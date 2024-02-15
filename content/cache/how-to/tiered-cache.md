@@ -5,9 +5,9 @@ pcx_content_type: concept
 
 # Tiered Cache
 
-Tiered Cache uses the size of Cloudflare’s network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
+Tiered Cache uses the size of Cloudflare's network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
 
-Tiered Cache works by dividing Cloudflare’s data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier must ask an upper-tier to see if it has the content. If the upper-tier does not have the content, only the upper-tier can ask the origin for content. This practice improves bandwidth efficiency by limiting the number of data centers that can ask the origin for content, which reduces origin load and makes websites more cost-effective to operate.
+Tiered Cache works by dividing Cloudflare's data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier must ask an upper-tier to see if it has the content. If the upper-tier does not have the content, only the upper-tier can ask the origin for content. This practice improves bandwidth efficiency by limiting the number of data centers that can ask the origin for content, which reduces origin load and makes websites more cost-effective to operate.
 
 Additionally, Tiered Cache concentrates connections to origin servers so they come from a small number of data centers rather than the full set of network locations. This results in fewer open connections using server resources.
 
@@ -15,15 +15,15 @@ To enable Tiered Cache, refer to [Enable Tiered Cache](/cache/how-to/tiered-cach
 
 ## Tiered Cache Topology
 
-Cloudflare allows you to select your cache topology so that you have control over how your origin connects to Cloudflare’s data centers. This will help ensure higher cache hit ratios, fewer origin connections, and a reduction of Internet latency. Below you can find details about the options we have available.
+Cloudflare allows you to select your cache topology so that you have control over how your origin connects to Cloudflare's data centers. This will help ensure higher cache hit ratios, fewer origin connections, and a reduction of Internet latency. Below you can find details about the options we have available.
 
 ### Smart Tiered Cache
 
-Smart Tiered Cache dynamically selects the single closest upper tier for each of your website’s origins with no configuration required, using our in-house performance and routing data. Cloudflare collects latency data for each request to an origin, and uses the latency data to determine how well any upper-tier data center is connected with an origin. As a result, Cloudflare can select the data center with the lowest latency to be the upper-tier for an origin.
+Smart Tiered Cache dynamically selects the single closest upper tier for each of your website's origins with no configuration required, using our in-house performance and routing data. Cloudflare collects latency data for each request to an origin, and uses the latency data to determine how well any upper-tier data center is connected with an origin. As a result, Cloudflare can select the data center with the lowest latency to be the upper-tier for an origin.
 
 ### Generic Global Tiered Cache
 
-Generic Global topology allows for all of Cloudflare’s global data centers to serve as a network of upper-tiers. This topology may help reduce the long tail latencies for far-away visitors.
+Generic Global topology allows for all of Cloudflare's global data centers to serve as a network of upper-tiers. This topology may help reduce the long tail latencies for far-away visitors.
 
 ### Regional Tiered Cache
 
@@ -33,7 +33,7 @@ Regional Cache instructs Cloudflare to check a regional hub data center near the
 
 ### Custom Tiered Cache
 
-Custom Tiered cache allows you to work with Cloudflare’s support team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have an unique traffic pattern. If you want a custom topology, please contact your CSM.
+Custom Tiered cache allows you to work with Cloudflare's support team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have an unique traffic pattern. If you want a custom topology, please contact your CSM.
 
 ## Availability
 
@@ -58,10 +58,10 @@ You can enable Tiered Cache in the dashboard or via API.
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 2. Select **Caching** > **Tiered Cache**.
 3. From **Tiered Cache**, toggle the button to **enabled**.
-4. In **Tiered Cache Topology**, you can control how your origin connects to Cloudflare’s data centers. You can select:
+4. In **Tiered Cache Topology**, you can control how your origin connects to Cloudflare's data centers. You can select:
     - **Upper Tier Cache** - You have the option to choose between Smart or Generic Global Tiered Cache Topology.
     - **Middle Tier Cache** -  If you have selected Smart or Custom Tiered Cache Topology, you can now enable Regional Tiered Cache.
-    - **Custom Tiered Cache** - Allows you to work with Cloudflare’s support team to set a custom topology that fits your specific needs.
+    - **Custom Tiered Cache** - Allows you to work with Cloudflare's support team to set a custom topology that fits your specific needs.
     - **Disable Tiered Cache**.
 
 ![Tiered Cache Topology dashboard](/images/cache/tiered_cache_topology.png)

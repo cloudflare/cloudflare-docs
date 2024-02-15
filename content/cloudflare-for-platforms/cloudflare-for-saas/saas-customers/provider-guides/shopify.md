@@ -46,6 +46,6 @@ If you cannot activate your domain using [proxied DNS records](/dns/manage-dns-r
 
 ### DNS CAA records
 
-Shopify issues SSL/TLS certificates for merchant domains using Let’s Encrypt. If you add any DNS CAA records, you must select Let’s Encrypt as the Certificate Authority (CA) or HTTPS connections may fail.
+Shopify issues SSL/TLS certificates for merchant domains using Let's Encrypt. If you add any DNS CAA records, you must select Let's Encrypt as the Certificate Authority (CA) or HTTPS connections may fail.
 
 For more details, refer to [CAA records](/ssl/edge-certificates/caa-records/#caa-records-added-by-cloudflare).

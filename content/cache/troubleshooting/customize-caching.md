@@ -8,7 +8,7 @@ title: Customize Caching
 
 Caching is a fundamental feature of the Cloudflare Content Delivery Network (CDN). As such, our global network automatically caches a lot of content around the world. When visitors request a cached resource, it is served from the data center closest to them and therefore, the content loads faster.
 
-You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/how-to/cache-rules/) or [Page Rules](/rules/page-rules/).
+You can speed up your site's performance even further thanks to the multiple caching settings available in [Cache rules](/cache/how-to/cache-rules/) or [Page Rules](/rules/page-rules/).
 
 ___
 
@@ -20,7 +20,7 @@ However, you can configure HTML caching through specific Cloudflare Page Rules s
 
 When configuring caching settings in the **Page Rules** app, you are essentially manipulating certain options of the **Caching** app. The difference lies in that through **Page Rules**, you apply the caching settings at the URL level (not the entire site), after matching a specific pattern defined in a custom page rule. That way, you have fine-grained control over which specific resources to cache.
 
-For background information on Cloudflare’s caching tools and options, consult:
+For background information on Cloudflare's caching tools and options, consult:
 
 -   [Which file extensions does Cloudflare cache for static content?](/cache/concepts/default-cache-behavior/)
 -   [Getting started with Cloudflare caching](/cache/get-started/)

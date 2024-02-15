@@ -123,7 +123,7 @@ Both Claim Rules are now available to export to your Cloudflare Access account.
 
 ## Export the certificate
 
-Now you’ll configure Cloudflare to recognize ADFS by extracting the _token-signing certificate_ from ADFS.
+Now you'll configure Cloudflare to recognize ADFS by extracting the _token-signing certificate_ from ADFS.
 
 To export the certificate:
 

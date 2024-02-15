@@ -11,7 +11,7 @@ Project Cybersafe Schools grants eligible schools with free access to Cloudflare
 
 {{<render file="_cybersafe-school-eligibility.md" productFolder="fundamentals">}}
 
-## Children’s Internet Protection Act (CIPA)
+## Children's Internet Protection Act (CIPA)
 
 {{<render file="_cybersafe-description.md" productFolder="fundamentals">}}
 

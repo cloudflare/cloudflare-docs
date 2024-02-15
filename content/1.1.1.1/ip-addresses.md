@@ -16,7 +16,7 @@ For detailed guidance refer to [Set up](/1.1.1.1/setup/).
 
 ## 1.1.1.1
 
-1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet.
+1.1.1.1 is Cloudflare's public DNS resolver. It offers a fast and private way to browse the Internet.
 
 |       IPv4      |                    IPv6                   |
 | --------------- | ----------------------------------------- |

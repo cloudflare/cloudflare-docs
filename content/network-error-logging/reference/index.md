@@ -41,7 +41,7 @@ Depending on the severity of the report volume, Cloudflare may declare an incide
 
 ## Cloudflare outage
 
-Cloudflare outages consist of issues within Cloudflare’s data-center fabric.
+Cloudflare outages consist of issues within Cloudflare's data-center fabric.
 
 These outages appear to customers as an increase in `tcp.timed_out`, `tcp.failed`, and `tcp.aborted` reports and will likely appear across multiple networks for a short period of time.
 
@@ -59,4 +59,4 @@ Customers can seek remediation by contacting the provider that they believe is s
 
 Certificate issues are also detectable through NEL. The `TLS.version`, `cipher_mismatch`, or other errors may present across multiple ISPs in multiple Cloudflare locations.
 
-If this is detected in NEL, the issue can be remediated by deploying new certificates or using [Cloudflare’s SSL management suite](/ssl/edge-certificates/advanced-certificate-manager/) to automatically deploy new certificates.
+If this is detected in NEL, the issue can be remediated by deploying new certificates or using [Cloudflare's SSL management suite](/ssl/edge-certificates/advanced-certificate-manager/) to automatically deploy new certificates.

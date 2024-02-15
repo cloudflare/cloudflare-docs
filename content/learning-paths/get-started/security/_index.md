@@ -7,7 +7,7 @@ layout: learning-module
 
 # Security
 
-Improve your application’s security posture by enabling and customizing your security settings. 
+Improve your application's security posture by enabling and customizing your security settings. 
 
 ## Objectives
 

@@ -8,7 +8,7 @@ weight: 2
 
 A false positive is an incorrect identification. In the case of DDoS protection, there is a false positive when legitimate traffic is mistakenly classified as attack traffic. This can occur when legacy applications, Internet services, or faulty client applications generate legitimate traffic that appears suspicious, has odd traffic patterns, deviates from best practices, or violates protocols.
 
-In these cases, Cloudflare’s DDoS Protection systems may flag that traffic as malicious and apply mitigation actions. If the traffic is in fact legitimate and not part of an attack, the mitigation actions can cause service disruptions and outages to your Internet properties.
+In these cases, Cloudflare's DDoS Protection systems may flag that traffic as malicious and apply mitigation actions. If the traffic is in fact legitimate and not part of an attack, the mitigation actions can cause service disruptions and outages to your Internet properties.
 
 To remedy a false positive:
 
@@ -39,7 +39,7 @@ To remedy a false positive:
 
 6. Select **Browse rules** and paste the rule name in the search field.
 
-7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_ (if supported by your current plan and subscriptions).
+7. Decrease the rule's **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_ (if supported by your current plan and subscriptions).
 
 8. Select **Next** and then select **Save**.
 
@@ -51,6 +51,6 @@ Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/
 
 {{<Aside type="note" header="Recommendation: Enable DDoS alerts">}}
 
-Cloudflare recommends that you create notifications for [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare’s systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
+Cloudflare recommends that you create notifications for [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare's systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
 
 {{</Aside>}}

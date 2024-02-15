@@ -14,7 +14,7 @@ The [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) 
 
 Workers do not need to prepare an entire response body before delivering it to `event.respondWith()`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
 
-- The visitor’s time-to-first-byte.
+- The visitor's time-to-first-byte.
 - The buffering done in the Worker.
 
 Minimizing buffering is especially important for processing or transforming response bodies larger than the Worker's memory limit. For these cases, streaming is the only implementation strategy.
@@ -45,7 +45,7 @@ export default {
     // Start pumping the body. NOTE: No await!
     response.body.pipeTo(writable);
 
-    // ... and deliver our Response while that’s running.
+    // ... and deliver our Response while that's running.
     return new Response(readable, response);
   }
 }
@@ -70,7 +70,7 @@ async function fetchAndStream(request) {
   // Start pumping the body. NOTE: No await!
   response.body.pipeTo(writable);
 
-  // ... and deliver our Response while that’s running.
+  // ... and deliver our Response while that's running.
   return new Response(readable, response);
 }
 ```
@@ -95,6 +95,6 @@ The Streams API is only available inside of the [Request context](/workers/runti
 
 ## Related resources
 
-* [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+* [MDN's Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
 * [Streams API spec](https://streams.spec.whatwg.org/)
 * Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

@@ -17,6 +17,6 @@ Now that you have learned how Area 1 can protect your inbox from phishing attack
 | [Trusted domains](/email-security/email-configuration/lists/trusted-domains/) | Trusted domains allows you to identify domains that should be exempted from Area 1 detections. |
 | [Message allow patterns](/email-security/email-configuration/lists/allowed-patterns/) | Allowed patterns exempts messages that match certain patterns from normal detection scanning. |
 | [Sender block lists](/email-security/email-configuration/lists/block-list/) | Blocked senders can mark all messages from specific senders with a MALICIOUS disposition. |
-| [Admin quarantine](/email-security/email-configuration/admin-quarantine/) | Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient’s inbox based on the disposition assigned by Area 1. |
+| [Admin quarantine](/email-security/email-configuration/admin-quarantine/) | Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the disposition assigned by Area 1. |
 | [DMARC Management (beta)](/dmarc-management/) | Cloudflare DMARC Management helps you track every source that is sending emails from your domain and review Domain-based Message Authentication Reporting and Conformance (DMARC) reports for each source. |
 

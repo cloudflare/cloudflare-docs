@@ -40,7 +40,7 @@ The Cloudflare APO WordPress plugin does not support multisite WordPress install
 
 ## Install and activate the Cloudflare WordPress plugin
 
-The easiest way to begin using APO is directly from Cloudflare’s WordPress plugin. Before you can use APO, you must first install and activate the plugin and then activate APO.
+The easiest way to begin using APO is directly from Cloudflare's WordPress plugin. Before you can use APO, you must first install and activate the plugin and then activate APO.
 
 1.  Navigate and log in to your WordPress account.
 2.  Select **Plugins** > **Add new**.

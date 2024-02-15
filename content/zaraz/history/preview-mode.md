@@ -28,8 +28,8 @@ Now that you have Zaraz working in preview mode, you can open your website and t
 
 1. In [Zaraz settings](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/settings) copy your **Debug Key**.
 2. Navigate to the website where you want to test your new settings.
-3. Access the browser’s developer tools. For example, to access developer tools in Google Chrome, select **View** > **Developer** > **Developer Tools**.
-4. Select the **Console** pane and enter the following command to start Zaraz’s preview mode:
+3. Access the browser's developer tools. For example, to access developer tools in Google Chrome, select **View** > **Developer** > **Developer Tools**.
+4. Select the **Console** pane and enter the following command to start Zaraz's preview mode:
 
     ```js
     zaraz.preview("<YOUR_DEBUG_KEY>")

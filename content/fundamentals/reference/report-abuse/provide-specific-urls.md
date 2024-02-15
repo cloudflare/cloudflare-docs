@@ -28,6 +28,6 @@ This is typically the most specific and helpful URL that someone reporting abuse
 
 ## Submitting the abuse report
 
-Once you have identified the URL for the specific asset, you can [submit an abuse report](https://abuse.cloudflare.com) through Cloudflare’s online abuse reporting process. 
+Once you have identified the URL for the specific asset, you can [submit an abuse report](https://abuse.cloudflare.com) through Cloudflare's online abuse reporting process. 
 
 You can learn more about the process, and what you can expect from Cloudflare in response to such abuse reports, from [our abuse policy](https://www.cloudflare.com/trust-hub/reporting-abuse/).

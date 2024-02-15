@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 This guide will instruct you through:
 
-- Creating your first database using D1, Cloudflare’s native serverless SQL database.
+- Creating your first database using D1, Cloudflare's native serverless SQL database.
 - Creating a schema and querying your database via the command-line.
 - Connecting a [Cloudflare Worker](/workers/) to your D1 database to query your D1 database programmatically.
 

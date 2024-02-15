@@ -54,7 +54,7 @@ In general, only abbreviate units of measurements when they modify specific quan
 |✅|❌|Rationale|
 |---|---|---|
 |128 GB|128 gb, 128gb, 128GB|Units of measurement should always be capitalized and spaced out from their corresponding numerical values.|
-|This network has a capacity of over **30 Tbps.**|This network has a capacity of over 30Tbps.|Adding a space between ‘30’ and ‘Tbps’ makes this sentence easier to read.|
+|This network has a capacity of over **30 Tbps.**|This network has a capacity of over 30Tbps.|Adding a space between '30' and 'Tbps' makes this sentence easier to read.|
 
 ## Physical distance
 

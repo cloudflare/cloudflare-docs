@@ -6,7 +6,7 @@ weight: 3
 
 # Gateway logs and PII
 
-Cloudflare Gateway gives you multiple ways to safely handle your employees’ personally identifiable information (PII). You can choose to exclude PII from activity logging, or you can choose to redact PII from everyone except for designated administrators.
+Cloudflare Gateway gives you multiple ways to safely handle your employees' personally identifiable information (PII). You can choose to exclude PII from activity logging, or you can choose to redact PII from everyone except for designated administrators.
 
 ## Types of PII
 

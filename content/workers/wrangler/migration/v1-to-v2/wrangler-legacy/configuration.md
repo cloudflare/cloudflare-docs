@@ -265,7 +265,7 @@ let value = await FOO.get("keyname");
 
 {{<Aside type="note">}}
 
-Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#kv).
+Creating your KV namespaces can be handled using Wrangler's [KV Commands](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/#kv).
 
 You can also define your `kv_namespaces` using an [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
@@ -307,7 +307,7 @@ You can also define your `site` using an [alternative TOML syntax](https://githu
 
 #### Storage Limits
 
-For exceptionally large pages, Workers Sites may not be ideal. There is a 25 MiB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
+For exceptionally large pages, Workers Sites may not be ideal. There is a 25 MiB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script's size limit. If you have too many files, you may not be able to use Workers Sites.
 
 #### Exclusively including files/directories
 

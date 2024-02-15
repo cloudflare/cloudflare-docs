@@ -7,7 +7,7 @@ layout: learning-module
 
 # Onboarding
 
-Make sure your zone is set up correctly, so you can fully take advantage of Cloudflare’s performance and security benefits.
+Make sure your zone is set up correctly, so you can fully take advantage of Cloudflare's performance and security benefits.
 
 ## Objectives
 

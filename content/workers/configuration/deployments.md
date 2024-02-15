@@ -49,7 +49,7 @@ To access your deployments:
 2. Select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Deployments**. 
 
-Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
+Deployments includes information about previous deployments, and your Worker's detail page displays information about the most recently deployed and currently active deployment.
 
 ### Via the API
 

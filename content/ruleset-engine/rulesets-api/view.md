@@ -34,7 +34,7 @@ Also, the list of rulesets at the zone level includes the account-level rulesets
 
 {{<Aside type="warning" header="Important">}}
 
-Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on which ruleset types are allowed in that product’s supported phases.
+Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on which ruleset types are allowed in that product's supported phases.
 
 {{</Aside>}}
 

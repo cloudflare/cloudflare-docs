@@ -8,15 +8,15 @@ meta:
 
 Workers was designed and built on top of Cloudflare's global network to allow developers to interact directly with the Cloudflare cache. The cache can provide ephemeral, data center-local storage, as a convenient way to frequently access static or dynamic content.
 
-By allowing developers to write to the cache, Workers provide a way to customize cache behavior on Cloudflare’s CDN. To learn about the benefits of caching, refer to the Learning Center’s article on [What is Caching?](https://www.cloudflare.com/learning/cdn/what-is-caching/).
+By allowing developers to write to the cache, Workers provide a way to customize cache behavior on Cloudflare's CDN. To learn about the benefits of caching, refer to the Learning Center's article on [What is Caching?](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
 Cloudflare Workers run before the cache but can also be utilized to modify assets once they are returned from the cache. Modifying assets returned from cache allows for the ability to sign or personalize responses while also reducing load on an origin and reducing latency to the end user by serving assets from a nearby location.
 
 ## Interact with the Cloudflare Cache
 
-Conceptually, there are two ways to interact with Cloudflare’s Cache using a Worker:
+Conceptually, there are two ways to interact with Cloudflare's Cache using a Worker:
 
-- Call to [`fetch()`](/workers/runtime-apis/fetch/) in a Workers script. Requests proxied through Cloudflare are cached even without Workers according to a zone’s default or configured behavior (for example, static assets like files ending in `.jpg` are cached by default). Workers can further customize this behavior by:
+- Call to [`fetch()`](/workers/runtime-apis/fetch/) in a Workers script. Requests proxied through Cloudflare are cached even without Workers according to a zone's default or configured behavior (for example, static assets like files ending in `.jpg` are cached by default). Workers can further customize this behavior by:
 
   - Setting Cloudflare cache rules (that is, operating on the `cf` object of a [request](/workers/runtime-apis/request/)).
 
@@ -77,7 +77,7 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
 The browser cache is controlled through the `Cache-Control` header sent in the response to the client (the response passed or promised to `event.respondWith()`). Workers can customize browser cache behavior by setting this header on the response.
 
-Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page rules and Cloudflare cache settings. Refer to the [How to customize Cloudflare’s cache](/cache/concepts/customize-cache/) if you wish to avoid writing JavaScript with still some granularity of control.
+Other means to control Cloudflare's cache that are not mentioned in this documentation include: Page rules and Cloudflare cache settings. Refer to the [How to customize Cloudflare's cache](/cache/concepts/customize-cache/) if you wish to avoid writing JavaScript with still some granularity of control.
 
 {{<Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">}}
 
@@ -89,7 +89,7 @@ The asset will be cached under the hostname specified within the Worker's subreq
 
 ### `fetch`
 
-In the context of Workers, a [`fetch`](/workers/runtime-apis/fetch/) provided by the runtime communicates with the Cloudflare cache. First, `fetch` checks to see if the URL matches a different zone. If it does, it reads through that zone’s cache (or Worker). Otherwise, it reads through its own zone’s cache, even if the URL is for a non-Cloudflare site. Cache settings on `fetch` automatically apply caching rules based on your Cloudflare settings. `fetch` does not allow you to modify or inspect objects before they reach the cache, but does allow you to modify how it will cache.
+In the context of Workers, a [`fetch`](/workers/runtime-apis/fetch/) provided by the runtime communicates with the Cloudflare cache. First, `fetch` checks to see if the URL matches a different zone. If it does, it reads through that zone's cache (or Worker). Otherwise, it reads through its own zone's cache, even if the URL is for a non-Cloudflare site. Cache settings on `fetch` automatically apply caching rules based on your Cloudflare settings. `fetch` does not allow you to modify or inspect objects before they reach the cache, but does allow you to modify how it will cache.
 
 When a response fills the cache, the response header contains `CF-Cache-Status: HIT`. You can tell an object is attempting to cache if one sees the `CF-Cache-Status` at all.
 

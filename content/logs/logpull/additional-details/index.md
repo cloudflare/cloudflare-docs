@@ -40,7 +40,7 @@ In that case, the output remains gzipped. Compressed data is approximately 5-10%
 
 ### Successful requests
 
-If the response or timeout limit is exceeded or there is any problem fetching the response, a `200` status will be returned and the response will end with the non-JSON text line “Error streaming data.” Because responses are streamed, there is no way to identify the error ahead of time. A response is successful if it does not end with the “Error streaming data" text line.
+If the response or timeout limit is exceeded or there is any problem fetching the response, a `200` status will be returned and the response will end with the non-JSON text line "Error streaming data." Because responses are streamed, there is no way to identify the error ahead of time. A response is successful if it does not end with the "Error streaming data" text line.
 
 Once you receive a successful response for a given zone and time range, the following is true for all subsequent requests:
 

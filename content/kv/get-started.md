@@ -69,7 +69,7 @@ For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --g
 
 ## 3. Create a KV namespace 
 
-A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
+A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
 
 You can create a KV namespace via Wrangler or the dashboard.
 
@@ -89,7 +89,7 @@ To create a KV namespace via Wrangler:
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
 ```
 
-The `wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you. 
+The `wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker's name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you. 
 
 ```sh
 $ wrangler kv:namespace create <YOUR_NAMESPACE>

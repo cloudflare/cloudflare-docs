@@ -8,7 +8,7 @@ inputParameters: productName;;greURL;;staticRoutesURL;;ipsecURL
 
 # Traffic steering
 
-$1 uses a static configuration to route traffic through {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels using the {{<glossary-tooltip term_id="GRE tunnel" link="$2">}}GRE{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="$4">}}Internet Protocol Security (IPsec){{</glossary-tooltip>}} protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
+$1 uses a static configuration to route traffic through {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels using the {{<glossary-tooltip term_id="GRE tunnel" link="$2">}}GRE{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="$4">}}Internet Protocol Security (IPsec){{</glossary-tooltip>}} protocols from Cloudflare's global network to your network, and from your network to Cloudflare's global network.
 
 $1 steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 
@@ -49,7 +49,7 @@ Using ECMP has a number of consequences:
 As a result, ECMP provides load balancing across tunnels with the same prefix and priority.
 
 {{<Aside type="note" header="Note:">}}
-Packets in the same flow use the same tunnel unless the tunnel priority changes. Packets for different flows can use different tunnels depending on which tunnel the flow’s 4-tuple – source and destination IP and source and destination port – hash to.
+Packets in the same flow use the same tunnel unless the tunnel priority changes. Packets for different flows can use different tunnels depending on which tunnel the flow's 4-tuple – source and destination IP and source and destination port – hash to.
 {{</Aside>}}
 
 ### Examples

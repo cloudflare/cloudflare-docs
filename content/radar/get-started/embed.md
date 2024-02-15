@@ -24,7 +24,7 @@ Charts supporting this feature will have a share icon <img src="/icons/share.svg
 
 1. Select the Share icon next to the description of the chart you wish to share.
 2. Select between Fixed Time and Real Time.
-   - Real Time uses a “sliding window” based on the selected date range, and will display data points looking back over that duration from the current date/time.
+   - Real Time uses a "sliding window" based on the selected date range, and will display data points looking back over that duration from the current date/time.
    - Fixed Time will always display a chart with only the currently visible data points.
 3. Select Copy Code and paste the code into your web page.
 

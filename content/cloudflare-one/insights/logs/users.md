@@ -6,7 +6,7 @@ weight: 1
 
 # User logs
 
-Cloudflare Zero Trust allows you to consult a comprehensive list of users who have authenticated to Cloudflare Zero Trust. For each user that logged in, you can see their name, their email address, and whether they’re actively utilizing a seat in both Access and Gateway.
+Cloudflare Zero Trust allows you to consult a comprehensive list of users who have authenticated to Cloudflare Zero Trust. For each user that logged in, you can see their name, their email address, and whether they're actively utilizing a seat in both Access and Gateway.
 
 To see your user list, go to **My Team** > **Users**.
 
@@ -22,7 +22,7 @@ Selecting the View button for any user will show you details for that user, such
 - Devices they have connected to Cloudflare Zero Trust
 - Their recent logins
 
-Select **View all activity** to see a full list of the user’s login events.
+Select **View all activity** to see a full list of the user's login events.
 
 ## Workplace records
 

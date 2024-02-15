@@ -89,7 +89,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/lockdowns" \
 
 ### Example rule
 
-The following example rule will only allow visitors connecting from a company’s headquarters or branch offices to access the staging environment and the wiki:
+The following example rule will only allow visitors connecting from a company's headquarters or branch offices to access the staging environment and the wiki:
 
 * Name:
 

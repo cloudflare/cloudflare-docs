@@ -18,7 +18,7 @@ Pulumi is free, open source, and optionally pairs with the [Pulumi Cloud](https:
 
 {{<Aside type="warning">}}
 
-To avoid resource management conflicts, it’s **always** recommended to manage Pulumi-controlled resources via Pulumi.
+To avoid resource management conflicts, it's **always** recommended to manage Pulumi-controlled resources via Pulumi.
 
 {{</Aside>}}
 

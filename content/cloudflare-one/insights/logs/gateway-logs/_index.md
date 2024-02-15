@@ -141,7 +141,7 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source IP**          | IP address of the user sending the packet.                                                                                                        |
 | **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                          |
-| **Destination IP**     | IP address of the packet’s target.                                                                                                                |
+| **Destination IP**     | IP address of the packet's target.                                                                                                                |
 | **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
 | **Session ID**         | ID of the unique session.                                                                                                                         |
 | **Time**               | Date and time of the session.                                                                                                                     |
@@ -183,7 +183,7 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | **Source IP**           | IP address of the user sending the packet.                                                                                                        |
 | **Source Port**         | Source port number for the packet.                                                                                                                |
 | **Source Country**      | Country code for the packet source.                                                                                                               |
-| **Destination IP**      | IP address of the packet’s target.                                                                                                                |
+| **Destination IP**      | IP address of the packet's target.                                                                                                                |
 | **Destination Port**    | Destination port number for the packet.                                                                                                           |
 | **Destination Country** | Destination port number for the packet.                                                                                                           |
 | **Protocol**            | Protocol over which the packet was sent.                                                                                                          |

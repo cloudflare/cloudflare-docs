@@ -117,7 +117,7 @@ $ pip install -U tus.py
 $ tus-upload --chunk-size 52428800 --header Authorization "Bearer <API_TOKEN>" <PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
-In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
+In the beginning of the response from tus, you'll see the endpoint for getting information about your newly uploaded video.
 
 ```bash
 INFO Creating file endpoint

@@ -6,7 +6,7 @@ title: Cache Everything while ignoring query strings
 
 # Cache Everything while ignoring query strings
 
-There might be times when you wish to cache content resources that are not in the list of file extensions that Cloudflare [caches by default](/cache/concepts/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (`form.html`) associated with the following URLs is cached in the Cloudflare edge network:
+There might be times when you wish to cache content resources that are not in the list of file extensions that Cloudflare [caches by default](/cache/concepts/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it's served via a URL that contains varying query strings. For example, you want to ensure that the resource (`form.html`) associated with the following URLs is cached in the Cloudflare edge network:
 
 ```txt
 https://www.example.com/support/form.html?param1=abc&param2=def
@@ -27,7 +27,7 @@ The _Cache Everything_ setting forces Cloudflare to consider all content that 
 
 _Ignore Query String_ modifies the cache key used at the Cloudflare edge to improve cache hit rates by reducing the number of unnecessary variations of an object that could be stored. It does so by storing and serving the same object from the edge regardless of any query string key value pairs appearing in the request path.
 
-If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/how-to/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
+If you're an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/how-to/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
 
 ___
 

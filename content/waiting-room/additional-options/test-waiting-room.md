@@ -68,7 +68,7 @@ Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/tes
 
 ## 3. Analyze results
 
-To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test.
+To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare's GraphQL API to check Total Active Users and Queued Users for each minute of your load test.
 
 {{<details header="Example Curl Statement">}}
 
@@ -112,7 +112,7 @@ From our test, we got the following results (these are extracted from results of
   - `"totalActiveUsersConfig": 300,`
   - `"totalQueuedUsers": 0`
 
-The first minute mark, 15:35:00 UTC, shows 137 active users past the waiting room. This is because our traffic was set to gradually ramp up within the first minute and the test did not start exactly at the minute mark. When data was aggregated for the following minute, 15:36:00 UTC, the waiting room reported the total 200 users active we expected on the site as each “user” made subrequests. The active user count remained stable at 200 as long as it received subrequests from the traffic sent by the load test.
+The first minute mark, 15:35:00 UTC, shows 137 active users past the waiting room. This is because our traffic was set to gradually ramp up within the first minute and the test did not start exactly at the minute mark. When data was aggregated for the following minute, 15:36:00 UTC, the waiting room reported the total 200 users active we expected on the site as each "user" made subrequests. The active user count remained stable at 200 as long as it received subrequests from the traffic sent by the load test.
 
 {{<Aside type="note" header="Note">}}
 

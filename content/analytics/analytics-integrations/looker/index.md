@@ -147,6 +147,6 @@ With the following pre-set filter values in the Looker dashboards all workers su
 
 - **WorkerSubrequet** set to value _False_
 
-- **ClientRequestMethod** doesn’t equal to _PURGE_
+- **ClientRequestMethod** doesn't equal to _PURGE_
 
 You can always adjust your default filters values according to your needs.

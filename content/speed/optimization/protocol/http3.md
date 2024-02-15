@@ -20,7 +20,7 @@ For more background on HTTP/3, visit the [Learning Center](https://www.cloudflar
 
 ## Enable HTTP/3
 
-HTTP/3 is available to all plans (though it does require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/)).
+HTTP/3 is available to all plans (though it does require an [SSL certificate at Cloudflare's edge network](/ssl/get-started/)).
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

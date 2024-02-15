@@ -16,7 +16,7 @@ Ensures the safety of your website visitors' browser environment.
 
 {{<plan type="paid">}}
 
-Page Shield simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. Page Shield also tracks the connections made by scripts on your domain’s pages and checks if they are malicious based on their destination.
+Page Shield simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. Page Shield also tracks the connections made by scripts on your domain's pages and checks if they are malicious based on their destination.
 
 ---
 

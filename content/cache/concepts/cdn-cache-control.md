@@ -15,7 +15,7 @@ An origin can:
 
 - Return the `CDN-Cache-Control` response header which Cloudflare evaluates to make caching decisions. `Cache-Control`, if also returned by the origin, is proxied as is and does not affect caching decisions made by Cloudflare. Additionally, `CDN-Cache-Control` is proxied downstream in case there are other CDNs between Cloudflare and the browser.
 
-- Return the `Cloudflare-CDN-Cache-Control` response header. This results in the same behavior as the origin returning `CDN-Cache-Control` except Cloudflare does not proxy `Cloudflare-CDN-Cache-Control` downstream because it’s a header only used to control Cloudflare. This option is beneficial if you want only Cloudflare to have a different caching behavior while all other downstream servers rely on `Cache-Control` or if you do not want Cloudflare to proxy the `CDN-Cache-Control` header downstream.
+- Return the `Cloudflare-CDN-Cache-Control` response header. This results in the same behavior as the origin returning `CDN-Cache-Control` except Cloudflare does not proxy `Cloudflare-CDN-Cache-Control` downstream because it's a header only used to control Cloudflare. This option is beneficial if you want only Cloudflare to have a different caching behavior while all other downstream servers rely on `Cache-Control` or if you do not want Cloudflare to proxy the `CDN-Cache-Control` header downstream.
 
 - Return both `Cloudflare-CDN-Cache-Control` and `CDN-Cache-Control` response headers. In this case, Cloudflare only looks at `Cloudflare-CDN-Cache-Control` when making caching decisions because it is the most specific version of `CDN-Cache-Control` and proxies `CDN-Cache-Control` downstream. Only forwarding `CDN-Cache-Control` in this situation is beneficial if you want Cloudflare to have a different caching behavior than other CDNs downstream.
 
@@ -43,7 +43,7 @@ In situations where Cloudflare does not receive `Cloudflare-CDN-Cache-Control`, 
 
 ### Manage cached assets TTLs
 
-Use `CDN-Cache-Control` when you want to manage cached asset’s TTLs separately for origin caches, CDN caches, and browser caches. Previously, this scenario required creating page rules, but `CDN-Cache-Control` accomplishes the desired behavior through origin-set response headers. The example below shows how you could manage your cached asset’s TTLs.
+Use `CDN-Cache-Control` when you want to manage cached asset's TTLs separately for origin caches, CDN caches, and browser caches. Previously, this scenario required creating page rules, but `CDN-Cache-Control` accomplishes the desired behavior through origin-set response headers. The example below shows how you could manage your cached asset's TTLs.
 
 Headers:
 

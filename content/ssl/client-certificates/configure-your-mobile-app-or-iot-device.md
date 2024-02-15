@@ -142,7 +142,7 @@ You can [create a client certificate in the Cloudflare dashboard](/ssl/client-ce
 
 However, since most developers working at scale generate their own private keys and certificate signing requests via API, this example uses the Cloudflare API to create client certificates.
 
-To create a bootstrap certificate for the iOS application and the IoT device, this example uses [Cloudflare’s public key infrastructure toolkit, CFSSL](https://github.com/cloudflare/cfssl):
+To create a bootstrap certificate for the iOS application and the IoT device, this example uses [Cloudflare's public key infrastructure toolkit, CFSSL](https://github.com/cloudflare/cfssl):
 
 ```bash
 # Generate a private key and CSR for the iOS device.
@@ -185,7 +185,7 @@ $ mv certificate-key.pem sensor-key.pem
 $ mv certificate.csr sensor.csr
 
 // now ask that these CSRs be signed by the private CA issued for your zone
-// we need to replace actual newlines in the CSR with ‘\n’ before POST’ing
+// we need to replace actual newlines in the CSR with '\n' before POST'ing
 $ CSR=$(cat ios.csr | perl -pe 's/\n/\\n/g')
 $ request_body=$(< <(cat <<EOF
 {
@@ -250,7 +250,7 @@ $ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-T
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
 
-For simplicity, this example embeds a “bootstrap” certificate and key in the application bundle as a PKCS#12-formatted file:
+For simplicity, this example embeds a "bootstrap" certificate and key in the application bundle as a PKCS#12-formatted file:
 
 ```sh
 $ openssl pkcs12 -export -out bootstrap-cert.pfx -inkey ios-key.pem -in ios.pem
@@ -258,7 +258,7 @@ Enter Export Password:
 Verifying - Enter Export Password:
 ```
 
-In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
+In a real-world deployment, a bootstrap certificate should only be used in conjunction with users' credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
 
 ### Embed the client certificate in an Android app
 

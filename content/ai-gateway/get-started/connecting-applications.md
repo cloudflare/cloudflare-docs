@@ -8,7 +8,7 @@ weight: 2
 
 In this guide, you will learn how to connect your application to your AI Gateway. You will need to [have an AI Gateway created](/ai-gateway/get-started/creating-gateway) to continue with this guide.
 
-Once you have configured a Gateway in the AI Gateway dashboard, click on “API Endpoints” to find your AI Gateway endpoint. AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint.
+Once you have configured a Gateway in the AI Gateway dashboard, click on "API Endpoints" to find your AI Gateway endpoint. AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint.
 
 ---
 ## Universal 

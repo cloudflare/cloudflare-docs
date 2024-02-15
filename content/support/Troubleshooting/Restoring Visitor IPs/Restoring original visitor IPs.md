@@ -40,7 +40,7 @@ ___
 
 ### Overview
 
-Cloudflare no longer updates and supports _mod\_cloudflare._ However, if you are using an Apache web server with an operating system such as **Ubuntu Server 18.04** and **Debian 9 Stretch**, you can use _mod\_remoteip_ to log your visitor’s original IP address.
+Cloudflare no longer updates and supports _mod\_cloudflare._ However, if you are using an Apache web server with an operating system such as **Ubuntu Server 18.04** and **Debian 9 Stretch**, you can use _mod\_remoteip_ to log your visitor's original IP address.
 
 **As this module was created by an outside party, we can't provide technical support for issues related to the plugin.**
 
@@ -139,7 +139,7 @@ If you can't install mod\_cloudflare, or if there is no Cloudflare plugin availa
 <?php if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];?>
 ```
 
-This command will only make the IP address available to scripts that need it. It doesn’t store the IP in your actual server logs.
+This command will only make the IP address available to scripts that need it. It doesn't store the IP in your actual server logs.
 
 ### Apache
 
@@ -199,7 +199,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 ```
 IfModule cloudflare_module
 CloudFlareRemoteIPHeader X-Forwarded-For
-CloudFlareRemoteIPTrustedProxy [insert your load balancer’s IP address]
+CloudFlareRemoteIPTrustedProxy [insert your load balancer's IP address]
 DenyAllButCloudFlare
 /IfModule
 ```
@@ -284,7 +284,7 @@ From IIS 8.5 onwards, custom logging is a built-in option. Refer to [IIS Enhance
 4.  Click **Ok**. You should see your new entry reflected under **Custom Fields**. Click on **Apply** when you are back in the _Logging_ window.
 
 1.  If this is successful, the log file should now have an underscore:You should also see the change in the fields:
-2.  Restart the site, then W3SVC, then the entire instance if the change doesn’t reflect immediately.When using enhanced logging in IIS 8.5+, it **does not restore** original visitor IP at the application level.
+2.  Restart the site, then W3SVC, then the entire instance if the change doesn't reflect immediately.When using enhanced logging in IIS 8.5+, it **does not restore** original visitor IP at the application level.
 
 To have Tomcat7 automatically restore the original visitor IP to your access logs and application you will need to add `%{CF-Connecting-IP}i` into your log schema.
 

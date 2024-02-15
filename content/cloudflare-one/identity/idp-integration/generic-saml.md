@@ -58,7 +58,7 @@ This optional configuration signs the [Access JWT](/cloudflare-one/identity/auth
 
 ### Email attribute name
 
-Many [Access policies](/cloudflare-one/policies/access/) depend on a user’s email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
+Many [Access policies](/cloudflare-one/policies/access/) depend on a user's email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
 
 Example in Okta:
 

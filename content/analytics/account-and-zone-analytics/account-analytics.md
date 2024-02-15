@@ -31,7 +31,7 @@ ___
 
 ## Review your account metrics
 
-This section outlines the aggregated metrics under each category.  Before reviewing your metrics, let’s define a couple of concepts used in some panels:
+This section outlines the aggregated metrics under each category.  Before reviewing your metrics, let's define a couple of concepts used in some panels:
 
 -   _Rate_ -  Reflects the ratio between the amount for a specific data category and the total.
 -   _Bandwidth_ - Refers to the number of bytes sent from the Cloudflare edge network to the requesting client.

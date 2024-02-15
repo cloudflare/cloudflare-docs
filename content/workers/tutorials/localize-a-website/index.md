@@ -16,15 +16,15 @@ title: Localize a website with HTMLRewriter
 
 The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML on the Cloudflare global network. This gives developers the ability to efficiently and transparently customize their Workers applications.
 
-In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
+In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors' location in the world.
 
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
 
 ## Setup
 
-This tutorial is designed to use an existing website. To simplify this process, you will use a free HTML5 template from [HTML5 UP](https://html5up.net). With this website as the base, you will use the `HTMLRewriter` functionality in the Workers platform to overlay an i18n layer, automatically translating the site based on the user’s language.
+This tutorial is designed to use an existing website. To simplify this process, you will use a free HTML5 template from [HTML5 UP](https://html5up.net). With this website as the base, you will use the `HTMLRewriter` functionality in the Workers platform to overlay an i18n layer, automatically translating the site based on the user's language.
 
-If you would like to deploy your own version of the site, you can find the source [on GitHub](https://github.com/signalnerve/i18n-example-workers). Instructions on how to deploy this application can be found in the project’s README.
+If you would like to deploy your own version of the site, you can find the source [on GitHub](https://github.com/signalnerve/i18n-example-workers). Instructions on how to deploy this application can be found in the project's README.
 
 ## Create a project
 
@@ -100,7 +100,7 @@ async function handleEvent(event) {
 
 Your `ElementHandler` will receive every element parsed by the `HTMLRewriter` instance, and due to the expressive API, you can query each incoming element for information.
 
-In [How it works](#understanding-data-i18n-key), the documentation describes `data-i18n-key`, a custom data attribute that could be used to find a corresponding translated string for the website’s user interface. In `ElementHandler`, you can define an `element` function, which will be called as each element is parsed. Inside of the `element` function, you can query for the custom data attribute using `getAttribute`:
+In [How it works](#understanding-data-i18n-key), the documentation describes `data-i18n-key`, a custom data attribute that could be used to find a corresponding translated string for the website's user interface. In `ElementHandler`, you can define an `element` function, which will be called as each element is parsed. Inside of the `element` function, you can query for the custom data attribute using `getAttribute`:
 
 ```js
 ---
@@ -156,7 +156,7 @@ class ElementHandler {
 
 To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
 
-You can expand on this translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user’s home language, provided that it is defined in `strings`.
+You can expand on this translation functionality to provide country-specific translations, based on the incoming request's `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user's home language, provided that it is defined in `strings`.
 
 To implement this:
 
@@ -256,7 +256,7 @@ async function handleEvent(event) {
 
 Your i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
 
-To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/). Set this ID at the top part of your project’s `wrangler.toml` file:
+To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/). Set this ID at the top part of your project's `wrangler.toml` file:
 
 ```toml
 ---
@@ -270,7 +270,7 @@ workers_dot_dev = true
 
 The `[site]` section at the bottom of your `wrangler.toml` file tells Wrangler how to deploy your Workers Site. The `bucket` key tells Wrangler where to find your static assets: by default set to the `public` folder, where you placed your HTML code at the beginning of this tutorial. The `entry-point` key indicates where your Workers script is located and, like `bucket`, the default of `workers-site` should already be correctly configured for your application.
 
-The final version of your project’s `wrangler.toml` file should look like:
+The final version of your project's `wrangler.toml` file should look like:
 
 ```toml
 ---
@@ -287,7 +287,7 @@ bucket = "./public"
 entry-point = "workers-site"
 ```
 
-Using `wrangler`, deploy to Cloudflare’s network, using the `deploy` command:
+Using `wrangler`, deploy to Cloudflare's network, using the `deploy` command:
 
 ```sh
 ---

@@ -72,13 +72,13 @@ Currently, Cache Rules are not compatible with image transformations . Cache Rul
 
 #### Edge TTL 
 
-Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests. This setting has three primary options:
+Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare's cache in response to requests. This setting has three primary options:
 
 - **Use cache control-header if present, bypass cache if not**: If a cache-control header is present on the response, follow its directives. If not, skip caching entirely.
 - **Use cache-control header if present, use default Cloudflare caching behavior if not**: If a cache-control header is present on the response, follow its directives. If not, cache in accordance with our [default cache settings](/cache/concepts/default-cache-behavior/).
 - **Ignore cache-control header and use this TTL**: Completely ignore any cache-control header on the response and instead cache the response for a duration specified in the timing dropdown.
 
-Additionally, you can select how long you would like a particular matching status code’s content to be cached in Cloudflare’s global network. In **Status Code TTL** section you can define the TTL duration for one or more status codes of responses from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than or equal_ or _Less than or equal_ status code, or to a _Range_ of status codes. Status code TTLs are similar to **Ignore cache-control header and use this TTL** in that the cache-control header on the response will be ignored in favor of the TTL specified by the cache rule. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
+Additionally, you can select how long you would like a particular matching status code's content to be cached in Cloudflare's global network. In **Status Code TTL** section you can define the TTL duration for one or more status codes of responses from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than or equal_ or _Less than or equal_ status code, or to a _Range_ of status codes. Status code TTLs are similar to **Ignore cache-control header and use this TTL** in that the cache-control header on the response will be ignored in favor of the TTL specified by the cache rule. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
 
 {{<details header="API information">}}
 
@@ -133,7 +133,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Browser TTL
 
-Browser TTL refers to the maximum cache time-to-live (TTL) that an asset should be considered available to serve from the browser’s cache.
+Browser TTL refers to the maximum cache time-to-live (TTL) that an asset should be considered available to serve from the browser's cache.
 
 Select if you want to **Bypass cache**, **Respect origin**, or **Override origin**. If you wish to override the browser TTL value, define how long resources cached by client browsers will remain valid from the dropdown menu. For more information, refer to [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl).
 

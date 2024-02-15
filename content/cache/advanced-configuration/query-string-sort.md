@@ -8,7 +8,7 @@ title: Query String Sort
 
 **Query String Sort** increases cache-hit rates by first sorting query strings into a consistent order before checking the Cloudflare cache.
 
-By default, Cloudflare’s cache treats resources as distinct if their URL query strings are in a different order. For instance, these resources are cached separately:
+By default, Cloudflare's cache treats resources as distinct if their URL query strings are in a different order. For instance, these resources are cached separately:
 
 -   `/video/48088296?title=0&byline=0&portrait=0&color=51a516`
 -   `/video/48088296?byline=0&color=51a516&portrait=0&title=0`
@@ -88,7 +88,7 @@ For example, you might have an image resizing endpoint or a search form, where t
 
 To minimize problems, consider:
 
--   Disabling **Query String Sort** for the site if you’re sure that this feature does not add value to any part of your site. Cloudflare disables this option by default in the **Caching** app.
+-   Disabling **Query String Sort** for the site if you're sure that this feature does not add value to any part of your site. Cloudflare disables this option by default in the **Caching** app.
 -   Use Cloudflare **Page Rules** to enable **Query String Sort** for URLs where preserving the query string parameter order is not important.
 -   Alternatively, use Cloudflare **Page Rules** to disable **Query String Sort** for URLs where a specific parameter order is required. For example, disable Query String Sort for `example.com/wp-admin/load-scripts.php*` or any URLs with similar requirements (replace example.com with your domain name).
 

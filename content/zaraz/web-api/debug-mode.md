@@ -19,4 +19,4 @@ You can set this cookie manually or via the `zaraz.debug` helper function availa
     zaraz.debug("YOUR_DEBUG_KEY")
     ```
 
-Zaraz’s debug mode is now enabled. A pop-up window will show up with the debugger information. To exit debug mode, remove the cookie by typing `zaraz.debug()` in the console pane of the browser.
+Zaraz's debug mode is now enabled. A pop-up window will show up with the debugger information. To exit debug mode, remove the cookie by typing `zaraz.debug()` in the console pane of the browser.

@@ -215,7 +215,7 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 
 This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
 
-When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user’s home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires.
+When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user's home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires.
 
 {{<Aside type="warning" header="Warning">}}
 Enabling this setting comes with two major consequences:

@@ -35,7 +35,7 @@ We have verified interoperability with the following modules:
 *   [Entrust nShield Connect](https://www.entrust.com/digital-security/hsm)
 *   [YubiKey Neo](https://www.yubico.com/product/yubikey-neo/)
 
-We’ve also tested with the following Cloud HSM offerings:
+We've also tested with the following Cloud HSM offerings:
 
 *   [AWS CloudHSM](/ssl/keyless-ssl/hardware-security-modules/aws-cloud-hsm/)
 *   [IBM Cloud HSM](/ssl/keyless-ssl/hardware-security-modules/ibm-cloud-hsm/)

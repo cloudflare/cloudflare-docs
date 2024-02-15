@@ -12,7 +12,7 @@ To create a Spectrum application, you can either use an IP address, a CNAME Reco
 
 ## Create a Spectrum application using an IP address
 
-To create a Spectrum application using an IP address, Cloudflare normally assigns you an arbitrary IP from Cloudflare’s IP pool to your application. If you want to use your own IP addresses, you can use [BYOIP](/spectrum/about/byoip/) or you can also use a [Static IP](/spectrum/about/static-ip/). In these two last cases, you need to create your Spectrum application through the API, as these features are not available via dash. When using the API, the field `origin_direct` takes as input the IP address.
+To create a Spectrum application using an IP address, Cloudflare normally assigns you an arbitrary IP from Cloudflare's IP pool to your application. If you want to use your own IP addresses, you can use [BYOIP](/spectrum/about/byoip/) or you can also use a [Static IP](/spectrum/about/static-ip/). In these two last cases, you need to create your Spectrum application through the API, as these features are not available via dash. When using the API, the field `origin_direct` takes as input the IP address.
 
 {{<details header="Add your application via Dashboard">}}
 

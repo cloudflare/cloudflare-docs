@@ -24,7 +24,7 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global networ
 
 **A Secure Web Gateway to protect users and devices.**
 
-* Enforce your company’s Acceptable Use Policy (AUP)
+* Enforce your company's Acceptable Use Policy (AUP)
 * Block risky sites with custom blocklists and built-in threat intel
 * Enhance visibility and protection into SaaS applications
 

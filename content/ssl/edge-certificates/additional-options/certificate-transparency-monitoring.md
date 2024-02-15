@@ -64,13 +64,13 @@ Only Certificate Authorities can revoke malicious certificates. If you believe a
 
 - [IdenTrust support](https://www.identrust.com/support/support-team)
 
-- [Let’s Encrypt support](https://letsencrypt.org/contact/)
+- [Let's Encrypt support](https://letsencrypt.org/contact/)
 
 - [Sectigo support](https://sectigo.com/support)
 
 ### Option 2: Contact domain registrars
 
-Domain registrars may be able to **suspend** potentially malicious domains. If, for example, you notice that a malicious domain was registered through GoDaddy, contact GoDaddy’s support team to see if they can help you. Do the same for other registrars.
+Domain registrars may be able to **suspend** potentially malicious domains. If, for example, you notice that a malicious domain was registered through GoDaddy, contact GoDaddy's support team to see if they can help you. Do the same for other registrars.
 
 ### Option 3: Improvise
 

@@ -29,7 +29,7 @@ For guidance on when you need to perform DCV, refer to [Domain Control Validatio
 
 To verify the [DCV status](/ssl/reference/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](/api/operations/ssl-verification-ssl-verification-details).
 
-A status of `active` means that the certificate has been deployed to Cloudflare’s global network and will be served as soon as HTTP traffic is proxied to Cloudflare.
+A status of `active` means that the certificate has been deployed to Cloudflare's global network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 
 ## Update DCV methods
 

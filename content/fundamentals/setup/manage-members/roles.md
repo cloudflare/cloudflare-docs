@@ -24,7 +24,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | API Gateway Read | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account. |
 | Audit Logs Viewer | Can view [Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/). |
 | Bot Management (Account-wide) | Can edit [Bot Management](/bots/plans/bm-subscription/) (including [Super Bot Fight Mode](/bots/get-started/pro/)) configurations for all domains in account. |
-| Billing | Can edit the account’s [billing profile](/fundamentals/subscriptions-and-billing/create-billing-profile/) and subscriptions |
+| Billing | Can edit the account's [billing profile](/fundamentals/subscriptions-and-billing/create-billing-profile/) and subscriptions |
 | Cloudflare Access | Can edit [Cloudflare Access](/cloudflare-one/policies/access/) policies. |
 | Cache Purge | Can purge the edge cache. |
 | Cloudflare DEX | Can edit [Cloudflare DEX](/cloudflare-one/insights/dex/). |

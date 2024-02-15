@@ -9,12 +9,12 @@ updated: 2024-01-08
 
 # Magic Network Monitoring DDoS testing guide
 
-This tutorial outlines the recommended process for customers to effectively test Cloudflare’s Magic Network Monitoring (MNM) in a repeatable manner.
+This tutorial outlines the recommended process for customers to effectively test Cloudflare's Magic Network Monitoring (MNM) in a repeatable manner.
 
 At a high level, customers will follow these steps:
 
 1. Select and install a trusted and open source DDoS simulation tool.
-2. Conduct a small test DDoS attack against Cloudflare’s 1.1.1.1.
+2. Conduct a small test DDoS attack against Cloudflare's 1.1.1.1.
 3. Conduct a DDoS attack against their own network.
 
 ## Recommended DDoS tools
@@ -50,7 +50,7 @@ If you are an Enterprise customer, you also need to [open a support ticket with 
 
 1. Go to the [Python download page](https://www.python.org/downloads/), and download the latest version of Python.
 2. Follow the recommended installation settings, and make sure to select the option **Add python.exe to PATH** to add Python to your file path.
-3. Open your command prompt, and run the following command to confirm Python has been installed and added to your computer’s program path:
+3. Open your command prompt, and run the following command to confirm Python has been installed and added to your computer's program path:
 
 ```bash
 C:\> python --version
@@ -72,7 +72,7 @@ You should receive a message with the current version of Git.
 
 ### 3. Install MHDDoS
 
-1. Go to the [installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation) for MHDDoS in the project’s GitHub repository wiki.
+1. Go to the [installation guide](https://github.com/MatrixTM/MHDDoS/wiki/installation) for MHDDoS in the project's GitHub repository wiki.
 2. Follow the steps for either **Automatic Installation**, **DockerFile**, or **Manual Installation** depending on your preference.
 
 {{<Aside type="note">}}The steps for **Automatic Installation** are a good default to follow unless you already have Docker set up and are familiar with it.{{</Aside>}}

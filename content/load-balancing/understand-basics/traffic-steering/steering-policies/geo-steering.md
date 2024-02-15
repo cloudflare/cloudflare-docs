@@ -18,7 +18,7 @@ You can assign multiple pools to the same area and the load balancer will use th
 
 ### Region steering
 
-Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query.
+Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client's DNS query.
 
 {{<Aside type="warning">}}
 If you add a pool to a region, you cannot [delete this pool](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.

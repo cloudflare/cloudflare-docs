@@ -12,11 +12,11 @@ meta:
 Only available on Enterprise plans.
 {{</Aside>}}
 
-Zero Trust risk scoring detects user activity and behaviors that could introduce risk to your organization’s systems and data. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
+Zero Trust risk scoring detects user activity and behaviors that could introduce risk to your organization's systems and data. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
 
 ## User risk scoring
 
-Cloudflare Zero Trust assigns a risk score of Low, Medium, or High based on detections of users’ activities, posture, and settings. A user’s score is equal to the highest-level risk behavior they trigger.
+Cloudflare Zero Trust assigns a risk score of Low, Medium, or High based on detections of users' activities, posture, and settings. A user's score is equal to the highest-level risk behavior they trigger.
 
 ### View a user's risk score
 
@@ -24,7 +24,7 @@ To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), g
 
 Users that have had their risk score [cleared](#clear-a-users-risk-score) will not appear in the table unless they trigger another risk behavior.
 
-### Clear a user’s risk score
+### Clear a user's risk score
 
 If required, you can reset risk scores for specific users. Once reset, users will not appear in the associated risk table until they trigger another risk behavior.
 

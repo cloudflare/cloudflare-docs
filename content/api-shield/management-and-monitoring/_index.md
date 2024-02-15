@@ -7,7 +7,7 @@ weight: 5
 
 # Endpoint Management
 
-Monitor the health of your {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} by saving, updating, and monitoring performance metrics using API Shield’s Endpoint Management.
+Monitor the health of your {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} by saving, updating, and monitoring performance metrics using API Shield's Endpoint Management.
 
 **Add endpoints** allows customers to save endpoints directly from [API Discovery](/api-shield/security/api-discovery/) or manually by method, path, and host.
 
@@ -95,7 +95,7 @@ The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
 #### Learned schemas can optionally include:
 
 - Detected query parameters and its format
-- API Shield’s rate limit threshold recommendations
+- API Shield's rate limit threshold recommendations
 
 ## Endpoint Performance Analysis
 
@@ -113,7 +113,7 @@ Customers viewing analytics have the ability to toggle detailed metrics view bet
 
 ## Using the Cloudflare API
 
-You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management’s API documentation](/api/operations/api-shield-api-discovery-retrieve-discovered-operations-on-a-zone) for more information.
+You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management's API documentation](/api/operations/api-shield-api-discovery-retrieve-discovered-operations-on-a-zone) for more information.
 
 ## Sensitive Data Detection
 

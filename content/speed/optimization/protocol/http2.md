@@ -20,7 +20,7 @@ For more background on HTTP/2, visit the [Learning Center](https://www.cloudflar
 
 ## Enable HTTP/2
 
-HTTP/2 is enabled by default for all plans (though it does require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/)). 
+HTTP/2 is enabled by default for all plans (though it does require an [SSL certificate at Cloudflare's edge network](/ssl/get-started/)). 
 
 ## Disable HTTP/2
 

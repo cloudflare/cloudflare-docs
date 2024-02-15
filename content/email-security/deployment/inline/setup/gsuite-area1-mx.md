@@ -172,7 +172,7 @@ After 36 hours, the MX record DNS update will have sufficiently propagated acros
 
 ## 5. Send Area 1 spam to user spam folder (optional)
 
-Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where the message can be sent to an administrative quarantine, this optional step can be configured to send messages that are identified as spam by Area 1 to the user’s spam folder.
+Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where the message can be sent to an administrative quarantine, this optional step can be configured to send messages that are identified as spam by Area 1 to the user's spam folder.
 
 1. Access [Google's Administrative Console](https://admin.google.com/), then select **Apps** > **Google Workspace** > **Gmail**.
 

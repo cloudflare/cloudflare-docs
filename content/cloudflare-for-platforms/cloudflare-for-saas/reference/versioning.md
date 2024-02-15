@@ -18,7 +18,7 @@ SSL for SaaS v2 removes IP-based routing and its associated problems. Instead, t
 
 ## What action is needed?
 
-To ensure that your service is not disrupted, you need to perform an additional ownership check on every new Custom Hostname. There are three methods to verify ownership: TXT, HTTP, and CNAME. Use TXT and HTTP for pre-validation to validate the Custom Hostname before traffic is proxied by Cloudflare’s edge.
+To ensure that your service is not disrupted, you need to perform an additional ownership check on every new Custom Hostname. There are three methods to verify ownership: TXT, HTTP, and CNAME. Use TXT and HTTP for pre-validation to validate the Custom Hostname before traffic is proxied by Cloudflare's edge.
 
 ### Recommended validation methods
 
@@ -44,7 +44,7 @@ Though you can use [CNAME validation](#cname-validation), we recommend you eithe
 
 #### CNAME Validation
 
-Custom Hostnames can also be validated once Cloudflare detects that the Custom Hostname is a CNAME record pointing to the fallback record configured for the SSL for SaaS domain. Though this is the simplest validation method, it increases the risk of errors. Since a CNAME record would also route traffic to Cloudflare’s edge, traffic may reach our edge before the Custom Hostname has completed validation or the SSL certificate has issued.
+Custom Hostnames can also be validated once Cloudflare detects that the Custom Hostname is a CNAME record pointing to the fallback record configured for the SSL for SaaS domain. Though this is the simplest validation method, it increases the risk of errors. Since a CNAME record would also route traffic to Cloudflare's edge, traffic may reach our edge before the Custom Hostname has completed validation or the SSL certificate has issued.
 
 Once you have tested and added the hostname validation step to your Custom Hostname creation process, please contact your Cloudflare Account Team to schedule a date to migrate your SSL for SaaS v1 zones. Your Cloudflare Account Team will work with you to validate your existing Custom Hostnames without downtime.
 
@@ -54,7 +54,7 @@ Both BYOIP addresses and IP addresses configured for Apex Proxying allow for hos
 
 ## What is available in the new version of SSL for SaaS?
 
-SSL for SaaS v2 is functionally equivalent to SSL for SaaS v1, but removes the requirements to use specific anycast IP addresses at Cloudflare’s edge and Cloudflare’s Universal SSL product with the SSL for SaaS zone.
+SSL for SaaS v2 is functionally equivalent to SSL for SaaS v1, but removes the requirements to use specific anycast IP addresses at Cloudflare's edge and Cloudflare's Universal SSL product with the SSL for SaaS zone.
 
 {{<Aside type="note">}}
 SSL for SaaS v2 is now called Cloudflare for SaaS.

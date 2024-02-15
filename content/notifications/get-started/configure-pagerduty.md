@@ -10,9 +10,9 @@ weight: 2
 This feature is only available if your account has at least one zone on a Business or higher plan. For more information, refer to our [plans](https://www.cloudflare.com/plans/).
 {{</Aside>}}
 
-Cloudflare’s Notification service supports routing notifications to PagerDuty. By sending notifications to PagerDuty you can leverage the same service definitions and escalation paths that you would for other third-party services that you connect to PagerDuty.
+Cloudflare's Notification service supports routing notifications to PagerDuty. By sending notifications to PagerDuty you can leverage the same service definitions and escalation paths that you would for other third-party services that you connect to PagerDuty.
 
-When a configuration that you have previously set up triggers a notification for PagerDuty, Cloudflare will send the notification to PagerDuty on your behalf. All of the PagerDuty services configured for the notification will receive the notification. PagerDuty will follow the service’s configuration to handle the notification appropriately. Actions like de-duping and rate limiting depend on the notification type.
+When a configuration that you have previously set up triggers a notification for PagerDuty, Cloudflare will send the notification to PagerDuty on your behalf. All of the PagerDuty services configured for the notification will receive the notification. PagerDuty will follow the service's configuration to handle the notification appropriately. Actions like de-duping and rate limiting depend on the notification type.
 
 To use PagerDuty as a connected service, you must [sign up for a PagerDuty account](https://www.pagerduty.com/sign-up/).
 

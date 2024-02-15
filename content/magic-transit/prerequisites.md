@@ -10,7 +10,7 @@ Before you can begin using Magic Transit, verify that you meet Cloudflare's onbo
 
 ## Verify router compatibility
 
-Magic Transit relies on {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels to transmit {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} from Cloudflare’s global network to your origin network.
+Magic Transit relies on {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels to transmit {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} from Cloudflare's global network to your origin network.
 
 The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
@@ -44,7 +44,7 @@ You can also use the Resource Public Key Infrastructure (RPKI) as an additional 
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
-{{<render file="prerequisites/_maximum-segment-size.md" withParameters="Magic Transit;;To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.">}}
+{{<render file="prerequisites/_maximum-segment-size.md" withParameters="Magic Transit;;To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel's interface for egress traffic.">}}
 
 {{<render file="prerequisites/_clear-dont-fragment.md">}}
 

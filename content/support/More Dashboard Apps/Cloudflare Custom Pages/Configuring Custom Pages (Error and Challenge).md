@@ -96,7 +96,7 @@ ___
 
 ## Step 3: Style your custom page
 
-Each custom error token has a default look and feel. However, you can use CSS to stylize each custom error tag using each tag's class ID. If you are familiar with CSS styling, you can customize the look and feel of the error page using each tag’s class ID. Please keep in mind that all the external resources like images, CSS, and scripts will be inlined during the process. As such, all external resources need to be available (i.e. return a 200 OK) otherwise an error will be thrown.
+Each custom error token has a default look and feel. However, you can use CSS to stylize each custom error tag using each tag's class ID. If you are familiar with CSS styling, you can customize the look and feel of the error page using each tag's class ID. Please keep in mind that all the external resources like images, CSS, and scripts will be inlined during the process. As such, all external resources need to be available (i.e. return a 200 OK) otherwise an error will be thrown.
 
 ___
 

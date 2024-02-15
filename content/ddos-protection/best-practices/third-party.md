@@ -25,14 +25,14 @@ Note that, if you are using a third-party CDN in front of Cloudflare and Cloudfl
 
 If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named **HTTP requests with unusual HTTP headers or URI path (signature #1)** with rule ID `0b1e17bd25c74e38834f19043486aee1`:
 
-- Change the rule’s action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
+- Change the rule's action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
 - Alternatively, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
 
 For more information, refer to [HTTP DDoS Attack Protection managed ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
 
 ## Using VPNs, NATs, and other third-party services
 
-Some Cloudflare Magic Transit customers operate {{<glossary-tooltip term_id="Virtual Private Network (VPN)">}}Virtual Private Networks (VPN){{</glossary-tooltip>}} so that their remote employees can connect securely to the organization’s services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
+Some Cloudflare Magic Transit customers operate {{<glossary-tooltip term_id="Virtual Private Network (VPN)">}}Virtual Private Networks (VPN){{</glossary-tooltip>}} so that their remote employees can connect securely to the organization's services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
 
 Cloudflare Magic Transit customers may also use third-party services such as Zoom, Webex, Microsoft Teams, and others for their internal organization communication. Because traffic to Cloudflare will be originating from a limited set of IP addresses belonging to these third-party services, it may appear as if the services are launching a DDoS attack against Cloudflare due to the amount of traffic from limited IP addresses.
 
@@ -46,4 +46,4 @@ If your organization uses VPNs, NATs, or third-party services at high rates of o
 
 - Exclude the desired traffic from the Managed DDoS rule using expression filters. You can exclude a combination of source ports, source IP addresses, destination ports, destination IP addresses, and protocol. For more information, refer to [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/configure-api/).
 
-If you are on an Enterprise plan, you can change a rule’s action to _Log_ to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/). After gathering this information, you can later define rule adjustments as previously described.
+If you are on an Enterprise plan, you can change a rule's action to _Log_ to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/). After gathering this information, you can later define rule adjustments as previously described.

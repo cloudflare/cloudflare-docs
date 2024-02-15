@@ -23,7 +23,7 @@ No, Cloudflare Fonts does not collect or log user data during the font delivery 
 
 ### Do I need to host my font files separately when using Cloudflare Fonts?
 
-No, Cloudflare Fonts simplifies the font delivery process. You do not need to host font files separately. The service works by rewriting the webpage’s HTML. It removes Google Fonts links and replaces them with inline CSS.
+No, Cloudflare Fonts simplifies the font delivery process. You do not need to host font files separately. The service works by rewriting the webpage's HTML. It removes Google Fonts links and replaces them with inline CSS.
 
 ### Are there any code changes required to use Cloudflare Fonts?
 

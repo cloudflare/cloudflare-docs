@@ -16,7 +16,7 @@ Cloudflare cannot provide authoritative DNS resolution for a domain — a [full 
 
 If you do not disable **DNSSEC** before changing your nameservers, you might experience the following issues:
 
--   DNS does not resolve after switching to Cloudflare’s nameservers.
+-   DNS does not resolve after switching to Cloudflare's nameservers.
 -   DNS query response status is `SERVFAIL`.
 -   The domain remains in a [Pending status](/dns/zone-setups/reference/domain-status/).
 

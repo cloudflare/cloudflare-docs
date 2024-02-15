@@ -44,7 +44,7 @@ async function handleRequest(request) {
   // You could also process the path to add or remove directories, modify filenames, etc.
   const imageURL = hiddenImageOrigin + requestURL.path
   // This will fetch image from the given URL, but to the website's visitors this
-  // will appear as a response to the original request. Visitor’s browser will
+  // will appear as a response to the original request. Visitor's browser will
   // not see this URL.
   return fetch(imageURL, {cf:{image:resizingOptions}})
 }
@@ -65,7 +65,7 @@ async function handleRequest(request) {
   // If someone tries to manipulate your image URLs to reveal higher-resolution images,
   // you can catch that and refuse to serve the request (or enforce a smaller size, etc.)
   if (resizingOptions.width > 1000) {
-    throw Error("We don’t allow viewing images larger than 1000 pixels wide")
+    throw Error("We don't allow viewing images larger than 1000 pixels wide")
   }
   return fetch(imageURL, {cf:{image:resizingOptions}})
 }

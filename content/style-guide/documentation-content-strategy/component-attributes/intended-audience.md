@@ -24,7 +24,7 @@ Usually 1-3 paragraphs. The first paragraph should describe the type of person t
 
 **Who is this for?**
 
-This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
+This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization's existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
@@ -35,7 +35,7 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 Those who read this reference architecture will learn:
 
-- How Cloudflare One protects an organization’s employees, devices, applications, data, and networks
+- How Cloudflare One protects an organization's employees, devices, applications, data, and networks
 - How Cloudflare One fits into your existing infrastructure, and how to approach migration to a SASE architecture
 - How to plan for deploying Cloudflare One
 

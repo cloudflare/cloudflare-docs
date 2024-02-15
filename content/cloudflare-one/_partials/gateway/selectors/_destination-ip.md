@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-The IP address of the request’s target.
+The IP address of the request's target.
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |

@@ -49,7 +49,7 @@ To check for Connector metrics:
 
 ### Query metrics with GraphQL
 
-Customers can query Cloudflare’s GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
+Customers can query Cloudflare's GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
 
 For example:
 

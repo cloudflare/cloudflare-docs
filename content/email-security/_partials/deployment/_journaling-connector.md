@@ -60,7 +60,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 12. Select **Next**.
 
-13. You need to validate the connector by using your tenant’s specific journaling address. To find this address, go to the [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses) > **Support** > **Service Addresses page**. 
+13. You need to validate the connector by using your tenant's specific journaling address. To find this address, go to the [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses) > **Support** > **Service Addresses page**. 
 
     ![Validate the connector](/images/email-security/deployment/api-setup/journaling/step13-validate-email.png)
 

@@ -307,7 +307,7 @@ $ wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
 
 After starting `wrangler tail` in a directory with a project, you will receive a live feed of console and exception logs for each request your Worker receives.
 
-Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (the directory with your `wrangler.toml` file).
+Like all Wrangler commands, run `wrangler tail` from your Worker's root directory (the directory with your `wrangler.toml` file).
 
 {{<Aside type="warning" header="Legacy issues with existing cloudflared configuration">}}
 
@@ -508,7 +508,7 @@ The `kv` subcommand allows you to store application data in the Cloudflare netwo
 To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with
 the `kv:namespace` subcommand.
 
-The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker's name (from your `wrangler.toml` file) and the binding name you provide:
 
 ```sh
 $ wrangler kv:namespace create "MY_KV"
@@ -765,7 +765,7 @@ $ wrangler kv:key put --binding= [--namespace-id=] $KEY $VALUE
 
 - `--preview` {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Interact with a preview namespace instead of production. Pass this to the `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
+  - Interact with a preview namespace instead of production. Pass this to the `wrangler.toml` file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
 
 - `--ttl` {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -873,7 +873,7 @@ $ wrangler kv:key get --binding= [--env=] [--preview] [--namespace-id=] "$KEY"
   - If defined, the operation will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 {{</definitions>}}
 
@@ -911,7 +911,7 @@ $ wrangler kv:key delete --binding= [--env=] [--preview] [--namespace-id=] "$KEY
   - Perform on a specific environment specified as `$ENVIRONMENT_NAME`.
 
 - `--preview` {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml`’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml`'s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 {{</definitions>}}
 
@@ -954,7 +954,7 @@ $ wrangler kv:bulk put --binding= [--env=] [--preview] [--namespace-id=] $FILENA
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 {{</definitions>}}
 
@@ -988,7 +988,7 @@ The schema below is the full schema for key-value entries uploaded via the bulk 
 
 - `key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
+  - The key's name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -1044,7 +1044,7 @@ $ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FIL
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 {{</definitions>}}
 
@@ -1063,7 +1063,7 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 
 - `key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The key’s name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid.
+  - The key's name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid.
 
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 

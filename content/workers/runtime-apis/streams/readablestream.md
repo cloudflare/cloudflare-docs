@@ -56,4 +56,4 @@ let reader = readable.getReader({ mode: 'byob' });
 
 - [Streams](/workers/runtime-apis/streams/)
 - [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
-- [MDN’s `ReadableStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)
+- [MDN's `ReadableStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)

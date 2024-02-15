@@ -25,7 +25,7 @@ Enabling Sourcing Kit will set it up with the necessary information to start imp
 Your import job is now created. You can review the job status on the Sourcing Kit main page. It will show you information such as how many objects it found, how many images were imported, and any errors that might have occurred.
 
 {{<Aside type="note">}}
-Sourcing Kit will warn you when you are about to reach the limit for your plan space quota. When you exhaust the space available in your plan, the importing jobs will be aborted. If you see this warning on Sourcing Kit’s main page, select **View plan** to change your plan’s limits.
+Sourcing Kit will warn you when you are about to reach the limit for your plan space quota. When you exhaust the space available in your plan, the importing jobs will be aborted. If you see this warning on Sourcing Kit's main page, select **View plan** to change your plan's limits.
 {{</Aside>}}
 
 ## Define a new source

@@ -7,9 +7,9 @@ meta:
 
 # Magic Firewall ruleset logic
 
-Magic Firewall rules are performed after Cloudflare's DDoS mitigations have been applied. The two systems are independent, and therefore, permitting traffic inside Magic Firewall does not allow it within our DDoS mitigations. Traffic can still be blocked by DDoS mitigations that are applied first in the flow through Cloudflare’s systems.
+Magic Firewall rules are performed after Cloudflare's DDoS mitigations have been applied. The two systems are independent, and therefore, permitting traffic inside Magic Firewall does not allow it within our DDoS mitigations. Traffic can still be blocked by DDoS mitigations that are applied first in the flow through Cloudflare's systems.
 
-By default, Magic Firewall permits all traffic until explicitly blocked by a rule. If no rules are configured, all traffic is permitted after Cloudflare’s DDoS mitigations have been applied.
+By default, Magic Firewall permits all traffic until explicitly blocked by a rule. If no rules are configured, all traffic is permitted after Cloudflare's DDoS mitigations have been applied.
 
 ## Security policy
 

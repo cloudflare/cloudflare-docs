@@ -128,7 +128,7 @@ To get started with Durable Objects:
 
 ## D1
 
-[D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+[D1](/d1/) is Cloudflare's native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
 
@@ -161,7 +161,7 @@ To get started with Queues:
 
 ## Hyperdrive
 
-Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users’ location.
+Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location.
 
 Hyperdrive allows you to:
 

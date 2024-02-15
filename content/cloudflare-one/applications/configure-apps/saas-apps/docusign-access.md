@@ -11,7 +11,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 - Access for SaaS requires that you have Single Sign-On available in your DocuSign plan.
 - A domain you own.
-- See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
+- See DocuSign's [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
 - A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
 
 ## 1. Create the Access for SaaS application
@@ -25,7 +25,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Use the following configuration:
 
     - Set the **Application** to _DocuSign_.
-    - Put placeholder values in **EntityID** and **Assertion Consumer Service URL** (e.g. `https://example.com`). We’ll come back and update these.
+    - Put placeholder values in **EntityID** and **Assertion Consumer Service URL** (e.g. `https://example.com`). We'll come back and update these.
     - Set **Name ID Format** to: _Unique ID_.
 
 1.  DocuSign requires SAML attributes to do Just In Time user provisioning. Ensure you are collecting SAML attributes from your IdP:

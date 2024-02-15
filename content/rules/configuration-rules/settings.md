@@ -339,7 +339,7 @@ header: API configuration example
 
 {{</details>}}
 
-[^1]: Automatic HTTPS Rewrites prevents end users from seeing “mixed content” errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
+[^1]: Automatic HTTPS Rewrites prevents end users from seeing "mixed content" errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
 
 [^2]: Auto Minify can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 

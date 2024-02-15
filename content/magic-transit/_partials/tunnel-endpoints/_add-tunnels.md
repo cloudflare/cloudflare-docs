@@ -20,8 +20,8 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 
 5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
-7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-8. In **Customer GRE endpoint**, enter your router’s public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
+7. In **Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
+8. In **Customer GRE endpoint**, enter your router's public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
 9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team.
 10. Leave the default values for **TTL** and **MTU**.
 11. Choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
@@ -38,8 +38,8 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 
 5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
-7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-8. In **Customer endpoint**, enter your router’s public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
+7. In **Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
+8. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team.
 10. Choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
@@ -181,7 +181,7 @@ You will receive a response like the following:
 }
 ```
 
-3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
+3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare's side, as this value is automatically set.
 
 {{</details>}}
 

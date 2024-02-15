@@ -8,7 +8,7 @@ layout: overview
 # Cloudflare DNS
 
 {{<description>}}
-Leverage Cloudflare’s global network to deliver excellent performance and reliability to your domain.
+Leverage Cloudflare's global network to deliver excellent performance and reliability to your domain.
 {{</description>}}
 
 {{<plan type="all">}}

@@ -31,8 +31,8 @@ For more exact matches, use the named fields in **Fielded Search** to denote whi
 2. Select the **Search** bar.
 3. Fill out one or more of the following fields. Filling multiple fields is the equivalent of adding the `AND` operator between the following terms:
 	- **Terms**: Searches for terms in any of the available fields. If you want to search for a message that matches multiple recipients, use this field. Only one value can be specified in the **From** and **To** fields.
-	- **From (Exact)**: Searches for the sender’s exact email address.
-	- **To (Exact)**: Searches for the recipient’s exact email address.
+	- **From (Exact)**: Searches for the sender's exact email address.
+	- **To (Exact)**: Searches for the recipient's exact email address.
 	- **Subject**: Searches for the terms in the subject field.
 	- **Domain**: Searches for messages from a specific domain.
 	- **Message ID**: Searches for messages with the stated message ID.

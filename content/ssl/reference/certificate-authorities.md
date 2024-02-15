@@ -51,7 +51,7 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate. You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
+The main determining factor for whether a platform can validate Let's Encrypt certificates is whether that platform trusts ISRG's "ISRG Root X1" certificate. You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let's Encrypt certificates.
 
 #### Other resources
 
@@ -77,7 +77,7 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser. All browsers or operating systems that depend on these root programs are covered.
+Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo's 360 browser. All browsers or operating systems that depend on these root programs are covered.
 In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq-27) may rely on a cross-signature to ensure optimal support across a wide range of devices.
 
 You can use the root CAs list for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.

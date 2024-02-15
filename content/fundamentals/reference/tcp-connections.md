@@ -18,7 +18,7 @@ A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[
 ```
 <br/>
 
-User traffic is routed to the nearest Cloudflare data center based on the shortest [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) path, thanks to [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routing. Cloudflare then processes the request. In case a request is not served from Cloudflare’s data centers, Cloudflare will open a connection to the origin server to forward the request.
+User traffic is routed to the nearest Cloudflare data center based on the shortest [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) path, thanks to [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routing. Cloudflare then processes the request. In case a request is not served from Cloudflare's data centers, Cloudflare will open a connection to the origin server to forward the request.
 
 ## TCP connections and keepalives
 

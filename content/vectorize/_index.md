@@ -49,7 +49,7 @@ Learn how to use Vectorize to generate vector embeddings using Workers AI.
 
 {{<related header="Workers AI" href="/workers-ai/" product="workers-ai">}}
 
-Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
 
 {{</related>}}
 

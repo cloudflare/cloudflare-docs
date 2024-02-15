@@ -45,7 +45,7 @@ Specify a value from the SAML Attribute Assertion.
 
 ### User Email
 
-Use this selector to create identity-based Gateway rules based on a user’s email.
+Use this selector to create identity-based Gateway rules based on a user's email.
 
 | UI name    | API example value                           |
 | ---------- | ------------------------------------------- |

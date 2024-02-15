@@ -31,7 +31,7 @@ Obtain the following URLs from your SaaS application account:
 
 6. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
 
-7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
+7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP's attributes you would like to include in the SAML statement sent to the SaaS application.
 
 {{<Aside type="note" header="IdP groups">}}
 If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.

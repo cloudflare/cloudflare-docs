@@ -6,7 +6,7 @@ weight: 7
 
 # KV namespaces
 
-A KV namespace is a key-value database replicated to Cloudflare’s global network.
+A KV namespace is a key-value database replicated to Cloudflare's global network.
 
 Bind your KV namespaces through Wrangler or via the Cloudflare dashboard.
 

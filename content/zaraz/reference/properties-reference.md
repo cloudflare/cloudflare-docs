@@ -59,18 +59,18 @@ _Cookie name:_ | Returns cookies obtained from the browser `document`.
 Property                   | Description
 -------------------------- | -----------
 _Browser engine_           | Returns the type of browser engine (for example, `WebKit`).
-_Browser engine version_   | Returns the version of the browser’s engine.
-_Browser name_             | Returns the browser’s name.
-_Browser version_          | Returns the browser’s version.
-_Device CPU_               | Returns the device’s CPU.
+_Browser engine version_   | Returns the version of the browser's engine.
+_Browser name_             | Returns the browser's name.
+_Browser version_          | Returns the browser's version.
+_Device CPU_               | Returns the device's CPU.
 _Device IP address_        | Returns the incoming IP address.
 _Device language_          | Returns the language used.
 _Device screen resolution_ | Returns the screen resolution of the device.
 _Device type_              | Returns the type of device used (for example, `iPhone`).
-_Device viewport_          | Returns the visible web page area in user’s device.
+_Device viewport_          | Returns the visible web page area in user's device.
 _Operating system name_    | Returns the operating system.
 _Operating system version_ | Returns the version of the operating system.
-_User-agent string_	       | Returns the browser’s user agent.
+_User-agent string_	       | Returns the browser's user agent.
 
 {{</table-wrap>}}
 

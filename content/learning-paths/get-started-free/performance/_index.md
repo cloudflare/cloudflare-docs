@@ -7,7 +7,7 @@ layout: learning-module
 
 # Performance
 
-Learn how to improve your application’s performance using Cloudflare’s free plan.
+Learn how to improve your application's performance using Cloudflare's free plan.
 
 ## Objectives
 

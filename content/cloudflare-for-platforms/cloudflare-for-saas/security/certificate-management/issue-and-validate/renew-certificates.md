@@ -16,7 +16,7 @@ Certificates are available for renewal 30 days before their expiration.
 
 ## Non-wildcard hostnames
 
-If you are using a non-wildcard hostname and proxying traffic through Cloudflare, Cloudflare will try to perform DCV automatically on the hostname’s behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
+If you are using a non-wildcard hostname and proxying traffic through Cloudflare, Cloudflare will try to perform DCV automatically on the hostname's behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
 
 If the custom hostname is not proxying traffic through Cloudflare, then the custom hostname domain owner will need to add the TXT or HTTP DCV token for the new certificate to validate and issue. As the SaaS provider, you will be responsible for sharing this token with the custom hostname domain owner.
 

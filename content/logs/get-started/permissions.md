@@ -32,7 +32,7 @@ To check the list of members in your account, or to manage roles and permissions
 
 1.  Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2.  From your Account Home, go to **Manage Account** > **Members**.
-3.  Enter a member’s email address to add them to your account, and select **Invite**.
+3.  Enter a member's email address to add them to your account, and select **Invite**.
 4.  Alternatively, scroll down to the **Members** card to find a list of members with their status and role.
 
 For more information, refer to [Managing roles within your Cloudflare account](/fundamentals/setup/manage-members/).

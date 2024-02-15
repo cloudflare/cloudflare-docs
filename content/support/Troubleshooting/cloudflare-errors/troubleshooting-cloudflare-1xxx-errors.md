@@ -95,9 +95,9 @@ Update your Cloudflare _A_ or _CNAME record_ to point to your origin IP addr
 5.  Click **Value** for the _A_ record to update.
 6.  Update the _A_ record.
 
-To ensure your origin web server doesn’t proxy its own requests through Cloudflare, configure your origin webserver to resolve your Cloudflare domain to:
+To ensure your origin web server doesn't proxy its own requests through Cloudflare, configure your origin webserver to resolve your Cloudflare domain to:
 
--   The internal NAT’d IP address, or
+-   The internal NAT'd IP address, or
 -   The public IP address of the origin web server.
 
 ___
@@ -135,7 +135,7 @@ ___
 ### Common causes
 
 -   Cloudflare staff disabled proxying for the domain due to abuse or terms of service violations.
--   DNS changes have not yet propagated or the site owner’s DNS _A records_ point to [Cloudflare IP addresses](https://www.cloudflare.com/ips).
+-   DNS changes have not yet propagated or the site owner's DNS _A records_ point to [Cloudflare IP addresses](https://www.cloudflare.com/ips).
 
 ### Resolution
 
@@ -156,7 +156,7 @@ If you are not the website owner, provide the website owner with a screenshot of
 If you are the website owner:
 
 1.  Retrieve a screenshot of the 1005 error from your customer
-2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID**, or client IP Address from the visitor’s 1005 error message.
+2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID**, or client IP Address from the visitor's 1005 error message.
 
 {{<Aside type="note">}}
 Convert the UTC timestamp of the 1005 error to your local timezone when
@@ -179,7 +179,7 @@ Error 1006 also occurs in the Cloudflare **Workers** app under the **Preview** t
 
 ### Resolution
 
-Request the website owner to investigate their Cloudflare security settings or allow your client IP address. Since the website owner blocked your request, Cloudflare support cannot override a customer’s security settings.
+Request the website owner to investigate their Cloudflare security settings or allow your client IP address. Since the website owner blocked your request, Cloudflare support cannot override a customer's security settings.
 
 ___
 
@@ -233,7 +233,7 @@ ___
 
 ### Common cause
 
-A website owner forbids access based on malicious activity detected from the visitor’s computer or network (ip\_address). The most likely cause is a virus or malware infection on the visitor’s computer.
+A website owner forbids access based on malicious activity detected from the visitor's computer or network (ip\_address). The most likely cause is a virus or malware infection on the visitor's computer.
 
 ### Resolution
 
@@ -321,7 +321,7 @@ ___
 
 ### Common cause
 
-Cloudflare cannot resolve the origin web server’s IP address.
+Cloudflare cannot resolve the origin web server's IP address.
 
 Common causes for Error 1016 are:
 
@@ -344,7 +344,7 @@ ___
 
 ### Common causes
 
--   The Cloudflare domain was recently activated and there is a delay propagating the domain’s settings to the Cloudflare edge network.
+-   The Cloudflare domain was recently activated and there is a delay propagating the domain's settings to the Cloudflare edge network.
 -   The Cloudflare domain was created via a Cloudflare partner (e.g., a hosting provider) and the provider's DNS failed.
 
 {{<Aside type="note">}}
@@ -377,7 +377,7 @@ ___
 
 ### Common cause
 
-A client or browser is blocked by a Cloudflare customer’s Firewall Rules (deprecated).
+A client or browser is blocked by a Cloudflare customer's Firewall Rules (deprecated).
 
 ### Resolution
 
@@ -386,14 +386,14 @@ If you are not the website owner, provide the website owner with a screenshot of
 If you are the website owner:
 
 1.  Retrieve a screenshot of the 1020 error from your customer
-2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
+2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor's 1020 error message.
 
 {{<Aside type="note">}}
 Convert the UTC timestamp of the 1020 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
-3\. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor’s IP address in [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967).
+3\. Assess the cause of the block and either update the **Firewall Rule** or allow the visitor's IP address in [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967).
 
 ___
 
@@ -451,7 +451,7 @@ Customers who previously pointed their domains to `1.1.1.1` will now encounter 
 
 ### Resolution
 
-Ensure DNS records are pointed to IP addresses you control, and in the case a placeholder IP address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0`.
+Ensure DNS records are pointed to IP addresses you control, and in the case a placeholder IP address is needed for "originless" setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0`.
 
 ___
 

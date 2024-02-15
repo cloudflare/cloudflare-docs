@@ -14,11 +14,11 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 {{<faq-answer>}}
 
-1.1.1.1 is Cloudflare's fast and secure DNS resolver. When you request to visit an application like `cloudflare.com`, your computer needs to know which server to connect you to so that it can load the application. Computers don’t know how to do this name to address translation, so they ask a specialized server to do it for them.
+1.1.1.1 is Cloudflare's fast and secure DNS resolver. When you request to visit an application like `cloudflare.com`, your computer needs to know which server to connect you to so that it can load the application. Computers don't know how to do this name to address translation, so they ask a specialized server to do it for them.
 
-This specialized server is called a DNS recursive resolver. The resolver’s job is to find the address for a given name, like `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`, and return it to the computer that asked for it.
+This specialized server is called a DNS recursive resolver. The resolver's job is to find the address for a given name, like `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`, and return it to the computer that asked for it.
 
-Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you’re on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
+Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you're on your home or wireless Internet, and by your network administrator if you're connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -44,7 +44,7 @@ Every resolver knows how to find the invisible `.` at the end of domain names (f
 
 The resolver asks one of the root servers where to find the next link in the chain — the top-level domain (abbreviated to TLD) or domain ending. An example of a TLD is `.com` or `.org`. Luckily, the root servers store the locations of all the TLD servers, so they can return which IP address the DNS resolver should go ask next.
 
-The resolver then asks the TLD’s servers where it can find the domain it is looking for. For example, a resolver might ask `.com` where to find `cloudflare.com`. TLDs host a file containing the location of every domain using the TLD.
+The resolver then asks the TLD's servers where it can find the domain it is looking for. For example, a resolver might ask `.com` where to find `cloudflare.com`. TLDs host a file containing the location of every domain using the TLD.
 
 Once the resolver has the final IP address, it returns the answer to the computer that asked.
 
@@ -108,7 +108,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 {{<faq-answer>}}
 
-Cloudflare minimizes privacy leakage by only sending minimal query name to authoritative DNS servers. For example, if a client is looking for foo.bar.example.com, the only part of the query 1.1.1.1 discloses to .com is that we want to know who’s responsible for example.com and the zone internals stay hidden.
+Cloudflare minimizes privacy leakage by only sending minimal query name to authoritative DNS servers. For example, if a client is looking for foo.bar.example.com, the only part of the query 1.1.1.1 discloses to .com is that we want to know who's responsible for example.com and the zone internals stay hidden.
 
 {{</faq-answer>}}
 {{</faq-item>}}

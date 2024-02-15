@@ -34,5 +34,5 @@ Buy and renew domains through Cloudflare Registrar at cost, without markup fees.
 ## Related products
  
 {{<related header="DNS" href="/dns/" product="dns">}}
-When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global Anycast network. This network delivers performance and global availability.
+When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare's global Anycast network. This network delivers performance and global availability.
 {{</related>}}

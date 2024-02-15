@@ -20,7 +20,7 @@ Provides analytics about anything using Cloudflare Workers.
 {{</feature>}}
 
 {{<feature header="Cloudflare Web Analytics" href="/analytics/web-analytics/">}}
-Provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
+Provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare's proxy.
 {{</feature>}}
 
 {{<feature header="Account and zone analytics" href="/analytics/account-and-zone-analytics/">}}

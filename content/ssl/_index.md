@@ -43,9 +43,9 @@ Refer to [features and availability](/ssl/reference/all-features/) for a complet
 ## Related products
 
 {{<related header="Cloudflare DNS" href="/dns/" product="dns">}}
-When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global Anycast network. This network delivers performance and global availability.
+When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare's global Anycast network. This network delivers performance and global availability.
 {{</related>}}
 
 {{<related header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/" product="cloudflare-for-platforms">}} 
-Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare’s network to your customers via their own custom or vanity domains.
+Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare's network to your customers via their own custom or vanity domains.
 {{</related>}}

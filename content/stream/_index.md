@@ -19,7 +19,7 @@ Cloudflare Stream lets you or your end users upload, store, encode, and deliver 
 
 You can use Stream to build your own video features in websites and native apps, from simple playback to an entire video platform.
 
-Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.cloudflare.com/network/) in hundreds of cities worldwide.
+Cloudflare Stream runs on [Cloudflare's global cloud network](https://www.cloudflare.com/network/) in hundreds of cities worldwide.
 
 {{<button-group>}}
 {{<button type="primary" href="/stream/get-started/">}}Get started{{</button>}}

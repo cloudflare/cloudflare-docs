@@ -6,7 +6,7 @@ weight: 2
 
 # Custom limits
 
-Custom limits allow you to programmatically set limits on your customer’s Worker to set caps on usage. We support custom limits for CPU time and a number of subrequests. 
+Custom limits allow you to programmatically set limits on your customer's Worker to set caps on usage. We support custom limits for CPU time and a number of subrequests. 
 
 ## Set Custom limits
 

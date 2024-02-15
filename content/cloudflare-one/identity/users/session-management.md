@@ -19,7 +19,7 @@ When a user logs in to an application protected by Access, Access validates thei
 | Application token   | Allows the user to access a specific Access application.  | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application     |
 {{</table-wrap>}}
 
-The user can access the application for the entire duration of the application token’s lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
+The user can access the application for the entire duration of the application token's lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
 
 The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
@@ -72,7 +72,7 @@ Unless there are changes to rules in the policy, users can start a new session i
 
 ### Per-User
 
-Access can immediately revoke a single user session across all applications in your account. However, if the user’s identity profile is still active, they can generate a new session.
+Access can immediately revoke a single user session across all applications in your account. However, if the user's identity profile is still active, they can generate a new session.
 
 If you want to permanently revoke a user's access:
 

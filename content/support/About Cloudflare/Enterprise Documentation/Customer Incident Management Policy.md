@@ -25,8 +25,8 @@ ___
 
 This SOP applies to Cloudflare customers and customer services as consumed by customers. The SOP is applicable to all customer production environments at Cloudflare including:
 
--   Cloudflare’s public website ([www.cloudflare.com](http://www.cloudflare.com/))
--   Cloudflare’s APIs (Application Programming Interfaces)
+-   Cloudflare's public website ([www.cloudflare.com](http://www.cloudflare.com/))
+-   Cloudflare's APIs (Application Programming Interfaces)
 -   Outbound third-party interfaces (e.g. credit card authorizations, etc.)
 -   Network infrastructure owned or managed by Cloudflare for production services
 -   Vendor software, hardware and services that affect any part of Cloudflare production
@@ -35,7 +35,7 @@ ___
 
 ## Background
 
-Cloudflare wants to build a better Internet. In order to deliver an improved experience to millions of Internet users, Cloudflare’s internal operations must follow excellent service delivery processes and procedures.  Cloudflare’s procedures therefore follow many industry-standard best practices, some of which specifically follow patterns of the Information Library Infrastructure Technology (ITIL).  This SOP follows the best practices of the ITIL Problem Management methodology.
+Cloudflare wants to build a better Internet. In order to deliver an improved experience to millions of Internet users, Cloudflare's internal operations must follow excellent service delivery processes and procedures.  Cloudflare's procedures therefore follow many industry-standard best practices, some of which specifically follow patterns of the Information Library Infrastructure Technology (ITIL).  This SOP follows the best practices of the ITIL Problem Management methodology.
 
 ___
 
@@ -47,23 +47,23 @@ Key terminology:
 
 **Event**
 
-Any identifiable and discrete thing which can be logged by one of Cloudflare’s production applications or systems
+Any identifiable and discrete thing which can be logged by one of Cloudflare's production applications or systems
 
 **Alert**
 
-An event of potential interest which is identified and communicated via one of Cloudflare’s monitoring systems
+An event of potential interest which is identified and communicated via one of Cloudflare's monitoring systems
 
 **Incident**
 
-A report or alert which has a high probability of affecting Cloudflare’s production systems, or an alert condition which only exists for a short period of time because the affected service is restored to health before a Problem condition is identified
+A report or alert which has a high probability of affecting Cloudflare's production systems, or an alert condition which only exists for a short period of time because the affected service is restored to health before a Problem condition is identified
 
 **Problem**
 
-An identified and categorized incident which has a negative impact on the optimal health and/or performance of Cloudflare’s production systems or applications
+An identified and categorized incident which has a negative impact on the optimal health and/or performance of Cloudflare's production systems or applications
 
 **Incident Report**
 
-A public report which describes the nature of a service Problem, Cloudflare’s overall response to the Problem, and efforts to reduce or eliminate future impact
+A public report which describes the nature of a service Problem, Cloudflare's overall response to the Problem, and efforts to reduce or eliminate future impact
 
 **Post Mortem Review**
 
@@ -83,7 +83,7 @@ Cloudflare ticketing system used for the tracking of incidents, work orders and 
 
 **Severity / Priority Level**
 
-Value of “P0, P1, P2 or P3” based on the severity of Problem impacting the Cloudflare network and customers
+Value of "P0, P1, P2 or P3" based on the severity of Problem impacting the Cloudflare network and customers
 
 **SLA**
 
@@ -99,7 +99,7 @@ Cloudflare resource responsible for ensuring the Problem is being addressed prop
 
 **The Internet Community**
 
-Cloudflare’s primary stakeholder group.  Cloudflare secures and optimizes over 4,600,000 websites, and the average Internet user interacts with Cloudflare websites over 500 times per week.
+Cloudflare's primary stakeholder group.  Cloudflare secures and optimizes over 4,600,000 websites, and the average Internet user interacts with Cloudflare websites over 500 times per week.
 
 **Third Party**
 
@@ -121,7 +121,7 @@ All necessary steps to resolve the root cause of a problem and ensure that it wi
 
 The primary tool which Cloudflare uses to publicly share information about its service delivery and any Incidents or Problems impacting Cloudflare services: [https://www.cloudflarestatus.com](https://www.cloudflarestatus.com/)
 
-The Status Page is hosted by a Third Party ([Statuspage.io](http://statuspage.io/)) which is not dependent on Cloudflare’s services for operation.
+The Status Page is hosted by a Third Party ([Statuspage.io](http://statuspage.io/)) which is not dependent on Cloudflare's services for operation.
 
 ___
 
@@ -169,7 +169,7 @@ ___
 
 The primary goal of Incident Management is to identify and react to potential problems as quickly as possible, and thereby minimize impact to production services and provide the best possible levels of service quality and availability.  The best possible levels of service quality and availability would be that all services operated exactly as designed 100% of the time, and were available and accessible 100% of the time.
 
-Because we accept that a combination of forces within our control, and forces beyond our control, will eventually impact service health, we define Service Level Objectives (SLOs), and Service Level Agreements (SLAs), to describe what degradations in service health are acceptable for various services within Cloudflare’s network.   SLAs and SLOs are expressed as percentages of periods of time (monthly and annually.)
+Because we accept that a combination of forces within our control, and forces beyond our control, will eventually impact service health, we define Service Level Objectives (SLOs), and Service Level Agreements (SLAs), to describe what degradations in service health are acceptable for various services within Cloudflare's network.   SLAs and SLOs are expressed as percentages of periods of time (monthly and annually.)
 
 The level of information given about an incident may vary, but the following information must be collected before an incident is classified and prioritized:
 
@@ -222,7 +222,7 @@ All tickets will be categorized according to the following 4 levels of priority.
 
 ### Category
 
-For proper tracking and communications, high priority (P0 and P1) problems will be assigned to categories. These categories (ticket labels) correspond to the publicly communicated categories which are listed on Cloudflare’s public Status Page.   
+For proper tracking and communications, high priority (P0 and P1) problems will be assigned to categories. These categories (ticket labels) correspond to the publicly communicated categories which are listed on Cloudflare's public Status Page.   
 
 Lower priority (P2 and P3) tickets may be categorized using labels and nomenclature which are specific to various Engineering and Non-engineering teams within Cloudflare.  These various labels and categories are not listed on this document.  
 
@@ -240,7 +240,7 @@ For all P0 and P1 issues, the on-duty Incident Manager should be contacted immed
 
 -   Validation of the severity of an issue
 -   Tracking of the issue from submission to resolution
--   Representation of clients’ best interest
+-   Representation of clients' best interest
 -   Logging of all actions and times
 -   Direction of personnel toward the fastest possible resolution
 -   Ensuring that clients and internal management are notified of status according to pre-determined time periods (or upon change in status)
@@ -287,7 +287,7 @@ The above points are still applicable even if it is a third party provider or ve
 
 #### **IR Report**
 
-The Incident Report (“IR”) is the primary method of communication to the client on an issue and may contain some or all parts of what is written within the ticket.  
+The Incident Report ("IR") is the primary method of communication to the client on an issue and may contain some or all parts of what is written within the ticket.  
 
 The person writing the report will vary depending on the severity of the issue and the responsible area.  Upon completion of the draft report, it is critical to ensure that the report is reviewed by Cloudflare management for content, commitments and professional presentation.  Once the report is approved it may be published to the client.
 

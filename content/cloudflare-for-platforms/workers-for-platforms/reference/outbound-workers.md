@@ -5,7 +5,7 @@ title: Outbound Workers
 
 # Outbound Workers
 
-Outbound Workers sit between your customer’s Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from user Workers.
+Outbound Workers sit between your customer's Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from user Workers.
 
 ![Outbound Workers diagram information](/images/cloudflare-for-platforms/outbound-worker-diagram.png)
 

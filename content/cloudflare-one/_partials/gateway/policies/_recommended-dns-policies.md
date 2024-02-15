@@ -15,7 +15,7 @@ This policy allows users to access official corporate domains. By deploying the 
 
 ## Block security threats
 
-Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare’s threat intelligence.
+Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 {{<render file="gateway/policies/_block-security-categories.md">}}
 
 ## Block content categories

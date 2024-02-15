@@ -44,7 +44,7 @@ export default {
      */
     const response = await fetch(request);
 
-    // Return origin response, if response wasn’t text
+    // Return origin response, if response wasn't text
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.toLowerCase().includes("text/")) {
       return response;
@@ -118,7 +118,7 @@ export default {
      */
     const response = await fetch(request);
 
-    // Return origin response, if response wasn’t text
+    // Return origin response, if response wasn't text
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.toLowerCase().includes("text/")) {
       return response;

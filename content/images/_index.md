@@ -15,7 +15,7 @@ Store, transform, optimize, and deliver images at scale
 
 Cloudflare Images provides an end-to-end solution to build and maintain your image infrastructure from one API.
 
-Images runs on Cloudflare’s global cloud network in over 270 cities around the world.
+Images runs on Cloudflare's global cloud network in over 270 cities around the world.
 
 {{<Aside type="note" header="Image Resizing is now available as transformations">}}
 All Image Resizing features are now available as part of the Cloudflare Images product. You can optimize and transform any publicly available image on the Internet. With our new pricing model, you will be billed only once per 30 days for each unique transformation. Read our [Birthday Week announcement](https://blog.cloudflare.com/merging-images-and-image-resizing/) to learn more about why we made these changes.
@@ -29,7 +29,7 @@ If you are using a legacy plan with Image Resizing, visit the [Dashboard](https:
 ## Features
 
 {{<feature header="Storage" href="/images/upload-images/">}}
-Use Cloudflare’s edge network to store your images.
+Use Cloudflare's edge network to store your images.
 
 {{</feature>}}
 

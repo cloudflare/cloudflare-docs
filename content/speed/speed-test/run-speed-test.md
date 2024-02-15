@@ -31,7 +31,7 @@ Observatory shows you a **Recommendations** tab, depending on the results from t
 
 ### Trend and History report
 
-In the Tested URLs table, in the last column, you can select the three dots > **View history report**, and you will have access to the **Trend** table that will show your website’s performance metrics over time and a **History report** of all the tests you run on your website.
+In the Tested URLs table, in the last column, you can select the three dots > **View history report**, and you will have access to the **Trend** table that will show your website's performance metrics over time and a **History report** of all the tests you run on your website.
 
 ## Enable real user monitoring (RUM)
 

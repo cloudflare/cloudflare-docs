@@ -29,7 +29,7 @@ Use Observatory to conduct tests with both synthetic and real user data to ident
 
 {{<feature header="Optimization" href="/speed/optimization/">}}
 
-Get recommendations of Cloudflare products and settings to improve your website’s performance.
+Get recommendations of Cloudflare products and settings to improve your website's performance.
 
 {{</feature>}}
 
@@ -52,11 +52,11 @@ Understand the performance of your webpages as experienced by your site visitors
 {{</related>}}
 
 {{<related header="Cloudflare Image Resizing" href="/images/transform-images/" product="images">}}
-Transform images on Cloudflare’s edge platform: resize, adjust quality, and convert images to WebP or AVIF format on demand.
+Transform images on Cloudflare's edge platform: resize, adjust quality, and convert images to WebP or AVIF format on demand.
 {{</related>}}
 
 {{<related header="Early Hints" href="/cache/advanced-configuration/early-hints/" product="cache">}}
-Take advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response.
+Take advantage of "server think time" to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response.
 {{</related>}}
 
 ---

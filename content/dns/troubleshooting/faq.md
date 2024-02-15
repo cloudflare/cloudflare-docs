@@ -110,7 +110,7 @@ ___
 
 ## What happens when I remove the `DS` record?
 
-When you remove your DS record, an invalidation process begins which results in the unsigning of your domain’s DNS records. This will allow your authoritative nameservers to be changed. If you are an existing customer, this will not affect your ability to use Cloudflare. New customers will need to complete this step before Cloudflare can be used successfully.
+When you remove your DS record, an invalidation process begins which results in the unsigning of your domain's DNS records. This will allow your authoritative nameservers to be changed. If you are an existing customer, this will not affect your ability to use Cloudflare. New customers will need to complete this step before Cloudflare can be used successfully.
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
+In the case a placeholder address is needed for "originless" setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 ## Why have I received an email: Your Name Servers have Changed?
 
-For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare’s nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from _Active_ to _Moved_ in the Cloudflare **Overview** app and an email is sent to the customer.
+For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare's nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from _Active_ to _Moved_ in the Cloudflare **Overview** app and an email is sent to the customer.
 
 This is important because - if a domain is in a *Moved* state for a [long enough period of time](/dns/zone-setups/reference/domain-status/) - it will be deleted from Cloudflare.
 

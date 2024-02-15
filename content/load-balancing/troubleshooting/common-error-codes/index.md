@@ -110,7 +110,7 @@ Use the List Monitors command to confirm that the `header` value set in the Clou
 
 ### Cause
 
-This error can occur if you’re using an older version of TLS or your origin server is not configured for HTTPS.
+This error can occur if you're using an older version of TLS or your origin server is not configured for HTTPS.
 
 ### Solution
 

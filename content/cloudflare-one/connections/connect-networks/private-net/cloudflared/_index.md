@@ -8,7 +8,7 @@ weight: 1
 
 A private network has two primary components: the server and the client. The server's infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare's global network by Cloudflare Tunnel. This is done by running the `cloudflared` daemon on the server.
 
-On the client side, end users connect to Cloudflare's global network using the Cloudflare WARP client. The WARP client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling.  When users connect to an IP made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare’s network to the corresponding tunnel.
+On the client side, end users connect to Cloudflare's global network using the Cloudflare WARP client. The WARP client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling.  When users connect to an IP made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare's network to the corresponding tunnel.
 
 ![Diagram displaying connections between a device, WireGuard tunnel, Cloudflare Tunnel and a public cloud.](/images/cloudflare-one/connections/private-ips-diagram.png)
 

@@ -17,7 +17,7 @@ Detect and receive notifications about attacks based on traffic flows.
 
 {{<plan type="all">}}
 
-Magic Network Monitoring provides visibility into your network traffic by analyzing network {{<glossary-tooltip term_id="flow data">}}flow data{{</glossary-tooltip>}} sent from a customer’s routers. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Magic Network Monitoring provides visibility into your network traffic by analyzing network {{<glossary-tooltip term_id="flow data">}}flow data{{</glossary-tooltip>}} sent from a customer's routers. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
 Enterprise customers can use Magic Network Monitoring with [Magic Transit on-demand](/magic-transit/on-demand/) to monitor their network, identify volumetric DDoS attacks, and activate Magic Transit on-demand to mitigate those attacks.
 

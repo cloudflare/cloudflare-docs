@@ -18,7 +18,7 @@ The threat score of a request has a value from 0 to 100, where 0 indicates low r
 
 ## Security levels
 
-Security levels are based on the threat score (except _Off_ and _I’m Under Attack!_). You can adjust the security level to challenge incoming requests based on the threat they pose.
+Security levels are based on the threat score (except _Off_ and _I'm Under Attack!_). You can adjust the security level to challenge incoming requests based on the threat they pose.
 
 The available security levels are the following:
 
@@ -31,7 +31,7 @@ The available security levels are the following:
 | Low                             | 25–100             | Challenges only threatening visitors.                                              |
 | Medium                          | 15–100             | Challenges both threatening and moderately threatening visitors.                   |
 | High                            |  0–100             | Challenges all visitors that exhibited threatening behavior within the last 14 days. |
-| I’m Under Attack!               | _N/A_              | Only for use if your website is currently under a DDoS attack.                     |
+| I'm Under Attack!               | _N/A_              | Only for use if your website is currently under a DDoS attack.                     |
 
 {{</table-wrap>}}
 

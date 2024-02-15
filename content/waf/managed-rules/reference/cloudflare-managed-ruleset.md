@@ -10,7 +10,7 @@ Created by the Cloudflare security team, this ruleset provides fast and effectiv
 
 Cloudflare recommends that you enable the rules whose tags correspond to your technology stack. For example, if you use WordPress, enable the rules tagged with `wordpress`.
 
-Cloudflare’s [WAF changelog](/waf/change-log/) allows you to monitor ongoing changes to the WAF's managed rulesets.
+Cloudflare's [WAF changelog](/waf/change-log/) allows you to monitor ongoing changes to the WAF's managed rulesets.
 
 {{<Aside type="note">}}
 

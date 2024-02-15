@@ -77,7 +77,7 @@ $ curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
 
 1. From the Cloudflare dashboard, select **R2**.
 2. Locate and select your bucket from the list.
-3. From your bucket’s page, select **Settings**.
+3. From your bucket's page, select **Settings**.
 4. Under **CORS Policy**, select **Add CORS policy**.
 5. From the **JSON** tab, manually enter or copy and paste your policy into the text box.
 6. When you are done, select **Save**.

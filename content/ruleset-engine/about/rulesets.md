@@ -39,7 +39,7 @@ Managed rulesets are preconfigured rulesets provided by Cloudflare that you can 
 
 The rules in a managed ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
-There are several Cloudflare products that provide you with managed rulesets. Check each product’s documentation for details on the available managed rulesets.
+There are several Cloudflare products that provide you with managed rulesets. Check each product's documentation for details on the available managed rulesets.
 
 For more information on deploying managed rulesets and defining overrides, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/).
 

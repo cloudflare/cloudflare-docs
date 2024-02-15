@@ -66,7 +66,7 @@ Refer to the [setup options](/email-security/deployment/) for Area 1 to learn ab
 - Inline deployment
 - API deployment
 
-With an [inline deployment](/email-security/deployment/inline/), Area 1 evaluates email messages before they reach a user’s inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Area 1 after they have already reached a user’s inbox.
+With an [inline deployment](/email-security/deployment/inline/), Area 1 evaluates email messages before they reach a user's inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Area 1 after they have already reached a user's inbox.
 
 ## Classification actions
 

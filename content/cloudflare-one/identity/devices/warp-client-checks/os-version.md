@@ -6,7 +6,7 @@ weight: 8
 
 # OS version
 
-The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than the configured value.
+The OS Version device posture attribute checks whether the version of a device's operating system matches, is greater than or lesser than the configured value.
 
 ## Prerequisites
 

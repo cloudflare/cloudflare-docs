@@ -5,7 +5,7 @@ title: Nouns and pronouns
 
 # Nouns and pronouns
 
-Refer to the customer in the second person. Where this is not possible, use gender neutral pronouns. Do not use “one” as a pronoun.
+Refer to the customer in the second person. Where this is not possible, use gender neutral pronouns. Do not use "one" as a pronoun.
 
 Make sure it is clear who or what pronouns are in reference to. Pronouns act as signposts to the subject of the sentence and should not be used so much that the subject is no longer clear.
 

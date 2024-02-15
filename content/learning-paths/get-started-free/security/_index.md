@@ -7,7 +7,7 @@ layout: learning-module
 
 # Security
 
-Learn how to improve your application’s security using Cloudflare’s free plan.
+Learn how to improve your application's security using Cloudflare's free plan.
 
 ## Objectives
 

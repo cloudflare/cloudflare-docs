@@ -13,7 +13,7 @@ To customize weights when you [create or edit a pool](/load-balancing/pools/crea
 
 {{<details header="Origin weight example">}}
 
-Here’s an example applying weights to three origin servers with a **Random** origin steering policy:
+Here's an example applying weights to three origin servers with a **Random** origin steering policy:
 
 - **Weights:** Origin Server A = 0.25; Origin Server B = 0.25; Origin Server C = 0.50
 - **When all origins are healthy**, each origin will receive the following proportion of total traffic: A = 25%; B = 25%; C = 50%.

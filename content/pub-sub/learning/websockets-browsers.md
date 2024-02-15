@@ -9,7 +9,7 @@ summary: Connect to Pub/Sub with WebSockets
 
 Pub/Sub allows you to both publish and subscribe from within a web browser or other WebSocket capable client. Every Pub/Sub Broker supports MQTT over WebSockets natively, without further configuration.
 
-With Pub/Sub’s WebSocket support, you can:
+With Pub/Sub's WebSocket support, you can:
 
 - Subscribe to a topic in the browser and push near real-time updates (such as notifications or chat messages) to those clients from your backend services.
 - Publish telemetry directly from WebSocket clients and then aggregate those messages in a centralized service or by using [Workers Analytics Engine](https://blog.cloudflare.com/workers-analytics-engine/) to consume them on your behalf.
@@ -19,9 +19,9 @@ When clients are connecting from a browser, you should use [`token` authenticati
 
 ## MQTT over WebSockets
 
-WebSocket support in Pub/Sub works by encapsulating MQTT packets (Pub/Sub’s underlying native protocol) within WebSocket [frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames).
+WebSocket support in Pub/Sub works by encapsulating MQTT packets (Pub/Sub's underlying native protocol) within WebSocket [frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames).
 
-- In many MQTT libraries, you can replace the `mqtts://` scheme with `wss://`, and your code will use a WebSocket transport instead of the native “raw” TCP transport.
+- In many MQTT libraries, you can replace the `mqtts://` scheme with `wss://`, and your code will use a WebSocket transport instead of the native "raw" TCP transport.
 - The WebSocket listener is available on both TCP ports `443` and `8884` versus `8883` for native MQTT.
 - WebSocket clients need to speak MQTT over WebSockets. Pub/Sub does not support other message serialization methods over WebSockets at present.
 - **Clients should include a `sec-websocket-protocol: mqtt` request header in the initial HTTP GET request** to distinguish an "MQTT over WebSocket" request from future, non-MQTT protocol support over WebSockets.
@@ -31,7 +31,7 @@ We recommend using [MQTT.js](https://github.com/mqttjs/MQTT.js), one of the most
 
 ## JavaScript Web Example
 
-In this example, we use MQTT.js’s WebSocket support to subscribe to a topic and publish messages to it.
+In this example, we use MQTT.js's WebSocket support to subscribe to a topic and publish messages to it.
 
 {{<Aside type="note">}}
 You can view a live demo available at [demo.mqtt.dev](http://demo.mqtt.dev) that allows you to use your own Pub/Sub Broker and a valid token to subscribe to a topic and publish messages to it.

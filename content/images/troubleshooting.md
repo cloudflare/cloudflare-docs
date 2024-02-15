@@ -64,6 +64,6 @@ Changes to image dimensions or other resizing options always take effect immedia
 
 Image requests consists of two parts: running Worker code, and image processing. The Worker code is always executed and uncached. Results of image processing are cached for one hour or longer if origin server's `Cache-Control` header allows. Source image is cached using regular caching rules. Resizing follows redirects internally, so the redirects are cached too.
 
-Because responses from Workers themselves are not cached at the edge, purging of _Worker URLs_ does nothing. Resized image variants are cached together under their source’s URL. When purging, use the (full-size) source image’s URL, rather than URLs of the Worker that requested resizing.
+Because responses from Workers themselves are not cached at the edge, purging of _Worker URLs_ does nothing. Resized image variants are cached together under their source's URL. When purging, use the (full-size) source image's URL, rather than URLs of the Worker that requested resizing.
 
 If the origin server sends an `Etag` HTTP header, the resized images will have an `Etag` HTTP header that has a format `cf-<gibberish>:<etag of the original image>`. You can compare the second part with the `Etag` header of the source image URL to check if the resized image is up to date.

@@ -162,9 +162,9 @@ You probably have enabled **Hide Originating IP Address** in the [Settings optio
 
 There is not a correct option, as the two options available in Google Analytics (GA) do different things.
 
-The **Hide Originating IP Address** option in [Tool Settings](/zaraz/get-started/edit-tools-and-actions/) prevents Zaraz from sending the IP address from a visitor to Google. This means that GA treats Zaraz’s Worker’s IP address as the visitor’s IP address. This is often close in terms of location, but it might not be.
+The **Hide Originating IP Address** option in [Tool Settings](/zaraz/get-started/edit-tools-and-actions/) prevents Zaraz from sending the IP address from a visitor to Google. This means that GA treats Zaraz's Worker's IP address as the visitor's IP address. This is often close in terms of location, but it might not be.
 
-With the **Anonymize Originating IP Address** available in the [Add field](/zaraz/get-started/additional-fields/) option, Cloudflare sends the visitor’s IP address to Google as is, and passes the [`aip` parameter](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip) to GA. This asks GA to anonymize the data.
+With the **Anonymize Originating IP Address** available in the [Add field](/zaraz/get-started/additional-fields/) option, Cloudflare sends the visitor's IP address to Google as is, and passes the [`aip` parameter](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip) to GA. This asks GA to anonymize the data.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -196,7 +196,7 @@ Yes. Refer to [Additional fields](/zaraz/get-started/additional-fields/) to lear
 
 {{<faq-answer>}}
 
-It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [debug mode](/zaraz/web-api/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
+It can take between 15 minutes to several hours for data to appear on Facebook's interface, due the way Facebook Pixel works. You can also use [debug mode](/zaraz/web-api/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
 
 {{</faq-answer>}}
 {{</faq-item>}}

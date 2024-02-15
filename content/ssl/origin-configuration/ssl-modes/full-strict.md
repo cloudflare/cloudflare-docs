@@ -24,7 +24,7 @@ For the best security, choose **Full (strict)** mode whenever possible (unless y
 Your origin needs to be able to support an SSL certificate that is:
 
 - Unexpired, meaning the certificate presents `notBeforeDate < now() < notAfterDate`.
-- Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/ssl/origin-configuration/origin-ca/).
+- Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare's Origin CA](/ssl/origin-configuration/origin-ca/).
 - Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname.
 
 {{<Aside type="note">}}

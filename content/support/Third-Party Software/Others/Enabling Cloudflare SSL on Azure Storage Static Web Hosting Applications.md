@@ -63,7 +63,7 @@ ___
 
 If you want Cloudflare to provide authoritative DNS, use the Cloudflare nameservers provided for your domain and place them in the DNS manager of your domain registrar.
 
-If you want to [use the CNAME method](https://support.cloudflare.com/hc/articles/360020348832), you’ll need to follow additional steps.
+If you want to [use the CNAME method](https://support.cloudflare.com/hc/articles/360020348832), you'll need to follow additional steps.
 
 ___
 

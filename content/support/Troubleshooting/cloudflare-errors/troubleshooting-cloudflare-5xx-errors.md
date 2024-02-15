@@ -47,7 +47,7 @@ Error 500 generally indicates an issue with your origin web server.  _Error es
 
 [Provide details to your hosting provider](#required-error-details-for-hosting-provider) to assist troubleshooting the issue.
 
-However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in the HTML response body, provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
+However, if the 500 error contains "cloudflare" or "cloudflare-nginx" in the HTML response body, provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 500 error occurrence
@@ -81,7 +81,7 @@ Cloudflare returns an Cloudflare-branded HTTP 502 or 504 error when your origin 
 
 Contact your hosting provider to troubleshoot these common causes at your origin web server:
 
--   Ensure the origin server responds to requests for the hostname and domain within the visitor’s URL that generated the 502 or 504 error.
+-   Ensure the origin server responds to requests for the hostname and domain within the visitor's URL that generated the 502 or 504 error.
 -   Investigate excessive server loads, crashes, or network failures.
 -   Identify applications or services that timed out or were blocked.
 
@@ -91,7 +91,7 @@ A 502 or 504 error originating from Cloudflare appears as follows:
 
 ![Example of an unbranded error 502.](/images/support/image5.png)
 
-If the error does not mention “cloudflare,” contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
+If the error does not mention "cloudflare," contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
 
 **Resolution**
 
@@ -107,11 +107,11 @@ ___
 
 HTTP error 503 occurs when your origin web server is overloaded. There are two possible causes discernible by error message:
 
--   Error doesn’t contain “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error doesn't contain "cloudflare" or "cloudflare-nginx" in the HTML response body.
 
 **Resolution**: Contact your hosting provider to verify if they rate limit requests to your origin web server.
 
--   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error contains "cloudflare" or "cloudflare-nginx" in the HTML response body.
 
 **Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 
@@ -185,7 +185,7 @@ ___
 Error 522 occurs when Cloudflare times out contacting the origin web server. Two different timeouts cause HTTP error 522 depending on when they occur between Cloudflare and the origin web server:
 
 1.  Before a connection is established, the origin web server does not return a SYN+ACK to Cloudflare within 15 seconds of Cloudflare sending a SYN.
-2.  After a connection is established, the origin web server doesn’t acknowledge (ACK) Cloudflare’s resource request within 90 seconds.
+2.  After a connection is established, the origin web server doesn't acknowledge (ACK) Cloudflare's resource request within 90 seconds.
 
 **Resolution**
 
@@ -202,13 +202,13 @@ If you are using [Cloudflare Pages](/pages/), verify that you have a custom doma
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
 -   An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
--   Details from the hosting provider’s investigation such as pertinent logs or conversations with the hosting provider.
+-   Details from the hosting provider's investigation such as pertinent logs or conversations with the hosting provider.
 
 ___
 
 ## Error 523: origin is unreachable
 
-Error 523 occurs when Cloudflare cannot contact your origin web server. This typically occurs when a network device between Cloudflare and the origin web server doesn’t have a route to the origin’s IP address.
+Error 523 occurs when Cloudflare cannot contact your origin web server. This typically occurs when a network device between Cloudflare and the origin web server doesn't have a route to the origin's IP address.
 
 **Resolution** [Contact your hosting provider](#required-error-details-for-hosting-provider) to exclude the following common causes at your origin web server:
 
@@ -315,7 +315,7 @@ For a potential quick fix, set **SSL** to *Full* instead of *Full
 the domain.
 {{</Aside>}}
 
-Request your server administrator or hosting provider to review the origin web server’s SSL certificates and verify that:
+Request your server administrator or hosting provider to review the origin web server's SSL certificates and verify that:
 
 -   Certificate is not expired
 -   Certificate is not revoked

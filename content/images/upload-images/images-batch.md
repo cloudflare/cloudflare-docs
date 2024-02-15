@@ -5,7 +5,7 @@ title: Upload via batch API
 
 # Upload via batch API
 
-The Images batch API lets you make several requests in sequence while bypassing Cloudflare’s global API rate limits. 
+The Images batch API lets you make several requests in sequence while bypassing Cloudflare's global API rate limits. 
 
 To use the Images batch API, you will need to obtain a batch token and use the token to make several requests. The requests authorized by this batch token are made to a separate endpoint and do not count toward the global API rate limits. Each token is subject to a rate limit of 200 requests per second. You can use multiple tokens if you require higher throughput to the Cloudflare Images API. 
 

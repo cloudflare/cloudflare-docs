@@ -108,7 +108,7 @@ If you would like to display different languages within your custom waiting room
 
 * To display a different language based on subdomain, download this [template](/waiting-room/static/index.subdomain.html.txt). The template displays the content in English as a default or if the subdomain contains `en`, Japanese if the subdomain contains `jp`, French if the subdomain contains `fr`, and Spanish if the subdomain contains `es`.
 
-Download either of these templates and customize them however you would like. Update the path or subdomain to reflect your site’s language selection structure. You may edit these templates to include other languages by adding translations to the `translations` object for each of the locales.
+Download either of these templates and customize them however you would like. Update the path or subdomain to reflect your site's language selection structure. You may edit these templates to include other languages by adding translations to the `translations` object for each of the locales.
 
 #### Resource hosting
 

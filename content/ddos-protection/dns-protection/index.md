@@ -28,7 +28,7 @@ Currently, you cannot configure Advanced DNS Protection rules using the Cloudfla
 
 ## Initial setup
 
-1. Contact your account team to enable Advanced DNS Protection and make the initial configuration. The initial thresholds are based on your network’s individual behavior.
+1. Contact your account team to enable Advanced DNS Protection and make the initial configuration. The initial thresholds are based on your network's individual behavior.
 
 2. [Add the prefixes](/ddos-protection/tcp-protection/how-to/add-prefix/) you wish to onboard using the Advanced TCP Protection user interface. Advanced DNS Protection will only be applied to the prefixes you onboard.
 

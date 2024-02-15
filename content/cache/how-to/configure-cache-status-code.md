@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Cache by status code
 
-Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.
+Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource's origin.
 
 Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/concepts/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
 
@@ -71,4 +71,4 @@ Provide a JSON object containing status codes and their corresponding TTLs. Each
 
 ## Set cache TTL by response status via a Cloudflare Worker
 
-The **cacheTtlByStatus** option is a version of the **cacheTtl** feature that designates a cache TTL for a request’s response status code (for example, `{ "200-299": 86400, 404: 1, "500-599": 0 }`).
+The **cacheTtlByStatus** option is a version of the **cacheTtl** feature that designates a cache TTL for a request's response status code (for example, `{ "200-299": 86400, 404: 1, "500-599": 0 }`).

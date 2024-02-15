@@ -6,7 +6,7 @@ weight: 10
 
 # Waiting Room Bypass Rules
 
-A Waiting Room Bypass Rule is a type of Waiting Room Rule built on Cloudflare’s Ruleset Engine and managed via the Waiting Room API. A Waiting Room Bypass Rule allows you to indicate specific traffic or areas of your site or application that you do not want a waiting room to apply to. Each bypass rule is created and managed at the individual waiting room level for precise control over your waiting room traffic.
+A Waiting Room Bypass Rule is a type of Waiting Room Rule built on Cloudflare's Ruleset Engine and managed via the Waiting Room API. A Waiting Room Bypass Rule allows you to indicate specific traffic or areas of your site or application that you do not want a waiting room to apply to. Each bypass rule is created and managed at the individual waiting room level for precise control over your waiting room traffic.
 
 To indicate where you want your bypass rules to apply, write [custom logic](/ruleset-engine/rules-language/) using the [fields](/ruleset-engine/rules-language/fields/) available via the Cloudflare Ruleset Engine from the following fields categories:
 
@@ -59,7 +59,7 @@ For examples and usage, refer to [Operators and grouping symbols](/ruleset-engin
 
 ## Manage Rules via the Waiting Room API
 
-You can manage, delete, and create bypass rules for your waiting room via the [Waiting Room API’s](/api/operations/waiting-room-list-waiting-room-rules). A bypass rule is a Waiting Room Rule that utilizes the `bypass_waiting_room` action.
+You can manage, delete, and create bypass rules for your waiting room via the [Waiting Room API's](/api/operations/waiting-room-list-waiting-room-rules). A bypass rule is a Waiting Room Rule that utilizes the `bypass_waiting_room` action.
 
 When creating a Bypass Waiting Room Rule via API, make sure you:
 

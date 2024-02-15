@@ -24,7 +24,7 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.cookies` | Object | Key-Value object containing all present cookies. |
 | `system.device.ip` | String | Visitor incoming IP address. |
 | `system.device.resolution` | String | Screen resolution for device. |
-| `system.device.viewport` | String | Visible web page area in user’s device. |
+| `system.device.viewport` | String | Visible web page area in user's device. |
 | `system.device.language` | String | Language used in user's device. |
 | `system.device.user-agent.ua` | Object | Browser user agent. |
 | `system.device.user-agent.browser.name` | String | Browser name. |
@@ -34,7 +34,7 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.device.user-agent.os.name` | String | Operating system. |
 | `system.device.user-agent.os.version` | String | Version of the operating system. |
 | `system.device.user-agent.device` | String | Type of device used (for example, iPhone). |
-| `system.device.user-agent.cpu` | String | Device’s CPU. |
+| `system.device.user-agent.cpu` | String | Device's CPU. |
 | `system.misc.random` | Number | Random number unique to each request. |
 | `system.misc.timestamp` | Number | Unix time in seconds. |
 | `system.misc.timestampMilliseconds` | Number | Unix time in milliseconds. |

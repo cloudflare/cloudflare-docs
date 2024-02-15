@@ -29,7 +29,7 @@ This guide covers how to configure Zendesk SSO with Access for SaaS.
    | **Assertion Consumer Service URL** | contents of **SAML SSO URL** in Zendesk account |
    | **Name ID Format**                 | _Email_                                         |
 
-5. (Optional) Configure these Attribute Statements to include a user’s first and last name:
+5. (Optional) Configure these Attribute Statements to include a user's first and last name:
 
    | Cloudflare attribute name | IdP attribute value                                               |
    | ------------------------- | ----------------------------------------------------------------- |

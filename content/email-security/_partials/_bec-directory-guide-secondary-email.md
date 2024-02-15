@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-When the Business Email Compromise list is configured, Cloudflare Area 1 will enforce the proper match of the sender’s display name and email address. Any variation from this strict requirement will raise a detection event. The reason of detection will be `Protected Name <NAME> should not appear as <non-configured email address>`. 
+When the Business Email Compromise list is configured, Cloudflare Area 1 will enforce the proper match of the sender's display name and email address. Any variation from this strict requirement will raise a detection event. The reason of detection will be `Protected Name <NAME> should not appear as <non-configured email address>`. 
 
 In some instances, you may want to allow your protected users to send emails from an alternate email address (like their personal email address). To configure this alternate address, you will have to add it to their directory entry.
 

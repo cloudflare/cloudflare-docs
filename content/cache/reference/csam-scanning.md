@@ -33,7 +33,7 @@ This email address will be used to both notify you in the event Cloudflare detec
 
 In order to get CyberTipline API credentials, you can email the [espteam@ncmec.org](mailto:espteam@ncmec.org) to get an application started. Go to the [NCMEC website](https://www.missingkids.org/theissues/csam) for more information. Cloudflare will use the credentials you provide in order to create reports to NCMEC when potential CSAM is identified on your zones. 
 
-Once you’ve verified your reporting email and entered your NCMEC credentials, scanning to identify potential CSAM will begin.
+Once you've verified your reporting email and entered your NCMEC credentials, scanning to identify potential CSAM will begin.
 
 ___
 
@@ -64,7 +64,7 @@ You likely have an obligation to securely preserve certain information related t
 
 -   You should remove the content and notify Cloudflare of the removal.
 
-Once any preservation obligations have been fulfilled, you should remove the content from your website. This is especially important if Cloudflare’s notice to you indicates that our block was unsuccessful.
+Once any preservation obligations have been fulfilled, you should remove the content from your website. This is especially important if Cloudflare's notice to you indicates that our block was unsuccessful.
 
 ___
 

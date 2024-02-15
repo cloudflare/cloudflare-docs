@@ -16,7 +16,7 @@ Secret sharing is an important technique many advanced threshold cryptography me
 
 Secret sharing allows you to split a secret value `𝑠` into `𝑛` shares `𝑠1,…,𝑠𝑛` so that `𝑠` can only be reconstructed if a threshold of `𝑡` shares is available.
 
-## Shamir’s Secret Sharing (SSS)
+## Shamir's Secret Sharing (SSS)
 
 The SSS scheme is one of the most well-known and widely used secret sharing approaches, and a core component of drand. SSS works over an arbitrary finite field, but a simplistic approach uses the integers modulo `𝑝`, denoted by `ℤ𝑝`. Let `𝑠∈ℤ𝑝` denote the secret to share.
 
@@ -34,7 +34,7 @@ Note that you can use any subset of `𝑡-of-𝑛` shares to perform Lagrange in
 
 SSS scheme assumes that the dealer is honest, but this may not always hold in practice. A Verifiable Secret Sharing (VSS) scheme protects against malicious dealers by enabling participants to verify that their shares are consistent with those dealt to other nodes, ensuring that the shared secret can be correctly reconstructed later.
 
-drand uses Feldman’s VSS scheme, an extension of SSS. Let `𝔾` denote a cyclic group of prime order `𝑝` in which computing discrete logarithms is intractable. A _cyclic group_ means there exists a generator, `𝑔`, so that any element `𝑥∈𝔾` can be written as `𝑥=𝑔𝑎` for some `𝑎∈{0,…,𝑝−1}`.
+drand uses Feldman's VSS scheme, an extension of SSS. Let `𝔾` denote a cyclic group of prime order `𝑝` in which computing discrete logarithms is intractable. A _cyclic group_ means there exists a generator, `𝑔`, so that any element `𝑥∈𝔾` can be written as `𝑥=𝑔𝑎` for some `𝑎∈{0,…,𝑝−1}`.
 
 ### Share Distribution
 
@@ -46,7 +46,7 @@ The recovery of secret `𝑠` works the same as regular SSS, except that verifie
 
 ## Distributed Key Generation (DKG)
 
-Although VSS schemes protect against a malicious dealer, the dealer still knows the secret. To create a collectively shared secret `𝑠` so no individual node gets any information about it, participants can use a DKG protocol. drand uses Pedersen’s DKG scheme, which runs `𝑛` instances of Feldman’s VSS in parallel and on top of additional verification steps.
+Although VSS schemes protect against a malicious dealer, the dealer still knows the secret. To create a collectively shared secret `𝑠` so no individual node gets any information about it, participants can use a DKG protocol. drand uses Pedersen's DKG scheme, which runs `𝑛` instances of Feldman's VSS in parallel and on top of additional verification steps.
 
 ### Share Distribution
 
@@ -54,7 +54,7 @@ Individual participants, `𝑖`, create a (random) secret, `𝑠𝑖∈ℤ𝑝`,
 
 ### Share Verification
 
-`𝑗` verifies the shares received as prescribed by Feldman’s VSS scheme. If `𝑗` receives an invalid share, `𝑠𝑖,𝑗`, from `𝑖`, then `𝑗` broadcasts a complaint. `𝑖` must reveal the correct share `𝑠𝑖,𝑗` or they are considered an invalid dealer.
+`𝑗` verifies the shares received as prescribed by Feldman's VSS scheme. If `𝑗` receives an invalid share, `𝑠𝑖,𝑗`, from `𝑖`, then `𝑗` broadcasts a complaint. `𝑖` must reveal the correct share `𝑠𝑖,𝑗` or they are considered an invalid dealer.
 
 ### Share Finalization
 
@@ -62,4 +62,4 @@ At the end of the protocol, the final share of `𝑖` is `𝑠𝑖=∑𝑗𝑠�
 
 The collective public key associated with the valid shares can be computed as `𝑆=∑𝑗𝐴𝑗,0` for all valid `𝑗`s.
 
-**Note:** Even though the secret created using Pedersen’s DKG can be biased, it is safe to use for threshold signing as shown by Rabin et al.
+**Note:** Even though the secret created using Pedersen's DKG can be biased, it is safe to use for threshold signing as shown by Rabin et al.

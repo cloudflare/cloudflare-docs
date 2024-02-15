@@ -8,7 +8,7 @@ meta:
 
 # Get started with Cache
 
-Cloudflare makes customer websites faster by storing a copy of the website’s content on the servers of our globally distributed data centers. Content can be either static or dynamic: static content is “cacheable” or eligible for caching, and dynamic content is “uncacheable” or ineligible for caching. The cached copies of content are stored physically closer to users, optimized to be fast, and do not require recomputing.
+Cloudflare makes customer websites faster by storing a copy of the website's content on the servers of our globally distributed data centers. Content can be either static or dynamic: static content is "cacheable" or eligible for caching, and dynamic content is "uncacheable" or ineligible for caching. The cached copies of content are stored physically closer to users, optimized to be fast, and do not require recomputing.
 
 Cloudflare caches static content based on the following factors:
 
@@ -23,7 +23,7 @@ Cloudflare only caches resources within the Cloudflare data center that serve th
 
 ## Learn the basics
 
-Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
+Discover the benefits of caching with Cloudflare's CDN and understand the default cache behavior.
 
 - [Understand what is a CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
 - [Understand default cache behavior](/cache/concepts/default-cache-behavior/)
@@ -49,7 +49,7 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 
 ## Secure your cache configuration
 
-Control resources a client is allowed to load and set access permissions to allow different origins to access your origin’s resources. Protect your site from web cache deception attacks while still caching static assets.
+Control resources a client is allowed to load and set access permissions to allow different origins to access your origin's resources. Protect your site from web cache deception attacks while still caching static assets.
 
 - [Avoid web cache poisoning attacks](/cache/cache-security/avoid-web-poisoning/)
 - [Configure Cross-Origin Resource Sharing (CORS)](/cache/cache-security/cors/)

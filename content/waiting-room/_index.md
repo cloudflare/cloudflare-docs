@@ -42,7 +42,7 @@ Apply a single waiting room to multiple hostnames and paths within the same zone
 ## Related products
 
 {{<related header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/" product="cloudflare-for-platforms">}} 
-Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare’s network to your customers via their own custom or vanity domains.
+Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare's network to your customers via their own custom or vanity domains.
 {{</related>}}
 
 {{<related header="Rules" href="/rules/" product="rules">}}

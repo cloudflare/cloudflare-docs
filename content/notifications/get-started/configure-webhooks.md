@@ -114,7 +114,7 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
    <!-- splunk    -->
    <tr>
       <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector">Splunk</a></td>
-      <td>The secret is required and has to be entered by the user. This is what Splunk refers to as <code>token</code>. Refer to <a target="_blank" rel="noopener noreferrer" href="https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in">Splunk’s documentation</a> for details.</td>
+      <td>The secret is required and has to be entered by the user. This is what Splunk refers to as <code>token</code>. Refer to <a target="_blank" rel="noopener noreferrer" href="https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in">Splunk's documentation</a> for details.</td>
       <td>
          <p>1. We only support three Splunk endpoints: <code>services/collector</code>, <code>services/collector/raw</code>, and <code>services/collector/event</code>.</p>
          <p>2. If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088.</p>

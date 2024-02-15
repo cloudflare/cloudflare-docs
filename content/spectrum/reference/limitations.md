@@ -14,7 +14,7 @@ At the moment, HTTPS applications do not support HTTP/3.
 
 ## UDP
 
-At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge.
+At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare's edge.
 
 ## Minecraft
 

@@ -10,6 +10,6 @@ meta:
 
 # Cloudflare Time Services
 
-Learn more about Cloudflare’s suite of time services.
+Learn more about Cloudflare's suite of time services.
 
 {{<directory-listing>}}

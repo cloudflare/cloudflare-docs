@@ -341,7 +341,7 @@ Both of these need to be present and match the variable names in your Worker's c
 
 Test the `/add-users` route and pass it an email address to insert: [http://127.0.0.1:8787/add-user?email=test@test.com](http://127.0.0.1:8787/add-user?email=test@test.com.)
 
-You should see the text `“Added”`. If you load the first URL with the `/users` route again ([http://127.0.0.1:8787/users](http://127.0.0.1:8787/users)), it will show the newly added row. You can repeat this as many times as you like. Note that due to its design, your application will not stop you from adding duplicate email addresses.
+You should see the text `"Added"`. If you load the first URL with the `/users` route again ([http://127.0.0.1:8787/users](http://127.0.0.1:8787/users)), it will show the newly added row. You can repeat this as many times as you like. Note that due to its design, your application will not stop you from adding duplicate email addresses.
 
 Quit Wrangler by typing `q` into the shell where it was started.
 

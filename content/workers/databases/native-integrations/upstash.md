@@ -21,7 +21,7 @@ To set up an integration with Upstash:
     ```sh
     ➜ set GB "Ey up?"
     OK
-    ➜ set US "Yo, what’s up?"
+    ➜ set US "Yo, what's up?"
     OK
     ➜ set NL "Hoi, hoe gaat het?"
     OK

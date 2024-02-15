@@ -14,17 +14,17 @@ These basic steps will help reduce common areas of confusion for Drupal users th
 
 **Step #1**
 
-Install the [Cloudflare Drupal plugin](https://drupal.org/project/cloudflare) to restore visitor IP information. Since Cloudflare acts as a proxy for sites using our network, Cloudflare’s IPs are going to show in your logs, including comments, unless you install something to restore the original visitor IP.
+Install the [Cloudflare Drupal plugin](https://drupal.org/project/cloudflare) to restore visitor IP information. Since Cloudflare acts as a proxy for sites using our network, Cloudflare's IPs are going to show in your logs, including comments, unless you install something to restore the original visitor IP.
 
 Why should you install the plugin?
 
 If you receive a lot of comments or spam on your blog, you may mistakenly believe that Cloudflare is spamming you. Some other Drupal plugins or extensions may also rely on the original visitor IP for the  services to work properly and reduce false alerts.
 
-Note: You don’t need to worry about this if you activated through a certified Cloudflare [certified Cloudflare Hosting partner](https://www.cloudflare.com/partners/technology-partners/), since they already [restore visitor IPs](https://support.cloudflare.com/hc/articles/200170786) by default.
+Note: You don't need to worry about this if you activated through a certified Cloudflare [certified Cloudflare Hosting partner](https://www.cloudflare.com/partners/technology-partners/), since they already [restore visitor IPs](https://support.cloudflare.com/hc/articles/200170786) by default.
 
 **Step #2**
 
-Create a [Page Rule](https://support.cloudflare.com/hc/articles/200168306) to exclude the Drupal admin or Drupal login sections from Cloudflare’s caching and performance features. You can access Page Rules in the [Rules app](https://support.cloudflare.com/hc/en-us/articles/200172336-How-do-I-create-a-PageRule-).
+Create a [Page Rule](https://support.cloudflare.com/hc/articles/200168306) to exclude the Drupal admin or Drupal login sections from Cloudflare's caching and performance features. You can access Page Rules in the [Rules app](https://support.cloudflare.com/hc/en-us/articles/200172336-How-do-I-create-a-PageRule-).
 
 Why do this?
 
@@ -34,7 +34,7 @@ While there is not always an issue, we have seen some optional performance feat
 
 Allow IP addresses you expect traffic from in the Cloudflare **Firewall** App. Some common services you probably want to allow include:
 
--   APIs you’re pulling from
+-   APIs you're pulling from
 -   Monitoring services you use to monitor your site's uptime
 -   Security services
 -   IP addresses you frequently login from
@@ -57,7 +57,7 @@ If you want your site to have less security and protection from various attacks,
 
 **Step #5**
 
-If you are using services like .htaccess, firewalls or server mods to manage access to your site from visitors, it is vitally important to make sure requests from [Cloudflare’s IP ranges](https://www.cloudflare.com/ips) are not being blocked or limited in any way. The number one cause of site offline issues in our support channel is something blocking or restricting requests from our IPs, so please take the time to make sure that all of Cloudflare’s IPs are allowed on your server and with your hosting provider.
+If you are using services like .htaccess, firewalls or server mods to manage access to your site from visitors, it is vitally important to make sure requests from [Cloudflare's IP ranges](https://www.cloudflare.com/ips) are not being blocked or limited in any way. The number one cause of site offline issues in our support channel is something blocking or restricting requests from our IPs, so please take the time to make sure that all of Cloudflare's IPs are allowed on your server and with your hosting provider.
 
 Why do this?
 

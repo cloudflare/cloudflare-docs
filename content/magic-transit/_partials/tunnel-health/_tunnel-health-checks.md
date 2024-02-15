@@ -70,7 +70,7 @@ Applying a penalty instead of removing the route altogether preserves redundancy
 
 ### Cloudflare data centers and tunnels
 
-In the event a Cloudflare data center is down, Cloudflare’s global network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare’s global network and dashboard, refer to [Cloudflare System Status](https://www.cloudflarestatus.com/).
+In the event a Cloudflare data center is down, Cloudflare's global network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare's global network and dashboard, refer to [Cloudflare System Status](https://www.cloudflarestatus.com/).
 
 ## Recovery
 
@@ -78,7 +78,7 @@ Once a tunnel is in the down state, global network servers continue to emit prob
 
 Tunnels in a degraded state transition to healthy when the failure rate for the previous 30 probes is less than 0.1%. This transition may take up to 30 minutes.
 
-$2’s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system’s output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
+$2's tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system's output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
 {{<Aside type="note" header="Note">}}
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.
@@ -105,7 +105,7 @@ Suppose the connectivity issue that set Tunnel 1 health to down becomes resolved
 
 When all three probes return successfully, $2 transitions the tunnel from down to degraded. As part of this transition, Cloudflare reduces the priority penalty for that route so that its priority becomes `500,100`. Because Tunnel 2 has a priority of `200`, traffic continues to flow over Tunnel 2.
 
-Global network servers will continue probing Tunnel 1. When the health check failure rate drops below 0.1% for a five minute period, $2 sets tunnel status to healthy. Tunnel 1’s routing priority is fully restored to `100`, and traffic steering returns the data flow to Tunnel 1.
+Global network servers will continue probing Tunnel 1. When the health check failure rate drops below 0.1% for a five minute period, $2 sets tunnel status to healthy. Tunnel 1's routing priority is fully restored to `100`, and traffic steering returns the data flow to Tunnel 1.
 
 ## Types of health checks
 
@@ -121,7 +121,7 @@ During onboarding, you specify IP addresses to configure endpoint health checks.
 
 Tunnel health checks monitor the status of the {{<glossary-tooltip term_id="GRE tunnel">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels that route traffic from Cloudflare to your origin network. $2 relies on health checks to steer traffic to the best available routes.
 
-During onboarding, you [specify the tunnel endpoints]($4) the tunnel probes originating from Cloudflare’s global network will target.
+During onboarding, you [specify the tunnel endpoints]($4) the tunnel probes originating from Cloudflare's global network will target.
 
 Tunnel health check results are exposed [via API](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/). These results are aggregated from individual health check results done on Cloudflare servers.
 

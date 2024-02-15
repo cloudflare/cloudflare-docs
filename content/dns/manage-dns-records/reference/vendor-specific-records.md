@@ -74,9 +74,9 @@ For information about the records to Microsoft 365, refer to [Microsoft's docume
 
 ### Microsoft Azure
 
-Follow Microsoft’s instructions on [configuring Azure DNS settings](https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain).
+Follow Microsoft's instructions on [configuring Azure DNS settings](https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain).
 
-Then, add Azure’s required records to [Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/).
+Then, add Azure's required records to [Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ---
 

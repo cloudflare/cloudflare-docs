@@ -25,7 +25,7 @@ Pairing-based cryptography is based on bilinear groups `(𝔾1,𝔾2,𝔾𝑡)`,
 
 To generate publicly-verifiable, unbiasable, distributed randomness, drand utilizes threshold Boneh-Lynn-Shacham (BLS) signatures. First we will describe regular BLS signatures and then the threshold variant.
 
-BLS signatures are short signatures that rely on bilinear pairings and consist only of a single element in `𝔾1`. They are deterministic in the sense they depend only on the message and the signer’s key, unlike other signature schemes, such as ECDSA, that require a fresh random value for each signed message to be secure. Put differently, any two BLS signatures on a given message produced with the same key are identical. In drand, we utilize this property to achieve unbiasability for randomness generation.
+BLS signatures are short signatures that rely on bilinear pairings and consist only of a single element in `𝔾1`. They are deterministic in the sense they depend only on the message and the signer's key, unlike other signature schemes, such as ECDSA, that require a fresh random value for each signed message to be secure. Put differently, any two BLS signatures on a given message produced with the same key are identical. In drand, we utilize this property to achieve unbiasability for randomness generation.
 
 The BLS signature scheme consists of the these sub-procedures.
 
@@ -39,7 +39,7 @@ Let `𝐻:{0,1}∗→𝔾1` denote a cryptographic hash function that maps arbit
 
 ### Signature Verification
 
-To verify that a BLS signature `𝜎` on a message `𝑚` is valid, the verifier checks if `𝑒(𝐻(𝑚),𝑋)=𝑒(𝜎,𝑔2)` holds using the signer’s public key `𝑋`.
+To verify that a BLS signature `𝜎` on a message `𝑚` is valid, the verifier checks if `𝑒(𝐻(𝑚),𝑋)=𝑒(𝜎,𝑔2)` holds using the signer's public key `𝑋`.
 
 Note that this equation holds for valid signatures since `𝑒(𝐻(𝑚),𝑋)=𝑒(𝐻(𝑚),𝑔𝑥2)=𝑒(𝐻(𝑚),𝑔2)𝑥=𝑒(𝑥𝐻(𝑚),𝑔2)=𝑒(𝜎,𝑔2)`.
 

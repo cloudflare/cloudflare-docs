@@ -16,7 +16,7 @@ ___
 
 ## Restore visitor IP
 
-Restore visitor IP by following the directions in [this article](https://support.cloudflare.com/hc/articles/200170786). Since Cloudflare acts as a proxy for sites using our network, Cloudflare’s IPs are going to show in your logs, including comments, unless you install something to restore the original visitor IP.
+Restore visitor IP by following the directions in [this article](https://support.cloudflare.com/hc/articles/200170786). Since Cloudflare acts as a proxy for sites using our network, Cloudflare's IPs are going to show in your logs, including comments, unless you install something to restore the original visitor IP.
 
 Why should you restore visitor IP?
 
@@ -32,7 +32,7 @@ ___
 
 ## Create a PageRule to exclude Joomla
 
-Create a [PageRule](https://support.cloudflare.com/hc/en-us/articles/200168306-Is-there-a-tutorial-for-Page-Rules-) to exclude the Joomla admin or Joomla login sections from Cloudflare’s caching and performance features. You can access PageRules in your [Cloudflare 'Settings' options](https://support.cloudflare.com/hc/en-us/articles/200172336-How-do-I-create-a-PageRule-).
+Create a [PageRule](https://support.cloudflare.com/hc/en-us/articles/200168306-Is-there-a-tutorial-for-Page-Rules-) to exclude the Joomla admin or Joomla login sections from Cloudflare's caching and performance features. You can access PageRules in your [Cloudflare 'Settings' options](https://support.cloudflare.com/hc/en-us/articles/200172336-How-do-I-create-a-PageRule-).
 
 Why do this?
 
@@ -44,7 +44,7 @@ ___
 
 Log in to your Cloudflare Threat Control panel and allow IP addresses you want traffic from or expect traffic from. Some common services you probably want to allow include:
 
--   APIs you’re pulling from
+-   APIs you're pulling from
 -   Monitoring services you use to monitor your site's uptime
 -   Security services
 -   IP addresses you frequently login from
@@ -75,7 +75,7 @@ ___
 
 ## Ensure requests from Cloudflare's IP ranges aren't blocked or limited
 
-If you are using services like .htaccess, firewalls or server mods to manage access to your site from visitors, it is vitally important to make sure requests from Cloudflare’s IP ranges are not being blocked or limited in any way. The number one cause of site offline issues in our support channel is something blocking or restricting requests from our IPs, so please take the time to make sure that all of Cloudflare’s IPs are allowed on your server.
+If you are using services like .htaccess, firewalls or server mods to manage access to your site from visitors, it is vitally important to make sure requests from Cloudflare's IP ranges are not being blocked or limited in any way. The number one cause of site offline issues in our support channel is something blocking or restricting requests from our IPs, so please take the time to make sure that all of Cloudflare's IPs are allowed on your server.
 
 Why do this?
 

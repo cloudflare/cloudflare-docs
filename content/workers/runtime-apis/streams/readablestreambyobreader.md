@@ -9,7 +9,7 @@ meta:
 
 # ReadableStreamBYOBReader
 
-<!-- TODO: See EW-2105. Should we document this if it isn’t effectively using buffer space? -->
+<!-- TODO: See EW-2105. Should we document this if it isn't effectively using buffer space? -->
 
 ## Background
 

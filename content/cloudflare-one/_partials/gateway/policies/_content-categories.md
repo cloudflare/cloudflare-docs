@@ -7,7 +7,7 @@ _build:
 
 ## Block content categories
 
-Block content categories which go against your organization’s acceptable use policy.
+Block content categories which go against your organization's acceptable use policy.
 
 | Selector           | Operator | Value                  | Action |
 | ------------------ | -------- | ---------------------- | ------ |

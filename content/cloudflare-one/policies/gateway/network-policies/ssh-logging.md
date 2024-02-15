@@ -92,7 +92,7 @@ $ ssh <username>@<hostname>
 ```
 
 {{<Aside type="note">}}
-If the target resource is already in a user’s `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
+If the target resource is already in a user's `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
 
 ```sh
 $ ssh-keygen -R <targetIP or hostname>

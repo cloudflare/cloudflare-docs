@@ -6,7 +6,7 @@ title: Understanding the True-Client-IP Header
 
 # Understanding the True-Client-IP Header
 
-Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only) to all requests to your origin server, which includes the end user’s IP address.
+Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only) to all requests to your origin server, which includes the end user's IP address.
 
 ## Availability
 

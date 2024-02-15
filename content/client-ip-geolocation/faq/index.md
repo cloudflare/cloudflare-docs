@@ -26,7 +26,7 @@ There is significant cross pollination between Cloudflare forward- and reverse-p
 
 WAF custom rules specifying country- or region-level match criteria will match correctly on users passing through our VPN and forward-proxy systems with no action needed from you.
 
-### In the example, what happens when Cloudflare’s Minneapolis data center is removed from service for maintenance?
+### In the example, what happens when Cloudflare's Minneapolis data center is removed from service for maintenance?
 
 The [example scenario](/client-ip-geolocation/about/#example-scenario) still provides accurate geolocation data.
 

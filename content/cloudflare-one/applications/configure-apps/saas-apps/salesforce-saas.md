@@ -53,7 +53,7 @@ This guide covers how to:
     - **Name:** (this is what you want your users to see on sign in)
     - **API name:** (this will pre-populate)
     - **Issuer:** `https://<your-team-name>.cloudflareaccess.com`, where your-team-name is your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
-    - **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step.
+    - **Identity Provider Certificate**: upload the `.crt` certificate file you've created in the previous step.
     - **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
     - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
     - **Identity Provider Login URL**: This is the SSO endpoint provided in Zero Trust for that application.

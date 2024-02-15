@@ -44,7 +44,7 @@ Use the following resources for help with server configuration:
 
 As a customer of the Privacy Gateway, you need to set up client-side support for the gateway. Clients are responsible for encrypting requests, sending them to the Cloudflare Privacy Gateway, and then decrypting the corresponding responses.
 
-Additionally, app developers need to [configure the client](#resources-1) to fetch or otherwise discover the gateway’s public key configuration. How this is done depends on how the gateway makes its public key configuration available. If you need help with this configuration, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
+Additionally, app developers need to [configure the client](#resources-1) to fetch or otherwise discover the gateway's public key configuration. How this is done depends on how the gateway makes its public key configuration available. If you need help with this configuration, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
 
 ### Resources
 

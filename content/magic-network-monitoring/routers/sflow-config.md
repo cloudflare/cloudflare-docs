@@ -3,7 +3,7 @@ title: sFlow configuration
 pcx_content_type: how-to
 weight: 4
 meta:
-    description: A step-by-step configuration guide for exporting sFlow data to Cloudflare’s network.
+    description: A step-by-step configuration guide for exporting sFlow data to Cloudflare's network.
 ---
 
 # sFlow configuration

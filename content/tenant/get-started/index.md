@@ -6,7 +6,7 @@ weight: 2
 
 # Get started
 
-Having access to Cloudflare’s provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following steps will get you started on making API calls to provision accounts, users, and services.
+Having access to Cloudflare's provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following steps will get you started on making API calls to provision accounts, users, and services.
 
 ## Before you begin
 

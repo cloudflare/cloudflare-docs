@@ -23,13 +23,13 @@ For incoming requests, the value of this header will always be set to `accept-en
 `CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
 This header will only be sent on the traffic from Cloudflare's edge to your origin web server.
 
-For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
+For guidance on logging your visitor's original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
 ### CF-Connecting-IP in Worker subrequests
 
-In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
+In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client's IP). `x-real-ip` can be altered by the user in their Worker script.
 
 In cross-zone subrequests from one Cloudflare customer zone to another Cloudflare customer zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
 
@@ -92,7 +92,7 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 ## CF-RAY
 
-The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
+The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor's request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
 Add the [`CF-Ray` header to your origin web server logs](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) to match requests proxied to Cloudflare to requests in your server logs.
 
@@ -100,7 +100,7 @@ Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 ## CF-IPCountry
 
-The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country.
+The `CF-IPCountry` header contains a two-character country code of the originating visitor's country.
 
 Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
 
@@ -117,7 +117,7 @@ The `CF-IPCountry` header is removed from requests made from a Worker to an orig
 
 ## CF-Visitor
 
-Currently, this header is a JSON object, containing only one key called “scheme”. The header will be either HTTP or HTTPS, and it is only relevant if you need to enable Flexible SSL in your Cloudflare settings. For example: `CF-Visitor: { \"scheme\":\"https\"}`.
+Currently, this header is a JSON object, containing only one key called "scheme". The header will be either HTTP or HTTPS, and it is only relevant if you need to enable Flexible SSL in your Cloudflare settings. For example: `CF-Visitor: { \"scheme\":\"https\"}`.
 
 ## CDN-Loop
 

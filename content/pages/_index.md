@@ -62,7 +62,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{<related header="D1" href="/d1/" product="d1">}}
 
-D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+D1 is Cloudflare's native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 {{</related>}}
 

@@ -50,7 +50,7 @@ We recommend using groups to define any IP address-based rules you configure in 
 
 {{<Aside>}}
 
-If adding more than one IP address or range to a group, it’s best to use an Include rule. If you don’t use the Include rule, the policy using that group attempts to require traffic to originate from all ranges.
+If adding more than one IP address or range to a group, it's best to use an Include rule. If you don't use the Include rule, the policy using that group attempts to require traffic to originate from all ranges.
 
 {{</Aside>}}
 

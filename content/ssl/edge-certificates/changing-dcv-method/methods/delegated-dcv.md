@@ -10,7 +10,7 @@ meta:
 
 Delegated DCV allows zones with [partial DNS setups](/dns/zone-setups/partial-setup/) - meaning authoritative DNS is not provided by Cloudflare - to delegate the DCV process to Cloudflare.
 
-DCV Delegation requires you to place a one-time record that allows Cloudflare to auto-renew all future certificate orders, so that there’s no manual intervention at the time of the renewal.
+DCV Delegation requires you to place a one-time record that allows Cloudflare to auto-renew all future certificate orders, so that there's no manual intervention at the time of the renewal.
 
 {{<Aside type="note">}}
 DCV Delegation will not work with Universal Certificates and requires the use of an [Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).

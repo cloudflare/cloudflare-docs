@@ -32,14 +32,14 @@ ___
 
 Cloudflare uses both the volume and frequency of traffic to guide your recommended rate. We calculate the recommended rate value throughout the day, and the new calculation may equal the existing recommendation due to similar traffic profiles existing on your API. When we recalculate, we look at requests that happened in the last 24 hours.
 
-You can view the `P50`/`95`/`99` of your request count for more details under an endpoint’s expanded view.
+You can view the `P50`/`95`/`99` of your request count for more details under an endpoint's expanded view.
 
 {{</faq-answer>}}
 {{</faq-item>}}
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Will I be able to access an endpoint’s data after I delete it?" >}}
+{{<faq-question level=2 text="Will I be able to access an endpoint's data after I delete it?" >}}
  
 {{<faq-answer>}}
 

@@ -40,9 +40,9 @@ Using [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set
 
 ### Use Tiered Cache
 
-[Tiered Cache](/cache/how-to/tiered-cache/) uses the size of Cloudflare’s network to reduce requests to customer origins by dramatically increasing cache hit ratios.
+[Tiered Cache](/cache/how-to/tiered-cache/) uses the size of Cloudflare's network to reduce requests to customer origins by dramatically increasing cache hit ratios.
 
-Tiered Cache works by dividing Cloudflare’s data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier must ask an upper-tier to see if it has the content. If the upper-tier does not have the content, only the upper-tier can ask the origin for content. This practice improves bandwidth efficiency by limiting the number of data centers that can ask the origin for content, which reduces origin load and makes websites more cost-effective to operate.
+Tiered Cache works by dividing Cloudflare's data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier must ask an upper-tier to see if it has the content. If the upper-tier does not have the content, only the upper-tier can ask the origin for content. This practice improves bandwidth efficiency by limiting the number of data centers that can ask the origin for content, which reduces origin load and makes websites more cost-effective to operate.
 
 See our [how to enable Tiered Cache article](/cache/how-to/tiered-cache/#enable-tiered-cache)
 
@@ -50,7 +50,7 @@ See our [how to enable Tiered Cache article](/cache/how-to/tiered-cache/#enable-
 ### Use Cache Reserve 
 
 [Cache Reserve](/cache/advanced-configuration/cache-reserve/) is a large, persistent data store implemented on top of [R2](/r2/).
-By pushing a single button in the dashboard, your website’s cacheable content will be written to Cache Reserve. In the same way that Tiered Cache builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want. 
+By pushing a single button in the dashboard, your website's cacheable content will be written to Cache Reserve. In the same way that Tiered Cache builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want. 
 This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
 You can find more details about [Cache Reserve here](/cache/advanced-configuration/cache-reserve/)

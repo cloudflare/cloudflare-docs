@@ -20,9 +20,9 @@ exploited vulnerabilities in the smart contract, stealing $50 million worth of
 Ether.
 
 Because there is no way to undo transactions in Ether, there was a highly
-controversial “hard fork," where the majority of the community agreed to accept
+controversial "hard fork," where the majority of the community agreed to accept
 a block that contained an _irregular state change_ that essentially drained all
-DAO funds into a special “WithdrawDAO” recovery contract. By convincing enough
+DAO funds into a special "WithdrawDAO" recovery contract. By convincing enough
 miners to accept this irregular block as valid, the DAO was able to return
 investors funds. However, not everyone agreed with the chain, with those who
 disagreed rejecting the irregular block and forming the Ethereum Classic
@@ -59,5 +59,5 @@ people can be made to collude to produce a malicious outcome. This is the
 _democratisation of trust_. In the DAO attack, a majority of nodes agreed to
 accept an irregular state transition. This effectively undid the damage of the
 attack, and shows how, at least in the world of blockchain, perception is
-reality. Because most people “believed" -- accepted this irregular block, it
-became a “real” -- valid block.
+reality. Because most people "believed" -- accepted this irregular block, it
+became a "real" -- valid block.

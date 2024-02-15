@@ -10,7 +10,7 @@ inputParameters: productName;;mssURL;;productURL;;tunnelEndpoints
 
 ## Tunnels and encapsulation
 
-$1 uses {{<glossary-tooltip term_id="GRE tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-ipsec/">}}IPsec tunnels{{</glossary-tooltip>}} to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
+$1 uses {{<glossary-tooltip term_id="GRE tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="https://www.cloudflare.com/learning/network-layer/what-is-ipsec/">}}IPsec tunnels{{</glossary-tooltip>}} to transmit packets from Cloudflare's global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you set up tunnel endpoints on routers at your data center.
 
 To accommodate additional header data introduced by encapsulation, the {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
@@ -38,13 +38,13 @@ Note right of C: Egress <br> traffic
 
 ## ​​Anycast
 
-$1 uses {{<glossary-tooltip term_id="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">}}Anycast{{</glossary-tooltip>}} IP addresses for Cloudflare’s tunnel endpoints. In the Anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
+$1 uses {{<glossary-tooltip term_id="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">}}Anycast{{</glossary-tooltip>}} IP addresses for Cloudflare's tunnel endpoints. In the Anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
 This works with {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnels because the GRE protocol is stateless. Each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
 For {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, the customer's router negotiates the creation of an IPsec tunnel with Cloudflare using the {{<glossary-tooltip term_id="Internet key exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} protocol. Next, the Cloudflare server that handled that negotiation will propagate the details of that newly created IPsec tunnel (traffic selectors, keys, etc.) across Cloudflare's data centers. The result is that any Cloudflare server can then handle traffic for that IPsec tunnel, even though only one Cloudflare server actually negotiated the setup of that tunnel.
 
-Cloudflare’s Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
+Cloudflare's Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare's global network as shown in the image below.
 
 ```mermaid
 flowchart LR
@@ -169,8 +169,8 @@ RFC name | Format | Example
 {{</table-wrap>}}
 
 Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following two conditions are met:
-1. The IPsec tunnel’s `customer_endpoint` value is set.
-2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer’s IPsec tunnels.
+1. The IPsec tunnel's `customer_endpoint` value is set.
+2. The combination of `cloudflare_endpoint` and `customer_endpoint` is unique among the customer's IPsec tunnels.
 
 {{<Aside type="warning">}}
 Make sure each IPsec tunnel has a unique combination of a [Cloudflare endpoint and customer endpoint]($4). If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.

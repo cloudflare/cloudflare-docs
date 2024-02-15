@@ -20,7 +20,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 ## Getting started
 
-1.  Run the `wrangler init` command in the root of your project’s directory to generate a basic Worker:
+1.  Run the `wrangler init` command in the root of your project's directory to generate a basic Worker:
 
     ```sh
     $ wrangler init -y
@@ -33,7 +33,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
     - `tsconfig.json`: Added if not already there to support writing the Worker in TypeScript.
     - `src/index.ts`: A basic Cloudflare Worker, written in TypeScript.
 
-2.  Add your site’s build/output directory to the `wrangler.toml` file:
+2.  Add your site's build/output directory to the `wrangler.toml` file:
 
     ```toml
     [site]

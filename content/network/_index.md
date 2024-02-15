@@ -31,7 +31,7 @@ Allow WebSockets connections to your origin server.
 ## Related products
  
 {{<related header="China Network" href="/china-network/" product="china-network">}}
-The Cloudflare China Network is a package of selected Cloudflare’s performance and security products running on data centers located in mainland China and operated by Cloudflare’s partner JD Cloud.
+The Cloudflare China Network is a package of selected Cloudflare's performance and security products running on data centers located in mainland China and operated by Cloudflare's partner JD Cloud.
 {{</related>}}
 
 {{<related header="Managed Transforms" href="/rules/transform/managed-transforms/" product="rules">}}

@@ -64,6 +64,6 @@ domain name, you can do that by [creating a new Ethereum Gateway](/web3/how-to/m
 
 ## Related resources
 
-If you’re interested in learning more, you can read the official [RPC
+If you're interested in learning more, you can read the official [RPC
 documentation](https://github.com/ethereum/wiki/wiki/JSON-RPC), along with the
 official documentation [provided by Ethereum](https://www.ethereum.org/use/).

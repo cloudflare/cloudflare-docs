@@ -25,7 +25,7 @@ For example, you can create an object lifecycle rule to delete objects after 30 
 5. Fill out the fields for the new rule.
 6. When you are done, select **Add rule**.
 
-## Configure a bucket’s lifecycle policy
+## Configure a bucket's lifecycle policy
 
 When you create an object lifecycle rule, you can specify which prefix you would like it to apply to.
 

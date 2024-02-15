@@ -30,5 +30,5 @@ Area 1 is continuously gathering new information about {{<glossary-tooltip term_
 
 You can enable two options: 
 
-- **Post Delivery Response**:  Area 1 will continue to re-evaluate emails already delivered to your users’ inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Area 1 retracts them.
+- **Post Delivery Response**:  Area 1 will continue to re-evaluate emails already delivered to your users' inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Area 1 retracts them.
 - **Phish Submission Response**: Area 1 will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Area 1. Retraction will occur according to your configuration.

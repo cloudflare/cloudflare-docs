@@ -79,7 +79,7 @@ The certificate is not trusted by a public Certificate Authority (CA).
 
 #### Solution
 
-If you’re using a self-signed certificate, Cloudflare recommends either using a publicly trusted certificate or setting the `allow_insecure` property on your Health Check to `true`.
+If you're using a self-signed certificate, Cloudflare recommends either using a publicly trusted certificate or setting the `allow_insecure` property on your Health Check to `true`.
 
 ### TLS name mismatch error
 
@@ -115,7 +115,7 @@ Set the host header in your Health Check object.
 
 #### Cause
 
-The IP address cannot be reached from Cloudflare’s network. Common causes are ISP or hosting provider network issues (e.g. BGP level), or that the IP does not exist.
+The IP address cannot be reached from Cloudflare's network. Common causes are ISP or hosting provider network issues (e.g. BGP level), or that the IP does not exist.
 
 #### Solution
 
@@ -139,7 +139,7 @@ Cloudflare cannot connect to the origin web server due to network unavailability
 
 #### Solution
 
-Check the IP entered for the origin in Cloudflare’s Health Checks configuration or the IP returned via DNS for the origin hostname.
+Check the IP entered for the origin in Cloudflare's Health Checks configuration or the IP returned via DNS for the origin hostname.
 
 ### HTTP Invalid Response
 
@@ -185,7 +185,7 @@ Review your Health Check configuration to ensure it matches an expected request 
 
 #### Cause
 
-The origin web server’s hostname resolves to an internal or restricted address. No checks are run against this origin.
+The origin web server's hostname resolves to an internal or restricted address. No checks are run against this origin.
 
 #### Solution
 

@@ -54,7 +54,7 @@ Cloudflare Durable Objects allows developers to access scalable compute and perm
 
 {{<related header="D1" href="/d1/" product="d1">}}
 
-Built on SQLite, D1 is Cloudflare’s first queryable relational database. Create an entire database by importing data or defining your tables and writing your queries within a Worker or through the API.
+Built on SQLite, D1 is Cloudflare's first queryable relational database. Create an entire database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 {{</related>}}
 

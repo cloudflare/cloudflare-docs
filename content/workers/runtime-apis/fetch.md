@@ -47,7 +47,7 @@ export default {
 highlight: [8]
 ---
 addEventListener('fetch', event => {
-  // NOTE: can’t use fetch here, as we’re not in an async scope yet
+  // NOTE: can't use fetch here, as we're not in an async scope yet
   event.respondWith(eventHandler(event));
 });
 

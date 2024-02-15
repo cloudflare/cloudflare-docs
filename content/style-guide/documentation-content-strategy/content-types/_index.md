@@ -40,7 +40,7 @@ Templates for each content type are also available in our [Cloudflare-docs GitHu
     <tr>
         <td><a href="/style-guide/documentation-content-strategy/content-types/reference/">Reference</a></td>
         <td>No</td>
-        <td>The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</td>
+        <td>The purpose of reference content is to provide supplemental information (a "deep dive") for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</td>
     </tr>
      <tr>
         <td><a href="/style-guide/documentation-content-strategy/content-types/reference-architecture/">Reference architecture</a></td>

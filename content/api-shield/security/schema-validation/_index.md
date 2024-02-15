@@ -75,7 +75,7 @@ If an endpoint is currently protected by a learned schema, the date of the last 
 
 ### Change the global default action of Schema Validation
 
-Schema Validation’s default action is visible on the main Schema Validation page. This action applies to any endpoint with its action set to `Default`. 
+Schema Validation's default action is visible on the main Schema Validation page. This action applies to any endpoint with its action set to `Default`. 
 
 - `Log` action: logs events to [Firewall Events](/firewall/).
 - `Block` action: blocks requests that fail the schema for an endpoint and logs events to [Firewall Events](/firewall/).

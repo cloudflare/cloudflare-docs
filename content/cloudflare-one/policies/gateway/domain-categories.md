@@ -29,7 +29,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Phishing                     | Domains that are known for stealing personal information.                                                                                               |
 | Private IP Address           | Domains that resolve to private IP Addresses.                                                                                                           |
 | Spam                         | Sites that are known for targeting users with unwanted sweepstakes, surveys, and advertisements.                                                        |
-| Spyware                      | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge. |
+| Spyware                      | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user's knowledge. |
 
 {{</table-wrap>}}
 

@@ -67,7 +67,7 @@ Using purge by prefix normalization, when a purge by prefix request comes into C
 
 ### How does URL Normalization work
 
-Take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](/rules/normalization/).
+Take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare's cache views these paths with [normalization on/off](/rules/normalization/).
 
 <table>
   <tbody>

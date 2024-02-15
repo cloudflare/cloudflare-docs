@@ -159,9 +159,9 @@ You can also use the dashboard to enable managed rulesets.
 
 ### Add rule-level overrides
 
-Applying a rule-level override allows you to customize the behavior of the managed ruleset. If you implemented Cloudflare’s above recommendation for the ruleset configuration, the rules will be set to a **Log** action and an **Enabled** status.
+Applying a rule-level override allows you to customize the behavior of the managed ruleset. If you implemented Cloudflare's above recommendation for the ruleset configuration, the rules will be set to a **Log** action and an **Enabled** status.
 
-On the other hand, if you did not apply Cloudflare’s recommendation in the previous step, the ruleset is implemented with all its defaults applied.
+On the other hand, if you did not apply Cloudflare's recommendation in the previous step, the ruleset is implemented with all its defaults applied.
 
 To add rule-level overrides in the dashboard:
 

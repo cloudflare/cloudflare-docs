@@ -62,7 +62,7 @@ Each row represents a packet sample. The sample rate is 1/10,000 packets.
 
 ### `flowtrackdNetworkAnalyticsAdaptiveGroups`
 
-This node is only available to Magic Transit customers. Provides metadata about out-of-state TCP DDoS attacks mitigated by `flowtrackd`, Cloudflare’s Advanced TCP Protection system.
+This node is only available to Magic Transit customers. Provides metadata about out-of-state TCP DDoS attacks mitigated by `flowtrackd`, Cloudflare's Advanced TCP Protection system.
 
 `flowtrackd` does not use the following ID fields: attack ID, rule ID, and ruleset ID.
 

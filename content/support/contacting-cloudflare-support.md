@@ -11,7 +11,7 @@ weight: 1
 
 Cloudflare Support _cannot_ perform the following actions:
 
--   Make configuration or account changes on a customer’s behalf
+-   Make configuration or account changes on a customer's behalf
 -   Provide sensitive account info over the phone
 -   Troubleshoot or answer questions about domains not associated with the Cloudflare account email address used to contact support
 
@@ -82,7 +82,7 @@ To submit a support ticket, follow these steps:
 4.  Verify that you are now in the Support Portal
 5.  Choose the category and subcategories that best define your issue
 6.  Choose the affected domains (if applicable)
-7.  Enter a detailed summary of the issue you’re experiencing.
+7.  Enter a detailed summary of the issue you're experiencing.
 8.  Review the right-hand panel of the Portal for recommended resources and for troubleshooting guides resulting from diagnostics run against your domain.
 9.  If the provided resources did not solve your issue, click Add more details to submit a ticket\*\*
 10.  Complete the ticket submission fields as completely as possible with the following information. _(**Please note** that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) and make sure you include all needed information.)_
@@ -100,7 +100,7 @@ To submit a support ticket, follow these steps:
         -   Relevant logs from the origin web server
         -   Output from [test tools](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) such as MTR, traceroute, dig/nslookup, and cURL
     -   Priority level, impact to service / production
-    -   Any collaborators whom you wish to be cc’d on the ticket
+    -   Any collaborators whom you wish to be cc'd on the ticket
 11.  Click **Submit Ticket**
 
 
@@ -138,7 +138,7 @@ ___
 
 ## Live chat support
 
-You can also use the **live chat** (Business and Enterprise plans, only) to ask specific questions that don’t require a lot of technical investigation:
+You can also use the **live chat** (Business and Enterprise plans, only) to ask specific questions that don't require a lot of technical investigation:
 
 1.  Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
 2.  Enter the email and password for your Cloudflare account. Your email needs to be verified in order to chat live with us.
@@ -173,7 +173,7 @@ Below are definitions of the priority levels Cloudflare assigns to tickets and t
     -   _Example_: Localized site outage. These issues may be with a single website or even a single server.
 -   P3 - Issues that may impact service performance or user experience but do not prevent service usage; account-related queries.
     -   _Example_: slow performance issues, information requests, or usage questions.
--   P4 - General questions related to Cloudflare’s products and services
+-   P4 - General questions related to Cloudflare's products and services
 
 ### Premium SLA
 

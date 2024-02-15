@@ -162,7 +162,7 @@ You have to upload the private key generated in the previous step to Area 1. Thi
 
 ## 4. Adjust the hop count in Area 1
 
-Since Area 1 is not configured as the MX record for your domains, you will need to adjust Area 1’s position (hop count) relative to Area 1’s position in the email processing order.
+Since Area 1 is not configured as the MX record for your domains, you will need to adjust Area 1's position (hop count) relative to Area 1's position in the email processing order.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 

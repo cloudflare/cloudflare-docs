@@ -51,7 +51,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 - **Interactive Challenge**: The visitor receives a challenge page that requires interaction.
 - **Simulate**: The request is allowed through but is logged in the [**Activity log**](/waf/analytics/security-events/paid-plans/#activity-log).
 
-Cloudflare’s [WAF changelog](/waf/change-log/) allows customers to monitor ongoing changes to the Cloudflare Managed Ruleset.
+Cloudflare's [WAF changelog](/waf/change-log/) allows customers to monitor ongoing changes to the Cloudflare Managed Ruleset.
 
 ___
 
@@ -128,5 +128,5 @@ ___
 - [Troubleshoot WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/troubleshooting/)
 - [Security Events](/waf/analytics/security-events/)
 - [Cloudflare WAF](/waf/)
-- [Cloudflare’s WAF changelog](/waf/change-log/)
+- [Cloudflare's WAF changelog](/waf/change-log/)
 - [WAF custom rules](/waf/custom-rules/)

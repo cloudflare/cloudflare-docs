@@ -14,7 +14,7 @@ ___
 
 ## Stage One: Improve Site Security
 
-In this stage, you are reinforcing the zone’s security features, which may cause additional disruption to admin features until exceptions can be applied. For that reason, it’s recommended to make these changes with expected administrative downtime. 
+In this stage, you are reinforcing the zone's security features, which may cause additional disruption to admin features until exceptions can be applied. For that reason, it's recommended to make these changes with expected administrative downtime. 
 
 The following should be considered an overview of some recommended security actions, and not a comprehensive guide. Refer to the developer documentation for specific products or features for more information.
 
@@ -38,10 +38,10 @@ ___
 
 ## Stage Two: Restore Administrative Functions
 
-Using the principle of least privilege, you can run some test actions from the admin panel to audit what is blocked and what is allowed. With this information, you can create precise exceptions. If the behavior doesn’t match your expectations, make sure to check that:
+Using the principle of least privilege, you can run some test actions from the admin panel to audit what is blocked and what is allowed. With this information, you can create precise exceptions. If the behavior doesn't match your expectations, make sure to check that:
 
 1.  The DNS record is proxied
-2.  You don’t have any Rules that would interfere with the WAF (like a Page Rule that is set to Disable Security)
+2.  You don't have any Rules that would interfere with the WAF (like a Page Rule that is set to Disable Security)
 
 After generating enough requests to have a good sample logged in your Firewall Events, observe the actions that were taken in the Managed rules section:
 
@@ -66,11 +66,11 @@ Any of these fields can be spoofed, so this is not a security measure on its own
 
 ### Skip specific rules from a Managed Ruleset
 
-Next, you want to use the information from your Firewall logs to select which rules to skip by [adding an exception](/waf/custom-rules/skip/). For WordPress, I’ve chosen the following:
+Next, you want to use the information from your Firewall logs to select which rules to skip by [adding an exception](/waf/custom-rules/skip/). For WordPress, I've chosen the following:
 
 ![](/images/support/Screenshot_2022-12-23_at_17.08.37.png)
 
-After this is complete, you will want to create a similar rule for any rulesets that prevent you from logging in. In my use case, I only needed to skip “OWASP Core Ruleset 949110.”
+After this is complete, you will want to create a similar rule for any rulesets that prevent you from logging in. In my use case, I only needed to skip "OWASP Core Ruleset 949110."
 
 **Note:** You may also want to consider adding a rule to skip the CMS-specific rules you enabled for non-CMS sections of your site if they cause any issues. Just follow the steps above, and set it to skip any of the Cloudflare Managed Ruleset rules that were enabled above. You can set this based on hostname, URI, or cookie, using the operators **does not equal, does not match,** or **does not contain**.
 
@@ -80,7 +80,7 @@ ___
 
 ## Stage Three: Restrict Access
 
-Now that you’ve elevated your security to protect the publicly accessible parts of your site against attacks and restored necessary administrative capabilities, you can further restrict who can access your admin panel in case of weak or exposed login credentials.
+Now that you've elevated your security to protect the publicly accessible parts of your site against attacks and restored necessary administrative capabilities, you can further restrict who can access your admin panel in case of weak or exposed login credentials.
 
 ### Zero Trust
 
@@ -97,7 +97,7 @@ While designed for authenticating appliances that cannot perform a login, you ca
 Do the following:
 
 1. [Create a client certificate](/ssl/client-certificates/create-a-client-certificate/) and save both the certificate and key to your device.
-2. Import the certificate to your computer’s key storage. With macOS Keychain, you can use the steps listed in [Test in the browser](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
+2. Import the certificate to your computer's key storage. With macOS Keychain, you can use the steps listed in [Test in the browser](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 3. [Enable mTLS](/ssl/client-certificates/enable-mtls/) by adding the correct host.
 4. In **SSL/TLS** > **Client Certificates**, select **Create mTLS Rule**.
 5. Under **If incoming requests match**, enter a value for thr **URI Path** field to narrow the rule scope to the admin section, otherwise you will block your visitors from accessing the public content.

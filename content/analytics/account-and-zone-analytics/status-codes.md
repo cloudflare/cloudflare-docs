@@ -12,7 +12,7 @@ Status Codes analytics by data center is exclusive to the [enterprise level of s
 
 Status Codes metrics in the Cloudflare dashboard **Analytics** app provide customers with a deeper insight into the distribution of errors that are occurring on their website per data center. A data center facility is where Cloudflare runs its servers that make up our edge network ([current locations](https://www.cloudflare.com/network/)).
 
-HTTP status codes that appear in a response passing through our edge are displayed in analytics. These codes can be split into three groups: ‘edge network errors’, ‘origin errors’ and '52x errors'.
+HTTP status codes that appear in a response passing through our edge are displayed in analytics. These codes can be split into three groups: 'edge network errors', 'origin errors' and '52x errors'.
 
 Errors that originate from our edge servers -such as `502`, `503`, and `504` with 'Cloudflare'- are not reported as part of the error analytics. However, errors such as `52x`, can inform you about problems with your server.
 

@@ -90,11 +90,11 @@ Some browsers either require a browser extension or cannot generate a HAR. When 
 
 2\. Go to `chrome://inspect/#devices`.
 
-3\. If debugging mode is enabled, you will see your device listed below “Remote Target” like the example below:
+3\. If debugging mode is enabled, you will see your device listed below "Remote Target" like the example below:
 
 ![Where to find the Inspect Devices when in Debug Mode for Android.](/images/support/step_1.jpg)
 
-4\. Type in the URL, select **Open** and **inspect** to open Chrome’s DevTools.
+4\. Type in the URL, select **Open** and **inspect** to open Chrome's DevTools.
 
 5\. Select the **Network** tab in the DevTools window.
 
@@ -200,7 +200,7 @@ View the sections below for tips on troubleshooting HTTP errors, performance, ca
 
 ### HTTP errors
 
-When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare’s proxy):
+When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare's proxy):
 
 ```
 $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
@@ -388,9 +388,9 @@ ___
 
 ## Perform a MTR
 
-Traceroute (MTR) is a tool that combines traceroute and ping, which is another common method for testing network connectivity and speed. In addition to the hops along the network path, MTR shows constantly updating information about the latency and packet loss along the route to the destination. This helps in troubleshooting network issues by allowing you to see what’s happening along the path in real-time.
+Traceroute (MTR) is a tool that combines traceroute and ping, which is another common method for testing network connectivity and speed. In addition to the hops along the network path, MTR shows constantly updating information about the latency and packet loss along the route to the destination. This helps in troubleshooting network issues by allowing you to see what's happening along the path in real-time.
 
-MTR works by discovering the network path in a similar manner to traceroute, and then regularly sending packets to continue collecting information to provide an updated view into the network’s health and speed.
+MTR works by discovering the network path in a similar manner to traceroute, and then regularly sending packets to continue collecting information to provide an updated view into the network's health and speed.
 
 Like traceroute, MTR can use ICMP or UDP for outgoing packets but relies on ICMP for return (Type 11: Time Exceeded) packets.
 

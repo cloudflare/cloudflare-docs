@@ -28,7 +28,7 @@ Several examples of helpful insights into your site performance via Cache Analyt
 - Short cache expiration TTL.
 
   - Identify the issue: Select **Add filter** and select **Cache status equals Revalidated**.
-  - Resolution: [Increase Cloudflare’s Edge Cache TTL via a Page Rule](/cache/how-to/edge-browser-cache-ttl/).
+  - Resolution: [Increase Cloudflare's Edge Cache TTL via a Page Rule](/cache/how-to/edge-browser-cache-ttl/).
 
 - Need to enable Tiered Cache or Custom Cache Key
 

@@ -192,7 +192,7 @@ The JSON object properties for a rule are defined as follows:
       <td>
         <code>action</code>
       </td>
-      <td>Defines what happens when there’s a match for the rule expression.</td>
+      <td>Defines what happens when there's a match for the rule expression.</td>
       <td>String</td>
       <td>The available actions depend on the <a href="/ruleset-engine/about/phases/">phase</a> where the rule's ruleset is executed.</td>
     </tr>

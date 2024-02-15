@@ -8,7 +8,7 @@ title: General DNS issues
 
 In web browsers such as Safari or Chrome, there are several commonly observable DNS errors:
 
--   `This site can’t be reached`
+-   `This site can't be reached`
 -   `This webpage is not available`
 -   `err_name_not_resolved`
 -   `Can't find the server`

@@ -14,7 +14,7 @@ APO cache by device type provides all of the same benefits of Cloudflare's cache
 
 To enable caching by device type, enable the setting from the Cloudflare dashboard's APO card or from the WordPress plugin version 4.4.0 or later.
 
-Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
+Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, `desktop` for every request to specify the visitor's device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
 {{<Aside>}}
 

@@ -35,7 +35,7 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes.
 
 {{<Aside type="warning" header="Warning">}}
-If you change your team name, you need to update your organization’s identity providers (IdPs) and the WARP client to reflect the new team name in order to avoid any mismatch errors.
+If you change your team name, you need to update your organization's identity providers (IdPs) and the WARP client to reflect the new team name in order to avoid any mismatch errors.
 {{</Aside>}}
 
 {{</faq-answer>}}
@@ -68,13 +68,13 @@ User seats can be removed for Access and Gateway at **My Team** > **Users**. Rem
 
 {{<Aside type="warning">}}
 
-The Remove action will remove a user’s seat, but it will not permanently revoke their ability to authenticate. To permanently disable a user’s ability to authenticate, you must modify the policies that allow them to reach a given application or enroll a device in WARP.
+The Remove action will remove a user's seat, but it will not permanently revoke their ability to authenticate. To permanently disable a user's ability to authenticate, you must modify the policies that allow them to reach a given application or enroll a device in WARP.
 
 {{</Aside>}}
 
 ### Revoking users
 
-The Revoke action will terminate active sessions and log out active devices, but will not remove the user’s consumption of an active seat.
+The Revoke action will terminate active sessions and log out active devices, but will not remove the user's consumption of an active seat.
 
 {{</faq-answer>}}
 {{</faq-item>}}

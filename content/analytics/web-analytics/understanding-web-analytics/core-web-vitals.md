@@ -16,7 +16,7 @@ Core Web Vitals is currently only supported in Chromium browsers, with Safari an
 
 ## Web Analytics Vitals Explorer
 
-Vitals Explorer enables you to easily pinpoint which elements in a web page are affecting the user’s experience while browsing your website, in a visual form.
+Vitals Explorer enables you to easily pinpoint which elements in a web page are affecting the user's experience while browsing your website, in a visual form.
 To find Vitals Explorer:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.

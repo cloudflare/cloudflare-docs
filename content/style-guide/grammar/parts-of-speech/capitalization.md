@@ -19,7 +19,7 @@ Each product, service, and feature should be properly spelled and capitalized wh
 **When to use Waiting Room capitalized and singular:**
 + Naming the product: *Waiting Room keeps wait times low by dynamically managing traffic.* 
 + Page title: *Access Waiting Room*
-+ Preceded by “Cloudflare”: *Cloudflare Waiting Room allows organizations to…*
++ Preceded by "Cloudflare": *Cloudflare Waiting Room allows organizations to…*
 + Preceding a feature name: *Waiting Room Event Scheduling*
 
 **When to waiting room(s) lower-case and in singular or plural:**

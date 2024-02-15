@@ -42,7 +42,7 @@ You must specify at least one option. Options are comma-separated (spaces are no
 
 {{<render file="_supported-properties.md">}}
 
-<!-- rotate is not a generally useful option, so it’s only documented in the advanced section -->
+<!-- rotate is not a generally useful option, so it's only documented in the advanced section -->
 
 ## Recommended image sizes
 

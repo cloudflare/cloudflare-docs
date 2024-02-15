@@ -31,12 +31,12 @@ If your domain was using a [full setup](/dns/zone-setups/full-setup/), your regi
 11. Use either the command-line based "whois" application provided with your Operating System or a website such as [ICANN Lookup](https://lookup.icann.org/).
 
     -   If you are unable to find the nameserver details for your domain, reach out to your domain registrar or domain provider to provide the domain registration information.
-    -   Ensure Cloudflare’s nameservers are the only two nameservers listed in the domain registration details.
+    -   Ensure Cloudflare's nameservers are the only two nameservers listed in the domain registration details.
     -   Ensure nameservers are spelled correctly in the domain registration.
 
 2. Confirm that the nameservers exactly match the nameservers provided within the **Cloudflare Nameservers** section of the Cloudflare **DNS** app.
 
-3. If you identify incorrect information, log in to your domain provider’s portal to make updates or contact your domain provider for assistance.
+3. If you identify incorrect information, log in to your domain provider's portal to make updates or contact your domain provider for assistance.
 
 ___
 

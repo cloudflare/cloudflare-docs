@@ -5,7 +5,7 @@ title: Tags
 
 # Tags
 
-To help you manage your customers’ Workers, use tags to better perform create, read, update, delete (CRUD) operations at scale. Tag user Worker scripts based on user ID, account ID, project ID, and environment. After you tag user Workers, when a user deletes their project, you will be able to delete all Workers associated with that project simultaneously.
+To help you manage your customers' Workers, use tags to better perform create, read, update, delete (CRUD) operations at scale. Tag user Worker scripts based on user ID, account ID, project ID, and environment. After you tag user Workers, when a user deletes their project, you will be able to delete all Workers associated with that project simultaneously.
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags" \

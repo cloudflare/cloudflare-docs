@@ -17,7 +17,7 @@ Find the latest quarterly DDoS threat reports in the [**Reports**](https://radar
 
 ### How we calculate ransom DDoS attack insights
 
-Cloudflare’s systems constantly analyze traffic and automatically apply mitigation when DDoS attacks are detected. Each attacked customer is prompted with an automated survey to help Cloudflare better understand the nature of the attack and the success of the mitigation. For over two years, Cloudflare has been surveying attacked customers. One of the questions in the survey asks the respondents if they received a threat or a ransom note. Over the past two years, on average, Cloudflare collected 164 responses per quarter. The responses of this survey are used to calculate the percentage of ransom DDoS attacks.
+Cloudflare's systems constantly analyze traffic and automatically apply mitigation when DDoS attacks are detected. Each attacked customer is prompted with an automated survey to help Cloudflare better understand the nature of the attack and the success of the mitigation. For over two years, Cloudflare has been surveying attacked customers. One of the questions in the survey asks the respondents if they received a threat or a ransom note. Over the past two years, on average, Cloudflare collected 164 responses per quarter. The responses of this survey are used to calculate the percentage of ransom DDoS attacks.
 
 ### How we calculate geographical and industry insights
 
@@ -29,11 +29,11 @@ At the application layer, Cloudflare uses the attacking IP addresses to understa
 
 #### Target country
 
-For both application-layer and network-layer DDoS attacks, attacks and traffic are grouped by customers’ billing country. This allows Cloudflare to understand which countries are subject to more attacks.
+For both application-layer and network-layer DDoS attacks, attacks and traffic are grouped by customers' billing country. This allows Cloudflare to understand which countries are subject to more attacks.
 
 #### Target industry
 
-For both application-layer and network-layer DDoS attacks, attacks and traffic are grouped by customers’ industry according to the internal customer relations management system. This allows Cloudflare to understand which industries are subject to more attacks.
+For both application-layer and network-layer DDoS attacks, attacks and traffic are grouped by customers' industry according to the internal customer relations management system. This allows Cloudflare to understand which industries are subject to more attacks.
 
 #### Total volume versus percentage
 

@@ -16,7 +16,7 @@ For example, you may expect that API requests made during a bank funds transfer 
 | Order | Method | Path | Description |
 | --- | --- | --- | --- |
 | 1 | `GET` | `/api/v1/users/{user_id}/accounts` | `user_id` is the active user. |
-| 2 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is one of the user’s accounts. |
+| 2 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is one of the user's accounts. |
 | 3 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user. |
 | 4 | `POST` | `/api/v1/transferFunds` | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
 

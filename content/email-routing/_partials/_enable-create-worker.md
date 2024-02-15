@@ -25,4 +25,4 @@ _build:
 
 12. Select **Save** to finish setting up your Email Worker.
 
-You have successfully created your Email Worker. In the Email Worker’s card, select the **route** field to expand it and check the routes associated with the Worker.
+You have successfully created your Email Worker. In the Email Worker's card, select the **route** field to expand it and check the routes associated with the Worker.

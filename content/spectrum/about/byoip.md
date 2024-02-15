@@ -6,7 +6,7 @@ weight: 0
 
 # BYOIP
 
-When creating a Spectrum application, Cloudflare normally assigns an arbitrary IP from Cloudflare’s IP pool to your application. If you want to be explicit in your network setup or use your own IP addresses, BYOIP with Spectrum allows you to do just that.
+When creating a Spectrum application, Cloudflare normally assigns an arbitrary IP from Cloudflare's IP pool to your application. If you want to be explicit in your network setup or use your own IP addresses, BYOIP with Spectrum allows you to do just that.
 
 BYOIP stands for [Bring Your Own IP](/byoip/). If you own an IP prefix you can migrate it to Cloudflare. After migration, Cloudflare broadcasts your IP prefix and traffic is routed to the global Cloudflare network. However, without configuration, Cloudflare will not know how to handle this traffic. The last step is to add Spectrum applications for all applications that you wish to protect with the IP addresses you want associated with them.
 
@@ -47,7 +47,7 @@ To use an IP, it must be assigned to a Spectrum app to create the appropriate A 
 
 ## Example
 
-In the example below, the application routes traffic through Cloudflare’s HTTP pipeline, including WAF, Workers and CDN functionality.
+In the example below, the application routes traffic through Cloudflare's HTTP pipeline, including WAF, Workers and CDN functionality.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \

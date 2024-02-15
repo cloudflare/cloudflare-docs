@@ -74,7 +74,7 @@ async function handleRequest(req) {
 
 ### Document Handlers
 
-A document handler represents the incoming HTML document. A number of functions can be defined on a document handler to query and manipulate a document’s `doctype`, `comments`, `text`, and `end`. Unlike an element handler, a document handler’s `doctype`, `comments`, `text`, and `end` functions are not scoped by a particular selector. A document handler's functions are called for all the content on the page including the content outside of the top-level HTML tag:
+A document handler represents the incoming HTML document. A number of functions can be defined on a document handler to query and manipulate a document's `doctype`, `comments`, `text`, and `end`. Unlike an element handler, a document handler's `doctype`, `comments`, `text`, and `end` functions are not scoped by a particular selector. A document handler's functions are called for all the content on the page including the content outside of the top-level HTML tag:
 
 ```js
 class DocumentHandler {
@@ -127,11 +127,11 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 - `tagName` {{<type>}}string{{</type>}}
 
-  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
+  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element's tag.
 
 - `attributes` {{<type>}}Iterator{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-  - A `[name, value]` pair of the tag’s attributes.
+  - A `[name, value]` pair of the tag's attributes.
 
 - `removed` {{<type>}}boolean{{</type>}}
 
@@ -212,7 +212,7 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 - `name` {{<type>}}string{{</type>}}
 
-  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
+  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element's tag.
 
 {{</definitions>}}
 
@@ -240,7 +240,7 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 Since Cloudflare performs zero-copy streaming parsing, text chunks are not the same thing as text nodes in the lexical tree. A lexical tree text node can be represented by multiple chunks, as they arrive over the wire from the origin.
 
-Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `“Hey. How ”,` then `“are you?”`. When the last chunk arrives, the text’s `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
+Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `"Hey. How ",` then `"are you?"`. When the last chunk arrives, the text's `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
 
 #### Properties
 
@@ -304,7 +304,7 @@ class ElementHandler {
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
 - `comment.text` {{<type>}}string{{</type>}}
-  - The text of the comment. This property can be assigned different values, to modify comment’s text.
+  - The text of the comment. This property can be assigned different values, to modify comment's text.
 
 {{</definitions>}}
 
@@ -334,7 +334,7 @@ class ElementHandler {
 
 ### Doctype
 
-The `doctype` function on a document handler allows developers to query a document’s [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doctype).
+The `doctype` function on a document handler allows developers to query a document's [doctype](https://developer.mozilla.org/en-US/docs/Glossary/Doctype).
 
 ```js
 class DocumentHandler {

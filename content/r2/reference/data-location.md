@@ -58,7 +58,7 @@ The following hint locations are supported:
 
 ### Additional considerations
 
-Location Hints are only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket’s location will be used.
+Location Hints are only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket's location will be used.
 
 ## Jurisdictional Restrictions
 

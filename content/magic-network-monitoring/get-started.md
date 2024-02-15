@@ -14,7 +14,7 @@ There is also a [free version](/magic-network-monitoring/magic-network-monitorin
 
 ## 1. Verify NetFlow or sFlow capabilities
 
-Verify your routers are capable of exporting {{<glossary-tooltip term_id="NetFlow">}}NetFlow{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="sFlow">}}sFlow{{</glossary-tooltip>}} to an IP address on Cloudflare’s network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Verify your routers are capable of exporting {{<glossary-tooltip term_id="NetFlow">}}NetFlow{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="sFlow">}}sFlow{{</glossary-tooltip>}} to an IP address on Cloudflare's network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
 Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
 

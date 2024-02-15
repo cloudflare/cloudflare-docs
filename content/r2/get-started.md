@@ -33,7 +33,7 @@ Before you create your first bucket, you must purchase R2 from the Cloudflare da
 
 {{<render file="_install_wrangler.md" productFolder="workers" >}}
 
-2. [Authenticate Wrangler](/workers/wrangler/commands/#login) to enable deployments to Cloudflare. When Wrangler automatically opens your browser to display Cloudflare’s consent screen, select **Allow** to send the API Token to Wrangler.
+2. [Authenticate Wrangler](/workers/wrangler/commands/#login) to enable deployments to Cloudflare. When Wrangler automatically opens your browser to display Cloudflare's consent screen, select **Allow** to send the API Token to Wrangler.
 
 ```txt
 wrangler login

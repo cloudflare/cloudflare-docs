@@ -9,12 +9,12 @@ meta:
 
 # Configure the Worker for JWT Validation
 
-Use a Worker to automatically keep your identity provider’s latest public key in the JWT Validation configuration.
+Use a Worker to automatically keep your identity provider's latest public key in the JWT Validation configuration.
 
 ## Prerequisites
 
 - Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/).
-- Find your identity provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
+- Find your identity provider's JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
 - Create a [Token Validation Configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
 - [Create a new API token](https://dash.cloudflare.com/profile/api-tokens) with the API Gateway `Write` permission.
 
@@ -27,7 +27,7 @@ Use a Worker to automatically keep your identity provider’s latest public key 
 
 ## Manually query the JWKs endpoint
 
-Find your Identity Provider’s URL and fetch the keys using `curl` and `jq`. Your URL may return more than just the issuer’s keys, so Cloudflare recommends using `jq` to filter the response to only return the keys. You must update the provided Worker sample code if your JWKs do not have a `keys` object.
+Find your Identity Provider's URL and fetch the keys using `curl` and `jq`. Your URL may return more than just the issuer's keys, so Cloudflare recommends using `jq` to filter the response to only return the keys. You must update the provided Worker sample code if your JWKs do not have a `keys` object.
 
 {{<Aside type="note">}}
 The keys listed below are for example purposes only and must not be used in your production environment, as they will never match the keys used by your identity provider to sign JWTs.
@@ -65,7 +65,7 @@ $ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | j
 2. Copy and paste the example code below into your new Worker, completely replacing any code that already exists.
 3. Replace the current zone ID with your zone ID.
 4. Replace the current Token Validation Configuration ID with your Token Validation Configuration.
-5. Replace the current identity provider’s URL with your identity provider’s key URL.
+5. Replace the current identity provider's URL with your identity provider's key URL.
 
 {{<Aside type="note">}}
 Identity provider URLs can typically be accessed at a known URL specific to your deployment. If you are unsure of the URL, contact your identity provider.

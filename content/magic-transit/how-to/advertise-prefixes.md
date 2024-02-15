@@ -66,9 +66,9 @@ You can only delete a prefix with an **Unapproved** status. To delete prefixes w
 
 ## Border Gateway Protocol (BGP) control for advertisements
 
-Use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare’s global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare’s globally distributed Route Reflectors, which will initiate propagation of your prefix advertisement across Cloudflare's global network.
+Use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare's global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare's globally distributed Route Reflectors, which will initiate propagation of your prefix advertisement across Cloudflare's global network.
 
-Prefixes can be advertised from Cloudflare’s network in a supported on-demand method such as BGP Control, or dynamically via the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). During the onboarding of your on-demand prefixes, please specify whether you want BGP-controlled advertisement or dynamic advertisement (via dashboard/API/Magic Network Monitoring).
+Prefixes can be advertised from Cloudflare's network in a supported on-demand method such as BGP Control, or dynamically via the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). During the onboarding of your on-demand prefixes, please specify whether you want BGP-controlled advertisement or dynamic advertisement (via dashboard/API/Magic Network Monitoring).
 
 ![BGP diagram for Magic Transit](/images/magic-transit/bgp-diagram.png)
 
@@ -82,7 +82,7 @@ After receiving your information, Cloudflare will update firewall filters to est
 
 ### Regional settings
 
-Magic Transit requires static routing to steer traffic from Cloudflare’s network over one of your configured tunnel off-ramps (GRE, IPsec or CNI). Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally. The default setting for static route regions is **All Regions**. Refer to [Configure static routes](/magic-transit/how-to/configure-static-routes/) for more information.
+Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (GRE, IPsec or CNI). Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally. The default setting for static route regions is **All Regions**. Refer to [Configure static routes](/magic-transit/how-to/configure-static-routes/) for more information.
 
 ## Example router configurations
 

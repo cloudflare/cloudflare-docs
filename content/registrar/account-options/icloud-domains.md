@@ -6,7 +6,7 @@ title: iCloud Custom Email Domains
 
 # iCloud Custom Email Domains
 
-With [iCloud Custom Email Domain](https://support.apple.com/kb/HT212514), you can now purchase a custom domain right from iCloud Settings through Cloudflare and have it automatically set up with your iCloud Mail account. It’s great if you want to create a custom email domain for you or your family, such as @examplefamily.com.
+With [iCloud Custom Email Domain](https://support.apple.com/kb/HT212514), you can now purchase a custom domain right from iCloud Settings through Cloudflare and have it automatically set up with your iCloud Mail account. It's great if you want to create a custom email domain for you or your family, such as @examplefamily.com.
 
 You will need an active iCloud+ subscription to add a custom email domain.
 
@@ -22,7 +22,7 @@ Once you have bought a custom email domain, you can manage your domain and other
 
 ### Signing in with Apple
 
-If you had signed up with Apple, signing into Cloudflare is as easy as clicking the “Sign in with Apple” button.
+If you had signed up with Apple, signing into Cloudflare is as easy as clicking the "Sign in with Apple" button.
 
 ### Signing in with Cloudflare
 
@@ -70,7 +70,7 @@ If your domain has records similar to those listed above and you are still exper
 
 If you try to visit your new domain, your browser will show an error or empty page.
 
-That’s because there’s more to setting up a website than purchasing a domain name (which you just did) and setting up email records (which we just did for you). 
+That's because there's more to setting up a website than purchasing a domain name (which you just did) and setting up email records (which we just did for you). 
 
 If you want your domain to be a fully functioning website, you will need to:
 

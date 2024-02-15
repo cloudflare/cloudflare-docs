@@ -57,7 +57,7 @@ NAv2 uses the same API endpoint but makes use of new nodes. While NAv1 has three
 
 {{</table-wrap>}}
 
-Each row represents one packet sample. The data is sampled at Cloudflare’s edge at [various rates](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/). You can also query the sample rate from the nodes using the `sample_interval` field.
+Each row represents one packet sample. The data is sampled at Cloudflare's edge at [various rates](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/). You can also query the sample rate from the nodes using the `sample_interval` field.
 
 For reference information on NAv2 nodes, refer to the [NAv2 node reference](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/).
 

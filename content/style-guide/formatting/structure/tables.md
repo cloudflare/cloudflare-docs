@@ -33,7 +33,7 @@ Do not use tables to format a page.
 
 **Add a table**
 
-To add a table, use three or more hyphens (---) to create each column’s header, and use pipes (|) to separate each column. For compatibility, you should also add a pipe on either end of the row.
+To add a table, use three or more hyphens (---) to create each column's header, and use pipes (|) to separate each column. For compatibility, you should also add a pipe on either end of the row.
 
 ```
 | Syntax      | Description |
@@ -73,7 +73,7 @@ The rendered output looks like this:
 
 You can format the text within tables. For example, you can add links, code, and emphasis.
 
-You can’t add headings, blockquotes, lists, horizontal rules, images, or HTML tags.
+You can't add headings, blockquotes, lists, horizontal rules, images, or HTML tags.
 
 ## Escaping pipe characters in tables
 

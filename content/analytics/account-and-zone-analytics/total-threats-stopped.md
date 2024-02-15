@@ -6,7 +6,7 @@ title: Total threats stopped
 
 # Total threats stopped
 
-Total Threats Stopped measures the number of “suspicious” and “bad” requests that were aimed at your site. Requests receive these labels by our IP Reputation Database as they enter Cloudflare’s network:
+Total Threats Stopped measures the number of "suspicious" and "bad" requests that were aimed at your site. Requests receive these labels by our IP Reputation Database as they enter Cloudflare's network:
 
 -   **Legitimate:** request pass directly to your site
 -   **Suspicious:** request has been challenged with a [Cloudflare challenge](/waf/reference/cloudflare-challenges/)

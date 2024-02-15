@@ -247,7 +247,7 @@ Workers integration supports:
 - `webp`: Generate images in Google WebP format. Set the quality to `100` to get the WebP lossless format.
 - `jpeg`: Generate images in interlaced progressive JPEG format, in which data is compressed in multiple passes of progressively higher detail.
 - `baseline-jpeg`: Generate images in baseline sequential JPEG format. It should be used in cases when target devices don't support progressive JPEG or other modern file formats.
-- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain data such as image size (before and after resizing), source image’s MIME type, and file size.
+- `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain data such as image size (before and after resizing), source image's MIME type, and file size.
 
 Example:
 

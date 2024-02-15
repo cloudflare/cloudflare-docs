@@ -14,7 +14,7 @@ As part of this process, you may also want to [generate a Certificate Signing Re
 
 ## Use cases
 
-This situation commonly occurs when your customers use Extended Validation (EV) certificates (the “green bar”) or when their information security policy prohibits third parties from generating private keys on their behalf.
+This situation commonly occurs when your customers use Extended Validation (EV) certificates (the "green bar") or when their information security policy prohibits third parties from generating private keys on their behalf.
 
 ## Limitations
 

@@ -34,7 +34,7 @@ WARP is available to several operating systems, including iOS and Android.
 ## Related products
  
 {{<related header="1.1.1.1" href="/1.1.1.1/" product="1.1.1.1">}}
-1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet.
+1.1.1.1 is Cloudflare's public DNS resolver. It offers a fast and private way to browse the Internet.
 {{</related>}}
 
 {{<related header="WARP for Zero Trust" href="/cloudflare-one/connections/connect-devices/warp/" product="cloudflare-one">}}

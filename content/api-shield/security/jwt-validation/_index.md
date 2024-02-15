@@ -6,15 +6,15 @@ weight: 5
 
 # JSON Web Tokens Validation
 
-{{<glossary-tooltip term_id="JSON web token (JWT)">}}JSON web tokens (JWT){{</glossary-tooltip>}} are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
+{{<glossary-tooltip term_id="JSON web token (JWT)">}}JSON web tokens (JWT){{</glossary-tooltip>}} are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token's integrity is important.
 
-API Shield’s JWT Validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT Validation will also stop requests with expired tokens or tokens that are not yet valid.
+API Shield's JWT Validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT Validation will also stop requests with expired tokens or tokens that are not yet valid.
 
 ## Process
 
 Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for JWT Validation to protect them.
 
-A JWT Validation configuration consists of creating a Token Validation Configuration by adding your JWT signer’s public keys and a JWT Validation Rule by specifying which hostnames and endpoints should be included for validation.
+A JWT Validation configuration consists of creating a Token Validation Configuration by adding your JWT signer's public keys and a JWT Validation Rule by specifying which hostnames and endpoints should be included for validation.
 
 ### Add a Token Validation Configuration
 
@@ -23,7 +23,7 @@ A JWT Validation configuration consists of creating a Token Validation Configura
 3. Under **JSON Web Token Settings**, select **Add configuration**.
 4. Add a name for your configuration.
 5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
-6. Copy and paste your JWT issuer’s public key(s).
+6. Copy and paste your JWT issuer's public key(s).
 
 {{<Aside type="note">}}
 Each JWT issuer typically publishes public keys for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.

@@ -12,8 +12,8 @@ Adaptive DDoS Protection provides the following types of protection:
 
 * **Adaptive DDoS Protection for Origins**: Detects and mitigates traffic that deviates from your site's origin errors profile.
 * **Adaptive DDoS Protection for User-Agents**: Detects and mitigates traffic that deviates from the top User Agents seen by Cloudflare on the network. The User Agent profile is built from the entire Cloudflare network and not only from the customer's zone.
-* **Adaptive DDoS Protection for Locations**: Detects and mitigates traffic that deviates from your site’s geo-distribution profile. The profile is calculated from the rate for every client country and region, using the rates from the past seven days.
-* **Adaptive DDoS Protection for Protocols**: Detects and mitigates traffic that deviates from your traffic’s IP protocol profile. The profile is calculated as a global rate for each of your prefixes.
+* **Adaptive DDoS Protection for Locations**: Detects and mitigates traffic that deviates from your site's geo-distribution profile. The profile is calculated from the rate for every client country and region, using the rates from the past seven days.
+* **Adaptive DDoS Protection for Protocols**: Detects and mitigates traffic that deviates from your traffic's IP protocol profile. The profile is calculated as a global rate for each of your prefixes.
 
 ## Availability
 
@@ -41,13 +41,13 @@ For Protocols   | Client IP country and Region for UDP       | —   | Yes
 
 Adaptive DDoS Protection creates a traffic profile by looking at the maximum rates of traffic every day, for the past seven days. These profiles are recalculated every day, keeping the seven-day time window. Adaptive DDoS Protection stores the maximal traffic rates seen for every predefined dimension value (the profiling dimension varies for each rule). Every profile uses one dimension, such as the source country of the request, the user agent, and the IP protocol. Incoming traffic that deviates from your profile may be malicious.
 
-To eliminate outliers, rate calculations only consider the 95th percentile rates (discarding the top 5% of the highest rates). Additionally, Adaptive DDoS Protection rules also take into account Cloudflare’s [Machine Learning (ML) models](/bots/concepts/bot-score/#machine-learning) to identify traffic that is likely automated.
+To eliminate outliers, rate calculations only consider the 95th percentile rates (discarding the top 5% of the highest rates). Additionally, Adaptive DDoS Protection rules also take into account Cloudflare's [Machine Learning (ML) models](/bots/concepts/bot-score/#machine-learning) to identify traffic that is likely automated.
 
 Cloudflare may change the logic of these protection rules from time to time to improve them. Any rule changes will appear in the [Managed rulesets changelog](/ddos-protection/change-log/) page.
 
 ### DDoS protection based on the origin HTTP error rate
 
-Cloudflare’s network is built to automatically monitor and mitigate large DDoS attacks. Cloudflare also helps mitigate smaller DDoS attacks, based on the following general rules:
+Cloudflare's network is built to automatically monitor and mitigate large DDoS attacks. Cloudflare also helps mitigate smaller DDoS attacks, based on the following general rules:
 
 * For zones on any plan, Cloudflare will apply mitigations when the HTTP error rate is above the _High_ (default) sensitivity level of 1,000 errors-per-second rate threshold. You can decrease the sensitivity level by [configuring the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-dashboard/).
 

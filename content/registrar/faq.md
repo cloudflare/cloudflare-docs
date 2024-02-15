@@ -114,7 +114,7 @@ No. A domain cannot have more than 10 years on the term. If you registered your 
 ## Domain registrations
 
 {{<faq-item>}}
-{{<faq-question level=3 text="My domain’s registration was not extended by one year after transferring to Cloudflare" >}}
+{{<faq-question level=3 text="My domain's registration was not extended by one year after transferring to Cloudflare" >}}
 
 {{<faq-answer>}}
 

@@ -15,7 +15,7 @@ Product description - What does this product do? Why would you use it? Short ove
  
 {{<plan type="<enterprise|pro|business|all|paid|add-on>">}}
 
-Summary - Brief welcoming introductory content. A few sentences describing the product’s benefits to the customer. Focus on customer benefit but can also include general product information.
+Summary - Brief welcoming introductory content. A few sentences describing the product's benefits to the customer. Focus on customer benefit but can also include general product information.
  
 ---
  

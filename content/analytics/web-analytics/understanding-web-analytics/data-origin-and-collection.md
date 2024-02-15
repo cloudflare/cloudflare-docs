@@ -12,7 +12,7 @@ Refer to the [W3C Processing Model](https://www.w3.org/TR/navigation-timing-2/#p
 
 ## Data collection and reporting
 
-Web Analytics collects the minimum amount of information - timing metrics - to show customers how their websites perform. Cloudflare does not track individual end users across our customers’ Internet properties.
+Web Analytics collects the minimum amount of information - timing metrics - to show customers how their websites perform. Cloudflare does not track individual end users across our customers' Internet properties.
 
 The Web Analytics performance beacon loads from `https://static.cloudflareinsights.com/beacon.min.js`. You may need to update your {{<glossary-tooltip term_id="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">}}Content Security Policy (CSP){{</glossary-tooltip>}} settings to load this script.
 

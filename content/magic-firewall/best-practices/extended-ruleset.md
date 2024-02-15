@@ -64,7 +64,7 @@ Rule 10 in the example ruleset below is acting as a catch-all to block all traff
 **Action**: Allow <br/>
 
 **Rule ID**: 10 <br/>
-**Description**: Otherwise deny all traffic to IP’s in `$endpoints` list <br/>
+**Description**: Otherwise deny all traffic to IP's in `$endpoints` list <br/>
 **Match**: `ip.dst in $endpoints` <br/>
 **Action**: Block <br/>
 

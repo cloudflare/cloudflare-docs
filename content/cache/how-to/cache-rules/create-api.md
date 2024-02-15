@@ -9,7 +9,7 @@ meta:
 
 # Create a cache rule via API
 
-Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/) to create a cache rule via API. To configure Cloudflare’s API refer to the [API documentation](/fundamentals/api/get-started/).
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/) to create a cache rule via API. To configure Cloudflare's API refer to the [API documentation](/fundamentals/api/get-started/).
 
 ## Basic rule settings
 

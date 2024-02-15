@@ -23,7 +23,7 @@ However, any Cache API operations in the Cloudflare Workers dashboard editor, [P
 
 {{<Aside type="note">}}
 
-This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the cache works](/workers/reference/how-the-cache-works/).
+This individualized zone cache object differs from Cloudflare's Global CDN. For details, refer to [How the cache works](/workers/reference/how-the-cache-works/).
 
 {{</Aside>}}
 
@@ -31,7 +31,7 @@ This individualized zone cache object differs from Cloudflare’s Global CDN. Fo
 
 ## Accessing Cache
 
-The `caches.default` API is strongly influenced by the web browsers’ Cache API, but there are some important differences. For instance, Cloudflare Workers runtime exposes a single global cache object.
+The `caches.default` API is strongly influenced by the web browsers' Cache API, but there are some important differences. For instance, Cloudflare Workers runtime exposes a single global cache object.
 
 ```js
 let cache = caches.default;

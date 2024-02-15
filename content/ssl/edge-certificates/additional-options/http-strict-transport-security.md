@@ -141,6 +141,6 @@ To disable HSTS on your website:
 
 {{<Aside type="note">}}
 
-Once HSTS <strong>Preload</strong> is configured, submit requests for addition to each browser’s preload list. Chrome, Firefox/Mozilla, and Safari use the Chrome preload list. A minimum <strong>Max Age Header</strong> of 12 months is required for inclusion in HSTS preload lists.
+Once HSTS <strong>Preload</strong> is configured, submit requests for addition to each browser's preload list. Chrome, Firefox/Mozilla, and Safari use the Chrome preload list. A minimum <strong>Max Age Header</strong> of 12 months is required for inclusion in HSTS preload lists.
 
 {{</Aside>}}

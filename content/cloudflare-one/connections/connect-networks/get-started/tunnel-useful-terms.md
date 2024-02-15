@@ -22,7 +22,7 @@ A tunnel name is a unique, user-friendly identifier that you choose for a tunnel
 
 ## Connector
 
-The connector, referred to as `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Our connector offers high availability by creating four long-lived connections to two distinct data centers within Cloudflare’s global network. This built-in redundancy means that if an individual connection, server, or data center goes down, your origin remains available.
+The connector, referred to as `cloudflared`, establishes connectivity from your origin server to the Cloudflare global network. Our connector offers high availability by creating four long-lived connections to two distinct data centers within Cloudflare's global network. This built-in redundancy means that if an individual connection, server, or data center goes down, your origin remains available.
   
 ## Replica
 
@@ -57,7 +57,7 @@ The `cert.pem` origin certificate is valid for at least 10 years, and the servic
 
 ### Credentials file
 
-This file is created when you run `cloudflared tunnel create <NAME>`. It stores your tunnel’s credentials in JSON format, and is unique to each tunnel. This file functions as a token authenticating the tunnel it is associated with. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/) for more details on when this file is needed.
+This file is created when you run `cloudflared tunnel create <NAME>`. It stores your tunnel's credentials in JSON format, and is unique to each tunnel. This file functions as a token authenticating the tunnel it is associated with. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/) for more details on when this file is needed.
 
 ### Ingress rule
 
@@ -65,7 +65,7 @@ Ingress rules let you specify which local services traffic should be proxied to.
 
 ## Quick tunnels
 
-Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port `8080`. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare’s network. Refer to [TryCloudflare](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/) for more information on how to run quick tunnels.
+Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port `8080`. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare's network. Refer to [TryCloudflare](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/) for more information on how to run quick tunnels.
 
 ## Virtual networks
 

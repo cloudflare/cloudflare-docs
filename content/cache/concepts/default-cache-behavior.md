@@ -7,7 +7,7 @@ meta:
 
 # Default Cache Behavior
 
-Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL cache rule overrides the headers.
+Cloudflare respects the origin web server's cache headers in the following order unless an Edge Cache TTL cache rule overrides the headers.
 
 {{<Aside type="warning">}}Page Rules will be deprecated, and you should instead use [Cache Rules](/cache/how-to/cache-rules/).{{</Aside>}}
 
@@ -26,7 +26,7 @@ For a list of directives and behaviors when Origin Cache-Control is enabled or d
 
 ## Default cached file extensions
 
-Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML by default. Additionally, Cloudflare caches a website’s robots.txt.
+Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML by default. Additionally, Cloudflare caches a website's robots.txt.
 
 |       |      |      |      |      |       |     |
 | ----- | ---- | ---- | ---- | ---- | ----- | --- |
@@ -44,7 +44,7 @@ To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) 
 
 ## Customization options and limits
 
-Cloudflare’s CDN provides several cache customization options:
+Cloudflare's CDN provides several cache customization options:
 
 - Caching behavior for individual URLs via [Cache Rules](/cache/how-to/cache-rules/)
 - Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
@@ -65,7 +65,7 @@ Cloudflare cacheable file limits:
 
 ## Cloudflare cache responses
 
-The output of the `CF-Cache-Status` header shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
+The output of the `CF-Cache-Status` header shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome's Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
 {{<table-wrap>}}
 <table>
@@ -81,7 +81,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
         HIT
       </td>
       <td colspan="5" rowspan="1">
-        The resource was found in Cloudflare’s cache.
+        The resource was found in Cloudflare's cache.
       </td>
     </tr>
     <tr>
@@ -89,7 +89,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
         MISS
       </td>
       <td colspan="5" rowspan="1">
-        The resource was not found in Cloudflare’s cache and was served from the origin web server.
+        The resource was not found in Cloudflare's cache and was served from the origin web server.
       </td>
     </tr>
     <tr>
@@ -109,7 +109,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
         EXPIRED
       </td>
       <td colspan="5" rowspan="1">
-        The resource was found in Cloudflare’s cache but was expired and served from the origin web
+        The resource was found in Cloudflare's cache but was expired and served from the origin web
         server.
       </td>
     </tr>
@@ -118,7 +118,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
         STALE
       </td>
       <td colspan="5" rowspan="1">
-        The resource was served from Cloudflare’s cache but was expired. Cloudflare could not
+        The resource was served from Cloudflare's cache but was expired. Cloudflare could not
         contact the origin to retrieve an updated resource.
       </td>
     </tr>
@@ -137,7 +137,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
         REVALIDATED
       </td>
       <td colspan="5" rowspan="1">
-        The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by
+        The resource is served from Cloudflare's cache but is stale. The resource was revalidated by
         either an <code>If-Modified-Since</code> header or an <code>If-None-Match</code> header.
       </td>
     </tr>
@@ -146,7 +146,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
         UPDATING
       </td>
       <td colspan="5" rowspan="1">
-        The resource was served from Cloudflare’s cache and was expired, but the origin web server
+        The resource was served from Cloudflare's cache and was expired, but the origin web server
         is updating the resource. UPDATING is typically only seen for very popular cached resources.
       </td>
     </tr>

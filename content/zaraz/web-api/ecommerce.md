@@ -207,7 +207,7 @@ zaraz.ecommerce('Order Completed', {
     {
       product_id: '999666321',
       sku: '8251511',
-      name: 'Boy’s shorts',
+      name: 'Boy's shorts',
       price: 10,
       quantity: 2,
       category: 'shorts',

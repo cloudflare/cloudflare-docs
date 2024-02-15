@@ -6,7 +6,7 @@ weight: 4
 
 # Azure Managed HSM
 
-This tutorial uses [Microsoft Azure’s Managed HSM](https://azure.microsoft.com/en-us/updates/akv-managed-hsm-public-preview/) — a FIPS 140-2 Level 3 certified implementation — to deploy a VM with the Keyless SSL daemon.
+This tutorial uses [Microsoft Azure's Managed HSM](https://azure.microsoft.com/en-us/updates/akv-managed-hsm-public-preview/) — a FIPS 140-2 Level 3 certified implementation — to deploy a VM with the Keyless SSL daemon.
 
 ---
 

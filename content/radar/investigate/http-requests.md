@@ -123,9 +123,9 @@ This returns the following:
 
 Bots tend to use more IPv4 addresses.
 
-It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/operations/radar-get-http-summary-by-ip-version) for other parameters.
+It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP's autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/operations/radar-get-http-summary-by-ip-version) for other parameters.
 
-If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
+If you do not know your ISP's ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
 ### Top
 

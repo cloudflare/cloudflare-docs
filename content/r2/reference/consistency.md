@@ -51,7 +51,7 @@ When connecting a [custom domain](/r2/buckets/public-buckets/#custom-domains) to
 Specifically, you should expect:
 
 * An object you delete from R2, but that is still cached, will still be available. You should [purge the cache](/cache/how-to/purge-cache/) after deleting objects if you need that delete to be reflected.
-* By default, Cloudflare’s cache will [cache HTTP 404 (Not Found) responses](/cache/how-to/configure-cache-status-code/#edge-ttl) automatically. If you upload an object to that same path, the cache may continue to return HTTP 404s until the cache TTL (Time to Live) expires and the new object is fetched from R2 or the [cache is purged](/cache/how-to/purge-cache/).
+* By default, Cloudflare's cache will [cache HTTP 404 (Not Found) responses](/cache/how-to/configure-cache-status-code/#edge-ttl) automatically. If you upload an object to that same path, the cache may continue to return HTTP 404s until the cache TTL (Time to Live) expires and the new object is fetched from R2 or the [cache is purged](/cache/how-to/purge-cache/).
 * An object for a given key is overwritten with a new object: the old (previous) object will continue to be served to clients until the cache TTL expires (or the object is evicted) or the cache is purged.
 
 The cache does not affect access via [Worker API bindings](/r2/api/workers/) or the [S3 API](/r2/api/s3/), as these operations are made directly against the bucket and do not transit through the cache.

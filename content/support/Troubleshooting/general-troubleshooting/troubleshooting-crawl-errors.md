@@ -25,8 +25,8 @@ ___
 
 To optimize CDN performance, Google and Bing assign special crawl rates to websites that use CDN services in order. Special crawl rates do not negatively affect Search Engine Optimization (SEO) and Search Engine Results Pages (SERPs). To change your crawl rates for Bing and Google, follow the guides below:
 
--   Change the Google crawl rate by [reviewing Google’s documentation](https://support.google.com/webmasters/answer/48620?hl=en).
--   Change your Bing crawl rate via guidance from Bing’s documentation:
+-   Change the Google crawl rate by [reviewing Google's documentation](https://support.google.com/webmasters/answer/48620?hl=en).
+-   Change your Bing crawl rate via guidance from Bing's documentation:
     -   [Bing Crawl Control](https://www.bing.com/webmasters/help/?topicid=55a30303)
     -   [Crawl Delay and the Bing Crawler](https://blogs.bing.com/webmaster/2009/08/10/crawl-delay-and-the-bing-crawler-msnbot)
 
@@ -44,7 +44,7 @@ Review the following recommendations to prevent crawler errors:
 
 -   Do not block Google crawler IP addresses via **custom rules** or **IP Access rules** within the **Security** app. If you are using [rate limiting rules](/waf/rate-limiting-rules/), make sure they do not apply to the Google crawler.
 
-Confirm an IP address belongs to Google by consulting Google’s documentation on [verifying googlebot IP addresses](https://support.google.com/webmasters/bin/answer.py?answer=80553).
+Confirm an IP address belongs to Google by consulting Google's documentation on [verifying googlebot IP addresses](https://support.google.com/webmasters/bin/answer.py?answer=80553).
 
 -   Do not block the United States via **custom rules** or **IP Access rules** within the **Security** app.
 -   Do not block or User-Agents in your .htaccess, server configuration, [robots.txt](http://support.google.com/webmasters/bin/answer.py?answer=35303), or web application.
@@ -74,7 +74,7 @@ Troubleshooting steps for the most commonly reported crawl errors are mentioned 
 
 ### HTTP 5XX Errors
 
-[HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431) indicate that either Cloudflare or your origin web server experienced an internal error. To correlate occurrences of crawl errors with site outages, monitor your origin web server’s health. Monitoring your website health both through Cloudflare and directly to your origin web server IPs determines whether errors occurred due to Cloudflare or your origin web server.
+[HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431) indicate that either Cloudflare or your origin web server experienced an internal error. To correlate occurrences of crawl errors with site outages, monitor your origin web server's health. Monitoring your website health both through Cloudflare and directly to your origin web server IPs determines whether errors occurred due to Cloudflare or your origin web server.
 
 ### DNS Errors
 
@@ -90,7 +90,7 @@ For domains on a Full setup, the result response contains the cloudflare.com dom
 
 `josh.ns.cloudflare.com. dns.cloudflare.com. 2013050901 10000 2400 604800 3600`
 
-Once you’ve confirmed how your domain was setup with Cloudflare, proceed with the troubleshooting steps appropriate to your domain setup.
+Once you've confirmed how your domain was setup with Cloudflare, proceed with the troubleshooting steps appropriate to your domain setup.
 
 **CNAME**
 
@@ -113,4 +113,4 @@ ___
 
 ## Related resources
 
-[Google’s documentation on crawl errors and troubleshooting](https://support.google.com/webmasters/answer/7440203#not_found_404)
+[Google's documentation on crawl errors and troubleshooting](https://support.google.com/webmasters/answer/7440203#not_found_404)

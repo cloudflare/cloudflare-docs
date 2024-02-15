@@ -10,7 +10,7 @@ Certificates statuses show which stage of the issuance process each certificate 
 
 ## New certificates
 
-When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare’s global network:
+When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare's global network:
 
 1.  Initializing
 2.  Pending Validation

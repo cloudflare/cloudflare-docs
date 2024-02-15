@@ -7,7 +7,7 @@ title: Metrics and analytics
 
 R2 exposes analytics that allow you to inspect the requests and storage of the buckets in your account.
 
-The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cloudflare.com/) are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
+The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cloudflare.com/) are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
 
 ## Metrics
 

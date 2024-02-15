@@ -10,7 +10,7 @@ Once of the most powerful features of Pub/Sub is the ability to connect [Cloudfl
 
 There are three ways to integrate a Worker with Pub/Sub:
 
-1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/kv/reference/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
+1. **As an "On Publish" hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/kv/reference/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
 2. (Not yet available in beta) **Publishing directly to a Pub/Sub topic from a Worker.** You can publish telemetry and events to Pub/Sub topics from your Worker code.
 3. (Not yet available in beta) **Subscribing to a Pub/Sub topic (or topics) from within a Worker**. This allows the Worker to act as any other subscriber and consume messages published either from external clients (over MQTT) or from other Workers.
 
@@ -277,14 +277,14 @@ The `PubSubMessage` type may grow to include additional fields over time, and we
 Messages sent to your on-publish Worker may be batched: each batch is an array of 1 or more `PubSubMessage`.
 
 - Batching helps to reduce the number of invocations against your Worker, and can allow you to better aggregate messages when writing them to upstream services.
-- Pub/Sub’s batching mechanism is designed to batch messages arriving simultaneously from publishers, and not wait several seconds.
+- Pub/Sub's batching mechanism is designed to batch messages arriving simultaneously from publishers, and not wait several seconds.
 - It does **not** measurably increase the latency of message delivery.
 
 ### On-Publish Best Practices
 
 - Only inspect the topics you need to to reduce the compute your Worker needs to do.
 - Use `ctx.waitUntil` if you need to write to storage or communicate with remote services and avoid increasing message delivery latency while waiting on those operations to complete.
-- Catch exceptions using [try-catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) - if your on-publish hook is able to “fail open”, you should use the `catch` block to return messages to the Broker in the event of an exception so that messages aren’t dropped.
+- Catch exceptions using [try-catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) - if your on-publish hook is able to "fail open", you should use the `catch` block to return messages to the Broker in the event of an exception so that messages aren't dropped.
 
 ## Troubleshoot Workers integrations
 

@@ -78,7 +78,7 @@ let decoder = new TextDecoder();
 {{<definitions>}}
 
 - `decode()` : {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}DOMString{{</type-link>}}
-  - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s `TextDecoder` documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
+  - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN's `TextDecoder` documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
 
 {{</definitions>}}
 

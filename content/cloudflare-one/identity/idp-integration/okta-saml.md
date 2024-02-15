@@ -42,7 +42,7 @@ To set up SAML with Okta as your identity provider:
 
 8. Select **Next**.
 
-9. Select **I’m an Okta customer adding an internal app** and check **This is an internal app that we have created**.
+9. Select **I'm an Okta customer adding an internal app** and check **This is an internal app that we have created**.
 
 ![Configuring feedback options in Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-3.png)
 

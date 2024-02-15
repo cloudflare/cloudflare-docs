@@ -90,7 +90,7 @@ To remove a domain:
 2. On the bucket page, select **Settings**.
 3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
 4. Next to the domain you want to disable, select **...** and **Remove domain**.
-5. Select ‘Remove domain’ in the confirmation window. The CNAME record pointing to the domain will also be removed as part of this step. You can always add the domain again.
+5. Select 'Remove domain' in the confirmation window. The CNAME record pointing to the domain will also be removed as part of this step. You can always add the domain again.
 
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
 
@@ -112,7 +112,7 @@ To enable access through `r2.dev` for your buckets:
 3. On the bucket page, select **Settings**.
 4. In **Settings**, go to **Public Access**.
 5. Under **R2.dev subdomain**, select **Allow Access**.
-6. In **Allow Public Access?**, confirm your choice by typing ‘allow’ to confirm and select **Allow**.
+6. In **Allow Public Access?**, confirm your choice by typing 'allow' to confirm and select **Allow**.
 7. You can now access the bucket and its objects using the Public Bucket URL.
 
 You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
@@ -126,6 +126,6 @@ To disable public access for your bucket:
 1. In **R2**, select the bucket you want to modify.
 2. On the bucket page, select **Settings**.
 3. Under **Bucket Details** > **R2.dev subdomain**, select **Disallow Access**.
-4. In **Disallow Public Access?**, type ‘disallow’ to confirm and select **Disallow**.
+4. In **Disallow Public Access?**, type 'disallow' to confirm and select **Disallow**.
 
 Your bucket and its objects can no longer be accessed using the Public Bucket URL.

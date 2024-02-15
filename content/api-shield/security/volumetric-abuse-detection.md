@@ -20,11 +20,11 @@ These two scenarios speak to the limitations of traditional rate limiting. Not o
 
 Volumetric Abuse Detection rate limits are generated on a per-session basis. Unlike traditional rate limits, which are based on IP addresses, Volumetric Abuse Detection rate limits are not as susceptible to false positives when traffic to your API increases.
 
-Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric abuse while minimizing false positives. If you are trying to prevent abusive bot traffic altogether, refer to Cloudflare’s [Bot solutions](/bots/).
+Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric abuse while minimizing false positives. If you are trying to prevent abusive bot traffic altogether, refer to Cloudflare's [Bot solutions](/bots/).
 
 ## Process
 
-Volumetric Abuse Detection analyzes your API’s individual session traffic statistics to recommend per-endpoint, per-session rate limits.
+Volumetric Abuse Detection analyzes your API's individual session traffic statistics to recommend per-endpoint, per-session rate limits.
 
 Volumetric Abuse Detection currently requires a {{<glossary-tooltip term_id="session identifier" link="/api-shield/get-started/#set-up-session-identifiers">}}session identifier{{</glossary-tooltip>}}, like an authorization token available as a request header or cookie.
 
@@ -43,7 +43,7 @@ p-values describe what percentile of your traffic fits below the value. For exam
 In **Endpoint Management**, you can review our confidence in the recommendation and how many unique sessions we have seen over the last seven (7) days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.
 
 {{<Aside type="note">}}
-Implementing low confidence rate limits can still be helpful to prevent API abuse. If you are hesitant due to the recommendation’s confidence, we suggest starting your rate limit rule in `log` mode and observing violations of the rule for false positives.
+Implementing low confidence rate limits can still be helpful to prevent API abuse. If you are hesitant due to the recommendation's confidence, we suggest starting your rate limit rule in `log` mode and observing violations of the rule for false positives.
 {{</Aside>}}
 
 ### Create rate limits

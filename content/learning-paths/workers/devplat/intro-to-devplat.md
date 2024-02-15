@@ -42,7 +42,7 @@ Some Cloudflare Developer storage products include:
 * [R2](/r2/): Object storage for all your data.
 * [KV](/kv/): Global, low-latency, key-value data storage.
 * [Durable Objects](/durable-objects/): Globally distributed coordination API with strongly consistent storage.
-* [D1](/d1/): Cloudflare’s native serverless database.
+* [D1](/d1/): Cloudflare's native serverless database.
 
 To understand which storage option is right for you, refer to the [Storage options guide](/workers/platform/storage-options/).
 

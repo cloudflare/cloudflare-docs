@@ -65,7 +65,7 @@ You can override the following rule properties:
 * `"action"`
 * `"enabled"`
 
-Some managed rulesets may have additional override requirements, or they may allow you to override other rule properties. Check each Cloudflare product’s documentation for details.
+Some managed rulesets may have additional override requirements, or they may allow you to override other rule properties. Check each Cloudflare product's documentation for details.
 
 {{<Aside type="warning" header="Important">}}
 

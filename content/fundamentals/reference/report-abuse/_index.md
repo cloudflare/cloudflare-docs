@@ -4,7 +4,7 @@ title: Report abuse
 weight: 2
 meta:
     title: Report abuse to Cloudflare
-    description: Learn how to report DMCA issues, phishing, trademark infringement, malware sites, child exploitation material, and more to Cloudflare’s Trust and Safety team.
+    description: Learn how to report DMCA issues, phishing, trademark infringement, malware sites, child exploitation material, and more to Cloudflare's Trust and Safety team.
 ---
 
 # Report abuse

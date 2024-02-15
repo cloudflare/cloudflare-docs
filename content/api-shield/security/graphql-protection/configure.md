@@ -9,7 +9,7 @@ meta:
 
 # Configure GraphQL malicious query protection
 
-Use the [Cloudflare GraphQL API](/analytics/graphql-api/getting-started/) to gather data about your GraphQL API’s current usage and configure Cloudflare’s GraphQL malicious query protection to log or block malicious queries.
+Use the [Cloudflare GraphQL API](/analytics/graphql-api/getting-started/) to gather data about your GraphQL API's current usage and configure Cloudflare's GraphQL malicious query protection to log or block malicious queries.
 
 ## Introduction
 

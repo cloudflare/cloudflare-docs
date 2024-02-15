@@ -7,7 +7,7 @@ _build:
 
 **All Data Centers (Enterprise only)**
 
-Health monitor probes are sent from every single data center in Cloudflare’s network to the origins within the associated pool. This allows probes to hit each origin during intervals set by the customer.
+Health monitor probes are sent from every single data center in Cloudflare's network to the origins within the associated pool. This allows probes to hit each origin during intervals set by the customer.
 
 **All Regions**
 

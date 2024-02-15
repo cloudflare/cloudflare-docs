@@ -17,5 +17,5 @@ By the end of this module, you will be able to:
 - Create a Gateway location and understand its purpose.
 - Verify your Gateway environment by proxing local DNS traffic.
 - Create a test policy to validate functionality.
-- Deploy Cloudflare’s recommended CIPA rule.
+- Deploy Cloudflare's recommended CIPA rule.
 - Customize the block page to ensure a seamless look and feel.

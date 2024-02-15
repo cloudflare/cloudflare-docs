@@ -33,14 +33,14 @@ Enterprise customers can submit payments via the following payment options:
 
 (preferred method)
 
-- **Bank**: Citibank, One Penn’s Way, New Castle, DE 19720 USA
+- **Bank**: Citibank, One Penn's Way, New Castle, DE 19720 USA
 - **Account name**: CLOUDFLARE INC
 - **Account number**: 31460181
 - **ABA/Routing number**: 031100209
 
 #### Wire transfer
 
-- **Bank**: Citibank, One Penn’s Way, New Castle, DE 19720 USA
+- **Bank**: Citibank, One Penn's Way, New Castle, DE 19720 USA
 - **Account name**: CLOUDFLARE INC
 - **Account number**: 31460181
 - **ABA/Routing number**: 031100209
@@ -52,7 +52,7 @@ Log in to your PayPal account and send your payment to ar@cloudflare.com. The pa
 
 #### International payments
 
-- **Bank**: Citibank, One Penn’s Way, New Castle, DE 19720 USA
+- **Bank**: Citibank, One Penn's Way, New Castle, DE 19720 USA
 - **Account name**: CLOUDFLARE INC
 - **Account number**: 31460181
 - **SWIFT**: CITIUS33

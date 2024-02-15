@@ -44,7 +44,7 @@ When you rename an Email Worker, you will lose the route that was previously bou
 
 4. From the drop-down menu, select **Manage Worker**.
 
-5. Select **Manage Service** > **Rename service**, and fill in the new Email Worker’s name.
+5. Select **Manage Service** > **Rename service**, and fill in the new Email Worker's name.
 
 6. Select **Continue** > **Move**.
 

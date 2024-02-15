@@ -92,7 +92,7 @@ const handler = request => {
 
 After adding an identical `dependency` to `private-api/package.json`, run `lerna bootstrap` again, and begin sharing code between your projects.
 
-When you are ready to deploy your codebases, define a script in each package’s `package.json` file (for example, `publish`), so that you can later deploy both codebases in a coordinated manner using the command `lerna run <SCRIPT_NAME>`:
+When you are ready to deploy your codebases, define a script in each package's `package.json` file (for example, `publish`), so that you can later deploy both codebases in a coordinated manner using the command `lerna run <SCRIPT_NAME>`:
 
 ```json
 ---
@@ -118,7 +118,7 @@ filename: packages/private-api/package.json
 }
 ```
 
-`lerna run publish` will look for the `publish` script defined in each package’s `project.json`, and if the project defines it, it will run the script inside of that project’s directory:
+`lerna run publish` will look for the `publish` script defined in each package's `project.json`, and if the project defines it, it will run the script inside of that project's directory:
 
 ```sh
 ---

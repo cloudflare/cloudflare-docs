@@ -24,7 +24,7 @@ You may have already installed npm. It is possible that an `EACCES` error may be
 
 ### Install with `cargo`
 
-Assuming you have Rust’s package manager, [Cargo](https://github.com/rust-lang/cargo), installed, run:
+Assuming you have Rust's package manager, [Cargo](https://github.com/rust-lang/cargo), installed, run:
 
 ```sh
 $ cargo install wrangler

@@ -6,7 +6,7 @@ weight: 3
 
 # Server-side validation
 
-Customers must call the siteverify endpoint to validate the Turnstile widget response from their website’s backend. The widget response must only be considered valid once it has been verified by the siteverify endpoint. The presence of a response alone is not enough to verify it as it does not protect from replay or forgery attacks. In some cases, Turnstile may purposely create invalid responses that are rejected by the siteverify API.
+Customers must call the siteverify endpoint to validate the Turnstile widget response from their website's backend. The widget response must only be considered valid once it has been verified by the siteverify endpoint. The presence of a response alone is not enough to verify it as it does not protect from replay or forgery attacks. In some cases, Turnstile may purposely create invalid responses that are rejected by the siteverify API.
 
 Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint.
 
@@ -138,7 +138,7 @@ The `remoteip` parameter helps to prevent abuse by ensuring the current visitor 
 
 {{</Aside>}}
 
-The siteverify endpoint behaves similar to reCAPTCHA’s or hCaptcha's siteverify endpoint.
+The siteverify endpoint behaves similar to reCAPTCHA's or hCaptcha's siteverify endpoint.
 The API accepts `application/x-www-form-urlencoded` and `application/json` requests, but the response type will always be `application/json`.
 
 It always contains a `success` property, either true or false, indicating whether the operation was successful or not.

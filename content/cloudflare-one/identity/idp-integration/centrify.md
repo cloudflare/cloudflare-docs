@@ -30,7 +30,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 9. Enter a strong application secret on the **Trust** section.
 
-10. Under **Service Provider Configuration** enter your application’s authentication domain as the resource application URL.
+10. Under **Service Provider Configuration** enter your application's authentication domain as the resource application URL.
 
 11. Under **Authorized Redirect URIs**, select **Add**.
 

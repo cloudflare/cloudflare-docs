@@ -77,4 +77,4 @@ For example, to block security threats for specific networks, you could create t
 | Security Categories | in       | Select all categories that apply                                | And   | Block  |
 | Source IP           | in list  | The name of the IP list containing your organization's networks |       |        |
 
-DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization's [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).

@@ -26,7 +26,7 @@ Cloudflare requires that you have a valid [ICP (Internet Content Provider)](/chi
 
 ### Will my Cloudflare account or configuration information be stored in China?
 
-Cloudflare has taken numerous steps to ensure your security and the integrity of your data in China. Your identification information such as email addresses, password hashes, and billing information are never stored on the Cloudflare China Network or shared with the Cloudflare partner except for Zone configuration information and bindings with Cloudflare’s Developer Suite which are stored on the China Network operated by our partners in China upon your enabling the China Service for a particular Zone.
+Cloudflare has taken numerous steps to ensure your security and the integrity of your data in China. Your identification information such as email addresses, password hashes, and billing information are never stored on the Cloudflare China Network or shared with the Cloudflare partner except for Zone configuration information and bindings with Cloudflare's Developer Suite which are stored on the China Network operated by our partners in China upon your enabling the China Service for a particular Zone.
 
 ## Licensing and onboarding
 
@@ -49,7 +49,7 @@ To mitigate the impact on your Internet properties, Cloudflare would reroute the
 
 ### What is content vetting and why do I need JD Cloud to vet my domain's content before onboarding?
 
-The JD Cloud network is proxying content inside of China for customers who have purchased the Cloudflare China Network subscription. To ensure compliance with China’s regulation on Internet information services and with [JD Cloud's service terms](https://docs.jdcloud.com/cn/product-service-agreement/starshield-terms-of-service), JD Cloud must review the content of all the domains before onboarding those domains to their network. They can approve or reject any domain based on the nature of its content. For more information, contact your sales team.
+The JD Cloud network is proxying content inside of China for customers who have purchased the Cloudflare China Network subscription. To ensure compliance with China's regulation on Internet information services and with [JD Cloud's service terms](https://docs.jdcloud.com/cn/product-service-agreement/starshield-terms-of-service), JD Cloud must review the content of all the domains before onboarding those domains to their network. They can approve or reject any domain based on the nature of its content. For more information, contact your sales team.
 
 ## Technical questions
 

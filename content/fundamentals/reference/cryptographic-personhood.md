@@ -25,7 +25,7 @@ The answer to most privacy concerns are summarized in this table:
 
 No, Cloudflare cannot collect biometrics. Our CAP process uses the WebAuthn API, which prevents the collection of [biometrics by default](https://www.w3.org/TR/webauthn-2/#sctn-biometric-privacy). When your device asks for a biometric authentication — such as via a fingerprint sensor — it all happens locally. 
 
-As such, we never see your biometric data: that remains on your device. Once your device confirms a match, it sends only a basic attestation message. In effect, your device sends a message proving “yes, someone correctly entered a fingerprint on this trustworthy device” and never sends the fingerprint itself.
+As such, we never see your biometric data: that remains on your device. Once your device confirms a match, it sends only a basic attestation message. In effect, your device sends a message proving "yes, someone correctly entered a fingerprint on this trustworthy device" and never sends the fingerprint itself.
 
 Yes, Cloudflare does collect a limited amount of data about your key. We store the manufacturer of your key and batch identifier ([minimum of 100,000](https://fidoalliance.org/specs/fido-uaf-v1.1-ps-20170202/fido-uaf-protocol-v1.1-ps-20170202.html#full-basic-attestation) keys per batch) for verification purposes. From our perspective, your key looks like all other keys in the batch.
 
@@ -63,7 +63,7 @@ We are updating this list as the ecosystem evolves and as we continue to test di
 
 ## Can hackers bypass the Cryptographic Attestation of Personhood?
 
-CAP is one of many techniques to identify and block bots. To date, we have seen some attempts to test CAP’s security system, such as [one thoughtfully-executed, well-documented test](https://betterappsec.com/building-a-webauthn-click-farm-are-captchas-obsolete-bfab07bb798c). The blog post discussing the test specifically calls out that this method does not break the Cloudflare threat model.
+CAP is one of many techniques to identify and block bots. To date, we have seen some attempts to test CAP's security system, such as [one thoughtfully-executed, well-documented test](https://betterappsec.com/building-a-webauthn-click-farm-are-captchas-obsolete-bfab07bb798c). The blog post discussing the test specifically calls out that this method does not break the Cloudflare threat model.
 
 This does not mean that CAP is broken, but rather shows that it raises the cost of an attack over the current CAPTCHA model.
 

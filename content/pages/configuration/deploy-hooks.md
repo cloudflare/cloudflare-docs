@@ -31,7 +31,7 @@ To configure your Deploy Hook, you must enter two key parameters:
 
 ## Using your Deploy Hook
 
-Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy.
+Once your configuration is complete, the Deploy Hook's unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy.
 
 ![Reviewing the Deploy Hook's newly generated unique URL](/images/pages/platform/deploy-hooks-details.png)
 
@@ -57,7 +57,7 @@ Contentful supports integration with Cloudflare Pages via its **Webhooks** featu
 
 ### Ghost
 
-You can configure your Ghost website to trigger Pages deployments by creating a new **Custom Integration**. In your Ghost website’s settings, create a new Custom Integration in the **Integrations** page.
+You can configure your Ghost website to trigger Pages deployments by creating a new **Custom Integration**. In your Ghost website's settings, create a new Custom Integration in the **Integrations** page.
 
 Each custom integration created can have multiple **webhooks** attached to it. Create a new webhook by selecting **Add webhook** and **Site changed (rebuild)** as the **Event**. Then paste your unique Deploy Hook URL as the **Target URL** value. After creating this webhook, your Cloudflare Pages application will redeploy whenever your Ghost site changes.
 

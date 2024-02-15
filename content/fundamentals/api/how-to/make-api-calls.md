@@ -24,7 +24,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}" \
 --header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
-## Using Cloudflare’s APIs
+## Using Cloudflare's APIs
 
 Every Cloudflare API element is fixed to a version number. The latest version is Version 4. The stable base URL for all Version 4 HTTPS endpoints is: `https://api.cloudflare.com/client/v4/`
 

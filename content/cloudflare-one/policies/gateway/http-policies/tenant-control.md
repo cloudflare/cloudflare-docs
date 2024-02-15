@@ -8,7 +8,7 @@ weight: 7
 
 Cloudflare Zero Trust offers IT administrators a way to ensure users have access to SaaS applications for corporate use, while at the same time blocking access to their personal accounts. This helps prevent the loss of sensitive or confidential data from a corporate network.
 
-You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user’s request is headed to your organization’s account for the SaaS application, and to deny access if the request is headed to an account that does not match the information in the header.
+You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user's request is headed to your organization's account for the SaaS application, and to deny access if the request is headed to an account that does not match the information in the header.
 
 Not all SaaS applications support tenant control. Examples of common applications that do support tenant control through the injection of HTTP headers are:
 

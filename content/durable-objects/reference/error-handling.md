@@ -23,7 +23,7 @@ A Durable Object stub is a client Object used to send requests to a remote Durab
 
 ## Example
 
-Any uncaught exceptions thrown by your code within a Durable Object’s `fetch()` handler or `constructor` method will be propagated to the caller’s `fetch()` call:
+Any uncaught exceptions thrown by your code within a Durable Object's `fetch()` handler or `constructor` method will be propagated to the caller's `fetch()` call:
 
 ```ts
 export interface Env {
@@ -36,11 +36,11 @@ export default {
     env: Env,
     ctx: ExecutionContext
   ): Promise<Response> {
-    // Any uncaught exceptions thrown by the Durable Object’s fetch()
-    // handler will be propagated to the caller’s fetch() promise.
+    // Any uncaught exceptions thrown by the Durable Object's fetch()
+    // handler will be propagated to the caller's fetch() promise.
     //
-    // If an uncaught exception is thrown by the Durable Object’s fetch()
-    // handler, then the exception propagated to the caller’s fetch()
+    // If an uncaught exception is thrown by the Durable Object's fetch()
+    // handler, then the exception propagated to the caller's fetch()
     // promise will include a .remote property, which will be set to True.
     //
     // This also includes uncaught exceptions in the Durable Object's

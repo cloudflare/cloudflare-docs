@@ -76,7 +76,7 @@ $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs 
 }
 ```
 
-Replace the ‘\n’ strings with actual newline before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:
+Replace the '\n' strings with actual newline before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:
 
 ```bash
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
@@ -93,7 +93,7 @@ Your customer will take the provided CSR and work with their CA to obtain a sign
 
 Upload the certificate and reference the ID that was provided when you generated the CSR.
 
-You should replace newlines in the certificate with literal ‘\n’ characters, as illustrated above in the custom certificate upload example. After doing so, build the request body and provide the ID that was returned in a previous step.
+You should replace newlines in the certificate with literal '\n' characters, as illustrated above in the custom certificate upload example. After doing so, build the request body and provide the ID that was returned in a previous step.
 
 Cloudflare only accepts publicly trusted certificates. If you attempt to upload a self-signed certificate, it will be rejected.
 

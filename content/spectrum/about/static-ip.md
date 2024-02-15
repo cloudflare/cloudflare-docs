@@ -16,7 +16,7 @@ Static IPs are an Enterprise feature that does not come standard with Spectrum. 
 
 Once you get your static IP from Cloudflare, you can use it via API, just like [BYOIP](/byoip/). For the moment, there is still no UI available for this feature.
 
-When creating a Spectrum application through the API, specify the static IPs that you have been provided. See, for instance, the API example below that creates an application routing traffic through Cloudflare’s HTTP pipeline.
+When creating a Spectrum application through the API, specify the static IPs that you have been provided. See, for instance, the API example below that creates an application routing traffic through Cloudflare's HTTP pipeline.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/spectrum/apps" \

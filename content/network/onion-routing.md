@@ -6,7 +6,7 @@ title: Onion Routing and Tor support
 
 # Onion Routing and Tor support
 
-Improve the Tor user experience by enabling Onion Routing, which enables Cloudflare to serve your website’s content directly through the Tor network and without requiring exit nodes.
+Improve the Tor user experience by enabling Onion Routing, which enables Cloudflare to serve your website's content directly through the Tor network and without requiring exit nodes.
 
 ## Availability
 

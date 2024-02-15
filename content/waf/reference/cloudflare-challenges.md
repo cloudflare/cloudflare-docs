@@ -152,7 +152,7 @@ You can customize your favicon by using the snippet below.
 ---
 header: HTML element
 ---
-<link rel="shortcut icon" href=“<FAVICON_LINK>”/>
+<link rel="shortcut icon" href="<FAVICON_LINK>"/>
 ```
 
 ---

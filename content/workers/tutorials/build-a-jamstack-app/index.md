@@ -27,7 +27,7 @@ If you would like to see the finished code for this project, find the [project o
 
 ## Init
 
-Cloudflare offers a collection of pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare’s command-line tool for managing Worker projects, integrates with all templates so that it is even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to create a Workers project.
+Cloudflare offers a collection of pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare's command-line tool for managing Worker projects, integrates with all templates so that it is even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to create a Workers project.
 
 In your terminal, create a Worker project with your desired project name; for example, `todos`:
 
@@ -41,7 +41,7 @@ $ cd todos
 
 Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/examples/).
 
-Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
+Wrangler's default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
 All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. When that request occurs, your constructed response will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
 

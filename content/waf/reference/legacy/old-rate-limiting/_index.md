@@ -39,7 +39,7 @@ ___
 Cloudflare Rate Limiting (previous version) is an add-on service for all customer plans, available in **Security** > **WAF** > **Rate limiting rules**.
 {{</Aside>}}
 
-The number of allowed rate limiting rules depends on the domain’s plan:
+The number of allowed rate limiting rules depends on the domain's plan:
 
 {{<table-wrap style="font-size: 87%">}}
 
@@ -52,7 +52,7 @@ The number of allowed rate limiting rules depends on the domain’s plan:
 
 {{</table-wrap>}}
 
-Cloudflare Rate Limiting supports multiple levels of configuration control depending on the domain’s Cloudflare plan. The table below maps out what you can do based on your plan:
+Cloudflare Rate Limiting supports multiple levels of configuration control depending on the domain's Cloudflare plan. The table below maps out what you can do based on your plan:
 
 {{<table-wrap>}}
 
@@ -115,7 +115,7 @@ Specify a minimum of two requests. For single request blocking, make the path un
 
 #### Request period
 
-A rule triggers once a client’s requests exceed the threshold for the specified duration.
+A rule triggers once a client's requests exceed the threshold for the specified duration.
 
 ### Rule mitigation
 

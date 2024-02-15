@@ -31,7 +31,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
-- [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
+- [`logout`](#logout) - Remove Wrangler's authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
@@ -1195,7 +1195,7 @@ Refer to the full schema for key-value entries uploaded via the bulk API:
 {{<definitions>}}
 
 - `key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
+  - The key's name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The UTF-8 encoded string to be stored, up to 25 MB in length.
 - `metadata` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

@@ -11,7 +11,7 @@ A [binding](/workers/configuration/bindings/) enables your Pages Functions to in
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
 {{<Aside type="note">}}
-Local development uses local storage. It cannot access data stored on Cloudflare’s servers.
+Local development uses local storage. It cannot access data stored on Cloudflare's servers.
 {{</Aside>}}
 
 ## KV namespaces
@@ -151,7 +151,7 @@ While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NA
 
 ## D1 databases
 
-[D1](/d1/) is Cloudflare’s native serverless database. To bind your D1 database to your Pages Function:
+[D1](/d1/) is Cloudflare's native serverless database. To bind your D1 database to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.

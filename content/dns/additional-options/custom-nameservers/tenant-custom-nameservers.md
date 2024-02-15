@@ -52,7 +52,7 @@ To make these TCNS the default namerservers for all new zones added to your acco
 
 To remove TCNS and their associated DNS records from a zone, use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata).
 
-If you are **not** using [Cloudflare Registrar](/registrar/), also remove the TCNS at your domain’s registrar.
+If you are **not** using [Cloudflare Registrar](/registrar/), also remove the TCNS at your domain's registrar.
 
 ## For tenant owners
 

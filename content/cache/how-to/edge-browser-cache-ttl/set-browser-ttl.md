@@ -6,7 +6,7 @@ weight: 3
 
 # Browser Cache TTL
 
-Specify a time for a visitor’s Browser Cache TTL to accelerate the page load for repeat visitors to your website. To configure cache duration within Cloudflare’s data centers, refer to [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/create-page-rules/).
+Specify a time for a visitor's Browser Cache TTL to accelerate the page load for repeat visitors to your website. To configure cache duration within Cloudflare's data centers, refer to [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/create-page-rules/).
 
 By default, Cloudflare honors the cache expiration set in your `Expires` and `Cache-Control` headers. Cloudflare overrides any `Cache-Control` or `Expires` headers with values set via the **Browser Cache TTL** option under **Caching** on your dashboard if:
 
@@ -23,7 +23,7 @@ The Cloudflare UI and API both prohibit setting Browser Cache TTL to 0 for non-E
 
 {{<Aside type="note" header="Note">}}
 
-If you modify cached assets, the new asset is not displayed to repeat visitors before the Browser Cache TTL duration. [Purging Cloudflare’s cache](/cache/how-to/purge-cache/) does not affect assets cached in a visitor’s browser.
+If you modify cached assets, the new asset is not displayed to repeat visitors before the Browser Cache TTL duration. [Purging Cloudflare's cache](/cache/how-to/purge-cache/) does not affect assets cached in a visitor's browser.
 
 {{</Aside>}}
 

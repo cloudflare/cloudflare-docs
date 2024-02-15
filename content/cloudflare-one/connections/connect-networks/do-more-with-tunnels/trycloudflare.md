@@ -35,8 +35,8 @@ TryCloudflare quick tunnels are currently not supported if a `config.yaml` confi
 ### Why does Cloudflare provide this service for free?
 
 - We want more users to experience the speed and security improvements of Cloudflare Tunnel (and Argo Smart Routing). We hope you test it with TryCloudflare and decide to add it to your production sites.
-- Cloudflare’s features historically require you to own a domain, set that domain’s DNS to Cloudflare’s nameservers, and configure its DNS records before you can begin to use any services. We hope to make more and more of our products available to trial without that burden.
-- We don’t guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
+- Cloudflare's features historically require you to own a domain, set that domain's DNS to Cloudflare's nameservers, and configure its DNS records before you can begin to use any services. We hope to make more and more of our products available to trial without that burden.
+- We don't guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
 
 ### Limits
 

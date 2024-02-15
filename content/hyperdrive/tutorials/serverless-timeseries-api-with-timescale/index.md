@@ -249,7 +249,7 @@ Your application is now live and accessible at `timescale-api.<YOUR_SUBDOMAIN>.w
 
 After deploying, you can interact with your Timescale IoT readings database using your Cloudflare Worker. Connection from the edge will be faster because you are using Cloudflare Hyperdrive to connect from the edge.
 
-You can now use your Cloudflare Worker to insert new rows into the `readings` table. To test this functionality, send a `POST` request to your Worker’s URL with the `/readings` path, along with a JSON payload containing the new product data:
+You can now use your Cloudflare Worker to insert new rows into the `readings` table. To test this functionality, send a `POST` request to your Worker's URL with the `/readings` path, along with a JSON payload containing the new product data:
 
 ```json
 [
@@ -265,7 +265,7 @@ You can now use your Cloudflare Worker to insert new rows into the `readings` ta
 
 This tutorial omits the `ts` (the timestamp) and `metadata` (the JSON blob) so they will be set to `now()` and `NULL` respectively.
 
-Once you have sent the `POST` request you can also issue a `GET` request to your Worker’s URL with the `/readings` path. Set the `limit` parameter to control the amount of returned records.
+Once you have sent the `POST` request you can also issue a `GET` request to your Worker's URL with the `/readings` path. Set the `limit` parameter to control the amount of returned records.
 
 If you have **curl** installed you can test with the following commands (replace **<YOUR_SUBDOMAIN>** with your subdomain from the deploy command above):
 

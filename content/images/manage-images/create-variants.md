@@ -43,7 +43,7 @@ The `Fit` property describes how the width and height dimensions should be inter
 
 ## Metadata options
 
-Variants allow you to choose what to do with your image’s metadata information. From the **Metadata** dropdown, choose:
+Variants allow you to choose what to do with your image's metadata information. From the **Metadata** dropdown, choose:
 
 - Strip all metadata
 - Strip all metadata except copyright

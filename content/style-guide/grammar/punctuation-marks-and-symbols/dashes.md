@@ -26,8 +26,8 @@ Additional examples:
 
 |✅|❌|Rationale|
 |----|---|---|
-|Protect your Internet property from common vulnerabilities with our enterprise-class Web Application Firewall (WAF).| Protect your Internet property from common vulnerabilities with our enterprise class Web Application Firewall (WAF). | ‘Enterprise-class’ refers to the ability of something to scale with and handle the needs of large enterprises. A hyphen is necessary because the compound modifier comes before the noun. |
-|Our WAF is enterprise class. | Our WAF is enterprise-class. | ‘Enterprise class’ modifies ‘WAF.’ A hyphen is not necessary because the compound modifier comes after the noun. |
+|Protect your Internet property from common vulnerabilities with our enterprise-class Web Application Firewall (WAF).| Protect your Internet property from common vulnerabilities with our enterprise class Web Application Firewall (WAF). | 'Enterprise-class' refers to the ability of something to scale with and handle the needs of large enterprises. A hyphen is necessary because the compound modifier comes before the noun. |
+|Our WAF is enterprise class. | Our WAF is enterprise-class. | 'Enterprise class' modifies 'WAF.' A hyphen is not necessary because the compound modifier comes after the noun. |
 
 ## Em dash (—)
 **Use em dashes to break up thoughts within a single sentence.** Em dashes (—) or double dashes (--) with spaces around them may be used to break up thoughts within a sentence. Single dashes (-), or hyphens, are commonly used to write compound words/modifiers and should never be used to break up thoughts in this way.
@@ -40,7 +40,7 @@ Dashes are used in pairs (in place of parenthesis) or alone (in place of a semic
 
 Examples: 
 
-+ Cookies provide saved information about a user’s session to establish a “state” — in most cases, identity — as your browser makes a request.
++ Cookies provide saved information about a user's session to establish a "state" — in most cases, identity — as your browser makes a request.
 
 + Embed yourself in the team — the best results will come when trust is built.
 
@@ -52,7 +52,7 @@ Additional examples:
 
 |✅|❌|Rationale|
 |----|---|---|
-|The app has made security and privacy core to the company’s mission — and that is why it chose Cloudflare to provide an extra layer of protection.|The app has made security and privacy core to the company’s mission—and that is why it chose Cloudflare to provide an extra layer of protection.|An em dash with spaces on both sides is the appropriate way to distinguish the offset phrase at the end of this sentence.|
+|The app has made security and privacy core to the company's mission — and that is why it chose Cloudflare to provide an extra layer of protection.|The app has made security and privacy core to the company's mission—and that is why it chose Cloudflare to provide an extra layer of protection.|An em dash with spaces on both sides is the appropriate way to distinguish the offset phrase at the end of this sentence.|
 |ACME has always looked deeply into two sources of traffic -- organic and direct traffic.|ACME has always looked deeply into two sources of traffic - organic and direct traffic.|A double dash is the appropriate way to clarify different types of traffic at the end of this sentence. A hyphen should not be used in place of a double dash.|
 
 Additional dash information:

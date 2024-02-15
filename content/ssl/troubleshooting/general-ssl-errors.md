@@ -87,10 +87,10 @@ Visitors to your site observe an OCSP response error.
 
 ### Resolution
 
-This error is either caused by the browser version or an issue requiring attention by one of Cloudflare’s SSL vendors. In order to properly diagnose, [contact Support](/support/contacting-cloudflare-support/) with the following information provided by the visitor that observes the browser error:
+This error is either caused by the browser version or an issue requiring attention by one of Cloudflare's SSL vendors. In order to properly diagnose, [contact Support](/support/contacting-cloudflare-support/) with the following information provided by the visitor that observes the browser error:
 
 1.  The output from [https://aboutmybrowser.com/](https://aboutmybrowser.com/)  .
-2.  The output of `https://<YOUR_DOMAIN>/cdn-cgi/trace` from the visitor’s browser.
+2.  The output of `https://<YOUR_DOMAIN>/cdn-cgi/trace` from the visitor's browser.
 
 ___
 

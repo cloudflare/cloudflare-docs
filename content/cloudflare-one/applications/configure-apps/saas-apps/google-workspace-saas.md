@@ -64,6 +64,6 @@ An Access login screen should appear.
 
 ## Troubleshooting
 
-`Error: “G Suite - This account cannot be accessed because the login credentials could not be verified.”`
+`Error: "G Suite - This account cannot be accessed because the login credentials could not be verified."`
 
 If you see this error, it is likely that the public key and private key do not match. Confirm that your certificate file includes the correct public key.

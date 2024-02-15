@@ -6,7 +6,7 @@ title: 4xx Client Error
 
 # 4xx Client Error
 
-4xx codes generally are error responses specifying an issue at the client’s end, potentially a network issue.  
+4xx codes generally are error responses specifying an issue at the client's end, potentially a network issue.  
 
 -   4xx codes can be used as a response to any request method.
 -   Origin server should include an explanation which should be displayed by User-Agent, with the exception of a `HEAD` request
@@ -53,7 +53,7 @@ If you're seeing a 403 response that contains Cloudflare branding in the respon
 
 Origin server was unable or unwilling to find the resource requested. This usually means the host server could not find the resource. To serve a more permanent version of this error one should use a 410 error code.
 
-These errors typically occur when someone mistypes a URL on your site when there is a broken link from another page, when a page that previously existed is moved or removed, or there is an error when a search engine indexes your site. For a typical site, these errors account for approximately 3% of the total page views, but they’re often untracked by traditional analytics platforms like Google Analytics.
+These errors typically occur when someone mistypes a URL on your site when there is a broken link from another page, when a page that previously existed is moved or removed, or there is an error when a search engine indexes your site. For a typical site, these errors account for approximately 3% of the total page views, but they're often untracked by traditional analytics platforms like Google Analytics.
 
 Website owners usually implement a custom page to be served when this error is generated.
 
@@ -82,7 +82,7 @@ The client did not send the required authentication with the request.
 The origin server did not receive the complete request in what it considers a reasonable time.
 
 -   Implied the server does not wish to wait and continue the connection.
--   Not used much because servers typically choose to use the “close” connection option.
+-   Not used much because servers typically choose to use the "close" connection option.
 
 ## **409 Conflict ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 
@@ -136,7 +136,7 @@ Cloudflare will generate this response for a URI longer than 32KB
 
 ## **415 Unsupported Media Type ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 
-Refusal from the server to process the format of the current payload. One way to identify and fix this issue would be to look at the `Content-Type` or `Content-Encoding` headers sent in the client’s request.
+Refusal from the server to process the format of the current payload. One way to identify and fix this issue would be to look at the `Content-Type` or `Content-Encoding` headers sent in the client's request.
 
 ## **416 Range Not Satisfiable ([RFC7233](https://datatracker.ietf.org/doc/html/rfc7233))**
 
@@ -150,7 +150,7 @@ The most common reason is that the file doesn't include such ranges. Browsers us
 
 ## **417 Expectation Failed ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 
-Failure of server to meet the requirements specified in the `Expect` header of the client’s request.
+Failure of server to meet the requirements specified in the `Expect` header of the client's request.
 
 ## **429 Too Many Requests ([RFC6585](https://tools.ietf.org/html/rfc6585))**
 

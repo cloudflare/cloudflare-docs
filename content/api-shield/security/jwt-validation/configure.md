@@ -51,7 +51,7 @@ Refer to the [Ruleset Engine documentation](/ruleset-engine/rules-language/field
 
 ### Credentials
 
-API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them.
+API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a "KID" which must be present in the JWT's header as well to allow  API Shield to match them.
 
 We allow up to 4 different keys in order to aid in key rollover.
 
@@ -61,7 +61,7 @@ It is highly recommended to validate the output of the API call to check that th
 
 ## Create a Token Configuration using the Cloudflare API
 
-Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Use cURL or any other API client tool to send the new configuration to Cloudflare's API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
 ```bash
 ---
@@ -151,7 +151,7 @@ Selectors control the scope of your token validation rule.
 
 If you only need JWT Validation on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include it in the JWT Validation rule.
 
-If you need to exclude endpoints from JWT validation that never have valid JWTs used with them (by design), such as a path and method used to establish a valid JWT in the first place, you must use the endpoint’s operation ID to exclude the endpoint in a selector.
+If you need to exclude endpoints from JWT validation that never have valid JWTs used with them (by design), such as a path and method used to establish a valid JWT in the first place, you must use the endpoint's operation ID to exclude the endpoint in a selector.
 
 To find the operation ID, refer to [Endpoint Management](/api-shield/management-and-monitoring/) or use the [Cloudflare API](/api/operations/api-shield-endpoint-management-retrieve-information-about-all-operations-on-a-zone).
 
@@ -424,7 +424,7 @@ header: Token Validation Rule JSON example
 
 ## Create a Token Validation Rule using the Cloudflare API
 
-Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Use cURL or any other API client tool to send the new configuration to Cloudflare's API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
 Replace any Token Configurations IDs and operation IDs with the IDs that exist in your zone.
 
@@ -642,4 +642,4 @@ Here is an overview of how JWT Validation processes incoming requests:
   The same accuracy applies as for EXP claims. As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator.
   {{</Aside>}}
 
-7. The final validation result and whether a token was present at all is made available to the WAF which applies the policy’s configured action (`log`/`block`).
+7. The final validation result and whether a token was present at all is made available to the WAF which applies the policy's configured action (`log`/`block`).

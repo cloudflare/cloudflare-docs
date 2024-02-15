@@ -29,7 +29,7 @@ Each web browser uses different methods to warn visitors about mixed content on 
 
 ### **Console logs**
 
-For mixed content warnings, the web browser loads the resources but users do not see the lock icon in the URL. Warning messages appear within the browser’s debug tools:
+For mixed content warnings, the web browser loads the resources but users do not see the lock icon in the URL. Warning messages appear within the browser's debug tools:
 
 ![Screenshot of mixed content warnings displayed in a browser console.](/images/support/hc-import-mixed_content_warning.png)
 
@@ -37,7 +37,7 @@ For mixed content errors, the browser refuses to load the resources over an inse
 
 ![Screenshot of mixed content errors displayed in a browser console.](/images/support/hc-import-mixed_content_error.png)
 
-Information on using the browser’s debug tools to locate these issues are found in the documentation for [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) and [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Alternatively, you can view your page source and find specific references of _http://_ for paths to other resources.
+Information on using the browser's debug tools to locate these issues are found in the documentation for [Chrome](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/fixing-mixed-content) and [Firefox](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content). Alternatively, you can view your page source and find specific references of _http://_ for paths to other resources.
 
 ___
 

@@ -17,7 +17,7 @@ Scaffold a VuePress site using the `create-vuepress-site` tool to set up a new p
 $ npx create-vuepress-site [optionalDirectoryName]
 ```
 
-The command will interactively prompt for details to configure your VuePress site’s metadata such the project name, description, maintainer's email and repository URL.
+The command will interactively prompt for details to configure your VuePress site's metadata such the project name, description, maintainer's email and repository URL.
 
 Once this is done, a scaffolded documentation site will be created in the `docs` directory and ready for you to customize or deploy.
 

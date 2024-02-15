@@ -15,7 +15,7 @@ weight: 1
 
 Once you have set up an alert, Cloudflare checks to see which zones should be monitored for the error rate. The [Clickhouse ABR database](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/) is polled for origin HTTP response codes for those zones. The [service-level objective (SLO)](https://sre.google/workbook/alerting-on-slos/) that is set in the alert is used to determine whether the rate of 5XX response codes to total responses is acceptable.
 
-Instead of using thresholds to calculate error rates, Cloudflare uses burn rates. When you select your SLO, the “error budget” for a set period of time is calculated to determine the burn rate. The burn rate is how quickly the error budget is used for that time period. For example, a burn rate of 1 means that the entirety of the error budget will be used up within the set time period.
+Instead of using thresholds to calculate error rates, Cloudflare uses burn rates. When you select your SLO, the "error budget" for a set period of time is calculated to determine the burn rate. The burn rate is how quickly the error budget is used for that time period. For example, a burn rate of 1 means that the entirety of the error budget will be used up within the set time period.
 
 For Error Rate alerts, Cloudflare uses the multi-window, multi-burn rate approach. We look at a short time period (five minutes) and a long time period (one hour) and only alert you if the error rate exceeds the burn rate for those time periods. This ensures that you are quickly alerted when an outage is detected within a short window, while simultaneously preventing too many false positives since the long window must also be triggered.
 

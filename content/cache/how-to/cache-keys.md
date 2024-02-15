@@ -139,7 +139,7 @@ You cannot include cookies specific to Cloudflare. Cloudflare cookies are prefix
 User feature fields add features about the end-user (client) into the Cache Key.
 
 - `device_type` classifies a request as `mobile`, `desktop`, or `tablet` based on the User Agent
-- `geo` includes the client’s country, derived from the IP address
+- `geo` includes the client's country, derived from the IP address
 - `lang` includes the first language code contained in the `Accept-Language` header sent by the client
 
 ## Availability

@@ -7,7 +7,7 @@ layout: learning-module
 
 # Advanced DDoS protection
 
-Learn how to customize and augment Cloudflare’s DDoS protection.
+Learn how to customize and augment Cloudflare's DDoS protection.
 
 ## Objectives
 

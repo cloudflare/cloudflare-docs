@@ -6,7 +6,7 @@ _build:
 inputParameters: param1
 ---
 
-Finally, you need to install the key server on your infrastructure, populate it with the SSL keys of the certificates you wish to use to terminate TLS at Cloudflare’s edge, and activate the key server so it can be mutually authenticated.
+Finally, you need to install the key server on your infrastructure, populate it with the SSL keys of the certificates you wish to use to terminate TLS at Cloudflare's edge, and activate the key server so it can be mutually authenticated.
 
 {{<Aside type="note">}}
 

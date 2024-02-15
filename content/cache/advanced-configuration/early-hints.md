@@ -5,9 +5,9 @@ pcx_content_type: concept
 
 # Early Hints
 
-Early Hints takes advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response. By sending these hints to a browser before the full response is prepared, the browser can figure out how to load the webpage faster for the end user.
+Early Hints takes advantage of "server think time" to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response. By sending these hints to a browser before the full response is prepared, the browser can figure out how to load the webpage faster for the end user.
 
-Formally, Early Hints is a [web standard](https://httpwg.org/specs/rfc8297.html) that defines a new HTTP status code (103 Early Hints) that defines new interactions between a client and server. 103s are served to clients while a 200 OK (or error) response is prepared, which is the “server think time.” You can enable Cloudflare's edge to cache and send 103 Early Hints responses with Link headers from your HTML pages. The response contains hints about which assets will likely be needed to fully render the webpage. This "hinting" speeds up page loads and generally reduces user-perceived latency.
+Formally, Early Hints is a [web standard](https://httpwg.org/specs/rfc8297.html) that defines a new HTTP status code (103 Early Hints) that defines new interactions between a client and server. 103s are served to clients while a 200 OK (or error) response is prepared, which is the "server think time." You can enable Cloudflare's edge to cache and send 103 Early Hints responses with Link headers from your HTML pages. The response contains hints about which assets will likely be needed to fully render the webpage. This "hinting" speeds up page loads and generally reduces user-perceived latency.
 
 {{<Aside type="note" header="Note">}}
 

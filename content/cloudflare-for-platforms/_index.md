@@ -18,7 +18,7 @@ Extend Cloudflare's security, reliability, and performance services to your cust
 ## Products
  
 {{<feature header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/">}}
-Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare’s network to your customers via their own custom or vanity domains.
+Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare's network to your customers via their own custom or vanity domains.
 {{</feature>}}
 
 {{<feature header="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/">}}

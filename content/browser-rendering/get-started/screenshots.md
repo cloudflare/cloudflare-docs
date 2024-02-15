@@ -37,7 +37,7 @@ You can choose to use either JavaScript or TypeScript for this guide.
 
 ## 2. Install Puppeteer
 
-In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
+In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 ```sh
 $ npm install @cloudflare/puppeteer --save-dev

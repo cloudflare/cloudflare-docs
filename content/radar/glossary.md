@@ -83,7 +83,7 @@ In some cases, a domain may be miscategorized. For example, a social media site 
 
 ## Domain Rankings
 
-Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
+Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings' popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
 Trending domains are domains which are currently experiencing an increase in popularity. Domains Trending Today are domains spiking in popularity, reflecting increased interest potentially related to a particular event or a topic. Domains Trending This Week are domains that have steadily grown in popularity, reflecting an increase of their user base over the week.
 
@@ -139,7 +139,7 @@ A complete TCP connection consists of a 3-way handshake initiated by a client wi
 
 Timeouts can be triggered, for example, by shutting down applications or devices before they can close connections. Timeouts also can be caused by third-party applications or devices seeking to prevent or break the connection. The RST packet is reserved for use by an endpoint to signal a fatal error or failure of some kind, but it can also inappropriately be transmitted by middleboxes to force endpoints to close their connections (see RFC 3360).
 
-Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in “[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)”).
+Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in "[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)").
 
 On Cloudflare Radar's Security & Attacks page, you can view connection tampering statistics derived from a sample of connections to Cloudflare's servers. The plot lines are defined as follows:
 * **Mid-handshake (Post-SYN)**: Connections matching signatures for tampering after the receipt of only a single SYN packet, and before the handshake completes. Tampering at this stage is likely triggered by the destination IP address, as SYN packets typically do not contain application-layer data.

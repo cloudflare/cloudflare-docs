@@ -75,7 +75,7 @@ You need to [convert your key](https://cloud.google.com/kms/docs/formatting-keys
 
 ## 4. Modify your gokeyless config file and restart the service
 
-Once you’ve imported the key, copy the **Resource name** from the UI. Then, add this value to the `gokeyless` YAML file under `private_key_stores`.
+Once you've imported the key, copy the **Resource name** from the UI. Then, add this value to the `gokeyless` YAML file under `private_key_stores`.
 
 With the config file saved, restart `gokeyless` and verify it started successfully.
 

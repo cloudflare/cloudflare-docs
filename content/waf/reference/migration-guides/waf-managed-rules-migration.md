@@ -395,7 +395,7 @@ Contact Cloudflare Support to get help with the following errors:
 
 Instead of using the previous APIs for managing WAF packages, rule groups, and rules, you must now use the [Rulesets API](/ruleset-engine/rulesets-api/) to programmatically configure WAF Managed Rules.
 
-You can also create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to specify changes to be executed on top of the default WAF Managed Rules configuration. These changes will take precedence over the managed ruleset’s default behavior.
+You can also create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to specify changes to be executed on top of the default WAF Managed Rules configuration. These changes will take precedence over the managed ruleset's default behavior.
 
 For more information, refer to the following resources:
 

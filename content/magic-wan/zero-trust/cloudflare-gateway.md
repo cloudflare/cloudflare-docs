@@ -9,7 +9,7 @@ meta:
 
 [Cloudflare Gateway](/cloudflare-one/policies/gateway/), our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
-You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magic-firewall/) policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. [DNS filtering](/learning-paths/dns-filtering/) requires using Cloudflare’s DNS resolver.
+You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magic-firewall/) policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. [DNS filtering](/learning-paths/dns-filtering/) requires using Cloudflare's DNS resolver.
 
 ## HTTPS Filtering
 

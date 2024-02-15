@@ -28,7 +28,7 @@ Below is a generic guide to successfully set up an identity provider based {{<gl
 
 3. In the **Attribute Statements**, add your application users. Emails you add here should match emails users already have in the Area 1 dashboard.
 
-4. After finishing the setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the SSO section of Area 1’s dashboard. Refer to **step 4** in the guide below for more details.
+4. After finishing the setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the SSO section of Area 1's dashboard. Refer to **step 4** in the guide below for more details.
 
 ## 2. Area 1 SAML setup
 

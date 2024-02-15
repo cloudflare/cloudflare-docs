@@ -67,15 +67,15 @@ For more details, refer to [Supported fields and operators](/load-balancing/addi
 
 ## Working with expressions
 
-The Expression Builder’s visual interface allows you to build expressions without worrying about field names and syntax.
+The Expression Builder's visual interface allows you to build expressions without worrying about field names and syntax.
 
 By comparison, the Expression Editor is text only, but it supports advanced features not available in the builder.
 
 ### Expression Builder
 
-Compound expressions are easier to scan when displayed in the Expression Builder’s visual interface, and the Expression Preview is a great reference for learning to write more advanced expressions.
+Compound expressions are easier to scan when displayed in the Expression Builder's visual interface, and the Expression Preview is a great reference for learning to write more advanced expressions.
 
-This Expression Builder screenshot shows the example compound expression described earlier. Compound expressions are easier to scan when displayed in the Expression Builder’s visual interface.
+This Expression Builder screenshot shows the example compound expression described earlier. Compound expressions are easier to scan when displayed in the Expression Builder's visual interface.
 
 ![Example rule configuration visible in the Expression Builder](/images/load-balancing/rules-builder-1.png)
 

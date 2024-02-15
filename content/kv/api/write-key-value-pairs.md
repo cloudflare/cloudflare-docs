@@ -59,11 +59,11 @@ An `expiration` setting on a key will result in that key being deleted, even in 
 
 {{</Aside>}}
 
-Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
+Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace's storage usage for billing purposes.
 
 There are two ways to specify when a key should expire:
 
- - Set a key's expiration using an absolute time specified in a number of [seconds since the UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For example, if you wanted a key to expire at 12:00AM UTC on April 1, 2019, you would set the key’s expiration to `1554076800`.
+ - Set a key's expiration using an absolute time specified in a number of [seconds since the UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For example, if you wanted a key to expire at 12:00AM UTC on April 1, 2019, you would set the key's expiration to `1554076800`.
 
  - Set a key's expiration time to live (TTL) using a relative number of seconds from the current time. For example, if you wanted a key to expire 10 minutes after creating it, you would set its expiration TTL to `600`.
 
@@ -75,7 +75,7 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put()` method has an optional third parameter. 
 
-The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtl`, depending on how you want to specify the key’s expiration time. 
+The `put()` method accepts an object with optional fields that allow you to customize the behavior of the `put()` method. You can set `expiration` or `expirationTtl`, depending on how you want to specify the key's expiration time. 
 
 To use `expiration` or `expirationTtl`, run one of the two commands below to set an expiration when writing a key from within a Worker:
 

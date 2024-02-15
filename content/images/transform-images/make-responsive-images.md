@@ -6,9 +6,9 @@ weight: 26
 
 # Make responsive images
 
-The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) allows browsers to automatically choose an image that is best suited for user’s screen resolution.
+The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) allows browsers to automatically choose an image that is best suited for user's screen resolution.
 
-`srcset` requires providing multiple resized versions of every image, and with Cloudflare’s image transformations this is an easy task to accomplish.
+`srcset` requires providing multiple resized versions of every image, and with Cloudflare's image transformations this is an easy task to accomplish.
 
 There are two different scenarios where it is useful to use `srcset`:
 
@@ -36,9 +36,9 @@ Note that it does not make sense to scale images up for use in `srcset`. That wo
 
 ## `srcset` for responsive images
 
-When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for a visitor’s screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there is not a single image size that fits all cases. With `<img srcset>` you can offer the browser several possible sizes and let it choose the most appropriate size automatically.
+When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for a visitor's screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there is not a single image size that fits all cases. With `<img srcset>` you can offer the browser several possible sizes and let it choose the most appropriate size automatically.
 
-By default, the browser assumes the image will be stretched to the full width of the screen, and will pick a size that is closest to a visitor’s screen size. In the `src` attribute the browser will pick any size that is a good fallback for older browsers that do not understand `srcset`.
+By default, the browser assumes the image will be stretched to the full width of the screen, and will pick a size that is closest to a visitor's screen size. In the `src` attribute the browser will pick any size that is a good fallback for older browsers that do not understand `srcset`.
 
 ```html
 <img

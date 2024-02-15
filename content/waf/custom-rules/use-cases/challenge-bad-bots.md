@@ -5,7 +5,7 @@ title: Challenge bad bots
 
 # Challenge bad bots
 
-Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
+Cloudflare's Bot Management feature scores the likelihood that a request originates from a bot.
 
 {{<Aside type="warning">}}
 

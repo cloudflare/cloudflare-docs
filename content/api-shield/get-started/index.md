@@ -43,7 +43,7 @@ If you do not have a schema to upload, continue reading this guide to learn how 
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
-API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
+API Shield works with Cloudflare WAF's [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
 
 {{<Aside type="note">}}
 A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection.
@@ -53,7 +53,7 @@ You can identify endpoints returning sensitive data by selecting the icon next t
 
 ## Add your discovered endpoints to Endpoint Management
 
-Cloudflare’s machine learning models have already inspected your existing traffic for the presence of API endpoints. By adding endpoints from API Discovery to Endpoint Management, you can unlock further security, visibility, and management features of the platform. Endpoint Management monitors the health of your API endpoints by saving, updating, and monitoring performance metrics. 
+Cloudflare's machine learning models have already inspected your existing traffic for the presence of API endpoints. By adding endpoints from API Discovery to Endpoint Management, you can unlock further security, visibility, and management features of the platform. Endpoint Management monitors the health of your API endpoints by saving, updating, and monitoring performance metrics. 
 
 {{<Aside type="note">}}
 Schema Validation, Schema Learning, JWT Validation, Sequence Analytics, and rate limit recommendations only run on endpoints saved to Endpoint Management.
@@ -85,7 +85,7 @@ You can observe Cloudflare suggested rate limits in Endpoint Management for endp
 
 Cloudflare learns schema parameters via traffic inspection for all endpoints stored in Endpoint Management. You can export OpenAPI schemas in OpenAPI v3.0.0 format by hostname. 
 
-Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield’s rate limit threshold recommendations.
+Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield's rate limit threshold recommendations.
 
 ### Import learned schema to Schema Validation
 

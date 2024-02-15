@@ -29,7 +29,7 @@ Bot Management customers can use Bot Analytics to:
 - Understand traffic during [your onboarding phase](/bots/get-started/bm-subscription/).
 - Tune WAF custom rules to be effective but not overly aggressive.
 - Study recent attacks to find trends and detailed information.
-- Learn more about Cloudflare’s detection engines with real data.
+- Learn more about Cloudflare's detection engines with real data.
 
 ## API
 

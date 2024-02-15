@@ -7,7 +7,7 @@ layout: learning-unit
 
 ## Workers concepts
 
-Cloudflare Workers allow you to build web functions and applications without configuring or maintaining infrastructure. Workers are deployed globally to over 300+ data centers around the world on Cloudflare’s global network.
+Cloudflare Workers allow you to build web functions and applications without configuring or maintaining infrastructure. Workers are deployed globally to over 300+ data centers around the world on Cloudflare's global network.
 
 Before you begin building with Workers, review the following reference material to understand how Workers works.
 

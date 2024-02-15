@@ -63,7 +63,7 @@ outputs:
 - When headers are used for `onlyIf` within `R2GetOptions` for the `get` R2 binding, they now correctly compare against the second granularity. This allows correctly round-tripping to the browser and back. Additionally, `secondsGranularity` is now an option that can be passed into options constructed by hand to specify this when constructing outside Headers for the same effect.
 - Fixed the TypeScript type of `DurableObjectState.id` in [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) to always be a `DurableObjectId`.
 - Validation errors during Worker upload for module scripts now include correct line and column numbers.
-- Bugfix, Profiling tools and flame graphs via Chrome’s debug tools now properly report information.
+- Bugfix, Profiling tools and flame graphs via Chrome's debug tools now properly report information.
 
 ## 2022-07-08
 
@@ -72,7 +72,7 @@ outputs:
 ## 2022-06-24
 
 - `wrangler dev` in global network preview mode now supports scheduling alarms.
-- R2 GET requests made with the `range` option now contain the returned range in the `GetObject`’s `range` parameter.
+- R2 GET requests made with the `range` option now contain the returned range in the `GetObject`'s `range` parameter.
 - Some Web Cryptography API error messages include more information now.
 - Updated V8 from 10.2 to 10.3.
 
@@ -116,7 +116,7 @@ outputs:
 
 ## 2022-05-05
 
-- `Response.redirect(url)` will no longer coalesce multiple consecutive slash characters appearing in the URL’s path.
+- `Response.redirect(url)` will no longer coalesce multiple consecutive slash characters appearing in the URL's path.
 - Fix generated types for Date.
 - Fix R2 bindings list without options to use the default list limit instead of never returning any results.
 - Fix R2 bindings did not correctly handle error messages from R2, resulting in internal error being thrown. Also fix behavior for get throwing an exception on a non-existent key instead of returning null. `R2Error` is removed for the time being and will be reinstated at some future time TBD.
@@ -169,7 +169,7 @@ outputs:
 ## 2022-02-25
 
 - The `TextDecoder` class now supports the full range of text encodings defined by the WHATWG Encoding Standard.
-- Both global `fetch()` and durable object `fetch()` now throw a TypeError when they receive a WebSocket in response to a request without the “Upgrade: websocket” header.
+- Both global `fetch()` and durable object `fetch()` now throw a TypeError when they receive a WebSocket in response to a request without the "Upgrade: websocket" header.
 - Durable Objects users may now store up to 50 GB of data across the objects in their account by default. As before, if you need more storage than that you can contact us for an increase.
 
 ## 2022-02-18
@@ -224,7 +224,7 @@ outputs:
 ## 2021-11-19
 
 - Durable Object stubs that receive an overload exception will be permanently broken to match the behavior of other exception types.
-- Fixed issue where preview service claimed Let’s Encrypt certificates were expired.
+- Fixed issue where preview service claimed Let's Encrypt certificates were expired.
 - [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) is now supported.
 
 ## 2021-11-12
@@ -248,7 +248,7 @@ outputs:
 ## 2021-10-14
 
 - `request.signal` will always return an `AbortSignal`.
-- Cloudflare Workers’ integration with Chrome DevTools profiling now more accurately reports the line numbers and time elapsed. Previously, the line numbers were shown as one line later then the actual code, and the time shown would be proportional but much longer than the actual time used.
+- Cloudflare Workers' integration with Chrome DevTools profiling now more accurately reports the line numbers and time elapsed. Previously, the line numbers were shown as one line later then the actual code, and the time shown would be proportional but much longer than the actual time used.
 - Upgrade to v8 9.5. Refer to [V8 release v9.5 · V8](https://v8.dev/blog/v8-release-95) for more details.
 
 ## 2021-09-24
@@ -284,7 +284,7 @@ outputs:
 - Workers can now make up to 1000 subrequests to Durable Objects from a within a single request invocation, up from the prior limit of 50.
 - Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything unusual or report your issue in the [Workers Discord](https://discord.cloudflare.com).
 - Durable Object constructors may now initiate I/O, such as `fetch()` calls.
-- Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
+- Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object's constructor.
 - In Durable Objects, the callback passed to `storage.transaction()` can now return a value, which will be propagated as the return value of the `transaction()` call.
 
 ## 2021-07-13
@@ -298,7 +298,7 @@ outputs:
 
 ## 2021-06-27
 
-- WebCrypto: Implemented non-standard Ed25519 operation (algorithm NODE-ED25519, curve name NODE-ED25519). The Ed25519 implementation differs from NodeJS’s in that raw import/export of private keys is disallowed, per parity with ECDSA/ECDH.
+- WebCrypto: Implemented non-standard Ed25519 operation (algorithm NODE-ED25519, curve name NODE-ED25519). The Ed25519 implementation differs from NodeJS's in that raw import/export of private keys is disallowed, per parity with ECDSA/ECDH.
 
 ## 2021-06-17
 
@@ -318,7 +318,7 @@ Changes this week:
 
 Changes this week:
 
-- WebCrypto: We now support the “raw” import/export format for ECDSA/ECDH public keys.
+- WebCrypto: We now support the "raw" import/export format for ECDSA/ECDH public keys.
 - `request.cf` is no longer missing when writing Workers using modules syntax.
 
 ## 2021-05-14
@@ -347,14 +347,14 @@ Changes this week:
 
 Changes this week:
 
-- In the WebCrypto API, encrypt and decrypt operations are now supported for the “AES-CTR” encryption algorithm.
-- For Durable Objects, CPU time limits are now enforced on the object level rather than the request level. Each time a new request arrives, the time limit is “topped up” to 500ms. After the (free) beta period ends and Durable Objects becomes generally available, we will increase this to 30 seconds.
+- In the WebCrypto API, encrypt and decrypt operations are now supported for the "AES-CTR" encryption algorithm.
+- For Durable Objects, CPU time limits are now enforced on the object level rather than the request level. Each time a new request arrives, the time limit is "topped up" to 500ms. After the (free) beta period ends and Durable Objects becomes generally available, we will increase this to 30 seconds.
 - When a Durable Object exceeds its CPU time limit, the entire object will be discarded and recreated. Previously, we allowed subrequest requests to continue using the same object, but this was dangerous because hitting the CPU time limit can leave the object in an inconsistent state.
 - Long running Durable Objects are given more subrequest quota as additional WebSocket messages are sent to them, to avoid the problem of a long-running Object being unable to make any more subrequests after it has been held open by a particular WebSocket for a while.
-- When a Durable Object’s code is updated, or when its isolate is reset due to exceeding the memory limit, all stubs pointing to the object will become invalidated and have to be recreated. This is consistent with what happens when the CPU time is exceeded, or when stubs become disconnected due to random network errors. This behavior is useful, as apps can now assume that two messages sent to the same stub will be delivered to exactly the same live instance (if they are delivered at all). Apps which do not care about this property should recreate their stubs for every request; there is no performance penalty from doing so.
-- When a Durable Object’s isolate exceeds its memory limit, an exception with an explanatory message will now be thrown to the caller, instead of “internal error”.
-- When a Durable Object exceeds its CPU time limit, an exception with an explanatory message will now be thrown to the caller, instead of “internal error”.
-- `wrangler tail` now reports CPU-time-exceeded exceptions with an explanatory message instead of “internal error”.
+- When a Durable Object's code is updated, or when its isolate is reset due to exceeding the memory limit, all stubs pointing to the object will become invalidated and have to be recreated. This is consistent with what happens when the CPU time is exceeded, or when stubs become disconnected due to random network errors. This behavior is useful, as apps can now assume that two messages sent to the same stub will be delivered to exactly the same live instance (if they are delivered at all). Apps which do not care about this property should recreate their stubs for every request; there is no performance penalty from doing so.
+- When a Durable Object's isolate exceeds its memory limit, an exception with an explanatory message will now be thrown to the caller, instead of "internal error".
+- When a Durable Object exceeds its CPU time limit, an exception with an explanatory message will now be thrown to the caller, instead of "internal error".
+- `wrangler tail` now reports CPU-time-exceeded exceptions with an explanatory message instead of "internal error".
 
 ## 2021-04-19
 
@@ -370,7 +370,7 @@ Changes since the last post on 3/26:
 - WebCrypto: Support ECDSA key generation.
 - Fixed bug where `crypto.subtle.encrypt()` on zero-length inputs would sometimes throw an exception.
 - Improved exception messages thrown by the WebCrypto API somewhat.
-- `waitUntil` is now supported for module Workers. An additional argument called ‘ctx’ is passed after ‘env’, and `waitUntil` is a method on ‘ctx’.
+- `waitUntil` is now supported for module Workers. An additional argument called 'ctx' is passed after 'env', and `waitUntil` is a method on 'ctx'.
 - `passThroughOnException` is now available under the ctx argument to module handlers
 - Reliability improvements for Durable Objects
 - Reliability improvements for Durable Objects persistent storage API
@@ -395,18 +395,18 @@ New this week:
 Changes this week:
 
 - In the preview mode of the dashboard, a Worker that fails during startup will now return a 500 response, rather than getting the default passthrough behavior, which was making it harder to notice when a Worker was failing.
-- A Durable Object’s ID is now provided to it in its constructor. It can be accessed off of the `state` provided as the constructor’s first argument, as in `state.id`.
+- A Durable Object's ID is now provided to it in its constructor. It can be accessed off of the `state` provided as the constructor's first argument, as in `state.id`.
 
 ## 2021-02-05
 
 New this week:
 
 - V8 has been updated from 8.8 to 8.9.
-- During a `fetch()`, if the destination server commits certain HTTP protocol errors, such as returning invalid (unparsable) headers, we now throw an exception whose description explains the problem, rather than an “internal error”.
+- During a `fetch()`, if the destination server commits certain HTTP protocol errors, such as returning invalid (unparsable) headers, we now throw an exception whose description explains the problem, rather than an "internal error".
 
 New last week (forgot to post):
 
-- Added support for `waitUntil()` in Durable Objects. It is a method on the state object passed to the Durable Object class’s constructor.
+- Added support for `waitUntil()` in Durable Objects. It is a method on the state object passed to the Durable Object class's constructor.
 
 ## 2021-01-22
 
@@ -428,7 +428,7 @@ Changes this week:
 
 Changes in the prior release:
 
-- Fixed delivery of WebSocket “error” events.
+- Fixed delivery of WebSocket "error" events.
 - Fixed a rare bug where a WritableStream could be garbage collected while it still had writes queued, causing those writes to be lost.
 
 ## 2020-12-10
@@ -449,7 +449,7 @@ Changes this week:
 
 As of this release, we impose a limit on the number of outgoing HTTP requests that a Worker can make simultaneously. **For each incoming request**, a Worker can make up to 6 concurrent outgoing `fetch()` requests.
 
-If a Worker’s request handler attempts to call `fetch()` more than six times (on behalf of a single incoming request) without waiting for previous fetches to complete, then fetches after the sixth will be delayed until previous fetches have finished. A Worker is still allowed to make up to 50 total subrequests per incoming request, as before; the new limit is only on how many can execute simultaneously.
+If a Worker's request handler attempts to call `fetch()` more than six times (on behalf of a single incoming request) without waiting for previous fetches to complete, then fetches after the sixth will be delayed until previous fetches have finished. A Worker is still allowed to make up to 50 total subrequests per incoming request, as before; the new limit is only on how many can execute simultaneously.
 
 **Automatic deadlock avoidance**
 
@@ -479,7 +479,7 @@ Changes this week:
 - Improved error message when a single request performs more than 1000 KV operations to make clear that a per-request limit was reached, not a global rate limit.
 - `wrangler dev` previews should now honor non-default resource limits, for example, longer CPU limits for those in the Workers Unbound beta.
 - Fixed off-by-one line numbers in Worker exceptions.
-- Exceptions thrown in a Durable Object’s `fetch()` method are now tunneled to its caller.
+- Exceptions thrown in a Durable Object's `fetch()` method are now tunneled to its caller.
 - Fixed a bug where a large Durable Object response body could cause the Durable Object to become unresponsive.
 
 ## 2020-11-13
@@ -516,7 +516,7 @@ Also, a change from the 2020-09-08 release that it seems we forgot to post:
 
 Changes last week:
 
-- Fixed a regression which could cause `HTMLRewriter.transform()` to throw spurious “The parser has stopped.” errors.
+- Fixed a regression which could cause `HTMLRewriter.transform()` to throw spurious "The parser has stopped." errors.
 - Upgraded V8 from 8.4 to 8.5.
 
 ## 2020-07-09
@@ -528,7 +528,7 @@ Changes this week:
 
 Changes last week (… forgot to post):
 
-- `setTimeout`/`setInterval` can now take additional arguments which will be passed on to the callback, as required by the spec. (Few people use this feature today because it’s usually much easier to use lambda captures.)
+- `setTimeout`/`setInterval` can now take additional arguments which will be passed on to the callback, as required by the spec. (Few people use this feature today because it's usually much easier to use lambda captures.)
 
 Changes the week before last (… also… forgot to post… we really need to code up a bot for this):
 
@@ -542,7 +542,7 @@ Changes this week:
 
 ## 2020-04-20
 
-Looks like we forgot to post release notes for a couple weeks. Releases still are happening weekly as always, but the “post to the community” step is insufficiently automated…
+Looks like we forgot to post release notes for a couple weeks. Releases still are happening weekly as always, but the "post to the community" step is insufficiently automated…
 4/2 release:
 
 - Fixed a source of long garbage collection paused in memory limit enforcement.
@@ -559,7 +559,7 @@ Looks like we forgot to post release notes for a couple weeks. Releases still ar
 
 New this week:
 
-- Certain “internal errors” that could be thrown when using the Cache API are now reported with human-friendly error messages. For example, `caches.default.match("not a URL")` now throws a TypeError.
+- Certain "internal errors" that could be thrown when using the Cache API are now reported with human-friendly error messages. For example, `caches.default.match("not a URL")` now throws a TypeError.
 
 ## 2020-02-28
 
@@ -573,7 +573,7 @@ New from the past two weeks:
 
 Changes over the last couple weeks:
 
-- Fixed a bug where if two differently-named scripts within the same account had identical content and were deployed to the same zone, they would be treated as the “same Worker”, meaning they would share the same isolate and global variables. This only applied between Workers on the same zone, so was not a security threat, but it caused confusion. Now, two differently-named Worker scripts will never be considered the same Worker even if they have identical content.
+- Fixed a bug where if two differently-named scripts within the same account had identical content and were deployed to the same zone, they would be treated as the "same Worker", meaning they would share the same isolate and global variables. This only applied between Workers on the same zone, so was not a security threat, but it caused confusion. Now, two differently-named Worker scripts will never be considered the same Worker even if they have identical content.
 - Performance and stability improvements.
 
 ## 2020-01-24
@@ -596,8 +596,8 @@ New this week:
 Runtime release notes covering the past few weeks:
 
 - Increased total per-request `Cache.put()` limit to 5GiB.
-- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/concepts/default-cache-behavior/).
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone's normal [cache limits](/cache/concepts/default-cache-behavior/).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
-- More “internal errors” were converted to useful user-facing errors.
+- More "internal errors" were converted to useful user-facing errors.
 - Stability improvements and bug fixes.

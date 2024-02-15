@@ -111,15 +111,15 @@ ___
 
 ## Troubleshooting
 
-_I keep getting “Invalid hostname: Use ‘@’ to represent the root domain.” when creating DNS records in Cloudflare._ 
+_I keep getting "Invalid hostname: Use '@' to represent the root domain." when creating DNS records in Cloudflare._ 
 
 -   Make sure you are creating CNAME records and not another record type.
 
 ___
 
-_Cloudflare is my domain name registrar and I don’t know how to change my nameservers._
+_Cloudflare is my domain name registrar and I don't know how to change my nameservers._
 
--   You don’t need to change the nameservers if you are already using Cloudflare as a domain name registrar.
+-   You don't need to change the nameservers if you are already using Cloudflare as a domain name registrar.
 
 ___
 

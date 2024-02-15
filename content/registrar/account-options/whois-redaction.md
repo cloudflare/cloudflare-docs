@@ -8,11 +8,11 @@ weight: 4
 
 Cloudflare Registrar provides personal data redaction on WHOIS information, if permitted by the registry.
 
-WHOIS is a standard for publishing the contact and nameserver information for all registered domains. Each registrar maintains their own WHOIS service. Anyone can query the registrar’s WHOIS service to reveal the data behind a given domain.
+WHOIS is a standard for publishing the contact and nameserver information for all registered domains. Each registrar maintains their own WHOIS service. Anyone can query the registrar's WHOIS service to reveal the data behind a given domain.
 
 However, broadcasting the registrant contact information via the WHOIS service can cause spam mail to be delivered to your personal addresses. Cloudflare Registrar offers personal data redaction on WHOIS for free, that meets current ICANN guidelines.
 
-Cloudflare’s WHOIS service can be found at https://rdap.cloudflare.com/. Select **WHOIS** as the search type.
+Cloudflare's WHOIS service can be found at https://rdap.cloudflare.com/. Select **WHOIS** as the search type.
 
 ## What is WHOIS redaction?
 
@@ -27,7 +27,7 @@ Cloudflare still maintains the authoritative, unredacted, record of your WHOIS d
 
 RDAP (Registration Data Access Protocol) is a new standard for querying domain contact and nameserver information for all registered domains. This new protocol offers some advantages over WHOIS, including standardized data access, support for internationalization, and secure access controls. RDAP is intended to eventually replace WHOIS. However, Cloudflare currently provides both WHOIS and RDAP search capability.
 
-Cloudflare’s RDAP service can be found at https://rdap.cloudflare.com/. Select **RDAP** as the search type.
+Cloudflare's RDAP service can be found at https://rdap.cloudflare.com/. Select **RDAP** as the search type.
 
 ## How can third parties reach registrants?
 

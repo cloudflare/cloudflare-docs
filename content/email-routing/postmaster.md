@@ -62,7 +62,7 @@ $ dig AAAA gmail-smtp-in.l.google.com
 gmail-smtp-in.l.google.com. 17 IN AAAA 2a00:1450:400c:c09::1b
 ```
 
-Email Routing also supports IPv6 through Cloudflare’s inbound MX servers.
+Email Routing also supports IPv6 through Cloudflare's inbound MX servers.
 
 ### MX, SPF, and DKIM records
 

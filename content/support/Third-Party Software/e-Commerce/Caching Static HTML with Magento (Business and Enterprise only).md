@@ -68,7 +68,7 @@ Magento 1.8.x and 1.9.x introduced [Cross Site Request Forgery checks](https://
 
 2. Somewhat Secure: A Magento community module exists which allows users to only disable CSRF checks on the "Add to Cart" form, where the security risk is less significant; the [Inovarti\_FixAddToCartMage18](https://github.com/deivisonarthur/Inovarti_FixAddToCartMage18/blob/master/README.md) plugin does this by allowing the "Add to Cart" functionality from CSRF protection. 
 
-3. Most Secure: The best alternative is to use AJAX to dynamically fill in the value of the CSRF token in your Magento site. When a user clicks the button to add something to their cart, some JavaScript jumps in to update the CSRF token in the forms to match the user’s session. This can enable most of the page to be served from cache but will still require a request back to the origin to fetch the token.
+3. Most Secure: The best alternative is to use AJAX to dynamically fill in the value of the CSRF token in your Magento site. When a user clicks the button to add something to their cart, some JavaScript jumps in to update the CSRF token in the forms to match the user's session. This can enable most of the page to be served from cache but will still require a request back to the origin to fetch the token.
 
 This final AJAX mechanism is implemented in a plugin called the [Magento Turpentine extension](https://github.com/nexcess/magento-turpentine). Whilst this plugin was built for performing caching with Varnish, it can also be used with Cloudflare.
 

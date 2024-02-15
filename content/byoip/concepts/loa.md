@@ -41,7 +41,7 @@ To whom it may concern:
 [Subnet & Originating ASN]
 - - - - - - - - - - - - - - - - - - -
 
-As a representative of the Company that is the owner of the aforementioned IP address blocks / originating ASNs, I hereby declare that I am authorized to sign this LOA on the Company’s behalf.
+As a representative of the Company that is the owner of the aforementioned IP address blocks / originating ASNs, I hereby declare that I am authorized to sign this LOA on the Company's behalf.
 
 Should you have any questions please email me at [E-MAIL ADDRESS], or call: [TELEPHONE NUMBER]
 

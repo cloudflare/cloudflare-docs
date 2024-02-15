@@ -46,7 +46,7 @@ To enable Durable Objects, you will need to purchase the Workers Paid plan:
 
 ## 3. Install Puppeteer
 
-In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
+In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 ```sh
 $ npm install @cloudflare/puppeteer --save-dev

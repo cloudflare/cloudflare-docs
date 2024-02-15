@@ -27,8 +27,8 @@ Cloudflare One is a secure access service edge (SASE) platform that protects ent
 - Protecting data in order to comply with regulations and prevent leaks
 - Simplifying connectivity across offices, data centers, and cloud environments
 
-Cloudflare One is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning hundreds of cities worldwide and interconnection with over 12,500 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
+Cloudflare One is built on Cloudflare's connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning hundreds of cities worldwide and interconnection with over 12,500 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
-As a result, Cloudflare operates within ~50 ms of ~95% of the world’s Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
+As a result, Cloudflare operates within ~50 ms of ~95% of the world's Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
 This document describes a reference architecture for organizations working towards a SASE architecture, and shows how Cloudflare One enables such security and networking transformation.

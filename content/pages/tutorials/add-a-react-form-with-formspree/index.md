@@ -161,7 +161,7 @@ To create a Formspree form, sign up for [an account on Formspree](https://formsp
 
 ![Creating a Formspree form](/images/pages/tutorials/react-new-form-dialog.png)
 
-You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 8 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
+You will be presented with instructions on how to integrate your new form. Copy the form's `hashid` (the last 8 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
 
 ![Newly generated form endpoint that you can copy to use in the ContactForm component](/images/pages/tutorials/react-form-endpoint.png)
 

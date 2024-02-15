@@ -17,7 +17,7 @@ meta:
 5. Select the message box that appears to choose the hostname you have input and select **Done**.
 6. Copy the JS snippet from **Manage site**. This is also where you can later edit the hostname you have just added.
 7. (Optional) Select **View Analytics sites** to go back on the Web Analytics interface. If you prefer to continue setting up Web Analytics website, continue reading.
-8. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
+8. Add the JS snippet to any of your website's HTML pages before the ending body tag.
 
 Web analytics is now set up on your website, but it may take a few minutes for Web Analytics data to appear.
 
@@ -37,7 +37,7 @@ To set up Web Analytics manually:
 1. After step 4 (above), expand **Advanced options**.
 2. Select **Disable automatic setup**.
 3. Copy the JS snippet.
-4. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
+4. Add the JS snippet to any of your website's HTML pages before the ending body tag.
 
 Repeat these steps for all of the websites you want to track with Web Analytics. Web Analytics is enabled by default for sites proxied through Cloudflare that previously used Browser Insights. Adjust Web Analytics for your site at any time by selecting **Manage site** from Web Analytics.
 

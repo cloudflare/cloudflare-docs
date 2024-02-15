@@ -6,7 +6,7 @@ weight: 5
 
 # Add audio tracks to a video
 
-A video must be uploaded before additional audio tracks can be attached to it. In the following example URLs, the video’s UID is referenced as `VIDEO_UID`.
+A video must be uploaded before additional audio tracks can be attached to it. In the following example URLs, the video's UID is referenced as `VIDEO_UID`.
 
 To add an audio track to a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
 

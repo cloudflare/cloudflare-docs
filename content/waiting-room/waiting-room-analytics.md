@@ -16,7 +16,7 @@ Using Waiting Room Analytics, you can:
 
 ## ​Dashboard Analytics
 
-To access your waiting room’s analytics in the dashboard:
+To access your waiting room's analytics in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Traffic** > **Waiting Room**.
@@ -26,11 +26,11 @@ To access your waiting room’s analytics in the dashboard:
 
 ## Event Analytics
 
-If your waiting room has a completed scheduled event, you can quickly access the event’s analytics by expanding the row for the waiting room you are interested in and selecting the event time. The link opens the analytics view for that waiting room, including information from the pre-queueing period to the end of the event.
+If your waiting room has a completed scheduled event, you can quickly access the event's analytics by expanding the row for the waiting room you are interested in and selecting the event time. The link opens the analytics view for that waiting room, including information from the pre-queueing period to the end of the event.
 
 To save this event information, you can either select **Download data** or **Print report**. If you delete the event, the time period link will no longer appear in your dashboard. If you edit the timing of the event, the time period link will update as well.
 
-If you do not get a link to your event’s analytics, one of the following may have happened:
+If you do not get a link to your event's analytics, one of the following may have happened:
 
 - Your event has not happened yet.
 - Your event started more than 30 days ago.

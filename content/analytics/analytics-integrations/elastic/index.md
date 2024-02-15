@@ -250,13 +250,13 @@ When you click to review a stream, you want to look for messages starting with t
 
 ![Visualizing AWS Lambda log stream messages](/images/fundamentals/elastic/screenshots/aws-lambda-log-streams-messages.png)
 
-If you see _status: \[RED]_, then your cluster isn’t healthy and it’s likely that your Cloudflare logs won’t appear. If this is the case, review how to debug in Kibana (see below).
+If you see _status: \[RED]_, then your cluster isn't healthy and it's likely that your Cloudflare logs won't appear. If this is the case, review how to debug in Kibana (see below).
 
 It is important to verify the return status of the call to Elasticsearch. Lines starting with _Flushing \[N] logs to elasticsearch_ and followed by a response line indicate that everything is working as expected.
 
 {{<Aside type="note" header="Note">}}
 
-You might see a _WARNING_ message containing text that says _‘y’ year should be replaced…_. You can ignore this message.
+You might see a _WARNING_ message containing text that says _'y' year should be replaced…_. You can ignore this message.
 
 {{</Aside>}}
 

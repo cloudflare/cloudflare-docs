@@ -116,7 +116,7 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 Workers automatically scale onto thousands of Cloudflare global network servers around the world. There is no general limit to the number of requests per second Workers can handle.
 
-Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
+Cloudflare's abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare's abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
 
 The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
@@ -178,7 +178,7 @@ For subrequests to internal services like Workers KV and Durable Objects, the su
 
 There is no set limit on the amount of real time a Worker may use. As long as the client which sent a request remains connected, the Worker may continue processing, making subrequests, and setting timeouts on behalf of that request.
 
-When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
+When the client disconnects, all tasks associated with that client's request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/workers/runtime-apis/handlers/fetch/), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
 
 ---
 

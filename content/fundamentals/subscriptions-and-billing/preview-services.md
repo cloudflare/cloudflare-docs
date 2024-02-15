@@ -14,7 +14,7 @@ You may cancel at any time before the 30 days ends by reaching out to your sales
 
 ## Available features and products
 
-To enable a preview service, use the **Dashboard link** in the following table. Then, select **Enable**. And that is it. You will have instant access to the product or feature you selected so you can begin determining if it is right for your business’ needs.
+To enable a preview service, use the **Dashboard link** in the following table. Then, select **Enable**. And that is it. You will have instant access to the product or feature you selected so you can begin determining if it is right for your business' needs.
 
 | Name                               | Dashboard link                                                                                              | Docs                                                                       | Community                                                                                           |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |

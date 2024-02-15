@@ -7,9 +7,9 @@ pcx_content_type: concept
 
 `Vary` is an HTTP response header that allows origins to serve variants of the same content that can be used depending on the browser sending the request.
 
-Cloudflare sits in between the browser and the origin. When Cloudflare receives the origin’s response, the specific image variant is cached so that subsequent requests from browsers with the same image preferences can be served from cache. This also means that serving multiple image variants for the same asset will create distinct cache entries.
+Cloudflare sits in between the browser and the origin. When Cloudflare receives the origin's response, the specific image variant is cached so that subsequent requests from browsers with the same image preferences can be served from cache. This also means that serving multiple image variants for the same asset will create distinct cache entries.
 
-`Vary` for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
+`Vary` for Images reduces the content-negotiation process by parsing a request's `Accept` header, which is sent to the origin to deliver the correct content to the browser.
 
 Vary for images is available for Pro, Business, and Enterprise customers.
 
@@ -38,7 +38,7 @@ You can use vary for images on the file extensions below if the origin server se
 
 ## Enable vary for images
 
-Vary for Images is enabled through Cloudflare’s API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
+Vary for Images is enabled through Cloudflare's API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
 
 ### Create a variants rule
 

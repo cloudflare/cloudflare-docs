@@ -20,7 +20,7 @@ To get started with generating a Pages Function, create a `/functions` directory
 
 {{<Aside type="note" header="Advanced mode">}}
 
-For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
+For existing applications where Pages Functions' built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
 
 {{</Aside>}}
 

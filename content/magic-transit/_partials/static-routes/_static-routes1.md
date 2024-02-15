@@ -8,7 +8,7 @@ inputParameters: productName;;anycastURL;;trafficSteering;;trafficRoutesAPI
 
 # Configure static routes
 
-$1 uses a static configuration to route your traffic through {{<glossary-tooltip term_id="anycast" link="$2">}}Anycast tunnels{{</glossary-tooltip>}} from Cloudflare’s global network to your locations.
+$1 uses a static configuration to route your traffic through {{<glossary-tooltip term_id="anycast" link="$2">}}Anycast tunnels{{</glossary-tooltip>}} from Cloudflare's global network to your locations.
 
 You must assign a route priority to each tunnel–subnet pair in your configuration, as follows:
 

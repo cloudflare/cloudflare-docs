@@ -14,7 +14,7 @@ Relatively few consumer grade routers are capable of exporting NetFlow or sFlow.
 
 {{<Aside type="note" header="Note:">}}
 
-These lists are not exhaustive, and we encourage you to check your router’s specification sheet to confirm your router is capable of exporting NetFlow or sFlow.
+These lists are not exhaustive, and we encourage you to check your router's specification sheet to confirm your router is capable of exporting NetFlow or sFlow.
 
 {{</Aside>}}
 

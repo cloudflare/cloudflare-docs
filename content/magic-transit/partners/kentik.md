@@ -22,7 +22,7 @@ You will need the email address associated with your Cloudflare account, Cloudfl
 4. On the **Configure Mitigations** page, locate the **Cloudflare** section.
 5. Select **Edit** next to the Cloudflare branded mitigation to edit and review the information.
 
-    In the example below under section two, the Cloudflare email address, Account ID, and API token are used to send the API call to Cloudflare to begin advertising routes and turn on Magic Transit for the customer’s network.
+    In the example below under section two, the Cloudflare email address, Account ID, and API token are used to send the API call to Cloudflare to begin advertising routes and turn on Magic Transit for the customer's network.
 
     ![Kentik mitigation setup](/images/magic-transit/kentik-setup.png)
 

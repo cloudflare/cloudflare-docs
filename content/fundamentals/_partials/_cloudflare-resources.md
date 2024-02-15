@@ -30,7 +30,7 @@ As you get started with Cloudflare, use the following resources.
 | [Cloudflare for Offices](https://www.cloudflare.com/cloudflare-for-offices/) | Improve connectivity with direct Cloudflare network access. |
 | [Cloudflare for Startups](https://www.cloudflare.com/forstartups/) | Help startups accelerate and protect their Internet properties. |
 | [Critical Infrastructure Defense Project (CIDP)](https://www.cloudflare.com/partners/technology-partners/cidp/) | Comprehensive cybersecurity protection for US critical infrastructure. |
-| [Project Cybersafe Schools](https://www.cloudflare.com/lp/cybersafe-schools/) | Grants eligible schools free access to Cloudflare’s Email Security and Gateway products. |
+| [Project Cybersafe Schools](https://www.cloudflare.com/lp/cybersafe-schools/) | Grants eligible schools free access to Cloudflare's Email Security and Gateway products. |
 | [Project Fair Shot](https://www.cloudflare.com/fair-shot/) | Provides Waiting Room to any government agency, hospital, pharmacy, or other organization facilitating the distribution of the COVID-19 vaccine for free. |
 | [Project Galileo](https://www.cloudflare.com/galileo/) | Cyber security protection for organizations working in the arts, human rights, civil society, journalism, or democracy fields. |
 | [Project Safekeeping](https://www.cloudflare.com/lp/project-safekeeping/) | Provides enterprise-level Zero Trust cybersecurity services to eligible under-resourced organizations that are vital to the basic functioning of our global communities organizations. |
@@ -46,4 +46,4 @@ As you get started with Cloudflare, use the following resources.
 | [Cloudflare System Status](https://www.cloudflarestatus.com/) | Review system status and track ongoing incidents and outages. |
 | [Cloudflare Radar](https://radar.cloudflare.com) | Check up-to-date Internet trends and insights. |
 | [Cloudflare TV](https://cloudflare.tv/schedule) | Tune in for technical deep dives, founder interviews, diverse voices, and more. |
-| [Terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) | Configure Cloudflare using HashiCorp’s Infrastructure as Code tool, Terraform. |
+| [Terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) | Configure Cloudflare using HashiCorp's Infrastructure as Code tool, Terraform. |

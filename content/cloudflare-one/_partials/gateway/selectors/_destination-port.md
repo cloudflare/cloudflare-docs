@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-The port number of the request’s target.
+The port number of the request's target.
 
 | UI name          | API example              |
 | ---------------- | ------------------------ |

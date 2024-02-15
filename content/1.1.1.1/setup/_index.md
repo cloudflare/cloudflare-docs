@@ -54,7 +54,7 @@ Cloudflare returns `0.0.0.0` if the [fully qualified domain name (FQDN)](https:/
 
 If you are using 1.1.1.1 for Families and see a domain that you believe is miscategorized, [fill in this form](https://radar.cloudflare.com/categorization-feedback/) to bring it to our attention. Your submission will remain anonymous.
 
-We review these submissions to improve Cloudflare’s categorization.
+We review these submissions to improve Cloudflare's categorization.
 
 {{</Aside>}}
 
