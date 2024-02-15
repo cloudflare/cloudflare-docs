@@ -20,4 +20,6 @@ To apply customizations to your block page:
    - Adding a [Mailto link](/cloudflare-one/policies/gateway/configuring-block-page/#allow-users-to-email-an-administrator)
    - Choosing a background color
 
-4. Select **Save**. Your customers will now see your custom block page when visiting a blocked website.
+4. Select **Save**.
+
+Users will now get a custom block page when visiting a blocked website.

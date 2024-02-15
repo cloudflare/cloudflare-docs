@@ -1330,20 +1330,31 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to enable Sippy.
+- `--provider` {{<type>}}"AWS"|"GCS"{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The provider of your source object storage bucket.
 - `--bucket` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The name of your AWS S3 bucket.
-- `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
-- `--secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#create-amazon-s3-credentials).
+  - The name of your source object storage bucket.
 - `--r2-key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Your R2 Access Key ID. Requires read and write access.
 - `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Your R2 Secret Access Key. Requires read and write access.
-- `--region` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
 - `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+- **AWS S3 provider-specific options:**
+- `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--region` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- **Google Cloud Storage provider-specific options:**
+- `--service-account-key-file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path to your Google Cloud service account key JSON file. This will read the service account key file and populate `client_email` and `private_key` options. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--client-email` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The client email for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--private-key` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
 
 {{</definitions>}}
 
@@ -1652,7 +1663,7 @@ Configure Cloudflare Pages.
 
 ### `dev`
 
-Develop your full stack Pages application locally.
+Develop your full-stack Pages application locally.
 
 ```txt
 wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]

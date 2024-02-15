@@ -14,7 +14,7 @@ Durable Objects provide a single-point-of-coordination for [Cloudflare Workers](
 
 While there are other use cases for using Workers exclusively with WebSockets, WebSockets are most useful when combined with Durable Objects.
 
-When a client connects to your application using a WebSocket, you need a way for server-generated messages to be sent using the existing socket connection. Multiple clients can establish a WebSocket connection with a specific Durable Object addressed by its [unique ID](/durable-objects/how-to/access-durable-object-from-a-worker/#1-create-durable-object-ids). The Durable Object can then send messages to each client over the WebSocket connection.
+When a client connects to your application using a WebSocket, you need a way for server-generated messages to be sent using the existing socket connection. Multiple clients can establish a WebSocket connection with a specific Durable Object addressed by its [unique ID](/durable-objects/configuration/access-durable-object-from-a-worker/#1-create-durable-object-ids). The Durable Object can then send messages to each client over the WebSocket connection.
 
 Durable Objects can use the web standard APIs described in the [WebSockets](/durable-objects/api/websockets/) API reference. Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example using Durable Objects with WebSockets.
 
@@ -46,7 +46,7 @@ If an event occurs for a hibernated Durable Object's corresponding handler metho
 
 {{<Aside type="warning" header="Support for local development">}}
 
-Prior to wrangler@3.13.2, and Miniflare `v3.20231016.0` WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
+Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
 
 If you are using older versions, note that while hibernatable WebSocket events such as `webSocketMessage()` will still be delivered, the Durable Object will never be evicted from memory.
 

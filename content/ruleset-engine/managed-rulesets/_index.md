@@ -9,9 +9,15 @@ weight: 6
 
 Managed rulesets are preconfigured rulesets provided by Cloudflare that you can deploy. Only Cloudflare can modify these rulesets.
 
-The rules in a managed ruleset have a default configuration. However, you can define overrides that change this default configuration.
+The rules in a managed ruleset have a default configuration. However, you can define [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that change this default configuration.
 
-There are several Cloudflare products that provide you with managed rulesets. Check each product’s documentation for details on the available managed rulesets.
+Several Cloudflare products include managed rulesets:
+
+- [Web Application Firewall (WAF)](/waf/managed-rules/)
+- [DDoS Protection](/ddos-protection/managed-rulesets/)
+- [Magic Firewall](/magic-firewall/how-to/enable-managed-rulesets/)
+
+ Check each product's documentation for details on the available managed rulesets.
 
 ## Get started
 
@@ -19,4 +25,8 @@ To view available managed rulesets, refer to [View rulesets](/ruleset-engine/bas
 
 To deploy a managed ruleset to a phase, refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
 
-You cannot edit the rules in a managed ruleset, but you can customize the managed ruleset behavior by using overrides. Refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for more information.
+To adjust the behavior of a managed ruleset, do one of the following:
+- Customize the behavior of one or more rules by using [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
+- Skip one or more managed rules by adding [exceptions](/ruleset-engine/managed-rulesets/create-exception/).
+
+Exceptions (only supported by the WAF) have priority over overrides.

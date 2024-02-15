@@ -34,7 +34,7 @@ The LOA must be a PDF. Transit providers may reject the LOA if it is a JPG or PN
 
 ## Verify IRR entries
 
-Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/how-to/verify-irr-entries/).
+Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/concepts/irr-entries/best-practices/#verify-an-irr-entry).
 
 If you are using a Cloudflare IP, you do not need to verify your IRR entries.
 

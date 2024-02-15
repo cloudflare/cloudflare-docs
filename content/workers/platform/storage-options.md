@@ -120,7 +120,7 @@ It is ideal for projects that require:
 
 To get started with Durable Objects:
 
-* Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects//).
+* Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
 * Review the [Durable Objects documentation](/durable-objects/).
 * Get started with [Durable Objects](/durable-objects/get-started/).
 * Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
@@ -140,7 +140,7 @@ To get started with D1:
 
 * Read [the documentation](/d1)
 * Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-* Review the [D1 client API](/d1/how-to/query-databases/).
+* Review the [D1 client API](/d1/build-databases/query-databases/).
 
 
 ## Queues

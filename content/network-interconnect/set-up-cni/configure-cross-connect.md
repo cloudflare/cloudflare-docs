@@ -8,7 +8,7 @@ meta:
 
 # Configure the network cross-connect
 
-The Cloudflare Infrastructure uses your information to configure the cross-connect, but the configuration process varies slightly for physical and virtual links. This process can take one to two weeks and can take longer depending on the provider. Your Customer Success Manager will remain in contact with you to ensure your cross-connect is on track.
+The Cloudflare Infrastructure uses your information to configure the cross-connect. The configuration process varies slightly for physical and virtual links. This process can take one to two weeks, or longer depending on the provider. Your Customer Success Manager will remain in contact with you to ensure your cross-connect is on track.
 
 ## Physical links
 

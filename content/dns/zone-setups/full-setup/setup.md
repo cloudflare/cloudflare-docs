@@ -26,7 +26,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{</Aside>}}
 
-- Have previously created a [Cloudflare account](/fundamentals/setup/account-setup/create-account/).
+- Have previously created a [Cloudflare account](/fundamentals/setup/account/create-account/).
 - Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
 
 {{<render file="_dnssec-providers.md">}}
@@ -37,7 +37,7 @@ All domains purchased through Cloudflare Registrar automatically use Cloudflare 
 
 {{<tutorial-step title="Add site to Cloudflare">}}
 
-In the Cloudflare dashboard, [add your domain](/fundamentals/setup/account-setup/add-site/).
+In the Cloudflare dashboard, [add your domain](/fundamentals/setup/manage-domains/add-site/).
 
 {{</tutorial-step>}}
 
@@ -77,7 +77,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 ### Update your registrar
 
-1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
+1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
 
 2. Remove your existing authoritative nameservers.
 
@@ -112,7 +112,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 - [MediaTemple](https://mediatemple.net/community/products/dv/204643220/how-do-i-edit-my-domain's-nameservers)
 - [MelbourneIT](https://support.melbourneit.com.au/articles/help/Domain-Name-Administration-FAQ/?q%3Dedit%2Bnameservers%26fs%3DSearch%26pn%3D1)
 - [Moniker](https://faq.moniker.com/register-own-nameservers)
-- [Name.com](https://www.name.com/support/articles/205934547-Changing-Your-Name-Servers)
+- [Name.com](https://www.name.com/support/articles/205934457-registering-custom-nameservers)
 - [NameCheap](https://www.namecheap.com/support/knowledgebase/article.aspx/767/10/how-can-i-change-the-nameservers-for-my-domain)
 - [Network Solutions](https://www.networksolutions.com/manage-it/edit-nameservers.jsp)
 - [OVH](https://docs.ovh.com/gb/en/domains/web_hosting_general_information_about_dns_servers/#step-2-edit-your-domains-dns-servers)

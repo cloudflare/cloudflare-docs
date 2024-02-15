@@ -83,7 +83,7 @@ To create an index, you will need to use the `wrangler vectorize create` command
 - Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
 - Only used for describing the index, and is not directly referenced in code.
 
-In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
+In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be Euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
 {{<render file="_vectorize-wrangler-version.md">}}
 
@@ -266,7 +266,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -335,8 +335,10 @@ From here, experiment by passing a different `queryVector` and observe the resul
 
 In a real-world application, the `queryVector` would be the vector embedding representation of a query from a user or system, and our `sampleVectors` would be generated from real content. To build on this example, read the [vector search tutorial](/vectorize/get-started/embeddings/) that combines Workers AI and Vectorize to build an end-to-end application with Workers.
 
-## Next steps
+## Related resources
 
 - [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 - Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- [Euclidean Distance vs Cosine Similarity](https://www.baeldung.com/cs/euclidean-distance-vs-cosine-similarity).
+- [Dot product](https://en.wikipedia.org/wiki/Dot_product).

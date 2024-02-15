@@ -1,7 +1,7 @@
 ---
 title: Testing
 pcx_content_type: reference
-weight: 13
+weight: 4
 ---
 
 # Testing

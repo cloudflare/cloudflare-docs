@@ -48,7 +48,7 @@ _(For Enterprise Emergency Phone Support)_
 For account security, you must verify your identity and account ownership in the Cloudflare dashboard before discussing account settings and sensitive details with Cloudflare Support. There are two verification options:
 
 -   a single-use token that automatically refreshes every thirty (30) seconds, or
--   an [authenticator app token](/fundamentals/account-and-billing/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) on your mobile device.
+-   an [authenticator app token](/fundamentals/setup/account/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) on your mobile device.
 
 ### Authenticating your account
 
@@ -66,7 +66,7 @@ For account security, you must verify your identity and account ownership in the
 
 ![](/images/support/Emergency_Phone_Support.png)
 
-5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/account-and-billing/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) on the following screen. After configuration, the token code will appear in your mobile authentication application.
+5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/setup/account/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) on the following screen. After configuration, the token code will appear in your mobile authentication application.
 
 6\. Wait until the Cloudflare Support agent asks for the code before sharing the verification token.
 
@@ -77,7 +77,7 @@ ___
 To submit a support ticket, follow these steps:
 
 1.  Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
-2.  Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](/fundamentals/account-and-billing/account-security/login-and-account-issues/) in order to submit a Support ticket.
+2.  Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](/fundamentals/setup/account/account-security/login-and-account-issues/) in order to submit a Support ticket.
 3.  Select the appropriate account requiring assistance.
 4.  Verify that you are now in the Support Portal
 5.  Choose the category and subcategories that best define your issue

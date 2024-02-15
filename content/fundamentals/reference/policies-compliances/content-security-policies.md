@@ -22,7 +22,7 @@ Cloudflare’s [CDN](/cache/) is compatible with CSP.
 
 Cloudflare does not:
 
-* Modify CSP headers from the origin web server.
+* Modify CSP headers from the origin web server (except when using Zaraz, to ensure the [Zaraz script is always running](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).
 * Require changes to acceptable sources for first or third-party content.
 * Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/reference/cdn-cgi-endpoint/) and [Cloudflare Fonts](/speed/optimization/content/fonts/#cloudflare-fonts) that rewrites Google Fonts urls).
 * Interfere with locations specified in your CSP.

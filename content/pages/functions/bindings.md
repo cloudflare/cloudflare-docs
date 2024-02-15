@@ -194,10 +194,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your D1 databases locally
 
-While developing locally, interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
+While [developing locally](/d1/configuration/local-development/#develop-locally-with-pages), interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
 
 {{<Aside type="note">}}
-By default, `wrangler dev` automatically persists data.
+By default, [`wrangler dev`](/workers/wrangler/commands/#dev-1) automatically persists data.
 {{</Aside>}}
 
 Specifically:
@@ -205,13 +205,14 @@ Specifically:
 * If your database is bound to `NORTHWIND_DB` and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1 NORTHWIND_DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
-Refer to the [D1 client API documentation](/d1/how-to/query-databases/) for the API methods available on your D1 binding.
+Refer to the [D1 client API documentation](/d1/build-databases/query-databases/) for the API methods available on your D1 binding.
 
 ## Workers AI
-[Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
+
+[Workers AI](/workers-ai/) allows you to run  AI models. To bind Workers AI to your Pages Function:
 
 {{<Aside type="warning">}}
-While pages currently supports Workers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
+While Pages currently supports Workers AI bindings, they do not work in local dev mode. Cloudflare aims to provide local dev support soon, but recommends you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -221,8 +222,7 @@ While pages currently supports Workers AI bindings, they do not work in local de
 5. Give your binding a name under **Variable name**.
 7. Redeploy your project for the binding to take effect.
 
-Install the Workers AI client library
-
+### Install the Workers AI client library
 
 Below is an example of how to use Workers AI in your Function. Your Workers AI binding is `AI`:
 
@@ -479,7 +479,7 @@ To add secrets to your Pages project:
 5. Select **Encrypt** to create your secret.
 6. Select **Save**.
 
-You use secrets the same way as environment variables, [see here](#environment-variables) for how to use them.
+You use secrets the same way as environment variables. For more guidance, refer to [Environment variables](#environment-variables).
 
 ### Interact with your secrets locally
 
