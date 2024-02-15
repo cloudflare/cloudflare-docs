@@ -53,6 +53,10 @@ To add a site:
 7. Select **Save**.
 8. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
+#### Network segmentation
+
+After setting up your LANs, you can configure your Connector to enable communication between them without traffic leaving your premises. Refer to [Network segmentation](/magic-wan/configuration/connector/network-options/network-segmentation/) for more information.
+
 #### DHCP options
 
 Magic WAN Connector supports different types of DHCP configurations. Connector can:
