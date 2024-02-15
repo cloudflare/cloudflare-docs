@@ -21,9 +21,9 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 4. Go to **Network**, and scroll down to **LAN configuration**.
 5. Select **LAN policies** > **Create Policy**.
 6. In **Policy name**, enter a descriptive name for the policy you are creating.
-7. From the dropdown menu **LAN 1**, select your origin LAN.
+7. From the drop-down menu **LAN 1**, select your origin LAN.
 8. (Optional) Specify a subnet for your first LAN in **Subnets**.
-9. (Optional) In **Ports** specify the TCP/UDP ports you want to use. Add a comma to separate each of the ports you want to use.
+9. (Optional) In **Ports** specify the TCP/UDP ports you want to use. Add a comma to separate each of the ports.
 10. In **LAN 2**, select the destination LAN and repeat the above process to configure it.
 11. (Optional) Select the type of traffic you want to keep local. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
 12. Select **Create policy**.
