@@ -18,4 +18,4 @@ Purging everything immediately clears all resources from your CDN cache in all C
 
 ## Resulting cache status
 
-Purge Everything invalidates the resource: for the next request the [CF-Cache-Status](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `EXPIRED`.
+Purge Everything invalidates the resource: for the next request the [CF-Cache-Status](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `EXPIRED`.
