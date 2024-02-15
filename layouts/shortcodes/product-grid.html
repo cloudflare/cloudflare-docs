@@ -553,7 +553,7 @@ function hideElement(id) {
 function triggerSearch() {
   let searchBox = document.getElementById('search');
   zaraz.track('product grid additional search', {input: searchBox.value})
-  document.querySelector(".DocSearch.DocSearch-Button").click()
+  window.location.assign(`/search/?q=${searchBox.value}`)
 }
 
 function zarazTrackSelect(eventName, selectedOption) {
