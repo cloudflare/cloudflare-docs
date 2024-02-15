@@ -75,6 +75,6 @@ Review the list of Cloudflare features that function in this manner:
 
 Resolve common caching concerns.
 
-- [Learn about Cloudflare's cache response statuses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses)
+- [Learn about Cloudflare's cache response statuses](/cache/concepts/cache-responses/)
 - [Investigate Cloudflare's cache response with cURL](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl)
 - [Diagnose Always Online issues](/cache/troubleshooting/always-online/)
