@@ -100,7 +100,7 @@ Additionally, you can use the slider tool below the chart to filter incoming req
 
 The main chart displays the following data for the selected time frame, according to the selected tab:
 
-* **HTTP requests**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
+* **Traffic analysis**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
 
     * **Mitigated by WAF**: Requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. It does not include requests that had the following actions applied: _Log_, _Skip_, and _Allow_.
     * **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
