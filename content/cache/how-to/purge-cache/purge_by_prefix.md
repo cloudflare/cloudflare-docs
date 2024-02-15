@@ -42,6 +42,10 @@ If you have a [Transform Rule](/rules/transform/) in place that is modifying par
 
 {{</Aside>}}
 
+## Resulting cache status
+
+Purging by prefix deletes the resource: for the next request the [CF-Cache-Status](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `MISS`.
+
 ## Limitations
 
 There are several limitations regarding purge by prefix:
