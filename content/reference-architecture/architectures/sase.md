@@ -409,6 +409,20 @@ All of the above methods result in only the DNS requests — not all traffic —
 
 The following table summarizes SWG capabilities for the various methods of forwarding traffic to Cloudflare (as of Oct 2023):
 
+|                                | IP tunnel or Interconnect (Magic WAN) | Device Agent (WARP) *1 | Remote Browser | Browser proxy | DNS proxy |
+|--------------------------------|---------------------------------------|------------------------|----------------|---------------|-----------|
+| Types of traffic forwarded     | TCP/UDP                               | TPC/UDP                | HTTP           | HTTP          | DNS       |
+| **Policy types**               |                                       |                        |                |               |           |
+| DNS                            | Yes                                   | Yes                    | No             | No            | Yes       |
+| HTTP/S *2                      | Yes                                   | Yes                    | Yes            | Yes           | N/A       |
+| Network (L3/L4 parameter)      | Yes                                   | Yes                    | Yes            | Yes           | No        |
+| **Data available in policies** |                                       |                        |                |               |           |
+| Identity information           | No                                    | Yes                    | Yes            | No            | No *3     |
+| Device posture                 | No                                    | Yes                    | No             | No            | No        |
+| **Capabilities**               |                                       |                        |                |               |           |
+| Remote browser isolation       | Yes                                   | Yes                    | Yes            | Yes           | N/A       |
+| Enforce egress IP              | Yes                                   | Yes                    | Yes            | Yes           | N/A       |
+
 Notes:
 
 1. Running the device agent in DNS over HTTP mode provides user identity information, in addition to the same capabilities as connecting via DNS.
