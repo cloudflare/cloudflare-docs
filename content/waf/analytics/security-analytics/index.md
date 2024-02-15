@@ -90,7 +90,7 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack analysis**, **Bot analysis**, and **Uploaded content** analysis sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
+The **Attack analysis**, **Bot analysis**, and **Uploaded content analysis** sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
 
 You can examine different traffic segments according to the current metric (attack, bot, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
