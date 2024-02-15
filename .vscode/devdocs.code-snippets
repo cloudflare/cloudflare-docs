@@ -99,6 +99,20 @@
       "description": "Header for a partial Markdown file",
       "scope": "markdown"
     },
+    "Markdown header: external link page": {
+        "prefix": ["headerexternallink"],
+        "body": [
+          "---",
+          "pcx_content_type: navigation",
+          "title: ${1:title}",
+          "external_link: ${2:url}",
+          "weight: ${3:weight}",
+          "_build:",
+          "  publishResources: false",
+          "  render: never",
+          "---",
+        ]
+    },
     "Markdown header: add meta title": {
         "prefix": ["metatitle"],
         "body": [
