@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Interrupt window
+meta:
+  description: Learn how to define when Connector can perform an update to its systems.
 ---
 
 # Interrupt window
