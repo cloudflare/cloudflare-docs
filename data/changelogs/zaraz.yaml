@@ -2,15 +2,25 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2024-02-15'
+  title:
+  description: |-
+    * **NEW**: add `manager.route` support for Managed Components
+    * **NEW**: introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
+    * **NEW**: add support for client-evaluated triggers (UI update following shortly)
+    * **Pinterest MC**: Add ecommerce support
+    * **Google Ads MC**: Append url and rnd params to pagead/landing endpoint
+    * **Bugfix**: Add noindex robots headers for Zaraz GET endpoint responses
+    * **Bugfix**: Gracefully handle responses from custom MCs without mapped endpoints
 - publish_date: '2024-02-05'
   title:
   description: |-
-    * **Dashboard** rename "tracks" to "events" for consistency
-    * **Click listeners** fix bug where anchor link click events were not bubbling
-    * **Pinterest Conversion API MC** fix installation
-    * **http MC** update _settings prefix usage handling
-    * better minification of client-side js
-    * begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration
+    * **Dashboard**: rename "tracks" to "events" for consistency
+    * **Pinterest Conversion API MC**: update parameters sent to api
+    * **HTTP MC**: update _settings prefix usage handling
+    * **Bugfix**: better minification of client-side js
+    * **Bugfix**: fix bug where anchor link click events were not bubbling when using click listener triggers
+    * **API update**: begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration
 - publish_date: '2023-12-19'
   title:
   description: |-
