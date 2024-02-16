@@ -149,7 +149,7 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the value can be of a basic type such as `String` or an array of values.
 
-The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<String><Array<String>>`, indicates the data type of the key (`String`) and the data type of values associated with keys (`Array` of `String` values). This means that when you access the value of key `"foo"` (a string) you will get either an array of `String` values or a missing value.
+The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<String><Array<String>>`, indicates the data type of the key (`String`) and the data type of values associated with keys (`Array` of `String` elements). This means that when you access the value of key `"foo"` (a string) you will get either an array of `String` elements or a missing value.
 
 To access a value in a map, enter the key between square brackets (`[]`):
 
