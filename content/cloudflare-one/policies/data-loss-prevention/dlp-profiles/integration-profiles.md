@@ -14,9 +14,9 @@ Cloudflare DLP integration profiles enable data loss prevention support for thir
 
 Detection entries in integration profiles are managed by the third-party platform and cannot be manually added, edited, or deleted within Cloudflare DLP.
 
-## Microsoft Purview / Information Protection (MIP) sensitivity labels
+## Microsoft Purview Information Protection (MIP) sensitivity labels
 
-Microsoft provides [Purview / MIP sensitivity labels](https://learn.microsoft.com/en-us/purview/sensitivity-labels) to classify and protect sensitive data.
+Microsoft provides [Purview Information Protection sensitivity labels](https://learn.microsoft.com/en-us/purview/sensitivity-labels) to classify and protect sensitive data.
 
 ### Setup
 
