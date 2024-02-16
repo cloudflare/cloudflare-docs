@@ -57,7 +57,7 @@ Setup requires a basic understanding of [Git](https://git-scm.com/). If you are 
 
 ### Create a new GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, go to your newly created project directory to prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
 # Skip the following 3 commands if you have built your application
