@@ -14,7 +14,7 @@ Only available on Enterprise plans.
 
 {{</Aside>}}
 
-Virtual networks This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
+This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
 
 {{<tutorial>}}
 
@@ -22,34 +22,30 @@ Virtual networks This tutorial gives administrators an easy way to allow their e
 
 Make sure you have:
 
-- The WARP client deployed on user devices
-- Multiple [dedicated egress IP address](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) assigned to your Zero Trust account
+- [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices
+- [Set up `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device (Steps 1 and 2)
+- Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
 
 {{</tutorial-prereqs>}}
 
-{{<tutorial-step title="Build a virtual network">}}
+{{<tutorial-step title="Create a virtual network">}}
 
 1. Use `cloudflared` to create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
 
     ```sh
-    $ cloudflared tunnel vnet add <vnet_name>
+    $ cloudflared tunnel vnet add <VNET_NAME>
     ```
 
 2. Assign an IP route to the virtual network.
 
     ```sh
-    $ cloudflared tunnel rouet ip add --vnet <vnet_name> <ip_range>
+    $ cloudflared tunnel route ip add --vnet <VNET_NAME> <ip_range>
     ```
 
 3. Add countries to the virtual network. For example:
 
     ```sh
-    $ cloudflared tunnel vnet add AMER &&
-    cloudflared tunnel vnet add ITALY &&
-    cloudflared tunnel vnet add GB &&
-    cloudflared tunnel vnet add IRELAND &&
-    cloudflared tunnel vnet add MEXICO &&
-    cloudflared tunnel vnet add CANADA
+    $ cloudflared tunnel vnet add AMER && cloudflared tunnel vnet add ITALY &&  cloudflared tunnel vnet add GB &&  cloudflared tunnel vnet add IRELAND &&  cloudflared tunnel vnet add MEXICO &&  cloudflared tunnel vnet add CANADA  
     ```
 
 {{</tutorial-step>}}
@@ -63,7 +59,7 @@ Make sure you have:
 
     | Selector        | Operator | Value         |
     | --------------- | -------- | ------------- |
-    | Virtual Network | is       | `<vnet_name>` |
+    | Virtual Network | is       | `<VNET_NAME>` |
 
 5. In **Select an egress IP**, select **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 
@@ -78,7 +74,7 @@ Make sure you have:
     $ curl ifconfig.me -4
     ```
 
-3. In the WARP client, select the gear icon > **Virtual Networks** > _<vnet_name>_.
+3. In the WARP client, select the gear icon > **Virtual Networks** > _<VNET_NAME>_.
 4. Check the egress IP address again.
 
     ```sh
