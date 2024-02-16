@@ -8,6 +8,14 @@ meta:
 
 # Pricing
 
+{{<Aside type="warning" header="Workers Standard pricing is now available">}}
+
+New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today.
+
+For users on the Workers Paid plan: You **have until March 1, 2024 to switch to new pricing on your own**, after which all of your Workers and Pages Functions currently under the [Bundled and Unbound pricing models](/workers/platform/pricing/#deprecated-usage-models) will be **automatically migrated** to the [Standard model](/workers/platform/pricing/#example-pricing-standard-usage-model). 
+
+{{</Aside>}}
+
 By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
 The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
@@ -21,13 +29,6 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 {{</Aside>}}
 
 ## Workers
-
-
-{{<Aside type="note" header="Workers Standard pricing is now available">}}
-  
-New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today. 
-
-{{</Aside>}}
 
 {{<table-wrap>}}
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
