@@ -215,10 +215,10 @@ var options = {
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
   retryDelays: [0, 3000, 5000, 10000, 20000], // Indicates to tus-js-client the delays after which it will retry if the upload fails
   metadata: {
-    filename: 'test.mp4',
+    name: 'test.mp4',
     filetype: 'video/mp4',
-    defaulttimestamppct: 0.5,
-    watermark: '<WATERMARK_UID>',
+    // Optional if you want to include a watermark
+    // watermark: '<WATERMARK_UID>',
   },
   uploadSize: size,
   onError: function (error) {
