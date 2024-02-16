@@ -2,6 +2,13 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-02-16"
+    title: API changes to `.run()`
+    description: |-
+      Previous breaking change on 2024-02-13 to `run()` was removed. `run()` returns a `D1Result`
+
+      Future change to `run()` to return a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object), as originally intended and documented, will be made with a compatibility date.
+
   - publish_date: "2024-02-13"
     title: API changes to `.raw()`, `.all()` and `.run()`
     description: |-
