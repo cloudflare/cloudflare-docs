@@ -53,7 +53,7 @@ Make sure you have:
 
     | Selector        | Operator | Value         |
     | --------------- | -------- | ------------- |
-    | Virtual Network | is       | `<VNET_NAME>` |
+    | Virtual Network | is       | _<VNET_NAME>_ |
 
 5. In **Select an egress IP**, select **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 
@@ -62,20 +62,14 @@ Make sure you have:
 {{<tutorial-step title="Test your egress policy">}}
 
 1. On your user's machine, log in to Zero Trust in the WARP client.
-2. Check the default egress IP address.
+2. In a terminal, run the following command to check the default egress IP address.
 
     ```sh
     $ curl ifconfig.me -4
     ```
 
-3. In the WARP client, select the gear icon > **Virtual Networks** > _<VNET_NAME>_.
-4. Check the egress IP address again.
-
-    ```sh
-    $ curl ifconfig.me -4
-    ```
-
-The traffic should be routed via the egress IP specified in the egress policy.
+3. In the WARP client, select the gear icon > **Virtual Networks**. Choose the virtual network you created.
+4. Check the egress IP address again by running the command from step 1. Traffic should be routed via the egress IP specified in the egress policy.
 
 {{</tutorial-step>}}
 
