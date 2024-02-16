@@ -6,11 +6,11 @@ weight: 8
 
 # Applications and app types
 
-Gateway allows you to build DNS, Network, and HTTP policies based on applications and app types. This feature gives you more granular control over how web applications are used on your network.
+Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. You can select individual applications or groups of app types to filter specific traffic on your network.
 
 ## Applications
 
-When you choose the _Application_ selector in a Gateway policy builder, the **Value** drop-down menu will show all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
+When you choose the _Application_ selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
 
 ## App types
 
@@ -50,7 +50,7 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 
 #### TLS decryption limitations
 
-Some applications are incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
+Applicatons can be incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
 
 {{<glossary-definition term_id="certificate pinning" prepend="- **Certificate pinning**: Certificate pinning is ">}}
 
@@ -58,18 +58,20 @@ Some applications are incompatible with [TLS decryption](/cloudflare-one/policie
 
 #### Application grouping
 
-Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As incompatible applications are released or identified, Gateway periodically updates this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create an HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) with the _Do Not Inspect_ group selected.
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) with the entire _Do Not Inspect_ app type selected.
 
 {{<Aside type="note" header="Install Cloudflare certificate manually to allow TLS decryption">}}
-Instead of setting up a _Do Not Inspect_ policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
+Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 {{</Aside>}}
 
 #### Microsoft 365 integration
 
-To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic.
+To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicity defined.
 
 To turn on the integration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
 2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
-3. To verify the policy was created, go to **Gateway** > **Firewall Policies**, then select **HTTP**. A policy named Office 365 Auto Generated will be enabled in your list.
+3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall Policies**, then select **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
+
+All future Microsoft 365 traffic will bypass Gateway logging and filtering. To disable this behavior, turn off or delete the policy.
