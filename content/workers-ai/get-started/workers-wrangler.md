@@ -127,11 +127,17 @@ After configuring your Worker, you can test your project locally before you depl
 
 ## 5. Develop locally with Wrangler
 
-While in your project directory, test Workers AI locally by running. Note, you will be prompted to login at this time:
+While in your project directory, test Workers AI locally by running the following command: 
 
 ```sh
 $ npx wrangler dev --remote
 ```
+
+{{<Aside type="note">}}
+
+Note, you will be prompted to login at this time.
+
+{{</Aside>}}
 
 {{<Aside type="warning">}}
 Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev environment is not currently capable of running them locally.
