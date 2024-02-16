@@ -42,7 +42,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 
 After activating your Connector, you can use it in a network configuration based on a static IP address — that is, a network configuration without a route to the Internet that has DHCP enabled.
 
-To move your Connector to a static IP network configuration:
+To use your Connector on a network configuration with a static IP:
 
 1. Wait 60 seconds after activating your Connector.
 2. Unplug the physical connection to the Internet-connected device which provides DHCP.
