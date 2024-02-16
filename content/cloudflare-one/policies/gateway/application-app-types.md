@@ -54,7 +54,7 @@ Applicatons can be incompatible with [TLS decryption](/cloudflare-one/policies/g
 
 {{<glossary-definition term_id="certificate pinning" prepend="- **Certificate pinning**: Certificate pinning is ">}}
 
-- **Non-web traffic**: Some applications send non-web traffic over TLS, such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP). Gateway cannot inspect these protocols.
+- **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
 
 #### Application grouping
 
@@ -68,7 +68,7 @@ Instead of creating a Do Not Inspect policy for an application, you may be able 
 
 To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicity defined.
 
-To turn on the integration:
+To turn on the Microsoft 365 integration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
 2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
