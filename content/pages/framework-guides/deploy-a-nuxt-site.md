@@ -112,7 +112,7 @@ export default defineNuxtConfig({
 });
 ```
 
-This module is powered by the `getPlatformProxy` [helper function](/workers/wrangler/api#getplatformproxy) will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. See [Wrangler configuration](workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+This module is powered by the `getPlatformProxy` [helper function](/workers/wrangler/api#getplatformproxy) will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. Review [Wrangler configuration information on bindings](workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
 
 {{<Aside type="note">}}
 
@@ -120,7 +120,7 @@ This module is powered by the `getPlatformProxy` [helper function](/workers/wran
 
 {{</Aside>}}
 
-In order to access bindings in a deployed application, you will need to [configure them](/pages/functions/bindings/) in the Cloudflare dashboard on your project's settings page.
+In order to access bindings in a deployed application, you will need to [configure your bindings](/pages/functions/bindings/) in the Cloudflare dashboard.
 
 ### Access bindings in your Nuxt application
 
