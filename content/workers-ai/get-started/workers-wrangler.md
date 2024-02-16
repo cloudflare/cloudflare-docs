@@ -130,7 +130,7 @@ After configuring your Worker, you can test your project locally before you depl
 While in your project directory, test Workers AI locally by running the following command: 
 
 ```sh
-$ npx wrangler dev --remote
+$ npx wrangler dev
 ```
 
 {{<Aside type="note">}}
@@ -139,9 +139,7 @@ Note, you will be prompted to login at this time.
 
 {{</Aside>}}
 
-{{<Aside type="warning">}}
-Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev environment is not currently capable of running them locally.
-{{</Aside>}}
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
 When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
 
