@@ -53,4 +53,4 @@ If you have a [Transform Rule](/rules/transform/) in place that is modifying par
 
 ## Resulting cache status
 
-Single-file purge deletes the resource: for the next request the [CF-Cache-Status](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses) header will be `MISS`.
+Purging by single-file deletes the resource, resulting in the CF-Cache-Status header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
