@@ -202,7 +202,7 @@ Accessing an non-existing key or an out-of-bounds array index for values which a
 
 ## Lists
 
-Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
+Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. Each list type supports items of a specific data type. All items in a list must have the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
