@@ -9,7 +9,7 @@ entries:
       
       `run()` now returns a `D1Result`, including the result rows, matching its original behaviour prior to the change on 2024-02-13.
 
-      Future change to `run()` to return a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object), as originally intended and documented, will be made with a compatibility date.
+      Future change to `run()` to return a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object), as originally intended and documented, will be gated behind a [compatibility date](/workers/configuration/compatibility-dates/) as to avoid breaking existing Workers relying on the way `run()` currently works.
 
   - publish_date: "2024-02-13"
     title: API changes to `.raw()`, `.all()` and `.run()`
