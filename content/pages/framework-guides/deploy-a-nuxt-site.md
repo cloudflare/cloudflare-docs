@@ -112,13 +112,14 @@ Projects created via C3 come with `nitro-cloudflare-dev`, a `nitro` module that 
 ```typescript
 ---
 filename: nuxt.config.ts
+highlights: [2]
 ---
 export default defineNuxtConfig({
   modules: ["nitro-cloudflare-dev"],
 });
 ```
 
-This module is powered by the `getBindingsProxy` [helper function](/workers/wrangler/api#getbindingsproxy) which will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. See [Wrangler configuration](workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+This module is powered by the `getPlatformProxy` [helper function](/workers/wrangler/api#getplatformproxy) will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. See [Wrangler configuration](workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
 
 {{<Aside type="note">}}
 `wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
