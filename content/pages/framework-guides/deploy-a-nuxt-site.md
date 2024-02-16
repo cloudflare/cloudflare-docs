@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Deploy a Nuxt site
+meta:
+  description: 
 ---
 
 # Deploy a Nuxt site
@@ -9,68 +11,63 @@ title: Deploy a Nuxt site
 
 In this guide, you will create a new Nuxt application and deploy it using Cloudflare Pages.
 
-## Create a new project
+## Create a new project using the `create-cloudflare` CLI (C3)
 
-The easiest way to get started is by using the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (also known as C3). To do so, open a terminal and run:
+Open up your terminal and run the following command to create a new Nuxt site. Your Nuxt site is configured for Cloudflare Pages using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/).
 
 ```sh
 $ npm create cloudflare@latest my-nuxt-app -- --framework=nuxt
 ```
 
-C3 will create a new project with `nuxi` (The official Nuxt cli) and install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
+C3 will create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli) and install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version). C3 will ask you a series of setup questions.
 
-## Migrating an existing Nuxt application
+After creating your project, a new `my-nuxt-app` directory will be generated using the default Nuxt template, updated to be fully compatible with Cloudflare Pages.
 
-Add `wrangler` to your project:
-
-```sh
-$ npm install --save-dev wrangler@latest
-```
-
-Update the deploy script in `package.json`:
-
-```json
----
-filename: package.json
----
-{
-  // ...
-  "scripts": {
-    // ...
-    "deploy": "npm run build && wrangler pages deploy ./dist"
-  }
-}
-```
-
-## Deploy your project
-
-After creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can re-deploy your application at any time by running following command inside your project directory:
+When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can re-deploy your application at any time by running following command inside your project directory:
 
 ```sh
 $ npm run deploy
 ```
 
-You can instead [connect a GitHub or Gitlab repository](/pages/configuration/git-integration) to your Pages project so that new versions of your project are built and deployed when changes to your git repository are detected. To do so, choose “No” when C3 asks if you’d like to deploy and refer to the guide below.
+{{<Aside type="note" header="Git integration">}}
 
-{{<Aside type="note">}}
+The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
 
-This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to this [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3, for example), you need to create a new Pages application in order to add Git integration to it.
 
 {{</Aside>}}
 
+## Configure and deploy a project without C3
+
+To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [dashboard guide](/pages/get-started/guide/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
+
+## Git integration
+
+[Connect a GitHub or Gitlab repository](/pages/configuration/git-integration) to your Pages project so that new versions of your project are built and deployed when changes to your Git repository are detected.
+
+In addition to [Direct Upload](/pages/get-started/direct-upload/) deployments, you can make use of the Pages Git integration, which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+
+{{<Aside type="note">}}
+
+Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
+
+{{</Aside>}}
+
+Setup requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+
 ### Create a new GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). Next, prepare and push your local application to GitHub by running the following commands in your terminal:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
-# Skip the following 3 commands if you've built your application
+# Skip the following 3 commands if you have built your application
 # using C3 or already committed your changes
 $ git init
 $ git add .
 $ git commit -m "Initial commit"
 
 $ git branch -M main
-$ git remote add origin https://github.com/<your-gh-username>/<repository-name>
+$ git remote add origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>
 $ git push -u origin main
 ```
 
@@ -79,17 +76,11 @@ $ git push -u origin main
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Navigate to [Workers & Pages > Create application > Pages > Connect to Git](https://dash.cloudflare.com/?to=/:account/pages/new/provider/github) and create a new pages project.
 
-{{<Aside type="note">}}
-
-Note that git integration cannot currently be added to existing Pages applications, so if you've already deployed your application via Direct Upload (using C3 for example), you will still need to create a new Pages application in order to proceed.
-
-{{</Aside>}}
-
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-{{<pages-build-preset framework="nuxt">}}
+{{<pages-build-preset framework="nuxt-js">}}
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
@@ -101,11 +92,13 @@ Cloudflare Pages will automatically rebuild your project and deploy it on every 
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-## Bindings
+## Use bindings in your Nuxt application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
 
-If you intend to use bindings in your project, you must first set them up for local and remote development.
+If you intend to use bindings in your project, you must first set up your bindings for local and remote development.
+
+### Set up bindings for local development
 
 Projects created via C3 come with `nitro-cloudflare-dev`, a `nitro` module that simplifies the process of working with bindings during development:
 
@@ -122,12 +115,14 @@ export default defineNuxtConfig({
 This module is powered by the `getPlatformProxy` [helper function](/workers/wrangler/api#getplatformproxy) will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. See [Wrangler configuration](workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
 
 {{<Aside type="note">}}
+
 `wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+
 {{</Aside>}}
 
 In order to access bindings in a deployed application, you will need to [configure them](/pages/functions/bindings/) in the Cloudflare dashboard on your project's settings page.
 
-### Accessing bound resources in your Nuxt application
+### Access bindings in your Nuxt application
 
 In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.com/docs/guide/directory-structure/server#server-directory). The `defineEventHandler()` method is used to define your API endpoints in which you can access Cloudflare's context via the provided `context` field. The `context` field allows you to access any bindings set for your application.
 

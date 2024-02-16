@@ -23,20 +23,6 @@ C3 will install necessary dependencies, including the [Wrangler](/workers/wrangl
 
 After creating your project, a new `my-next-app` directory will be generated using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
 
-Change to this directory to continue development.
-
-```sh
-$ cd my-next-app
-```
-
-If you chose to deploy, you will receive a unique subdomain for your project on `*.pages.dev`, and you can access it almost immediately.
-
-To (re)deploy your application after having made changes, run the deployment command that C3 generates for you:
-
-```sh
-$ npm run pages:deploy
-```
-
 {{<Aside type="note" header="Git integration">}}
 
 The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
@@ -51,7 +37,7 @@ If you already have a Next.js project or wish to manually create and deploy one 
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
 
 If you intend to use bindings in your project, you must set them up for local and remote development.
 
@@ -225,9 +211,17 @@ Both cases can be improved by setting up proper [loaders](https://nextjs.org/doc
 
 ## Git integration
 
-In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration/), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+[Connect a GitHub or Gitlab repository](/pages/configuration/git-integration) to your Pages project so that new versions of your project are built and deployed when changes to your Git repository are detected.
 
-This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+In addition to Direct Upload deployments, you can make use of the Pages Git integration, which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+
+{{<Aside type="note">}}
+
+Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
+
+{{</Aside>}}
+
+Setup requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
 
 ### Create a new GitHub repository
 
@@ -241,19 +235,13 @@ $ git add .
 $ git commit -m "Initial commit"
 
 $ git branch -M main
-$ git remote add origin https://github.com/<your-gh-username>/<repository-name>
+$ git remote add origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>
 $ git push -u origin main
 ```
 ### Connect your application to the GitHub repository via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-
-{{<Aside type="note">}}
-
-The Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
-
-{{</Aside>}}
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -299,7 +287,6 @@ And preview your project by running:
 ```sh
 $ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat
 ```
-
 
 ### Deploy your application and iterate
 
