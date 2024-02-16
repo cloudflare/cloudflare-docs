@@ -17,4 +17,4 @@ Purging everything immediately clears all resources from your CDN cache in all C
 
 ## Resulting cache status
 
-Purge Everything invalidates the resource, resulting in the CF-Cache-Status header indicating [`EXPIRED`](/cache/concepts/cache-responses/#expired) for subsequent requests.
+Purge Everything invalidates the resource, resulting in the `CF-Cache-Status` header indicating [`EXPIRED`](/cache/concepts/cache-responses/#expired) for subsequent requests.

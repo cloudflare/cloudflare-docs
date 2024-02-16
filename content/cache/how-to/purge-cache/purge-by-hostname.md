@@ -27,7 +27,7 @@ You can purge hostnames via the Cloudflare API. For more information, refer to t
 
 ## Resulting cache status
 
-Purging by hostname deletes the resource, resulting in the CF-Cache-Status header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
+Purging by hostname deletes the resource, resulting in the `CF-Cache-Status` header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
 
 If [tiered cache](/cache/how-to/tiered-cache/) is used, purging by hostname may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
 Depending on whether the upper tier has the resource or not, and whether the end user is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.

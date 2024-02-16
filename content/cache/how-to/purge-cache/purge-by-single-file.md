@@ -53,4 +53,4 @@ If you have a [Transform Rule](/rules/transform/) in place that is modifying par
 
 ## Resulting cache status
 
-Purging by single-file deletes the resource, resulting in the CF-Cache-Status header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
+Purging by single-file deletes the resource, resulting in the `CF-Cache-Status` header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
