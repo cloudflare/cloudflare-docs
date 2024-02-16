@@ -153,7 +153,7 @@ The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-la
 
 To access a value in a map, enter the key between square brackets (`[]`):
 
-```
+```txt
 <MAP_FIELD>[<KEY>]
 ```
 
