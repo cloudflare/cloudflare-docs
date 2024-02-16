@@ -45,6 +45,7 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
   rules {
     action = "execute"
     action_parameters {
+      # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
         rules {
@@ -83,6 +84,7 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
   rules {
     action = "execute"
     action_parameters {
+      # Cloudflare L3/4 DDoS Attack Protection Ruleset
       id = "3b64149bfa6e4220bbbc2bd6db589552"
       overrides {
         rules {
@@ -153,6 +155,7 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
     description = "At the low sensitivity threshold, block the traffic"
     action = "execute"
     action_parameters {
+      # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
         rules {
@@ -177,6 +180,7 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
     description = "At the default sensitivity threshold, log to see if any legitimate traffic gets caught"
     action = "execute"
     action_parameters {
+      # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
         rules {
