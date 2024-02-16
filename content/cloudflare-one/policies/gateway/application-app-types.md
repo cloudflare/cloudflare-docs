@@ -72,6 +72,6 @@ To turn on the integration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
 2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
-3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall Policies**, then select **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
+3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall Policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
 
 All future Microsoft 365 traffic will bypass Gateway logging and filtering. To disable this behavior, turn off or delete the policy.
