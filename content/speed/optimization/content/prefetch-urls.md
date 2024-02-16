@@ -64,3 +64,12 @@ The IP address used to make the prefetch request to the manifest file is logged 
 - Cloudflare will only prefetch files listed in the manifest file if the resources are those [cached by default](/cache/concepts/default-cache-behavior/#default-cached-file-extensions).
 
 - Prefetch is not compatible with the custom cache key configuration. For more information, refer to [Cache Key limitations](/cache/how-to/cache-keys/#limitations).
+
+- The maximum number of files per manifest file is 1024.
+
+- The maximum number of manifest files is 16.
+
+- A manifest file has a size limit of 1 MB.
+
+
+
