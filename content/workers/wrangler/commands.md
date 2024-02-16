@@ -2326,8 +2326,17 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```txt
-wrangler types
+```sh
+wrangler types [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
+  - The name of the interface to generate for the environment object.
+  - _Ignored if the worker uses the Service Worker syntax._
+
+{{</definitions>}}
+
 
 <!--TODO Add examples of DTS generated output -->
