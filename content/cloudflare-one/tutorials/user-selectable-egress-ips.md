@@ -3,10 +3,10 @@ updated: 2024-02-07
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
-title: Allow your users to change their egress IP address using Virtual Networks and Egress Policies
+title: Allow users to change their egress IP address using virtual networks and egress policies
 ---
 
-# Allow your users to change their egress IP address using Virtual Networks and Egress Policies
+# Allow users to change their egress IP address using virtual networks and egress policies
 
 {{<Aside type="note">}}
 
@@ -14,7 +14,7 @@ Only available on Enterprise plans.
 
 {{</Aside>}}
 
-This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned Dedicated Egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
+This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned dedicated egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
 
 {{<tutorial>}}
 
