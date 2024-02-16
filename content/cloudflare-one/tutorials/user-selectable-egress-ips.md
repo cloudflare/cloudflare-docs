@@ -23,7 +23,7 @@ This tutorial gives administrators an easy way to allow their end-users to chang
 Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices
-- [Set up `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device (Steps 1 and 2)
+- [Set up `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device (steps 1 and 2)
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
 
 {{</tutorial-prereqs>}}
@@ -40,12 +40,6 @@ Make sure you have:
 
     ```sh
     $ cloudflared tunnel route ip add --vnet <VNET_NAME> <ip_range>
-    ```
-
-3. Add countries to the virtual network. For example:
-
-    ```sh
-    $ cloudflared tunnel vnet add AMER && cloudflared tunnel vnet add ITALY &&  cloudflared tunnel vnet add GB &&  cloudflared tunnel vnet add IRELAND &&  cloudflared tunnel vnet add MEXICO &&  cloudflared tunnel vnet add CANADA  
     ```
 
 {{</tutorial-step>}}
