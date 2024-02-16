@@ -15,4 +15,4 @@ By the end of this module, you will be able to:
 
 - Manage applications that are directly integrated with an identity provider.
 - Pass user information from Cloudflare Access to your application.
-- Evaluate onboarding methods for different types of internal applications.
+- Review best practices for onboarding different types of internal applications.
