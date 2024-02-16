@@ -97,7 +97,7 @@ The Cloudflare Rules language supports these standard fields:
       </td>
    </tr>
    <tr id="field-http-request-cookies">
-      <td valign="top"><code>http.request.cookies</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.cookies</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
          </p>
@@ -1260,7 +1260,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
   </thead>
   <tbody>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><code>http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
        <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
         </p>
@@ -1315,7 +1315,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
       </td>
     </tr>
     <tr id="field-raw-http-request-uri-args">
-      <td valign="top"><code>raw.http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>raw.http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
        <td>
         <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
         </p>
@@ -1353,7 +1353,7 @@ The Cloudflare Rules language supports these HTTP header fields:
   </thead>
   <tbody>
    <tr id="field-http-request-headers">
-      <td valign="top"><code>http.request.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).</p>
          <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
@@ -1515,7 +1515,7 @@ The Cloudflare Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr id="field-http-request-body-form">
-      <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
@@ -1638,7 +1638,7 @@ The Cloudflare Rules language supports these HTTP response fields:
       </td>
    </tr>
    <tr id="field-http-response-headers">
-      <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents HTTP response headers as a Map (or associative array).
          </p>
