@@ -111,7 +111,7 @@ You can access individual array elements using an index (a non-negative value) b
 
 Use the special notation `[*]` when specifying an expression that will be evaluated for each array element (like the [`map` high-order function](<https://wikipedia.org/wiki/Map_(higher-order_function)>)). This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
 
-### Examples
+### Examples { #array-examples }
 
 Consider the `http.request.headers.names` field with type `Array<String>` in the following examples:
 
@@ -129,7 +129,7 @@ Consider the `http.request.headers.names` field with type `Array<String>` in the
 
 In the last example, the `lower()` function includes the `[*]` notation so that the function is evaluated for each array element. This function, used along `[*]`, returns a new array where each element of the input array is converted to lowercase. Then, the string comparison uses `[*]` to transform the array resulting from applying `lower()` to each header name into an array of boolean values. Finally, `any()` evaluates to true if at least one of these array elements is true.
 
-### Final notes
+### Notes { #array-notes }
 
 It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
 
@@ -145,10 +145,64 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 - `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
 - `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
+## Maps
+
+A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the value can be of a basic type such as `String` or an array of values.
+
+The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<String><Array>`, indicates the data type of the key (`String`) and the data type of values associated with keys (`Array`). This means that when you access the value of key `"foo"` (a string) you will get either an array of values or a missing value.
+
+To access a value in a map, enter the key between square brackets (`[]`):
+
+```
+<MAP_FIELD>[<KEY>]
+```
+
+For maps where the values have an `Array` type, you cannot directly use [operators](/ruleset-engine/rules-language/operators/) with the obtained (array) value, since these operators do not support arrays directly. To use an operator on an item of the array, use the special notation `[*]` when specifying an expression. This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
+
+### Examples { #map-examples }
+
+The following example is based on the [`http.request.headers`](/ruleset-engine/rules-language/fields/#field-http-request-headers) field with a data type of `Map<String><Array>`, where array elements are of `String` data type.
+
+If an incoming HTTP request included a single `Accept: application/json` HTTP header, the following expressions would evaluate to the indicated values:
+
+```txt
+http.request.headers["accept"]     # ==> ["application/json"]
+http.request.headers["accept"][0]  # ==> "application/json"
+
+any(http.request.headers["accept"][*] == "application/json") # ==> true
+any(http.request.headers["accept"][*] == "text/plain")       # ==> false
+```
+
+The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/#field-http-request-uri-args) field with a data type of `Map<String><Array>`, where array elements are of `String` data type.
+
+If an HTTP request included three `filter` URI arguments `waf`, `botm`, and `cdn`, the following expressions would evaluate to the indicated values:
+
+```txt
+# Example request URL:
+# https://example.com/?filter=waf&filter=botm&filter=cdn
+
+http.request.uri.args["filter"]          # ==> ["waf", "botm", "cdn"]
+
+len(http.request.uri.args["filter"][1])  # ==> 4
+
+# Check if the length of all 'filter' values is always 3 or 4
+all(len(http.request.uri.args["filter"][*])[*] in {3 4})      # ==> true
+
+# Check if the length of 'filter' values is never 3 or 4
+all(len(http.request.uri.args["filter"][*])[*] not in {3 4})  # ==> false
+```
+
+For more information on `any()`, `all()`, `len()`, and other available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
+
+### Notes { #map-notes }
+
+It is not possible to define your own maps. You can only use maps returned by fields.
+
+Accessing an non-existing key or an out-of-bounds array index for values which are arrays produces a "missing value". A missing value has the behavior described in the notes section for [Arrays](#arrays).
+
 ## Lists
 
 Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
-
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
