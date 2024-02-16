@@ -253,15 +253,13 @@ curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records"
 -H 'x-auth-key: <API_KEY>' \
 -H "Content-Type: application/json" \
 --data '{
-  "type":"SRV",
+  "type": "SRV",
+  "name": "_xmpp._tcp.example.com",
   "data": {
-    "service":"_xmpp",
-    "proto":"_tcp",
-    "name":"example.com",
-    "priority":10,
-    "weight":5,
-    "port":5223,
-    "target":"server.example.com"
+    "priority": 10,
+    "weight": 5,
+    "port": 5223,
+    "target": "server.example.com"
   }
 }'
 ```
@@ -275,20 +273,17 @@ header: Response
     "id": "<ID>",
     "zone_id": "<ZONE_ID>",
     "zone_name": "example.com",
-    "name": "xmpp.tcp.example.com",
+    "name": "_xmpp._tcp.example.com",
     "type": "SRV",
-    "content": "5\t5223\tserver.example.com",
+    "content": "5 5223 server.example.com",
     "priority": 10,
     "proxiable": false,
     "proxied": false,
     "ttl": 1,
     "locked": false,
     "data": {
-      "name": "example.com",
       "port": 5223,
       "priority": 10,
-      "proto": "_tcp",
-      "service": "_xmpp",
       "target": "server.example.com",
       "weight": 5
     },
