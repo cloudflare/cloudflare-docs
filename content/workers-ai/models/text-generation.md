@@ -212,7 +212,7 @@ You can use unscoped prompts to send a single question to the model without worr
 };
 ```
 
-You can also use unscoped prompts to construct the model chat template manually. In this case, you can use the raw parameter. Here's an input example of a [Mistral](https://docs.mistral.ai/llm/mistral-instruct-v0.1#chat-template) chat template prompt:
+You can also use unscoped prompts to construct the model chat template manually. In this case, you can use the raw parameter. Here's an input example of a [Mistral](https://docs.mistral.ai/models/#chat-template) chat template prompt:
 
 ```javascript
 {
