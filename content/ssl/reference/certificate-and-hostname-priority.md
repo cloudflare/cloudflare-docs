@@ -77,11 +77,11 @@ If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudf
 
 #### Scenario 1
 
-Customer1 uses Cloudflare as authoritative DNS for the zone 'shop.example.com'. Customer2 is a SaaS provider that creates and successfully [verifies the new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) 'shop.example.com'. Afterward, traffic starts routing over Customer2's zone:
+Customer1 uses Cloudflare as authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) `shop.example.com`. Afterward, traffic starts routing over Customer2's zone:
 
 - If Customer1 wants to regain control of their zone, Customer1 contacts Customer2 and requests them to delete the custom hostname record. Another possibility is to stop proxying (gray-cloud) the record.
-- If Customer1 is already proxying a new custom hostname for 'www.example.com', Customer2 creates and verifies 'www.example.com' so traffic starts routing over Customer2's zone. Since this new custom hostname is the last one validated, the new custom hostname on Customer1's zone enters a _moved_ status.
-- If Customer1 is already proxying a legacy custom hostname for 'www.example.com' and Customer2 creates and verifies a new wildcard custom hostname for '*.example.com', traffic is routed to Customer1's zone while the 'www.example.com' CNAME points to Customer1.
+- If Customer1 is already proxying a new custom hostname for `www.example.com`, Customer2 creates and verifies `www.example.com` so traffic starts routing over Customer2's zone. Since this new custom hostname is the last one validated, the new custom hostname on Customer1's zone enters a _moved_ status.
+- If Customer1 is already proxying a legacy custom hostname for `www.example.com` and Customer2 creates and verifies a new wildcard custom hostname for `*.example.com`, traffic is routed to Customer1's zone while the `www.example.com` CNAME points to Customer1.
 
 #### Scenario 2
 

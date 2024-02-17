@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Troubleshooting
-weight: 8
+weight: 9
 ---
 
 # Troubleshooting

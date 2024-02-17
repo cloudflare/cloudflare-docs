@@ -72,5 +72,4 @@ As of now, Custom Managed Components do not support the use of the following met
 - `manager.registerEmbed`
 - `manager.registerWidget`
 - `manager.proxy`
-- `manager.route`
 - `manager.serve`

@@ -7,7 +7,7 @@ _build:
 
 Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/reference/tunnels/#ipsec-tunnels) and [static routes](/magic-wan/reference/traffic-steering/) for you. You cannot configure these manually.
 
-To check the IPsec tunnels and static routes created by your Magic Wan Connector:
+To check the IPsec tunnels and static routes created by your Magic WAN Connector:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
