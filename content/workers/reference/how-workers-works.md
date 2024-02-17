@@ -17,6 +17,8 @@ The differences between JavaScript written for the browser or Node.js happen at 
 
 Each of these machines hosts an instance of the Workers runtime, and each of those runtimes is capable of running thousands of user-defined applications. This guide will review some of those differences.
 
+For more information, refer to the [Cloud Computing without Containers blog post](https://blog.cloudflare.com/cloud-computing-without-containers).
+
 The three largest differences are: Isolates, Compute per Request, and Distributed Execution.
 
 ## Isolates
@@ -29,12 +31,12 @@ A single runtime can run hundreds or thousands of isolates, seamlessly switching
   {{<architecture-diagram>}}
 </figure>
 
-Unlike other serverless providers which use [containerized processes](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) each running an instance of a language runtime, Workers pays the overhead of a JavaScript runtime once on the start of a container. Workers processes are able to run essentially limitless scripts with almost no individual overhead by creating an isolate for each Workers function call. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine. Notably, on startup isolates consume an order of magnitude less memory.
+Unlike other serverless providers which use [containerized processes](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) each running an instance of a language runtime, Workers pays the overhead of a JavaScript runtime once on the start of a container. Workers processes are able to run essentially limitless scripts with almost no individual overhead. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine. Notably, on startup isolates consume an order of magnitude less memory.
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
 - Resource limitations on the machine.
-- A suspicious script - anything seen as trying to break out of the Isolate sandbox.
+- A suspicious script - anything seen as trying to break out of the isolate sandbox.
 - Individual [resource limits](/workers/platform/limits/).
 
 Because of this, it is generally advised that you not store mutable state in your global scope unless you have accounted for this contingency.

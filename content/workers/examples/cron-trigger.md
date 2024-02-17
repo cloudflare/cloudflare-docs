@@ -24,12 +24,11 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async scheduled(event, env, ctx) {
     console.log("cron processed");
   },
-};
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

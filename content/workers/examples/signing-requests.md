@@ -147,7 +147,7 @@ const encoder = new TextEncoder();
 // How long an HMAC token should be valid for, in seconds
 const EXPIRY = 60;
 
-export default <ExportedHandler<{ SECRET_DATA: string }>>{
+export default {
   async fetch(request, env) {
     // You will need some secret data to use as a symmetric key. This should be
     // attached to your Worker as an encrypted secret.
@@ -235,7 +235,7 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
 
     return fetch(new URL(url.pathname, "https://example.com"), request);
   },
-};
+} satisfies ExportedHandler<{ SECRET_DATA: string }>;
 ```
 
 {{</tab>}}

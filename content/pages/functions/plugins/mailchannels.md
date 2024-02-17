@@ -11,7 +11,7 @@ The MailChannels Pages Plugin intercepts all form submissions made which have th
 {{<Aside type="note">}}
 To use the Mailchannels Pages Plugin, you must first add a [Domain Lockdown DNS record](https://support.mailchannels.com/hc/en-us/articles/16918954360845-Secure-your-domain-name-against-spoofing-with-Domain-Lockdown-) to the domain you are sending email from. For more information, refer to the [Mailchannels documentation](https://support.mailchannels.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
 
-For standard setup with Cloudflare Pages, refer to [Enabling MailChannels for your Account](#enabling-mailchannels-for-your-account---domain-lockdown) below.
+For standard setup with Cloudflare Pages, refer to [Enabling MailChannels for your Account](#enable-mailchannels-for-your-account---domain-lockdown) below.
 {{</Aside>}}
 
 ## Installation

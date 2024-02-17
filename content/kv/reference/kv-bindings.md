@@ -37,7 +37,7 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
+With this, the deployed Worker will have a `TODO` field in their environment object (the second parameter of the `fetch()` request handler). Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
 
 ```js

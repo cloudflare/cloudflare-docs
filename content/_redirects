@@ -142,6 +142,7 @@
 /byoip/about/prefix-delegations/ /byoip/concepts/prefix-delegations/ 301
 /byoip/about/ /byoip/concepts/ 301
 /byoip/cloudflare-ips/ /byoip/get-started/#cloudflare-ips 301
+/byoip/how-to/configure-dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
@@ -646,6 +647,7 @@
 # notifications
 /fundamentals/notifications/ /notifications/ 301
 /notifications/create-notifications/ /notifications/get-started/ 301
+/notifications/create-pagerduty/ /notifications/get-started/configure-pagerduty/ 301
 /notifications/edit-notifications/ /notifications/get-started/ 301
 /notifications/create-notifications/create-pagerduty/ /notifications/get-started/configure-pagerduty/ 301
 /notifications/edit-notifications/edit-pagerduty/ /notifications/get-started/configure-pagerduty/ 301
@@ -1502,6 +1504,7 @@
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
+/magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
 
 # Workers
 /workers/reference/apis/* /workers/runtime-apis/:splat 301

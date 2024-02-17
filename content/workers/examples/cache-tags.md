@@ -59,7 +59,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
@@ -97,9 +97,7 @@ const handler: ExportedHandler = {
         return new Response(JSON.stringify(errorObject), { status: 500 });
       });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

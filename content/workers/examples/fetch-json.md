@@ -56,7 +56,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request, env, ctx) {
     /**
      * Example someHost is set up to take in a JSON request
@@ -91,9 +91,7 @@ const handler: ExportedHandler = {
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

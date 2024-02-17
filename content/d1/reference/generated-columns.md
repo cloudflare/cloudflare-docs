@@ -48,7 +48,7 @@ As a concrete example, to automatically extract the `location` value from the fo
 }
 ```
 
-To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/reference/query-json/#extracting-values) function to extract the value from the `raw_data` column each time you write to that row:
+To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/reference/query-json/#extract-values) function to extract the value from the `raw_data` column each time you write to that row:
 
 ```sql
 CREATE TABLE sensor_readings (

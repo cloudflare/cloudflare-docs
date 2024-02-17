@@ -13,7 +13,7 @@ Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternati
 Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally,  you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
 
 - Intel x86 CPU architecture
-- ESXi hypervisor 7.0U1 or higher (free edition is supported)
+- ESXi hypervisor 7.0U1 or higher
 - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
 - 4 GB of RAM per virtual connector
 - 8 GB of disk per virtual connector

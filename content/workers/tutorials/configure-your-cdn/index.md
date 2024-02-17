@@ -88,7 +88,7 @@ To fetch files from the R2 bucket, use the `BINDING.get` function. In the below 
 filename: worker.ts
 ---
 export default {
-  async fetch(request: Request, env: any) {
+  async fetch(request, env: any) {
     // For example, the request URL my-worker.account.workers.dev/image.png
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
@@ -107,7 +107,7 @@ export default {
       headers,
     });
   },
-};
+} satisfies ExportedHandler;
 ```
 The code written above fetches and returns data from the R2 bucket when a `GET` request is made to the Worker application using a specific URL path.
 
@@ -128,7 +128,7 @@ Now, add a new code path that handles a `PUT` HTTP request. This new code will c
 filename: worker.ts
 ---
 export default {
-  async fetch(request: Request, env: any) {
+  async fetch(request, env: any) {
     if (request.method === 'PUT') {
       // Note that you could require authentication for all requests
       // by moving this code to the top of the fetch function.
@@ -147,7 +147,7 @@ export default {
     
     // include the previous code here...
   },
-};
+} satisfies ExportedHandler;
 ```
 
 This approach ensures that only clients who provide a valid bearer token, via the `Authorization` header equal to the `AUTH_SECRET` value, will be permitted to upload to the R2 bucket. If you used a different binding name than `AUTH_SECRET`, replace it in the code above.
@@ -160,7 +160,6 @@ After completing your Cloudflare Worker project, deploy it to Cloudflare. Make s
 $ npx wrangler deploy
 ```
 Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
-
 
 You have successfully created a Cloudflare Worker that allows you to interact with an R2 bucket to accomplish tasks such as uploading and downloading files. You can now use this as a starting point for your own projects.
 

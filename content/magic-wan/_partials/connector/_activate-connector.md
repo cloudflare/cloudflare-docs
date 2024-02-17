@@ -18,5 +18,5 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 2. Go to **Magic WAN** > **Configuration** > **Connectors**.
 3. Find the Connector you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
 4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-5. The **Interrupt service window** is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites.
+5. The **Interrupt window** is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 6. Select **Update**.

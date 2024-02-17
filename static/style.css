@@ -3154,6 +3154,14 @@ html[is-docs-page] body {
   margin-bottom: 1em;
 }
 
+.DocsMarkdown .small-img.centered,
+.DocsMarkdown .medium-img.centered,
+.DocsMarkdown .large-img.centered,
+.DocsMarkdown .full-img.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .DocsMarkdown--link {
   text-decoration: none;
   color: inherit;

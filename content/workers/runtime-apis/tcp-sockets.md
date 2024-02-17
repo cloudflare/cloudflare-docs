@@ -75,6 +75,18 @@ export default {
 
 {{</definitions>}}
 
+### `SocketInfo`
+
+{{<definitions>}}
+
+- `remoteAddress` {{<type>}}string | null{{</type>}}
+  - The address of the remote peer the socket is connected to. May not always be set.
+ 
+- `localAddress` {{<type>}}string | null{{</type>}}
+  - The address of the local network endpoint for this socket. May not always be set.
+
+{{</definitions>}}
+
 ### `Socket`
 
 {{<definitions>}}
@@ -85,6 +97,9 @@ export default {
 - {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
   - The `WritableStream` returned only accepts chunks of `Uint8Array` or its views.
+
+- `opened` {{<type>}}`Promise<SocketInfo>`{{</type>}}
+  - This promise is resolved when the socket connection is established and is rejected if the socket encounters an error.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
