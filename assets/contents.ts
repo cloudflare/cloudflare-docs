@@ -28,8 +28,11 @@ export function toc() {
       }
 
       last = document.createElement('li') as ListItem;
-      let text = tmp.lastElementChild.textContent.trim();
-      last.innerHTML = `<a class="DocsTableOfContents-link" href="#${tmp.id}">${text}</a>`;
+      let a = document.createElement('a');
+      a.classList.add('DocsTableOfContents-link');
+      a.href = '#' + tmp.id;
+      a.textContent = tmp.lastElementChild.textContent.trim();
+      last.append(a);
       container.appendChild(last);
       last.h = tmp.nodeName;
     }
