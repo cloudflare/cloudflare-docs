@@ -27,10 +27,10 @@
     }
     // set tooltip text
     if (isDark) {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
+      document.getElementById("ThemeToggle--tooltip").textContent =
         "Set theme to light (⇧+D)";
     } else {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
+      document.getElementById("ThemeToggle--tooltip").textContent =
         "Set theme to dark (⇧+D)";
     }
   }
