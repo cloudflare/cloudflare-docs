@@ -76,7 +76,7 @@ export default {
 
   public constructor(from: String, to: String, raw: ReadableStream | String);
 
-  setReject(reason: String): void;
+  setReject(reason: string): void;
   forward(rcptTo: string, headers?: Headers): Promise<void>;
   reply(message: EmailMessage): Promise<void>;
 }
