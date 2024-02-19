@@ -1,7 +1,7 @@
 ---
 title: Scope your configuration
 pcx_content_type: tutorial
-weight: 4
+weight: 1
 ---
 
 # Scope your configuration
