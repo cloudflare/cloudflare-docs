@@ -21,3 +21,5 @@ Durable Objects can use the web standard APIs described in [WebSockets API](/dur
 {{<Aside type="warning" header="WebSockets disconnection">}}
 
 Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted. Any connections to old Durable Objects will be disconnected.
+
+{{</Aside>}}
