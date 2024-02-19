@@ -2,11 +2,12 @@
 title: Peering portal setup
 pcx_content_type: tutorial
 updated: 2023-04-04
+weight: 4
 ---
 
 # Peering portal setup
 
-You can use a peering portal, such as PeeringDB, to view and maintain your database of peering locations. 
+You can use a peering portal, such as PeeringDB, to view and maintain your database of peering locations.
 
 Before you begin using PeeringDB, you must create an account and affiliate with Cloudflare.
 
@@ -32,13 +33,13 @@ When your affiliation is approved, **Cloudflare, Inc.** appears under **Existing
 
 ## Request peer sessions
 
-Before you can request a peering session for an ASN, you must be an admin for that ASN. 
+Before you can request a peering session for an ASN, you must be an admin for that ASN.
 
 1. On the **ASN** page on [PeeringDB](https://www.peeringdb.com/), select **Users**. Confirm your email address in the **Admin** group.
 2. From the **Peering Portal**, locate **Peering Locations**.
 3. From the **Sessions** toggle, select **Potential**.
 
-The **Peer** button under **Peering Request** only appears active to admins. 
+The **Peer** button under **Peering Request** only appears active to admins.
 
 ![Admin view of peering locations list](/images/network-interconnect/peeringdb-admin-view.png)
 
