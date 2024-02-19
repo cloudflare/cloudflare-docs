@@ -100,7 +100,7 @@ Compute Duration:
 
 <sup>1</sup> 100 messages per minute comes from the fact that 100 clients connect to each DO, and each sends 1 message per minute.
 
-<sup>2</sup> we use 1 second here because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10ms to execute (4,320,000 seconds).
+<sup>2</sup> The example uses 1 second because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10 ms to execute (4,320,000 seconds).
 
 ## Transactional Storage API billing
 
