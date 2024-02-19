@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Full-stack deployment
 meta:
-  description: Deploy a full-stack Next.js site.
+  description: Deploy a full-stack Next.js site (recommended).
 ---
 
 # Deploy a Next.js site
@@ -41,13 +41,58 @@ $ npm run pages:deploy
 
 The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
 
-Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3, for example), you need to create a new Pages application in order to add Git integration to it.
-
 {{</Aside>}}
 
 ## Configure and deploy a project without C3
 
 If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
+
+
+## Git integration
+
+In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration/), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
+
+{{<Aside type="note">}}
+
+Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
+
+{{</Aside>}}
+
+This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+
+### Create a new GitHub repository
+
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+
+```sh
+# Skip the following 3 commands if you have built your application
+# using C3 or already committed your changes
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+
+$ git branch -M main
+$ git remote add origin https://github.com/<your-gh-username>/<repository-name>
+$ git push -u origin main
+```
+### Connect your application to the GitHub repository via the Cloudflare dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+
+You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
+
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+
+{{<pages-build-preset framework="next-js">}}
+
+Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
+
+4. After completing configuration, click the **Save and Deploy** button.
+
+You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
+
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 ## Use bindings in your Next.js application
 
@@ -223,53 +268,6 @@ The Cloudflare network does not provide the same image optimization support as t
 
 Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/), refer to [resize with Cloudflare Workers](/images/transform-images/transform-via-workers/).
 
-## Git integration
-
-In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration/), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
-
-This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
-
-### Create a new GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-# Skip the following 3 commands if you have built your application
-# using C3 or already committed your changes
-$ git init
-$ git add .
-$ git commit -m "Initial commit"
-
-$ git branch -M main
-$ git remote add origin https://github.com/<your-gh-username>/<repository-name>
-$ git push -u origin main
-```
-### Connect your application to the GitHub repository via the Cloudflare dashboard
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-
-{{<Aside type="note">}}
-
-The Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
-
-{{</Aside>}}
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
-
-{{<pages-build-preset framework="next-js">}}
-
-Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
-
-4. After completing configuration, click the **Save and Deploy** button.
-
-You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
-Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
-
-Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
-
 ## Recommended development workflow
 
 When developing a `next-on-pages` application, this is the development workflow that Cloudflare recommends:
@@ -299,7 +297,6 @@ And preview your project by running:
 ```sh
 $ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat
 ```
-
 
 ### Deploy your application and iterate
 
