@@ -4,6 +4,6 @@ pcx_content_type: navigation
 weight: 3
 ---
 
-# About Cloudflare Network Interconnect
+# Cloudflare Network Interconnect 1.0
 
 {{<directory-listing>}}
