@@ -1,7 +1,7 @@
 ---
 title: Setup
 pcx_content_type: get-started
-weight: 3
+weight: 4
 meta:
   title: Cloudflare Network Interconnect Setup
 ---

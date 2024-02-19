@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Bidirectional Forwarding Detection
+weight: 3
 ---
 
 # Bidirectional Forwarding Detection
