@@ -1,5 +1,5 @@
 ---
-title: Types of Interconnect
+title: Types of interconnect
 pcx_content_type: reference
 weight: 2
 meta:
