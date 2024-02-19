@@ -8,7 +8,7 @@ title: Configuring Custom Pages (Error and Challenge)
 
 ## Overview
 
-Cloudflare uses a wide range of [error codes](https://support.cloudflare.com/hc/en-us/sections/200820298-Error-Pages) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
+Cloudflare uses a wide range of [error codes](/support/troubleshooting/cloudflare-errors/) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
 
 If you are on the Pro, Business, or Enterprise plan you can customize and brand these pages for your whole account or for specific domains. You can design custom error pages to appear during a security challenge or when an error occurs.
 
