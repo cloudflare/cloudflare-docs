@@ -58,6 +58,9 @@ All WARP connector and WARP client devices in your Zero Trust organization have 
 3. Enable **Warp to Warp**. This allows Cloudflare to route traffic to the CGNAT IP space.
 4. Next, go to **Settings** > **WARP Client**.
 5. Enable [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip).
+6. [Check your Split Tunnel configuration](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp) and ensure that the CGNAT IP space (`100.96.0.0/12`) routes through WARP.
+
+    For example, if you are using **Exclude** mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
 
 ## 4. Install a WARP connector
 
@@ -112,7 +115,7 @@ In this example, we will create a WARP connector for subnet `10.0.0.0/24` and in
       If the registration did not go through, try the following troubleshooting strategies:
 
       - Ensure that `mdm.xml` is formatted correctly and stored in `/var/lib/cloudflare-warp`.
-      - Ensure that you have a [device enrollment rule](/cloudflare-one/connections/connect-networks/private-net/warp-connector/#2-add-a-device-enrollment-rule) for the service token.
+      - Ensure that you have a [device enrollment rule](/cloudflare-one/connections/connect-networks/private-net/warp-connector/#2-add-a-device-enrollment-rule) with the _Service Auth_ action (not _Allow_).
       - Restart the WARP systemd service:
         ```sh
         $ sudo systemctl restart warp-svc.service

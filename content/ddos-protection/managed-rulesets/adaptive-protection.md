@@ -29,6 +29,8 @@ For User-Agents | User Agent<br/>(entire Cloudflare network) | Yes | —
 For Locations   | Client IP country and region               | Yes | —
 **L3/4 Adaptive DDoS Protection** |                          |     |
 For Protocols   | IP protocol                                | —   | Yes
+For Protocols   | Client IP country and Region for UDP       | —   | Yes
+
 
 {{</table-wrap>}}
 

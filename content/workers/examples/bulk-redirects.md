@@ -42,7 +42,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const externalHostname = "examples.cloudflareworkers.com";
 
@@ -63,9 +63,7 @@ const handler: ExportedHandler = {
     // If request not in map, return the original request
     return fetch(request);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

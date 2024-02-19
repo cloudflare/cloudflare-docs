@@ -1504,6 +1504,7 @@
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
+/magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
 
 # Workers
 /workers/reference/apis/* /workers/runtime-apis/:splat 301

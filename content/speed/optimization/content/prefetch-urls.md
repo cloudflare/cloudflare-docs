@@ -59,6 +59,14 @@ The manifest file should contain URIs, protocol-relative URLs or full URLs, sepa
 The IP address used to make the prefetch request to the manifest file is logged as `127.0.0.1` in your Cloudflare logs.
 {{</Aside>}}
 
+### Prefetch files limits
+
+The prefetch files limits are the following:
+
+- The maximum number of manifest files is 16.
+- The maximum number of files per manifest file is 1024.
+- A manifest file has a size limit of 1 MB.
+
 ## Limitations
 
 - Cloudflare will only prefetch files listed in the manifest file if the resources are those [cached by default](/cache/concepts/default-cache-behavior/#default-cached-file-extensions).

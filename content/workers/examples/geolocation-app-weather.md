@@ -67,7 +67,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     let endpoint = "https://api.waqi.info/feed/geo:";
     const token = ""; //Use a token from https://aqicn.org/api/
@@ -113,9 +113,7 @@ const handler: ExportedHandler = {
       },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
