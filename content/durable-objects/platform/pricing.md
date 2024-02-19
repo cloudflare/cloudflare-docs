@@ -82,7 +82,7 @@ Compute Duration:
 This example represents a moderately trafficked Durable Objects based application using WebSocket Hibernation to broadcast game, chat or real-time user state across connected clients:
 
 * 100 Durable Objects each have 100 Hibernatable WebSocket connections established to each of them.
-* Clients send one message per minute, and it takes 10ms to process a single message in the `webSocketMessage` handler. Since each Durable Object handles 100 WebSockets, cumulatively each Durable Object will be actively executing JS for 1 second each minute (100 WebSockets * 10ms).
+* Clients send one message per minute, and it takes 10ms to process a single message in the `webSocketMessage()` handler. Since each Durable Object handles 100 WebSockets, cumulatively each Durable Object will be actively executing JS for 1 second each minute (100 WebSockets * 10ms).
 
 In this scenario, the estimated monthly cost would be calculated as:
 
