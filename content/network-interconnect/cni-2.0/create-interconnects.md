@@ -20,4 +20,4 @@ pcx_content_type: how-to
 
 8. Review the options you have chosen, and select **Confirm order**.
 9. Download the letter of authorization that Cloudflare created with your settings. You will need this document to contact your data center and provide them the IP addresses for the CNI connection.
-10. Select View Interconnects to review the CNIs you have ordered.
+10. Select **View Interconnects** to review the CNIs you have ordered.
