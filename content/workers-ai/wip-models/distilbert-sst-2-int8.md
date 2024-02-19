@@ -11,5 +11,4 @@ task:
   description: Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes.
 ---
 
-{{% model-display %}}
-
+{{% model-display-header %}}
