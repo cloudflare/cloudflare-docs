@@ -75,7 +75,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     /**
      * Example someHost is set up to return raw JSON
@@ -128,9 +128,7 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

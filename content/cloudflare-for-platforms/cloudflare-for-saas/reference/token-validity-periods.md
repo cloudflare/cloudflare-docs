@@ -14,3 +14,7 @@ However, these tokens expire after a certain amount of time, depending on your c
 | --- | --- |
 | Let's Encrypt | 7 days |
 | Google Trust Services | 14 days |
+
+{{<Aside type="warning">}}
+{{<render file="_dcv-invalid-token-situations.md" productFolder="ssl" >}}
+{{</Aside>}}

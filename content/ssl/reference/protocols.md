@@ -27,13 +27,13 @@ TLS 1.3, which offers additional security and performance improvements, was appr
 
 ## Decide which version to use
 
-Not all browser versions support TLS 1.2 and above. Depending on your particular business situation, this may present some limitations in using stronger encryption standards.
+TLS 1.3 has become widely adopted. As a general rule, Cloudflare recommends setting TLS to 1.3, as it will provide the best security.
 
-Consider using TLS 1.0 or 1.1 for sites with a broad user base, particularly non-transactional sites. In this way, you minimize the possibility that some clients cannot connect to your site securely.
+However, not all browser versions support TLS 1.2 and above. Depending on your particular business situation, this may present some limitations in using stronger encryption standards:
 
-For a narrow user base and sites that run internal applications or business and productivity applications, Cloudflare recommends TLS 1.2. These sites might already have more stringent security requirements or might be subject to PCI compliance. However, you also need to ensure that your users upgrade to a TLS 1.2 compliant browser.
+- Consider using TLS 1.0 or 1.1 for sites with a broad user base, particularly non-transactional sites. In this way, you minimize the possibility that some clients cannot connect to your site securely.
 
-It is not recommended to set the minimum TLS to 1.3, unless there is a specific use case, as this will likely cause issues with search engine crawlers and certain browsers.
+- For a narrow user base and sites that run internal applications or business and productivity applications, Cloudflare recommends TLS 1.2. These sites might already have more stringent security requirements or might be subject to PCI compliance. You also need to ensure that your users upgrade to a TLS 1.2 compliant browser.
 
 ## Related resources
 

@@ -25,7 +25,7 @@ A URL with five segments look similar to the example below.
 
 The `scheme` and `port` segments are optional. If omitted, scheme matches both `http://` and `https:// protocols`. If no port is specified, the rule matches all ports.
 
-You can disable a page rule at any time. While a rule is disabled, actions won’t trigger, but the rule still appears in the **Rules** > **Page Rules** tab, is editable, and counts against the number of rules allowed for your domain. The Save as Draft option creates a page rule that is disabled by default.
+You can disable a page rule at any time. While a rule is disabled, actions will not trigger, but the rule still appears in the **Rules** > **Page Rules** tab, is editable, and counts against the number of rules allowed for your domain. The Save as Draft option creates a page rule that is disabled by default.
 
 Page rules trigger certain actions when a request matches a defined URL pattern.
 
@@ -110,7 +110,7 @@ Enterprise domains can cache content by device type to target visitors with cont
 7.  Select **On**.
 8.  Select **Save and Deploy**.
 
-Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, or `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
+Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, or `desktop` for every request to specify the visitor's device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
 To purge resources using Cache By Device Type, you must [purge by Cache-Tag](/cache/how-to/purge-cache/purge-by-tags/).
 
@@ -128,10 +128,10 @@ Do not use **Cache Everything** for admin sections of your website or for pages 
 2.  Choose the appropriate domain.
 3.  Select **Rules** > Page **Rules**.
 4.  Select **Create Page Rule**.
-5.  Under **If the URL matches**, create a URL pattern to differentiate your website’s static versus dynamic content.
+5.  Under **If the URL matches**, create a URL pattern to differentiate your website's static versus dynamic content.
 6.  Under **Then the settings are**, choose **Cache Level**.
 7.  For **Select Cache Level**, choose the **Cache Everything** submenu setting.
 8.  Select **Save and Deploy**.
-9.  Verify your resources are cached by checking the [cache response returned by Cloudflare](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses).
+9.  Verify your resources are cached by checking the [cache response returned by Cloudflare](/cache/concepts/cache-responses/).
 
-Cloudflare caches XML responses when using Cache Everything. By default, jquery's getScript explicitly bypasses cache by appending a timestamp query string [unless the behavior is disabled](http://api.jquery.com/jQuery.getScript/). For further details on how to adjust Cloudflare’s behavior for query strings, refer to our article on [Caching Levels](/cache/how-to/set-caching-levels/).
+Cloudflare caches XML responses when using Cache Everything. By default, jquery's getScript explicitly bypasses cache by appending a timestamp query string [unless the behavior is disabled](http://api.jquery.com/jQuery.getScript/). For further details on how to adjust Cloudflare's behavior for query strings, refer to our article on [Caching Levels](/cache/how-to/set-caching-levels/).

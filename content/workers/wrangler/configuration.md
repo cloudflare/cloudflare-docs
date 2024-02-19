@@ -184,7 +184,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logging/tail-workers/).
 
 {{</definitions>}}
 
@@ -862,8 +862,7 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 [Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
 whether that be from Workers, Pages, or anywhere via REST API.
 
-Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
-even in local development.
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
 Unlike other bindings, this binding is limited to one AI binding per Worker project.
 

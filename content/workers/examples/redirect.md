@@ -21,15 +21,13 @@ layout: example
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     const destinationURL = "https://example.com";
     const statusCode = 301;
     return Response.redirect(destinationURL, statusCode);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -61,7 +59,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const base = "https://example.com";
     const statusCode = 301;
@@ -74,9 +72,7 @@ const handler: ExportedHandler = {
 
     return Response.redirect(destinationURL, statusCode);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

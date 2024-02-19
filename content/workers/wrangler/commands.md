@@ -1663,7 +1663,7 @@ Configure Cloudflare Pages.
 
 ### `dev`
 
-Develop your full stack Pages application locally.
+Develop your full-stack Pages application locally.
 
 ```txt
 wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
