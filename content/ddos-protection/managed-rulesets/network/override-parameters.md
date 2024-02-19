@@ -1,7 +1,7 @@
 ---
 title: Parameters
 pcx_content_type: reference
-weight: 5
+weight: 6
 meta:
   title: Network-layer DDoS Attack Protection parameters
 ---
