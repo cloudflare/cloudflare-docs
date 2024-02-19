@@ -10,7 +10,7 @@ weight: 3
 
 WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server.
 
-[Durable Objects](/durable-objects/) support WebSockets — your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
+Durable Objects support WebSockets — your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
 For more information beyond the API reference, refer to [Use WebSockets in Durable Objects](/durable-objects/reference/websockets/).
 
@@ -99,7 +99,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 {{<definitions>}}
 
 - {{<code>}}serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
-  - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
+  - This method is part of the [WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
@@ -112,7 +112,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 {{<definitions>}}
 
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
-  - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
+  - This method is part of the [WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
   - Retrieves the most recent value passed to `state.serializeAttachment()`, or `null` if none exists.
 
@@ -120,7 +120,7 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{<heading-pill style="beta" heading="h2">}}State Methods{{</heading-pill>}}
 
-These methods are part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
+These methods are part of the [WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
 ### acceptWebSocket
 
@@ -134,7 +134,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
   - `tags` are optional string tags used to look up the WebSocket with `state.getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
 
-  - The Hibernatable WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+  - The WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 {{</definitions>}}
 
@@ -224,7 +224,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
 {{<heading-pill style="beta" heading="h2">}}Handler Methods{{</heading-pill>}}
 
-These methods are part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
+These methods are part of the [WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
 ### webSocketMessage
 
@@ -297,4 +297,4 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 ## Related resources
 
 - [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
-- [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template).
+- [Cloudflare's WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template).
