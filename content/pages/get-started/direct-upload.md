@@ -7,6 +7,10 @@ title: Direct Upload
 
 Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the drag and drop method.
 
+## Prerequisites
+
+Before you deploy your project with Direct Upload, run the appropriate [build command](/pages/configuration/build-configuration/#framework-presets) to build your project.
+
 ## Upload methods
 
 After you have your prebuilt assets ready, there are two ways to begin uploading: 
@@ -51,6 +55,8 @@ From here, you have created an empty project and can now deploy your assets for 
 ```sh
 $ npx wrangler pages deploy <OUTPUT_DIRECTORY>
 ```
+
+Find the appropriate output directory for your project in [Build directory under Framework presents](/pages/configuration/build-configuration/#framework-presets).
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
  

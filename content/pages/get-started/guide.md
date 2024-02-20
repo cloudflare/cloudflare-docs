@@ -3,20 +3,12 @@ title: Guide
 pcx_content_type: get-started
 weight: 1
 meta:
-  title: Get started guide
+  title: Git integration guide
 ---
 
-# Get started
+# Git integration guide
 
-In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform.
-
-There are three ways to set up a Pages project:
-
-1. Connecting your [Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages) to Pages.
-2. Deploying your prebuilt assets right to Pages with [Direct Upload](/pages/get-started/direct-upload/).
-3. Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
-
-This guide will take you through the Git setup option.
+In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform through Git integration.
 
 ## Connect your Git provider to Pages
 
