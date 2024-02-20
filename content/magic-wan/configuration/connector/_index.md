@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 2
 ---
 
-# Magic WAN Connector
+# Configure with Magic WAN Connector
 
 The Magic WAN Connector is a lightweight virtual appliance you can install in corporate network locations to automatically connect, {{<glossary-tooltip term_id="traffic steering">}}steer{{</glossary-tooltip>}}, and shape any IP traffic. Magic WAN Connector is the easiest way to onboard your network locations to Cloudflare One.
 
