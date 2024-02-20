@@ -18,4 +18,4 @@ Request header modification Transform Rules affect the HTTP headers that are sen
 
 To check whether a request header modification is taking effect, you can check the logs on your origin server or use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) to check that the rule is matching traffic correctly.
 
-If you intennded for the headers to be used in the browser, you have to [modify the response headers(/rules/transform/response-header-modification/) instead.
+If you intennded for the headers to be used in the browser, you have to [modify the response headers](/rules/transform/response-header-modification/) instead.
