@@ -19,7 +19,9 @@ With Foundation DNS, you get access to advanced reliability, security, and insig
 
 ## Availability
 
-New opt-in offering for Enterprise
+Foundation DNS is only available to Enterprise plans.
+
+Depending on your account settings or specific options you made when onboarding a zone, advanced nameservers may not be enabled. Refer to [Setup TBD](/dns/foundation-dns/setup/).
 
 ## Related resources
 
