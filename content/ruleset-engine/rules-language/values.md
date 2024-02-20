@@ -188,8 +188,14 @@ len(http.request.uri.args["filter"][1])  # ==> 4
 # Check if the length of all 'filter' values is always 3 or 4
 all(len(http.request.uri.args["filter"][*])[*] in {3 4})      # ==> true
 
-# Check if the length of 'filter' values is never 3 or 4
-all(len(http.request.uri.args["filter"][*])[*] not in {3 4})  # ==> false
+# Check if the length of 'filter' values (if any) is never 3 or 4
+all(not len(http.request.uri.args["filter"][*])[*] in {3 4})  # ==> false
+
+# Check if the http.request.uri.args map contains a "filter" key
+len(http.request.uri.args["filter"]) >= 0     # ==> true
+
+# Check if the http.request.uri.args map does not contain an "order" key
+not len(http.request.uri.args["order"]) >= 0  # ==> true
 ```
 
 For more information on `any()`, `all()`, `len()`, and other available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
