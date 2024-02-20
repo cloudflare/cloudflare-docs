@@ -13,7 +13,7 @@ This tutorial will guide you through install and setup of the [`@cloudflare/vite
 ## Prerequisites
 
 - Open your Worker project's root folder or create a new project via our [Get Started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
-- Install [Vitest](https://vitest.dev/) `1.1.3` or later
+- Install [Vitest](https://vitest.dev/) `1.3.0`
 
 ## Install `@cloudflare/vitest-pool-workers`
 
@@ -49,28 +49,40 @@ export default defineConfig({
 });
 ```
 
-This tells Vitest which pool you are using (ie. `@cloudflare/vitest-pool-workers`). Next, we will add options via `defineWorkersPoolOptions` to support our first test:
+This tells Vitest which pool you are using (ie. `@cloudflare/vitest-pool-workers`). Next, we will add configuration options via `defineWorkersPoolOptions` to support our tests.
+
+### Add Configuration Options via Wrangler
+
+You can reference a `wrangler.toml` to leverage its `main` entrypoint, its compatibility settings, and its bindings.
 
 ```js
 ---
-highlight: [6-7]
+highlight: [6-9]
 ---
 export default defineConfig({
   test: {
     pool: "@cloudflare/vitest-pool-workers",
     poolOptions: {
       workers: defineWorkersPoolOptions({
-        main: "../src/worker.ts",
-        isolatedStorage: true
+        isolatedStorage: true,
+        wrangler: {
+          configPath: "../wrangler.toml",
+        },
       }),
     },
   },
 });
 ```
 
-`main` should be the path to the main entrypoint for your worker. `isolatedStorage` ensures that any writes to storage performed in a test will be undone at the end of the test.
+{{<Aside type="note">}}
 
-### Configure Bindings
+`isolatedStorage` ensures that any writes to storage performed in a test will be undone at the end of the test.
+
+{{</Aside>}}
+
+### 
+
+### Add Configuration Options via Miniflare
 
 [Miniflare](https://miniflare.dev), which also powers [Wrangler's](/workers/wrangler/) local bindings, can be used for advanced configuration.
 
@@ -86,7 +98,7 @@ export default defineConfig({
     poolOptions: {
       workers: defineWorkersPoolOptions({
         isolatedStorage: true,
-        main: "./src/index.ts",
+        main: "../src/index.ts",
         miniflare: {
           kvNamespaces: ["TEST_NAMESPACE"],
         },
@@ -96,11 +108,11 @@ export default defineConfig({
 });
 ```
 
-This configuration would add a KV namespace `TEST_NAMESPACE` for you to use in tests.
+This configuration would add a KV namespace `TEST_NAMESPACE` for you to use in tests. Using this method, you can add other bindings like Durable Objects and service bindings.  
 
 {{<Aside type="note">}}
 
-Additional configuration options like Durable Objects and service bindings can be found in the `@cloudflare/vitest-pool-workers` [repo examples](https://github.com/cloudflare/workers-sdk/tree/main/packages/vitest-pool-workers/test).
+Additional Miniflare configuration options can be found in the `@cloudflare/vitest-pool-workers` [repo examples](https://github.com/cloudflare/workers-sdk/tree/main/packages/vitest-pool-workers/test).
 
 {{</Aside>}}
 
