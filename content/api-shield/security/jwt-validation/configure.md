@@ -49,7 +49,7 @@ Cloudflare will remove any fields that are unnecessary from each key and will dr
 
 It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
 
-## Token Configuration JSON Object
+## Token Configuration JSON object
 
 The example below shows a JSON object with all of the information necessary to create a Token Configuration using the Cloudflare API. If you would like to create JWKs for testing, refer to [mkjwk JSON Web Key Generator](https://mkjwk.org/).
 
@@ -78,6 +78,7 @@ header: Example
             }
         ]
     }
+}
 ```
 
 
