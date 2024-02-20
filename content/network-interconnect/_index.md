@@ -26,3 +26,5 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 **TODO**: Create three new top level page groups: “CNI 2.0”, “CNI 1.0”, “Public Peering, IX, and PNI”
 
 **TODO**: Under the new CNI 1.0 section, we’ll put the existing CNI setup docs
+
+**TODO**: make clear CNI/Interconnects in the dash is only available to MT and MWAN customers
