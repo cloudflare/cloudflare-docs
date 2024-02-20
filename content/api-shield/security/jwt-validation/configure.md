@@ -85,7 +85,7 @@ header: Example
 
 Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-```json
+```bash
 ---
 header: Example using cURL
 ---
@@ -269,7 +269,7 @@ Operations can be included at a host level and ignored on a per-operation basis.
 
 You can use the `POST /zones/{zone_id}/api_gateway/token_validation/rules/preview` endpoint to see the operations covered by this rule:
 
-```json
+```bash
 ---
 header: Example using cURL
 ---
