@@ -147,9 +147,9 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 ## Maps
 
-A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the value can be of a basic type such as `String` or an array of values.
+A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the key must be a `String` and the value can be of any type (for example, a `String` or an array of values). All values in a map must have the same type.
 
-The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<String><Array<String>>`, indicates the data type of the key (`String`) and the data type of values associated with keys (`Array` of `String` elements). This means that when you access the value of key `"foo"` (a string) you will get either an array of `String` elements or a missing value.
+The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<Array<String>>`, indicates the data type of the values associated with keys (an `Array` of `String` elements). This means that when you access the value of key `"foo"` you will get either an array of `String` elements or a [missing value](#map-notes).
 
 To access a value in a map, enter the key between square brackets (`[]`):
 
@@ -161,7 +161,7 @@ For maps where the values have an `Array` type, you cannot directly use [operato
 
 ### Examples { #map-examples }
 
-The following example is based on the [`http.request.headers`](/ruleset-engine/rules-language/fields/#field-http-request-headers) field with a data type of `Map<String><Array<String>>`, where array elements are of `String` data type.
+The following example is based on the [`http.request.headers`](/ruleset-engine/rules-language/fields/#field-http-request-headers) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
 
 If an incoming HTTP request included a single `Accept: application/json` HTTP header, the following expressions would evaluate to the indicated values:
 
@@ -173,7 +173,7 @@ any(http.request.headers["accept"][*] == "application/json") # ==> true
 any(http.request.headers["accept"][*] == "text/plain")       # ==> false
 ```
 
-The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/#field-http-request-uri-args) field with a data type of `Map<String><Array<String>>`, where array elements are of `String` data type.
+The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/#field-http-request-uri-args) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
 
 If an HTTP request included three `filter` URI arguments `waf`, `botm`, and `cdn`, the following expressions would evaluate to the indicated values:
 
