@@ -4,10 +4,14 @@ title: Setup <TBD>
 weight: 3
 ---
 
-# Enable advanced nemeservers
+# Foundation DNS configuration
 
-TBD >> Might make sense to change title and structure
+Advanced nameservers are included with Foundation DNS, but you have a few options to set them up depending on your needs.
 
-## Prerequisites
+Your setup will also affect each zone access to the new GraphQL analytics.
 
-## Analytics
+## Enable advanced nameservers on a zone
+
+## Set advanced nameservers as default
+
+## Use GraphQL analytics
