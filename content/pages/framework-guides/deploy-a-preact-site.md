@@ -21,7 +21,7 @@ $ cd your-project-name
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -68,4 +68,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Preact">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Preact">}}

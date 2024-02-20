@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-{{<render file="__create-github-repository-prefix.md">}}
+{{<render file="/_framework-guides/_create-github-repository-prefix.md">}}
 
 ```sh
 $ git remote add origin https://github.com/<your-gh-username>/<repository-name>

@@ -161,7 +161,7 @@ $ hugo new posts/hello-world.md
 
 Inside of `hello-world.md`, add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -208,4 +208,4 @@ If you plan to use [preview deployments](/pages/configuration/preview-deployment
 
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Hugo">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hugo">}}

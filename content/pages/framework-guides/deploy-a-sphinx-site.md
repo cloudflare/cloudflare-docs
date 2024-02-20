@@ -254,4 +254,4 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Sphinx">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Sphinx">}}

@@ -37,7 +37,7 @@ If you already have a Next.js project or wish to manually create and deploy one 
 
 ### Create a new GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+{{<render file="/_framework-guides/_create-github-repository-prefix.md">}}
 
 ```sh
 # Skip the following 3 commands if you have built your application
@@ -277,4 +277,4 @@ $ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compa
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
-{{<render file="_learn-more.md" withParameters="Next.js">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Next.js">}}

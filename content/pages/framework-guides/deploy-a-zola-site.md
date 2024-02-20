@@ -72,7 +72,7 @@ Upon running `zola init`, you will prompted with three questions:
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -109,4 +109,4 @@ base_url = "https://my-zola-project.pages.dev"
 
 Every time you commit new code to your Zola site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Zola">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Zola">}}

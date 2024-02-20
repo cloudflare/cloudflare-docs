@@ -63,7 +63,7 @@ export default defineConfig({
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -143,4 +143,4 @@ The Cloudflare adapter accepts the same options as [Miniflare](https://miniflare
 
 After setting up the binding locally, you only need to set the binding in the Cloudflare dashboard as well and it will be available for your Solid application on your next deployment. To add the binding there, refer to [Bindings](/pages/functions/bindings/).
 
-{{<render file="_learn-more.md" withParameters="Solid">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Solid">}}

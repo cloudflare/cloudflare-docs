@@ -37,7 +37,7 @@ $ npm run dev
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -137,4 +137,4 @@ export const loader = async ({ context, params }: LoaderArgs) => {
 
 Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/durable-objects/).
 
-{{<render file="_learn-more.md" withParameters="Remix">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Remix">}}

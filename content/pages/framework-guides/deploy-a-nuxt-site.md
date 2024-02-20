@@ -37,13 +37,13 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 ## Configure and deploy a project without C3
 
-To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [dashboard guide](/pages/get-started/guide/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
+To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation).After you have set up your Nuxt project, choose either the [Git integration guide](/pages/get-started/guide/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
 
 {{<render file="/_framework-guides/_git-integration.md">}}
 
 ### Create a new GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, go to your newly created project directory to prepare and push your local application to GitHub by running the following commands in your terminal:
+{{<render file="/_framework-guides/_create-github-repository-prefix.md">}}
 
 ```sh
 # Skip the following 3 commands if you have built your application
@@ -125,4 +125,4 @@ export default defineEventHandler(({ context }) => {
 });
 ```
 
-{{<render file="_learn-more.md" withParameters="Nuxt">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Nuxt">}}
