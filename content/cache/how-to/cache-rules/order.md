@@ -16,6 +16,8 @@ Cache rules affect requests differently from Page Rules. This is how they are ap
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design.
 
+4. Cache rules take precedence over zone-wide rules in the configuration tab within the cache settings. This means that when configuring your cache settings, rules that are more specific take precedence over broader, zone-wide configurations. For example, the timeout duration for the entire zone `example.com` is set to 600 seconds. However, there is a rule specifically for the hostname `timeout.example.com` that sets it to 1200 seconds. In this case, `timeout.example.com` will use the longer timeout of 1200 seconds, overriding the zone-wide setting.
+
 ## Execution order of Rules products
 
 {{<render file="_product_execution_order.md" productFolder="rules">}}
