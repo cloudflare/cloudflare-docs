@@ -8,6 +8,45 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Name-Related Data Fields on SRV (DNS) Records
+**End of life date: May 31st, 2024**
+
+The name of an SRV record normally consists of three parts: the service (e.g., `_xmpp`), the protocol (e.g., `_tcp`), and the base name (`example.com`).
+The complete name would then be, e.g., `_xmpp._tcp.example.com`.
+
+When interacting with DNS records through the [API](/api/operations/dns-records-for-a-zone-create-dns-record), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
+
+```
+{
+  "name": "_xmpp._tcp.example.com",
+  "data": {
+    "service": "_xmpp",
+    "proto": "_tcp",
+    "name": "example.com",
+    ...
+  },
+  ...
+}
+```
+
+We are deprecating the `service`, `proto` and `name` fields *within* the `data` map in favor of the `name` field *outside* the data map, which is the same name field that's used by all other record types.
+
+Before the end of life date, please ensure that:
+
+- when reading SRV records, you use only the `name` outside of the data map and ignore `service`, `proto` and `name` within the data map if they exist; and
+- when writing SRV records, you set the `name` outside of the data map and **do not set** `service`, `proto` or `name` within the data map.
+
+After the end of life date, the API will stop producing the `service`, `proto` and `name` data fields, and if any of them are received from a client, an error will be returned.
+
+This deprecation does not affect other SRV data fields not mentioned above (`priority`, `weight`, `port`, `target`) or data fields for any other record type other than SRV.
+
+Modified API:
+ - GET /zones/:zone_id/dns_records
+ - POST /zones/:zone_id/dns_records
+ - GET /zones/:zone_id/dns_records/:dns_record_id
+ - PATCH /zones/:zone_id/dns_records/:dns_record_id
+ - PUT /zones/:zone_id/dns_records/:dns_record_id
+
 ## Mobile Redirect 
 **End of life date: June 30th, 2024**
 
