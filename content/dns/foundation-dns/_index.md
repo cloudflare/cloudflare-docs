@@ -10,7 +10,7 @@ Foundation DNS is the premium Cloudflare DNS offering for large enterprise custo
 
 With Foundation DNS, you get access to advanced reliability, security, and insights. Features include the following:
 
-* Advanced nameservers that provide:
+* [Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) that provide:
     * More consistent nameserver assignment
     * Strategically distributed IPs to increase resiliency
     * Reduced exposure to incidents and or software regression
