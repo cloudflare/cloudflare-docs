@@ -133,10 +133,7 @@ In the last example, the `lower()` function includes the `[*]` notation so that 
 
 It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
 
-Accessing an out-of-bounds array index produces a "missing value". A missing value has the following behavior:
-
-- Any comparison `<expr> <op> <literal>` where `<expr>` evaluates to a missing value will evaluate to false.
-- Function calls like `function(<expr>)`, where `<expr>` evaluates to a missing value, will return a missing value in most cases, but the exact behavior can vary per function.
+{{<render file="_rules-language-missing-value-behavior.md" withParameters="an out-of-bounds array index">}}
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
@@ -204,7 +201,7 @@ For more information on `any()`, `all()`, `len()`, and other available functions
 
 It is not possible to define your own maps. You can only use maps returned by fields.
 
-Accessing an non-existing key or an out-of-bounds array index for values which are arrays produces a "missing value". A missing value has the behavior described in the notes section for [Arrays](#arrays).
+{{<render file="_rules-language-missing-value-behavior.md" withParameters="a non-existing key in a map">}}
 
 ## Lists
 
