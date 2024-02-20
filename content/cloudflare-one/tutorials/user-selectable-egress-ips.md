@@ -23,14 +23,14 @@ This tutorial gives administrators an easy way to allow their end-users to chang
 Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices
-- [Set up `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device (steps 1 and 2)
+- [Set up `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device (Steps 1 and 2)
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
 
 {{</tutorial-prereqs>}}
 
 {{<tutorial-step title="Create a virtual network">}}
 
-1. Use `cloudflared` to create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
+1. In a terminal, use `cloudflared` to create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
 
     ```sh
     $ cloudflared tunnel vnet add <VNET_NAME>
@@ -39,7 +39,7 @@ Make sure you have:
 2. Assign an IP route to the virtual network.
 
     ```sh
-    $ cloudflared tunnel route ip add --vnet <VNET_NAME> <ip_range>
+    $ cloudflared tunnel route ip add --vnet <VNET_NAME> 10.0.0.0/8
     ```
 
 {{</tutorial-step>}}
@@ -69,7 +69,9 @@ Make sure you have:
     ```
 
 3. In the WARP client, select the gear icon > **Virtual Networks**. Choose the virtual network you created.
-4. Check the egress IP address again by running the command from step 1. Traffic should be routed via the egress IP specified in the egress policy.
+4. Check the egress IP address again by running the command from Step 1. Traffic should be routed via the egress IP specified in the egress policy.
+
+You can repeat this tutorial to create separate virtual networks for each dedicated egress IP assigned to your account.
 
 {{</tutorial-step>}}
 
