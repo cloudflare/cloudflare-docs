@@ -17,9 +17,9 @@ weight: 5
 | Windows  | ✅           | 2022.4.115.0        |
 | macOS    | ✅           | 2022.4.114.0        |
 | Linux    | ✅           |       |
-| iOS      | ❌           |   |
-| Android  | ❌           |   |
-| ChromeOS | ❌           |   |
+| iOS      | ✅           | 1.0  |
+| Android  | ✅           | 1.0  |
+| ChromeOS | ✅           | 1.0  |
 
 {{</details>}}
 
@@ -208,10 +208,18 @@ You can verify that the virtual network was successfully deleted by typing `clou
 
 ## Connect to a virtual network
 
-1. Open the WARP client on your device.
+### Windows, macOS, and Linux
 
+1. Open the WARP client.
 2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
+3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
+When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+
+### iOS, Android, and ChromeOS
+
+1. Launch the Cloudflare One Agent app.
+2. Go to **Advanced** > **Connection options** > **Virtual networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
 When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
