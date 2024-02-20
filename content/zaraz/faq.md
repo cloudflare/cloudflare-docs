@@ -190,7 +190,7 @@ Yes. Refer to [Additional fields](/zaraz/get-started/additional-fields/) to lear
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=4 text="How can I attach User Properties to my events?" >}}
+{{<faq-question level=4 text="How do I attach a User Property to my events?" >}}
 
 {{<faq-answer>}}
 
