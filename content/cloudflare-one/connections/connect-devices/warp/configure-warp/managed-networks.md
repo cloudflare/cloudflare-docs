@@ -181,5 +181,6 @@ To check if the WARP client detects the network location:
 3. Open a terminal and run `warp-cli debug alternate-network`.
 
 ## Best practices
+
 - The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
 - Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
