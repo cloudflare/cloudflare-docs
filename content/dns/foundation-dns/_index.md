@@ -13,7 +13,7 @@ With Foundation DNS, you get access to advanced reliability, security, and insig
 * Advanced nameservers that provide:
     * More consistent nameserver assignment
     * Strategically distributed IPs to increase resiliency
-    * Reduced exposure to incidents and effects of software regression
+    * Reduced exposure to incidents and or software regression
 * DNSSEC keys unique to your account
 * GraphQL analytics
 
