@@ -130,6 +130,21 @@ $ curl -v --insecure https://<private-server-IP>:3333/
 
 You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
 
+### Supported cipher suites
+
+Make sure your TLS endpoint accepts one of the following cipher suites:
+
+- TLS_AES_256_GCM_SHA384
+- TLS_AES_128_GCM_SHA256
+- TLS_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+- TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+- TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+- TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+- TLS_EMPTY_RENEGOTIATION_INFO_SCSV
+
 ## 2. Extract the SHA-256 fingerprint
 
 To obtain the SHA-256 fingerprint of a certificate:
