@@ -8,7 +8,7 @@ meta:
 
 # Migrate from unstable_dev
 
-<TBD>
+`@cloudflare/vitest-pool-workers` provides a great alternative for developers using the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API.
 
 
 ## Related resources
