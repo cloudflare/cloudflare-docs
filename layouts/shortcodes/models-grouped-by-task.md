@@ -1,7 +1,7 @@
-{{- range .Page.Pages.GroupByParam "task_display" -}}
-##  {{ .Key }}
-
+{{- range .Page.Pages.GroupByParam "task_type" -}}
   {{ $firstPage := index (.Pages) 0 -}}
+
+##  {{ $firstPage.Params.task.name }}
 
 {{ $firstPage.Params.task.description }}
 
