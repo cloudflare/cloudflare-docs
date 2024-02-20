@@ -132,18 +132,7 @@ You need to pass the `insecure` option because we are using a self-signed certif
 
 ### Supported cipher suites
 
-Make sure your TLS endpoint accepts one of the following cipher suites:
-
-- TLS_AES_256_GCM_SHA384
-- TLS_AES_128_GCM_SHA256
-- TLS_CHACHA20_POLY1305_SHA256
-- TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-- TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-- TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-- TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-- TLS_EMPTY_RENEGOTIATION_INFO_SCSV
+The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your TLS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
 
 ## 2. Extract the SHA-256 fingerprint
 
@@ -193,4 +182,4 @@ To check if the WARP client detects the network location:
 
 ## Best practices
 - The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
-- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to choose which settings profile the device will receive.
+- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
