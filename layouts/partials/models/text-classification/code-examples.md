@@ -1,1 +1,1 @@
-No code examples.
+No code examples for `{{ .model.name }}`

@@ -1,4 +1,12 @@
-{{ $modelId := printf "@%s" .model.id}}
+{{ $modelId := (.model.name) }}
+
+{{/* Kody do you hate this? Thinkimg about inlining the tab code */}}
+{{ define "partials/models/hack-tabs" }}
+  {{ return "<div><em>You cannot use shortcodes in a partial</em>, <strong>BUT you can return HTML from an inline partial</strong></div>" }}
+{{ end }}
+
+{{ partial "partials/models/hack-tabs" }}
+
 ## Code Example
 
 This is one line of text, telling you what's happening.

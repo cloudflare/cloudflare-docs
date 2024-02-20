@@ -1,14 +1,23 @@
 ---
-title: distilbert-sst-2-int8
-pcx_content_type: get-started
 model:
-  id: cf/huggingface/distilbert-sst-2-int8
-  name: distilbert-sst-2-int8
-  description: Distilled BERT model that was finetuned on SST-2 for sentiment classification
-task_type: text-classification
-task:
-  name: Text Classification
-  description: Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes.
+  id: "eaf31752-a074-441f-8b70-d593255d2811"
+  source: 1
+  name: "@cf/huggingface/distilbert-sst-2-int8"
+  description: "Distilled BERT model that was finetuned on SST-2 for sentiment classification"
+  task:
+    id: "19606750-23ed-4371-aab2-c20349b53a60"
+    name: "Text Classification"
+    description: "Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes."
+  tags:
+    - "huggingface"
+    - "text-classification"
+  properties:
+    - property_id: "info"
+      value: "https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static"
+task_type: "text-classification"
+model_display_name: "distilbert-sst-2-int8"
+title: "distilbert-sst-2-int8"
+
 ---
 
 {{% model-display %}}

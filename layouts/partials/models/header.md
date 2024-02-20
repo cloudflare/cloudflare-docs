@@ -1,18 +1,49 @@
-**Model ID**: `@{{ .model.id }}`
+**Model ID**: `{{ .model.name }}`
 
 {{ .model.description }}
 
-{{ with .model.infos }}[More information]({{ . }}){{ end }}
-{{ with .model.terms }}[Terms & License]({{ . }}){{ end }}
+{{ $propertyMap := (dict
+    "info" "More Information"
+    "terms" "Terms & License"
+    "default_max_tokens_stream" "Default max (sequence) tokens (stream)"
+    "default_max_tokens" "Default max (sequence) tokens"
+    "context_length_limit" "Context tokens limit"
+    "sequence_length_limit" "Sequence tokens limit"
+    "max_input_tokens" "Max input tokens"
+    "output_dimensions" "Output dimensions")
+}}
+
+{{- range .model.properties -}}
+  {{- $propertyId := .property_id -}}
+  {{- $value := .value -}}
+  {{- range (slice "info" "terms") -}}
+    {{- $key := . -}}
+    {{- if eq $propertyId $key -}}
+[{{ index $propertyMap $key }}]({{ $value }}) &nbsp;
+    {{- end -}}
+  {{- end -}}
+{{- end }}
+
 
 ## Properties
 
-**Task Type**: {{ .task.name }} (TODO: Link to the Detail page?)<br/>
+{{/* TODO: Can I get the page better here? */}}
+**Task Type**: [{{ .model.task.name }}](/workers-ai/wip-models/#{{ .task_type }})
 
-{{- range .model.limits }}
-**{{ .name }}**: {{ .value }}<br/>
+{{/* This loops through the slice in order */}}
+{{- range .model.properties -}}
+  {{- $propertyId := .property_id -}}
+  {{- $value := .value -}}
+  {{- range (slice "context_length_limit" "sequence_length_limit" "max_input_tokens" "output_dimensions") -}}
+    {{- $key := . -}}
+    {{- if eq $propertyId $key }}
+**{{ index $propertyMap $key }}**: {{ $value }}
+    {{ end -}}
+  {{- end -}}
 {{- end }}
 
+
+{{/* These don't exist yet
 ## Model parameters
 
 <div class="DocsMarkdown--definitions">
@@ -28,3 +59,5 @@
 
 </ul>
 </div>
+
+*/}}
