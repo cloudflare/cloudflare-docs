@@ -270,6 +270,8 @@ const platform = await getPlatformProxy(options);
 
           Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
 
+          _Note_: If use `wrangler`'s `--persist-to` option please keep in mind that such option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. So for example if you run `wrangler dev --persist-to ./my-directory`, in order to reuse the same location using `getPlatformProxy` you'll have to specify: `persist: "./my-directory/v3"`.
+
 {{</definitions>}}
 
 ### Return Type
