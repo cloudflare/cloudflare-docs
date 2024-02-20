@@ -39,7 +39,7 @@ Magic WAN sends health check probes to monitor network status and the health of 
 Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 
-{{<feature header="Network analytics" href="/magic-wan/configuration/manually/how-to/view-analytics/">}}
+{{<feature header="Network analytics" href="/magic-wan/configuration/common-settings/view-analytics/">}}
 Network analytics allows you to check traffic patterns and DDoS attacks in near real-time, to troubleshoot IP traffic issues.
 {{</feature>}}
 
