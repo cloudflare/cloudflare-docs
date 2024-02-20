@@ -603,6 +603,8 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 ]'
 ```
 
+Rules can be reordered by setting a position field in the `PATCH` body.
+
 This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` after rule `7124f9bc-d6b5-430d-b488-b6bc2892f2fb`:
 
 ```bash
