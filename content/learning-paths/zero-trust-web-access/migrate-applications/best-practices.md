@@ -7,7 +7,7 @@ layout: learning-unit
 
 Most customers have a heterogenous private application portfolio; some are home-built, some are internal managed services, some have SSO integrations available, and some rely on HTML or other forms of authentication. With that in mind, we recommend that you mix-and-match [onboarding solutions](/learning-paths/zero-trust-web-access/migrate-applications/integrated-sso/#potential-solutions) to fit the needs of each individual application. As shown in the table below, you can bucket applications into a series of stack-ranked categories that prioritize ease of implementation and total organizational impact.
 
-| Application type | Recommended onboarding | Time investment | Outcome |
+| Application type | Recommendation | Time investment | Outcome |
 | ---------------- | ---------------------- | --------------- | ------- |
 | Private web apps without integrated SSO | [Present applications exclusively on Cloudflare domains.](#present-applications-exclusively-on-cloudflare-domains) | Low | Users access applications on new domains delegated to Cloudflare and instantly apply SSO through Cloudflare integration. |
 | Private web apps with integrated SSO | **If SSO configuration is possible:** [Present applications exclusively on Cloudflare domains.](#present-applications-exclusively-on-cloudflare-domains) <br> **If SSO configuration is not possible:** Present applications on existing internal domains with identical external domains delegated to Cloudflare | Medium | Users access internal web services on the same or new domains from Cloudflare. If configured, the SSO provider transparently redirects users from internal domains to Cloudflare authoritative external domains. |
