@@ -1,11 +1,11 @@
 ---
-title: Peering portal setup
+title: PNI and peering setup
 pcx_content_type: tutorial
 updated: 2023-04-04
 weight: 4
 ---
 
-# Peering portal setup
+# PNI and peering setup
 
 You can use a peering portal, such as PeeringDB, to view and maintain your database of peering locations.
 
