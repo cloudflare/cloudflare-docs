@@ -37,6 +37,9 @@ import { defineConfig } from "vitest/config";
 Then, you will add the following within `defineConfig` to define the pool and its options:
 
 ```js
+---
+filename: vitest.config.js
+---
 export default defineConfig({
   test: {
     pool: "@cloudflare/vitest-pool-workers",
@@ -57,6 +60,7 @@ You can reference a `wrangler.toml` to leverage its `main` entrypoint, its compa
 
 ```js
 ---
+filename: vitest.config.js
 highlight: [6-9]
 ---
 export default defineConfig({
@@ -80,8 +84,6 @@ export default defineConfig({
 
 {{</Aside>}}
 
-### 
-
 ### Add Configuration Options via Miniflare
 
 [Miniflare](https://miniflare.dev), which also powers [Wrangler's](/workers/wrangler/) local bindings, can be used for advanced configuration.
@@ -90,6 +92,7 @@ For example, to add bindings that will be used in tests, you can add `miniflare`
 
 ```js
 ---
+filename: vitest.config.js
 highlight: [8-10]
 ---
 export default defineConfig({
@@ -121,6 +124,9 @@ Additional Miniflare configuration options can be found in the `@cloudflare/vite
 If you're using TypeScript, you'll need to define types for Cloudflare and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (ie. `test`) and add the following:
 
 ```js
+---
+filename: tsconfig.json
+---
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
