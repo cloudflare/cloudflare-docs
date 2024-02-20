@@ -96,7 +96,7 @@ export default defineConfig({
 });
 ```
 
-This configuration would add a KV namespace `TEST_NAMESPACE` for you to use in tests. 
+This configuration would add a KV namespace `TEST_NAMESPACE` for you to use in tests.
 
 {{<Aside type="note">}}
 
@@ -106,7 +106,7 @@ Additional configuration options like Durable Objects and service bindings can b
 
 ## Define Types
 
-If you're using TypeScript, you'll need to define types for Cloudflare and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests and add the following:
+If you're using TypeScript, you'll need to define types for Cloudflare and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (ie. `test`) and add the following:
 
 ```js
 {
@@ -125,7 +125,161 @@ Save this file, and you're ready to write your first test.
 
 ## Write Tests
 
+If you created a basic Worker via the guide listed above, you should have the following fetch handler in the `src` folder:
 
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response('Hello World!');
+  },
+};
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: index.ts
+---
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		return new Response('Hello World!');
+	},
+};
+```
+{{</tab>}}
+{{</tabs>}}
+
+This Worker receives a request, and returns a response of "Hello World!". In order to test this, create a `test` folder with the following test file:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+---
+filename: index.spec.js
+---
+import { env, createExecutionContext, getWaitUntil } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+// Could import any other source file/function here
+import worker from "../src";
+
+describe("Hello World worker", () => {
+  it("displays Hello World!", async () => {
+    const request = new Request("http://example.com");
+    const ctx = createExecutionContext();
+    const response = await worker.fetch(request, env, ctx);
+    await getWaitUntil(ctx);
+    expect(await response.text()).toBe("Hello World!");
+  });
+});
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: index.spec.ts
+---
+import { env, createExecutionContext, getWaitUntil } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+// Could import any other source file/function here
+import worker from "../src";
+
+// For now, you'll need to do something like this to get a correctly-typed
+// `Request` to pass to `worker.fetch()`.
+const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
+
+escribe("Hello World worker", () => {
+  it("displays Hello World!", async () => {
+    const request = new IncomingRequest("http://example.com");
+    const ctx = createExecutionContext();
+    const response = await worker.fetch(request, env, ctx);
+    await getWaitUntil(ctx);
+    expect(await response.text()).toBe("Hello World!");
+  });
+});
+```
+{{</tab>}}
+{{</tabs>}}
+
+Let's add functionality to handle a `404` path on the Worker. This will return the text `Not found` as well as the status code `404`.
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    const { pathname } = new URL(request.url);
+
+    if(pathname === "/404") {
+      return new Response('Not found', { status: 404 });
+    }
+
+    return new Response('Hello World!');
+  },
+};
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: index.ts
+---
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const { pathname } = new URL(request.url);
+
+    if(pathname === "/404") {
+      return new Response('Not found', { status: 404 });
+    }
+
+		return new Response('Hello World!');
+	},
+};
+```
+{{</tab>}}
+{{</tabs>}}
+
+To test this, we would add the following to our test file:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+---
+filename: index.spec.js
+---
+it("displays not found and proper status for /404", async () => {
+    const request = new Request("http://example.com/404");
+    const ctx = createExecutionContext();
+    const response = await worker.fetch(request, env, ctx);
+    await getWaitUntil(ctx);
+    expect(await response.text()).toBe("Not found");
+    expect(await response.status).toBe(404);
+  });
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+---
+filename: index.spec.ts
+---
+it("displays not found and proper status for /404", async () => {
+    const request = new IncomingRequest("http://example.com/404");
+    const ctx = createExecutionContext();
+    const response = await worker.fetch(request, env, ctx);
+    await getWaitUntil(ctx);
+    expect(await response.text()).toBe("Not found");
+    expect(await response.status).toBe(404);
+  });
+```
+{{</tab>}}
+{{</tabs>}}
 
 ## Related resources
 
