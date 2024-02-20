@@ -6,6 +6,23 @@ weight: 5
 
 # Virtual networks
 
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2022.4.115.0        |
+| macOS    | ✅           | 2022.4.114.0        |
+| Linux    | ✅           |       |
+| iOS      | ❌           |   |
+| Android  | ❌           |   |
+| ChromeOS | ❌           |   |
+
+{{</details>}}
+
 {{<render file="tunnel/_virtual-networks-intro.md" productFolder="cloudflare-one">}}
 
 ## Use cases
