@@ -33,18 +33,7 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
 
-
-## Git integration
-
-In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration/), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
-
-{{<Aside type="note">}}
-
-Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
-
-{{</Aside>}}
-
-This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+{{<render file="/_framework-guides/_git-integration.md">}}
 
 ### Create a new GitHub repository
 

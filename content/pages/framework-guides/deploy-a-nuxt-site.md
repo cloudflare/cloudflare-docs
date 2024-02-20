@@ -2,12 +2,12 @@
 pcx_content_type: how-to
 title: Deploy a Nuxt site
 meta:
-  description: 
+  description: Web framework making Vue.js-based development simple and powerful.
 ---
 
 # Deploy a Nuxt site
 
-[Nuxt](https://nuxt.com) is a web framework making web Vue.js-based development simple and powerful.
+[Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
 
 In this guide, you will create a new Nuxt application and deploy it using Cloudflare Pages.
 
@@ -39,19 +39,7 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [dashboard guide](/pages/get-started/guide/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
 
-## Git integration
-
-[Connect a GitHub or Gitlab repository](/pages/configuration/git-integration) to your Pages project so that new versions of your project are built and deployed when changes to your Git repository are detected.
-
-In addition to [Direct Upload](/pages/get-started/direct-upload/) deployments, you can make use of the Pages Git integration, which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
-
-{{<Aside type="note">}}
-
-Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
-
-{{</Aside>}}
-
-Setup requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+{{<render file="/_framework-guides/_git-integration.md">}}
 
 ### Create a new GitHub repository
 
@@ -82,11 +70,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-After completing configuration, click the **Save and Deploy** button.
-
-You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
-
-Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
+After completing configuration, click the **Save and Deploy** button. Review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
