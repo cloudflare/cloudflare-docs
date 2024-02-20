@@ -80,7 +80,7 @@ export default defineConfig({
 
 {{<Aside type="note">}}
 
-`isolatedStorage` ensures that any writes to storage performed in a test will be undone at the end of the test.
+For a full list of available configuration options, read the [Configuration guide](/workers/testing/vitest/configuration/).
 
 {{</Aside>}}
 
@@ -115,7 +115,7 @@ This configuration would add a KV namespace `TEST_NAMESPACE` for you to use in t
 
 {{<Aside type="note">}}
 
-Additional Miniflare configuration options can be found in the `@cloudflare/vitest-pool-workers` [repo examples](https://github.com/cloudflare/workers-sdk/tree/main/packages/vitest-pool-workers/test).
+For a full list of available Miniflare options, read the Miniflare [WorkersOptions API docs](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
 
 {{</Aside>}}
 
