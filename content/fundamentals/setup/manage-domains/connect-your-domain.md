@@ -13,7 +13,7 @@ This guide reviews the concepts behind connecting your domain using Cloudflare a
 
 To get started with Cloudflare as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/), you must first create an account and connect your domain. After creating your account, select `Add site` and follow the [step-by-step tutorial](/fundamentals/setup/account-setup/add-site/) to configure your [DNS records](/dns/manage-dns-records/), which informs Cloudflare where to forward requests.
 
-Your domain is always in your control - completing these steps does not mean that you are relinquishing ownership. After connecting your domain, you may [transfer registration](/registrar/get-started/transfer-domain-to-cloudflare/) to be managed at Cloudflare, but you will still remain the owner.
+Your domain is always in your control - connecting your domain to Cloudflare does not mean that you are relinquishing ownership. If you decide to [transfer your domain registration](/registrar/get-started/transfer-domain-to-cloudflare/) to be managed at Cloudflare, you will still retain full ownership.
 
 {{<Aside type="note">}}
 For a domain purchased through [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), we take care of the connection process on your behalf.
@@ -22,27 +22,31 @@ For a domain purchased through [Cloudflare Registrar](https://www.cloudflare.com
 
 ## Domain configurations
 
-When you connect your domain to Cloudflare, it is assigned a set of default configurations for our [application services](/products/?product-group=Application+performance%2CApplication+security%2CCloudflare+essentials), based on the domain [plan](https://www.cloudflare.com/plans/). These services determine how Cloudflare treats traffic for your domain.
+When you connect your domain to Cloudflare, a set of default configurations is generated for our [application services](/products/?product-group=Application+performance%2CApplication+security%2CCloudflare+essentials), based on the domain [plan](https://www.cloudflare.com/plans/). These services determine how Cloudflare treats traffic for your domain.
 
-Your configurations only affect live traffic: when your domain's status is active and your traffic is [proxied](#proxy-eligibility), by enabling the proxy status on the DNS records for the hostnames you want to proxy through Cloudflare's network. 
-
-Some services can be set at the account-level (if available in your plan), which affect all domains under your account, such as the [Web Application Firewall (WAF)](/waf/). 
+Your configurations only affect live traffic, when your domain's status is [**active**](/fundamentals/setup/manage-domains/connect-your-domain/#activating-your-domain) and its traffic is [**proxied**](#proxy-eligibility). Your configurations can be altered prior to activating or enabling the proxy status on the DNS records for the hostnames you want to proxy.
 
 Use the Cloudflare dashboard or [API](/api/) to modify, test, or [version](/version-management/) your configuration.
 
-{{<Aside>}}
+{{<Aside header="Account-level configurations">}}
+Some configurations can be set at the account-level (if available in your plan), which are applied to all domains under your account, such as the [Web Application Firewall (WAF)](/waf/). 
+
 Account-level configurations are processed before domain-level services. Refer to [Traffic sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first) to learn more. 
 {{</Aside>}}
 
 ## Activating your domain
 
-In a full setup, your domain will be pending until you update its nameservers at your domain registrar with the assigned Cloudflare nameservers. This step is essential for two reasons. First, to inform DNS resolvers that your traffic should route through Cloudflare and second, to verify that you own the domain. Only the owner or administrator of a domain has access to its registrar and the ability to change the domains nameservers.
+In a full setup, your domain will be pending until you update its nameservers at your domain registrar with the assigned Cloudflare nameservers. This step is essential for two reasons:
+1. First, to inform DNS resolvers that your traffic should route through Cloudflare
+2. And second, to verify that you are the domains owner. Only the owner or administrator of a domain can access  its registrar and change its nameservers.
 
 {{<Aside>}}
 Note: The activation process involves different steps if you are using a [secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) or [partial (CNAME) setup](/dns/zone-setups/partial-setup/).
 {{</Aside>}}
 
 Registrars take up to 24 hours to process nameserver changes (quicker in most cases). You will receive an email when your domain becomes active. While your domain is pending, your `HTTP/S` traffic is not live, but Cloudflare will respond to DNS queries on your assigned nameservers.
+
+By activating your domain in full mode, your traffic will immediately start using [Cloudflare's DNS services](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-handles-dns-queries), so it's important to review how to avoid downtime and what [proxying traffic](/fundamentals/concepts/how-cloudflare-works/#proxying-traffic) means. 
 
 ## Avoiding downtime
 
