@@ -85,8 +85,8 @@ The following steps are planned for future additions:
 
 Currently, you cannot perform traces for:
 
-* [Spectrum](/spectrum/) applications.
-* Hostnames using [Data Localization Suite](/data-localization/).
+* [Spectrum](/spectrum/) applications
+* Hostnames using [Data Localization Suite](/data-localization/)
 
 Also, the following products will not appear in trace results:
 
