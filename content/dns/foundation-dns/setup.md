@@ -23,7 +23,7 @@ To enable advanced namerservers on an existing or new zone:
 
 To manually update your nameservers:
 1. Log in to the admin account for your domain registrar or the DNS configuration of the parent zone.
-2. Replace your existing authoritative nameservers by the advanced namservers provided by Cloudflare or update the `NS` records with the advanced nameservers names.
+2. Replace your existing authoritative nameservers by the advanced namservers provided by Cloudflare, or update the `NS` records in the parent of your zone with the advanced nameservers names.
 
 {{<Aside type="warning">}}
 Make sure the values for your assigned nameservers are copied exactly.
