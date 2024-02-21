@@ -13,6 +13,4 @@ Now that your device enrollment policies and WARP profiles are configured, you c
 
 By the end of this module, you will be able to:
 
-- Manually deploy WARP on a test device.
-- Create an automated script to use with your organization’s managed deployment tool.
-- View user traffic in Zero Trust.
+{{<render file="zero-trust/_connect-devices-objectives.md">}}
