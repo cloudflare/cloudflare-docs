@@ -1809,7 +1809,7 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 {{<definitions>}}
 
 - `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The [directory](/pages/configuration/build-configuration/) of static files to upload.
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

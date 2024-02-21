@@ -75,7 +75,7 @@ Cloudflare Pages begins by working from your repository's root directory. The en
 
 The build command is provided by your framework. For example, the Gatsby framework uses `gatsby build` as its build command. When you are working without a framework, leave the **Build command** field blank.
 
-The build directory is generated from the build command. Each framework has its own naming convention, for example, the build output directory is named `/public` for many frameworks.
+The build output directory is generated from the build command. Each [framework](/pages/configuration/build-configuration/#framework-presets) has its own naming convention, for example, the build output directory is named `/public` for many frameworks.
 
 The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
