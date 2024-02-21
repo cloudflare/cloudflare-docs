@@ -32,7 +32,7 @@ Refer to the [demo](https://demo.turnstile.workers.dev/) and its [source code](h
 
 ### Protect forms
 
-Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
+Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, you can embed `<div class="cf-turnstile"></div>` into your site to protect your forms.
 
 <div>
 
