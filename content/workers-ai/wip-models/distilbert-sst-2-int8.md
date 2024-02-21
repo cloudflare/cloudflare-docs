@@ -18,7 +18,6 @@ task_type: "text-classification"
 model_display_name: "distilbert-sst-2-int8"
 title: "distilbert-sst-2-int8"
 layout: "model"
-
 ---
 
-JSON API HERE
+JSON API

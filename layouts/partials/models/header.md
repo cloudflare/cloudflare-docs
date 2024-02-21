@@ -1,3 +1,5 @@
+THIS: {{ index $.Site.Data.models.properties.links "info"}}
+
 **Model ID**: `{{ .model.name }}`
 
 {{ .model.description }}
