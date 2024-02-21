@@ -31,4 +31,16 @@ Make sure the values for your assigned nameservers are copied exactly.
 
 ## Set advanced nameservers as default
 
+(TBD) **DNS Zone Dafaults** allow you to specify which configurations will be automatically enabled to new zones added to your account.
+
+To select advanced namerserver as default:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Manage Account** > **Configurations** > **DNS Settings**
+3. Select **Configure defaults**
+4. For **Nameserver assignment** choose (TBD)**Advanced nameservers**
+5. Select **Save** to confirm.
+
+All new zones added to your account will be automatically assigned advanced nameservers. This can be changed later, for each zone, from **DNS** > **Settings**.
+
 ## Use GraphQL analytics
