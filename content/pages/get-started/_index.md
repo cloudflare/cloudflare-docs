@@ -8,6 +8,6 @@ weight: 2
 
 {{<render file="_pages_survey.md">}}
 
-There are three ways to set up a Pages project:
+Choose a setup method for your Pages project:
 
 {{<directory-listing showDescriptions="true">}}

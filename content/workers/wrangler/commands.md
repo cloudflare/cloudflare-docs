@@ -1803,13 +1803,13 @@ After starting `wrangler pages deployment tail`, you will receive a live stream 
 Deploy a directory of static assets as a Pages deployment.
 
 ```txt
-wrangler pages deploy <DIRECTORY> [OPTIONS]
+wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The directory of static files to upload.
+- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [directory](/pages/configuration/build-configuration/) of static files to upload.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

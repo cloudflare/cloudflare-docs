@@ -56,10 +56,10 @@ Subsequent deployments will reuse both of these values (saved in your `node_modu
 From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) command:
 
 ```sh
-$ npx wrangler pages deploy <OUTPUT_DIRECTORY>
+$ npx wrangler pages deploy <BUILD_OUTPUT_DIRECTORY>
 ```
 
-Find the appropriate output directory for your project in [Build directory under Framework presents](/pages/configuration/build-configuration/#framework-presets).
+Find the appropriate build output directory for your project in [Build directory under Framework presents](/pages/configuration/build-configuration/#framework-presets).
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
  
