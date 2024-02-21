@@ -9,11 +9,9 @@ meta:
 
 # Product compatibility
 
+As a general rule, settings on the customer zone will override settings on the SaaS zone. In addition, Orange-to-Orange does not permit traffic directed to a custom hostname zone into another custom hostname zone.
+
 The following table provides a list of compatibility guidelines for various Cloudflare products and features.
-
-As a general rule, settings on the customer zone will override settings on the SaaS zone.
-
-Please note that O2O feature does not allow a custom hostname zone send traffic into another custom hostname zone. 
 
 {{<Aside type="note">}}
 
