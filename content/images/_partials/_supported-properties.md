@@ -479,7 +479,7 @@ cf: {image: {onerror: "redirect"}}
 
 #### `quality`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/)..{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/).{{</Aside>}}
 
 Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format. Example:
 
