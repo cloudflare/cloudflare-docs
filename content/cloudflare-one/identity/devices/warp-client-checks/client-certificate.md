@@ -16,7 +16,7 @@ The Client Certificate device posture attribute checks if the device has a valid
   | System  | Certificate store    |
   | ------- | -------------------- |
   | macOS   | System Keychain      |
-  | Windows | `Current User/Personal` store |
+  | Windows | `Current User\Personal` store |
   | Linux   | NSSDB                |
 
 ## Configure the client certificate check
