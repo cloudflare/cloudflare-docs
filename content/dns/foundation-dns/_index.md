@@ -6,16 +6,16 @@ weight: 9
 
 # Foundation DNS
 
-Foundation DNS is the premium Cloudflare DNS offering for large enterprise customers.
+Foundation DNS is the Cloudflare DNS offering for enterprise customers.
 
 With Foundation DNS, you get access to advanced reliability, security, and insights. Features include the following:
 
 * [Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) that provide:
-    * More consistent nameserver assignment
     * Strategically distributed IPs to increase resiliency
+    * More consistent nameserver assignment
     * Reduced exposure to incidents or software regression
 * DNSSEC keys unique to your account
-* GraphQL analytics
+* GraphQL DNS analytics
 
 ## Availability
 
