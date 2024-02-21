@@ -992,7 +992,7 @@ The Cloudflare Rules language supports these dynamic fields:
       <td>
         <p>An array of scan results in the order the content objects were detected in the request.
         </p>
-        <p>The possible values are: <code>clean</code>, <code>suspicious</code>, <code>malicious</code>, and <code>not scanned</code>.
+        <p>The possible values are: <code>clean</code>, <code>suspicious</code>, <code>infected</code>, and <code>not scanned</code>.
         </p>
         <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.
         </p>
