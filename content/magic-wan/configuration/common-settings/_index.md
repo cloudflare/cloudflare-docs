@@ -6,6 +6,6 @@ weight: 3
 
 # Common settings
 
-Review this section to learn about settings common to Magic WAN Connector and the manual set up of Magic WAN.
+Review this section to learn about settings shared between the Magic WAN Connector and the manual setup process for Magic WAN.
 
 {{<directory-listing>}}
