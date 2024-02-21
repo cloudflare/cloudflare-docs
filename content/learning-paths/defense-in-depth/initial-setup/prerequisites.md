@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-To use defense-in-depth, make sure you have:
+To make the most of defense-in-depth, make sure that you have the following:
 
-- A device that can run [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/)
-- (Optional) A device that can run [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) to connect non-WARP devices to Cloudflare
+- A device that can run [WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/), Cloudflare's endpoint agent.
+- (Optional) A [Linux host server](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux) on the private network that can run the Cloudflare WARP Connector. This is only needed for server-initiated traffic flows such as Microsoft SCCM, Active Directory (AD) updates, and DevOps workflows that require server-initiated connections.
