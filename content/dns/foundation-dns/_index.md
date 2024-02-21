@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Foundation DNS
-weight: 9
+weight: 4
 ---
 
 # Foundation DNS
