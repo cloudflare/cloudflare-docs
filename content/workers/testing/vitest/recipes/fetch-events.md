@@ -16,6 +16,9 @@ The following code snippets are intended to help you get started testing fetch e
 
 ## Example Configuration
 
+{{<tabs labels="Basic | Advanced">}}
+{{<tab label="basic" default="true">}}
+
 ```js
 ---
 filename: vitest.config.js
@@ -37,6 +40,67 @@ export default defineConfig({
 		},
 	},
 });
+```
+
+{{</tab>}}
+{{<tab label="advanced">}}
+
+```js
+---
+filename: vitest.config.js
+---
+import { defineWorkersPoolOptions } from "@cloudflare/vitest-pool-workers/config";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	test: {
+		globalSetup: ["./global-setup.ts"],
+		pool: "@cloudflare/vitest-pool-workers",
+		poolOptions: {
+			workers: defineWorkersPoolOptions({
+				isolatedStorage: true,
+				singleWorker: true,
+				miniflare: {
+					// Configuration for the test runner Worker
+					compatibilityDate: "2024-01-01",
+					compatibilityFlags: [
+						"nodejs_compat",
+					],
+					serviceBindings: {
+						WORKER: "worker",
+					},
+
+					workers: [
+						// Configuration for the Worker under test
+						{
+							name: "worker",
+							modules: true,
+							scriptPath: "./dist/index.js", // Built by `global-setup.ts`
+							compatibilityDate: "2024-01-01",
+							compatibilityFlags: ["nodejs_compat"],
+						},
+					],
+				},
+			}),
+		},
+	},
+});
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+If using the advanced configuration from the example above, you will also need this:
+
+```js
+---
+filename: global-setup.ts
+---
+import childProcess from "node:child_process";
+
+export default function () {
+	childProcess.execSync("wrangler build", { cwd: __dirname });
+}
 ```
 
 ## Example Worker
@@ -92,6 +156,20 @@ it("dispatches fetch event", async () => {
 });
 ```
 
+```js
+---
+filename: fetch-integration-advanced.test.ts
+---
+import { env } from "cloudflare:test";
+import { expect, it } from "vitest";
+
+it("dispatches fetch event", async () => {
+	const response = await env.WORKER.fetch("http://example.com");
+	expect(await response.text()).toBe("👋");
+});
+
+```
+
 ## Related resources
 
-- More examples of testing scheduled events can be found in the `workers-sdk` [repo](https://github.com/cloudflare/workers-sdk/)
+- More examples of testing fetch events can be found in the `workers-sdk` [repo](https://github.com/cloudflare/workers-sdk/)
