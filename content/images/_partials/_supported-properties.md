@@ -459,7 +459,7 @@ Options are:
 
 #### `onerror=redirect`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting is ignored by Cloudflare Images.{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/).{{</Aside>}}
 
 In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains. Example:
 
