@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Direct Upload
+meta:
+  title: Direct Upload
+  description: Upload your prebuilt assets to Pages and deploy them via the Wrangler CLI or the Cloudflare dashboard.
 ---
 
 # Direct Upload

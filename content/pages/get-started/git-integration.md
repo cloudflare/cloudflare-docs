@@ -1,9 +1,10 @@
 ---
-title: Guide
+title: Git integration
 pcx_content_type: get-started
 weight: 1
 meta:
   title: Git integration guide
+  description: Connect your Git provider to Pages.
 ---
 
 # Git integration guide
