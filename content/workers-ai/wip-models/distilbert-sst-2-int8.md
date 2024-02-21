@@ -17,7 +17,8 @@ model:
 task_type: "text-classification"
 model_display_name: "distilbert-sst-2-int8"
 title: "distilbert-sst-2-int8"
+layout: "model"
 
 ---
 
-{{% model-display %}}
+JSON API HERE

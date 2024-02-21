@@ -34,4 +34,3 @@ related:
     value: https://example.com
 ---
 
-{{% model-display %}}

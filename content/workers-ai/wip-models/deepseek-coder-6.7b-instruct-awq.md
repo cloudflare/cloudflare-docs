@@ -17,7 +17,7 @@ model:
 task_type: "text-generation"
 model_display_name: "deepseek-coder-6.7b-instruct-awq"
 title: "deepseek-coder-6.7b-instruct-awq"
+layout: "model"
 
 ---
 
-{{% model-display %}}

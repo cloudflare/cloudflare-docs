@@ -1,0 +1,34 @@
+{{ define "main" }}
+  {{ $params := .Page.Params }}
+  <div class="DocsPage">
+    {{- partial "skipcontent" . -}}
+    {{- partial "topbar.mobile" . -}}
+    {{- partial "sidebar.nav" . -}}
+
+    <div class="DocsToolbar">
+      {{- partial "topbar.search" . -}}
+      {{- partial "topbar.tools" . -}}
+    </div>
+
+    <main class="DocsBody">
+      {{ partial "sidebar.toc" . }}
+
+      <div id="docs-content" data-reach-skip-nav-content></div>
+      {{- partial "breadcrumbs" . -}}
+
+      <div class="DocsContent" id="main" page-type="document">
+        <h1>{{ .Title }}</h1>
+
+        <article class="DocsMarkdown">
+          {{partial "models/header.md" $params | markdownify }}
+          <h2>API schema</h2>
+          <p>The following schema is based on <a href="https://json-schema.org/">JSON Schema</a></p>
+          {{- .Content -}}
+          {{ partial "models/footer.md" $params | markdownify }}
+        </article>
+      </div>
+    </main>
+
+    {{ partial "footer" . }}
+  </div>
+{{ end }}

@@ -23,7 +23,7 @@ model:
 task_type: "text-generation"
 model_display_name: "llama-2-7b-chat-int8"
 title: "llama-2-7b-chat-int8"
+layout: "model"
 
 ---
 
-{{% model-display %}}
