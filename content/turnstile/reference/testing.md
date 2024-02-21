@@ -26,4 +26,4 @@ The following {{<glossary-tooltip term_id="sitekey">}}sitekeys{{</glossary-toolt
 
 ## Testing locally
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain whitelist](/turnstile/reference/domain-management/).
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/reference/domain-management/).
