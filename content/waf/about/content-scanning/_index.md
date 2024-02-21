@@ -84,7 +84,3 @@ Scan results for detected content objects<br>Values: `clean`, `suspicious`,<br>`
 {{</table-wrap>}}
 
 For examples of rule expressions using these fields, refer to [Example rules](/waf/about/content-scanning/example-rules/).
-
-## Availability
-
-Content scanning is available as a paid add-on to customers on an Enterprise plan.
