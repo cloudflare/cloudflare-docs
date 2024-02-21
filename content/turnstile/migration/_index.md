@@ -4,7 +4,7 @@ pcx_content_type: migration
 weight: 3
 ---
 
-# Migrating from alternative services
+# Migrate from alternative services
 
 If you are using alternative CAPTCHA services, you can switch to Cloudflare Turnstile using the guides below to assist with the upgrade process.
 

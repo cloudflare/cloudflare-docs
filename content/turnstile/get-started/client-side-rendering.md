@@ -170,7 +170,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 
 To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
 
-## Refreshing a widget
+## Refresh a widget
 
 A few seconds before a token expires, the `expired-callback` is invoked.
 

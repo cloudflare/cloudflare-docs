@@ -4,7 +4,7 @@ pcx_content_type: migration
 weight: 4
 ---
 
-# Migrating from reCAPTCHA
+# Migrate from reCAPTCHA
 
 If you are using reCAPTCHA today, you can switch seamlessly to Cloudflare Turnstile by following the step-by-step guide below to assist with the upgrade process.
 

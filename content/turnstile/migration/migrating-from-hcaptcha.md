@@ -4,7 +4,7 @@ pcx_content_type: migration
 weight: 5
 ---
 
-# Migrating from hCaptcha
+# Migrate from hCaptcha
 
 If you are using hCaptcha today, you can switch seamlessly to Cloudflare Turnstile by following the step-by-step guide below to assist with the upgrade process.
 
