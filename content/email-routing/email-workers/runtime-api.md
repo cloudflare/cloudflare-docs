@@ -74,7 +74,7 @@ export default {
   readonly raw: ReadableStream;
   readonly rawSize: number;
 
-  public constructor(from: String, to: String, raw: ReadableStream | String);
+  public constructor(from: string, to: string, raw: ReadableStream | string);
 
   setReject(reason: string): void;
   forward(rcptTo: string, headers?: Headers): Promise<void>;
