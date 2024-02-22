@@ -1163,6 +1163,7 @@
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
+/workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
