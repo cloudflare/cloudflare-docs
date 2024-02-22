@@ -59,7 +59,7 @@ From here, you have created an empty project and can now deploy your assets for 
 $ npx wrangler pages deploy <BUILD_OUTPUT_DIRECTORY>
 ```
 
-Find the appropriate build output directory for your project in [Build directory under Framework presents](/pages/configuration/build-configuration/#framework-presets).
+Find the appropriate build output directory for your project in [Build directory under Framework presets](/pages/configuration/build-configuration/#framework-presets).
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
  

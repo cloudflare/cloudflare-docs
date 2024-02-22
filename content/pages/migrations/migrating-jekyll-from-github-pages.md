@@ -109,7 +109,7 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 {{<Aside type="note">}}
 
-If you are configuring your Cloudflare Pages site for the first time, refer to the [Git integration guide](/pages/get-started/git-integration/), which explains how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Git integration guide](/pages/get-started/git-integration/), which explains how to connect your existing Git repository to Cloudflare Pages.
 
 {{</Aside>}}
 
