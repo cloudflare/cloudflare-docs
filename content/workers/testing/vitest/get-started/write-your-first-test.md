@@ -121,7 +121,7 @@ For a full list of available Miniflare options, read the Miniflare [WorkersOptio
 
 ## Define Types
 
-If you're using TypeScript, you'll need to define types for Cloudflare and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (ie. `test`) and add the following:
+If you're using TypeScript, you'll need to define types for Cloudflare Workers and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (ie. `test`) and add the following:
 
 ```js
 ---
