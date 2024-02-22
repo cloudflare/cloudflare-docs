@@ -1,1 +1,0 @@
-No code examples for `{{ .model.name }}`

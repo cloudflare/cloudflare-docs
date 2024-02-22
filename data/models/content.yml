@@ -1,0 +1,12 @@
+# This is used to determine if specific files/values should be rendered
+# Overrides work like so: if `model.name` isn't found it will look for `task_type`
+# Specificity wins
+
+models:
+  llama-2-7b-chat-int8:
+    code-examples: "_partials/models/code-examples/llama-2-7b-chat-int8.md"
+
+tasks:
+  text-generation:
+    code-examples: "_partials/models/code-examples/text-generation.md"
+

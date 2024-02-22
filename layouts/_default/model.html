@@ -1,5 +1,4 @@
 {{ define "main" }}
-  {{ $params := .Page.Params }}
   <div class="DocsPage">
     {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
@@ -20,11 +19,11 @@
         <h1>{{ .Title }}</h1>
 
         <article class="DocsMarkdown">
-          {{partial "models/header.md" $params | markdownify }}
+          {{partial "models/header.md" . | markdownify }}
           <h2>API schema</h2>
           <p>The following schema is based on <a href="https://json-schema.org/">JSON Schema</a></p>
           {{- .Content -}}
-          {{ partial "models/footer.md" $params | markdownify }}
+          {{ partial "models/footer.md" .| markdownify }}
         </article>
       </div>
     </main>

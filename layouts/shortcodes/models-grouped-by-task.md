@@ -1,5 +1,5 @@
 {{- range .Page.Pages.GroupByParam "task_type" -}}
-  {{ $firstPage := index (.Pages) 0 -}}
+  {{- $firstPage := index .Pages 0 }}
 
 ##  {{ $firstPage.Params.model.task.name }}
 
