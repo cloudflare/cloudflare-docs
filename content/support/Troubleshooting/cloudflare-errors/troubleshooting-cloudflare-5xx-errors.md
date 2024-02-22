@@ -1,16 +1,16 @@
 ---
 pcx_content_type: troubleshooting
-title: Troubleshooting  5XX errors
+title: Troubleshooting Cloudflare 5XX errors
 source:
 ---
 
-# Troubleshooting  5XX errors –  Help Center
+# Troubleshooting Cloudflare 5XX errors – Cloudflare Help Center
 
 When troubleshooting most 5XX errors, the correct course of action is to first contact your hosting provider or site administrator to troubleshoot and gather data.
 
 {{<Aside type="note">}}
 
- Support only assists the domain owner to resolve issues. If you are a site visitor, report the problem to the site owner.
+Cloudflare Support only assists the domain owner to resolve issues. If you are a site visitor, report the problem to the site owner.
 
 {{</Aside>}}
 
@@ -451,4 +451,4 @@ ___
 -   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
 -   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
--   [ Community Tips](https://community..com/tag/communitytip)
+-   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)
