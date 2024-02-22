@@ -11,9 +11,7 @@ level: warning
 ignorecase: true
 link: https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/
 swap:
-  ‘: \'
-  ’: \'
-  “: \"
-  ”: \"
+  '(?:’|‘)': \'
+  '(?:“|”)': \"
 action:
   name: replace
