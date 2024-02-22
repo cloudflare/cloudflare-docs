@@ -1,16 +1,16 @@
 ---
 pcx_content_type: troubleshooting
-title: Troubleshooting Cloudflare 5XX errors
+title: Troubleshooting  5XX errors
 source:
 ---
 
-# Troubleshooting Cloudflare 5XX errors – Cloudflare Help Center
+# Troubleshooting  5XX errors –  Help Center
 
 When troubleshooting most 5XX errors, the correct course of action is to first contact your hosting provider or site administrator to troubleshoot and gather data.
 
 {{<Aside type="note">}}
 
-Cloudflare Support only assists the domain owner to resolve issues. If you are a site visitor, report the problem to the site owner.
+ Support only assists the domain owner to resolve issues. If you are a site visitor, report the problem to the site owner.
 
 {{</Aside>}}
 
@@ -91,7 +91,7 @@ A 502 or 504 error originating from Cloudflare appears as follows:
 
 ![Example of an unbranded error 502.](/images/support/image5.png)
 
-If the error does not mention “cloudflare,” contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
+If the error does not mention `cloudflare`, contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
 
 Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic. 
 In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
@@ -113,11 +113,11 @@ ___
 
 HTTP error 503 occurs when your origin web server is overloaded. There are two possible causes discernible by error message:
 
--   Error doesn’t contain “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error doesn’t contain `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: Contact your hosting provider to verify if they rate limit requests to your origin web server.
 
--   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error contains `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 
@@ -451,4 +451,4 @@ ___
 -   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Customizing Cloudflare error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/)
 -   [MTR/Traceroute Diagnosis and Usage](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute)
--   [Cloudflare Community Tips](https://community.cloudflare.com/tag/communitytip)
+-   [ Community Tips](https://community..com/tag/communitytip)
