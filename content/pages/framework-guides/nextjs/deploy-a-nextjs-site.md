@@ -101,8 +101,8 @@ highlight: [1-7]
 ---
 import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev'
 
-// note: the if statement is because we only need to use the function
-// during development (the check is recommended but completely optional)
+// note: the if statement is present because we
+//       only need to use the function during development
 if (process.env.NODE_ENV === 'development') {
   await setupDevPlatform()
 }
@@ -121,8 +121,8 @@ export default nextConfig
 filename: next.config.js / next.config.cjs
 highlight: [1-6]
 ---
-// note: the if statement is because we only need to use the function
-// during development (the check is recommended but completely optional)
+// note: the if statement is present because we
+//       only need to use the function during development
 if (process.env.NODE_ENV === "development") {
   const { setupDevPlatform } = require("@cloudflare/next-on-pages/next-dev")
   setupDevPlatform()
