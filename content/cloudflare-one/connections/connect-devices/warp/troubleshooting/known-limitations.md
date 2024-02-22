@@ -26,7 +26,7 @@ The WARP client does not support multiple users on a single Windows device. WARP
 
 On Windows devices in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
 
-```bash
+```txt
 C:\Users\JohnDoe>nslookup google.com
 Server:  UnKnown
 Address:  ::ffff:127.0.2.2
@@ -40,7 +40,7 @@ To work around the issue, specify the IPv4 address of the [WARP local DNS proxy]
   ```
 
 Alternatively, use Powershell:
-  ```bash
+  ```powershell
   PS C:\Users\JohnDoe> Resolve-DnsName -Name google.com
   ```
 
