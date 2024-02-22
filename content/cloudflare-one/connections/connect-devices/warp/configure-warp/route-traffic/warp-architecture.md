@@ -304,7 +304,7 @@ To view the entire routing table on Windows, run `netstat -r`.
 You can also search the routing table for an IP address. In this example, we see that traffic to `1.1.1.1` is sent through the WARP virtual interface:
 
 ```powershell
-PS C:/> Find-NetRoute -RemoteIPAddress "1.1.1.1" | Select-Object InterfaceAlias -Last 1
+PS C:\> Find-NetRoute -RemoteIPAddress "1.1.1.1" | Select-Object InterfaceAlias -Last 1
 
 InterfaceAlias
 --------------
