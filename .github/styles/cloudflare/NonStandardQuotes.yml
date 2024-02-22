@@ -10,7 +10,7 @@ message: "**Warning**: Use standard single quotes or double quotes only. Do not 
 level: warning
 ignorecase: true
 link: https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/
-scope: raw
+append: true
 swap:
   '(?:’|‘)': \\'
   '(?:“|”)': \\"
