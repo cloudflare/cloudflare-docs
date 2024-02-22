@@ -113,7 +113,7 @@ ___
 
 HTTP error 503 occurs when your origin web server is overloaded. There are two possible causes discernible by error message:
 
--   Error doesn’t contain `cloudflare` or `cloudflare-nginx` in the HTML response body.
+-   Error doesn't contain `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: Contact your hosting provider to verify if they rate limit requests to your origin web server.
 
