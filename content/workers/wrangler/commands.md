@@ -2338,7 +2338,7 @@ wrangler types [<PATH>] [OPTIONS]
 
 - `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
   - The name of the interface to generate for the environment object.
-  - _Ignored if the worker uses the Service Worker syntax._
+  - _Not valid if the worker uses the Service Worker syntax._
 
 {{</definitions>}}
 
