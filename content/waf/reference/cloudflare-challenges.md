@@ -54,7 +54,7 @@ The visitor will have to wait until their browser finishes processing the JavaSc
 
 ### Interactive Challenge
 
-Interactive challenges require a visitor to interact with the challenge page, presenting the visitor with an interactive challenge to solve. Cloudflare does not recommend using Interactive Challenges. Enabling JavaScript and cookies on the browser is required for interactive challenge.
+Interactive challenges require a visitor to interact with the challenge page, presenting the visitor with an interactive challenge to solve. Cloudflare does not recommend using Interactive Challenges.
 
 For more on why Cloudflare does not recommend using Interactive Challenge, in favor of Managed Challenge, refer to our [blog](https://blog.cloudflare.com/end-cloudflare-captcha/).
 
@@ -94,10 +94,14 @@ If a visitor encounters a challenge, Cloudflare employees cannot remove that cha
 
 When observing a Cloudflare Challenge page, a visitor could:
 
-- Successfully pass the challenge to visit the website. Cookies and JavaScript support are required in browser settings to pass the challenge.
+- Successfully pass the challenge to visit the website.
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).
+
+{{<Aside type="note">}}
+Visitors must enable JavaScript and cookies on their browser to be able to pass any type of challenge.
+{{</Aside>}}
 
 ---
 
