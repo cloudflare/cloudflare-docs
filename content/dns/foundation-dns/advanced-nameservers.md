@@ -10,6 +10,13 @@ TBD >> Might make sense to change title and structure
 
 ## Anycast network groups
 
+
+## Dedicated release process
+
+Zones using advanced nameservers are also less exposed to incidents or software regression.
+
+The dedicated release process means that only stable changes, that have been in production for a while, will reach advanced nameservers.
+
 ## Nameservers hosting and assignment
 
 While standard Cloudflare nameservers are hosted under `ns.cloudflare.com` or `secondary.cloudflare.com`, advanced nameservers use different domains:
@@ -31,5 +38,3 @@ Consider the domain `example.com`, and subdomains `abc.example.com` and `123.exa
 - `new.abc.example.com` directly descends from both `abc.example.com` and `example.com`, and cannot have the same nameservers as them, but can have the same nameservers as `123.example.com`.
 
 {{</details>}}
-
-## Dedicated release process
