@@ -11,7 +11,7 @@ ignorecase: true
 link: https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/
 scope: raw
 swap:
-  '[‘’]': \\'
-  '[“”]': \\"
+  \\‘|\\’: \\'
+  \\“|\\”: \\"
 action:
   name: replace
