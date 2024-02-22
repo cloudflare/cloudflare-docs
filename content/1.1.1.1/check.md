@@ -13,4 +13,4 @@ After setting up `1.1.1.1`, you can check if you are correctly connected to Clou
 
 Wait for the page to load and run its tests. The page will present you a summary of the type of connection you have to `1.1.1.1`, as well as the Cloudflare data center you are connected to.
 
-Testing “bad quotes’.
+Testing “bad quotes”.
