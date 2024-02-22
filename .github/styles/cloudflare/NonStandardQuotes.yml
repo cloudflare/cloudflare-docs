@@ -4,15 +4,14 @@
 # Use only standard single and double quotes, not left or right quotes.
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
-
 extends: substitution
 message: "**Warning**: Use standard single quotes or double quotes only. Do not use left or right quotes. For more details, refer to [Quotation marks](https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/)."
 level: warning
 ignorecase: true
 link: https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/
-append: true
+scope: raw
 swap:
-  '(?:’|‘)': \\'
-  '(?:“|”)': \\"
+  '[‘’]': \\'
+  '[“”]': \\"
 action:
   name: replace
