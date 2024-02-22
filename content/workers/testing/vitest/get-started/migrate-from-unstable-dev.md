@@ -35,12 +35,8 @@ describe("worker", async () => {
 +   const response = await worker.fetch(request, env, ctx);
 +   await waitOnExecutionContext(ctx);
 
-    expect(response).not.toBe(undefined);
-
-    if (response) {
-      const text = await response.text();
-      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-    }
+    const text = await response.text();
+    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
 
 -   worker.stop();
   })
