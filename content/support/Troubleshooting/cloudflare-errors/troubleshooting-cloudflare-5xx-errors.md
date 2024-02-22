@@ -97,7 +97,7 @@ Otherwise, under certain conditions it is possible a given Data Center observes 
 In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
 These traffic adjustments are mostly seamless and take only a few seconds. 
 Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors. 
-You can find more information about our automated traffic management tools [in this blogpost].
+You can find more information about our automated traffic management tools [in this blogpost](https://blog.cloudflare.com/meet-traffic-manager).
 
 **Resolution**
 
