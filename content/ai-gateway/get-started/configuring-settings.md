@@ -6,7 +6,7 @@ weight: 3
 
 # Observe and control
 
-Now that your application is connected to the AI Gateway, you should be able to see see requests coming in through your [Cloudflare Dashboard - AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general). This guide shows you what data you can expect to see and what settings to configure for better control.
+Now that your application is connected to the AI Gateway, you should be able to see requests coming in through your [Cloudflare Dashboard - AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general). This guide shows you what data you can expect to see and what settings to configure for better control.
 
 ---
 
