@@ -25,13 +25,13 @@ Here is a quick rundown on PAC files:
 - Why use them: PAC files are handy for organizations or networks that want to control access to the Internet. PAC files can allow access to some websites directly while routing others through the proxy for filtering or security.
 - Benefits: Managing a single PAC file saves time and effort compared to manually configuring proxy settings for each device. It also allows for flexible rules based on websites, time and date, and other factors.
 
-Think of it like this: you are driving to a friend's house, but there is construction on the main road. Your GPS (the PAC file) suggests a detour through a side street (the proxy server) to get there faster.
+Think of PAC files like a GPS: you are driving to a friend's house, but there is construction on the main road. Your GPS (the PAC file) suggests a detour through a side street (the proxy server) to get there faster.
 
 ## Where are the PAC files hosted?
 
 PAC files are usually hosted in a centralized location where all the devices can reach and download the file, the browsers are configured with PAC URL and the browsers retrieves the PAC file from the address usually when the browser is opened.
 
-## Create a PAC file
+## Create PAC files
 
 For detailed instructions on creating a PAC file, refer to [Enable Gateway proxy with PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/).
 
