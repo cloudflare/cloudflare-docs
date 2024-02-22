@@ -164,10 +164,10 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx) {
 		return new Response('Hello World!');
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}
