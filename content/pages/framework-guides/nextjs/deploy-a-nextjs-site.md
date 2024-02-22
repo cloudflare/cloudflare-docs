@@ -37,7 +37,7 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 ## Configure and deploy a project without C3
 
-If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/blob/3846730c4a0d12/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
+If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages) for instructions and additional information to help you develop and deploy your project.
 
 {{<render file="/_framework-guides/_git-integration.md">}}
 
@@ -87,7 +87,7 @@ Projects created with C3 have bindings for local development set up by default.
 
 {{</Aside>}}
 
-To set up bindings for use in local development, you will use the `setupDevPlatform` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/blob/3846730c4a0d12/internal-packages/next-dev). This function, tries to read the project's [`wrangler.toml`](/workers/wrangler/configuration/) file and based on it sets up a platform emulation that your Next.js application can make use of locally.
+To set up bindings for use in local development, you will use the `setupDevPlatform` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function, tries to read the project's [`wrangler.toml`](/workers/wrangler/configuration/) file and based on it sets up a platform emulation that your Next.js application can make use of locally.
 
 For example, to work with a KV binding locally, open the Next.js configuration file and add:
 
