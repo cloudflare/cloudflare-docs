@@ -35,8 +35,8 @@ Address:  ::ffff:127.0.2.2
 ```
 
 To work around the issue, specify the IPv4 address of the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) in your query:
-  ```sh
-  $ nslookup google.com 127.0.2.2
+  ```bash
+  C:\Users\JohnDoe>nslookup google.com 127.0.2.2
   ```
 
 Alternatively, use Powershell:
