@@ -4,9 +4,9 @@
 <!doctype html>
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available {{ with $.Page.Params.structured_data -}}{{ if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}}>
   <head>
-    {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
+    
     {{- partial "onetrust" -}}
-    {{- end -}}
+    
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
     {{- if hugo.IsProduction -}}
