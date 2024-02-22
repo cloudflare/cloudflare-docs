@@ -113,9 +113,11 @@ If you see this warning, you may have to disable DNS over HTTPS setting in Firef
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
 
-## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
+## WARP on Linux shows `DNS connectivity check failed`.
 
-This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. To solve the issue:
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests.
+
+To solve the issue:
 
 1. Add the following line to `/etc/systemd/resolved.conf`:
 
@@ -123,7 +125,9 @@ This error means that the `systemd-resolved` service on Linux is not allowing WA
 ResolveUnicastSingleLabel=yes
 ```
 
-2. Restart the service:
+2. Make sure that no other DNS servers are configured in `/etc/systemd/resolved.conf`. For example, if the file contains `DNS=X.Y.Z.Q`, comment out the line.
+
+3. Restart the service:
 
 ```sh
 $ sudo systemctl restart systemd-resolved.service
