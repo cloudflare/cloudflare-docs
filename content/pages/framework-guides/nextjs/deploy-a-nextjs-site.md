@@ -19,9 +19,14 @@ Open up your terminal and run the following command to create a new Next.js site
 $ npm create cloudflare@latest my-next-app -- --framework=next
 ```
 
-C3 will install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter. C3 will also ask you a series of setup questions.
+C3 will ask you a series of setup questions. C3 will also install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter.
+After you have answered all the setup questions, C3 will generate a new `my-next-app` directory using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
 
-After creating your project, a new `my-next-app` directory will be generated using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
+When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
+
+```sh
+$ npm run deploy
+```
 
 {{<Aside type="note" header="Git integration">}}
 
@@ -37,7 +42,7 @@ If you already have a Next.js project or wish to manually create and deploy one 
 
 ### Create a new GitHub repository
 
-{{<render file="/_framework-guides/_create-github-repository-prefix.md">}}
+{{<render file="/_framework-guides/_create-gh-repo.md">}}
 
 ```sh
 # Skip the following 3 commands if you have built your application
@@ -71,9 +76,7 @@ Additionally, you will have access to [preview deployments](/pages/configuration
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
-
-If you intend to use bindings in your project, you must set them up for local and remote development.
+{{<render file="/_framework-guides/_bindings_definition.md">}}
 
 ### Set up bindings for local development
 

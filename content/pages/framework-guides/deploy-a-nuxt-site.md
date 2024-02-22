@@ -13,17 +13,17 @@ In this guide, you will create a new Nuxt application and deploy it using Cloudf
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
-Open up your terminal and run the following command to create a new Nuxt site. Your Nuxt site is configured for Cloudflare Pages using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/).
+The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) configures your Nuxt site for Cloudflare Pages. Run the following command in your terminal to create a new Nuxt site:
 
 ```sh
 $ npm create cloudflare@latest my-nuxt-app -- --framework=nuxt
 ```
 
-C3 will create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli) and install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version). C3 will ask you a series of setup questions.
+C3 will ask you a series of setup questions and create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli). C3 will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
 
-After creating your project, a new `my-nuxt-app` directory will be generated using the default Nuxt template, updated to be fully compatible with Cloudflare Pages.
+After you have answered all the setup questions, C3 will generate a new `my-nuxt-app` directory using the default Nuxt template, updated to be fully compatible with Cloudflare Pages.
 
-When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can re-deploy your application at any time by running following command inside your project directory:
+When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
 
 ```sh
 $ npm run deploy
@@ -41,9 +41,9 @@ To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https:/
 
 {{<render file="/_framework-guides/_git-integration.md">}}
 
-### Create a new GitHub repository
+### Create a GitHub repository
 
-{{<render file="/_framework-guides/_create-github-repository-prefix.md">}}
+{{<render file="/_framework-guides/_create-gh-repo.md">}}
 
 ```sh
 # Skip the following 3 commands if you have built your application
@@ -76,9 +76,7 @@ Additionally, you will have access to [preview deployments](/pages/configuration
 
 ## Use bindings in your Nuxt application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
-
-If you intend to use bindings in your project, you must first set up your bindings for local and remote development.
+{{<render file="/_framework-guides/_bindings_definition.md">}}
 
 ### Set up bindings for local development
 
@@ -94,7 +92,7 @@ export default defineNuxtConfig({
 });
 ```
 
-This module is powered by the `getPlatformProxy` [helper function](/workers/wrangler/api#getplatformproxy) will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in the `wrangler.toml` file and emulate them in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
 
 {{<Aside type="note">}}
 
@@ -104,16 +102,9 @@ This module is powered by the `getPlatformProxy` [helper function](/workers/wran
 
 In order to access bindings in a deployed application, you will need to [configure your bindings](/pages/functions/bindings/) in the Cloudflare dashboard.
 
-
 ### Add bindings to Typescript projects
 
-{{<Aside type="note">}}
-
-Projects created with C3 have a default `env.d.ts` file.
-
-{{</Aside>}}
-
-To get proper type support, you need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
+To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
 
 The following is an example of adding a `KVNamespace` binding:
 
