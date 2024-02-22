@@ -8,7 +8,7 @@ meta:
 
 # Migrate from unstable_dev
 
-The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach for users wanting to run unit or integration tests against their Workers. The `@cloudflare/vitest-pool-workers` package provides a more ergonomic API and better developer experience for users wanting to write a wide variety of tests.
+The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach for users wanting to run integration tests against their Workers. The `@cloudflare/vitest-pool-workers` package provides a more ergonomic API and better developer experience for users wanting to write a wide variety of tests.
 
 This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest pool. For more information on writing tests with the Workers Vitest pool read [this guide](/workers/testing/vitest/get-started/write-your-first-test/).
 
