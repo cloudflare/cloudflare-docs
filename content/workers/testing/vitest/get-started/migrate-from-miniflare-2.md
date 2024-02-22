@@ -31,7 +31,7 @@ $ npm install --save-dev --save-exact vitest@1.3.0
 $ npm install --save-dev @cloudflare/vitest-pool-workers
 ```
 
-After that, update your Vitest configuration file to use the pool instead. Most Miniflare configuration previously specified `environmentOptions` can be moved to `poolOptions.workers.miniflare` instead. Refer to [Miniflare's `WorkerOptions` interface](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md#interface-workeroptions) for supported options and the [Miniflare version 2 to 3 migration guide](https://miniflare.dev/get-started/migrating#api-changes) for more information.
+After that, update your Vitest configuration file to use the pool instead. Most Miniflare configuration previously specified `environmentOptions` can be moved to `poolOptions.workers.miniflare` instead. Refer to [Miniflare's `WorkerOptions` interface](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md#interface-workeroptions) for supported options and the [Miniflare version 2 to 3 migration guide](https://miniflare.dev/get-started/migrating#api-changes) for more information. If you relied on configuration stored in a `wrangler.toml` file, set `wrangler.configPath` too.
 
 ```diff
 ---
@@ -48,6 +48,7 @@ filename: vitest.config.js
 +     poolOptions: {
 +       workers: defineWorkersPoolOptions({
 +         miniflare: { ... },
++         wrangler: { configPath: "./wrangler.toml" },
 +       }),
 +     },
     },
@@ -136,7 +137,7 @@ filename: index.spec.js
 
 ## Waiting for `waitUntil()`ed `Promise`s
 
-The `new ExecutionContext()` constructor are `getMiniflareWaitUntil()` function are now `createExecutionContext()` and `waitOnExecutionContext()` respectively. Note `waitOnExecutionContext()` now returns an empty `Promise<void>` instead of a `Promise` resolving to the results of all `waitUntil()`ed `Promise`s.
+The `new ExecutionContext()` constructor and `getMiniflareWaitUntil()` function are now `createExecutionContext()` and `waitOnExecutionContext()` respectively. Note `waitOnExecutionContext()` now returns an empty `Promise<void>` instead of a `Promise` resolving to the results of all `waitUntil()`ed `Promise`s.
 
 ```diff
 ---
