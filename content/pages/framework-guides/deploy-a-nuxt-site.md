@@ -104,6 +104,40 @@ This module is powered by the `getPlatformProxy` [helper function](/workers/wran
 
 In order to access bindings in a deployed application, you will need to [configure your bindings](/pages/functions/bindings/) in the Cloudflare dashboard.
 
+
+### Add bindings to Typescript projects
+
+{{<Aside type="note">}}
+
+Projects created with C3 have a default `env.d.ts` file.
+
+{{</Aside>}}
+
+To get proper type support, you need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
+
+The following is an example of adding a `KVNamespace` binding:
+
+```ts
+---
+filename: env.d.ts
+highlight: [10]
+---
+import { CfProperties, Request, ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
+
+declare module 'h3' {
+    interface H3EventContext {
+        cf: CfProperties,
+        cloudflare: {
+          request: Request,
+          env: {
+            MY_KV: KVNamespace,
+          }
+          context: ExecutionContext,
+        };
+    }
+}
+```
+
 ### Access bindings in your Nuxt application
 
 In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.com/docs/guide/directory-structure/server#server-directory). The `defineEventHandler()` method is used to define your API endpoints in which you can access Cloudflare's context via the provided `context` field. The `context` field allows you to access any bindings set for your application.
@@ -112,12 +146,11 @@ The following code block shows an example of accessing a KV namespace in Nuxt.
 
 ```typescript
 ---
-filename: src/my-endpoint.get.ts
-highlight: [2, 3]
+filename: server/api/hello.ts / server/api/hello.js
+highlight: [2]
 ---
 export default defineEventHandler(({ context }) => {
-  // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const MY_KV: KVNamespace = context.cloudflare.env.MY_KV;
+  const MY_KV = context.cloudflare.env.MY_KV;
 
   return {
     // ...
