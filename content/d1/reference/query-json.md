@@ -8,9 +8,9 @@ weight: 4
 
 D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:
 
-* [Query paths](#extracting-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
+* [Query paths](#extract-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
 * Insert and/or replace values within an object or array.
-* [Expand the contents of a JSON object](#expanding-arrays-for-in-queries) or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
+* [Expand the contents of a JSON object](#expand-arrays-for-in-queries) or array into multiple rows - for example, for use as part of a `WHERE ... IN` predicate.
 * Create [generated columns](/d1/reference/generated-columns/) that are automatically populated with values from JSON objects you insert.
 
 One of the biggest benefits to parsing JSON within D1 directly is that it can directly reduce the number of round-trips (queries) to your database. It reduces the cases where you have to read a JSON object into your application (1), parse it, and then write it back (2).

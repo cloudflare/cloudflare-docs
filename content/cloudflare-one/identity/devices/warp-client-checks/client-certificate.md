@@ -16,7 +16,7 @@ The Client Certificate device posture attribute checks if the device has a valid
   | System  | Certificate store    |
   | ------- | -------------------- |
   | macOS   | System Keychain      |
-  | Windows | User Trust Store     |
+  | Windows | `Current User\Personal` store |
   | Linux   | NSSDB                |
 
 ## Configure the client certificate check
@@ -61,7 +61,7 @@ $ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/Sy
 2. Run the following command to search for a certificate with a specific common name:
 
 ```bash
-PS C:\Users\JohnDoe> Get-ChildItem Cert:\LocalMachine\My\ | where{$_.Subject -like "*<COMMON_NAME>*"}
+PS C:\Users\JohnDoe> Get-ChildItem Cert:\CurrentUser\My\ | where{$_.Subject -like "*<COMMON_NAME>*"}
 ```
 
 {{</tab>}}

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Reference
-weight: 5
+weight: 8
 ---
 
 # Magic WAN Connector device information
@@ -17,31 +17,17 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ---
 
+## ICMP traffic
+
+{{<glossary-tooltip term_id="ICMP">}}ICMP traffic{{</glossary-tooltip>}} is routed through the Internet and bypasses [Cloudflare Gateway](/cloudflare-one/policies/gateway/). This enables you to ping resources on the Internet from the Magic WAN connector directly, which can be useful for debugging.
+
+---
+
 ## VLAN ID
 
 This feature allows you to have multiple [VLANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
 
-A non-zero value set up for the VLAN ID field in your WAN / LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN / LAN.
-
----
-
-## Heartbeat
-
-Magic WAN Connector communicates periodically with Cloudflare via HTTPS. This is also known as a heartbeat, and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
-
-The heartbeat calls are made to `api.cloudflare.com`. Each Connector has a heartbeat frequency of 10 seconds, independently of the number of WAN interfaces you have running on your device.
-
-There are three symbols for the heartbeat signal that allow you to quickly check the status of Magic WAN Connector:
-
-- **Blue `i`**: Magic WAN Connector is contacting Cloudflare as expected.
-- **Yellow triangle**: Magic WAN Connector has not yet connected to Cloudflare.
-- **Red triangle**: There is a potential problem with Magic WAN Connector.
-
-### Access Magic WAN Connector's heartbeat
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Find your Connector. Move your mouse over the icons right after the **Status** column to check the timestamp with the last time Connector successfully contacted Cloudflare.
+A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN/LAN.
 
 ---
 

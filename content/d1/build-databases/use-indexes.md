@@ -78,7 +78,7 @@ This will return output resembling the below:
 └──────────────────────────────────┴───────┴────────────────────────────────────────┘
 ```
 
-Note that you cannot modify this table, or an existing index. To modify an index, [delete it first](#removing-indexes) and [create a new index](#create-an-index) with the updated definition.
+Note that you cannot modify this table, or an existing index. To modify an index, [delete it first](#remove-indexes) and [create a new index](#create-an-index) with the updated definition.
 
 ## Test an index
 
@@ -139,5 +139,5 @@ Take note of the following considerations when creating indexes:
 
 * Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index. The performance benefit of an index and reduction in rows read will, in nearly all cases, offset this additional write.
 * You cannot create indexes that reference other tables or use non-deterministic functions, since the index would not be stable.
-* Indexes cannot be updated. To add or remove a column from an index, [remove](#removing-indexes) the index and then [create a new index](#create-an-index) with the new columns.
+* Indexes cannot be updated. To add or remove a column from an index, [remove](#remove-indexes) the index and then [create a new index](#create-an-index) with the new columns.
 * Indexes contribute to the overall storage required by your database: an index is effectively a table itself.

@@ -52,7 +52,7 @@ To serve the TLS certificate using Python:
             self.wfile.write(b'OK')
             return
 
-   server = http.server.HTTPServer(('0.0.0.0', 3333), BasicHandler)
+   server = http.server.ThreadingHTTPServer(('0.0.0.0', 3333), BasicHandler)
    sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
    sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
    server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
@@ -130,6 +130,10 @@ $ curl -v --insecure https://<private-server-IP>:3333/
 
 You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
 
+### Supported cipher suites
+
+The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your TLS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
+
 ## 2. Extract the SHA-256 fingerprint
 
 To obtain the SHA-256 fingerprint of a certificate:
@@ -176,8 +180,7 @@ To check if the WARP client detects the network location:
 2. Disconnect and reconnect to the network.
 3. Open a terminal and run `warp-cli debug alternate-network`.
 
-{{<Aside type="note">}}
-The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+## Best practices
 
-If multiple managed networks are configured and reachable, the first managed network to respond is used when determining which WARP settings profile the device should receive.
-{{</Aside>}}
+- The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.

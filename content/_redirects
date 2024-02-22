@@ -133,7 +133,8 @@
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
 /byoip/best-practices/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
-/byoip/irr-records/verify-irr-entries/ /byoip/how-to/verify-irr-entries/ 301
+/byoip/irr-records/verify-irr-entries/ /byoip/concepts/irr-entries/best-practices/#verify-an-irr-entry 301
+/byoip/how-to/verify-irr-entries/ /byoip/concepts/irr-entries/best-practices/#verify-an-irr-entry 301
 /byoip/about/irr/ /byoip/concepts/irr-entries/ 301
 /byoip/best-practices/irr-entries/ /byoip/concepts/irr-entries/best-practices/ 301
 /byoip/about/loa/ /byoip/concepts/loa/ 301
@@ -141,6 +142,7 @@
 /byoip/about/prefix-delegations/ /byoip/concepts/prefix-delegations/ 301
 /byoip/about/ /byoip/concepts/ 301
 /byoip/cloudflare-ips/ /byoip/get-started/#cloudflare-ips 301
+/byoip/how-to/configure-dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
@@ -549,6 +551,7 @@
 /learning-paths/modules/security/dns-filtering-concepts/what-is-dns/ /learning-paths/dns-filtering/concepts/what-is-dns/ 301
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
+/learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
 
 # more redirects in the /dynamic/ section
 
@@ -640,10 +643,16 @@
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
+/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ 301
+/magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
+/magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/
+/magic-wan/configuration/manually/how-to/tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/
+/magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/configuration/common-settings/view-analytics/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
 /notifications/create-notifications/ /notifications/get-started/ 301
+/notifications/create-pagerduty/ /notifications/get-started/configure-pagerduty/ 301
 /notifications/edit-notifications/ /notifications/get-started/ 301
 /notifications/create-notifications/create-pagerduty/ /notifications/get-started/configure-pagerduty/ 301
 /notifications/edit-notifications/edit-pagerduty/ /notifications/get-started/configure-pagerduty/ 301
@@ -656,7 +665,8 @@
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
 /pages/how-to/deploy-a-hugo-site/ /pages/framework-guides/deploy-a-hugo-site/ 301
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
-/pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/deploy-a-nextjs-site/ 301
+/pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
+/pages/framework-guides/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -1153,6 +1163,7 @@
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
+/workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
@@ -1499,6 +1510,7 @@
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
+/magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
 
 # Workers
 /workers/reference/apis/* /workers/runtime-apis/:splat 301

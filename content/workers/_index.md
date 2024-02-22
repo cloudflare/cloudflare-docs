@@ -28,7 +28,7 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
 
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](//workers/wrangler/commands/#deploy) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
 
 {{</feature>}}
 

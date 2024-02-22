@@ -19,4 +19,12 @@ _build:
 7. (Optional) Enter a custom port for each IP address.
 8. Select **Create policy**.
 
-Custom resolvers are saved to your account for future use. When users first connect to Zero Trust, Gateway will send a query to all resolvers listed, returning and caching the first response for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.
+Custom resolvers are saved to your account for future use. You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
+
+When a user's query matches a resolver policy, Gateway will send the query to your listed resolvers in the following order:
+
+1. Public resolvers
+2. Private resolvers behind the default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) for your account
+3. Private resolvers behind a custom virtual network
+
+Gateway will cache the fastest resolver for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.

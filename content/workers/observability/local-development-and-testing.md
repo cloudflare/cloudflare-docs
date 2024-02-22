@@ -28,7 +28,7 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
 
 ### Clear Wrangler's local storage
 

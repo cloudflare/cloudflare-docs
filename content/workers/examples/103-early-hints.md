@@ -86,7 +86,7 @@ const HTML = `
 </html>
 `;
 
-const handler: ExportedHandler = {
+export default {
   async fetch(req) {
     // If request is for test.css, serve the raw CSS
     if (/test\.css$/.test(req.url)) {
@@ -105,9 +105,7 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

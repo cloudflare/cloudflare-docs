@@ -2,6 +2,28 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-02-16"
+    title: API changes to `.run()`
+    description: |-
+      A previous change (made on 2024-02-13) to the `run()` [query statement method](/d1/build-databases/query-databases/#await-stmtrun) has been reverted.
+      
+      `run()` now returns a `D1Result`, including the result rows, matching its original behaviour prior to the change on 2024-02-13.
+
+      Future change to `run()` to return a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object), as originally intended and documented, will be gated behind a [compatibility date](/workers/configuration/compatibility-dates/) as to avoid breaking existing Workers relying on the way `run()` currently works.
+
+  - publish_date: "2024-02-13"
+    title: API changes to `.raw()`, `.all()` and `.run()`
+    description: |-
+      D1's `raw()`, `all()` and `run()` [query statement methods](/d1/build-databases/query-databases/#query-statement-methods) have been updated to reflect their intended behaviour and improve compatibility with ORM libraries.
+      
+      `raw()` now correctly returns results as an array of arrays, allowing the correct handling of duplicate column names (such as when joining tables), as compared to `all()`, which is unchanged and returns an array of objects. To include an array of column names in the results when using `raw()`, use `raw({columnNames: true})`.
+      
+      `run()` no longer incorrectly returns a `D1Result` and instead returns a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object) as originally intended and documented.
+      
+      This may be a breaking change for some applications that expected `raw()` to return an array of objects.
+
+      Visit the [query databases documentation](/d1/build-databases/query-databases/) to review D1's query methods, return types and TypeScript support in detail.
+
   - publish_date: "2024-01-18"
     title: Support for LIMIT on UPDATE and DELETE statements
     description: |-

@@ -13,9 +13,9 @@ Refer to the sections below to understand how cipher suites work with the differ
 
 ## Cipher suites and edge certificates
 
-While the default cipher suites provided with [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) are are meant for a balance of security and compatibility, some of them might be considered weak by third-party testing tools, such as the [Qualys SSL Labs test](https://www.ssllabs.com/ssltest/).
+While the default cipher suites provided with [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) are meant for a balance of security and compatibility, some of them might be considered weak by third-party testing tools, such as the [Qualys SSL Labs test](https://www.ssllabs.com/ssltest/).
 
-If the Universal SSL offering does not meet your business requirements, you can use Cloudflare [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to restrict the cipher suites used in connections between Cloudflare and your visitor’s browser.
+If the Universal SSL offering does not meet your business requirements, you can use Cloudflare [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to restrict the cipher suites used in connections between Cloudflare and your visitor's browser.
 
 After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting).
 

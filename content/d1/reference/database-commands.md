@@ -99,7 +99,7 @@ Show the indexed column(s) for the given `INDEX_NAME`.
 You can also query the `sqlite_master` table to show all tables, indexes, and the original SQL used to generate them:
 
 ```sql
-SELECT name, sql FROM sqlite_master"
+SELECT name, sql FROM sqlite_master
 ```
 ```json
       {

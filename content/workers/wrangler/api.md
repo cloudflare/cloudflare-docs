@@ -11,7 +11,7 @@ meta:
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
-- [`getBindingsProxy`](#getbindingsproxy) - Get [bindings](/workers/configuration/bindings/) via Wrangler and use them in your code.
+- [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
 
 ## `unstable_dev`
 
@@ -233,11 +233,11 @@ describe("multi-worker testing", () => {
 {{</tab>}}
 {{</tabs>}}
 
-## `getBindingsProxy`
+## `getPlatformProxy`
 
-The `getBindingsProxy` function is used to get a proxy for **local** `workerd` bindings that can be then used in code running via Node.js processes for Workers and Pages projects.
+The `getPlatformProxy` function provides a way to obtain an object containing proxies (to **local** `workerd` bindings) and emulations of Cloudflare Workers specific values, allowing the emulation of such in a Node.js process.
 
-Getting a proxy is useful for emulating bindings in applications targeting Workers, but running outside the Workers runtime (for example, framework local development servers running in Node.js), or for testing purposes (for example, ensuring code properly interacts with a binding).
+One general use case for getting a platform proxy is for emulating bindings in applications targeting Workers, but running outside the Workers runtime (for example, framework local development servers running in Node.js), or for testing purposes (for example, ensuring code properly interacts with a type of binding).
 
 {{<Aside type="note">}}
 
@@ -248,7 +248,7 @@ Binding proxies provided by this function are a best effort emulation of the rea
 ### Syntax
 
 ```js
-const bindingsProxy = await getBindingsProxy(options);
+const platform = await getPlatformProxy(options);
 ```
 
 ### Parameters
@@ -274,14 +274,22 @@ const bindingsProxy = await getBindingsProxy(options);
 
 ### Return Type
 
-`getBindingsProxy()` returns a `Promise` resolving to an object containing the following fields.
+`getPlatformProxy()` returns a `Promise` resolving to an object containing the following fields.
 
 {{<definitions>}}
 
-*   `bindings` {{<type>}}Record<string, unknown>{{</type>}}
+*   `env` {{<type>}}Record<string, unknown>{{</type>}}
 
-    *   Bindings proxies that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
-    *   Typescript Tip: `getBindingsProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
+    *   Object containing proxies to bindings that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
+    *   Typescript Tip: `getPlatformProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
+
+*   `cf` {{<type-link href="/workers/runtime-apis/request/#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+
+    * Mock of the `Request`'s `cf` property, containing data similar to what you would see in production.
+
+*   `ctx` {{<type>}}object{{</type>}}
+
+    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) functions that do nothing.
 
 *   `caches` {{<type>}}object{{</type>}}
 
@@ -291,41 +299,41 @@ const bindingsProxy = await getBindingsProxy(options);
 *   `dispose()` {{<type>}}() => Promise\<void>{{</type>}}
 
     *   Terminates the underlying `workerd` process.
-    *   Call this after the bindings proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of bindings, you don't need to call this function.
+    *   Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you do not need to call this function.
 
 {{</definitions>}}
 
 
 ### Usage
 
-The `getBindingsProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
+The `getPlatformProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
 
 ```js
 [vars]
 MY_VARIABLE = "test"
 ```
 
-You can access the bindings by importing `getBindingsProxy` like this:
+You can access the bindings by importing `getPlatformProxy` like this:
 
 ```js
-import { getBindingsProxy } from "wrangler";
+import { getPlatformProxy } from "wrangler";
 
-const { bindings } = await getBindingsProxy();
+const { env } = await getPlatformProxy();
 ```
 
 To access the value of the `MY_VARIABLE` binding add the following to your code:
 
 ```js
-console.log(`MY_VARIABLE = ${bindings['MY_VARIABLE']}`);
+console.log(`MY_VARIABLE = ${env.MY_VARIABLE}`);
 ```
 
 This will print the following output: `MY_VARIABLE = test`.
 
 ### Supported bindings
 
-All supported bindings found in your `wrangler.toml` are available to you via `bindings`.
+All supported bindings found in your `wrangler.toml` are available to you via `env`.
 
-The bindings supported by `getBindingsProxy` are:
+The bindings supported by `getPlatformProxy` are:
 
  * [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
 
@@ -343,7 +351,7 @@ The bindings supported by `getBindingsProxy` are:
 
  * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
 
-    * To use the `AI` binding with `getBindingsProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
+    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
 
     {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 

@@ -70,7 +70,7 @@ D1 automatically converts supported JavaScript (including TypeScript) types pass
 
 ## Return object
 
-The methods `stmt.run()`, `stmt.all()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
+The methods `stmt.all()` and `db.batch()` return a typed `D1Result` object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
 {
@@ -102,14 +102,71 @@ The `db.exec()` method returns a `D1ExecResult` object:
 
 ## Query statement methods
 
-The D1 API supports the following query statement methods:
+The D1 API supports the following query statement methods for querying against a D1 database.
 
-* [`await stmt.first( [column] )`](/d1/build-databases/query-databases/#await-stmtfirstcolumn)
 * [`await stmt.all()`](/d1/build-databases/query-databases/#await-stmtall)
 * [`await stmt.raw()`](/d1/build-databases/query-databases/#await-stmtraw)
+* [`await stmt.first( [column] )`](/d1/build-databases/query-databases/#await-stmtfirstcolumn)
 * [`await stmt.run()`](/d1/build-databases/query-databases/#await-stmtrun)
 * [`await db.dump()`](/d1/build-databases/query-databases/#await-dbdump)
 * [`await db.exec()`](/d1/build-databases/query-databases/#await-dbexec)
+
+### await stmt.all()
+
+Returns all rows as an array of objects, with each result row represented as an object on the `results` property of the `D1Result` type.
+
+When joining tables with identical column names, only the leftmost column will be included in the row object. Use [`stmt.raw()`](#await-stmtraw) to return all rows as an array of arrays.
+
+```js
+const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
+const { results } = await stmt.all();
+console.log(results);
+/*
+[
+  {
+     name: "John",
+     age: 42,
+  },
+   {
+     name: "Anthony",
+     age: 37,
+  },
+    {
+     name: "Dave",
+     age: 29,
+  },
+ ]
+*/
+```
+
+### await stmt.raw()
+
+Returns results as an array of arrays, with each row represented by an array. The return type is an array of arrays, and does not include query metadata.
+
+Column names are not included in the result set by default. To include column names as the first row of the result array, set `.raw({columnNames: true})`.
+
+```js
+const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
+const rows = await stmt.raw();
+console.log(rows);
+
+/*
+[
+  [ "John", 42 ],
+  [ "Anthony", 37 ],
+  [ "Dave", 29 ],
+]
+*/
+
+// With columnNames: true
+const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
+const [columns, ...rows] = await stmt.raw({columnNames: true});
+console.log(columns);
+
+/*
+[ "name", age ], // The first result array includes the column names
+*/
+```
 
 ### await stmt.first([column])
 
@@ -136,59 +193,6 @@ If the query returns rows, but `column` does not exist, then `first()` will thro
 
 `stmt.first()` does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
 
-### await stmt.all()
-
-Returns all rows and metadata.
-
-```js
-const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
-const { results } = await stmt.all();
-console.log(results);
-/*
-[
-  {
-     name: "John",
-     age: 42,
-  },
-   {
-     name: "Anthony",
-     age: 37,
-  },
-    {
-     name: "Dave",
-     age: 29,
-  },
- ]
-*/
-```
-
-
-
-### await stmt.raw()
-
-Same as [`stmt.all()`](/d1/build-databases/query-databases/#await-stmtall), but returns an array of rows instead of objects.
-
-```js
-const stmt = db.prepare('SELECT name, age FROM users LIMIT 3');
-const raw = await stmt.raw();
-console.log(raw);
-/*
-[
-  [ "John", 42 ],
-  [ "Anthony", 37 ],
-  [ "Dave", 29 ],
-]
-*/
-console.log(raw.map(row => row.join(',')).join("\n"));
-/*
-John,42
-Anthony,37
-Dave,29
-*/
-```
-
-
-
 ### await stmt.run()
 
 Runs the query (or queries), but returns no results. Instead, `run()` returns the metrics only. Useful for write operations like UPDATE, DELETE or INSERT.
@@ -209,12 +213,12 @@ console.log(info);
 */
 ```
 
-
-
 ### await db.dump()
 
 {{<Aside type="warning">}}
+
 This API only works on databases created during D1's alpha period. Check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
 {{</Aside>}}
 
 Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
@@ -228,7 +232,6 @@ return new Response(dump, {
     }
 });
 ```
-
 
 ### await db.exec()
 
@@ -246,6 +249,26 @@ console.log(out);
   duration: 76
 }
 */
+```
+
+## TypeScript support
+
+D1's query API is fully-typed via the `@cloudflare/workers-types` package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional _type parameter_ so that a function understands the type of the data it is handling.
+
+When using the [query statement methods](#query-statement-methods) `stmt.all()`, `stmt.raw()` and `stmt.first()`, you can provide a type representing each database row. D1's API will [return the result object](#return-object) with the correct type.
+
+For example, providing an `OrderRow` type as a type parameter to `stmt.all()` will return a typed `Array<OrderRow>` object instead of the default `Record<string, unknown>` type:
+
+```ts
+// Row definition
+type OrderRow = {
+  Id: string;
+  CustomerName: string;
+  OrderDate: number;
+}
+
+// Elsewhere in your application
+const result = await env.MY_DB.prepare("SELECT Id, CustomerName, OrderDate FROM [Order] ORDER BY ShippedDate DESC LIMIT 100").all<OrderRow>();
 ```
 
 ## Reuse prepared statements

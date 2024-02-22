@@ -1,29 +1,29 @@
 ---
-updated: 2024-02-06
+updated: 2024-02-08
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Explore Code Generation Using Deepseek Coder Models
+title: Explore Code Generation Using DeepSeek Coder Models
 ---
 
-# Explore Code Generation Using Deepseek Coder Models
+# Explore Code Generation Using DeepSeek Coder Models
 
 A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
 
-You can [download the Deepseek Coder notebook](/workers-ai/static/documentation/notebooks/deepseek-coder-exploration.ipynb) or view the embedded notebook below.
+You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/notebooks/deepseek-coder-exploration.ipynb) or view the embedded notebook below.
 
+{{<youtube id="SHIiB0CIADE">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
 
 ---
 
-## Exploring Code Generation Using Deepseek Coder
+## Exploring Code Generation Using DeepSeek Coder
 
-AI Models being able to generate code unlocks all sorts of use cases. The [Deepseek Coder](https://github.com/deepseek-ai/DeepSeek-Coder) models `@hf/thebloke/deepseek-coder-6.7b-base-awq` and `@hf/thebloke/deepseek-coder-6.7b-instruct-awq` are now available on [Workers AI](https://developers.cloudflare.com/workers-ai).
+AI Models being able to generate code unlocks all sorts of use cases. The [DeepSeek Coder](https://github.com/deepseek-ai/DeepSeek-Coder) models `@hf/thebloke/deepseek-coder-6.7b-base-awq` and `@hf/thebloke/deepseek-coder-6.7b-instruct-awq` are now available on [Workers AI](/workers-ai).
 
 Let's explore them using the API!
-
 
 
 ```python
@@ -142,19 +142,19 @@ We've all been there, bugs happen. Sometimes those stacktraces can be very intim
 ```python
 model = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
 
-prompt = """Tell the user how to correct the following code:
+system_message = "The user is going to give you code that isn't working. Explain to the user what might be wrong"
 
-# Welcomes our user
+code = """# Welcomes our user
 def hello_world(first_name="World"):
     print(f"Hello, {name}!")
-
 """
 
 response = requests.post(
     f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}",
     headers={"Authorization": f"Bearer {api_token}"},
     json={"messages": [
-        {"role": "user", "content": prompt}
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": code},
     ]}
 )
 inference = response.json()
@@ -163,7 +163,9 @@ display(Markdown(response))
 ```
 
 
-The variable name is not defined in the function. It should be "first_name" instead of "name". Here is the corrected code:
+The error in your code is that you are trying to use a variable `name` which is not defined anywhere in your function. The correct variable to use is `first_name`. So, you should change `f"Hello, {name}!"` to `f"Hello, {first_name}!"`.
+
+Here is the corrected code:
 
 ```python
 # Welcomes our user
@@ -171,35 +173,78 @@ def hello_world(first_name="World"):
     print(f"Hello, {first_name}")
 ```
 
-You can call this function with a name as an argument like this:
+Now, when you call `hello_world()`, it will print "Hello, World" by default. If you call `hello_world("John")`, it will print "Hello, John".
+
+
+
+### Write tests!
+
+Writing unit tests is a common best practice. With the enough context, it's possible to write unit tests.
+
 
 ```python
-hello_world("John")
+model = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
+
+system_message = "The user is going to give you code and would like to have tests written in the Python unittest module."
+
+code = """
+class User:
+
+    def __init__(self, first_name, last_name=None):
+        self.first_name = first_name
+        self.last_name = last_name
+        if last_name is None:
+            self.last_name = "Mc" + self.first_name
+
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+"""
+
+response = requests.post(
+    f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}",
+    headers={"Authorization": f"Bearer {api_token}"},
+    json={"messages": [
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": code},
+    ]}
+)
+inference = response.json()
+response = inference["result"]["response"]
+display(Markdown(response))
 ```
 
-This will print:
 
-```
-Hello, John
-```
 
-If you call the function without an argument, it will print:
+Here is a simple unittest test case for the User class:
 
 ```python
-hello_world()
+import unittest
+
+class TestUser(unittest.TestCase):
+
+    def test_full_name(self):
+        user = User("John", "Doe")
+        self.assertEqual(user.full_name(), "John Doe")
+
+    def test_default_last_name(self):
+        user = User("Jane")
+        self.assertEqual(user.full_name(), "Jane McJane")
+
+if __name__ == '__main__':
+    unittest.main()
 ```
 
-This will print:
+In this test case, we have two tests:
 
-```
-Hello, World
-```
+- `test_full_name` tests the `full_name` method when the user has both a first name and a last name.
+- `test_default_last_name` tests the `full_name` method when the user only has a first name and the last name is set to "Mc" + first name.
 
+If all these tests pass, it means that the `full_name` method is working as expected. If any of these tests fail, it
 
 
 ### Fill-in-the-middle Code Completion
 
-A common use case in Developer Tools is to autocomplete based on context. Deepseek Coder provides the ability to submit existing code with a placeholder, so that the model can complete in context.
+A common use case in Developer Tools is to autocomplete based on context. DeepSeek Coder provides the ability to submit existing code with a placeholder, so that the model can complete in context.
 
 Warning: The tokens are prefixed with `<｜` and suffixed with `｜>` make sure to copy and paste them.
 
@@ -213,7 +258,7 @@ code = """
 from jklol import email_service
 
 def send_email(email_address, body):
-    is_valid_email = re.<｜fim▁hole｜>
+    <｜fim▁hole｜>
     if not is_valid_email:
         raise InvalidEmailAddress(email_address)
     return email_service.send(email_address, body)<｜fim▁end｜>
@@ -246,7 +291,7 @@ is_valid_email = re.match(r"[^@]+@[^@]+\.[^@]+", email_address)
 
 ### Experimental: Extract data into JSON
 
-No need to threaten the model or bring grandma into the prompt.
+No need to threaten the model or bring grandma into the prompt. Get back JSON in the format you want.
 
 
 ```python
@@ -323,3 +368,5 @@ display(Markdown(f"""
   "interests": ["AI", "Cloudflare", "Tacos", "Burritos"]
 }
 ```
+
+
