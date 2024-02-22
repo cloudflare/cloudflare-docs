@@ -7,6 +7,8 @@ title: DNS over Discord
 
 1.1.1.1 works from a Discord server, thanks to the 1.1.1.1 bot. [Invite the bot to your Discord server](https://cfl.re/3nM6VfQ) to start using DNS over Discord.
 
+Testing “bad quotes”. Doesn‘t it work?
+
 ## Perform DNS lookups
 
 Once the bot is in your server, type `/dig` to start performing DNS lookups. This will provide a native interface within Discord that allows you to specify the domain to lookup, an optional DNS record type and an optional flag for a short result.
