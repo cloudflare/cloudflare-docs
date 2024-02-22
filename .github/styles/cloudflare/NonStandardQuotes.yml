@@ -8,6 +8,7 @@ extends: substitution
 message: "**Warning**: Use standard single quotes or double quotes only. Do not use left or right quotes. For more details, refer to [Quotation marks](https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/)."
 level: warning
 ignorecase: true
+scope: raw
 link: https://developers.cloudflare.com/style-guide/grammar/punctuation-marks-and-symbols/quotation-marks/
 swap:
   \‘|\’: \'
