@@ -21,6 +21,7 @@ import "prismjs/components/prism-jsx.min.js";
 import "prismjs/components/prism-markdown.min.js";
 import "prismjs/components/prism-perl.min.js";
 import "prismjs/components/prism-php.min.js";
+import "prismjs/components/prism-powershell.min.js";
 import "prismjs/components/prism-python.min.js";
 import "prismjs/components/prism-ruby.min.js";
 import "prismjs/components/prism-rust.min.js";
