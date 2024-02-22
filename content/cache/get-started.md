@@ -8,7 +8,7 @@ meta:
 
 # Get started with Cache
 
-Cloudflare makes customer websites faster by storing a copy of the website’s content on the servers of our globally distributed data centers. Content can be either static or dynamic: static content is “cacheable” or eligible for caching, and dynamic content is “uncacheable” or ineligible for caching. The cached copies of content are stored physically closer to users, optimized to be fast, and do not require recomputing.
+Cloudflare makes customer websites faster by storing a copy of the website's content on the servers of our globally distributed data centers. Content can be either static or dynamic: static content is “cacheable” or eligible for caching, and dynamic content is “uncacheable” or ineligible for caching. The cached copies of content are stored physically closer to users, optimized to be fast, and do not require recomputing.
 
 Cloudflare caches static content based on the following factors:
 
@@ -23,7 +23,7 @@ Cloudflare only caches resources within the Cloudflare data center that serve th
 
 ## Learn the basics
 
-Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
+Discover the benefits of caching with Cloudflare's CDN and understand the default cache behavior.
 
 - [Understand what is a CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
 - [Understand default cache behavior](/cache/concepts/default-cache-behavior/)
@@ -75,6 +75,6 @@ Review the list of Cloudflare features that function in this manner:
 
 Resolve common caching concerns.
 
-- [Learn about Cloudflare's cache response statuses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses)
+- [Learn about Cloudflare's cache response statuses](/cache/concepts/cache-responses/)
 - [Investigate Cloudflare's cache response with cURL](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl)
 - [Diagnose Always Online issues](/cache/troubleshooting/always-online/)
