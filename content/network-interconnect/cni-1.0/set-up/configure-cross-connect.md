@@ -8,7 +8,7 @@ meta:
 
 # Configure the network cross-connect
 
-The Cloudflare Infrastructure uses your information to configure the cross-connect. The configuration process varies slightly for physical and virtual links. This process can take one to two weeks, or longer depending on the provider. Your Customer Success Manager will remain in contact with you to ensure your cross-connect is on track.
+The Cloudflare infrastructure uses your information to configure the cross-connect. The configuration process varies slightly for physical and virtual links. This process can take one to two weeks, or longer depending on the provider. Your Customer Success Manager will remain in contact with you to ensure your cross-connect is on track.
 
 ## Physical links
 
@@ -18,9 +18,7 @@ To configure the network cross-connect for physical links, Cloudflare generates 
 - Verify when the cross-connects are complete.
 
 {{<Aside type="note">}}
-
 To review physical interconnection locations, see [Partners](/network-interconnect/partners/#physical-interconnection).
-
 {{</Aside>}}
 
 ## Virtual Links
@@ -28,11 +26,8 @@ To review physical interconnection locations, see [Partners](/network-interconne
 To configure the network cross-connect for virtual links, you must create a request from the partner dashboard. Cloudflare will then review and accept the request.
 
 {{<Aside type="note">}}
-
 When using a virtual partner network interconnect, provision cross-connects using the appropriate partner portals.
-
 For more information, see the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
-
 {{</Aside>}}
 
 ### Follow your partner's instructions below
