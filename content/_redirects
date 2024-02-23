@@ -197,6 +197,17 @@
 /support/third-party-software/e-commerce/using-cloudflare-with-shopify/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-wp-engine/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/wpengine/ 301
 
+# CNI - Cloudflare Network Interconnect
+/network-interconnect/about/interconnect-types/ /network-interconnect/about/ 301
+/network-interconnect/about/route-leak-detection/ /network-interconnect/about/ 301
+/network-interconnect/about/argo-for-packets/ /network-interconnect/about/ 301
+/network-interconnect/about/bfd/ /network-interconnect/cni-1.0/set-up/configure-bgp-bfd/ 301
+/network-interconnect/set-up-cni/ /network-interconnect/cni-1.0/set-up/ 301
+/network-interconnect/set-up-cni/scope-config/ /network-interconnect/cni-1.0/set-up/scope-config/ 301
+/network-interconnect/set-up-cni/configure-cross-connect/ /network-interconnect/cni-1.0/set-up/configure-cross-connect/ 301
+/network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/cni-1.0/set-up/configure-bgp-bfd/ 301
+/network-interconnect/set-up-cni/peering-portal/ /network-interconnect/pni-and-peering/ 301
+
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
 /constellation/platform/ /constellation/ 301
@@ -1499,6 +1510,9 @@
 /ssl/ssl-for-saas/reference/* /cloudflare-for-platforms/cloudflare-for-saas/reference/ 301
 /ssl/ssl-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
 /cloudflare-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
+
+# CNI cloudflare Network Interconnect
+/network-interconnect/partners/* /network-interconnect/cni-1.0/set-up/partners/:splat 301
 
 # Magic WAN
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
