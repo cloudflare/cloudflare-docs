@@ -5,18 +5,24 @@ updated: 2023-04-04
 weight: 4
 ---
 
-# PNI and peering setup
+# Public Peering an Private Network Interconnection
+
+Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-policy/). There is no requirement to be a Cloudflare customer for public peering, or a Private Network Interconnect.
+
+If you operate a public autonomous system on the BGP table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing [peering@cloudflare.com](peering@cloudflare.com).
+
+If you peer with Cloudflare, you can signup to use our [Peering Portal](https://www.cloudflare.com/partners/peering-portal/) which can be used to monitor where your network exchanges with Cloudflare.
+
+## PNI and peering setup
 
 You can use a peering portal, such as PeeringDB, to view and maintain your database of peering locations.
 
 Before you begin using PeeringDB, you must create an account and affiliate with Cloudflare.
 
-## Log in to the PeeringDB portal
+### Log in to the PeeringDB portal
 
 {{<Aside type="note">}}
-
 You must first [create PeeringDB portal account](https://www.peeringdb.com/register) before you can log in.
-
 {{</Aside>}}
 
 1. [Log in](https://www.peeringdb.com/account/login/?next=/register) to your account.
@@ -31,7 +37,7 @@ When your affiliation is approved, **Cloudflare, Inc.** appears under **Existing
 
 ![List of existing affiliations](/images/network-interconnect/peeringdb-affiliation-approved.png)
 
-## Request peer sessions
+### Request peer sessions
 
 Before you can request a peering session for an ASN, you must be an admin for that ASN.
 
