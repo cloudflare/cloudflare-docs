@@ -12,40 +12,45 @@ The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recomme
 
 This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest pool. For more information on writing tests with the Workers Vitest pool read [this guide](/workers/testing/vitest/get-started/write-your-first-test/).
 
-## Starting and Stopping Workers
+## Referencing a Worker for Integration Testing
 
-With the Workers Vitest pool, Workers and their functions can be imported and referenced like any other module. There is no need to stop a Worker via `worker.stop()` either. This is handled automatically after tests run.
+With `unstable_dev`, to trigger a `fetch` event, you would do this:
 
-```diff
+```js
 ---
 filename: index.spec.js
 ---
-- import { unstable_dev } from "wrangler"
-+ import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
-+ import { describe, it, expect } from "vitest";
-+ import worker from "src/index.js";
+import { unstable_dev } from "wrangler"
 
-describe("worker", async () => {
-  it("returns hello world", () => {
--   const worker = await unstable_dev("src/index.ts");
-+   const request = new Request("http://example.com/");
-+   const ctx = createExecutionContext();
-
--   const response = await worker.fetch();
-+   const response = await worker.fetch(request, env, ctx);
-+   await waitOnExecutionContext(ctx);
-
-    const text = await response.text();
-    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-
--   worker.stop();
-  })
-}
+it("dispatches fetch event", () => {
+  const worker = await unstable_dev("src/index.ts");
+  const resp = await worker.fetch("http://example.com");
+  ...
+})
 ```
+
+With the Workers Vitest pool, now you can do the same thing using the `SELF` fetcher from `cloudflare:test`:
+
+```js
+---
+filename: index.spec.ts
+---
+import { SELF } from "cloudflare:test";
+import "../src/"; // Currently required to automatically rerun tests when `main` changes
+
+it("dispatches fetch event", async () => {
+	const response = await SELF.fetch("http://example.com");
+	...
+});
+```
+
+## Stopping a Worker
+
+With the Workers Vitest pool there is no need to stop a Worker via `worker.stop()`. This is handled automatically after tests run.
 
 ## Importing Wrangler Config
 
-Via the `unstable_dev` API, users could reference a `wrangler.toml` config file by adding it as an option like this:
+Via the `unstable_dev` API, users can reference a `wrangler.toml` config file by adding it as an option like this:
 
 ```js
 ---
@@ -100,5 +105,3 @@ describe("Worker", () => {
 ...
 });
 ```
-
-## Related resources

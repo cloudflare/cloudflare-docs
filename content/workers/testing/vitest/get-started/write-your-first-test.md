@@ -180,7 +180,7 @@ This Worker receives a request, and returns a response of "Hello World!". In ord
 ---
 filename: index.spec.js
 ---
-import { env, createExecutionContext, getWaitUntil } from "cloudflare:test";
+import { env, createExecutionContext, waitOnExecutionContext() } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 // Could import any other source file/function here
 import worker from "../src";
@@ -190,7 +190,7 @@ describe("Hello World worker", () => {
     const request = new Request("http://example.com");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await getWaitUntil(ctx);
+    await waitOnExecutionContext()(ctx);
     expect(await response.text()).toBe("Hello World!");
   });
 });
@@ -201,7 +201,7 @@ describe("Hello World worker", () => {
 ---
 filename: index.spec.ts
 ---
-import { env, createExecutionContext, getWaitUntil } from "cloudflare:test";
+import { env, createExecutionContext, waitOnExecutionContext() } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 // Could import any other source file/function here
 import worker from "../src";
@@ -215,7 +215,7 @@ escribe("Hello World worker", () => {
     const request = new IncomingRequest("http://example.com");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await getWaitUntil(ctx);
+    await waitOnExecutionContext()(ctx);
     expect(await response.text()).toBe("Hello World!");
   });
 });
@@ -250,7 +250,7 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx) {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {
@@ -258,8 +258,8 @@ export default {
     }
 
 		return new Response('Hello World!');
-	},
-};
+	} 
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}
@@ -276,7 +276,7 @@ it("displays not found and proper status for /404", async () => {
     const request = new Request("http://example.com/404");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await getWaitUntil(ctx);
+    await waitOnExecutionContext()(ctx);
     expect(await response.text()).toBe("Not found");
     expect(await response.status).toBe(404);
   });
@@ -291,7 +291,7 @@ it("displays not found and proper status for /404", async () => {
     const request = new IncomingRequest("http://example.com/404");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await getWaitUntil(ctx);
+    await waitOnExecutionContext()(ctx);
     expect(await response.text()).toBe("Not found");
     expect(await response.status).toBe(404);
   });

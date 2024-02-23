@@ -126,6 +126,8 @@ export default {
 
 ## Example Tests
 
+### Unit
+
 ```js
 ---
 filename: scheduled-unit.test.ts
@@ -150,6 +152,8 @@ it("dispatches scheduled event", async () => {
   expect(result.outcome).toBe("ok");
 });
 ```
+
+### Integration
 
 ```js
 ---

@@ -1,5 +1,5 @@
 ---
-title: Scheduled Events
+title: Fetch Events
 weight: 1
 pcx_content_type: concept
 meta:
@@ -118,6 +118,8 @@ export default {
 
 ## Example Tests
 
+### Unit
+
 ```js
 ---
 filename: fetch-unit.test.ts
@@ -141,6 +143,8 @@ it("dispatches fetch event", async () => {
 	expect(await response.text()).toBe("👋");
 });
 ```
+
+### Integration
 
 ```js
 ---
