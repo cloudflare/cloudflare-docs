@@ -8,15 +8,13 @@ meta:
 
 # Technology Partner Program
 
-## Virtual Private Interconnection
+## Virtual Cloudflare Network Interconnect 1.0
 
 Cloudflare partners with multiple network fabric providers to offer as many connectivity options and locations as possible. During the [configure the cross-connect](/network-interconnect/set-up-cni/configure-cross-connect/) step, you will initiate a connection from your chosen provider's admin portal.
 
 {{<Aside type="note">}}
-
 You can read more about the partner program on our website. See
 the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
-
 {{</Aside>}}
 
 - [365 Partners](https://www.cloudflare.com/partners/technology-partners/365-data-centers/)
@@ -36,11 +34,5 @@ the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com
 - Zayo
 
 {{<Aside type="note">}}
-
 If you cannot find a Cloudflare port close to your infrastructure from your fabric provider's dashboard, contact `interconnection@cloudflare.com` to request a port closer to your location under the Interconnect Anywhere program.
-
 {{</Aside>}}
-
-## Physical Interconnection
-
-Cloudflare collaborates with data center providers to streamline the physical network interconnect provisioning process in our physical locations. The locations below are available with our PNI partners.
