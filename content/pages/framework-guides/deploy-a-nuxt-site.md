@@ -46,7 +46,7 @@ To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https:/
 {{<render file="/_framework-guides/_create-gh-repo.md">}}
 
 ```sh
-# Skip the following 3 commands if you have built your application
+# Skip the following three commands if you have built your application
 # using C3 or already committed your changes
 $ git init
 $ git add .
@@ -106,7 +106,7 @@ This module is powered by the [`getPlatformProxy` helper function](/workers/wran
 
 In order to access bindings in a deployed application, you will need to [configure your bindings](/pages/functions/bindings/) in the Cloudflare dashboard.
 
-### Add bindings to Typescript projects
+### Add bindings to TypeScript projects
 
 To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
 
@@ -115,7 +115,7 @@ The following is an example of adding a `KVNamespace` binding:
 ```ts
 ---
 filename: env.d.ts
-highlight: [10]
+highlight: [9]
 ---
 import { CfProperties, Request, ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
 

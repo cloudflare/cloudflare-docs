@@ -69,7 +69,7 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-4. After completing configuration, select the **Save and Deploy**.
+4. After completing configuration, select **Save and Deploy**.
 
 You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
