@@ -13,7 +13,7 @@ This tutorial will guide you through install and setup of the [`@cloudflare/vite
 ## Prerequisites
 
 - Open your Worker project's root folder or create a new project via our [Get Started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
-- Install [Vitest](https://vitest.dev/) `1.3.0`
+- Install [Vitest](https://vitest.dev/) `1.3.0` using `npm install vitest@1.3.0 --save-dev --save-exact`
 
 ## Install `@cloudflare/vitest-pool-workers`
 
