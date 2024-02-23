@@ -10,7 +10,7 @@ Cloudflare engages with your organization in an initial kickoff call to confirm 
 
 ## Physical CNI 1.0 setup
 
-To set up a PNI connection, provide the following information:
+To set up a CNI 1.0 connection, provide the following information:
 
 - Colocation facility where you want to connect. The location must be accessible from one of [Cloudflare's peering locations](https://www.peeringdb.com/net/4224).
 - Port speeds
@@ -18,7 +18,7 @@ To set up a PNI connection, provide the following information:
 Cloudflare will issue you a Letter of Authorization for you to order a cross connect to fulfill your CNI.
 
 {{<Aside type="warning" header="Important">}}
-To set up a cross-connect in a metropolitan area network (MAN) that does not have a physical Cloudflare location, you must purchase Equinix Metro Connect or a similar product to interconnect locations. For example, if Cloudflare has a peering facility in NY5 and you are in NY1, you must use Metro Connect to cross-connect from NY1 to NY5.
+To set up a cross-connect in a metropolitan area network (MAN) that does not have a physical Cloudflare location, you must purchase an Equinix Metro Connect or a similar product to interconnect locations. For example, if Cloudflare has a peering facility in NY5 and you are in NY1, you must use Metro Connect to cross-connect from NY1 to NY5.
 {{</Aside>}}
 
 ## Virtual (partner) Cloudflare Network Interconnect 1.0
