@@ -37,7 +37,7 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 ## Configure and deploy a project without C3
 
-To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [Git integration guide](/pages/get-started/guide/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
+To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [Git integration guide](/pages/get-started/git-integration/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
 
 {{<render file="/_framework-guides/_git-integration.md">}}
 
