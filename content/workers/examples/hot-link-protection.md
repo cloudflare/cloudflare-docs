@@ -46,7 +46,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/";
     const PROTECTED_TYPE = "image/";
@@ -70,9 +70,7 @@ const handler: ExportedHandler = {
     // Everything is fine, return the response normally.
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

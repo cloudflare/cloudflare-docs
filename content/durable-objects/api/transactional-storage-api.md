@@ -1,7 +1,7 @@
 ---
 title: Transactional Storage
 pcx_content_type: concept
-weight: 16
+weight: 2
 ---
 
 # Transactional Storage

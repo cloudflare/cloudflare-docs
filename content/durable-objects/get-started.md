@@ -1,5 +1,5 @@
 ---
-weight: 1
+weight: 2
 title: Get started
 pcx_content_type: get-started
 ---
@@ -197,13 +197,13 @@ export default {
 In the code above, you have:
 
 1. Exported your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
-2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/how-to/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
+2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/configuration/access-durable-object-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later. 
 3. Derived an object ID from the URL path. `MY_DURABLE_OBJECT.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path. 
 4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
 5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
 6. Received an HTTP response back to the client with `return response`.
 
-Refer to [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/) to learn more about communicating to a Durable Object.
+Refer to [Access a Durable Object from a Worker](/durable-objects/configuration/access-durable-object-from-a-worker/) to learn more about communicating to a Durable Object.
 
 ## 5. Configure Durable Object bindings
 
@@ -275,6 +275,6 @@ Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.de
 
 By finishing this tutorial, you have successfully created, tested and deployed a Durable Object.
 ### Related resources
-- [Access a Durable Object from a Worker](/durable-objects/how-to/access-durable-object-from-a-worker/).
-- [Create Durable Object stubs](/durable-objects/how-to/create-durable-object-stubs/).
-- [Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.
+- [Access a Durable Object from a Worker](/durable-objects/configuration/access-durable-object-from-a-worker/)
+- [Create Durable Object stubs](/durable-objects/configuration/create-durable-object-stubs/)
+- [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.

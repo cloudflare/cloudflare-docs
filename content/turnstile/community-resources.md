@@ -1,7 +1,7 @@
 ---
 title: Community resources
 pcx_content_type: reference
-weight: 13
+weight: 12
 structured_data: true
 ---
 
@@ -45,7 +45,7 @@ Libraries that only support the server-side validation of Turnstile:
 
 - [fastify-cloudflare-turnstile](https://www.npmjs.com/package/fastify-cloudflare-turnstile)
 
-## Fullstack libraries
+## Full-stack libraries
 
 Libraries that both support the both client-side rendering and server-side validation of Turnstile:
 

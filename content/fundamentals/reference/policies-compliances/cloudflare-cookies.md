@@ -41,6 +41,8 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 {{</Aside>}}
 
+{{<render file="_disable-cf-bm-cookie.md" productFolder="bots" >}}
+
 ### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
 The `cf_ob_info` cookie provides information on:

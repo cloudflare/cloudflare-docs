@@ -102,27 +102,6 @@ header: API configuration example
 This setting will not disable [Apps with Workers](https://cloudflareapps.com/apps/developer/docs/workers). These apps request permission to add a Worker when you are installing them.
 {{</Aside>}}
 
-## Disable Railgun (deprecated)
-
-Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
-
-{{<details header="API information">}}
-
-API configuration property name: `"disable_railgun"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "disable_railgun": true
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
 ## Disable Zaraz
 
 Disable [Cloudflare Zaraz](/zaraz/) [^6] for matching requests.
@@ -367,8 +346,6 @@ header: API configuration example
 [^3]: Browser Integrity Check blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
 [^4]: Cloudflare Apps is a platform for sharing high-quality apps that anyone with a website can use.
-
-[^5]: Railgun (deprecated) is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
 
 [^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 

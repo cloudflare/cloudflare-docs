@@ -20,8 +20,8 @@ If your device does not support [certificate installation via WARP](/cloudflare-
 
 First, download the Cloudflare certificate. The certificate is available both as a `.pem` and as a `.crt` file. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
-- [Download certificate (.crt)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt)
-- [Download certificate (.pem)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+- [Download certificate (.crt)](/cloudflare-one/static/Cloudflare_CA.crt)
+- [Download certificate (.pem)](/cloudflare-one/static/Cloudflare_CA.pem)
 
 ### Verify the certificate fingerprint
 
@@ -139,7 +139,7 @@ The location where the root certificate should be installed is different dependi
 
 The following procedure applies to Debian-based systems, such as Debian, Ubuntu, and Kali Linux.
 
-1. Download the [`.pem` certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
+1. Download the [`.pem` certificate](/cloudflare-one/static/Cloudflare_CA.pem).
 2. Install the `ca-certificates` package.
 
 ```sh
@@ -162,7 +162,7 @@ $ sudo dpkg-reconfigure ca-certificates
 
 The following procedure applies to Red Hat-based systems, such as Red Hat Enterprise Linux (RHEL), Fedora, Rocky Linux, and AlmaLinux.
 
-1. Download both the [`.crt` certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [`.pem` certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
+1. Download both the [`.crt` certificate](/cloudflare-one/static/Cloudflare_CA.crt) and the [`.pem` certificate](/cloudflare-one/static/Cloudflare_CA.pem).
 2. Install the `ca-certificates` package.
 
 ```sh
@@ -275,9 +275,11 @@ Some applications require the use of a publicly trusted certificate — they do 
 
 #### Chrome
 
-In macOS and Windows, [Chrome uses the operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows). In other operating systems, such as Linux and ChromeOS, you may have to install the Cloudflare certificate to your browser manually.
+Versions of Chrome before Chrome 113 use the [operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows) on macOS and Windows. Chrome 113 and newer on macOS and Windows -- and all versions on Linux and ChromeOS -- use the [Chrome internal trust store](https://www.chromium.org/Home/chromium-security/root-ca-policy/#introduction).
 
-1. Download the [Cloudflare certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) in `.pem` format.
+To install the Cloudflare certificate to Chrome manually:
+
+1. Download the [Cloudflare certificate](/cloudflare-one/static/Cloudflare_CA.pem) in `.pem` format.
 2. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
 3. Select **Manage certificates**.
 4. Go to **Authorities**. Select **Import**.
@@ -300,7 +302,7 @@ The command to install the certificate with Python on Windows automatically incl
 1. Download the Cloudflare root certificate:
 
    ```bash
-   curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+   curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
    ```
 
 2. To update the bundle to include the Cloudflare certificate, run the following command:
@@ -327,7 +329,7 @@ The command to install the certificate with Python on Windows automatically incl
 3. Download the Cloudflare root certificate:
 
    ```sh
-   $ wget https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+   $ wget https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem
    ```
 
 4. Append the Cloudflare certificate to this CA Store by running:
@@ -394,7 +396,7 @@ $ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 
 ### npm
 
-The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
+The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/Cloudflare_CA.pem) file type.
 
 ```sh
 $ npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
@@ -421,7 +423,7 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 2. Get the Cloudflare CA.
 
    ```sh
-   $ curl -O https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+   $ curl -O https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem
    ```
 
 3. Combine the certs into a single `.pem` file.
@@ -504,11 +506,11 @@ Google Apps Manager (GAM) uses its own certificate store. To add the Cloudflare 
 
 ### AWS CLI
 
-If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
 ### PHP Composer
 
-The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
+The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/Cloudflare_CA.pem) file type.
 
 ```sh
 $ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
@@ -648,4 +650,4 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 
 ### Minikube
 
-Instructions on how to install the Cloudflare root certificate are available [here](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority)
+To trust the Cloudflare root certificate in Minikube, refer to [x509: certificate signed by unknown authority](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority).

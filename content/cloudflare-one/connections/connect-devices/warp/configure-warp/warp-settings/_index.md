@@ -72,13 +72,15 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
 
+This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+
 **Value:**
 
 - `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices.
 
 - `Enabled`: Sets the local interface IP on each device to its {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}}.  The change takes effect within 24 hours.
 
-This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
 
 ## Device settings
 
@@ -194,11 +196,26 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 
 Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.
 
-{{<heading-pill style="beta" heading="h3">}} Allow users to enable local network exclusion {{</heading-pill>}}
+### Allow users to enable local network exclusion
 
-{{<render file="warp/_all-systems-modes-plans.md">}}
+{{<details header="Feature availability">}}
 
-This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network.
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2024.1.159.0         |
+| macOS    | ✅           | 2024.1.160.0         |
+| Linux    | ❌           |       |
+| iOS      | ❌           |       |
+| Android  | ✅           | 1.4   |
+| ChromeOS | ✅           | 1.4   |
+
+{{</details>}}
+
+This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
 
 When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user’s home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires.
 

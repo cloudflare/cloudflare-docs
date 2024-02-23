@@ -7,7 +7,7 @@ structured_data: true
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) or [Discord channel](https://discord.gg/2TRr6nSxdd) to explore additional resources.
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) or [Discord channel](https://discord.cloudflare.com) to explore additional resources.
 
 - [General](#general)
 - [Tools](#tools)
@@ -134,7 +134,7 @@ E-commerce tracking needs to be enabled in [the Zaraz Settings page](/zaraz/refe
 
 {{<faq-answer>}}
 
-Zaraz comes with built-in [Single Page Application (SPA) support](/zaraz/reference/settings/#single-page-application-support) that automatically sends pageview events when navigating through the pages of your SPA. However, if you have advanced use cases, you might want to build your own system to trigger pageviews. In such cases, you can use the internal SPA pageview event by calling `zaraz.track("__zarazSPA")`.
+Zaraz comes with built-in [Single Page Application (SPA) support](/zaraz/reference/settings/#single-page-application-support) that automatically sends pageview events when navigating through the pages of your SPA. However, if you have advanced use cases, you might want to build your own system to trigger pageviews. In such cases, you can use the internal SPA pageview event by calling `zaraz.spaPageview()`.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -185,6 +185,16 @@ This is not a bug. Zaraz does not offer all the automatic events the normal GA4 
 {{<faq-answer>}}
 
 Yes. Refer to [Additional fields](/zaraz/get-started/additional-fields/) to learn how to send additional data to tools.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=4 text="How do I attach a User Property to my events?" >}}
+
+{{<faq-answer>}}
+
+In your Google Analytics 4 action, select **Add field** > **Add custom field...** and enter a field name that starts with `up.` — for example, `up.name`. This will make Zaraz send the field as a User Property and not as an Event Property.
 
 {{</faq-answer>}}
 {{</faq-item>}}

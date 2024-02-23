@@ -7,7 +7,7 @@ pcx_content_type: how-to
 
 ## Optimize cache ratios
 
-Depending on the cache status you receive, you can make modifications to improve your cache ratio. To review the list of cache statuses, refer to [Cloudflare cache responses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses).
+Depending on the cache status you receive, you can make modifications to improve your cache ratio. To review the list of cache statuses, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
 
 - **Dynamic**: Default response for many file types including HTML. To cache additional content, refer to [custom caching with page rules](/cache/troubleshooting/customize-caching/).
 - **Revalidated**: To address an atypical quantity of revalidated content, consider [increasing your Edge Cache TTLs](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) via a Page Rule or [max-age origin directive](/cache/concepts/cache-control/#cache-control-directives).
@@ -28,7 +28,7 @@ Several examples of helpful insights into your site performance via Cache Analyt
 - Short cache expiration TTL.
 
   - Identify the issue: Select **Add filter** and select **Cache status equals Revalidated**.
-  - Resolution: [Increase Cloudflare’s Edge Cache TTL via a Page Rule](/cache/how-to/edge-browser-cache-ttl/).
+  - Resolution: [Increase Cloudflare's Edge Cache TTL via a Page Rule](/cache/how-to/edge-browser-cache-ttl/).
 
 - Need to enable Tiered Cache or Custom Cache Key
 

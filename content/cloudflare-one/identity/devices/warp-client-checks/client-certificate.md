@@ -12,6 +12,12 @@ The Client Certificate device posture attribute checks if the device has a valid
 
 - A root CA that issues client certificates for your devices. You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) to generate a sample root CA for testing.
 - {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
+- A client certificate is [installed and trusted](#how-warp-checks-for-a-client-certificate) on the device.
+  | System  | Certificate store    |
+  | ------- | -------------------- |
+  | macOS   | System Keychain      |
+  | Windows | `Current User\Personal` store |
+  | Linux   | NSSDB                |
 
 ## Configure the client certificate check
 
@@ -55,7 +61,7 @@ $ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/Sy
 2. Run the following command to search for a certificate with a specific common name:
 
 ```bash
-PS C:\Users\JohnDoe> Get-ChildItem Cert:\LocalMachine\Root\ | where{$_.Subject -like "*<COMMON_NAME>*"}
+PS C:\Users\JohnDoe> Get-ChildItem Cert:\CurrentUser\My\ | where{$_.Subject -like "*<COMMON_NAME>*"}
 ```
 
 {{</tab>}}

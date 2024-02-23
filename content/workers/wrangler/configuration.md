@@ -184,7 +184,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logging/tail-workers/).
 
 {{</definitions>}}
 
@@ -374,7 +374,7 @@ cpu_ms = 100
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/how-to/query-databases/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-databases/query-databases/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -412,10 +412,16 @@ Example:
 ---
 header: wrangler.toml
 ---
+d1_databases = [
+  { binding = "<BINDING_NAME>", database_name = "<DATABASE_NAME>", database_id = "<DATABASE_ID>" }
+]
+
+# or
+
 [[d1_databases]]
-binding = "PROD_DB"
-database_name = "test-db"
-database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+binding = "<BINDING_NAME>"
+database_name = "<DATABASE_NAME>"
+database_id = "<DATABASE_ID>"
 ```
 
 ### Durable Objects
@@ -436,7 +442,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The Worker script where the Durable Object is defined, if it is external to this Worker.
+  - The name of the Worker where the Durable Object is defined, if it is external to this Worker. When using this option a local instance of the Durable Object will not be created, and instead a remote binding is used.
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -451,8 +457,15 @@ Example:
 header: wrangler.toml
 ---
 durable_objects.bindings = [
-  { name = "<TEST_OBJECT>", class_name = "<TEST_CLASS>" }
+  { name = "<BINDING_NAME>", class_name = "<CLASS_NAME>" }
 ]
+
+# or
+
+[[durable_objects.bindings]]
+name = "<BINDING_NAME>"
+class_name = "<CLASS_NAME>"
+
 ```
 
 #### Migrations
@@ -486,10 +499,13 @@ Example:
 header: wrangler.toml
 ---
 [[migrations]]
-tag = ""
-new_classes = [""]
-renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }]
-deleted_classes = ["DeprecatedClass"]
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+
+[[migrations]]
+tag = "v2"
+renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
+deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
 ### KV namespaces
@@ -527,8 +543,19 @@ Example:
 header: wrangler.toml
 ---
 kv_namespaces = [
-  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
+  { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
+  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
 ]
+
+# or
+
+[[kv_namespaces]]
+binding = "<BINDING_NAME1>"
+id = "<NAMESPACE_ID1>"
+
+[[kv_namespaces]]
+binding = "<BINDING_NAME2>"
+id = "<NAMESPACE_ID2>"
 ```
 
 ### Queues
@@ -556,8 +583,8 @@ Example:
 header: wrangler.toml
 ---
 [[queues.producers]]
-  queue = "my-queue"
-  binding = "MY_QUEUE"
+  binding = "<BINDING_NAME>"
+  queue = "<QUEUE_NAME>"
 ```
 
 To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
@@ -647,8 +674,19 @@ Example:
 header: wrangler.toml
 ---
 r2_buckets  = [
-  { binding = "<TEST_BUCKET>", bucket_name = "<TEST_BUCKET>"}
+  { binding = "<BINDING_NAME1>", bucket_name = "<BUCKET_NAME1>"},
+  { binding = "<BINDING_NAME2>", bucket_name = "<BUCKET_NAME2>"}
 ]
+
+# or
+
+[[r2_buckets]]
+binding = "<BINDING_NAME1>"
+bucket_name = "<BUCKET_NAME1>"
+
+[[r2_buckets]]
+binding = "<BINDING_NAME2>"
+bucket_name = "<BUCKET_NAME2>"
 ```
 
 ### Vectorize indexes
@@ -675,10 +713,15 @@ Example:
 ---
 header: wrangler.toml
 ---
+vectorize  = [
+  { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"}
+]
+
+# or
 
 [[vectorize]]
-binding = "<INDEX_NAME>"
-index_name = "<YOUR_INDEX>"
+binding = "<BINDING_NAME>"
+index_name = "<INDEX_NAME>"
 ```
 
 ### Service bindings
@@ -691,15 +734,11 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The binding name used to refer to the bound service.
+  - The binding name used to refer to the bound Worker.
 
 - `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the service.
-
-- `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/wrangler/environments/).
+  - The name of the Worker.
 
 {{</definitions>}}
 
@@ -710,8 +749,14 @@ Example:
 header: wrangler.toml
 ---
 services = [
-  { binding = "<TEST_BINDING>", service = "<TEST_WORKER>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
+
+# or
+
+[[services]]
+binding = "<BINDING_NAME>"
+service = "<WORKER_NAME>"
 ```
 
 ### Analytics Engine Datasets
@@ -738,6 +783,10 @@ Example:
 ---
 filename: wrangler.toml
 ---
+analytics_engine_datasets = { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+
+# or
+
 [[analytics_engine_datasets]]
 binding = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
@@ -768,8 +817,19 @@ Example of a `wrangler.toml` configuration that includes an mTLS certificate bin
 header: wrangler.toml
 ---
 mtls_certificates = [
-    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
+    { binding = "<BINDING_NAME1>", certificate_id = "<CERTIFICATE_ID1>" },
+    { binding = "<BINDING_NAME2>", certificate_id = "<CERTIFICATE_ID2>" }
 ]
+
+# or
+
+[[mtls_certificates]]
+binding = "<BINDING_NAME1>"
+certificate_id = "<CERTIFICATE_ID1>"
+
+[[mtls_certificates]]
+binding = "<BINDING_NAME2>"
+certificate_id = "<CERTIFICATE_ID2>"
 ```
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
@@ -781,13 +841,17 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 {{<definitions>}}
 
-- `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - Defines that you are creating bindings for sending emails from your Worker.
+  - The binding name.
 
-- `attribute` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `destination_address` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Defines the type of binding. Refer to [Types of bindings](/email-routing/email-workers/send-email-workers/#types-of-bindings) for more information.
+  - The [chosen email address](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+
+- `allowed_destination_addresses` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The [allowlist of email addresses](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
 
 {{</definitions>}}
 
@@ -798,8 +862,9 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 [Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
 whether that be from Workers, Pages, or anywhere via REST API.
 
-Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
-even in local development.
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
+
+Unlike other bindings, this binding is limited to one AI binding per Worker project.
 
 {{<definitions>}}
 
@@ -815,8 +880,12 @@ Example:
 ---
 filename: wrangler.toml
 ---
+ai = { binding = "<AI>" }
+
+# or
+
 [ai]
-binding = "AI" # i.e. available in your Worker on env.AI
+binding = "AI" # available in your Worker code on `env.AI`
 ```
 
 ## Bundling

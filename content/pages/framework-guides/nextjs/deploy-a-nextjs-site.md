@@ -1,0 +1,284 @@
+---
+pcx_content_type: how-to
+title: Full-stack deployment
+meta:
+  description: Deploy a full-stack Next.js site (recommended).
+---
+
+# Deploy a Next.js site
+
+[Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
+
+This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
+
+## Create a new project using the `create-cloudflare` CLI (C3)
+
+The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) will configure your Next.js site for Cloudflare Pages. Run the following command in your terminal to create a new Next.js site:
+
+```sh
+$ npm create cloudflare@latest my-next-app -- --framework=next
+```
+
+C3 will ask you a series of setup questions. C3 will also install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter.
+
+After creating your project, C3 will generate a new `my-next-app` directory using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
+
+When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
+
+```sh
+$ npm run deploy
+```
+
+{{<Aside type="note" header="Git integration">}}
+
+The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
+
+{{</Aside>}}
+
+## Configure and deploy a project without C3
+
+If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
+
+{{<render file="/_framework-guides/_git-integration.md">}}
+
+### Create a new GitHub repository
+
+{{<render file="/_framework-guides/_create-gh-repo.md">}}
+
+```sh
+# Skip the following three commands if you have built your application
+# using C3 or already committed your changes
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+
+$ git branch -M main
+$ git remote add origin https://github.com/<your-gh-username>/<repository-name>
+$ git push -u origin main
+```
+### Connect your application to the GitHub repository via the Cloudflare dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+
+You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
+
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+
+{{<pages-build-preset framework="next-js">}}
+
+Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
+
+4. After completing configuration, select **Save and Deploy**.
+
+You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
+
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying your changes to production.
+
+## Use bindings in your Next.js application
+
+{{<render file="/_framework-guides/_bindings_definition.md">}}
+
+### Set up bindings for local development
+
+{{<Aside type="note">}}
+
+Projects created with C3 have bindings for local development set up by default.
+
+{{</Aside>}}
+
+To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
+
+For example, to work with a KV binding locally, open the Next.js configuration file and add:
+
+{{<tabs labels="next.config.mjs | next.config.(js|cjs)">}}
+{{<tab label="next.config.mjs">}}
+
+```js
+---
+filename: next.config.mjs
+highlight: [1, 6-18]
+---
+import { setupDevBindings } from '@cloudflare/next-on-pages/next-dev'
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
+
+// we only need to use the function during development so Cloudflare can check `NODE_ENV`
+// (note: this check is recommended but completely optional)
+if (process.env.NODE_ENV === 'development') {
+  // call the function with the bindings you want to have access to
+  await setupDevBindings({
+    bindings: {
+      MY_KV: {
+        type: "kv",
+        id: "MY_KV",
+      },
+    },
+  })
+}
+
+export default nextConfig
+```
+
+{{</tab>}}
+{{<tab label="next.config.(js|cjs)">}}
+
+```js
+---
+filename: next.config.js / next.config.cjs
+highlight: [4-18]
+---
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
+
+// we only need to use the function during development so we can check NODE_ENV
+// (note: this check is recommended but completely optional)
+if (process.env.NODE_ENV === "development") {
+  const { setupDevBindings } = require("@cloudflare/next-on-pages/next-dev")
+
+  // call the function with the bindings you want to have access to
+  setupDevBindings({
+    bindings: {
+      MY_KV: {
+        type: "kv",
+        id: "MY_KV",
+      },
+    },
+  })
+}
+
+module.exports = nextConfig
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+### Set up bindings for a deployed application
+
+To access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare dashboard.
+
+### Access bindings in the application
+
+Local and remote bindings can be accessed directly from `process.env`. The following code example shows how to access them in a `hello` API route of an App Router application.
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
+```js
+---
+filename: app/api/hello/route.js
+highlight: [3]
+---
+export async function GET(request) {
+  // this is the KV binding you defined in the config file
+  const myKv = process.env.MY_KV;
+
+  // get a value from the namespace
+  const kvValue = await myKv.get(`kvTest`) || false;
+
+  return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
+}
+```
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+---
+filename: app/api/hello/route.ts
+highlight: [3]
+---
+export async function GET(request: NextRequest) {
+  // this is the KV binding you defined in the config file
+  const myKv = process.env.MY_KV;
+
+  // get a value from the namespace
+  const kvValue = await myKv.get(`kvTest`) || false;
+
+  return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
+}
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+### Add bindings to TypeScript projects
+
+{{<Aside type="note">}}
+
+Projects created with C3 have a default `env.d.ts` file.
+
+{{</Aside>}}
+
+To get proper type support, you need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
+
+The following is an example of adding a `KVNamespace` binding:
+
+```ts
+---
+filename: env.d.ts
+highlight: [4-10]
+---
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      // The KV Namespace binding type used here comes
+      // from `@cloudflare/workers-types`. To
+      // use it like so, make sure that you have installed
+      // the package as a dev dependency and you have added
+      // it to your `tsconfig.json` file under
+      // `compilerOptions.types`.
+      MY_KV: KVNamespace;
+    }
+  }
+}
+
+export {};
+```
+
+## `Image` component
+
+The Cloudflare network does not provide the same image optimization support as the Vercel network does. Because of this, the Next.js' `<Image />` component behaves differently from how it would in the Vercel network.
+
+- If you build your application as a static site, the `<Image />` component will not serve any images.
+
+- If you build your application using `@cloudflare/next-on-pages`, the component will work but it will not perform any image optimization (regardless of the [props](https://react.dev/learn/passing-props-to-a-component) you pass to it).
+
+Both cases can be improved by setting up proper [loaders](https://nextjs.org/docs/pages/api-reference/components/image#loader) for the `<Image />` component, which allow you to use any image optimization service you want. To use [Cloudflare Images](/images/), refer to [resize with Cloudflare Workers](/images/transform-images/transform-via-workers/).
+
+## Recommended development workflow
+
+When developing a `next-on-pages` application, this is the development workflow that Cloudflare recommends:
+
+### Develop using the standard Next.js dev server
+
+The [standard development server provided by Next.js](https://nextjs.org/docs/getting-started/installation#run-the-development-server) is the best available option for a fast and polished development experience. The `next-dev` submodule (as described in the [local bindings](#set-up-bindings-for-local-development) section) makes it possible to use Next.js' standard development server while still having access to your Cloudflare bindings.
+
+### Build and preview your application locally
+
+To ensure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you are comfortable checking the correctness of the application during your development process, you will want to build and preview it locally using Cloudflare's `workerd` JavaScript runtime.
+
+If you have created your project with C3, do this by running:
+
+```sh
+$ npm run pages:build && npm run pages:dev
+```
+
+If you have created your project without C3, run:
+
+```sh
+$ npx @cloudflare/next-on-pages@1
+```
+
+And preview your project by running:
+
+```sh
+$ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat
+```
+
+### Deploy your application and iterate
+
+After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
+
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Next.js">}}

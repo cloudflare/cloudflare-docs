@@ -58,6 +58,7 @@ Description                | All plans
 Maximum execution time     | 5 ms
 Maximum memory             | 2 MB
 Maximum total package size | 32 KB
+Subrequests                | 1
 
 ## Execution order
 

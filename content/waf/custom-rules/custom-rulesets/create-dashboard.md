@@ -65,4 +65,4 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 ## Configuring a custom response for blocked requests
 
-{{<render file="_custom-response-blocked-requests.md">}}
+{{<render file="_custom-response-blocked-requests.md" withParameters="WAF block;;403">}}

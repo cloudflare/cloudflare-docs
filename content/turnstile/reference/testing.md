@@ -1,7 +1,7 @@
 ---
 title: Testing
 pcx_content_type: reference
-weight: 13
+weight: 4
 ---
 
 # Testing
@@ -24,7 +24,6 @@ The following {{<glossary-tooltip term_id="sitekey">}}sitekeys{{</glossary-toolt
 | `2x0000000000000000000000000000000AA` | Always fails | 
 | `3x0000000000000000000000000000000AA` | Yields a "token already spent" error | 
 
-
 ## Testing locally
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain whitelist](/turnstile/reference/domain-management/).
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/reference/domain-management/).

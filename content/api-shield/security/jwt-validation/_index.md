@@ -65,12 +65,7 @@ JWT Validation is available for all API Shield customers. Enterprise customers w
 
 ## Limitations
 
-Currently, the following limitations are in place while we operate the closed beta:
-1. JWT Validation configuration is only available via API today. For help configuring JWT Validation using the Cloudflare API, refer to [configuring JWT Validation](/api-shield/security/jwt-validation/configure/).
-2. JWT Validation only operates on JWTs sent in client request headers. If your clients send in JWTs in cookies or `POST` bodies, direct that feedback to your account team.
-3. There can only be a single JWT Validation configuration per zone.
-We intend to remove these limitations in the near future.
-4. JWT Validation only operates for {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (host, method, and path) added to [Endpoint Management](/api-shield/management-and-monitoring/). 
+Currently, the following known limitations exist:
 
 1. JWT Validation only operates on JWTs sent in client request headers or cookies. If your clients send in JWTs in a `POST` body, direct that feedback to your account team.
-1. JWT Validation only operates for endpoints (host, method, and path) added to Endpoint Management.
+2. JWT Validation only operates for {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} (host, method, and path) added to Endpoint Management. You can add all of your endpoints to endpoint management through [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema Validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), [manually via the Cloudflare dashboard](/api-shield/management-and-monitoring/#add-endpoints-manually), or via the [API](/api/operations/api-shield-endpoint-management-add-operations-to-a-zone).

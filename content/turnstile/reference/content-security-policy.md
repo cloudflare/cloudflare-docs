@@ -1,7 +1,7 @@
 ---
 title: Content Security Policy
 pcx_content_type: reference
-weight: 16
+weight: 8
 ---
 
 # Content Security Policy
@@ -19,6 +19,6 @@ We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evalu
 
 ## Pre-Clearance support
 
-If you are using [Turnstile in pre-clearance mode](/turnstile/reference/pre-clearance-support/), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endpoint in [`/cdn-cgi/`](/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
+If you are using [Turnstile in pre-clearance mode](/turnstile/get-started/pre-clearance-support/), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endpoint in [`/cdn-cgi/`](/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
 
 For this request to succeed, your `connect-src` directive must include `'self'`.

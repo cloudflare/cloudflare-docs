@@ -23,13 +23,13 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2024-02-20</td>
+      <td>2024-02-26</td>
+      <td>Block</td>
+      <td>100546_BETA</td>
+      <td>...07c62aeb</td>
+      <td>XSS - HTML Encoding BETA</td>
+      <td>This will replace ...1d870399 in NEW WAF</td>
     </tr>
   </tbody>
 </table>

@@ -77,4 +77,4 @@ For further help with API calls on Windows, refer to [Making API calls on Window
 
 ## Audit
 
-Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/#access-audit-logs).
+Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/#access-audit-logs).

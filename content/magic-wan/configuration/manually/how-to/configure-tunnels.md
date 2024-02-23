@@ -26,7 +26,7 @@ meta:
 
 ## Add tunnels
 
-{{<render file="tunnel-endpoints/_add-tunnels.md" productFolder="magic-transit" withParameters="Magic WAN;;**Magic WAN** > **Configuration**;;/magic-wan/configuration/manually/how-to/tunnel-health-checks/;;/magic-wan/reference/tunnel-health-checks/;;/magic-wan/reference/anti-replay-protection/;;bidirectional">}}
+{{<render file="tunnel-endpoints/_add-tunnels.md" productFolder="magic-transit" withParameters="Magic WAN;;**Magic WAN** > **Configuration**;;/magic-wan/configuration/common-settings/tunnel-health-checks/;;/magic-wan/reference/tunnel-health-checks/;;/magic-wan/reference/anti-replay-protection/;;bidirectional">}}
 
 ## Bidirectional vs unidirectional health checks
 

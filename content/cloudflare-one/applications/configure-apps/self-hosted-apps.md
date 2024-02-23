@@ -6,22 +6,57 @@ weight: 2
 
 # Add a self-hosted application
 
-{{<render file="access/_self-hosted-app-intro.md" productFolder="cloudflare-one">}}
+Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer between the end user and your origin. You can use signals from your existing identity providers (IdPs), device posture providers, and [other rules](/cloudflare-one/policies/access/#selectors) to control who can access your application.
+
+![Cloudflare Access authenticates users to your internal applications.](/images/cloudflare-one/applications/network-diagram.png)
 
 ## Prerequisites
 
-- [Add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
-- [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
+- An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
 
 ## 1. Add your application to Access
 
-{{<render file="access/_add-app-to-access.md" productFolder="cloudflare-one">}}
 
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **Self-hosted**.
+
+4. Enter any name for the application.
+
+5. Choose a **Session Duration**. The session duration determines the minimum frequency for which a user will be prompted to authenticate with the configured IdP. If you want users to re-authenticate every time they reach your application, select _No duration, expires immediately_.
+
+6. In **Application domain**, enter the domains that will represent the application.
+
+   - Domains must belong to an active zone in your Cloudflare account. You can either select a domain from the dropdown or enter a [custom domain](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) that you control.
+   - You can use [wildcards](/cloudflare-one/policies/access/app-paths/) to protect multiple parts of an application that share a root path.
+
+7. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+
+8. {{<render file="access/_access-block-page.md">}}
+
+9. {{<render file="access/_access-choose-idps.md">}}
+
+10. Select **Next**.
 
 ## 2. Add an Access policy
 
-{{<render file="access/_add-access-policy.md" productFolder="cloudflare-one">}}
+You can now configure an [Access policy](/cloudflare-one/policies/access/) to control who can connect to your application.
 
+1. Enter any name for your rule.
+
+2. Specify a policy [action](/cloudflare-one/policies/access/#actions).
+
+3. Assign [Access groups](/cloudflare-one/identity/users/groups/) to reuse existing rules, or create new rules. You can add as many include, exception, or require statements as needed.
+
+4. (Optional) Customize the login experience for users who match this policy:
+
+   - [Purpose justification](/cloudflare-one/policies/access/require-purpose-justification/)
+   - [Temporary authentication](/cloudflare-one/policies/access/temporary-auth/)
+
+5. Select **Next**.
 
 ## 3. (Optional) Configure advanced settings
 

@@ -86,7 +86,7 @@ If you do not configure an Access policy for your custom domain, an Access authe
 
 {{</Aside>}}
 
-If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
+If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.cloudflare.com](https://discord.cloudflare.com), and share your bug report in the #pages-general channel.
 
 ## Delete a project with a high number of deployments
 

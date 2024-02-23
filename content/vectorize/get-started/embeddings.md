@@ -227,7 +227,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.

@@ -6,13 +6,17 @@ weight: 3
 
 # Gateway activity logs
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
 
 {{</Aside>}}
 
-{{<render file="gateway/_activity-logs.md" productFolder="cloudflare-one">}}
+Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/) for sessions proxied by Gateway.
+
+To view Gateway activity logs, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway**. Select an individual row to investigate the event in more detail.
+
+Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/insights/logs/logpush/).
 
 ## Selective logging
 
@@ -120,6 +124,12 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 {{</table-wrap>}}
 
 ## Network logs
+
+{{<Aside type="warning" header="Failed connection logs">}}
+
+Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
+
+{{</Aside>}}
 
 ### Explanation of the fields
 

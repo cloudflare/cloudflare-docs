@@ -196,7 +196,7 @@ EOF
 ))
 
 // save the response so we can view it and then extra the certificate
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d “$request_body” https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
+$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d "$request_body" https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
 
 $ cat response.json | jq .
 {
@@ -353,7 +353,7 @@ def readSensor():
     # Takes a reading from a temperature sensor and store it to temp_measurement
 
     dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime(‘%Y-%m-%dT%H:%M:%SZ’)
+    timestampStr = dateTimeObj.strftime('%Y-%m-%dT%H:%M:%SZ')
 
     measurement = {'temperature':str(temp_measurement),'time':timestampStr}
     return measurement
