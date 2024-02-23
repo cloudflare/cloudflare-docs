@@ -6,9 +6,9 @@ weight: 1
 
 # Turnstile Pages Plugin
 
-Turnstile is  Cloudflare's [smart CAPTCHA alternative](/turnstile/).
+[Turnstile](/turnstile/) is Cloudflare's smart CAPTCHA alternative.
 
-The Turnstile Pages Plugin validates Cloudflare Turnstile tokens
+The Turnstile Pages Plugin validates Cloudflare Turnstile tokens.
 
 ## Installation
 
@@ -45,10 +45,11 @@ export const onRequestPost = [
 ```
 
 
-This Plugin only exposes a single route to verify an incoming turnstile response in a POST as the `cf-turnstile-response` parameter. It will be available wherever it is mounted. In the above example, because it is mounted in `functions/register.ts`, it will validate requests to `/register`.
- The Plugin is mounted with a single object parameter with the following properties.
+This Plugin only exposes a single route to verify an incoming Turnstile response in a `POST` as the `cf-turnstile-response` parameter. It will be available wherever it is mounted. In the example above, it is mounted in `functions/register.ts`. As a result, it will validate requests to `/register`.
+ 
+ The Plugin is mounted with a single object parameter with the following properties:
 
-[`secret`](https://dashboard.hcaptcha.com/settings) (mandatory) can both be found in your Turnstile dashboard.
+[`secret`](https://dash.cloudflare.com/login) (mandatory) can both be found in your Turnstile dashboard.
 
 `response` and `remoteip` are optional strings. `response` the turnstile token to verify (if not provided, the plugin will default to extracting `cf-turnstile-response` from a `multipart/form-data` request). `remoteip` should be requester's IP address (defaults to the `CF-Connecting-IP` header of the request).
 
