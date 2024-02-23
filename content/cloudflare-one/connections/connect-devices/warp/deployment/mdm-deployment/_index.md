@@ -38,8 +38,8 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 To uninstall the WARP client:
 
-1. First, locate the `.msi` package with the following Powershell command:
-```bash
+1. First, locate the `.msi` package with the following PowerShell command:
+```powershell
 PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
 
 IdentifyingNumber                      Name            LocalPackage
