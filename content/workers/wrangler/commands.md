@@ -2334,7 +2334,7 @@ wrangler types [<PATH>] [OPTIONS]
 
 - `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
   - The path to where the declaration file for your Worker will be written.
-  - Since it is a declaration file, it needs to have a `d.ts` extension.
+  - The path to the declaration file must have a `d.ts` extension.
 
 - `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
   - The name of the interface to generate for the environment object.
