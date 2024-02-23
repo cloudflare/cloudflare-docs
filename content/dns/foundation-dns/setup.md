@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Setup <TBD>
+title: Setup
 weight: 3
 ---
 
-# Foundation DNS configuration
+# Set up advanced nameservers
 
 Advanced nameservers included with Foundation DNS are an opt-in configuration. Consider the sections below to understand how you can enable advanced nameservers.
 
