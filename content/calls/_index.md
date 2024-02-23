@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Calls
 ---
 
-# Cloudflare Calls
+{{<heading-pill style="beta">}} Cloudflare Calls {{</heading-pill>}}
 
 {{<description>}}
 
