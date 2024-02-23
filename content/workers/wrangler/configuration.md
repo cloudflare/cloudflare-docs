@@ -130,6 +130,12 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
 
   - Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
 
+- `preserve_file_names` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
+    The default is to prepend filenames with a content hash.
+    For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
+
 - `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Whether Wrangler should send usage metrics to Cloudflare for this project.
