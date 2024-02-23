@@ -21,7 +21,7 @@ Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-polic
 
 ## Cloudflare Network Interconnect 2.0
 
-Cloudflare Network Interconnect 2.0 (CNI 2.0) [link to blog] is the fastest and easiest way to physically connect your Magic Transit or Magic WAN connected network directly to Cloudflare. You can use your Cloudflare account to find a Cloudflare data center near you, and order a CNI 2.0 directly from the Interconnects section of the Cloudflare dashboard in three minutes. Once deployed, you can view any CNI 2.0 connections from the dashboard. CNI 2.0 integrates with Magic Transit and Magic WAN, and removes the requirement for a GRE tunnel for all traffic over the circuit.
+Cloudflare Network Interconnect 2.0 (CNI 2.0) is the fastest and easiest way to physically connect your Magic Transit or Magic WAN connected network directly to Cloudflare. You can use your Cloudflare account to find a Cloudflare data center near you, and order a CNI 2.0 directly from the Interconnects section of the Cloudflare dashboard in three minutes. Once deployed, you can view any CNI 2.0 connections from the dashboard. CNI 2.0 integrates with Magic Transit and Magic WAN, and removes the requirement for a GRE tunnel for all traffic over the circuit.
 
 ### CNI 2.0 requirements
 
