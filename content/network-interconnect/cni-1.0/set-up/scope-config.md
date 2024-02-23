@@ -6,7 +6,7 @@ weight: 1
 
 # Scope your configuration
 
-Cloudflare engages with your organization in an initial kickoff call to confirm the scope and timeline for the CNI setup. To prepare for the initial kickoff call, have the configuration data for the type of cross-connect you want to use with CNI ready to provide to your Customer Success Manager.
+Cloudflare engages with your organization in an initial kickoff call to confirm the scope and timeline for the CNI set up. To prepare for the initial kickoff call, have the configuration data for the type of cross-connect you want to use with CNI ready to provide to your Customer Success Manager.
 
 ## Physical CNI 1.0 setup
 

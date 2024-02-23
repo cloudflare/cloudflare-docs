@@ -8,7 +8,7 @@ meta:
 
 # Types of interconnect
 
-Cloudflare supports two CNI 1.0 connectivity options: physical and virtual. The network interconnect is the link between your infrastructure and Cloudflare's network.
+Cloudflare supports two Cloudflare Network Interconnect (CNI) 1.0 connectivity options: physical and virtual. The network interconnect is the link between your infrastructure and Cloudflare's network.
 
 ## Physical Cloudflare Network Interconnect 1.0
 
@@ -26,7 +26,7 @@ Physical CNI 1.0 connections can range from 10G to 100G. The smallest compatible
 
 Cloudflare partners with Equinix, Megaport, Console Connect, PacketFabric, Coresite, Epsilon and Zayo to provide virtual Cloudflare Network Interconnect 1.0 connection  that easily connect you with Cloudflare at any of our interconnection platform locations. For more information about our partner program, see [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
 
-Choose a virtual CNI 1.0 connection  when you are already using our partner providers or when you want a quick and easy way to onboard a secure cloud experience.
+Choose a virtual CNI 1.0 connection  when you are already using our partner providers or when you want a quick and easy way to onboard to a secure cloud experience.
 
 ### Limitations
 Virtual CNI bandwidth may be limited by the interconnection platform partner.
