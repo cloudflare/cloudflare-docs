@@ -15,7 +15,7 @@ Service-to-service integrations allow the WARP client to get device posture data
 | ---------------------| ----- | ------- | ----- | --- | ---------------- |
 | [Crowdstrike](/cloudflare-one/identity/devices/service-providers/crowdstrike/) | ✅ | ✅ | ✅ | ❌ | ❌ |
 | [Kolide](/cloudflare-one/identity/devices/service-providers/kolide/) | ✅ | ✅ | ✅ | ❌ | ❌ |
-| [Microsoft Endpoint Manager](/cloudflare-one/identity/devices/service-providers/microsoft/) | ✅ | ✅ | ✅ | ❌ | ❌ |
+| [Microsoft Endpoint Manager](/cloudflare-one/identity/devices/service-providers/microsoft/) | ✅ | ✅ | ❌ | ❌ | ❌ |
 | [SentinelOne](/cloudflare-one/identity/devices/service-providers/sentinelone/) | ✅ | ✅ | ✅ | ❌ | ❌ |
 | [Uptycs](/cloudflare-one/identity/devices/service-providers/uptycs/) | ✅ | ✅ | ✅ | ❌ | ❌ |
 | [Workspace ONE](/cloudflare-one/identity/devices/service-providers/workspace-one/) | ✅ | ✅ | ✅ | ❌ | ❌ |
