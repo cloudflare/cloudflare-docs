@@ -159,15 +159,7 @@ delete this file to remove _mod\_cloudflare_, then restart Apache.
 
 ### Nginx
 
-Mod\_cloudflare is installed by modifying [the nginx configuration file](http://nginx.org/en/docs/http/ngx_http_realip_module.html) `nginx.conf` with the `ngx_http_realip_module`.
-
-To remove _mod\_cloudflare_ you should comment or remove this line, then restart nginx, and _mod\_cloudflare_ should be gone_._
-
-{{<Aside type="note">}}
-To remove *mod\_cloudflare* from other web server types, consult your
-web server documentation for how to remove modules.
-{{</Aside>}}
-
+_mod\_cloudflare_ is not needed for Nginx. Use the [`ngx_http_realip_module` NGINX module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and the configuration parameters described in the [Web server instructions](https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/#web-server-instructions) instead.
 ___
 
 ## Web server instructions
