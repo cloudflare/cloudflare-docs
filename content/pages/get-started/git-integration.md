@@ -76,7 +76,7 @@ The build command is provided by your framework. For example, the Gatsby framewo
 
 The build output directory is generated from the build command. Each [framework](/pages/configuration/build-configuration/#framework-presets) has its own naming convention, for example, the build output directory is named `/public` for many frameworks.
 
-The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
+The root directory is where your site's content lives. If not specified, Cloudflare assumes that your linked Git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
 Refer to [Build configuration](/pages/configuration/build-configuration/) for more information.
 
