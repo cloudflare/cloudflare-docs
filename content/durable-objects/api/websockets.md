@@ -6,11 +6,13 @@ weight: 3
 
 # WebSockets
 
-{{<Aside type="note">}}
+## Background 
 
-Durable Objects support the WebSocket API. Refer to [WebSockets](/workers/runtime-apis/websockets/) to learn more.
+WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server.
 
-{{</Aside>}}
+Durable Objects support the [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
+
+For more information beyond the API reference, refer to [Durable Objects with WebSockets](/durable-objects/reference/websockets/).
 
 ## WebSocket Hibernation
 
