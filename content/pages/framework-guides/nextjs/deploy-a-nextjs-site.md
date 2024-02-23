@@ -46,7 +46,7 @@ If you already have a Next.js project or wish to manually create and deploy one 
 {{<render file="/_framework-guides/_create-gh-repo.md">}}
 
 ```sh
-# Skip the following 3 commands if you have built your application
+# Skip the following three commands if you have built your application
 # using C3 or already committed your changes
 $ git init
 $ git add .
@@ -203,7 +203,7 @@ export async function GET(request: NextRequest) {
 {{</tab>}}
 {{</tabs>}}
 
-### Add bindings to Typescript projects
+### Add bindings to TypeScript projects
 
 {{<Aside type="note">}}
 
