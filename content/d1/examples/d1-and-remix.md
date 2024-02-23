@@ -21,7 +21,7 @@ To set up a new Remix site on Cloudflare Pages that can query D1:
 The following example shows you how to define a Remix [`loader`](https://remix.run/docs/en/main/route/loader) that has a binding to a D1 database.
 
 * Bindings are passed through on the `context.env` parameter passed to a `LoaderFunction`.
-* If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/build-databases/query-databases/#query-statement-methods) methods via `context.env.DB`.
+* If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/build-with-d1/query-databases/#query-statement-methods) methods via `context.env.DB`.
 
 {{<tabs labels="ts">}}
 {{<tab label="ts" default="true">}}

@@ -60,7 +60,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 - Create your first [D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
 - Configure a D1 bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#d1-databases).
-- Learn more about how to query a D1 database using the [client API](/d1/build-databases/query-databases/).
+- Learn more about how to query a D1 database using the [client API](/d1/build-with-d1/query-databases/).
 
 ### Vectorize database bindings
 

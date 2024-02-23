@@ -104,12 +104,12 @@ The `db.exec()` method returns a `D1ExecResult` object:
 
 The D1 API supports the following query statement methods for querying against a D1 database.
 
-* [`await stmt.all()`](/d1/build-databases/query-databases/#await-stmtall)
-* [`await stmt.raw()`](/d1/build-databases/query-databases/#await-stmtraw)
-* [`await stmt.first( [column] )`](/d1/build-databases/query-databases/#await-stmtfirstcolumn)
-* [`await stmt.run()`](/d1/build-databases/query-databases/#await-stmtrun)
-* [`await db.dump()`](/d1/build-databases/query-databases/#await-dbdump)
-* [`await db.exec()`](/d1/build-databases/query-databases/#await-dbexec)
+* [`await stmt.all()`](/d1/build-with-d1/query-databases/#await-stmtall)
+* [`await stmt.raw()`](/d1/build-with-d1/query-databases/#await-stmtraw)
+* [`await stmt.first( [column] )`](/d1/build-with-d1/query-databases/#await-stmtfirstcolumn)
+* [`await stmt.run()`](/d1/build-with-d1/query-databases/#await-stmtrun)
+* [`await db.dump()`](/d1/build-with-d1/query-databases/#await-dbdump)
+* [`await db.exec()`](/d1/build-with-d1/query-databases/#await-dbexec)
 
 ### await stmt.all()
 
@@ -237,7 +237,7 @@ return new Response(dump, {
 
 Executes one or more queries directly without prepared statements or parameters binding. This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe. Only use this method for maintenance and one-shot tasks (for example, migration jobs). The input can be one or multiple queries separated by `\n`.
 
-If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/build-databases/query-databases/#errors) to learn more.
+If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/build-with-d1/query-databases/#errors) to learn more.
 
 ```js
 const migration = await fetch('/migration.sql');

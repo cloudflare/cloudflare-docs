@@ -10,7 +10,7 @@ D1 supports a number of database-level commands that allow you to list tables, i
 
 ## Commands
 
-You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-databases/query-databases/).
+You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/query-databases/).
 
 ### `PRAGMA table_list`
 
@@ -122,6 +122,6 @@ SELECT name, sql FROM sqlite_master
 
 ## Related resources
 
-* Learn [how to create indexes](/d1/build-databases/use-indexes/#list-indexes) in D1.
+* Learn [how to create indexes](/d1/build-with-d1/use-indexes/#list-indexes) in D1.
 * Use D1's [JSON functions](/d1/reference/query-json/) to query JSON data.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.

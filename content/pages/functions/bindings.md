@@ -219,7 +219,7 @@ Specifically:
 * If your database is bound to `NORTHWIND_DB` and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1 NORTHWIND_DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
-Refer to the [D1 client API documentation](/d1/build-databases/query-databases/) for the API methods available on your D1 binding.
+Refer to the [D1 client API documentation](/d1/build-with-d1/query-databases/) for the API methods available on your D1 binding.
 
 Alternatively, you can interact with a D1 database locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#d1-databases) for more information.
 

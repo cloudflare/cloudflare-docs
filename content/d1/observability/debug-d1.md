@@ -10,7 +10,7 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 ## Handle errors
 
-The D1 [client API](/d1/build-databases/query-databases/) returns detailed [error messages](/d1/build-databases/query-databases/#errors) within an `Error` object. 
+The D1 [client API](/d1/build-with-d1/query-databases/) returns detailed [error messages](/d1/build-with-d1/query-databases/#errors) within an `Error` object. 
 
 To ensure you are capturing the full error message, log or return `e.message` as follows:
 
@@ -49,7 +49,7 @@ You should include as much of the following in any bug report:
 
 * The ID of your database. Use `wrangler d1 list` to match a database name to its ID.
 * The query (or queries) you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
-* The Worker code that makes the query, including any calls to `bind()` using the [client API](/d1/build-databases/query-databases/).
+* The Worker code that makes the query, including any calls to `bind()` using the [client API](/d1/build-with-d1/query-databases/).
 * The full error text, including the content of [`error.cause.message`](#handle-errors).
 
 ## Related resources

@@ -19,7 +19,7 @@ This allows you to more precisely query over data and reduce the result set your
 
 ## Types
 
-JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/build-databases/query-databases/#type-conversion) as D1 in general, including:
+JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/build-with-d1/query-databases/#type-conversion) as D1 in general, including:
 
 * A JSON null is treated as a D1 `NULL`.
 * A JSON number is treated as an `INTEGER` or `REAL`.
@@ -76,7 +76,7 @@ ERROR 9015: SQL engine error: query error: Error code 1: SQL error or missing da
 
 D1's support for [generated columns](/d1/reference/generated-columns/) allows you to create dynamic columns that are generated based on the values of other columns, including extracted or calculated values of JSON data.
 
-These columns can be queried like any other column, and can have [indexes](/d1/build-databases/use-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
+These columns can be queried like any other column, and can have [indexes](/d1/build-with-d1/use-indexes/) defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.
 
 For example, to define a column based on a value within a larger JSON object, use the `AS` keyword combined with a [JSON function](#supported-functions) to generate a typed column:
 
@@ -204,7 +204,7 @@ key|value|type|id|fullkey|path
 2|94944|integer|3|$[2]|$
 ```
 
-You can use `json_each` with D1's [client API](/d1/build-databases/query-databases/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/build-databases/query-databases/#parameter-binding):
+You can use `json_each` with D1's [client API](/d1/build-with-d1/query-databases/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/build-with-d1/query-databases/#parameter-binding):
 
 ```ts
 const stmt = context.env.DB

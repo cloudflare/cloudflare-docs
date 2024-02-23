@@ -28,10 +28,10 @@ Metrics can be queried (and are retained) for the past 31 days.
 
 ## Row counts
 
-D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/build-databases/query-databases/#return-object).
+D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/build-with-d1/query-databases/#return-object).
 
 Row counts are a precise count of how many rows were read (scanned) or written by that query.
-Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/build-databases/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   
+Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/build-with-d1/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   
 
 Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on how rows are counted.
 
