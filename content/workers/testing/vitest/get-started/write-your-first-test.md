@@ -117,7 +117,7 @@ export default defineConfig({
 });
 ```
 
-This configuration would add a KV namespace `TEST_NAMESPACE` for you to use in tests. Using this method, you can add other bindings like Durable Objects and service bindings.  
+This configuration would add a KV namespace `TEST_NAMESPACE` that was only accessible in tests. Using this method, you can add or override existing bindings like Durable Objects or service bindings.  
 
 {{<Aside type="note">}}
 
