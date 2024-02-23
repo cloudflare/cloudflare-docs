@@ -26,10 +26,10 @@ This example represents a simple Durable Object used as a co-ordination service 
 
 In this scenario, the estimated monthly cost would be calculated as:
 
-Requests:
+**Requests**:
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
 
-Compute Duration:
+**Compute Duration**:
 - 1,000,000 seconds \* 128 MB / 1 GB = 128,000 GB-s
 - (128,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
@@ -44,12 +44,12 @@ This example represents a moderately trafficked Durable Objects based applicatio
 
 In this scenario, the estimated monthly cost would be calculated as:
 
-Requests:
+**Requests**:
 - 50 requests to each of the 100 Durable Objects to establish the WebSockets (5,000 connections created each day, total 150,000 connection requests).
 - 50 messages per minute \* 100 Durable Objects \* 60 minutes \* 8 hours \* 30 days = 72,000,000 requests + 150,000 connection requests.
 - (~72 million requests - included 1 million requests) x $0.15 / 1,000,000 = $10.65.
 
-Compute Duration
+**Compute Duration**:
 - 100 Durable Objects \* 60 seconds \* 60 minutes \* 8 hours \* 30 days = 86,400,000 seconds.
 - 86,400,000 seconds \* 128 MB / 1 GB = 11,059,200 GB-s.
 - (11,059,200 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $133.24.
@@ -65,12 +65,12 @@ This example represents a horizontally scaled Durable Objects based application 
 
 In this scenario, the estimated monthly cost would be calculated as:
 
-Requests:
+**Requests**:
 - 100 requests to establish the WebSockets.
 - 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
 - (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
 
-Compute Duration:
+**Compute Duration**:
 - 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
 - 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
 - (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
@@ -86,12 +86,12 @@ This example represents a moderately trafficked Durable Objects based applicatio
 
 In this scenario, the estimated monthly cost would be calculated as:
 
-Requests:
+**Requests**:
 - 100 requests to each of the 100 Durable Objects to establish the WebSockets (10,000 initial connections).
 - 100 messages per minute<sup>1</sup> \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests
 - (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = $64.65
 
-Compute Duration:
+**Compute Duration**:
 - 100 Durable Objects \* 1 second<sup>2</sup> \* 60 minutes \* 24 hours \* 30 days = 4,320,000 seconds
 - 4,320,000 seconds \* 128 MB / 1 GB = 552,960 GB-s
 - (552,960 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $1.91
