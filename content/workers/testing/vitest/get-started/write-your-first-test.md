@@ -92,7 +92,7 @@ For a full list of available configuration options, read the [Configuration guid
 
 ### Add Configuration Options via Miniflare
 
-[Miniflare](https://miniflare.dev), which also powers [Wrangler's](/workers/wrangler/) local bindings, can be used for advanced configuration.
+Under the hood, the Workers Vitest pool uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/) local mode. Options can be passed directly to Miniflare for advanced configuration.
 
 For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersPoolOptions` like this:
 
