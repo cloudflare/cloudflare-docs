@@ -57,11 +57,7 @@ While developing locally, interact with your KV namespace by adding `-k <BINDING
 
 Alternatively, you can interact with a KV namespace locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#kv-namespaces) for more information.
 
-{{<Aside type="note">}}
-
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
-
-{{</Aside>}}
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## Durable Object namespaces
 
@@ -165,11 +161,7 @@ If your bucket is bound to `BUCKET`, access this bucket in local dev by running 
 
 Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#r2-buckets) for more information.
 
-{{<Aside type="note">}}
-
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
-
-{{</Aside>}}
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## D1 databases
 
@@ -231,11 +223,7 @@ Refer to the [D1 client API documentation](/d1/how-to/query-databases/) for the 
 
 Alternatively, you can interact with a D1 database locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#d1-databases) for more information.
 
-{{<Aside type="note">}}
-
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
-
-{{</Aside>}}
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## Workers AI
 [Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
@@ -338,11 +326,7 @@ To interact with a [service binding](/workers/configuration/bindings/about-servi
 
 Alternatively, you can interact with a service binding locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#service-bindings) for more information.
 
-{{<Aside type="note">}}
-
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
-
-{{</Aside>}}
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## Queue Producers
 
