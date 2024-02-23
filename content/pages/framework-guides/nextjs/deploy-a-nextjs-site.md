@@ -87,7 +87,7 @@ Projects created with C3 have bindings for local development set up by default.
 
 {{</Aside>}}
 
-To set up bindings for use in local development, you will use the `setupDevPlatform` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function, tries to read the project's [`wrangler.toml`](/workers/wrangler/configuration/) file and based on it sets up a platform emulation that your Next.js application can make use of locally.
+To set up bindings for use in local development, you will use the `setupDevPlatform` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). `setupDevPlatform` sets up a platform emulation based on your project's [`wrangler.toml`](/workers/wrangler/configuration/) file that your Next.js application can make use of locally.
 
 For example, to work with a KV binding locally, open the Next.js configuration file and add:
 
@@ -101,7 +101,7 @@ highlight: [1-7]
 ---
 import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev'
 
-// note: the if statement is present because we
+// note: the if statement is present because you
 //       only need to use the function during development
 if (process.env.NODE_ENV === 'development') {
   await setupDevPlatform()
@@ -121,7 +121,7 @@ export default nextConfig
 filename: next.config.js / next.config.cjs
 highlight: [1-6]
 ---
-// note: the if statement is present because we
+// note: the if statement is present because you
 //       only need to use the function during development
 if (process.env.NODE_ENV === "development") {
   const { setupDevPlatform } = require("@cloudflare/next-on-pages/next-dev")
@@ -137,7 +137,7 @@ module.exports = nextConfig
 {{</tab>}}
 {{</tabs>}}
 
-Also make sure to have a `wrangler.toml` file at the root of your project with a declaration for a KV binding named `MY_KV`:
+Make sure to have a `wrangler.toml` file at the root of your project with a declaration for a KV binding named `MY_KV`:
 
 ```toml
 ---
@@ -150,7 +150,7 @@ compatibility_flags = ["nodejs_compat"]
 
 [[kv_namespaces]]
 binding = "MY_KV"
-id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+id = "<YOUR_KV_NAMESPACE_ID>"
 ```
 
 ### Set up bindings for a deployed application
@@ -159,14 +159,13 @@ To access bindings in a deployed application, you will need to [configure](/page
 
 ### Add bindings to Typescript projects
 
-If your project is using typescript you will want to set up proper type support so that you can access
-your bindings in a type safe and convenient manner.
+If your project is using TypeScript, you will want to set up proper type support so you can access your bindings in a type-safe and convenient manner.
 
 To get proper type support, you need to create a new `env.d.ts` file in your project and extend the `CloudflareEnv` (used by `getRequestContext`) interface with your [bindings](/pages/functions/bindings/).
 
 {{<Aside type="note">}}
 
-Note: Projects created with C3 have a default `env.d.ts` file.
+Projects created with C3 have a default `env.d.ts` file.
 
 {{</Aside>}}
 
@@ -282,7 +281,7 @@ $ npx wrangler pages dev .vercel/output/static
 
 {{<Aside type="note">}}
 
-The `wrangler pages dev` command needs to run the application using the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) compatibility flag, that can be either specified in the `wrangler.toml` file or provided to the command as an inline argument: `--compatibility-flag=nodejs_compat`.
+The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to run the application using the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) compatibility flag. The `nodejs_compat` flag can be specified in either your project's `wrangler.toml` file or provided to the command as an inline argument: `--compatibility-flag=nodejs_compat`.
 
 {{</Aside>}}
 
