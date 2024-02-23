@@ -13,17 +13,23 @@ This tutorial will guide you through install and setup of the [`@cloudflare/vite
 ## Prerequisites
 
 - Open your Worker project's root folder or create a new project via our [Get Started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
-- Install [Vitest](https://vitest.dev/) `1.3.0` using `npm install vitest@1.3.0 --save-dev --save-exact`
 
-## Install `@cloudflare/vitest-pool-workers`
+## Install Vitest and `@cloudflare/vitest-pool-workers`
 
 Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
 
 ```sh
+$ npm install vitest@1.3.0 --save-dev --save-exact
 $ npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
-This will add the package to your `package.json` file and install it as a dev dependency.
+This will add the packages to your `package.json` file and install them as dev dependencies. 
+
+{{<Aside type="note">}}
+
+The `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.3.0.
+
+{{</Aside>}}
 
 ## Define Vitest Configuration
 
