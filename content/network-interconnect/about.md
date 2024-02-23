@@ -8,7 +8,7 @@ meta:
 
 # About Cloudlfare Network Interconnect
 
-Cloudflare supports a variety of options to connect your network to ours- Cloudflare Network Interconnect (CNI), and peering via either an internet exchange, or a private network interconnect (PNI).  Below is a brief overview of the options to help you decide which method best fits your network. Some customers may find that it makes sense to deploy both CNI and PNI.
+Cloudflare supports a variety of options to connect your network to Cloudflare Network Interconnect (CNI), and peering via either an internet exchange, or a private network interconnect (PNI).  Below is a brief overview of the options to help you decide which method best fits your network. Some customers may find that it makes sense to deploy both CNI and PNI.
 
 ## Public Peering, Internet Exchanges, and Private Network Interconnects (PNIs)
 
