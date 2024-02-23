@@ -2,7 +2,7 @@
 link: "/queues/platform/changelog/"
 productName: Queues
 entries:
-- publish_date: '2024-02-09'
+- publish_date: '2024-02-24'
   title: Explicit retries no longer impact consumer concurrency/scaling.
   description: |-
     Calling `retry()` or `retryAll()` on a message or message batch will no longer have an impact on how Queues scales [consumer concurrency](/queues/reference/consumer-concurrency/).
