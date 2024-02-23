@@ -16,7 +16,7 @@ Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) C
 To use `create-cloudflare` to create a new Remix project, run the following command:
 
 ```sh
-$ npm create cloudflare@latest my-remix-app -- --framework=remix
+$ npm create cloudflare@latest my-remix-app --framework=remix
 ```
 
 `create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
