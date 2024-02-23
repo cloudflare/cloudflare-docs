@@ -13,28 +13,20 @@ This guide will instruct you how to deploy a full-stack Next.js project which us
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
-Open up your terminal and run the following command to create a new Next.js site. Your Next.js site is configured for Cloudflare Pages using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/).
+The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) will configure your Next.js site for Cloudflare Pages. Run the following command in your terminal to create a new Next.js site:
 
 ```sh
 $ npm create cloudflare@latest my-next-app -- --framework=next
 ```
 
-C3 will install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter. C3 will also ask you a series of setup questions.
+C3 will ask you a series of setup questions. C3 will also install necessary dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@cloudflare/next-on-pages` adapter.
 
-After creating your project, a new `my-next-app` directory will be generated using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
+After creating your project, C3 will generate a new `my-next-app` directory using the default Next.js template, updated to be fully compatible with Cloudflare Pages.
 
-Change to this directory to continue development.
-
-```sh
-$ cd my-next-app
-```
-
-If you chose to deploy, you will receive a unique subdomain for your project on `*.pages.dev`, and you can access it almost immediately.
-
-To (re)deploy your application after having made changes, run the deployment command that C3 generates for you:
+When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
 
 ```sh
-$ npm run pages:deploy
+$ npm run deploy
 ```
 
 {{<Aside type="note" header="Git integration">}}
@@ -47,25 +39,14 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
 
-
-## Git integration
-
-In addition to Direct Upload deployments, you can make use of the Pages [Git integration](/pages/configuration/git-integration/), which allows you to connect a GitHub repository to your Pages application and have the application automatically built and deployed after each new commit is pushed to it.
-
-{{<Aside type="note">}}
-
-Git integration cannot currently be added to existing Pages applications. If you have already deployed your application (using C3 for example), you need to create a new Pages application in order to add the Git integration to it.
-
-{{</Aside>}}
-
-This requires a basic understanding of [Git](https://git-scm.com/). If you are new to Git, refer to GitHub's [summarized Git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up Git on your local machine.
+{{<render file="/_framework-guides/_git-integration.md">}}
 
 ### Create a new GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+{{<render file="/_framework-guides/_create-gh-repo.md">}}
 
 ```sh
-# Skip the following 3 commands if you have built your application
+# Skip the following three commands if you have built your application
 # using C3 or already committed your changes
 $ git init
 $ git add .
@@ -88,17 +69,15 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-4. After completing configuration, click the **Save and Deploy** button.
+4. After completing configuration, select **Save and Deploy**.
 
 You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying your changes to production.
 
 ## Use bindings in your Next.js application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/).
-
-If you intend to use bindings in your project, you must set them up for local and remote development.
+{{<render file="/_framework-guides/_bindings_definition.md">}}
 
 ### Set up bindings for local development
 
@@ -224,7 +203,7 @@ export async function GET(request: NextRequest) {
 {{</tab>}}
 {{</tabs>}}
 
-### Add bindings to Typescript projects
+### Add bindings to TypeScript projects
 
 {{<Aside type="note">}}
 
@@ -302,4 +281,4 @@ $ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compa
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
-{{<render file="_learn-more.md" withParameters="Next.js">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Next.js">}}
