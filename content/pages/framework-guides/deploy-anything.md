@@ -29,7 +29,7 @@ To deploy your site to Pages:
 
 </div>
 
-Unlike many of the framework guides, the build command and build output directory for your site are going to be completely custom. Cloudflare recommends using `exit 0` as your **Build command** to access features such as Pages Functions. The **Build output directory** is where your application's content lives.
+Unlike many of the framework guides, the build command and build output directory for your site are going to be completely custom. If you are not using a preset and do not need to build your site, use `exit 0` as your **Build command**. Cloudflare recommends using `exit 0` as your **Build command** to access features such as Pages Functions. The **Build output directory** is where your application's content lives.
 
 After configuring your site, you can begin your first deploy. Your custom build command (if provided) will run, and Pages will deploy your static site.
 
