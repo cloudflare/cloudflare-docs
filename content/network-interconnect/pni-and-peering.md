@@ -7,9 +7,9 @@ weight: 4
 
 # Public Peering an Private Network Interconnection
 
-Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-policy/). There is no requirement to be a Cloudflare customer for public peering, or a Private Network Interconnect.
+Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-policy/). There is no requirement to be a Cloudflare customer for public peering, or a Private Network Interconnect (PNI).
 
-If you operate a public autonomous system on the BGP table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing [peering@cloudflare.com](peering@cloudflare.com).
+If you operate a public autonomous system on the Border Gateway Protocol (BGP) table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing [peering@cloudflare.com](peering@cloudflare.com).
 
 If you peer with Cloudflare, you can signup to use our [Peering Portal](https://www.cloudflare.com/partners/peering-portal/) which can be used to monitor where your network exchanges with Cloudflare.
 
