@@ -44,7 +44,7 @@ Creating a `.gitignore` file ensures that only what is needed gets pushed onto y
 $ dotnet new gitignore
 ```
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 {{<Aside type="note">}}
 
@@ -95,4 +95,4 @@ Or
 
 2.  Remove the `*.wasm` files from the output (`rm output/wwwroot/_framework/*.wasm`) and modify your Blazor application to [load the Brotli compressed files](https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-6.0#compression) instead.
 
-{{<render file="_learn-more.md" withParameters="Blazor">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Blazor">}}

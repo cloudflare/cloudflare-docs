@@ -2326,8 +2326,21 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```txt
-wrangler types
+```sh
+wrangler types [<PATH>] [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
+  - The path to where the declaration file for your Worker will be written.
+  - The path to the declaration file must have a `d.ts` extension.
+
+- `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
+  - The name of the interface to generate for the environment object.
+  - Not valid if the Worker uses the Service Worker syntax.
+
+{{</definitions>}}
+
 
 <!--TODO Add examples of DTS generated output -->

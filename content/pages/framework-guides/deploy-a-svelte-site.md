@@ -33,7 +33,7 @@ $ npm run dev
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## SvelteKit Cloudflare configuration
 
@@ -181,4 +181,4 @@ export const GET = (({ url }) => {
 For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Svelte">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Svelte">}}

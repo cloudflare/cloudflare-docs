@@ -643,6 +643,11 @@
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
+/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ 301
+/magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
+/magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/
+/magic-wan/configuration/manually/how-to/tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/
+/magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/configuration/common-settings/view-analytics/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
@@ -1159,6 +1164,7 @@
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
+/workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
