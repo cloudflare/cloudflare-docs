@@ -6,5 +6,5 @@ _build:
 ---
 
 - Manually deploy WARP on a test device.
-- Create an automated script to use with your organization’s managed deployment tool.
+- Create an automated script to use with your organization's managed deployment tool.
 - View user traffic in Zero Trust.
