@@ -239,7 +239,7 @@ The `getPlatformProxy` function provides a way to obtain an object containing pr
 
 {{<Aside type="warning">}}
 
-Note that `getPlatformProxy` is, by design, to be used exclusively in Node.js applications. It cannot be run inside a worker (i.e. in the `workerd` runtime).
+`getPlatformProxy` is, by design, to be used exclusively in Node.js applications. `getPlatformProxy` cannot be run inside a Worker (that is, in the `workerd` runtime).
 
 {{</Aside>}}
 
