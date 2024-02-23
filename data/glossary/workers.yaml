@@ -47,19 +47,19 @@ entries:
 
 - term: R2
   general_definition: |-
-    
+    [R2](/r2/) is an S3-compatible distributed object storage designed to eliminate the obstacles of sharing data across clouds.
 
-- term: service Worker
+- term: service worker
   general_definition: |-
-    
+    Refers to [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) [syntax]().
 
 - term: subrequest
   general_definition: |-
     A subrequest is an additional HTTP requests from the Worker to another resource or another Worker.
 
-- term: tail Worker
+- term: Tail Worker
   general_definition: |-
-
+    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to console.log() or uncaught exceptions. 
 
 - term: V8
   general_definition: |-
