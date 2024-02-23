@@ -25,7 +25,7 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future.
 
-There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) and we will review the issue.
+There are no known bugs at the moment and it is safe to use. If you discover any bugs, open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 
 {{</Aside>}}
@@ -258,6 +258,7 @@ const platform = await getPlatformProxy(options);
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object containing preferences for the bindings:
+
         * `configPath` {{<type>}}string{{</type>}}
 
           The path to the configuration object to use (default `wrangler.toml`).
@@ -269,8 +270,8 @@ const platform = await getPlatformProxy(options);
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
           Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
-
-          _Note_: If use `wrangler`'s `--persist-to` option please keep in mind that such option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. So for example if you run `wrangler dev --persist-to ./my-directory`, in order to reuse the same location using `getPlatformProxy` you'll have to specify: `persist: "./my-directory/v3"`.
+          
+          **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: "./my-directory/v3"`.
 
 {{</definitions>}}
 
