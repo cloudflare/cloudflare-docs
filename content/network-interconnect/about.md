@@ -21,7 +21,7 @@ Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-polic
 
 ## Cloudflare Network Interconnect 2.0
 
-Cloudflare Network Interconnect 2.0 (CNI 2.0) is the fastest and easiest way to physically connect your Magic Transit or Magic WAN connected network directly to Cloudflare. You can use your Cloudflare account to find a Cloudflare data center near you, and order a CNI 2.0 directly from the Interconnects section of the Cloudflare dashboard in three minutes. Once deployed, you can view any CNI 2.0 connections from the dashboard. CNI 2.0 integrates with Magic Transit and Magic WAN, and removes the requirement for a GRE tunnel for all traffic over the circuit.
+[Cloudflare Network Interconnect 2.0 (CNI 2.0)](/network-interconnect/cni-2.0/) is the fastest and easiest way to physically connect your Magic Transit or Magic WAN connected network directly to Cloudflare. You can use your Cloudflare account to find a Cloudflare data center near you, and order a CNI 2.0 directly from the Interconnects section of the [Cloudflare dashboard](/network-interconnect/cni-2.0/create-interconnects/) in three minutes. Once deployed, you can view any CNI 2.0 connections from the dashboard. CNI 2.0 integrates with Magic Transit and Magic WAN, and removes the requirement for a GRE tunnel for all traffic over the circuit.
 
 ### CNI 2.0 requirements
 
@@ -33,7 +33,7 @@ To be able to use CNI 2.0, you need:
 
 ## Cloudflare Network Interconnect 1.0
 
-Cloudflare Network Interconnect 1.0 enables customers to connect their network directly to Cloudflare. You will need to work with an Implementation Manager to discover the best location to connect to Cloudflare, and to order a circuit. In addition to physically connecting to Cloudflare with a cross-connect, CNI 1.0 also supports virtual CNIs via our technology partners like Megaport and Equinix. If you are a Magic Transit customer, Cloudflare can send you clean traffic over a CNI 1.0 without a GRE tunnel.
+Cloudflare Network Interconnect 1.0 enables customers to connect their network directly to Cloudflare. You will need to work with an implementation manager to discover the best location to connect to Cloudflare, and to order a circuit. In addition to physically connecting to Cloudflare with a cross-connect, CNI 1.0 also supports virtual CNIs via our technology partners like Megaport and Equinix. If you are a Magic Transit customer, Cloudflare can send you clean traffic over a CNI 1.0 without a GRE tunnel.
 
 ### CNI 1.0 requirements
 
@@ -47,11 +47,11 @@ To be able to use CNI 1.0, you need:
 
 Below, you can compare the several CNI options.
 
-Capability                          | CNI 2.0                               | CNI 1.0
----                                 | ---                                   | ---
-Supported port speeds               | 1, 10, 100 Gbps                       | 10 Gbps, 100 Gbps
-Circuit ordering and management     | Self-service via Cloudflare Dashboard | Manual with Implementation Manager
-Magic Transit Integration           | No GRE tunnel required                | No GRE required to receive clean traffic from Cloudflare. <br> Outbound Internet traffic through Magic Transit requires a GRE.
-Magic WAN Integration               | No GRE tunnel required                | Not supported. Refer to IPsec over PNI.
-Virtual CNI via Technology Partners | Not supported (coming soon)           | Console Connect, Equinix Users, Megaport, PacketFabric
+Capability                              | CNI 2.0                               | CNI 1.0
+---                                     | ---                                   | ---
+**Supported port speeds**               | 1 Gbps, 10 Gbps, 100 Gbps             | 10 Gbps, 100 Gbps
+**Circuit ordering and management**     | Self-service via Cloudflare dashboard | Manual with implementation manager
+**Magic Transit integration**           | No GRE tunnel required                | No GRE required to receive clean traffic from Cloudflare. <br> Outbound Internet traffic through Magic Transit requires a GRE tunnel.
+**Magic WAN integration**               | No GRE tunnel required                | Not supported. Refer to IPsec over PNI.
+**Virtual CNI via Technology Partners** | Not supported (coming soon)           | Console Connect, Equinix Users, Megaport, PacketFabric
 
