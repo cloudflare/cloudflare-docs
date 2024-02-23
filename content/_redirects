@@ -662,6 +662,7 @@
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
+/pages/get-started/guide/ /pages/get-started/git-integration/ 301
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
 /pages/how-to/deploy-a-hugo-site/ /pages/framework-guides/deploy-a-hugo-site/ 301
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
