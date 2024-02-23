@@ -1,7 +1,7 @@
 ---
 title: CNI 2.0
 pcx_content_type: navigation
-weight: 2
+weight: 3
 ---
 
 # Cloudflare Network Interconnect 2.0
