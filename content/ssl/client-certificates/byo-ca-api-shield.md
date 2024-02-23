@@ -64,6 +64,10 @@ This is especially useful if you already have mTLS implemented and client certif
 
   {{</definitions>}}
 
+{{<Aside type="note" header="Bring your own CA for mTLS is API-only">}}
+The enabled hostnames will not be reflected onto the **SSL** > **Client Certificates** > **Hosts** section of the **Client Certificates** card. Any hosts that are presented here are using client certificates issued by a Cloudflare Managed CA, and not your uploaded CA certificate.
+{{</Aside>}}
+
 4. Create a custom rule to enforce client certificate validation.
 You can do this [via the dashboard](/api-shield/security/mtls/configure/) or [via API](/waf/custom-rules/create-api/).
 
