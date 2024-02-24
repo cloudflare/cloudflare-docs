@@ -33,15 +33,6 @@
 {{ .Scratch.Set "conditional-name" "code-examples" }}
 {{ partial "models/conditionally.md" . }}
 
-{{/*
-{{ $modelTemplates := (index $.Site.Data.models.content.models .model_display_name) }}
-{{ $taskTemplates := (index $.Site.Data.models.content.tasks .task_type) }}
-{{ if isset $modelTemplates "code-examples" }}
-  {{ partial (index $modelTemplates "code-examples") . | markdownify }}
-{{ else if isset $taskTemplates "code-examples"}}
-  {{ partial (index $taskTemplates "code-examples") . | markdownify }}
-{{ end }}
-*/}}
 
 {{/* These don't exist yet
 ## Model parameters
