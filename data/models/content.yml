@@ -4,9 +4,9 @@
 
 models:
   llama-2-7b-chat-int8:
-    code-examples: "_partials/models/code-examples/llama-2-7b-chat-int8.md"
+    code-examples: "models/code-examples/llama-2-7b-chat-int8.md"
 
 tasks:
   text-generation:
-    code-examples: "_partials/models/code-examples/text-generation.md"
+    code-examples: "models/code-examples/text-generation.md"
 

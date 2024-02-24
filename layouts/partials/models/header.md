@@ -1,16 +1,16 @@
 {{ $linksMap := $.Site.Data.models.properties.links }}
 {{ $limitsMap := $.Site.Data.models.properties.limits }}
+{{ $params :=  .Page.Params }}
 
 {{ $properties := dict }}
-{{ range .Page.Params.model.properties }}
+{{ range $params.model.properties }}
   {{ $entry := . }}
   {{ $properties = merge $properties (dict $entry.property_id $entry.value) }}
 {{ end }}
 
-{{ with .Page.Params }}
-**Model ID**: `{{ .model.name }}`
+**Model ID**: `{{ $params.model.name }}`
 
-{{ .model.description }}
+{{ $params.model.description }}
 
 {{ range $key, $display := $linksMap -}}
   {{- with (index $properties $key) -}}
@@ -22,13 +22,26 @@
 ## Properties
 
 {{/* TODO: Can I get the page better here? */}}
-**Task Type**: [{{ .model.task.name }}](/workers-ai/wip-models/#{{ .task_type }})
+**Task Type**: [{{ $params.model.task.name }}](/workers-ai/wip-models/#{{ $params.task_type }})
 
-{{ range $key, $display := $limitsMap -}}
+{{- range $key, $display := $limitsMap -}}
   {{- with (index $properties $key) }}
 **{{ $display }}**: {{ . }}
   {{ end -}}
 {{- end -}}
+
+{{ .Scratch.Set "conditional-name" "code-examples" }}
+{{ partial "models/conditionally.md" . }}
+
+{{/*
+{{ $modelTemplates := (index $.Site.Data.models.content.models .model_display_name) }}
+{{ $taskTemplates := (index $.Site.Data.models.content.tasks .task_type) }}
+{{ if isset $modelTemplates "code-examples" }}
+  {{ partial (index $modelTemplates "code-examples") . | markdownify }}
+{{ else if isset $taskTemplates "code-examples"}}
+  {{ partial (index $taskTemplates "code-examples") . | markdownify }}
+{{ end }}
+*/}}
 
 {{/* These don't exist yet
 ## Model parameters
@@ -49,4 +62,3 @@
 
 */}}
 
-{{ end }}

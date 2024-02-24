@@ -19,7 +19,7 @@
         <h1>{{ .Title }}</h1>
 
         <article class="DocsMarkdown">
-          {{partial "models/header.md" . | markdownify }}
+          {{ partial "models/header.md" . | markdownify }}
           <h2>API schema</h2>
           <p>The following schema is based on <a href="https://json-schema.org/">JSON Schema</a></p>
           {{- .Content -}}
