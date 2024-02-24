@@ -261,7 +261,7 @@ For example, providing an `OrderRow` type as a type parameter to `stmt.all()` wi
 
 ```ts
 // Row definition
-type OrderRow {
+type OrderRow = {
   Id: string;
   CustomerName: string;
   OrderDate: number;

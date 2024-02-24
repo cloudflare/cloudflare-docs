@@ -189,6 +189,16 @@ Yes. Refer to [Additional fields](/zaraz/get-started/additional-fields/) to lear
 {{</faq-answer>}}
 {{</faq-item>}}
 
+{{<faq-item>}}
+{{<faq-question level=4 text="How do I attach a User Property to my events?" >}}
+
+{{<faq-answer>}}
+
+In your Google Analytics 4 action, select **Add field** > **Add custom field...** and enter a field name that starts with `up.` — for example, `up.name`. This will make Zaraz send the field as a User Property and not as an Event Property.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
 ### Facebook Pixel
 
 {{<faq-item>}}

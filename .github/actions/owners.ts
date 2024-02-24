@@ -19,6 +19,7 @@ export const OWNERS: Record<string, string[]> = {
   "browser-rendering": ["deadlypants1973"],
   byoip: ["patriciasantaana"],
   cache: ["angelampcosta"],
+  calls: ["dcpena"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["jason-cf"],
