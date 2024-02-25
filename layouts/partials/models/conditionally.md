@@ -1,6 +1,4 @@
 {{ $conditionalName := .Scratch.Get "conditional-name"}}
-{{ $modelTemplates := (index $.Site.Data.models.content.models .Page.Params.model_display_name) }}
-{{ $taskTemplates := (index $.Site.Data.models.content.tasks .Page.Params.task_type) }}
 {{ $partialsRoot := "layouts/partials/"}}
 
 {{ $conditionalTemplate := printf "models/%s/%s.md" $conditionalName .Page.Params.model_display_name }}

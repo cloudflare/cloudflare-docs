@@ -6,10 +6,14 @@
 # NOTE: This is currently unused...plan to use for additional links
 
 models:
-  llama-2-7b-chat-int8:
-    code-examples: "models/code-examples/llama-2-7b-chat-int8.md"
+  deepseek-coder-6.7b-instruct-awq:
+    links:
+      - name: "Official GitHub Repository"
+        url: "https://github.com/deepseek-ai/DeepSeek-Coder"
 
 tasks:
   text-generation:
-    code-examples: "models/code-examples/text-generation.md"
+    links:
+      - name: "Tutorial - How to Choose the Right Text Generation Model"
+        url: "/workers-ai/tutorials/how-to-choose-the-right-text-generation-model/"
 
