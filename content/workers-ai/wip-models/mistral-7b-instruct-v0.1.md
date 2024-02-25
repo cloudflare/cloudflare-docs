@@ -1,36 +1,26 @@
 ---
-title: mistral-7b-instruct-v0.1
-pcx_content_type: get-started
 model:
-  id: cf/mistral/mistral-7b-instruct-v0.1
-  name: mistral-7b-instruct-v0.1
-  description: Instruct fine-tuned version of the Mistral-7b generative text model with 7 billion parameters
-  terms: https://www.example.com/
-  infos: https://www.example.com/
-  limits:
-    - name: "Default max (sequence) tokens (stream)"
-      value: 596
-    - name: "Default max (sequence) tokens"
-      value: 256
-  params:
-    - name: prompt
-      type: string
-      desc: this is sample text
-    - name: raw
-      type: boolean
-      optional: true
-      desc: this is more text
+  id: "c907d0f9-d69d-4e93-b501-4daeb4fd69eb"
+  source: 1
+  name: "@cf/mistral/mistral-7b-instruct-v0.1"
+  description: "Instruct fine-tuned version of the Mistral-7b generative text model with 7 billion parameters"
+  task:
+    id: "c329a1f9-323d-4e91-b2aa-582dd4188d34"
+    name: "Text Generation"
+    description: "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+  tags:
+    - "mistral"
+    - "text-generation"
+  properties:
+    - property_id: "info"
+      value: "https://mistral.ai/news/announcing-mistral-7b/"
+    - property_id: "constellation_config"
+      value: "max_concurrent_requests: 10"
+task_type: "text-generation"
+model_display_name: "mistral-7b-instruct-v0.1"
+layout: "model"
+title: "mistral-7b-instruct-v0.1"
 
-task_type: text-generation
-task:
-  name: Text Generation
-  description: Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks.
-related:
-  - name: This will be a very helpful resource
-    value: https://example.com
-  - name: Also check out this one
-    value: https://example.com
-  - name: All good things come in three
-    value: https://example.com
 ---
 
+TODO: JSON Schemas

@@ -1,8 +1,8 @@
 ---
 model:
-  id: "60474554-f03b-4ff4-8ecc-c1b7c71d7b29"
+  id: "7f180530-2e16-4116-9d26-f49fbed9d372"
   source: 2
-  name: "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
+  name: "@hf/thebloke/deepseek-coder-6.7b-base-awq"
   description: "Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese."
   task:
     id: "c329a1f9-323d-4e91-b2aa-582dd4188d34"
@@ -13,11 +13,11 @@ model:
     - "text-generation"
   properties:
     - property_id: "terms"
-      value: "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ"
+      value: "https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ"
 task_type: "text-generation"
-model_display_name: "deepseek-coder-6.7b-instruct-awq"
+model_display_name: "deepseek-coder-6.7b-base-awq"
 layout: "model"
-title: "deepseek-coder-6.7b-instruct-awq"
+title: "deepseek-coder-6.7b-base-awq"
 
 ---
 
