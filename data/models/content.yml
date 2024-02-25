@@ -11,6 +11,7 @@ models:
       - name: "Official GitHub Repository"
         url: "https://github.com/deepseek-ai/DeepSeek-Coder"
   deepseek-coder-6.7b-base-awq:
+    links:
       - name: "Official GitHub Repository"
         url: "https://github.com/deepseek-ai/DeepSeek-Coder"
 tasks:
