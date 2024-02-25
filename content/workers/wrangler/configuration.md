@@ -832,7 +832,7 @@ binding = "<BINDING_NAME2>"
 certificate_id = "<CERTIFICATE_ID2>"
 ```
 
-mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
+mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/bindings/mtls).
 
 ### Email bindings
 
