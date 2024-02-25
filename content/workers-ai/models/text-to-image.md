@@ -61,7 +61,7 @@ export default {
 $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0 \
   -X POST \
   -H "Authorization: Bearer {API_TOKEN}" \
-  -d '{ "prompt": "cyberpunk cat" }'
+  -d '{ "prompt": "cyberpunk cat", "num_steps": 20 }'
 ```
 
 {{</tab>}}
