@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: API
 weight: 2
 meta:
-  description: An experimental API to programmatically manage your Cloudflare Workers.
+  description: A set of programmatic APIs that can be integrated with local Cloudflare Workers related workflows.
 ---
 
 # Wrangler API
@@ -14,6 +14,12 @@ Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
 
 ## `unstable_dev`
+
+{{<Aside type="note">}}
+
+The `unstable_dev` is an experimental function and its stability is not guaranteed.
+
+{{</Aside>}}
 
 Start an HTTP server for testing your Worker.
 
