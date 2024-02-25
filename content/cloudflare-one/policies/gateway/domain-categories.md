@@ -8,6 +8,10 @@ weight: 9
 
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
+{{<render file="gateway/_content-security-categories.md">}}
+
+This combination helps us stay ahead of emerging threats. While we cannot disclose specific methodologies due to security considerations, please rest assured that we continually strive to protect your online experience.
+
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
 {{<Aside type="note" header="Subdomain category">}}

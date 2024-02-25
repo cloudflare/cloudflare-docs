@@ -49,7 +49,7 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Content Categories
 
-{{<render file="gateway/selectors/_content-categories.md" withParameters=" ">}}
+{{<render file="gateway/selectors/_block-content-categories.md" withParameters=" ">}}
 
 ### DNS Resolver IP
 
