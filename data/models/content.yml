@@ -13,8 +13,6 @@ models:
   deepseek-coder-6.7b-base-awq:
       - name: "Official GitHub Repository"
         url: "https://github.com/deepseek-ai/DeepSeek-Coder"
-
-
 tasks:
   text-generation:
     links:
@@ -24,4 +22,3 @@ tasks:
     links:
       - name: "Tutorial - Build a Retrieval Augmented Generation (RAG) AI"
         url: "/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/"
-
