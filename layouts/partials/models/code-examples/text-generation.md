@@ -77,7 +77,6 @@ import requests
 ACCOUNT_ID = "your-account-id"
 AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
 
-
 prompt = "Tell me all about PEP-8"
 response = requests.post(
   f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{{ .Params.model.name}}",
