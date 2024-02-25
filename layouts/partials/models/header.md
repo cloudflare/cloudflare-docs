@@ -31,7 +31,13 @@
 {{- end -}}
 
 {{ .Scratch.Set "conditional-name" "code-examples" }}
-{{ partial "models/conditionally.md" . }}
+{{ partial "models/conditionally.md" . | markdownify}}
+
+{{ .Scratch.Set "conditional-name" "prompting-guides" }}
+{{ partial "models/conditionally.md" . | markdownify}}
+
+{{ .Scratch.Set "conditional-name" "responses" }}
+{{ partial "models/conditionally.md" . | markdownify}}
 
 
 {{/* These don't exist yet

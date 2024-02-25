@@ -2,6 +2,9 @@
 # Overrides work like so: if `model.name` isn't found it will look for `task_type`
 # Specificity wins
 
+
+# NOTE: This is currently unused...plan to use for additional links
+
 models:
   llama-2-7b-chat-int8:
     code-examples: "models/code-examples/llama-2-7b-chat-int8.md"
