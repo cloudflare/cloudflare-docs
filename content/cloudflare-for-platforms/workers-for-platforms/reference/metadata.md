@@ -80,6 +80,9 @@ At a minimum, the `main_module` key is required to publish a user Worker.
 
   - The path to the module entry point of the user Worker that will be executed. For example, `main.js`.
 
+- `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used for the user Worker. Refer to (Compatibility dates)[https://developers.cloudflare.com/workers/configuration/compatibility-dates/].
 
 - `bindings` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
