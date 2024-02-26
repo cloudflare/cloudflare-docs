@@ -128,15 +128,13 @@ If your account zone default settings are already defined to have **Multi-provid
 Send the following `PATCH` request replacing the placeholders with your zone ID and authentication information:
 
 ```bash
-curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings/multi
-_provider' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'X-Auth-Key: <API_KEY>' \
--H 'Content-Type: application/json' \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "id": "multi
-_provider",
-  "value": true
+    "multi_provider": true
 }'
 ```
 
