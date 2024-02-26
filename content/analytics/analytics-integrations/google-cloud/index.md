@@ -165,7 +165,6 @@ To create a report for your log data based on the Cloudflare template:
 | EdgeColoID                 | Text                                 |
 | ClientSrcPort              | Text                                 |
 | EdgeResponseStatus         | Number                               |
-| EdgeRateLimitID            | Text                                 |
 | Copy of EdgeStartTimestamp | Date & Time > Date Hour (YYYYMMDDHH) |
 | OriginResponseStatus       | Number                               |
 | ClientASN                  | Text                                 |
