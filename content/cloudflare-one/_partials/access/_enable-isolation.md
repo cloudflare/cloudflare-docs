@@ -15,4 +15,4 @@ _build:
 
 Browser Isolation is now enabled for users who match this policy. After the user logs into Access, the application will launch in a remote browser. To confirm that the application is isolated, refer to [Check if a web page is isolated](/cloudflare-one/policies/browser-isolation/setup/#3-check-if-a-web-page-is-isolated).
 
-You can optionally add a second Allow policy for users on managed devices who do not require isolation.
+You can optionally add another Allow policy for users on managed devices who do not require isolation.
