@@ -2503,7 +2503,7 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-    max-width: 692px;
+    max-width: 100%;
     margin-bottom: 1em
 }
 
