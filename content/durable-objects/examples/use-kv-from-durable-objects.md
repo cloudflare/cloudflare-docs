@@ -71,7 +71,7 @@ export default {
   }
 }
 
-export class YourDurableObject implements Durable Object {
+export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
       this.state = state;
       // Ensure you pass your bindings and environmental variables into
