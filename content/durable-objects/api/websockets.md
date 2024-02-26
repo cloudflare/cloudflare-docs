@@ -16,7 +16,7 @@ For more information beyond the API reference, refer to [Durable Objects with We
 
 ## WebSocket Hibernation
 
-The WebSocket Hibernation API allows a Durable Object that is not currently running an event handler (such as [handling a WebSocket message](/durable-objects/api/websockets/#websocketmessage), HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation").
+The WebSocket Hibernation API allows a Durable Object that is not currently running an event handler (such as [handling a WebSocket message](/durable-objects/api/websockets/#websocketmessage), HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation"). This reduces duration charges that would otherwise be incurred during periods of inactivity.
 
 {{<heading-pill style="beta" heading="h2">}}Extensions to WebSocket API{{</heading-pill>}}
 
@@ -38,7 +38,7 @@ The WebSocket Hibernation API allows a Durable Object that is not currently runn
 
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
-  - Retrieves the most recent value passed to `state.serializeAttachment()`, or `null` if none exists.
+  - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
 
 {{</definitions>}}
 
@@ -56,7 +56,7 @@ The WebSocket Hibernation API allows a Durable Object that is not currently runn
 
   - `tags` are optional string tags used to look up the WebSocket with `state.getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
 
-  - The WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+  - The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 {{</definitions>}}
 

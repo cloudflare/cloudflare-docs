@@ -26,7 +26,13 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 ## WebSocket Hibernation
 
-The WebSockets API allows a Durable Object that is not currently running an event handler (such as handling a WebSocket message, HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation").
+The WebSocket Hibernation API allows a Durable Object that is not currently running an event handler (such as handling a WebSocket message, HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation").
+
+{{<Aside type="note">}}
+
+Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets cannot be hibernated.
+
+{{</Aside>}}
 
 A Durable Object that hibernates will not incur billable [Duration (GB-sec) charges](/durable-objects/platform/pricing/). For applications with many long-lived Durable Objects and periodic WebSocket messages or events, using WebSocket Hibernation can measurably reduce billable duration.
 
