@@ -168,6 +168,12 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 A subrequest is any request that a Worker makes to another Internet resource using the [Fetch API](/workers/runtime-apis/fetch/).
 
+### Can I make subrequests from my Worker to another Worker on my account?
+
+To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/configuration/bindings/about-service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
+
+If you attempt to use global `fetch()` to make a subrequest to another Worker on your account that runs on the same [zone](https://developers.cloudflare.com/fundamentals/setup/accounts-and-zones/#zones), without Service Bindings, the request will fail.
+
 ### How many subrequests can I make?
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
