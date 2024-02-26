@@ -7,8 +7,11 @@ layout: learning-module
 
 # Connect networks to Cloudflare
 
-To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
+After connecting your devices to Zero Trust, you can route traffic from these devices' networks.
 
 ## Objectives
 
 By the end of this module, you will be able to:
+
+- Understand the various methods for routing network traffic to Cloudflare
+- Decide which network on-ramp to use for your organization
