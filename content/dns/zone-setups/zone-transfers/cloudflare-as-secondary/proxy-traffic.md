@@ -27,16 +27,32 @@ Before you set up Secondary DNS override, make sure that you have:
 
 ## Set up Secondary DNS override
 
-
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) the **Proxy status** for these records to be **Proxied**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **DNS** > **Settings**.
+3. Enable **Secondary DNS override**.
+4. On **DNS** > **Records**, for specific `A`, `AAAA`, or `CNAME` records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) their **Proxy status** to **Proxied**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`. Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
+1. To enable Secondary DNS override on a zone, use the following PATCH request:
+
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+    "secondary_overrides": true
+}'
+```
+
+2. For specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`.
+    - Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
 
 {{</tab>}}
 {{</tabs>}}
