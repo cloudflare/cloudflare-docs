@@ -26,7 +26,7 @@ If your organization is most concerned about general data patterns that fit exis
 
 ## Best practices: building functional DLP policies in Gateway
 
-The best way to begin applying data loss prevention inspection to your traffic and to minimize the chance of false positives and begin collecting actionable data is to start with the “known knowns” within your sensitive data policies. This means that rather than building policies to detect sensitive data like SSNs or financial information across all of your traffic to start, you should start by building policies that target both sensitive data types and destinations that are known data sources or points of high risk, inside or external to your organization.
+The best way to begin applying data loss prevention inspection to your traffic and to minimize the chance of false positives and begin collecting actionable data is to start with the "known knowns" within your sensitive data policies. This means that rather than building policies to detect sensitive data like SSNs or financial information across all of your traffic to start, you should start by building policies that target both sensitive data types and destinations that are known data sources or points of high risk, inside or external to your organization.
 
 For example, this might look for most organizations like an interest in detecting financial information egressing from user devices to a series of critical SaaS applications. To limit the risk of false positives, and to filter out logging 'noise' in the system, we'd recommend building your first series of policies to specify both target data and target destination.
 [api and example docs]

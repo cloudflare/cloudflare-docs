@@ -17,7 +17,7 @@ You can control potential risk and shape user behavior without applying heavy-ha
 
 [example policy flow screenshot and api call]
 
-## Isolating all “gray-listed” traffic
+## Isolating all "gray-listed" traffic
 
 A common method for using Browser Isolation to dramatically enhance your security posture by protecting against unknown or zero-day threats is to separate all HTTP traffic into known acceptable, known malicious, and 'unknown' buckets, and to isolate the 'unknown'. You can easily accomplish this by setting explicit allow policies for all your known applications and trusted websites (either by using Cloudflare application definitions or managing a list), setting explicit block policies for all security risks, known-malicious, and against-acceptable-use intentional denies, and then setting a policy to isolate all other traffic in this middle. In this context, if something is 'unknown' to the business, Cloudflare will isolate it by default, and prevent any malicious code from being executed client side, with additional controls available.
 [screenshot and API example for three policies]
