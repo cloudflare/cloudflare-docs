@@ -63,12 +63,12 @@ To create a peer using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Select **DNS Zone Transfers**.
-4. For **Peer DNS servers**, select **Create**. 
+4. For **Peer DNS servers**, select **Create**.
 5. Enter the following information, paying particular attention to:
     - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
     - **Port**: Specifies the IP Port for the NOTIFY IP.
     - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
-    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
+    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
 6. Select **Create**.
 
 ### Using the API
@@ -113,12 +113,14 @@ Using the information from your secondary DNS provider, [create `NS` records](/d
 By default, Cloudflare ignores `NS` records that are added to the zone apex. By sending the following API call, you can enable the usage of apex NS records and Cloudflare nameservers will respond with them alongside the assigned Cloudflare nameservers of the zone.
 
 ```bash
-curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings/use_apex_ns' \
+curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings/multi
+_provider' \
 -H 'X-Auth-Email: <EMAIL>' \
 -H 'X-Auth-Key: <API_KEY>' \
 -H 'Content-Type: application/json' \
 --data '{
-  "id": "use_apex_ns",
+  "id": "multi
+_provider",
   "value": true
 }'
 ```

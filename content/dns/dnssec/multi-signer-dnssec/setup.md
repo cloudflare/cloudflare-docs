@@ -82,12 +82,14 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 {{</Aside>}}
 
 ```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings/use_apex_ns' \
+$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings/multi
+_provider' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <KEY>' \
 --header 'Content-Type: application/json' \
 --data '{
-  "id": "use_apex_ns",
+  "id": "multi
+_provider",
   "value": true
 }'
 ```
