@@ -244,7 +244,7 @@
 /d1/build-databases/ /d1/build-with-d1/ 301
 /d1/build-databases/query-databases/ /d1/build-with-d1/query-databases/ 301
 /d1/build-databases/use-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/build-databases/import-data/ /d1/build-with-d1/import-data/ 3-1
+/d1/build-databases/import-data/ /d1/build-with-d1/import-data/ 301
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
