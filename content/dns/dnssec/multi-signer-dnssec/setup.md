@@ -20,9 +20,9 @@ Note that:
 
 ## 1. Set up Cloudflare zone
 
-{{<Aside type="note">}}
-The following steps also apply if you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that, in such case, the records in steps 2 and 3 should be transferred from the primary, and step 4 is not necessary.
-{{</Aside>}}
+### Cloudflare as Primary
+
+If you use Cloudflare as a primary DNS provider, meaning that you manage your DNS records in Cloudflare, do the following:
 
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
@@ -76,9 +76,6 @@ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_re
 
 {{<Aside type="warning">}}
 This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, Cloudflare will ignore any `NS` records created on the zone apex. This means that responses to DNS queries made to the zone apex and requesting `NS` records will only contain Cloudflare nameservers.
-
-If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is not necessary.
-
 {{</Aside>}}
 
 ```bash
@@ -91,6 +88,58 @@ _provider' \
   "id": "multi
 _provider",
   "value": true
+}'
+```
+
+### Cloudflare as secondary
+
+If you use Cloudflare as a secondary DNS provider, do the following:
+
+1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
+
+```bash
+$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <KEY>' \
+--header 'Content-Type: application/json' \
+--data '{
+  "status": "active",
+  "dnssec_multi_signer": true
+}'
+```
+
+2. Add the ZSK(s) of your external provider(s) to a DNSKEY record on your primary DNS provider. This record should be transferred successfully to Cloudflare.
+
+```bash
+$ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <KEY>' \
+--header 'Content-Type: application/json' \
+--data '{
+  "type": "DNSKEY",
+  "name": "<ZONE_NAME>",
+  "data": {
+    "flags": 256,
+    "protocol": 3,
+    "algorithm": 13,
+    "public_key": "<PUBLIC_KEY>"
+  },
+  "ttl": 3600
+}'
+```
+
+3. Add your external provider(s) nameservers as NS records on your zone apex on your primary DNS provider. These records should be transferred successfully to Cloudflare.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "type": "NS",
+  "name": "<ZONE_NAME>",
+  "content": "<NS_DOMAIN>",
+  "ttl": 86400
 }'
 ```
 
