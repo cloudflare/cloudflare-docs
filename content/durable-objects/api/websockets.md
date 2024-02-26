@@ -12,11 +12,13 @@ WebSockets are long-lived TCP connections that enable bi-directional, real-time 
 
 Durable Objects support the [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
-For more information beyond the API reference, refer to [Durable Objects with WebSockets](/durable-objects/reference/websockets/).
+For more information beyond the API reference, refer to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example.
 
 ## WebSocket Hibernation
 
 The WebSocket Hibernation API allows a Durable Object that is not currently running an event handler (such as [handling a WebSocket message](/durable-objects/api/websockets/#websocketmessage), HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation"). This reduces duration charges that would otherwise be incurred during periods of inactivity.
+
+To learn more about WebSocket Hibernation, refer to [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/) example.
 
 {{<heading-pill style="beta" heading="h2">}}Extensions to WebSocket API{{</heading-pill>}}
 

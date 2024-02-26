@@ -62,7 +62,7 @@ export class WebSocketHibernationServer {
       // request within the Durable Object. It has the effect of "accepting" the connection,
       // and allowing the WebSocket to send and receive messages.
       // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the websocket
-      // is "hibernatable", therefore does not need to pin this Durable Object to memory while
+      // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
       // the connection is open. During periods of inactivity, the Durable Object can be evicted
       // from memory, but the WebSocket connection will remain open. If at some later point the
       // WebSocket receives a message, the runtime will recreate the Durable Object
@@ -113,14 +113,14 @@ This Durable Object supports the following endpoints:
 filename: index.ts
 ---
 export interface Env {
-  WEBSOCKET_SERVER: DurableObjectNamespace;
+  WEBSOCKET_HIBERNATION_SERVER: DurableObjectNamespace;
 }
 
 // Worker
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // We will always refer to the same Durable Object instance,
-    // since we've hardcoded the name "foo".
+    // This example will always refer to the same Durable Object instance,
+    // since the name "foo" is hardcoded.
     let id: DurableObjectId = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
     let stub: DurableObjectStub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
 
@@ -154,9 +154,8 @@ export class WebSocketHibernationServer {
       // Calling `acceptWebSocket()` tells the runtime that this WebSocket is to begin terminating
       // request within the Durable Object. It has the effect of "accepting" the connection,
       // and allowing the WebSocket to send and receive messages.
-      //
       // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the websocket
-      // is "hibernatable", therefore does not need to pin this Durable Object to memory while
+      // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
       // the connection is open. During periods of inactivity, the Durable Object can be evicted
       // from memory, but the WebSocket connection will remain open. If at some later point the
       // WebSocket receives a message, the runtime will recreate the Durable Object
@@ -193,7 +192,7 @@ This Durable Object supports the following endpoints:
   }
 
   async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-    // If the client closes the connection, we will close it too.
+    // If the client closes the connection, the runtime will invoke the webSocketClose() handler.
     ws.close(code, "Durable Object is closing WebSocket");
   }
 }

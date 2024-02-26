@@ -75,7 +75,7 @@ export class WebSocketServer {
         server.send(`[Durable Object]: ${event.data}`);
       });
 
-      // If the client closes the connection, we will close it too.
+      // If the client closes the connection, the runtime will also close the connection.
       server.addEventListener('close', cls => {
         this.currentlyConnectedWebSockets -= 1;
         server.close(cls.code, "Durable Object is closing WebSocket");
@@ -118,8 +118,8 @@ export interface Env {
 // Worker
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // We will always refer to the same Durable Object instance,
-    // since we've hardcoded the name "foo".
+    // The example will refer to the same Durable Object instance,
+    // since the name "foo" is hardcoded.
     let id: DurableObjectId = env.WEBSOCKET_SERVER.idFromName("foo");
     let stub: DurableObjectStub = env.WEBSOCKET_SERVER.get(id);
 
@@ -169,7 +169,7 @@ export class WebSocketServer {
         server.send(`[Durable Object]: ${event.data}`);
       });
 
-      // If the client closes the connection, we will close it too.
+      // If the client closes the connection, the runtime will close the connection too.
       server.addEventListener('close', (cls: CloseEvent) => {
         this.currentlyConnectedWebSockets -= 1;
         server.close(cls.code, "Durable Object is closing WebSocket");
@@ -186,7 +186,7 @@ export class WebSocketServer {
       return new Response(`There are ${this.currentlyConnectedWebSockets} WebSocket clients connected to this Durable Object instance.`);
     }
 
-    // Unknown path, we'll reply with usage info.
+    // Unknown path, reply with usage info.
     return new Response(`
 This Durable Object supports the following endpoints:
   /websocket
