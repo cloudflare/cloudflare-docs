@@ -191,7 +191,7 @@ Available Filters:
 
 The Splunk Cloudflare App relies on data from the Cloudflare Enterprise Logs fields outlined below. Depending on which fields you have enabled, certain dashboards might not populate fully.
 
-If that is the case, verify and test the Cloudflare App filters below each dashboard (these filters are the same across all dashboards). You can delete any filters that you don’t need, even if such filters include data fields already contained in your logs.
+If that is the case, verify and test the Cloudflare App filters below each dashboard (these filters are the same across all dashboards). You can delete any filters that you do not need, even if such filters include data fields already contained in your logs.
 
 Also, you could compare the list of fields you are getting in Cloudflare Logs with the fields listed in **Splunk** > **Settings** > **Data Model** > **Cloudflare**.
 
@@ -247,10 +247,6 @@ The available fields are:
 
 - EdgePathingStatus
 
-- EdgeRateLimitAction
-
-- EdgeRateLimitID
-
 - EdgeRequestHost
 
 - EdgeResponseBytes
@@ -263,12 +259,6 @@ The available fields are:
 
 - EdgeStartTimestamp
 
-- FirewallMatchesActions
-
-- FirewallMatchesSources
-
-- FirewallMatchesRuleIDs
-
 - OriginIP
 
 - OriginResponseStatus
@@ -279,17 +269,22 @@ The available fields are:
 
 - RayID
 
-- WAFAction
+
+- SecurityAction
+
+- SecurityActions
+
+- SecurityRuleDescription
+
+- SecurityRuleID
+
+- SecurityRuleIDs
+
+- SecuritySources
 
 - WAFFlags
 
 - WAFMatchedVar
-
-- WAFProfile
-
-- WAFRuleID
-
-- WAFRuleMessage
 
 - WorkerSubrequest
 
