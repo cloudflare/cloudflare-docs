@@ -22,7 +22,7 @@
 ## Properties
 
 {{/* TODO: Can I get the page better here? */}}
-**Task Type**: [{{ $params.model.task.name }}](/workers-ai/wip-models/#{{ $params.task_type }})
+**Task Type**: [{{ $params.model.task.name }}](/workers-ai/models/#{{ $params.task_type }})
 {{ range $key, $display := $limitsMap -}}
   {{- with (index $properties $key) }}
 **{{ $display }}**: {{ . }}

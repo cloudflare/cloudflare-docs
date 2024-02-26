@@ -1,11 +1,11 @@
 ---
 pcx_content_type: navigation
-title: WIP Models
+title: Models
 weight: 3
 hideChildren: true
 ---
 
-# WIP Models
+# Models
 
 Browse our entire catalog of models.
 
