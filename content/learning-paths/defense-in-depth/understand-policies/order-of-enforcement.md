@@ -5,4 +5,6 @@ weight: 1
 layout: learning-unit
 ---
 
-Cloudflare Gateway policies follow a specific [order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/).
+Gateway follows a specific order of enforcement as traffic travels through the Cloudflare global network to the Internet:
+
+{{<render file="gateway/_order-of-enforcement.md" productFolder="cloudflare-one">}}

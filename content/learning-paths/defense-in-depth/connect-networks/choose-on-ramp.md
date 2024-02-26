@@ -28,3 +28,5 @@ Only available on Enterprise plans.
 - [Cloudflare Network Interconnect](network-interconnect/) (CNI) at private peering locations or some public cloud instances (where compatible)
 
 Magic WAN on-ramps and off-ramps the traffic via your IPSEC tunnels after transiting the Cloudflare network. You can upgrade Magic WAN traffic with Gateway to egress publicly. WARP traffic can traverse Magic WAN's IPSEC tunnels to reach a private network.
+
+Next, you will learn how enforce policies with Cloudflare Gateway.
