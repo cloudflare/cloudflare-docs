@@ -27,4 +27,3 @@ Refer to [Routes with `workers.dev`](/workers/configuration/routing/routes/#rout
 
 - [Announcing `workers.dev`](https://blog.cloudflare.com/announcing-workers-dev)
 - [`wrangler.toml` routes configuration](/workers/wrangler/configuration/#types-of-routes)
-
