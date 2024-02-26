@@ -6,9 +6,11 @@ weight: 6
 
 # Phish submissions
 
-As part of your email configuration, administrators and email recipients can submit missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses/) so Cloudflare can process them and take necessary action.
+As part of your continuous email security posture, administrators and email recipients should submit missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses/) so Cloudflare can process them and take necessary action.
 
 Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a detection. These include preemptively crawling the web to identify campaigns, machine learning, custom signatures, among others. In order for Area 1 to identify why phish was missed, we need to run the original samples through our module and identify why some of our modules did not score the sample high enough to elevate it to malicious.
+
+Submitting missed phish samples to Cloudflare is of paramount importance and necessary for continuous protection as it helps us improve our machine learning (ML) models and alerts us of new attack vectors before they become prevalent.
 
 ## How to submit phish
 
