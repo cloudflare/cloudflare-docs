@@ -108,6 +108,10 @@ To allow these applications to function normally, administrators can configure b
 
 If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
+## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
+
+Advanced security features including HTTPS traffic inspection require browsers to present a valid [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/). Chrome loads and caches the system certificate list when it starts, so existing browser sessions may show invalid certificate errors if you recently installed a new certificate or enrolled the WARP client. To load the new certificate, restart your browser.
+
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
