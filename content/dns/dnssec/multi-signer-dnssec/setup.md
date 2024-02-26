@@ -121,7 +121,17 @@ If you use Cloudflare as a secondary DNS provider, do the following:
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Content.....
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and zone.
+2. Go to **DNS** > **Settings**.
+3. For **DNSSEC with Secondary DNS** select **Live signing**.
+
+{{<Aside type="note">}}
+For the purpose of this tutorial, you will update your registrar with the DS record later, in [Step 3](/dns/dnssec/multi-signer-dnssec/setup/#3-set-up-registrar).
+{{</Aside>}}
+
+5. Also enable **Multi-signer DNSSEC** and **Multi-provider DNS**.
+6. Add the ZSK(s) of your external provider(s) to a DNSKEY record at your primary DNS provider. This record should be transferred successfully to Cloudflare.
+7. Add your external provider(s) nameservers as NS records on your zone apex at your primary DNS provider. These records should be transferred successfully to Cloudflare.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -139,39 +149,10 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 }'
 ```
 
-2. Add the ZSK(s) of your external provider(s) to a DNSKEY record on your primary DNS provider. This record should be transferred successfully to Cloudflare.
+2. Add the ZSK(s) of your external provider(s) to a DNSKEY record at your primary DNS provider. This record should be transferred successfully to Cloudflare.
 
-```bash
-$ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
---data '{
-  "type": "DNSKEY",
-  "name": "<ZONE_NAME>",
-  "data": {
-    "flags": 256,
-    "protocol": 3,
-    "algorithm": 13,
-    "public_key": "<PUBLIC_KEY>"
-  },
-  "ttl": 3600
-}'
-```
+3. Add your external provider(s) nameservers as NS records on your zone apex at your primary DNS provider. These records should be transferred successfully to Cloudflare.
 
-3. Add your external provider(s) nameservers as NS records on your zone apex on your primary DNS provider. These records should be transferred successfully to Cloudflare.
-
-```bash
-curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "type": "NS",
-  "name": "<ZONE_NAME>",
-  "content": "<NS_DOMAIN>",
-  "ttl": 86400
-}'
 ```
 {{</tab>}}
 {{</tabs>}}
