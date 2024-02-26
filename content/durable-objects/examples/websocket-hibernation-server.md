@@ -13,7 +13,7 @@ This example is similar to the [Build a WebSocket server](/durable-objects/examp
 
 {{<Aside type="note">}}
 
-WebSocket Hibernation is unavailable for outgoing WebSocket use-cases. Hibernation is only supported when the Durable Object acts as a server. For use-cases where outgoing WebSockets are required, refer to [Writing a WebSocket client](/workers/examples/websockets/#write-a-websocket-client).
+WebSocket Hibernation is unavailable for outgoing WebSocket use-cases. Hibernation is only supported when the Durable Object acts as a server. For use-cases where outgoing WebSockets are required, refer to [Write a WebSocket client](/workers/examples/websockets/#write-a-websocket-client).
 
 {{</Aside>}}
 

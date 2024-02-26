@@ -13,7 +13,7 @@ This example shows how to build a WebSocket server using Durable Objects and Wor
 
 {{<Aside type="warning">}}
 
-WebSocket connections pin your Durable Object to memory, and so duration charges will be incurred so long as the WebSocket is connected (regardless of activity). To avoid duration charges during periods of inactivity, use the [WebSocket Hibernation API](/durable-objects/examples/websocket-hibernation-server), which only charges for duration when JS is actively executing.
+WebSocket connections pin your Durable Object to memory, and so duration charges will be incurred so long as the WebSocket is connected (regardless of activity). To avoid duration charges during periods of inactivity, use the [WebSocket Hibernation API](/durable-objects/examples/websocket-hibernation-server), which only charges for duration when JavaScript is actively executing.
 
 {{</Aside>}}
 
