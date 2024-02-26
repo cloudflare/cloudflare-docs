@@ -298,6 +298,6 @@ After you have previewed your application locally, you can deploy it to Cloudfla
 
 ### Troubleshooting
 
-- All server-side routes in your Next.js project must be configured as "Edge" runtime routes, by adding `export const runtime = 'edge';` to each individual route. Refer to the [`next-on-pages` docs](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md) for more examples. If you see the error `failed to retrieve the Cloudflare request context` — try adding this to your route.
+- All server-side routes in your Next.js project must be configured as "Edge" runtime routes, by adding `export const runtime = 'edge';` to each individual route. Refer to the [`next-on-pages` docs](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md) for more examples.
 - `next-on-pages` documents other common issues [here](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/gotchas.md).
 
