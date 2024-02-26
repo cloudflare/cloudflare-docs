@@ -1,14 +1,13 @@
-
 ## Code Examples
 
 <details>
   <summary>Workers - TypeScript</summary>
 
 ```ts
-import { Ai } from '@cloudflare/ai'
+import { Ai } from "@cloudflare/ai";
 
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
@@ -16,21 +15,22 @@ export default {
     const ai = new Ai(env.AI);
 
     const inputs = {
-        prompt: "cyberpunk cat",
+      prompt: "cyberpunk cat",
     };
 
-    const response = await ai.run("{{ .Page.Params.model.name }}", inputs);
+    const response = await ai.run<"{{ .Page.Params.model.name }}">(
+      "{{ .Page.Params.model.name }}",
+      inputs
+    );
 
     return new Response(response, {
-        headers: {
-            "content-type": "image/png",
-        },
+      headers: {
+        "content-type": "image/png",
+      },
     });
-
-  }
-}
+  },
+};
 ```
-
 
 </details>
 

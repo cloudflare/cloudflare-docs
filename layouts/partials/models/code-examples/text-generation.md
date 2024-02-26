@@ -1,4 +1,3 @@
-
 ## Code Examples
 
 <details>
@@ -8,7 +7,7 @@
 import { Ai } from "@cloudflare/ai";
 
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
@@ -23,10 +22,13 @@ export default {
       },
     ];
 
-    const stream = await ai.run("{{ .Params.model.name }}", {
-      messages,
-      stream: true,
-    });
+    const stream = await ai.run<"{{ .Params.model.name }}">(
+      "{{ .Params.model.name }}",
+      {
+        messages,
+        stream: true,
+      }
+    );
 
     return new Response(stream, {
       headers: { "content-type": "text/event-stream" },
@@ -93,7 +95,6 @@ return result.response
 ```
 
 </details>
-
 
 <details>
   <summary>curl</summary>

@@ -1,30 +1,31 @@
-
 ## Code Examples
 
 <details>
   <summary>Worker - TypeScript</summary>
 
 ```ts
-import { Ai } from '@cloudflare/ai'
+import { Ai } from "@cloudflare/ai";
 
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const response = await ai.run('{{ .Page.Params.model.name }}', {
+    const response = await ai.run<"{{ .Params.model.name }}">(
+      "{{ .Page.Params.model.name }}",
+      {
         text: "I'll have an order of the moule frites",
         source_lang: "english", // defaults to english
-        target_lang: "french"
+        target_lang: "french",
       }
     );
 
     return new Response(JSON.stringify(response));
   },
-}
+};
 ```
 
 </details>
@@ -53,7 +54,6 @@ print(output)
 
 </details>
 
-
 <details>
   <summary>curl</summary>
 
@@ -63,6 +63,5 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID}/ai/ru
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
     -d '{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }'
 ```
-
 
 </details>

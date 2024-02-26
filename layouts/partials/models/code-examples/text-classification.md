@@ -1,26 +1,27 @@
-
 ## Code Examples
 
 <details>
   <summary>Worker - TypeScript</summary>
 
 ```ts
-import { Ai } from '@cloudflare/ai'
+import { Ai } from "@cloudflare/ai";
 
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const response = await ai.run('{{ .Page.Params.model.name }}', {
-        text: "This pizza is great!"
+    const response = await ai.run<"{{ .Page.Params.model.name }}">(
+      "{{ .Page.Params.model.name }}",
+      {
+        text: "This pizza is great!",
       }
     );
 
-    return Response.json(response)
+    return Response.json(response);
   },
 };
 ```

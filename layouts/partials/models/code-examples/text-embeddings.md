@@ -1,14 +1,13 @@
-
 ## Code Examples
 
 <details>
   <summary>Worker - TypeScript</summary>
 
 ```ts
-import { Ai } from '@cloudflare/ai'
+import { Ai } from "@cloudflare/ai";
 
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
@@ -17,13 +16,15 @@ export default {
 
     // Can be a string or array of strings]
     const stories = [
-      'This is a story about an orange cloud',
-      'This is a story about a llama',
-      'This is a story about a hugging emoji'
-    ]
+      "This is a story about an orange cloud",
+      "This is a story about a llama",
+      "This is a story about a hugging emoji",
+    ];
 
-    const embeddings = await ai.run('{{ .Page.Params.model.name }}', {
-        text: stories
+    const embeddings = await ai.run<"{{ .Params.model.name }}">(
+      "{{ .Page.Params.model.name }}",
+      {
+        text: stories,
       }
     );
 
@@ -33,7 +34,6 @@ export default {
 ```
 
 </details>
-
 
 <details>
   <summary>Python</summary>
