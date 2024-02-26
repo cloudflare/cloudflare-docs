@@ -78,7 +78,7 @@ The `zone_id` and `zone_name` options are interchangeable. However, if using Clo
 
 ## Routes with `workers.dev`
 
-When you create your Worker, a [`*.workers.dev`](/workers/configuration/routing/workers-dev/) route is automatically set up. Review your `workers.dev` route in your Worker > **Triggers** > **Routes**.
+When you create your Worker, a [`workers.dev`](/workers/configuration/routing/workers-dev/) route is automatically set up. Review your `workers.dev` route in your Worker > **Triggers** > **Routes**.
 
 To disable the `workers.dev` route, include the following in your Worker's `wrangler.toml` file:
 

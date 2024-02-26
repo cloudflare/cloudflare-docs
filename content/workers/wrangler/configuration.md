@@ -292,13 +292,13 @@ route = "example.com/*"
 
 ### `workers.dev`
 
-Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard.
+Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard.
 
 {{<definitions>}}
 
 - `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker runs on a custom `*.workers.dev` account subdomain. Defaults to `true`.
+  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true`.
 
 {{</definitions>}}
 
