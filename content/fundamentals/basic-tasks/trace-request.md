@@ -83,11 +83,13 @@ The following steps are planned for future additions:
 
 ## Limitations
 
-Currently, you cannot perform traces for [Spectrum](/spectrum/) applications.
+Currently, you cannot perform traces for:
+
+* [Spectrum](/spectrum/) applications
+* Hostnames using [Data Localization Suite](/data-localization/)
 
 Also, the following products will not appear in trace results:
 
 * [Firewall rules](/firewall/)
 * [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
 * [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
-* [Data Localization Suite](/data-localization/)

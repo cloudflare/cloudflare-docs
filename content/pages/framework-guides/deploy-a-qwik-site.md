@@ -31,7 +31,7 @@ $ npm start
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -81,4 +81,4 @@ export const useGetServerTime = routeLoader$(({ platform }) => {
 });
 ```
 
-{{<render file="_learn-more.md" withParameters="Qwik">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Qwik">}}

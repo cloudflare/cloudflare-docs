@@ -34,5 +34,5 @@ To use Images Light, select **Use my own storage** when purchasing Images in the
 
 |<div style="width:150px">Plan</div>| Images transformed |
 |-----------------------------------|--------------------|
-| Free, Pro, Basic                  | - $0.50 per 1K unique transformations per month<br> - 5K transformations included per month
+| Free, Pro, Business               | - $0.50 per 1K unique transformations per month<br> - 5K transformations included per month
 | Enterprise      | - $0.50 per 1K unique transformations per month <br> - 1M transformations included |

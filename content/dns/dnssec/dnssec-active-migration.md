@@ -42,7 +42,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 --data '{"status": "active"}'
 ```
 
-4. Enable multi-signer DNSSEC using the following request. This step can only be achieved via the [API](/api/operations/dnssec-edit-dnssec-status).
+4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
 $ curl --request PATCH \
