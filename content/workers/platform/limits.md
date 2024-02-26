@@ -172,7 +172,7 @@ A subrequest is any request that a Worker makes to another Internet resource usi
 
 To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/configuration/bindings/about-service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
 
-If you attempt to use global `fetch()` to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without Service Bindings, the request will fail.
+If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without Service Bindings, the request will fail.
 
 ### How many subrequests can I make?
 
