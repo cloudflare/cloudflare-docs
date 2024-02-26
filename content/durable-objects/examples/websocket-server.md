@@ -118,7 +118,7 @@ export interface Env {
 // Worker
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // The example will refer to the same Durable Object instance,
+    // This example will refer to the same Durable Object instance,
     // since the name "foo" is hardcoded.
     let id: DurableObjectId = env.WEBSOCKET_SERVER.idFromName("foo");
     let stub: DurableObjectStub = env.WEBSOCKET_SERVER.get(id);
@@ -146,8 +146,8 @@ export class WebSocketServer {
   // Handle HTTP requests from clients.
   async fetch(request: Request): Promise<Response> {
     if (request.url.endsWith("/websocket")) {
-      // We expect to receive a WebSocket Upgrade request.
-      // If we have one, we will accept the request and return a WebSocket Response.
+      // Expect to receive a WebSocket Upgrade request.
+      // If there is one, accept the request and return a WebSocket Response.
       const upgradeHeader = request.headers.get('Upgrade');
       if (!upgradeHeader || upgradeHeader !== 'websocket') {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });

@@ -28,7 +28,7 @@ filename: index.js
 // Worker
 export default {
   async fetch(request, env) {
-    // The example refers to the same Durable Object instance,
+    // This example refers to the same Durable Object instance,
     // since it hardcodes the name "foo".
     let id = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
     let stub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
