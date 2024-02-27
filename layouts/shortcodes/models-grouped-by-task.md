@@ -5,10 +5,10 @@
 
 {{ $firstPage.Params.model.task.description }}
 
-| Model | Model ID      | Description                  |
-|-------|---------------|------------------------------|
+| Model     | Model ID          | Description   |
+|-----------|-------------------|---------------|
   {{- range .Pages -}}
     {{- $params := .Params }}
-| [{{ $params.model_display_name }}]({{ .RelPermalink }}) | `{{$params.model.name}}` | {{ $params.model.description }}
+| [{{ $params.model_display_name }}]({{ .RelPermalink }}) | `{{$params.model.name}}` | {{ $params.model.description | truncate 50 }} |
   {{- end -}}
 {{- end -}}
