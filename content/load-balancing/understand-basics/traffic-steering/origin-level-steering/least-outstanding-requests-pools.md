@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Least Outstanding Requests
+title: Least outstanding requests
 weight: 4
 meta:
   title: Least Outstanding Requests steering - Origin-level steering
@@ -8,7 +8,7 @@ meta:
 
 # Least Outstanding Requests steering
 
-**Least Outstanding Requests steering** allows you to route traffic to origins that currently have the fewest number of outstanding requests.
+**Least Outstanding Requests steering** allows you to route traffic to origins that currently have the lowest number of outstanding requests.
 
 This steering policy selects an origin by taking into consideration origin weights, as well as each origin's number of in-flight requests. Origins with more pending requests are weighted proportionately less in relation to others.
 
@@ -30,7 +30,7 @@ header: Pools
 Refer to the [API documentation](/api/operations/load-balancer-pools-update-pool) for more information on the pool configuration.
 
 {{<Aside type="note">}}
-Least Outstanding Requests steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-outstanding-requests/), taking into account outstanding request counts and `random_steering` weights for pools on the load balancer.
+Least Outstanding Requests steering can also be configured on a load balancer as a [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/least-outstanding-requests/), taking into account outstanding request counts and [`random_steering` weights](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) for pools on the load balancer.
 {{</Aside>}}
 
 ## Limitations
