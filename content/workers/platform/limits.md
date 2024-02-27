@@ -174,6 +174,7 @@ To make subrequests from your Worker to another Worker on your account, use [Ser
 
 If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without Service Bindings, the request will fail.
 
+If you make a subrequest from your Worker to a target Worker that runs on a [Custom Domain](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/#worker-to-worker-communication) rather than a route, the request will be allowed.
 ### How many subrequests can I make?
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
