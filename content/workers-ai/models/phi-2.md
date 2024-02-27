@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "phi-2"
 layout: "model"
 title: "phi-2"
-
 ---
-
-TODO: JSON Schemas

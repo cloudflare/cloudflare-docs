@@ -18,7 +18,4 @@ task_type: "text-generation"
 model_display_name: "deepseek-coder-6.7b-instruct-awq"
 layout: "model"
 title: "deepseek-coder-6.7b-instruct-awq"
-
 ---
-
-TODO: JSON Schemas

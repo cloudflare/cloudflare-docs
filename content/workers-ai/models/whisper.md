@@ -20,7 +20,4 @@ task_type: "automatic-speech-recognition"
 model_display_name: "whisper"
 layout: "model"
 title: "whisper"
-
 ---
-
-TODO: JSON Schemas

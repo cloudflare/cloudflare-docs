@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "discolm-german-7b-v1-awq"
 layout: "model"
 title: "discolm-german-7b-v1-awq"
-
 ---
-
-TODO: JSON Schemas

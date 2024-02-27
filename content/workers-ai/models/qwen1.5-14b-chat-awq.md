@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "qwen1.5-14b-chat-awq"
 layout: "model"
 title: "qwen1.5-14b-chat-awq"
-
 ---
-
-TODO: JSON Schemas

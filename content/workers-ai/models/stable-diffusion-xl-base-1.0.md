@@ -22,7 +22,4 @@ task_type: "text-to-image"
 model_display_name: "stable-diffusion-xl-base-1.0"
 layout: "model"
 title: "stable-diffusion-xl-base-1.0"
-
 ---
-
-TODO: JSON Schemas

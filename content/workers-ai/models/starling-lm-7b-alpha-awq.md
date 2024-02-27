@@ -16,7 +16,4 @@ task_type: "text-generation"
 model_display_name: "starling-lm-7b-alpha-awq"
 layout: "model"
 title: "starling-lm-7b-alpha-awq"
-
 ---
-
-TODO: JSON Schemas

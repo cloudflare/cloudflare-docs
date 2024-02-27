@@ -19,7 +19,4 @@ task_type: "text-generation"
 model_display_name: "codellama-7b-instruct-awq"
 layout: "model"
 title: "codellama-7b-instruct-awq"
-
 ---
-
-TODO: JSON Schemas

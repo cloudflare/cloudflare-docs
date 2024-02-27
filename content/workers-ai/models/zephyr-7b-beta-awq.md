@@ -18,7 +18,4 @@ task_type: "text-generation"
 model_display_name: "zephyr-7b-beta-awq"
 layout: "model"
 title: "zephyr-7b-beta-awq"
-
 ---
-
-TODO: JSON Schemas

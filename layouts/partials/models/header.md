@@ -38,11 +38,13 @@
 {{ .Scratch.Set "conditional-name" "responses" }}
 {{ partial "models/conditionally.md" . | markdownify}}
 
+{{/*
+
 ## API Schema
 
 The following schema is based on [JSON Schema](https://json-schema.org/)
 
-{{/* Currently the content on the model directly */}}
+ Currently the content on the model directly */}}
 
 {{/* These don't exist yet
 ## Model parameters

@@ -18,7 +18,4 @@ task_type: "text-classification"
 model_display_name: "distilbert-sst-2-int8"
 layout: "model"
 title: "distilbert-sst-2-int8"
-
 ---
-
-TODO: JSON Schemas

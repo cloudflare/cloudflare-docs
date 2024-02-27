@@ -20,7 +20,4 @@ task_type: "image-classification"
 model_display_name: "resnet-50"
 layout: "model"
 title: "resnet-50"
-
 ---
-
-TODO: JSON Schemas

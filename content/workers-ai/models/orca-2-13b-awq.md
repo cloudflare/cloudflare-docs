@@ -16,7 +16,4 @@ task_type: "text-generation"
 model_display_name: "orca-2-13b-awq"
 layout: "model"
 title: "orca-2-13b-awq"
-
 ---
-
-TODO: JSON Schemas

@@ -16,7 +16,4 @@ task_type: "text-generation"
 model_display_name: "openhermes-2.5-mistral-7b-awq"
 layout: "model"
 title: "openhermes-2.5-mistral-7b-awq"
-
 ---
-
-TODO: JSON Schemas

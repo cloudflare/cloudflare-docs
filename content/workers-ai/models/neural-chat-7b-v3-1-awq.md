@@ -16,7 +16,4 @@ task_type: "text-generation"
 model_display_name: "neural-chat-7b-v3-1-awq"
 layout: "model"
 title: "neural-chat-7b-v3-1-awq"
-
 ---
-
-TODO: JSON Schemas

@@ -26,7 +26,4 @@ task_type: "text-generation"
 model_display_name: "llama-2-7b-chat-int8"
 layout: "model"
 title: "llama-2-7b-chat-int8"
-
 ---
-
-TODO: JSON Schemas

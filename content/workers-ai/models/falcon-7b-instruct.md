@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "falcon-7b-instruct"
 layout: "model"
 title: "falcon-7b-instruct"
-
 ---
-
-TODO: JSON Schemas

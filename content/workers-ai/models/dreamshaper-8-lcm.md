@@ -15,7 +15,4 @@ task_type: "text-to-image"
 model_display_name: "dreamshaper-8-lcm"
 layout: "model"
 title: "dreamshaper-8-lcm"
-
 ---
-
-TODO: JSON Schemas

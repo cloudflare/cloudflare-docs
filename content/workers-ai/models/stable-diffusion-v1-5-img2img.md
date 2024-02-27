@@ -15,7 +15,4 @@ task_type: "text-to-image"
 model_display_name: "stable-diffusion-v1-5-img2img"
 layout: "model"
 title: "stable-diffusion-v1-5-img2img"
-
 ---
-
-TODO: JSON Schemas

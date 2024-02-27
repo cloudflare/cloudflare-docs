@@ -15,7 +15,4 @@ task_type: "image-to-text"
 model_display_name: "uform-gen2-qwen-500m"
 layout: "model"
 title: "uform-gen2-qwen-500m"
-
 ---
-
-TODO: JSON Schemas

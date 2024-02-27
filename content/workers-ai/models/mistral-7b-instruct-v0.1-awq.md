@@ -18,7 +18,4 @@ task_type: "text-generation"
 model_display_name: "mistral-7b-instruct-v0.1-awq"
 layout: "model"
 title: "mistral-7b-instruct-v0.1-awq"
-
 ---
-
-TODO: JSON Schemas

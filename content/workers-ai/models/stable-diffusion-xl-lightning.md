@@ -15,7 +15,4 @@ task_type: "text-to-image"
 model_display_name: "stable-diffusion-xl-lightning"
 layout: "model"
 title: "stable-diffusion-xl-lightning"
-
 ---
-
-TODO: JSON Schemas

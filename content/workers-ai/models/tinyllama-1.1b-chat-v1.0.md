@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "tinyllama-1.1b-chat-v1.0"
 layout: "model"
 title: "tinyllama-1.1b-chat-v1.0"
-
 ---
-
-TODO: JSON Schemas

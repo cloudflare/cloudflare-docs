@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "yarn-mistral-7b-64k-awq"
 layout: "model"
 title: "yarn-mistral-7b-64k-awq"
-
 ---
-
-TODO: JSON Schemas

@@ -16,7 +16,4 @@ task_type: "text-generation"
 model_display_name: "llamaguard-7b-awq"
 layout: "model"
 title: "llamaguard-7b-awq"
-
 ---
-
-TODO: JSON Schemas

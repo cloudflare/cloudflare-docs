@@ -24,7 +24,4 @@ task_type: "text-embeddings"
 model_display_name: "bge-base-en-v1.5"
 layout: "model"
 title: "bge-base-en-v1.5"
-
 ---
-
-TODO: JSON Schemas

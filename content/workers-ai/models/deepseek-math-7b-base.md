@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "deepseek-math-7b-base"
 layout: "model"
 title: "deepseek-math-7b-base"
-
 ---
-
-TODO: JSON Schemas

@@ -15,7 +15,4 @@ task_type: "summarization"
 model_display_name: "bart-large-cnn"
 layout: "model"
 title: "bart-large-cnn"
-
 ---
-
-TODO: JSON Schemas

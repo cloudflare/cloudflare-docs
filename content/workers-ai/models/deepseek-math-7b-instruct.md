@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "deepseek-math-7b-instruct"
 layout: "model"
 title: "deepseek-math-7b-instruct"
-
 ---
-
-TODO: JSON Schemas

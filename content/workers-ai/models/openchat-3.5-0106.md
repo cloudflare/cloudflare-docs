@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "openchat-3.5-0106"
 layout: "model"
 title: "openchat-3.5-0106"
-
 ---
-
-TODO: JSON Schemas

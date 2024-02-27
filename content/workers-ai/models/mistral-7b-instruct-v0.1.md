@@ -20,7 +20,4 @@ task_type: "text-generation"
 model_display_name: "mistral-7b-instruct-v0.1"
 layout: "model"
 title: "mistral-7b-instruct-v0.1"
-
 ---
-
-TODO: JSON Schemas

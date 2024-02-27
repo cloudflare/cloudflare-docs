@@ -15,7 +15,4 @@ task_type: "text-generation"
 model_display_name: "sqlcoder-7b-2"
 layout: "model"
 title: "sqlcoder-7b-2"
-
 ---
-
-TODO: JSON Schemas
