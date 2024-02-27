@@ -1,3 +1,10 @@
+{{/* This is a specificity based partial loader
+
+It will display model specific templates first, then task-type
+
+NOTE: Set the value `"conditional-name"` in .Scratch before including this template
+*/}}
+
 {{ $conditionalName := .Scratch.Get "conditional-name"}}
 {{ $partialsRoot := "layouts/partials/"}}
 
