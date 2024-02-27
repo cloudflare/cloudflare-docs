@@ -2,7 +2,7 @@
 link: "/queues/platform/changelog/"
 productName: Queues
 entries:
-- publish_date: '2024-03-04`
+- publish_date: '2024-03-04'
   title: Default content type now set to JSON
   description: |-
     The default [content type](/queues/reference/javascript-apis/#queuescontenttype) for messages published to a queue is now `json`, which improves compatibility with the upcoming pull-based queues.
