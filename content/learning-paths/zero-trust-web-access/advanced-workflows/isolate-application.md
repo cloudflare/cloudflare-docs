@@ -55,7 +55,7 @@ The following two Access policies work together to require Browser Isolation for
 
   | Additional settings | Status  |
   | ------------------- | ------- |
-  | Isolate application | Enabled |
+  | Isolate application | Disabled |
 
 - **Policy 2: Allow users without WARP**
 
