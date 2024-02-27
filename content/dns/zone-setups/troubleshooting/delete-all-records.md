@@ -11,8 +11,16 @@ When you connect your domain to Cloudflare, the [DNS records quick scan](/dns/zo
 
 If you realize most of them are not applicable and want to delete all DNS records and start from zero, you can use the following script:
 
+## Steps
+
+This method assumes you are familiar with [API calls fundamentals](/fundamentals/api/).
+
+1. Make sure you have [an API token](/fundamentals/api/get-started/create-token/) that allows you to edit DNS for your zone.
+2. Get your [zone ID](/fundamentals/setup/find-account-and-zone-ids/).
+3. Run the following script, replacing `<ZONE_ID>` and `<API_TOKEN>` with the values you got from the previous steps.
+
 {{<Aside type="warning">}}
-This method assumes you are familiar with [API calls fundamentals](/fundamentals/api/how-to/make-api-calls/).
+This script uses [jq](https://jqlang.github.io/jq/) to format `JSON` outputs for readability. Refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/) for details.
 {{</Aside>}}
 
 ```bash
