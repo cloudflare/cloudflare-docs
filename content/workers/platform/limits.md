@@ -210,7 +210,7 @@ if (resp.statusCode <= 299) {
   // Call resp.json(), resp.text() or otherwise process the body
 } else {
   // Explicitly cancel it
-  response.body.cancel()
+  resp.body.cancel()
 }
 ```
 
