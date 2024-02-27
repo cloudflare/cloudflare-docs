@@ -20,6 +20,15 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
+- Projects configured for [Direct Upload](/pages/get-started/direct-upload/) currently cannot have their production branch changed through the Cloudflare Dashboard, however this can be changed using the [Update project](https://developers.cloudflare.com/api/operations/pages-project-update-project) API endpoint:
+
+```sh
+$ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_IDENTIFIER_HERE/pages/projects/<PROJECT_NAME> \
+ --header 'Content-Type: application/json' \
+ --header 'Authorization: Bearer <API_TOKEN>' \
+ --data '{ "production_branch": "<PROD_BRANCH_NAME>" }'
+```
+
 ## Git configuration
 
 - After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Delete your Pages project and create a new one pointing at a different repository if you need to update it.
