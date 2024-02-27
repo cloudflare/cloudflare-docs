@@ -345,7 +345,11 @@ The bindings supported by `getPlatformProxy` are:
 
     * To use a Durable Object binding with `getPlatformProxy`, you need to always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
 
-      For example, in your Worker project's `wrangler.toml` file, you have a Durable Object with certain `class_name` and `script_name` set to `"my-worker"`. The same exact `class_name` is also used by a Durable Object binding in your `my-worker` Worker, and you are running the Worker via `wrangler dev`. Calling `getPlatformProxy` will then successfully generate a proxy to the Durable Object defined in the `my-worker` Worker.
+      For example, in the `wrangler.toml` file that `getPlatformProxy` reads, there can be a Durable Object
+      binding declared with a `class_name` of `"MyDurableObject"` and a `script_name` of `"my-worker"`.
+      In order for this binding to be successfully proxied by `getPlatformProxy` a worker named `my-worker`
+      with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
+      separately via `wrangler dev`.
 
  * [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
 
