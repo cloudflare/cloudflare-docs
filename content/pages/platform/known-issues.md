@@ -23,7 +23,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 - Projects configured for [Direct Upload](/pages/get-started/direct-upload/) currently cannot have their production branch changed through the Cloudflare Dashboard, however this can be changed using the [Update project](/api/operations/pages-project-update-project) API endpoint:
 
 ```sh
-$ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_IDENTIFIER_HERE/pages/projects/<PROJECT_NAME> \
+$ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUNT_IDENTIFIER_HERE>/pages/projects/<PROJECT_NAME> \
  --header 'Content-Type: application/json' \
  --header 'Authorization: Bearer <API_TOKEN>' \
  --data '{ "production_branch": "<PROD_BRANCH_NAME>" }'
