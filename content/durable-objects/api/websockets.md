@@ -191,5 +191,6 @@ To learn more about WebSocket Hibernation, refer to [Build a WebSocket server wi
 ## Related resources
 
 - Refer to [Build a WebSocket server](/durable-objects/examples/websocket-server/) to learn more about building a WebSocket server using Durable Objects and Workers.
+- For more information beyond the API reference [Durable Objects with WebSockets](/durable-objects/reference/websockets/).
 - [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 - [Cloudflare's WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template).
