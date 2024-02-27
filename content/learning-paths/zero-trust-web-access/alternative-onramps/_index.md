@@ -5,7 +5,7 @@ weight: 8
 layout: learning-module
 ---
 
-# (Optional) Alternative on-ramps to ZTWA
+# Alternative on-ramps to ZTWA (Optional)
 
 
 ## Objectives
