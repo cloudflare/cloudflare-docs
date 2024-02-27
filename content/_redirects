@@ -292,7 +292,7 @@
 /durable-objects/how-to/ /durable-objects/configuration/ 301
 /durable-objects/how-to/access-durable-object-from-a-worker/ /durable-objects/configuration/access-durable-object-from-a-worker/ 301
 /durable-objects/how-to/create-durable-object-stubs/ /durable-objects/configuration/create-durable-object-stubs/ 301
-/durable-objects/durable-objects-api/ /durable-objects/api/ 301
+/durable-objects/durable-objects-api/ /durable-objects/api/durable-objects-api/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
