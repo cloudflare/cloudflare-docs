@@ -442,7 +442,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Worker where the Durable Object is defined, if it is external to this Worker. This option can be used both in local and remote mode, the former requiring you do run the external worker in a separate process (via `wrangler dev`), while for the latter the appropriate remote binding would be used instead.
+  - The name of the Worker where the Durable Object is defined, if it is external to this Worker. This option can be used both in local and remote development. In local development, you must run the external Worker in a separate process (via `wrangler dev`). In remote development, the appropriate remote binding must be used.
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
