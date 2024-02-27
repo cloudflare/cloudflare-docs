@@ -38,16 +38,19 @@ The rendered output looks like this:
 
 ## Displaying terminal commands
 
-Use the `sh` language for **one-line commands** executed in the Linux/macOS terminal (each command must be in a single line).
+- Use the `sh` language for **one-line commands** executed in the Linux/macOS terminal (each command must be in a single line).
 
-Each line containing a command that the user should enter *must* start with a `$` sign. The reader will be able to select these prefixed lines with commands, but no other lines in the code block (which should be command output).
+    Each line containing a command that the user should enter *must* start with a `$` sign. The reader will be able to select these prefixed lines with commands, but no other lines in the code block (which should be command output).
 
-{{<Aside type="note">}} The **Copy to clipboard** button (top-right corner of the code block) will copy the entire content, not just what the reader can select.{{</Aside>}}
+    {{<Aside type="note">}} The **Copy to clipboard** button (top-right corner of the code block) will copy the entire content, not just what the reader can select.{{</Aside>}}
 
-Use the `bash` language for other **Linux/macOS/generic commands**:
+- Use the `bash` language for other **Linux/macOS/generic commands**. For example:
+    - Commands that span multiple lines (usually each line ends with a `\`) and may include one or more lines of JSON content.
+    - Commands for specific shells (for example, a command specifically for the zsh shell, where the prompt is usually `#`).
 
-+ Commands that span multiple lines (usually each line ends with a `\`) and may include one or more lines of JSON content.
-+ Commands for other platforms (Windows console, Windows PowerShell) or for specific shells (for example, a command specifically for the zsh shell, where the prompt is usually #).
+- Use the `powershell` language for Windows PowerShell commands.
+
+- Use the `txt` language for Windows console commands.
 
 ## Terminal prompts
 
@@ -66,27 +69,6 @@ Blocks containing **Linux/macOS/generic** commands:
 
 + Use the same prefixes as for `sh`, even if they are not mandatory — "**`$`** " (dollar sign, space) or "**FOLDER_NAME `$`** " (folder name, space, dollar sign, space).
 
-Blocks containing **Windows console** commands:
-
-+ Use "**FOLDER_NAME>**" (folder name, bigger than symbol, no space after).
-
-  Alternatively, do not include any prompt and start the line with the command the user must enter (knowing that it will be harder to understand what must be entered and what is example output).
-
-  Examples:
-
-  + <b>C:\\></b>command-to-run.exe
-  + <b>C:\\Program Files></b>command-to-run.exe
-  + <b>C:\\Users\\JohnDoe></b>command-to-run.exe
-
-Blocks containing **PowerShell** commands:
-
-+ Use "**PS FOLDER_NAME>** " (the `>` is part of the prompt, and there is a space after it).
-
-  Examples:
-
-  + **PS C:\\Users\\JohnDoe>** command-to-run.exe
-  + **PS C:\\>** command-to-run.exe
-
 Blocks containing **zsh** commands:
 
 + Use "**#** " (hash sign, space) or "**FOLDER_NAME #** " (folder name, space, hash sign, space). Very similar to `sh` blocks but with a hash sign instead of a dollar sign.
@@ -95,6 +77,27 @@ Blocks containing **zsh** commands:
 
   + **#** command
   + **~/my-folder #** command (where `~` means the home folder of the current user).
+
+### For "powershell" blocks
+
+Use "**PS FOLDER_NAME>** " (the `>` is part of the prompt, and there is a space after it).
+
+Examples:
+
++ **PS C:\\>** command-to-run.exe
++ **PS C:\\Users\\JohnDoe>** command-to-run.exe
+
+### For Windows console ("txt") blocks
+
+Use "**FOLDER_NAME>**" (folder name, bigger than symbol, no space after).
+
+Alternatively, do not include any prompt and start the line with the command the user must enter (knowing that it will be harder to understand what must be entered and what is example output).
+
+Examples:
+
++ <b>C:\\></b>command-to-run.exe
++ <b>C:\\Program Files></b>command-to-run.exe
++ <b>C:\\Users\\JohnDoe></b>command-to-run.exe
 
 ---
 
@@ -122,6 +125,7 @@ Multi-line curl commands with a JSON body should use `bash` syntax highlighting,
 + `json`
 + `kotlin`
 + `php`
++ `powershell`
 + `python` (alias: `py`)
 + `ruby` (alias: `rb`)
 + `rust` (alias: `rs`)

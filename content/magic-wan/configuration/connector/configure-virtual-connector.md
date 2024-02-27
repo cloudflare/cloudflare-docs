@@ -13,7 +13,7 @@ Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternati
 Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally,  you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
 
 - Intel x86 CPU architecture
-- ESXi hypervisor 7.0U1 or higher (free edition is supported)
+- ESXi hypervisor 7.0U1 or higher
 - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
 - 4 GB of RAM per virtual connector
 - 8 GB of disk per virtual connector
@@ -80,7 +80,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 1. Go to **Virtual Machines** in VMware, and boot up Virtual Connector's VM.
 2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](#1-create-a-site) for its connected site.
 3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
-4. If successful, the [tunnel health checks](/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/) will show as healthy.
+4. If successful, the [tunnel health checks](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) will show as healthy.
 5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
 
 ---

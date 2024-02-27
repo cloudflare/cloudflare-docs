@@ -50,8 +50,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request) {
     /**
      * @param {string} PRESHARED_AUTH_HEADER_KEY Custom header to check for key
      * @param {string} PRESHARED_AUTH_HEADER_VALUE Hard coded key value
@@ -70,9 +70,7 @@ const handler: ExportedHandler = {
       status: 403,
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

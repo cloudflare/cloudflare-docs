@@ -1803,13 +1803,13 @@ After starting `wrangler pages deployment tail`, you will receive a live stream 
 Deploy a directory of static assets as a Pages deployment.
 
 ```txt
-wrangler pages deploy <DIRECTORY> [OPTIONS]
+wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The directory of static files to upload.
+- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2227,7 +2227,7 @@ wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 
 Manage client certificates used for mTLS connections in subrequests.
 
-These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
 ### `upload`
 
@@ -2326,8 +2326,21 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```txt
-wrangler types
+```sh
+wrangler types [<PATH>] [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
+  - The path to where the declaration file for your Worker will be written.
+  - The path to the declaration file must have a `d.ts` extension.
+
+- `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
+  - The name of the interface to generate for the environment object.
+  - Not valid if the Worker uses the Service Worker syntax.
+
+{{</definitions>}}
+
 
 <!--TODO Add examples of DTS generated output -->

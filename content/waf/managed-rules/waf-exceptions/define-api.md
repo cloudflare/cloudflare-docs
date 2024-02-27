@@ -13,7 +13,7 @@ To add a managed rules exception via API, create a rule with `skip` action in a 
 To configure the exception, define the `action_parameters` object according to the exception type. Refer to the following examples:
 
 - [Skip all remaining rules](#skip-all-remaining-rules)
-- [Skip one or more WAF managed rulesets](#skip-one-or-more-waf-managed-rulesets)
+- [Skip the Cloudflare Managed Ruleset](#skip-the-cloudflare-managed-ruleset)
 - [Skip one or more rules of WAF managed rulesets](#skip-one-or-more-rules-of-waf-managed-rulesets)
 
 For more information on creating exceptions via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/) in the Ruleset Engine documentation.

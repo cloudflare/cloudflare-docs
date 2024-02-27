@@ -50,17 +50,6 @@ No. Cloudflare will stop tracking performance data when you delete an endpoint a
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Why do I still see my endpoint in Discovery after I’ve added it to Endpoint Management?" >}}
-
-{{<faq-answer>}}
-
-Your endpoints will continue to appear in Discovery after being added to Endpoint Management for the immediate future. In a future release, we plan to differentiate between endpoints that are in Discovery that have not yet been added to Endpoint Management.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-___
-
-{{<faq-item>}}
 {{<faq-question level=2 text="Why do I not receive threshold recommendations for my discovered API endpoints?" >}}
 
 {{<faq-answer>}}

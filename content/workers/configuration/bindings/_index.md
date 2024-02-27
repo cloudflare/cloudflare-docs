@@ -80,7 +80,7 @@ Dispatch namespace bindings allow for communication between a dynamic dispatch W
 
 mTLS certificate bindings enable Worker subrequests to present a client certificate when communicating with a service that requires client authentication.
 
-- Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
+- Learn more about [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).
 - Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).
 
 ### Email bindings

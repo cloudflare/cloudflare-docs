@@ -53,7 +53,7 @@ macOS has two firewalls: an application-based firewall and a port-based firewall
 
 1. Open PowerShell and run:
 
-    ```bash
+    ```powershell
     PS C:\Users\JohnDoe> Get-NetFirewallProfile -PolicyStore ActiveStore -Name Public
     ```
 
