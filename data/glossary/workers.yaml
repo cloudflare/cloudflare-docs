@@ -11,7 +11,7 @@ entries:
 
 - term: CPU time
   general_definition: |-
-    
+    [CPU time](/workers/platform/limits/#cpu-time) is the amount of time the central processing unit (CPU) actually spends doing work, during a given request.
 
 - term: Durable Objects
   general_definition: |-
@@ -31,11 +31,11 @@ entries:
 
 - term: isolate
   general_definition: |-
-    A subrequest is an additional HTTP requests from the Worker to another resource or another Worker.
+    [Isolates](/workers/reference/how-workers-works/#isolates) are lightweight contexts that provide your code with variables it can access and a safe environment to be executed within.
 
 - term: module Worker
   general_definition: |-
-    
+    Refers to a Worker written in [module syntax](/workers/reference/migrate-to-module-workers/).
 
 - term: origin
   general_definition: |-
@@ -43,7 +43,7 @@ entries:
 
 - term: rollback
   general_definition: |-
-    
+    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network. 
 
 - term: R2
   general_definition: |-
@@ -51,7 +51,7 @@ entries:
 
 - term: service worker
   general_definition: |-
-    Refers to [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) [syntax]().
+    Refers to [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) [syntax](/workers/reference/migrate-to-module-workers/).
 
 - term: subrequest
   general_definition: |-
@@ -63,11 +63,11 @@ entries:
 
 - term: V8
   general_definition: |-
-        
+    Chrome V8 is a [JavaScript engine](https://www.cloudflare.com/learning/serverless/glossary/what-is-chrome-v8/), which means that it [executes JavaScript code]().
 
-- term: wall time
+- term: wall-clock time
   general_definition: |-
-    
+    [Wall-clock time](/workers/platform/limits/#duration) is the total amount of time from the start to end of an invocation of a Worker.
 
 - term: workerd
   general_definition: |-
