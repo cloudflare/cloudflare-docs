@@ -11,6 +11,8 @@ With Cloudflare Access, you can build infinitely customizable policies using Ext
 - Check IP addresses against external threat feeds.
 - Call industry-specific user registries.
 
-The External Evaluation rule requires two values: an API endpoint to call and a key to verify that any request response is coming from a trusted source. After the user authenticates with your identity provider, all information about the user, device and location is passed to your external API. The API returns a pass or fail response to Access which will then either allow or deny access to the user.
+The External Evaluation rule requires two values: an API endpoint to call and a key to verify that any request response is coming from a trusted source. After the user authenticates with your identity provider, all information about the user, device and location is passed to your external API. The API returns a pass or fail response to Access which will then either allow or deny access to the user.  Example code for the API is available in our [open-source repository](https://github.com/cloudflare/workers-access-external-auth-example).
 
-For detailed setup instructions, refer to [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/). Example code for the API is available in our [open-source repository](https://github.com/cloudflare/workers-access-external-auth-example).
+## Set up External Evaluation rule
+
+For detailed setup instructions, refer to [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/).

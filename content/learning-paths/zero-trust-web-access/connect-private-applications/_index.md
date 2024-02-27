@@ -13,5 +13,5 @@ Cloudflare Tunnel allows you to securely connect your applications to Cloudflare
 
 By the end of this module, you will be able to:
 
-- Create a Cloudflare Tunnel
-
+- Create a Cloudflare Tunnel.
+- Publish your application via a public hostname.
