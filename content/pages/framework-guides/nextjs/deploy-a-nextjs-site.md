@@ -294,10 +294,94 @@ The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to r
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
+## Gotchas
+
+Let's explore some common pitfalls that you can encounter why developing a Next.js fullstack application for Cloudflare Pages.
+
+### Edge runtime
+
+All the server-side routes in your Next.js project must be configured as "Edge" runtime routes.
+
+In order to do that remember to add `export const runtime = 'edge';` to each individual server-side route.
+
+{{<Aside type="note">}}
+
+If you're using the Pages router, for page routes you need to use `'experimental-edge'` instead of `'edge'`.
+
+{{</Aside>}}
+
+### App router
+
+#### Not found
+
+Next.js generates a not-found route for your application under the hood during the build process. In some circumstances Next.js can detect that the route requires server side logic (particularly if computation is being performed in the root layout component) and it might create a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+To prevent such problem we recommend to always provide a custom not-found route which explicitly opts in the edge runtime:
+
+```ts
+---
+filename: (src/)app/not-found.(jsx|tsx)
+---
+
+export const runtime = 'edge';
+
+export default async function NotFound() {
+    // ...
+    return (
+        // ...
+    );
+}
+```
+
+{{<Aside type="note">}}
+
+Projects created with C3 have a default custom not-found page already created for them.
+
+{{</Aside>}}
+
+#### `generateStaticParams`
+
+When doing static site generation (SSG) in the app directory and using the [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) utility, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+In such cases you need to instruct Next.js not to do so by specifying a `false` [`dynamicParams`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams):
+
+```diff
+---
+filename: app/my-example-page/[slug]/page.jsx
+---
++ export const dynamicParams = false;
+
+// ...
+```
+
+### Pages router
+
+#### `getStaticPaths`
+
+When doing static site generation (SSG) in the pages directory and using the [`getStaticPaths`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths) utility, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+In such cases you need to instruct Next.js not to do so by specifying a [false `fallback`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false):
+
+```diff
+---
+filename: pages/my-example-page/[slug].jsx
+---
+// ...
+
+export async function getStaticPaths() {
+    // ...
+
+    return {
+        paths,
++       fallback: false,
+	};
+}
+```
+
+{{<Aside type="warning">}}
+
+Note that the `paths` array cannot be empty as that causes Next.js to ignore the provided `fallback` value, so make sure that at build time at least one entry is present in the array
+
+{{</Aside>}}
+
 {{<render file="/_framework-guides/_learn-more.md" withParameters="Next.js">}}
-
-### Troubleshooting
-
-- All server-side routes in your Next.js project must be configured as "Edge" runtime routes, by adding `export const runtime = 'edge';` to each individual route. Refer to the [`next-on-pages` docs](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/examples.md) for more examples.
-- `next-on-pages` documents other common issues [here](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/gotchas.md).
-
