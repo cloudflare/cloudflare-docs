@@ -301,7 +301,6 @@ After you have previewed your application locally, you can deploy it to Cloudfla
 
 All server-side routes in your Next.js project must be configured as "Edge" runtime routes, when running on Cloudflare Pages. You must add `export const runtime = 'edge';` to each individual server-side route.
 
-In order to do that remember to add `export const runtime = 'edge';` to each individual server-side route.
 
 {{<Aside type="note">}}
 
