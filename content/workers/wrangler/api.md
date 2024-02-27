@@ -15,12 +15,6 @@ Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 ## `unstable_dev`
 
-{{<Aside type="note">}}
-
-The `unstable_dev` is an experimental function and its stability is not guaranteed.
-
-{{</Aside>}}
-
 Start an HTTP server for testing your Worker.
 
 Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
@@ -29,7 +23,7 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 {{<Aside type="note">}}
 
-The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future.
+The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future.
 
 There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) and we will review the issue.
 
