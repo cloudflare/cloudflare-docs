@@ -11,10 +11,10 @@ Gateway supports creating [lists](/cloudflare-one/policies/gateway/lists/) of UR
 
 ## Example list policy
 
-The following DNS policy will allow access to all approved corporate domains included in a list called `Corporate Domains`.
+The following DNS policy will allow access to all approved corporate domains included in a list called **Corporate Domains**.
 
-| Selector            | Operator  | Value              | Action |
-| ------------------- | ----------| -------------------| ------ |
-| Domain              | in list   | `Corporate Domains`| Allow  |
+| Selector | Operator | Value               | Action |
+| -------- | -------- | ------------------- | ------ |
+| Domain   | in list  | *Corporate Domains* | Allow  |
 
 Next, learn what order Gateway policies of the same type take precedence.

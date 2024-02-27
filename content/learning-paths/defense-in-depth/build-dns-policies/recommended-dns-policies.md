@@ -5,52 +5,62 @@ weight: 4
 layout: learning-unit
 ---
 
-We recommend you add the following DNS policies.
+We recommend you add the following DNS policies to build a defense-in-depth strategy for your organization.
 
-## 1. All-DNS-Domain-Allowlist
+{{<details header="All-DNS-Domain-Allowlist" open="true">}}
 
-Allowlist the Corporate and Trusted Domains or Hostnames. With this policy you ensure that employees can access trusted domains even if they fall under a blocked category like _Newly seen domains_ or _Login pages_.
+Allowlist any trusted domains and hostnames. With this policy, you ensure that your users can access your organization's domains even if the domains fall under a blocked category, such as **Newly Seen Domains** or **Login Screens**.
 
-| Selector | Operator | Value                                 | Logic | Action |
-| -------- | -------- | ------------------------------------- | ----- | ------ |
-| Domain   | in list  | <Corporate Domains \| Trusted Domain> | Or    | Allow  |
-| Host     | in list  | <Corporate Domains \| Trusted Domain> |       |        |
+| Selector | Operator | Value             | Logic | Action |
+| -------- | -------- | ----------------- | ----- | ------ |
+| Domain   | in list  | _Trusted Domains_ | Or    | Allow  |
+| Host     | in list  | _Trusted Domains_ |       |        |
 
-## 2. All-DNS-SecurityCategories-Blocklist
+{{</details>}}
 
-Block security categories such as _Command & Control_, _Botnet_ and _Malware_ based on Cloudflare's threat intelligence.
+{{<details header="All-DNS-SecurityCategories-Blocklist" open="true">}}
 
-| Selector            | Operator | Value               | Action |
-| ------------------- | -------- | ------------------- | ------ |
-| Security Categories | in       | _All Scurity Risks_ | Block  |
+Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories), such as **Command and Control & Botnet** and **Malware**, based on Cloudflare's threat intelligence.
 
-## 3. All-DNS-ContentCategories-Blocklist
+| Selector            | Operator | Value                | Action |
+| ------------------- | -------- | -------------------- | ------ |
+| Security Categories | in       | _All Security Risks_ | Block  |
 
-Although these categories are not always a security threat it's convenient to block them to minimize the risk your organization be exposed to Security Threats.
+{{</details>}}
 
-Initially, Allow action will help to track the policy matching, and identify potential false positives. Finally blocking these categories, allowlisting the trusted domains on the _Trusted Domain_ List used in the **All-DNS-Domain-Allowlist**.
+{{<details header="All-DNS-ContentCategories-Blocklist" open="true">}}
 
-| Selector           | Operator | Value            | Action       |
-| ------------------ | -------- | ---------------- | ------------ |
-| Content Categories | in       | _Security Risks_ | Allow\|Block |
+Entries in the [security risk content subcategory](/cloudflare-one/policies/gateway/domain-categories/#security-risk-subcategories), such as **New Domains**, do not always pose a security threat. We recommend you first create an Allow policy to track policy matching and identify any false positives. You can add false positives to your **Trusted Domains** list used in **All-DNS-Domain-Allowlist**.
 
-## 4. All-DNS-Application-Blocklist
+After your test is complete, we recommend you change the action to Block to minimize risk to your organization.
 
-Block unauthorized applications to limit their users' access to certain web-based tools and minimize the risk of Shadow IT. For example, the following policy blocks AI assistants.
+| Selector           | Operator | Value            | Action |
+| ------------------ | -------- | ---------------- | ------ |
+| Content Categories | in       | _Security Risks_ | Allow  |
+
+{{</details>}}
+
+{{<details header="All-DNS-Application-Blocklist" open="true">}}
+
+Block unauthorized applications to limit your users' access to certain web-based tools and minimize the risk of {{<glossary-tooltip term_id="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">}}shadow IT{{</glossary-tooltip>}}. For example, the following policy blocks popular AI chatbots.
 
 | Selector    | Operator | Value             | Action |
 | ----------- | -------- | ----------------- | ------ |
 | Application | in       | _ChatGPT_, _Bard_ | Block  |
 
-## 5. All-DNS-GeoCountryIP-Blocklist
+{{</details>}}
 
-Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+{{<details header="All-DNS-GeoCountryIP-Blocklist" open="true">}}
+
+Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's users or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
 | Selector                        | Operator | Value                                                                                                                                                           | Action |
 | ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
 | Resolved Country IP Geolocation | in       | _Afghanistan_, _Belarus_, _Congo (Kinshasa)_, _Cuba_, _Iran_, _Iraq_, _Korea (North)_, _Myanmar_, _Russian Federation_, _Sudan_, _Syria_, _Ukraine_, _Zimbabwe_ | Block  |
 
-## 6. All-DNS-DomainTopLevel-Blocklist
+{{</details>}}
+
+{{<details header="All-DNS-DomainTopLevel-Blocklist" open="true">}}
 
 Block frequently misused top-level domains (TLDs) to reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations such as [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries) and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
@@ -58,29 +68,37 @@ Block frequently misused top-level domains (TLDs) to reduce security risks, espe
 | -------- | ------------- | -------------------------------------------------------------------------------------------------------- | ------ |
 | Domain   | matches regex | `[.](cn\|ru)$ or [.](rest\|hair\|top\|live\|cfd\|boats\|beauty\|mom\|skin\|okinawa)$ or [.](zip\|mobi)$` | Block  |
 
-## 7. All-DNS-DomainPhishing-Blocklist
+{{</details>}}
 
-Block misused domains to protect users against sophisticated phishing attacks, you could prevent users from accessing phishing domains that are specifically targeting your organization. The following policy blocks specific keywords associated with an organization or its authentication services (such as okta, 2fa, cloudflare or sso), while still allowing access to official corporate domains.
+{{<details header="All-DNS-DomainPhishing-Blocklist" open="true">}}
+
+Block misused domains to protect your users against sophisticated phishing attacks, such as domains that specifically target your organization. For example, the following policy blocks specific keywords associated with an organization or its authentication services (such as `okta`, `2fa`, `cloudflare` and `sso`) while still allowing access to trusted domains.
 
 | Selector | Operator      | Value                                       | Logic | Action |
 | -------- | ------------- | ------------------------------------------- | ----- | ------ |
-| Domain   | not in list   | <Corporate Domains>                         | And   | Block  |
+| Domain   | not in list   | _Trusted Domains_                           | And   | Block  |
 | Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |       |        |
 
-## 8. All-DNS-ResolvedIP-Blocklist
+{{</details>}}
 
-Block specific IP addresses that are known to be malicious or pose a threat to your organization. This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs). Ideally Incident Response Teams can feed this List with API automation.
+{{<details header="All-DNS-ResolvedIP-Blocklist" open="true">}}
+
+Block specific IP addresses that are malicious or pose a threat to your organization. You can implement this policy by either creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs). Ideally, your CERTs can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
 
 | Selector    | Operator | Value          | Action |
 | ----------- | -------- | -------------- | ------ |
-| Resolved IP | in list  | <IP Blocklist> | Block  |
+| Resolved IP | in list  | _IP Blocklist_ | Block  |
 
-## 9. All-DNS-DomainHost-Blocklist
+{{</details>}}
 
-Block specific Domains or Hosts that are known to be malicious or pose a threat to your organization. This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs). Ideally Incident Response Teams can feed this List with API automation.
+{{<details header="All-DNS-DomainHost-Blocklist" open="true">}}
+
+Block specific domains or hosts that are malicious or pose a threat to your organization. Like **All-DNS-ResolvedIP-Blocklist**, this blocklist can be updated manually or via API automation.
 
 | Selector | Operator      | Value              | Logic | Action |
 | -------- | ------------- | ------------------ | ----- | ------ |
-| Domain   | in list       | <Domain Blocklist> | Or    | Block  |
-| Host     | in list       | <Host Blocklist>   | Or    |        |
+| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
+| Host     | in list       | _Host Blocklist_   | Or    |        |
 | Host     | matches regex | `.*example\.com`   |       |        |
+
+{{</details>}}
