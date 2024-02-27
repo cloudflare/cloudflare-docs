@@ -5,7 +5,7 @@ title: Breakout traffic
 
 # Breakout traffic
 
-Breakout traffic allows you to define which applications should bypass Cloudflare’s security filtering, and go directly to the Internet. This is a per-site configuration. You need to configure breakout traffic for each of your existing sites.
+Breakout traffic allows you to define which applications should dynamically bypass Cloudflare’s security filtering and go directly to the Internet. This is a per-site configuration. You need to configure breakout traffic for each of your existing sites.
 
 ## Add an application
 
