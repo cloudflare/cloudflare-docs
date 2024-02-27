@@ -8,8 +8,6 @@ weight: 39
 
 Jobs in Logpush now have a new key **output_options** which replaces **logpull_options** and allows more flexible formatting.
 
-Edge Logstream jobs do not support this yet.
-
 You can modify log output options via the Cloudflare dashboard when creating or editing a Logpush job, or via the API as shown below.
 
 ## Replace logpull_options
