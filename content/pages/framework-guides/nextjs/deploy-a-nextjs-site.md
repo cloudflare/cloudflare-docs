@@ -313,7 +313,7 @@ If you are using the Pages router, for page routes, you need to use `'experiment
 
 #### Not found
 
-Next.js generates a not-found route for your application under the hood during the build process. In some circumstances Next.js can detect that the route requires server side logic (particularly if computation is being performed in the root layout component) and it might create a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+Next.js generates a `not-found` route for your application under the hood during the build process. In some circumstances, Next.js can detect that the route requires server-side logic (particularly if computation is being performed in the root layout component) and Next.js might create a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
 
 To prevent this incompatibility, Cloudflare recommends to always provide a custom `not-found` route which explicitly opts in the edge runtime:
 
