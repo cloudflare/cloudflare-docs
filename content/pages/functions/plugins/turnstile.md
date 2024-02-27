@@ -22,7 +22,7 @@ $ npm install @cloudflare/pages-plugin-turnstile
 ---
 filename: functions/register.ts
 ---
-import turnstilePlugin from "../../pages-plugins/packages/turnstile";
+import turnstilePlugin from "@cloudflare/pages-plugin-turnstile";
 
 /**
  * POST /api/submit-with-plugin
