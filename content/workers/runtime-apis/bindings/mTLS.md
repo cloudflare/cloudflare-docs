@@ -49,7 +49,7 @@ Certificate IDs are displayed after uploading, and can also be viewed with the c
 Adding an mTLS certificate binding includes a variable in the Worker's environment on which the `fetch()` method is available. This `fetch()` method uses the standard [Fetch](/workers/runtime-apis/fetch/) API and has the exact same signature as the global `fetch`, but always presents the client certificate when establishing the TLS connection.
 
 {{<Aside type="note">}}
-mTLS certificate bindings present an API similar to [service bindings](/workers/runtime-apis/service-bindings).
+mTLS certificate bindings present an API similar to [service bindings](/workers/runtime-apis/bindings/service-bindings).
 {{</Aside>}}
 
 ### Interface

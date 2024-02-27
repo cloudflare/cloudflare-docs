@@ -190,7 +190,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 ## Types of routes
 
-There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and `workers.dev`.
+There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
 
 ### Custom Domains
 
@@ -289,6 +289,26 @@ header: wrangler.toml
 ---
 route = "example.com/*"
 ```
+
+### `workers.dev`
+
+Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard.
+
+{{<definitions>}}
+
+- `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true`.
+
+{{</definitions>}}
+
+```toml
+---
+header: wrangler.toml
+---
+workers_dev = false
+```
+
 
 ## Triggers
 
@@ -832,7 +852,7 @@ binding = "<BINDING_NAME2>"
 certificate_id = "<CERTIFICATE_ID2>"
 ```
 
-mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
+mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/bindings/mtls).
 
 ### Email bindings
 

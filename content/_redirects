@@ -1181,7 +1181,6 @@
 /workers/learning/service-worker/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrating-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrate-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
-/workers/runtime-apis/durable-objects/ /durable-objects/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/headers/ /workers/runtime-apis/headers/ 301
 /workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/ 301
@@ -1239,7 +1238,6 @@
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/tail-event/ /workers/runtime-apis/handlers/tail/ 301
-/workers/runtime-apis/kv/ /kv/api/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
@@ -1248,6 +1246,12 @@
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 /workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 /workers/learning/security-model/ /workers/reference/security-model/ 301
+/workers/runtime-apis/R2/ /workers/runtime-apis/bindings/R2/ 301
+/workers/runtime-apis/durable-objects/ /workers/runtime-apis/bindings/durable-objects/ 301
+/workers/runtime-apis/kv/ /workers/runtime-apis/bindings/kv/ 301
+/workers/runtime-apis/mTLS/ /workers/runtime-apis/bindings/mTLS/ 301
+/workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
+/workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
