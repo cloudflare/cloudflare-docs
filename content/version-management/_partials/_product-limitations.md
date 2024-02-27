@@ -68,6 +68,6 @@ Version Management does not currently support or have limited support for the fo
 {{</details>}}
 
 {{<details header="Wrangler">}}
-- If a version has a worker route, it might disappear when a worker is deployed via [Wrangler](/workers/wrangler/).
-- If two versions have the same custom domains, the worker might randomly choose between them.
+- If a version has a Worker route, it might disappear when a Worker is deployed via [Wrangler](/workers/wrangler/).
+- If two versions have the same custom domains, the Worker might randomly choose between them.
 {{</details>}}
