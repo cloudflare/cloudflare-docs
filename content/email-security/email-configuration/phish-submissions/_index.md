@@ -10,7 +10,7 @@ As part of your continuous email security posture, administrators and security a
 
 Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a detection. These include preemptively crawling the web to identify campaigns, machine learning, custom signatures, among others. In order for Area 1 to identify why phish was missed, we need to run the original samples through our module and identify why some of our modules did not score the sample high enough to elevate it to malicious.
 
-Submitting missed phish samples to Cloudflare is of paramount importance and necessary for continuous protection as it helps us improve our machine learning (ML) models and alerts us of new attack vectors before they become prevalent.
+Submitting missed phish samples to Cloudflare is of paramount importance and necessary for continuous protection. Submitting missed phish samples helps Cloudflare improve our machine learning (ML) models, and alerts us of new attack vectors before they become prevalent.
 
 ## How to submit phish
 
