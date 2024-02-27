@@ -17,7 +17,7 @@ To define how your Magic WAN Connector should steer traffic based on known appli
 
 ![Application selector box](/images/magic-wan/connector/application-selector.png)
 
-{{<Aside type="note" header="Header text">}}
+{{<Aside type="note">}}
 
 Cloudflare’s best practice recommendation is to route all traffic through our global network for comprehensive security filtering and access controls, but there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
