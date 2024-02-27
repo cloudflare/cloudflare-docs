@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: Manage subdomains
+meta:
+    title: Manage subdomains
 ---
 
 # Manage subdomains

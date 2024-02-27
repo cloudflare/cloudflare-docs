@@ -6,24 +6,30 @@ weight: 2
 
 # How Cloudflare works
 
-{{<render file="_how-cloudflare-works.md" productFolder="fundamentals">}}
+Cloudflare is a large network of servers that can improve the security, performance, and reliability of anything connected to the Internet, such as your website/web application, or your corporate network.
 
 ## Application Services
 
-### How Cloudflare handles DNS queries
+To optimize your website/web application, Cloudflare acts as a DNS provider for your domain, and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) for your web traffic. 
+
+### How Cloudflare works as a DNS provider
 
 In a [full DNS setup](/dns/zone-setups/full-setup/), when you [connect a domain](/fundamentals/setup/manage-domains/connect-your-domain/) to Cloudflare, we become the authoritative DNS provider for that domain. When Cloudflare receives a DNS query for your domain, our response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the value of the record, the record's proxy eligibility, and it's (/dns/manage-dns-records/reference/proxied-dns-records/). 
 
 If a DNS record is proxied, and the [domain status](/dns/zone-setups/reference/domain-status/) is active, Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), **not** the value defined in your DNS table. This approach informs the requesting entity that the request should route to Cloudflare's network, instead of directly to the origin server. In contrast, when a DNS record is set to 'DNS only', meaning the proxy is off, Cloudflare responds with the value defined in your DNS table (i.e., an IP address or CNAME record). This means `HTTP/S` requests go directly to the origins erver and are not processed or protected by Cloudflare.
 
-### Proxying traffic
+### How Cloudflare works as a reverse proxy
+
+All requests to and from your origin flow through Cloudflare and — as these requests pass through our network — we can apply various rules and optimizations to improve security, performance, and reliability. 
 
 Cloudflare is both an authoritative DNS server and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) that sits between two distinct networks. Depending the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of individual DNS records, Cloudflare responds to DNS queries with different values. This hybrid design allows Cloudflare to respond to both DNS queries and `HTTP/S` traffic, depending on the proxy status of individual hostnames, and the its [domain status](/dns/zone-setups/reference/domain-status/).
 
 In the Cloudflare dashboard, you can the proxy status of your records, within each of your domains, on the DNS records page.
 
 {{<Aside>}}
+
 To proxy `HTTP/S` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
+
 {{</Aside>}}
 
 | Type | Name | Content | Proxy status | TTL | Actions |

@@ -7,11 +7,9 @@ meta:
 
 # Connect your domain
 
-This guide reviews the concepts behind connecting your domain using Cloudflare as an Authoritative DNS provider.
+Many of our layer 7 services depend on your domain using Cloudflare as its authoritative DNS provider and as a reverse proxy for its HTTP/S traffic.
 
-## Get started
-
-To get started with Cloudflare as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/), you must first create an account and connect your domain. After creating your account, select `Add site` and follow the [step-by-step tutorial](/fundamentals/setup/account-setup/add-site/) to configure your [DNS records](/dns/manage-dns-records/), which informs Cloudflare where to forward requests.
+To get started with Cloudflare as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/), you must first create an account and connect your domain. After creating your account, select `Add site` and follow the [step-by-step tutorial](/fundamentals/setup/manage-domains/add-site/) to configure your [DNS records](/dns/manage-dns-records/), which informs Cloudflare where to forward requests.
 
 Your domain is always in your control - connecting your domain to Cloudflare does not mean that you are relinquishing ownership. If you decide to [transfer your domain registration](/registrar/get-started/transfer-domain-to-cloudflare/) to be managed at Cloudflare, you will still retain full ownership.
 
@@ -41,7 +39,9 @@ In a full setup, your domain will be pending until you update its nameservers at
 2. And second, to verify that you are the domains owner. Only the owner or administrator of a domain can access  its registrar and change its nameservers.
 
 {{<Aside>}}
+
 Note: The activation process involves different steps if you are using a [secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) or [partial (CNAME) setup](/dns/zone-setups/partial-setup/).
+
 {{</Aside>}}
 
 Registrars take up to 24 hours to process nameserver changes (quicker in most cases). You will receive an email when your domain becomes active. While your domain is pending, your `HTTP/S` traffic is not live, but Cloudflare will respond to DNS queries on your assigned nameservers.
@@ -53,5 +53,5 @@ By activating your domain in full mode, your traffic will immediately start usin
 In a full setup, it is essential that your domains DNS table has all of your DNS records configured properly before activating your domain. In addition, you may need to:
 
 - [Disable DNSSEC](/dns/dnssec/). DNSSEC is a security extension that ensures all DNS answers can be trusted. If nameservers are changed before disabling DNSSEC, their cryptographic signatures will no longer match and DNS resolution will fail. After your domain is successfully activated, you should enable DNSSEC again. 
-- [Accept Cloudflare traffic](/fundamentals/setup/allow-cloudflare-ip-addresses/). If you are proxying traffic to your origin, you need to ensure that your origin will accept connections from Cloudflare. One way to do this is to allow traffic originating from Cloudflare IPs. You can harden the connection between Cloudflare and your origin by using Authenticated Origin Pulls ([mTLS](/ssl/origin-configuration/authenticated-origin-pull/)). An alternative approach to proxy traffic to your origin is to [configure a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
+- [Accept Cloudflare traffic](/fundamentals/concepts/cloudflare-ip-addresses/). If you are proxying traffic to your origin, you need to ensure that your origin will accept connections from Cloudflare. One way to do this is to allow traffic originating from Cloudflare IPs. You can harden the connection between Cloudflare and your origin by using Authenticated Origin Pulls ([mTLS](/ssl/origin-configuration/authenticated-origin-pull/)). An alternative approach to proxy traffic to your origin is to [configure a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
 - [Configure SSL/TLS](/ssl/edge-certificates/). The first thing Cloudflare does when it receives a `HTTP/S` request is decryption.

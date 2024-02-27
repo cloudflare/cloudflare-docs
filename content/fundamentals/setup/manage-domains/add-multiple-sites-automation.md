@@ -2,7 +2,8 @@
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add multiple sites via automation
-weight: 2
+meta:
+    title: Add multiple sites via automation
 ---
 
 # Add multiple sites via automation

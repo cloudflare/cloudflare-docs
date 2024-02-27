@@ -1,6 +1,8 @@
 ---
 title: Star websites
 pcx_content_type: how-to
+meta:
+    title: Star websites
 ---
 
 # Star websites
