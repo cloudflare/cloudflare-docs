@@ -27,25 +27,26 @@ The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest/configuration
 
 In this model, a single `workerd` process is started with a Worker for each test file. Tests files are executed concurrently and `.concurrent` tests are supported. Every test will read/write from the same shared storage, and bind to the same auxiliary `workers`.
 
-**TODO: diagram**
+![Isolation Model #1: No Isolated Storage & No Single Worker](/images/workers/testing/vitest/isolation-model-1-no-isolated-storage-no-single-worker.svg)
 
 ### `isolatedStorage: ❌ singleWorker: ✅`
 
 In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial but `.concurrent` tests are supported. Every test will read/write from the same shared storage, and bind to the same auxiliary `workers`.
 
-**TODO: diagram**
+![Isolation Model #2: No Isolated Storage & Single Worker](/images/workers/testing/vitest/isolation-model-2-no-isolated-storage-single-worker.svg)
 
 ### `isolatedStorage: ✅ singleWorker: ❌`
 
 In this model, a `workerd` process is started for each test file. Test files are executed concurrently but `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and bind to its own set of auxiliary `workers`.
 
-**TODO: diagram**
+![Isolation Model #3: Isolated Storage & No Single Worker](/images/workers/testing/vitest/isolation-model-3-isolated-storage-no-single-worker.svg)
 
 ### `isolatedStorage: ✅ singleWorker: ✅`
 
 In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial and `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and binding to the same auxiliary `workers`.
 
-**TODO: diagram**
+![Isolation Model #4: Isolated Storage & Single Worker](/images/workers/testing/vitest/isolation-model-4-isolated-storage-single-worker.svg)
+
 
 ## Modules
 
