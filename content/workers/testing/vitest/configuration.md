@@ -78,20 +78,20 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
     // Get the current list stored in a KV namespace
     async function get(): Promise<string[]> {
-      return await env.COUNTER.get("list", "json") ?? [];
+      return await env.NAMESPACE.get("list", "json") ?? [];
     }
     // Add an item to the end of the list
     async function append(item: string) {
       const value = await get();
       value.push(item);
-      await env.COUNTER.put("list", JSON.stringify(value));
+      await env.NAMESPACE.put("list", JSON.stringify(value));
     }
 
     beforeAll(() => append("all"));
     beforeEach(() => append("each"));
 
     test("one", async () => {
-      // Each test gets it's own storage environment copied from the parent
+      // Each test gets its own storage environment copied from the parent
       await append("one");
       expect(await get()).toStrictEqual(["all", "each", "one"]);
     });
