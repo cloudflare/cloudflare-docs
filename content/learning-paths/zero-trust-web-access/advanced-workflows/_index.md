@@ -7,7 +7,7 @@ layout: learning-module
 
 # Advanced ZTWA workflows
 
-Customize Access policies to the specific requirements of your application or organization.
+Build advanced Access policies based on the specific requirements of your application or organization.
 
 ## Objectives
 

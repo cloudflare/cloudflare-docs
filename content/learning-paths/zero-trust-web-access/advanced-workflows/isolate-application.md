@@ -17,6 +17,18 @@ Cloudflare sends all isolated traffic through our Secure Web Gateway inspection 
 - Inspect the request body to match against [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) (DLP) profiles with as much specificity and control as if the user had deployed an endpoint agent.
 - Control users ability to cut and paste, upload and download files, or print while in an isolated session.
 
+## Prerequisites
+
+{{<render file="access/_isolation-prereqs.md" productFolder="cloudflare-one">}}
+
+## Enable Browser Isolation
+
+{{<render file="access/_enable-isolation.md" productFolder="cloudflare-one">}}
+
+## Example Access policies
+
+In the following example, Policy 1 allows employees on corporate devices to access the application directly. Users who do not match Policy 1, such as employees and contractors on unmanaged devices, will load the application in an isolated browser.
+
 ```mermaid
 flowchart LR
 accTitle: Access policies for a private web application
@@ -34,46 +46,107 @@ E["Isolated browsing
 with HTTP policies applied"]
 ```
 
-## Prerequisites
+**Policy 1: Allow employees who pass device posture checks**
 
-{{<render file="access/_isolation-prereqs.md" productFolder="cloudflare-one">}}
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
-## Enable Browser Isolation
+| Action | Rule type | Selector | Value |
+| ------ | ---- | -------- | -----------|
+| Allow  | Include | Emails ending in | `@team.com` |
+|        | Require | [Device Posture - Serial Number List](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) | `Corporate serial numbers` |
 
-{{<render file="access/_enable-isolation.md" productFolder="cloudflare-one">}}
+| Additional settings | Status  |
+| ------------------- | ------- |
+| Isolate application | Disabled |
 
-## Example Access policies
+{{</tab>}}
 
-The following two Access policies work together to require Browser Isolation for a subset of users. Policy 1 allows employees who are using the Cloudflare WARP client to access the application directly; their traffic already goes through our Secure Web Gateway for inspection. Users who do not match Policy 1, such as employees and contractors on unmanaged devices, are required to access the application through an isolated browser.
+{{<tab label="api" no-code="true">}}
 
-- **Policy 1: Allow employees**
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_uuid}/policies \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "decision": "allow",
+  "name": "Allow employees who pass device posture checks",
+  "include": [
+    {
+      "email_domain": {
+        "domain": "team.com"
+      }
+    }
+  ],
+  "exclude": [],
+  "require": [
+    {
+      "device_posture": {
+        "integration_uid": "{serial_number_list_uuid}"
+      }
+    }
+  ],
+  "precedence": 1
+}'
+```
 
-  | Action | Rule type | Selector | Value |
-  | ------ | ---- | -------- | -----------|
-  | Allow  | Include | Emails ending in | `@team.com` |
-  |        | Require | WARP | `WARP` |
+To create a list of serial numbers, refer to [Create Zero Trust list](/api/operations/zero-trust-lists-create-zero-trust-list).
 
-  | Additional settings | Status  |
-  | ------------------- | ------- |
-  | Isolate application | Disabled |
+{{</tab>}}
+{{</tabs>}}
 
-- **Policy 2: Allow users without WARP**
+**Policy 2: Allow and isolate contractors**
 
-  | Action | Rule type | Selector | Value |
-  | ------ | ---- | -------- | -----------|
-  | Allow  | Include | Emails ending in | `@team.com`, `@contractors.com` |
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
-  | Additional settings | Status  |
-  | ------------------- | ------- |
-  | Isolate application | Enabled |
+| Action | Rule type | Selector | Value |
+| ------ | ---- | -------- | -----------|
+| Allow  | Include | Emails ending in | `@team.com`, `@contractors.com` |
 
-For more information, refer to the [Access policies documentation](/cloudflare-one/policies/access/).
+| Additional settings | Status  |
+| ------------------- | ------- |
+| Isolate application | Enabled |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_uuid}/policies \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "decision": "allow",
+  "name": "Allow and isolate contractors",
+  "include": [
+    {
+      "email_domain": {
+        "domain": "team.com"
+      }
+    },
+    {
+      "email_domain": {
+        "domain": "contractors.com"
+      }
+    }
+  ],
+  "exclude": [],
+  "require": [],
+  "precedence": 2,
+  "isolation_required": true
+}'
+```
+{{</tab>}}
+{{</tabs>}}
 
 ## Example HTTP policies
 
-### Block file downloads
+### Disable file downloads in isolated browser
 
-Blocks isolated users on unmanaged devices from downloading any files from your private application.
+Prevents users on unmanaged devices from downloading any files from your private application.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -97,40 +170,59 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --data '{
-  "name": "Company Wiki DNS policy",
+--data '{
+  "name": "Disable file downloads in isolated browser",
   "conditions": [
     {
       "type": "traffic",
       "expression": {
-        "any": {
-          "in": {
-            "lhs": {
-              "splat": "dns.domains"
-            },
-            "rhs": "$<DOMAIN_LIST_ID>"
-          }
+        "in": {
+          "lhs": "http.request.host",
+          "rhs": [
+            "internal.site.com"
+          ]
         }
       }
     },
     {
-      "type": "identity",
+      "type": "device_posture",
       "expression": {
-        "matches": {
-          "lhs": "identity.email",
-          "rhs": ".*@example.com"
+        "any": {
+          "in": {
+            "lhs": {
+              "splat": "device_posture.checks.passed"
+            },
+            "rhs": [
+              "{serial_number_list_uuid}"
+            ]
+          }
         }
       }
     }
   ],
-  "action": "allow",
-  "precedence": 13002,
+  "action": "isolate",
+  "precedence": 14002,
   "enabled": true,
-  "description": "Allow employees to access company wiki domains.",
+  "description": "",
+  "rule_settings": {
+    "block_page_enabled": false,
+    "block_reason": "",
+    "biso_admin_controls": {
+      "dcp": false,
+      "dcr": false,
+      "dd": true,
+      "dk": false,
+      "dp": false,
+      "du": false
+    }
+  },
   "filters": [
-    "dns"
+    "http"
   ]
 }'
 ```
+
+To create a list of serial numbers, refer to [Create Zero Trust list](/api/operations/zero-trust-lists-create-zero-trust-list).
 
 {{</tab>}}
 {{</tabs>}}
@@ -141,23 +233,92 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 Requires Data Loss Prevention add-on.
 {{</Aside>}}
 
-Block isolated users on unmanaged devices from downloading files that contain credit card numbers. This logic requires two policies:
+Block users on unmanaged devices from downloading files that contain credit card numbers. This logic requires two policies:
 
-- **Policy 1: Block file downloads in isolated browser**
-
-  | Selector                     | Operator | Value                      | Logic | Action  |
-  |------------------------------|----------|----------------------------|-------|---------|
-  | Host                         | in       | `internal.site.com`        | And   | Isolate |
-  | Passed Device Posture Checks | not in   | `Corporate serial numbers` |       |         |
-
-  | Policy settings | Status |
-  | --------------  | - |
-  | Disable file downloads | Enabled |
+- **Policy 1: [Disable file downloads in isolated browser](/learning-paths/zero-trust-web-access/advanced-workflows/isolate-application/#disable-file-downloads-in-isolated-browser)**
 
 - **Policy 2: Block credit card numbers**
 
-  | Selector                     | Operator | Value                      | Logic | Action  |
-  |------------------------------|----------|----------------------------|-------|---------|
-  | Host                         | in       | `internal.site.com`        | And   | Block   |
-  | Passed Device Posture Checks | not in   | `Corporate serial numbers` | And   |         |
-  | DLP Profile                  | in       | `Financial information`    |       |         |
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+| Selector                     | Operator | Value                      | Logic | Action  |
+|------------------------------|----------|----------------------------|-------|---------|
+| Host                         | in       | `internal.site.com`        | And   | Block   |
+| [DLP Profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/)                  | in       | `Financial information`    | And   |         |
+| Passed Device Posture Checks | not in   | `Corporate serial numbers` |       |         |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "name": "Block credit card numbers",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": {
+        "and": [
+          {
+            "in": {
+              "lhs": "http.request.host",
+              "rhs": [
+                "internal.site.com"
+              ]
+            }
+          },
+          {
+            "any": {
+              "in": {
+                "lhs": {
+                  "splat": "dlp.profiles"
+                },
+                "rhs": [
+                  "{dlp_profile_uuid}"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "device_posture",
+      "expression": {
+        "any": {
+          "in": {
+            "lhs": {
+              "splat": "device_posture.checks.passed"
+            },
+            "rhs": [
+              "{serial_number_list_uuid}"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "action": "block",
+  "precedence": 14003,
+  "enabled": true,
+  "description": "",
+  "rule_settings": {
+    "block_page_enabled": false,
+    "block_reason": "",
+    "biso_admin_controls": null
+  },
+  "filters": [
+    "http"
+  ]
+}'
+```
+
+To configure a DLP profile, refer to [Update predefined profile](/api/operations/dlp-profiles-update-predefined-profile) or [Create custom profile](/api/operations/dlp-profiles-create-custom-profiles).
+
+{{</tab>}}
+{{</tabs>}}
