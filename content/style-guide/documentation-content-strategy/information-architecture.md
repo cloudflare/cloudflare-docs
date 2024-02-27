@@ -1,13 +1,13 @@
 ---
 pcx_content_type: concept
 title: Information architecture
-weight: 3
+weight: 4
 
 ---
 
 # Information architecture
 
-The information architecture (IA) of the Cloudflare docs follows a consistent pattern. Product documentation always includes an Overview and Get started page. Including other content types depends on the product, how it is used, and what content users need to be successful.
+The information architecture (IA) of the Cloudflare developer documentation follows a consistent pattern. Product documentation always includes an [Overview](/style-guide/documentation-content-strategy/content-types/overview/) and [Get started](/style-guide/documentation-content-strategy/content-types/get-started/) page. Including other content types depends on the product, how it is used, and what content users need to be successful.
 
 ## Developer platform information architecture
 
