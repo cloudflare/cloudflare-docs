@@ -7,6 +7,8 @@ layout: learning-unit
 
 When building DNS, network, or HTTP policies to block malicious activity for your organization, you can use external indicator feeds supplied by Cloudflare and other third-party providers.
 
-## Subscribing to indicator feeds
+## Subscribe to indicator feeds
 
 {{<render file="_indicator-feeds-overview.md" withParameters="To subscribe to an indicator feed, contact your account team. For more information, refer to [Custom Indicator Feeds](/security-center/indicator-feeds/)." productFolder="security-center">}}
+
+Next, you will learn how to build policies to filter DNS queries for your organization.
