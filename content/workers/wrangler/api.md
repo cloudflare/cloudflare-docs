@@ -25,7 +25,7 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future.
 
-`unstable_dev()` has no known bugs and is safe to use. If you discover any bugs, open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+`unstable_dev()` has no known bugs and is safe to use. If you discover any bugs, open a [GitHub issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</Aside>}}
 
