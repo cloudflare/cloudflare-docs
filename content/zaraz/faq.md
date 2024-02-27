@@ -201,6 +201,20 @@ It can take between 15 minutes to several hours for data to appear on Facebookâ€
 {{</faq-answer>}}
 {{</faq-item>}}
 
+### Google Ads
+
+{{<faq-item>}}
+{{<faq-question level=4 text="What is the expected format for Conversion Id and Conversion Label" >}}
+
+{{<faq-answer>}}
+
+Conversion Id and Conversion Label are usually given by Google Ads in the following format: AW-11111111/22222222  
+
+111111111 is the Conversion Id (without the "AW-" prefix) and 222222222 the Conversion Label expected by Zaraz.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
 ### Custom HTML
 
 {{<faq-item>}}
