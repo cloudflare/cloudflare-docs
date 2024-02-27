@@ -39,7 +39,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async scheduled(event, env, ctx) {
     // Write code for updating your API
     switch (event.cron) {
@@ -58,9 +58,7 @@ const handler: ExportedHandler = {
     }
     console.log("cron processed");
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

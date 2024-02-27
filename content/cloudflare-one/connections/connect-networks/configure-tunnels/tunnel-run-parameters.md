@@ -14,7 +14,9 @@ This page lists general-purpose configuration options for a Cloudflare Tunnel. Y
 | ----------------- | ------- |
 | `cloudflared tunnel --autoupdate-freq <FREQ> run <UUID or NAME>`  | `24h`   |
 
-Configures autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
+Configures the frequency of `cloudflared` updates.
+
+By default, `cloudflared` will periodically check for updates and restart with the new version. Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests. See also: [`no-autoupdate`](#no-autoupdate). 
 
 ## `config`
 
@@ -84,13 +86,11 @@ Exposes a Prometheus endpoint on the specified IP address/port, which you can th
 
 ## `no-autoupdate`
 
-| Syntax          | Default | Environment Variable |
-| --------------- | ------- | -------------------- |
-| `cloudflared tunnel --no-autoupdate <BOOLEAN> run <UUID or NAME>`  | `false` | `NO_AUTOUPDATE`      |
+| Syntax          | Environment Variable |
+| --------------- | -------------------- |
+| `cloudflared tunnel --no-autoupdate run <UUID or NAME>`  | `NO_AUTOUPDATE`  |
 
-When `false`, `cloudflared` will periodically check for updates and restart with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
-
-When `true`, automatic updates are disabled.
+Disables automatic `cloudflared` updates. See also: [`autoupdate-freq`](#autoupdate-freq). 
 
 ## `origincert`
 

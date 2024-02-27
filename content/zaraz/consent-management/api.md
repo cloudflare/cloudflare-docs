@@ -12,9 +12,6 @@ The Consent API allows you to programmatically control all aspects of the Consen
 
 Using the Consent API, you can integrate Zaraz Consent preferences with an external Consent Management Platform, customize your consent modal, or restrict consent management to users in specific regions.
 
-{{<Aside type="note">}}
-Consent API is only available for accounts on a [Workers Paid plan](/workers/platform/pricing/).
-{{</Aside>}}
 
 ---
 

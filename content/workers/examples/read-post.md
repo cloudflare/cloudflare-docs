@@ -76,7 +76,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     /**
      * rawHtmlResponse returns HTML inputted directly
@@ -130,9 +130,7 @@ const handler: ExportedHandler = {
       return new Response("The request was a GET");
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

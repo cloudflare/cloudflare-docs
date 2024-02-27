@@ -63,7 +63,7 @@ The billing information that Cloudflare has on file is inaccurate or incomplete.
 Gift cards and pre-payment cards may not be accepted for payment as they are not associated with a billing address.
 {{</Aside>}}
 
-To ensure all billing information is current and accurate, refer to [Updating your Cloudflare billing information](/fundamentals/subscriptions-and-billing/updating-billing-info/).
+To ensure all billing information is current and accurate, refer to [Updating your Cloudflare billing information](/fundamentals/subscriptions-and-billing/update-billing-info/).
 
 ### Insufficient funds
 
@@ -83,4 +83,4 @@ ___
 
 -   [Cloudflare billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/)
 -   [Understand Cloudflare invoices](/fundamentals/subscriptions-and-billing/understand-invoices/)
--   [Updat your Cloudflare billing information](/fundamentals/subscriptions-and-billing/updating-billing-info/)
+-   [Updat your Cloudflare billing information](/fundamentals/subscriptions-and-billing/update-billing-info/)

@@ -110,7 +110,8 @@ A router, firewall, antivirus software, or other third-party security product is
 
 ### Resolution
 
-Configure the third-party security product to allow the [WARP ingress IPs and ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
+1. Configure the third-party security product to allow the [WARP ingress IPs and ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
+2. Ensure that your Internet router is working properly and try rebooting the router.
 
 ## CF_HOST_UNREACHABLE_CHECK
 

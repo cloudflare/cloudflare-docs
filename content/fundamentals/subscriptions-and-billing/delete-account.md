@@ -29,7 +29,7 @@ Before Cloudflare can cancel your account and delete your personal information, 
 
 * If you are using a Cloudflare [CNAME setup](/dns/zone-setups/partial-setup/), [update your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) at your DNS provider to point to your website IPs or hostnames instead of Cloudflare.
 
-* [Delete payment information](/fundamentals/subscriptions-and-billing/updating-billing-info/#delete-your-current-payment-method)
+* [Delete payment information](/fundamentals/subscriptions-and-billing/update-billing-info/#delete-your-current-payment-method)
 
 * (*Optional*) [Download a copy of your invoices](/fundamentals/subscriptions-and-billing/understand-invoices/#download-invoice). Once deleted, the invoices will no longer be accessible and cannot be re-sent to you.
 

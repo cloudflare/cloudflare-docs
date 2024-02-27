@@ -13,18 +13,27 @@ Family of generative text models, such as large language models (LLM), that can 
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Text Generation models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
-| `@cf/meta/llama-2-7b-chat-fp16`                   | Full precision (fp16) generative text model with 7 billion parameters from Meta<br/><strong>Default max (sequence) tokens (stream)</strong>: 2500<br/><strong>Default max (sequence) tokens</strong>: 256<br/><strong>Context tokens limit</strong>: 3072<br/><strong>Sequence tokens limit</strong>: 2500<br/>[More information](https://ai.meta.com/llama/)<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>  |
-| `@cf/meta/llama-2-7b-chat-int8`                   | Quantized (int8) generative text model with 7 billion parameters from Meta<br/><strong>Default max (sequence) tokens (stream)</strong>: 1800<br/><strong>Default max (sequence) tokens</strong>: 256<br/><strong>Context tokens limit</strong>: 2048<br/><strong>Sequence tokens limit</strong>: 1800<br/>[More information](https://ai.meta.com/llama/)<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>  |
+| `@hf/thebloke/llamaguard-7b-awq`                   | Llama Guard is provided as-is without any representations, warranties, or guarantees. Any rules or examples contained in blogs, developer docs, or other reference materials are provided for informational purposes only. You acknowledge and agree that you are responsible for the results and outcomes of your use of Workers AI. Cloudflare has no control or authority over the third-party models, which are provided to you subject to separate third-party licenses between you and the model provider.<br/><strong>Default max (sequence) tokens (stream)</strong>: 512<br/><strong>Default max (sequence) tokens</strong>: 256<br/>  |
+| `@hf/thebloke/neural-chat-7b-v3-1-awq`                   | This model is a fine-tuned 7B parameter LLM on the Intel Gaudi 2 processor from the mistralai&#x2F;Mistral-7B-v0.1 on the open source dataset Open-Orca&#x2F;SlimOrca.<br/><strong>Default max (sequence) tokens (stream)</strong>: 512<br/><strong>Default max (sequence) tokens</strong>: 256<br/>  |
+| `@cf/meta/llama-2-7b-chat-fp16`                   | Full precision (fp16) generative text model with 7 billion parameters from Meta<br/><strong>Default max (sequence) tokens (stream)</strong>: 2500<br/><strong>Default max (sequence) tokens</strong>: 256<br/><strong>Context tokens limit</strong>: 3072<br/><strong>Sequence tokens limit</strong>: 2500<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>[More information](https://ai.meta.com/llama/)<br/>  |
 | `@cf/mistral/mistral-7b-instruct-v0.1`                   | Instruct fine-tuned version of the Mistral-7b generative text model with 7 billion parameters<br/><strong>Default max (sequence) tokens (stream)</strong>: 1800<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://mistral.ai/news/announcing-mistral-7b/)<br/>  |
 | `@hf/thebloke/codellama-7b-instruct-awq`                   | CodeLlama 7B Instruct AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Code Llama variant.<br/><strong>Default max (sequence) tokens (stream)</strong>: 596<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-AWQ)<br/>  |
+| `@cf/meta/llama-2-7b-chat-int8`                   | Quantized (int8) generative text model with 7 billion parameters from Meta<br/><strong>Default max (sequence) tokens (stream)</strong>: 1800<br/><strong>Default max (sequence) tokens</strong>: 256<br/><strong>Context tokens limit</strong>: 2048<br/><strong>Sequence tokens limit</strong>: 1800<br/>[Terms and license](https://ai.meta.com/resources/models-and-libraries/llama-downloads/)<br/>[More information](https://ai.meta.com/llama/)<br/>  |
+| `@hf/thebloke/mistral-7b-instruct-v0.1-awq`                   | Mistral 7B Instruct v0.1 AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Mistral variant.<br/><strong>Default max (sequence) tokens (stream)</strong>: 596<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ)<br/>  |
+| `@hf/thebloke/llama-2-13b-chat-awq`                   | Llama 2 13B Chat AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Llama 2 variant.<br/><strong>Default max (sequence) tokens (stream)</strong>: 512<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ)<br/>  |
+| `@hf/thebloke/deepseek-coder-6.7b-base-awq`                   | Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese.<br/><strong>Default max (sequence) tokens (stream)</strong>: 512<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[Terms and license](https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ)<br/>  |
+| `@hf/thebloke/openhermes-2.5-mistral-7b-awq`                   | OpenHermes 2.5 Mistral 7B is a state of the art Mistral Fine-tune, a continuation of OpenHermes 2 model, which trained on additional code datasets.<br/><strong>Default max (sequence) tokens (stream)</strong>: 512<br/><strong>Default max (sequence) tokens</strong>: 256<br/>  |
+| `@hf/thebloke/deepseek-coder-6.7b-instruct-awq`                   | Deepseek Coder is composed of a series of code language models, each trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese.<br/><strong>Default max (sequence) tokens (stream)</strong>: 512<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[Terms and license](https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ)<br/>  |
+| `@hf/thebloke/zephyr-7b-beta-awq`                   | Zephyr 7B Beta AWQ is an efficient, accurate and blazing-fast low-bit weight quantized Zephyr model variant.<br/><strong>Default max (sequence) tokens (stream)</strong>: 596<br/><strong>Default max (sequence) tokens</strong>: 256<br/>[More information](https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ)<br/>  |
 
 ## Examples - chat style with system prompt (preferred)
+
 {{<tabs labels="streaming | worker | node | python | curl">}}
 {{<tab label="streaming" default="true">}}
 
@@ -151,26 +160,6 @@ Part of getting good results from text generation models is asking questions cor
 
 There are two ways to prompt text generation models with Workers AI:
 
-### Unscoped prompts
-
-Unscoped prompts send your raw data to the model pipeline, unchanged. You can use this method if you want to send a single string of text to the model, or if you're familiar with model internals and want to construct the model chat template manually.
-
-Here's an example of a simple question, without templating:
-
-```javascript
-{
-  prompt: "tell me a joke about cloudflare"
-};
-```
-
-Here's an input example of a [Mistral](https://docs.mistral.ai/models/#chat-template) chat template prompt:
-
-```javascript
-{
-  prompt: "<s>[INST]comedian[/INST]</s>\n[INST]tell me a joke about cloudflare[/INST]"
-};
-```
-
 ### Scoped prompts
 
 This is the **recommended** method. With scoped prompts, Workers AI takes the burden of knowing and using different chat templates for different models and provides a unified interface to developers when building prompts and creating text generation tasks.
@@ -193,6 +182,42 @@ Here's an input example of a scoped prompt using system and user roles:
     { role: "system", content: "you are a very funny comedian and you like emojis" },
     { role: "user", content: "tell me a joke about cloudflare" },
   ],
+};
+```
+
+Here's a better example of a chat session using multiple iterations between the user and the assistant.
+
+```javascript
+{
+  messages: [
+    { role: "system", content: "you are a professional computer science assistant" },
+    { role: "user", content: "what is WASM?" },
+    { role: "assistant", content: "WASM (WebAssembly) is a binary instruction format that is designed to be a platform-agnostic" },
+    { role: "user", content: "does Python compile to WASM?" },
+    { role: "assistant", content: "No, Python does not directly compile to WebAssembly" },
+    { role: "user", content: "what about Rust?" },
+  ],
+};
+```
+
+Note that different LLMs are trained with different templates for different use cases. While Workers AI tries its best to abstract the specifics of each LLM template from the developer through a unified API, you should always refer to the model documentation for details (we provide links in the table above.) For example, instruct models like Codellama are fine-tuned to respond to a user-provided instruction, while chat models expect fragments of dialogs as input.
+
+### Unscoped prompts
+
+You can use unscoped prompts to send a single question to the model without worrying about providing any context. Workers AI will automatically convert your { prompt: } input to a reasonable default scoped prompt internally so that you get the best possible prediction.
+
+```javascript
+{
+  prompt: "tell me a joke about cloudflare"
+};
+```
+
+You can also use unscoped prompts to construct the model chat template manually. In this case, you can use the raw parameter. Here's an input example of a [Mistral](https://docs.mistral.ai/llm/mistral-instruct-v0.1#chat-template) chat template prompt:
+
+```javascript
+{
+  prompt: "<s>[INST]comedian[/INST]</s>\n[INST]tell me a joke about cloudflare[/INST]",
+  raw: true
 };
 ```
 
@@ -300,6 +325,10 @@ The following schema is based on [JSON Schema](https://json-schema.org/)
         "prompt": {
           "type": "string",
           "maxLength": 4096
+        },
+        "raw": {
+          "type": "boolean",
+          "default": false
         },
         "stream": {
           "type": "boolean",

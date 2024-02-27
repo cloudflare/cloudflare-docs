@@ -13,13 +13,13 @@ weight: 5
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Text-to-Image models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
-| `@cf/stabilityai/stable-diffusion-xl-base-1.0`                   | Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.<br/>[More information](https://stability.ai/stable-diffusion)<br/>[Terms and license](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md)<br/>  |
+| `@cf/stabilityai/stable-diffusion-xl-base-1.0`                   | Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.<br/>[Terms and license](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md)<br/>[More information](https://stability.ai/stable-diffusion)<br/>  |
 
 ## Examples
 

@@ -82,7 +82,7 @@ Billing periods are 30 days. Payments for all recurring monthly costs are proces
 
 ### Cloudflare invoice without company name
 
-To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/subscriptions-and-billing/updating-billing-info/).
+To add your business or company name, VAT ID, or Tax ID/EIN on an invoice, add the company name when [updating billing information](/fundamentals/subscriptions-and-billing/update-billing-info/).
 
 ### Inconsistent invoice and payment amounts
 

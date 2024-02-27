@@ -193,13 +193,36 @@ While handling a request, each Worker is allowed to have up to six connections o
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
 - Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
-Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+Once a Worker has six connections open, it can still attempt to open additional connections.
 
-If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+* These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
+* Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+
+If you have cases in your application that use `fetch()` but that do not require consuming the response body, you can avoid the unread response body from consuming a concurrent connection by using `response.body.cancel()`.
+
+For example, if you want to check whether the HTTP response code is successful (2xx) before consuming the body, you should explicitly cancel the pending response body:
+
+```ts
+let resp = await fetch(url)
+
+// Only read the response body for successful responses
+if (resp.statusCode <= 299) {
+  // Call resp.json(), resp.text() or otherwise process the body
+} else {
+  // Explicitly cancel it
+  resp.body.cancel()
+}
+```
+
+This will free up an open connection.
+
+If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker.
+
+If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
 
 {{<Aside type="note">}}
 
-Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
+Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/bindings/service-bindings/)) will share the simultaneous open connection limit.
 
 {{</Aside>}}
 
@@ -275,9 +298,9 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
+You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logging/tail-workers/).
 
-Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logging/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
 
 ## Related resources
 
