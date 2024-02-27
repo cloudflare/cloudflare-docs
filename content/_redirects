@@ -1248,10 +1248,15 @@
 /workers/learning/security-model/ /workers/reference/security-model/ 301
 
 # workers ai
-/workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
+/workers-ai/models/llm/ /workers-ai/models/#text-embeddings 301
 /workers-ai/models/speech-to-text/ /workers-ai/models/speech-recognition/ 301
 /workers-ai/models/sentiment-analysis/ /workers-ai/models/text-classification/ 301
 /workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
+/workers-ai/models/text-embeddings/ /workers-ai/models/#text-embeddings 301
+/workers-ai/models/speech-recognition/ /workers-ai/models/#automatic-speech-recognition 301
+/workers-ai/models/translation/  /workers-ai/models/#translation 301
+/workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
+/workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
