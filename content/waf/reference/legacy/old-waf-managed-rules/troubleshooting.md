@@ -46,4 +46,4 @@ To identify false negatives, review the HTTP logs on your origin web server. To 
 - Are DNS records that serve HTTP traffic proxied through Cloudflare?
 - Is a firewall rule [bypassing](/firewall/cf-firewall-rules/actions/#supported-actions) managed rules? 
 - Does an allowed country, ASN, IP range, or IP address in [IP Access rules](/waf/tools/ip-access-rules/) or [firewall rules](/firewall/cf-firewall-rules/) match the attack traffic?
-- Is the malicious traffic reaching your origin IP addresses directly to bypass Cloudflare protection? Block all traffic except from [Cloudflare's IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin web server.
+- Is the malicious traffic reaching your origin IP addresses directly to bypass Cloudflare protection? Block all traffic except from [Cloudflare's IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin web server.

@@ -184,13 +184,13 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `tail_consumers` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/tail-workers/).
+  - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logging/tail-workers/).
 
 {{</definitions>}}
 
 ## Types of routes
 
-There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and `workers.dev`.
+There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
 
 ### Custom Domains
 
@@ -290,6 +290,26 @@ header: wrangler.toml
 route = "example.com/*"
 ```
 
+### `workers.dev`
+
+Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard.
+
+{{<definitions>}}
+
+- `workers_dev` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true`.
+
+{{</definitions>}}
+
+```toml
+---
+header: wrangler.toml
+---
+workers_dev = false
+```
+
+
 ## Triggers
 
 Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
@@ -374,7 +394,7 @@ cpu_ms = 100
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/how-to/query-databases/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-databases/query-databases/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -442,7 +462,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The Worker script where the Durable Object is defined, if it is external to this Worker.
+  - The name of the Worker where the Durable Object is defined, if it is external to this Worker. This option can be used both in local and remote development. In local development, you must run the external Worker in a separate process (via `wrangler dev`). In remote development, the appropriate remote binding must be used.
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -832,7 +852,7 @@ binding = "<BINDING_NAME2>"
 certificate_id = "<CERTIFICATE_ID2>"
 ```
 
-mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
+mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/bindings/mtls).
 
 ### Email bindings
 
@@ -862,8 +882,7 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 [Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
 whether that be from Workers, Pages, or anywhere via REST API.
 
-Using Workers AI always accesses your Cloudflare account in order to run AI models, and so will incur usage charges
-even in local development.
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
 Unlike other bindings, this binding is limited to one AI binding per Worker project.
 

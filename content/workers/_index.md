@@ -28,7 +28,7 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
 
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](//workers/wrangler/commands/#deploy) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
 
 {{</feature>}}
 
@@ -98,7 +98,7 @@ Offload third-party tools and services to the cloud and improve the speed and se
 
 {{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
-{{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
+{{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
 
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 

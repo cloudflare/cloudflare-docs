@@ -122,7 +122,7 @@ We may remove the `cf-placement` header before Smart Placement enters general av
 
 ## Best practices
 
-If you are building full-stack applications on Workers, we recommend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/service-bindings/) to connect your front-end logic and back-end logic Workers. 
+If you are building full-stack applications on Workers, we recommend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) to connect your front-end logic and back-end logic Workers. 
 
 ![Smart Placement and Service Bindings](/images/workers/platform/smart-placement-service-bindings.png)
 
@@ -130,4 +130,4 @@ Enabling Smart Placement on your back-end Worker will invoke it close to your ba
 
 ## Give feedback on Smart Placement
 
-Smart Placement is in beta. To share your thoughts and experience with Smart Placement, join the [Cloudflare Developer Discord](https://discord.gg/cloudflaredev).
+Smart Placement is in beta. To share your thoughts and experience with Smart Placement, join the [Cloudflare Developer Discord](https://discord.cloudflare.com).

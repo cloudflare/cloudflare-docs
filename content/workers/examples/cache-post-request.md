@@ -63,7 +63,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request, env, ctx) {
     async function sha256(message) {
       // encode as UTF-8
@@ -104,9 +104,7 @@ const handler: ExportedHandler = {
       return new Response("Error thrown " + e.message);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -13,15 +13,16 @@ Sentiment analysis or text classification is a common NLP task that classifies a
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Text Classification models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
 | `@cf/huggingface/distilbert-sst-2-int8`                   | Distilled BERT model that was finetuned on SST-2 for sentiment classification<br/>[More information](https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static)<br/>  |
 
 ## Examples
+
 {{<tabs labels="worker | node | python | curl">}}
 {{<tab label="worker" default="true">}}
 
@@ -101,21 +102,16 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/hug
 
 ```json
 {
-  "result": {
-    "items": [
-      {
-      "label": "POSITIVE",
-      "score": 0.9998738765716553
-      },
-      {
-        "label": "NEGATIVE",
-        "score": 0.00012611268903128803
-      }
-    ],
-  }
-  "success": true,
-  "errors":[],
-  "messages":[]
+  "items": [
+    {
+    "label": "POSITIVE",
+    "score": 0.9998738765716553
+    },
+    {
+      "label": "NEGATIVE",
+      "score": 0.00012611268903128803
+    }
+  ]
 }
 ```
 

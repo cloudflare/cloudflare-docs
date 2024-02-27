@@ -13,9 +13,9 @@ Automatic speech recognition (ASR) models convert a speech signal, typically an 
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Automatic Speech Recognition models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |

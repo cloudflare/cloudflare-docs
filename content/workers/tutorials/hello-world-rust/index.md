@@ -26,7 +26,7 @@ This command creates a directory called `rustwasm-markdown-parser` which you can
 
 Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
 
-## 2. Developer your Worker
+## 2. Develop your Worker
 
 You can test how your Workers function will execute when it is deployed by using the [`dev` command](/workers/wrangler/commands/#dev):
 

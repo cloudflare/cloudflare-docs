@@ -16,7 +16,7 @@ weight: 3
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | 2024.1.159.0         |
 | macOS    | ✅           | 2024.1.160.0         |
-| Linux    | ❌           |       |
+| Linux    | ✅           | 2024.2.62.0          |
 | iOS      | ❌           |       |
 | Android  | ✅           | 1.4   |
 | ChromeOS | ✅           | 1.4   |
@@ -35,99 +35,40 @@ To enable multiple organizations, administrators need to modify their [MDM file]
 
 An MDM file supports a maximum of 25 configurations. The following example includes three configurations.
 
-### plist file
+### XML
 
 ```xml
-<plist version="1.0">
-  <array>
-    <dict>
-        <key>organization</key>
-        <string>mycompany</string>
-        <key>display_name</key>
-        <string>Production environment</string>
-    </dict>
-    <dict>
-        <key>organization</key>
-        <string>mycompany</string>
-        <key>override_warp_endpoint</key>
-        <string>203.0.113.0:500</string>
-        <key>display_name</key>
-        <string>Cloudflare China network</string>
-    </dict>
-    <dict>
-        <key>organization</key>
-        <string>test-org</string>
-        <key>display_name</key>
-        <string>Test environment</string>
-    </dict>
-  </array>
-</plist>
+<array>
+  <dict>
+    <key>organization</key>
+    <string>mycompany</string>
+    <key>display_name</key>
+    <string>Production environment</string>
+  </dict>
+  <dict>
+    <key>organization</key>
+    <string>mycompany</string>
+    <key>override_warp_endpoint</key>
+    <string>203.0.113.0:500</string>
+    <key>display_name</key>
+    <string>Cloudflare China network</string>
+  </dict>
+  <dict>
+    <key>organization</key>
+    <string>test-org</string>
+    <key>display_name</key>
+    <string>Test environment</string>
+  </dict>
+</array>
 ```
 
-### mobileconfig file
+### plist
 
-```xml
-<plist version="1.0">
-<dict>
-    <key>PayloadContent</key>
-    <array>
-        <dict>
-            <key>PayloadDisplayName</key>
-            <string>Warp Configuration</string>
-            <key>PayloadIdentifier</key>
-            <string>com.cloudflare.warp.CB8B22D4-50E1-48E8-8874-A7594627013A</string>
-            <key>PayloadOrganization</key>
-            <string>Cloudflare Ltd.</string>
-            <key>PayloadType</key>
-            <string>com.cloudflare.warp</string>
-            <key>PayloadUUID</key>
-            <string>CB8B22D4-50E1-48E8-8874-A7594627013A</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
-            <key>configs</key>
-            <array>
-              <dict>
-                  <key>organization</key>
-                  <string>mycompany</string>
-                  <key>display_name</key>
-                  <string>Production environment</string>
-              </dict>
-              <dict>
-                  <key>organization</key>
-                  <string>mycompany</string>
-                  <key>override_warp_endpoint</key>
-                  <string>203.0.113.0:500</string>
-                  <key>display_name</key>
-                  <string>Cloudflare China network</string>
-              </dict>
-              <dict>
-                  <key>organization</key>
-                  <string>test-org</string>
-                  <key>display_name</key>
-                  <string>Test environment</string>
-              </dict>
-            </array>
-        </dict>
-    </array>
-    <key>PayloadDisplayName</key>
-    <string>Cloudflare WARP</string>
-    <key>PayloadIdentifier</key>
-    <string>cloudflare_warp</string>
-    <key>PayloadOrganization</key>
-    <string>Cloudflare, Ltd.</string>
-    <key>PayloadRemovalDisallowed</key>
-    <false/>
-    <key>PayloadScope</key>
-    <string>System</string>
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>2B7763B8-64F6-41EB-AA5E-7761651B8131</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-</dict>
-</plist>
-```
+[Download](/cloudflare-one/static/mdm/multiple-orgs/com.cloudflare.warp.plist) an example `.plist` file. If placing the file manually, be sure to [convert the file into binary format](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#create-plist-file).
+
+### mobileconfig
+
+[Download](/cloudflare-one/static/mdm/multiple-orgs/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
 
 ## Switch organizations in WARP
 

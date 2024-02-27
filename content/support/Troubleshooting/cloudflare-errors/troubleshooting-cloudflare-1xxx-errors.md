@@ -10,7 +10,7 @@ ___
 
 ## Overview
 
-The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](https://api.cloudflare.com/). HTTP 409, 530, 403, 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
+The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](/api/). HTTP 409, 530, 403, and 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
 
 {{<Aside type="note">}}
 Cloudflare **[Custom Error
@@ -24,7 +24,7 @@ If the resolutions within each error description below do not resolve the error,
 {{<Aside type="note">}}
 Only the site owner may contact Cloudflare for technical support. Lookup
 contact information for a domain via the [Whois
-database](https://whois.icann.org/en/lookup).
+database](https://lookup.icann.org/).
 {{</Aside>}}
 
 {{<Aside type="note">}}
@@ -203,7 +203,7 @@ A website owner blocked your request based on your client's web browser.
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup). Site owners disable **Browser** **Integrity Check** via the **Settings** tab of the **Security** app.
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/). Site owners disable **Browser** **Integrity Check** via the **Settings** tab of the **Security** app.
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support
@@ -220,7 +220,7 @@ A request is made for a resource that uses [Cloudflare hotlink protection](ht
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup).  **Hotlink Protection** is managed via the Cloudflare **Scrape Shield** app.
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/).  **Hotlink Protection** is managed via the Cloudflare **Scrape Shield** app.
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support
@@ -237,7 +237,7 @@ A website owner forbids access based on malicious activity detected from the vi
 
 ### Resolution
 
-Update your antivirus software and run a full system scan. Cloudflare can not override the security settings the site owner has set for the domain. To request website access, contact the site owner to allow your IP address. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup).
+Update your antivirus software and run a full system scan. Cloudflare can not override the security settings the site owner has set for the domain. To request website access, contact the site owner to allow your IP address. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/).
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support

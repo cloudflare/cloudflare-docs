@@ -24,6 +24,12 @@ To create a wildcard DNS record, [create a DNS record](/dns/manage-dns-records/h
 
 {{</example>}}
 
+{{<Aside type="warning">}}
+
+If your project is on [Cloudflare Pages](/pages/), note that wildcard custom domains are not supported. Refer to [known issues](/pages/platform/known-issues/#custom-domains) for details.
+
+{{</Aside>}}
+
 You can also create a wildcard DNS record specifically for a deeper subdomain. For example, if you wanted to create a wildcard record on `*.www.example.com`, you would create a record with `*.www` in the name field.
 
 {{<example>}}

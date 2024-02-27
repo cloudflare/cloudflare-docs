@@ -107,7 +107,7 @@ entries:
     - No externally-visible changes.
 - publish_date: '2023-03-06'
   description: |-
-    - [Workers Logpush](/workers/observability/logpush/#limits) now supports
+    - [Workers Logpush](/workers/observability/logging/logpush/#limits) now supports
     300 characters per log line. This is an increase from the previous limit of 150
     characters per line.
 - publish_date: '2023-02-06'

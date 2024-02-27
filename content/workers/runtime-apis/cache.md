@@ -228,7 +228,6 @@ The `cache.delete` method only purges content of the cache in the data center th
 ## Related resources
 
 - [How the cache works](/workers/reference/how-the-cache-works/)
-- [Configure your CDN](/workers/tutorials/configure-your-cdn/)
 - [Example: Cache using `fetch()`](/workers/examples/cache-using-fetch/)
 - [Example: using the Cache API](/workers/examples/cache-api/)
 - [Example: caching POST requests](/workers/examples/cache-post-request/)

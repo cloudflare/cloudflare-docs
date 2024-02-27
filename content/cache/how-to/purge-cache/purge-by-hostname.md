@@ -24,3 +24,10 @@ Purging by hostname means that all assets at URLs with a host that matches one o
 You can purge hostnames via the Cloudflare API. For more information, refer to the [API documentation](/api/operations/zone-purge). You can use up to 30 hostnames per API call and make up to 30,000 purge API calls in a 24-hour period.
 
 {{</Aside>}}
+
+## Resulting cache status
+
+Purging by hostname deletes the resource, resulting in the `CF-Cache-Status` header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
+
+If [tiered cache](/cache/how-to/tiered-cache/) is used, purging by hostname may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
+Depending on whether the upper tier has the resource or not, and whether the end user is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.

@@ -171,4 +171,4 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

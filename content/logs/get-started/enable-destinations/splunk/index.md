@@ -184,3 +184,8 @@ The WAF should now ignore requests made to Splunk HEC by Cloudflare.
 To analyze and visualize Cloudflare Logs using the Cloudflare App for Splunk, follow the steps in the [Splunk Analytics integration page](/analytics/analytics-integrations/splunk/).
 {{</Aside>}}
 
+---
+
+## More resources
+
+{{<render file="_video-send-network-analytics-logs-to-splunk.md">}}

@@ -159,15 +159,7 @@ delete this file to remove _mod\_cloudflare_, then restart Apache.
 
 ### Nginx
 
-Mod\_cloudflare is installed by modifying [the nginx configuration file](http://nginx.org/en/docs/http/ngx_http_realip_module.html) `nginx.conf` with the `ngx_http_realip_module`.
-
-To remove _mod\_cloudflare_ you should comment or remove this line, then restart nginx, and _mod\_cloudflare_ should be gone_._
-
-{{<Aside type="note">}}
-To remove *mod\_cloudflare* from other web server types, consult your
-web server documentation for how to remove modules.
-{{</Aside>}}
-
+_mod\_cloudflare_ is not needed for Nginx. Use the [`ngx_http_realip_module` NGINX module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and the configuration parameters described in the [Web server instructions](https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/#web-server-instructions) instead.
 ___
 
 ## Web server instructions
@@ -238,12 +230,9 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
-
-When using [Railgun](/railgun/) (deprecated) or other reverse proxy software such as Varnish, user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
-
-1.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
-2.  At the very end add:`CloudflareRemoteIPTrustedProxy railgun_address`So, if your Railgun server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
-3.  If you have more than one server to add to the trusted proxy list, you can add them at the end:CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
+3.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
+4.  At the very end add:`CloudflareRemoteIPTrustedProxy {LOOPBACK_ADDRESS}` So, if your server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
+5.  If you have more than one server to add to the trusted proxy list, you can add them at the end: CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
 
 To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.
 

@@ -76,8 +76,8 @@ When setting up new device posture checks, we recommend first testing them witho
 1. Open a PowerShell window.
 2. Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
 
-   ```bash
-   PS C:\>Users\JohnDoe> Get-AuthenticodeSignature -FilePath c:\myfile.exe
+   ```powershell
+   PS C:\Users\JohnDoe> Get-AuthenticodeSignature -FilePath c:\myfile.exe
    ```
 
 ## Determine the SHA-256 value
@@ -98,8 +98,8 @@ The SHA-256 value almost always changes between versions of a file/application.
 1. Open a PowerShell window.
 2. Use the `get-filehash` command to find the SHA256 value of the file. For example:
 
-   ```bash
-   PS C:\>Users\JohnDoe> get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
+   ```powershell
+   PS C:\Users\JohnDoe> get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
    ```
 
 ## How WARP checks for an application

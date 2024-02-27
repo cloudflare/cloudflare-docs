@@ -102,7 +102,7 @@ For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.c
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
 
-Currently, authentication tokens can only be generated through the API. You can run this [interactive Python script](/cloudflare-one/static/documentation/connections/authenticated-doh.py) which automates the setup procedure, or follow the steps described below.
+Currently, authentication tokens can only be generated through the API. You can run this [interactive Python script](/cloudflare-one/static/authenticated-doh.py) which automates the setup procedure, or follow the steps described below.
 
 ### 1. Create a service token for the account
 

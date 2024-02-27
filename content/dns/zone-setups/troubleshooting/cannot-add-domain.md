@@ -8,7 +8,7 @@ meta:
 
 # Cannot add domain
 
-If you encounter issues [adding a domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, follow these troubleshooting steps.
+If you encounter issues [adding a domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, follow these troubleshooting steps.
 
 ## Step 1 - Disable DNSSEC
 

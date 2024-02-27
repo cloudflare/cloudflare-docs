@@ -10,7 +10,7 @@ weight: 4
 
 ## Subdomain redirects
 
-For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](/fundamentals/basic-tasks/manage-subdomains/#set-up-redirects).
+For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](/fundamentals/setup/manage-domains/manage-subdomains/#set-up-redirects).
 
 ## SSL/TLS for subdomains
 

@@ -22,7 +22,7 @@ The currently available Security Insights are listed below:
 | [Dangling CNAME Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A ‘CNAME’ DNS record is pointing to a resource that cannot be found. You are at risk of a subdomain takeover. |
 | [DMARC Record Errors](/dns/manage-dns-records/reference/dns-record-types/#dmarc) | We detect an incorrect or missing DMARC record. |
 | [Domains without HSTS](/ssl/edge-certificates/additional-options/http-strict-transport-security/) | HSTS, HTTP Strict Transport Security, is a header which allows a website to specify and enforce security policy in client web browsers. This policy enforcement protects secure websites from downgrade attacks SSL stripping and cookie hijacking. |
-| [Users without MFA](/fundamentals/account-and-billing/account-security/2fa/) | We detect that Cloudflare administrative user %{email} has not enabled multifactor authentication. |
+| [Users without MFA](/fundamentals/setup/account/account-security/2fa/) | We detect that Cloudflare administrative user %{email} has not enabled multifactor authentication. |
 | Exposed RDP Servers | We detect an RDP server that is exposed to the public internet. |
 | [SPF Record Errors](/dns/manage-dns-records/reference/dns-record-types/#spf) | We detect an incorrect or missing SPF record. |
 | [Domains missing TLS Encryption](/ssl/get-started/) | We detect that there is no TLS encryption for this domain. |

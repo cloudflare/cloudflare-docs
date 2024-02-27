@@ -294,3 +294,9 @@ The available fields are:
 - WorkerSubrequest
 
 - ZoneID
+
+---
+
+## More resources
+
+{{<render file="_video-send-network-analytics-logs-to-splunk.md" productFolder="logs">}}

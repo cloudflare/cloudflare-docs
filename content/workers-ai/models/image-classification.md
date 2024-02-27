@@ -13,9 +13,9 @@ Image classification models take an image input and assigns it labels or classes
 
 {{<render file="_npm-update.md">}}
 
-## Available Embedding Models
+## Available models
 
-List of available models in for this task type:
+List of available Image Classification models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
@@ -67,17 +67,13 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mic
 **Example Workers AI response**
 
 ```json
-{
-    "inputs": { "image":[] },
-    "response": [
-        { "label":"PERSIAN CAT" ,"score":0.4071170687675476 },
-        { "label":"PEKINESE", "score":0.23444877564907074 },
-        { "label":"FEATHER BOA", "score":0.22562485933303833 },
-        { "label":"POMERANIAN", "score":0.033316344022750854 },
-        { "label":"JAPANESE SPANIEL", "score":0.024184171110391617 }
-    ]
-}
-
+[
+  { "label":"PERSIAN CAT" ,"score":0.4071170687675476 },
+  { "label":"PEKINESE", "score":0.23444877564907074 },
+  { "label":"FEATHER BOA", "score":0.22562485933303833 },
+  { "label":"POMERANIAN", "score":0.033316344022750854 },
+  { "label":"JAPANESE SPANIEL", "score":0.024184171110391617 }
+]
 ```
 
 ## API schema
