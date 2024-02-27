@@ -2,7 +2,7 @@
 pcx_content_type: troubleshooting
 title: Delete all DNS records
 meta:
-    title: Delete all DNS records
+    description: Learn how to delete all your DNS records in Cloudflare with a script so you can start from zero instead of using the quick scan results.
 ---
 
 # Delete all DNS records
