@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: API
 weight: 2
 meta:
-  description: A set of programmatic APIs that can be integrated with local Cloudflare Workers related workflows.
+  description: A set of programmatic APIs that can be integrated with local Cloudflare Workers-related workflows.
 ---
 
 # Wrangler API
