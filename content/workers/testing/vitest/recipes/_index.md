@@ -6,6 +6,7 @@ weight: 3
 
 # Recipes
 
-Guides and examples to help with testing Workers projects.
+These examples help demonstrate how to write unit tests and integration tests for Workers projects using the [`@cloudflare/vitest-pool-workers`](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) package.
 
-{{<directory-listing showDescriptions="true">}}
+- [Basic unit and integration tests using `SELF`](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/basics-unit-integration-self)
+- [Basic integration tests using an auxiliary Worker](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary)
