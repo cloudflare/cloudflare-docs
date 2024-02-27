@@ -21,12 +21,12 @@ Version Management does not currently support or have limited support for the fo
 
 {{<details header="Cache Rules when used with Cloudflare Images">}}
 - [Image Resizing](/images/) does not work with the `additional_cacheable_ports` [Cache Rule](/cache/how-to/cache-rules/) setting and Zone Versioning.
-- Product incompatibility issues.
+- If you use `additional_cacheable_ports` with Image Resizing, the image will be resized every time it is requested and will result in low performance. 
 {{</details>}}
 
 {{<details header="Workers Cache API">}}
 - [Workers Cache API](/workers/runtime-apis/cache/) does not work with Version Management.
-- Product incompatibility issues.
+- If you use the Workers Cache API with Zone Versioning, you might encounter unexpected caching behaviours.
 {{</details>}}
 
 {{<details header="China Network">}}
