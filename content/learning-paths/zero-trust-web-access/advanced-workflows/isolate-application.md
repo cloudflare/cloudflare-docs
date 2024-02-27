@@ -92,9 +92,9 @@ Block isolated users on unmanaged devices from downloading files that contain cr
 
 - **Policy 1: Block file downloads in isolated browser**
 
-  | Selector                     | Operator | Value                 | Logic | Action  |
-  |------------------------------|----------|-----------------------|-------|---------|
-  | Host                         | in       | `internal.site.com`   | And   | Isolate |
+  | Selector                     | Operator | Value                      | Logic | Action  |
+  |------------------------------|----------|----------------------------|-------|---------|
+  | Host                         | in       | `internal.site.com`        | And   | Isolate |
   | Passed Device Posture Checks | not in   | `Corporate serial numbers` |       |         |
 
   | Policy settings | Status |
@@ -103,7 +103,8 @@ Block isolated users on unmanaged devices from downloading files that contain cr
 
 - **Policy 2: Block credit card numbers**
 
-  | Selector                     | Operator | Value                    | Logic | Action  |
-  |------------------------------|----------|--------------------------|-------|---------|
-  | Host                         | in       | `internal.site.com`      | And   | Block   |
-  | DLP Profile                  | in       | `Financial information`  |       |         |
+  | Selector                     | Operator | Value                      | Logic | Action  |
+  |------------------------------|----------|----------------------------|-------|---------|
+  | Host                         | in       | `internal.site.com`        | And   | Block   |
+  | Passed Device Posture Checks | not in   | `Corporate serial numbers` | And   |         |
+  | DLP Profile                  | in       | `Financial information`    |       |         |
