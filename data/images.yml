@@ -5,7 +5,7 @@ product:
   title: Cloudflare Image Optimization
   url: /images/
   group: Developer platform
-  additional_groups: [Application performance]
+  additional_groups: [Media]
   wrap: true
   preview_tryout: true
 

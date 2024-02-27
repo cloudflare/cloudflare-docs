@@ -57,10 +57,10 @@ $ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/Sy
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-1. Open a Powershell window.
+1. Open a PowerShell window.
 2. Run the following command to search for a certificate with a specific common name:
 
-```bash
+```powershell
 PS C:\Users\JohnDoe> Get-ChildItem Cert:\CurrentUser\My\ | where{$_.Subject -like "*<COMMON_NAME>*"}
 ```
 

@@ -107,7 +107,7 @@ resolver #2
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-On Windows, open a Powershell window and run `ipconfig`. The DNS servers should be set to WARP's local DNS proxy IPs.
+On Windows, open a PowerShell window and run `ipconfig`. The DNS servers should be set to WARP's local DNS proxy IPs.
 
 ```powershell
 ---
@@ -311,7 +311,7 @@ InterfaceAlias
 CloudflareWARP
 ```
 
-In contrast, this DHCP address is excluded from WARP and uses the default interface :
+In contrast, this DHCP address is excluded from WARP and uses the default interface:
 
 ```powershell
 PS C:\> Find-NetRoute -RemoteIPAddress "169.254.0.0" | Select-Object InterfaceAlias -Last 1
