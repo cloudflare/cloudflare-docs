@@ -15,7 +15,7 @@ For more information, refer to [Applications and app types](/cloudflare-one/poli
 
 To define how your Magic WAN Connector should steer traffic based on known applications, choose a site and select **Traffic Steering**. Here you can specify how to handle traffic for specific applications and override default network-layer steering decisions.
 
-![Application selector box](/images/magic-wan/connector/application-selector.svg)
+![Application selector box](/images/magic-wan/connector/application-selector.png)
 
 {{<Aside type="note" header="Header text">}}
 
