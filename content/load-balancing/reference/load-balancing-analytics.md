@@ -125,7 +125,7 @@ header: Response (truncated)
 This query shows the weighted, round-trip time (RTT) measurement (`avgRttMs`) for monitor requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
 
 {{<Aside type="warning">}}
-Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. This is different from the raw RTT, for individual requests that reach the Cloudflare network.
+Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. `avgRttMs` is different from the raw RTT for individual requests that reach the Cloudflare network.
 {{</Aside>}}
 
 ```graphql
