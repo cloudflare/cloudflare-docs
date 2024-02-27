@@ -11,7 +11,7 @@ Requires Browser Isolation add-on.
 
 [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) integrates with your web-delivered Access applications to protect sensitive applications from data loss. You can build Access policies that require certain users to access your application exclusively through Browser Isolation, while other users matching different policies continue to access the application directly. For example, you may wish to layer on additional security measures for third-party contractors or other users without a corporate device.
 
-Cloudflare sends all isolated traffic through our Secure Web Gateway inspection engine, which allows you to apply Gateway HTTP policies such as:
+Cloudflare sends all isolated traffic through our Secure Web Gateway inspection engine, which allows you to apply [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) such as:
 
 - Restrict specific actions and HTTP request methods.
 - Inspect the request body to match against [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) (DLP) profiles with as much specificity and control as if the user had deployed an endpoint agent.
@@ -44,7 +44,7 @@ with HTTP policies applied"]
 
 ## Example Access policies
 
-The following two Access policies work together to require Browser Isolation for a subset of users. Policy 1 allows employees who are using the Cloudflare WARP client to access the application directly; their traffic already goes through our Secure Web Gateway for inspection. Users who do not match Policy 1, such as employees and contractors on an unmanaged device, are required to access the application through an isolated browser.
+The following two Access policies work together to require Browser Isolation for a subset of users. Policy 1 allows employees who are using the Cloudflare WARP client to access the application directly; their traffic already goes through our Secure Web Gateway for inspection. Users who do not match Policy 1, such as employees and contractors on unmanaged devices, are required to access the application through an isolated browser.
 
 - **Policy 1: Allow employees**
 
@@ -67,11 +67,16 @@ The following two Access policies work together to require Browser Isolation for
   | ------------------- | ------- |
   | Isolate application | Enabled |
 
+For more information, refer to the [Access policies documentation](/cloudflare-one/policies/access/).
+
 ## Example HTTP policies
 
 ### Block file downloads
 
 Blocks isolated users on unmanaged devices from downloading any files from your private application.
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 | Selector                     | Operator | Value                 | Logic | Action  |
 |------------------------------|----------|-----------------------|-------|---------|
@@ -81,6 +86,54 @@ Blocks isolated users on unmanaged devices from downloading any files from your 
 | Policy settings | Status |
 | --------------  | - |
 | Disable file downloads | Enabled |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "name": "Company Wiki DNS policy",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": {
+        "any": {
+          "in": {
+            "lhs": {
+              "splat": "dns.domains"
+            },
+            "rhs": "$<DOMAIN_LIST_ID>"
+          }
+        }
+      }
+    },
+    {
+      "type": "identity",
+      "expression": {
+        "matches": {
+          "lhs": "identity.email",
+          "rhs": ".*@example.com"
+        }
+      }
+    }
+  ],
+  "action": "allow",
+  "precedence": 13002,
+  "enabled": true,
+  "description": "Allow employees to access company wiki domains.",
+  "filters": [
+    "dns"
+  ]
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ### Block file downloads of sensitive data
 
