@@ -254,7 +254,7 @@ You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 
 ## 6. Next steps
 
-Reference the [finished code for this tutorial on GitHub](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/openai-function-calling).
+Reference the [finished code for this tutorial on GitHub](https://github.com/rickyrobinett/openai-function-calling-workers).
 
 To continue working with Workers and AI, refer to [the guide on using LangChaing and Cloudflare Workers together](https://blog.cloudflare.com/langchain-and-cloudflare/) or [how to build a ChatGPT plugin with Cloudflare Workers](https://blog.cloudflare.com/magic-in-minutes-how-to-build-a-chatgpt-plugin-with-cloudflare-workers/).
 

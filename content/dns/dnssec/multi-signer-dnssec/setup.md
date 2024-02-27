@@ -10,11 +10,13 @@ meta:
 
 This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/) with Cloudflare, using the [model 2](/dns/dnssec/multi-signer-dnssec/about/) as described in [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 
-{{<Aside type="note">}}
-Note that this process requires that your other DNS provider(s) also support multi-signer DNSSEC.
-{{</Aside>}}
+## Before you begin
 
-Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
+Note that:
+
+- This process requires that your other DNS provider(s) also support multi-signer DNSSEC.
+- Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
+- Enabling **DNSSEC** and **Multi-signer DNSSEC** in [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) only replaces the first step in [1. Set up Cloudflare zone](#1-set-up-cloudflare-zone). You still have to follow the rest of this tutorial to complete the setup.
 
 ## 1. Set up Cloudflare zone
 

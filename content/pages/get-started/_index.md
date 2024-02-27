@@ -8,4 +8,6 @@ weight: 2
 
 {{<render file="_pages_survey.md">}}
 
-{{<directory-listing>}}
+Choose a setup method for your Pages project:
+
+{{<directory-listing showDescriptions="true">}}
