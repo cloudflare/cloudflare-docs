@@ -20,23 +20,23 @@ A Web Application Firewall or WAF creates a shield between a web app and the Int
 
 The two main roles of the Cloudflare WAF are the following:
 
-- **Detection**: Run incoming requests through one or more [traffic scans](#available-traffic-scans) to find malicious or potentially malicious activity. The scores from enabled traffic scans are available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, where you can analyze your security posture and determine the most appropriate mitigation rules.
+- **Detection**: Run incoming requests through one or more [traffic detections](#available-traffic-detections) to find malicious or potentially malicious activity. The scores from enabled detections are available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, where you can analyze your security posture and determine the most appropriate mitigation rules.
 
 - **Mitigation**: Blocks, challenges, or throttles requests through different [mitigation features](#waf-mitigation-features) such as custom rules, WAF Managed Rules, and rate limiting rules. Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
 
 {{<Aside type="note" header="Note">}}
-Enabling traffic scans will not apply any mitigation measures to incoming traffic; they only provide signals that you can use to define your attack mitigation strategy.
+Enabling traffic detections will not apply any mitigation measures to incoming traffic; they only provide signals that you can use to define your attack mitigation strategy.
 {{</Aside>}}
 
-### Available traffic scans
+### Available traffic detections
 
-The WAF currently provides the following traffic scans for detecting security threats in incoming requests:
+The WAF currently provides the following detections for finding security threats in incoming requests:
 
 - [**Bots**](/bots/reference/bot-management-variables/#ruleset-engine-fields): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
 - [**Attacks**](/waf/about/waf-attack-score/): Checks for known attack variations and malicious payloads. Scores traffic on a scale from 1 (likely to be malicious) to 99 (unlikely to be malicious).
 - [**Malicious uploads**](/waf/about/content-scanning/): Scans content objects, such as uploaded files, for malicious signatures like malware.
 
-To enable traffic scans in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
+To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
 
 ### WAF mitigation features
 

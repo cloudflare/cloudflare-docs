@@ -6,7 +6,7 @@ weight: 3
 
 # Uploaded content scanning
 
-WAF content scanning is a WAF [detection](/waf/about/#detection-versus-mitigation) component that scans content being uploaded to your application.
+WAF content scanning is a WAF [traffic detection](/waf/about/#detection-versus-mitigation) that scans content being uploaded to your application.
 
 When enabled, content scanning attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
 
@@ -40,8 +40,6 @@ A content object is any request payload detected by heuristics that does not mat
 
 Content scanning does not take the request's `Content-Type` header into account, since this header can be manipulated. If the system detects a malicious object but cannot determine its exact content type, it reports the malicious content object as having an `application/octet-stream` content type.
 
-The content scanner will fully check content objects with a size up to 15 MB. For larger content objects, the scanner will analyze the first 15 MB and provide scan results based on that portion of the object.
-
 ## Scanned content
 
 Content scanning can check the following content objects for malicious content:
@@ -52,7 +50,7 @@ Content scanning can check the following content objects for malicious content:
 
 All content objects in an incoming request will be scanned, namely for requests with multiple uploaded files (for example, a submitted HTML form with several file inputs).
 
-The scanner will only scan content objects with a size up to 15 MB.
+The content scanner will fully check content objects with a size up to 15 MB. For larger content objects, the scanner will analyze the first 15 MB and provide scan results based on that portion of the object.
 
 ## Custom scan expressions
 
@@ -62,7 +60,7 @@ Sometimes, you may wish to specify where to find the content objects, such as wh
 {"file": "<BASE64_ENCODED_STRING>"}
 ```
 
-In these situations, configure a custom scan expression to tell the content scanner where to find the content objects. For more information, refer to [Configure a custom scan expression](#2-optional-configure-a-custom-scan-expression).
+In these situations, configure a custom scan expression to tell the content scanner where to find the content objects. For more information, refer to [Configure a custom scan expression](/waf/about/content-scanning/get-started/#4-optional-configure-a-custom-scan-expression).
 
 ## ​​Content scanning fields
 
