@@ -64,36 +64,36 @@ export default {
 
 {{<definitions>}}
 
-- {{<code>}}head(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}head(key{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}
 
   - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and `null` if the key does not exist.
 
-- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}
 
   - Retrieves the `R2ObjectBody` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
 
-- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}},{{</code>}} {{<code>}} options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}
 
   - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}put(){{</code>}} returns `null`, and the object will not be stored.
   - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
-- {{<code>}}delete(keys{{<param-type>}}string | string[]{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}delete(keys{{<param-type>}}string | string[]{{</param-type>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}
 
   - Deletes the given {{<code>}}values{{</code>}} and metadata under the associated {{<code>}}keys{{</code>}}. Once the delete succeeds, returns {{<code>}}void{{</code>}}.
    - R2 deletes are strongly consistent. Once the Promise resolves, all subsequent read operations will no longer see the provided key value pairs globally.
 
-- {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}>{{</type>}}
 
   - Returns an {{<code>}}R2Objects{{</code>}} containing a list of {{<code>}}R2Object{{</code>}} contained within the bucket. By default, returns the first 1000 entries.
 
-- {{<code>}}createMultipartUpload(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2MultipartOptions{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2MultipartUpload{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}createMultipartUpload(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2MultipartOptions{{</param-type>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2MultipartUpload{{</param-type>}}>{{</type>}}
 
   - Creates a multipart upload.
   - Returns Promise which resolves to an `R2MultipartUpload` object representing the newly created multipart upload. Once the multipart upload has been created, the multipart upload can be immediately interacted with globally, either through the Workers API, or through the S3 API.
 
-- {{<code>}}resumeMultipartUpload(key{{<param-type>}}string{{</param-type>}}, uploadId{{<param-type>}}string{{</param-type>}}) {{<type>}}R2MultipartUpload{{</type>}}{{</code>}}
+- {{<code>}}resumeMultipartUpload(key{{<param-type>}}string{{</param-type>}}, uploadId{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}R2MultipartUpload{{</type>}}
 
   - Returns an object representing a multipart upload with the given key and uploadId.
   - The resumeMultipartUpload operation does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the `R2MultipartUpload` object.
@@ -106,38 +106,38 @@ export default {
 
 {{<definitions>}}
 
-- {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}key{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The object's key.
 
-- {{<code>}}version{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}version{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - Random unique string associated with a specific upload of a key.
 
-- {{<code>}}size{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}size{{</code>}}{{<param-type>}}number{{</param-type>}}
 
   - Size of the object in bytes.
 
-- {{<code>}}etag{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}etag{{</code>}}{{<param-type>}}string{{</param-type>}}
 
 {{<Aside type="note">}}
-We recommend using the `httpEtag` field when returning an etag in a response header. This ensures the etag is quoted and conforms to [rfc 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3).
+Cloudflare recommends using the `httpEtag` field when returning an etag in a response header. This ensures the etag is quoted and conforms to [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3).
 {{</Aside>}}
   - The etag associated with the object upload.
 
-- {{<code>}}httpEtag{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}httpEtag{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The object's etag, in quotes so as to be returned as a header.
 
-- {{<code>}}uploaded{{<param-type>}}Date{{</param-type>}}{{</code>}}
+- {{<code>}}uploaded{{</code>}}{{<param-type>}}Date{{</param-type>}}
 
   - A Date object representing the time the object was uploaded.
 
-- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}{{</code>}}
+- {{<code>}}httpMetadata{{</code>}}{{<param-type>}}R2HTTPMetadata{{</param-type>}}
 
   - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
-- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{</code>}}
+- {{<code>}}customMetadata{{</code>}}{{<param-type>}}Record\<string, string>{{</param-type>}}
 
   - A map of custom, user-defined metadata associated with the object.
   
@@ -161,27 +161,27 @@ We recommend using the `httpEtag` field when returning an etag in a response hea
 
 {{<definitions>}}
 
-- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
+- {{<code>}}body{{</code>}}{{<param-type>}}ReadableStream{{</param-type>}}
 
   - The object's value.
 
-- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+- {{<code>}}bodyUsed{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
   - Whether the object's value has been consumed or not.
 
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}arrayBuffer(){{</code>}} : {{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}
 
   - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
 
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
+- {{<code>}}text(){{</code>}} : {{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}>{{</type>}}
 
   - Returns a Promise that resolves to an string containing the object's value.
 
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
+- {{<code>}}json<T>(){{</code>}} : {{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}>{{</type>}}
 
   - Returns a Promise that resolves to the given object containing the object's value.
 
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
+- {{<code>}}blob(){{</code>}} : {{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}>{{</type>}}
 
   - Returns a Promise that resolves to a binary Blob containing the object's value.
 
@@ -203,31 +203,30 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 {{<definitions>}}
 
-- {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}key{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The `key` for the multipart upload.
 
-- {{<code>}}uploadId{{<param-type>}}string{{</param-type>}}{{</code>}}
+- {{<code>}}uploadId{{</code>}}{{<param-type>}}string{{</param-type>}}
 
   - The `uploadId` for the multipart upload.
 
-- {{<code>}}uploadPart(partNumber{{<param-type>}}number{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2UploadedPart{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}uploadPart(partNumber{{<param-type>}}number{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2UploadedPart{{</param-type>}}>{{</type>}}
 
   - Uploads a single part with the specified part number to this multipart upload. Each part must be uniform in size with an exception for the final part which can be smaller.
   - Returns an `R2UploadedPart` object containing the `etag` and `partNumber`. These `R2UploadedPart` objects are required when completing the multipart upload.
 
 
-- {{<code>}}abort() {{<type>}}Promise\<{{<param-type>}}void{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}abort() {{</code>}} : {{<type>}}Promise\<{{<param-type>}}void{{</param-type>}}>{{</type>}}
 
   - Aborts the multipart upload. Returns a Promise that resolves when the upload has been successfully aborted.
 
-- {{<code>}}complete(uploadedParts{{<param-type>}}R2UploadedPart{{</param-type>}}[]) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}complete(uploadedParts{{<param-type>}}R2UploadedPart{{</param-type>}}[]){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}
 
   - Completes the multipart upload with the given parts.
   - Returns a Promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
 
 {{</definitions>}}
-
 
 ## Method-specific types
 
@@ -235,11 +234,11 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 {{<definitions>}}
 
-- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
+- {{<code>}}onlyIf{{</code>}}{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
   
-- {{<code>}}range{{<param-type>}}R2Range{{</param-type>}}{{</code>}}
+- {{<code>}}range{{</code>}}{{<param-type>}}R2Range{{</param-type>}}
 
   - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
 
@@ -257,15 +256,15 @@ There are 3 variations of arguments that can be used in a range:
 
 {{<definitions>}}
 
-- {{<code>}}offset{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}offset{{</code>}}{{<param-type>}}number{{</param-type>}}
 
   - The byte to begin returning data from, inclusive.
 
-- {{<code>}}length{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}length{{</code>}}{{<param-type>}}number{{</param-type>}}
 
   - The number of bytes to return. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
   
-- {{<code>}}suffix{{<param-type>}}number{{</param-type>}}{{</code>}}
+- {{<code>}}suffix{{</code>}}{{<param-type>}}number{{</param-type>}}
 
   - The number of bytes to return from the end of the file, starting from the last byte. If more bytes are requested than exist in the object, fewer bytes than this number may be returned.
 
@@ -275,15 +274,15 @@ There are 3 variations of arguments that can be used in a range:
 
 {{<definitions>}}
 
-- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
+- {{<code>}}onlyIf{{</code>}}{{<param-type>}}R2Conditional{{</param-type>}} |{{<param-type>}}Headers{{</param-type>}}
 
   - Specifies that the object should only be stored given satisfaction of certain conditions in the `R2Conditional`. Refer to [Conditional operations](#conditional-operations).
 
-- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}httpMetadata{{</code>}}{{<param-type>}}R2HTTPMetadata{{</param-type>}} |{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
-- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}customMetadata{{</code>}}{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
@@ -293,23 +292,23 @@ Only a single hashing algorithm can be specified at once.
 
 {{</Aside>}}
 
-- {{<code>}}md5{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}md5{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}} |{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A md5 hash to use to check the received object's integrity.
 
-- {{<code>}}sha1{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}sha1{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}} |{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A SHA-1 hash to use to check the received object's integrity.
 
-- {{<code>}}sha256{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}sha256{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}} |{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A SHA-256 hash to use to check the received object's integrity.
 
-- {{<code>}}sha384{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}sha384{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}} |{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A SHA-384 hash to use to check the received object's integrity.
 
-- {{<code>}}sha512{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}sha512{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}} |{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A SHA-512 hash to use to check the received object's integrity.
 
@@ -319,11 +318,11 @@ Only a single hashing algorithm can be specified at once.
 
 {{<definitions>}}
 
-- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}httpMetadata{{</code>}}{{<param-type>}}R2HTTPMetadata{{</param-type>}} |{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
 
-- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}customMetadata{{</code>}}{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A map of custom, user-defined metadata that will be stored with the object.
 
@@ -333,19 +332,19 @@ Only a single hashing algorithm can be specified at once.
 
 {{<definitions>}}
 
-- {{<code>}}limit{{<param-type>}}number{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}limit{{</code>}}{{<param-type>}}number{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
   - The number of results to return. Defaults to `1000`, with a maximum of `1000`.
 
-- {{<code>}}prefix{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}prefix{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
   - The prefix to match keys against. Keys will only be returned if they start with given prefix. 
 
-- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}cursor{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
   - An opaque token that indicates where to continue listing objects from. A cursor can be retrieved from a previous list operation.
 
-- {{<code>}}delimiter{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}delimiter{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
   - The character to use when grouping keys.
 
-- {{<code>}}include{{<param-type>}}Array\<string\>{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}include{{</code>}}{{<param-type>}}Array\<string\>{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
   - Can include `httpMetadata` and/or `customMetadata`. If included, items returned by the list will include the specified metadata.
 
   - Note that there is a limit on the total amount of data that a single `list` operation can return. If you request data, you may receive fewer than `limit` results in your response to accommodate metadata.
@@ -396,19 +395,19 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 {{<definitions>}}
 
-- {{<code>}}objects{{<param-type>}}Array\<{{<type>}}R2Object{{</type>}}\>{{</param-type>}}{{</code>}}
+- {{<code>}}objects{{</code>}}{{<param-type>}}Array\<{{<type>}}R2Object{{</type>}}\>{{</param-type>}}
 
   - An array of objects matching the `list` request.
 
-- {{<code>}}truncated{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+- {{<code>}}truncated{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
   - If true, indicates there are more results to be retrieved for the current `list` request.
 
-- {{<code>}}cursor{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}cursor{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
   - A token that can be passed to future `list` calls to resume listing from that point. Only present if truncated is true.
 
-- {{<code>}}delimitedPrefixes{{<param-type>}}Array\<{{<type>}}string{{</type>}}\>{{</param-type>}}{{</code>}}
+- {{<code>}}delimitedPrefixes{{</code>}}{{<param-type>}}Array\<{{<type>}}string{{</type>}}\>{{</param-type>}}
 
   - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
   
@@ -424,19 +423,19 @@ If the condition check for `put()` fails, `null` will be returned instead of the
 
 {{<definitions>}}
 
-- {{<code>}}etagMatches{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}etagMatches{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
   - Performs the operation if the object's etag matches the given string.
 
-- {{<code>}}etagDoesNotMatch{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}etagDoesNotMatch{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
   - Performs the operation if the object's etag does not match the given string.
 
-- {{<code>}}uploadedBefore{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}uploadedBefore{{</code>}}{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
   - Performs the operation if the object was uploaded before the given date.
 
-- {{<code>}}uploadedAfter{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}uploadedAfter{{</code>}}{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
   - Performs the operation if the object was uploaded after the given date.
 
@@ -452,17 +451,17 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
 {{<definitions>}}
 
-- {{<code>}}contentType{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}contentType{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
-- {{<code>}}contentLanguage{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}contentLanguage{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
-- {{<code>}}contentDisposition{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}contentDisposition{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
-- {{<code>}}contentEncoding{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}contentEncoding{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
-- {{<code>}}cacheControl{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}cacheControl{{</code>}}{{<param-type>}}string{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
-- {{<code>}}cacheExpiry{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}{{</code>}}
+- {{<code>}}cacheExpiry{{</code>}}{{<param-type>}}Date{{<prop-meta>}}optional{{</prop-meta>}}{{</param-type>}}
 
  {{</definitions>}}
 
