@@ -38,7 +38,7 @@
 {{ .Scratch.Set "conditional-name" "responses" }}
 {{ partial "models/conditionally.md" . | markdownify}}
 
-
+{{if (index .Page.Params "json_schema") }}
 ## API Schema
 
 The following schema is based on [JSON Schema](https://json-schema.org/)
@@ -58,6 +58,8 @@ The following schema is based on [JSON Schema](https://json-schema.org/)
   {{ .Page.Params.json_schema.output }}
   ```
 </details>
+
+{{end}}
 
 {{/* These don't exist yet
 ## Model parameters
