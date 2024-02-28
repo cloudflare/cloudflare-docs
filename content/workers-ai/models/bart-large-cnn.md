@@ -16,7 +16,7 @@ model_display_name: "bart-large-cnn"
 layout: "model"
 title: "bart-large-cnn"
 json_schema:
-  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"input_text\": {\n      \"type\": \"string\"\n    },\n    \"max_length\": {\n      \"type\": \"integer\"\n    }\n  },\n  \"required\": [\n    \"input_text\"\n  ]\n}"
+  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"input_text\": {\n      \"type\": \"string\"\n    },\n    \"max_length\": {\n      \"type\": \"integer\",\n      \"default\": 1024\n    }\n  },\n  \"required\": [\n    \"input_text\"\n  ]\n}"
   output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"summary\": {\n      \"type\": \"string\"\n    }\n  }\n}"
 
 ---

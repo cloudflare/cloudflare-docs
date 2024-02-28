@@ -10,7 +10,9 @@ model:
     description: "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
   tags:
     - "text-generation"
-  properties: []
+  properties:
+    - property_id: "info"
+      value: "https://huggingface.co/microsoft/phi-2"
 task_type: "text-generation"
 model_display_name: "phi-2"
 layout: "model"

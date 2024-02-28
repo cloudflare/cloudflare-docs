@@ -10,7 +10,11 @@ model:
     description: "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
   tags:
     - "text-generation"
-  properties: []
+  properties:
+    - property_id: "terms"
+      value: "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
+    - property_id: "info"
+      value: "https://huggingface.co/defog/sqlcoder-7b-2"
 task_type: "text-generation"
 model_display_name: "sqlcoder-7b-2"
 layout: "model"

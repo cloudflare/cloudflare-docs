@@ -10,7 +10,9 @@ model:
     description: "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
   tags:
     - "text-generation"
-  properties: []
+  properties:
+    - property_id: "info"
+      value: "https://huggingface.co/TheBloke/DiscoLM_German_7b_v1-AWQ"
 task_type: "text-generation"
 model_display_name: "discolm-german-7b-v1-awq"
 layout: "model"
