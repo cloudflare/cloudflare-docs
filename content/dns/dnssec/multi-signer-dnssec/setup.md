@@ -127,7 +127,7 @@ If you use Cloudflare as a secondary DNS provider, do the following:
 For the purpose of this tutorial, you will update your registrar with the DS record later, in [Step 3](/dns/dnssec/multi-signer-dnssec/setup/#3-set-up-registrar).
 {{</Aside>}}
 
-5. Also enable **Multi-signer DNSSEC** and **Multi-provider DNS**.
+5. Also enable **Multi-signer DNSSEC**.
 6. Add the ZSK(s) of your external provider(s) to a DNSKEY record at your primary DNS provider. This record should be transferred successfully to Cloudflare.
 7. Add your external provider(s) nameservers as NS records on your zone apex at your primary DNS provider. These records should be transferred successfully to Cloudflare.
 
