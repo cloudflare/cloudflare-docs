@@ -10,7 +10,11 @@ model:
     description: "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
   tags:
     - "text-generation"
-  properties: []
+  properties:
+    - property_id: "info"
+      value: "https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct"
+    - property_id: "terms"
+      value: "https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL"
 task_type: "text-generation"
 model_display_name: "deepseek-math-7b-instruct"
 layout: "model"
