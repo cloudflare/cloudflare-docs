@@ -68,16 +68,16 @@ When content scanning is enabled, you can use the following fields in WAF rules:
 
 {{<table-wrap>}}
 
-Field name in the dashboard           | Field name in expressions
---------------------------------------|--------------------------------------
-Has content object                    | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-has_obj)
-Has malicious content object          | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-has_malicious_obj)
-Number of malicious content objects   | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-num_malicious_obj)
-Content object scan failed            | [`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-has_failed)
-Number of detected content objects    | [`cf.waf.content_scan.num_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-num_obj)
-Size of detected content objects (in bytes) | [`cf.waf.content_scan.obj_sizes`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-obj_sizes)
-File type of detected content objects | [`cf.waf.content_scan.obj_types`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-obj_types)
-Scan results for detected content objects<br>Values: `clean`, `suspicious`,<br>`infected`, and `not scanned` | [`cf.waf.content_scan.obj_results`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-obj_results)
+Field name in the dashboard         | Field name in expressions
+------------------------------------|--------------------------------------
+Has content object                  | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-has_obj)
+Has malicious content object        | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-has_malicious_obj)
+Number of malicious content objects | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-num_malicious_obj)
+Content scan has failed             | [`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-has_failed)
+Number of content objects           | [`cf.waf.content_scan.num_obj`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-num_obj)
+Content object sizes (in bytes)     | [`cf.waf.content_scan.obj_sizes`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-obj_sizes)
+Content object types                | [`cf.waf.content_scan.obj_types`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-obj_types)
+Content object results<br>Values: `clean`, `suspicious`,<br>`infected`, and `not scanned` | [`cf.waf.content_scan.obj_results`](/ruleset-engine/rules-language/fields/#field-cf-waf-content_scan-obj_results)
 
 {{</table-wrap>}}
 
