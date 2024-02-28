@@ -12,6 +12,11 @@ Version Management does not currently support or have limited support for the fo
 - Customers are allowed to opt-in to remove the UI block that prevents enabling Version Management.
 {{</details>}}
 
+{{<details header="Authenticated Origin Pull">}}
+- [Authenticated Origin Pull](/ssl/origin-configuration/authenticated-origin-pull/) does not work with Zone Versioning.
+- Accessing your domain from an allowlisted IP returns a Cloudflare 520 error.
+{{</details>}}
+
 {{<details header="Cache">}}
 - [Cache](/workers/runtime-apis/cache/) settings are versioned, but cache keys are not.
 - Caching a new URL on staging would cache it for production as well.
