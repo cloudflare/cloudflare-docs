@@ -6,7 +6,7 @@ weight: 5
 
 # Text-to-Image
 
-
+Generates images from input text. These models can be used to generate and modify images based on text prompts.
 
 * Task type: **text-to-image**
 * TypeScript class: **AiTextToImage**
@@ -19,7 +19,11 @@ List of available Text-to-Image models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
+| `@cf/runwayml/stable-diffusion-v1-5-inpainting`                   | Stable Diffusion Inpainting is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input, with the extra capability of inpainting the pictures by using a mask.<br/>  |
+| `@cf/bytedance/stable-diffusion-xl-lightning`                   | SDXL-Lightning is a lightning-fast text-to-image generation model. It can generate high-quality 1024px images in a few steps.<br/>  |
+| `@cf/lykon/dreamshaper-8-lcm`                   | Stable Diffusion model that has been fine-tuned to be better at photorealism without sacrificing range.<br/>  |
 | `@cf/stabilityai/stable-diffusion-xl-base-1.0`                   | Diffusion-based text-to-image generative model by Stability AI. Generates and modify images based on text prompts.<br/>[Terms and license](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md)<br/>[More information](https://stability.ai/stable-diffusion)<br/>  |
+| `@cf/runwayml/stable-diffusion-v1-5-img2img`                   | Stable Diffusion is a latent text-to-image diffusion model capable of generating photo-realistic images. Img2img generate a new image from an input image with Stable Diffusion. <br/>  |
 
 ## Examples
 
@@ -83,6 +87,44 @@ The following schema is based on [JSON Schema](https://json-schema.org/)
   "properties": {
     "prompt": {
       "type": "string"
+    },
+    "image": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "binary"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "image": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "mask": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "binary"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mask": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      ]
     },
     "num_steps": {
       "type": "integer",

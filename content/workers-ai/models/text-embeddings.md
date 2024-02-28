@@ -19,6 +19,7 @@ List of available Text Embeddings models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
+| `@hf/baai/bge-base-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector.<br/>  |
 | `@cf/baai/bge-small-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector<br/><strong>Max input tokens</strong>: 512<br/><strong>Output dimensions</strong>: 384<br/>[More information](https://huggingface.co/BAAI/bge-base-en-v1.5)<br/>  |
 | `@cf/baai/bge-base-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector<br/><strong>Max input tokens</strong>: 512<br/><strong>Output dimensions</strong>: 768<br/>[More information](https://huggingface.co/BAAI/bge-base-en-v1.5)<br/>  |
 | `@cf/baai/bge-large-en-v1.5`                   | BAAI general embedding (bge) models transform any given text into a compact vector<br/><strong>Max input tokens</strong>: 512<br/><strong>Output dimensions</strong>: 1024<br/>[More information](https://huggingface.co/BAAI/bge-base-en-v1.5)<br/>  |

@@ -19,7 +19,7 @@ List of available Translation models:
 
 | Model ID                        | Description                   |
 | ------------------------------- | ----------------------------- |
-| `@cf/meta/m2m100-1.2b`                   | Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation<br/><strong>languages</strong>: english, chinese, french, spanish, arabic, russian, german, japanese, portuguese, hindi<br/>[More information](https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100)<br/>[Terms and license](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)<br/>  |
+| `@cf/meta/m2m100-1.2b`                   | Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation<br/>[More information](https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100)<br/>[Terms and license](https://github.com/facebookresearch/fairseq/blob/main/LICENSE)<br/>  |
 
 ## Examples
 
