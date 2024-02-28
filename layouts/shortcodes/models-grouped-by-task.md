@@ -9,6 +9,6 @@
 |-----------|-------------------|---------------|
   {{- range .Pages -}}
     {{- $params := .Params }}
-| [{{ $params.model_display_name }}]({{ .RelPermalink }}) | `{{$params.model.name}}` | {{ $params.model.description | truncate 50 }} |
+| [{{ $params.model_display_name }}]({{ .RelPermalink }}) | `{{$params.model.name}}` | {{ $params.model.description }} |
   {{- end -}}
 {{- end -}}
