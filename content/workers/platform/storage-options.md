@@ -19,13 +19,13 @@ Storage options can also be used by your front-end application built with Cloudf
 
 Available storage and persistency products include:
 
-* [Workers KV](#workers-kv) for key-value storage.
-* [R2](#r2) for object storage, including use-cases where S3 compatible storage is required.
-* [Durable Objects](#durable-objects) for transactional, globally coordinated storage.
-* [D1](#d1) as a relational, SQL-based database.
-* [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
-* [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
-* [Vectorize](/vectorize/) for vector search and storing embeddings from [Workers AI](/workers-ai/).
+- [Workers KV](#workers-kv) for key-value storage.
+- [R2](#r2) for object storage, including use-cases where S3 compatible storage is required.
+- [Durable Objects](#durable-objects) for transactional, globally coordinated storage.
+- [D1](#d1) as a relational, SQL-based database.
+- [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
+- [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
+- [Vectorize](/vectorize/) for vector search and storing embeddings from [Workers AI](/workers-ai/).
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
@@ -33,18 +33,17 @@ Applications built on the Workers platform may combine one or more storage compo
 
 {{<table-wrap>}}
 
-| Use-case                      | Product       | Ideal for              |
-| ----------------------------- | ------------- | ---------------------- |
-| Key-value storage             | [Workers KV](/kv/) | Configuration data, service routing metadata, personalization (A/B testing) 
-| Object storage                | [R2](/r2/)    | User-facing web assets, images, machine learning and training datasets, analytics datasets, log and event data. |
-| SQL database                  | [D1](/d1/)    | Relational data, including user profiles, product listings and orders, and/or customer data. |
-| Global co-ordination          | [Durable Objects](/durable-objects/) | Building collaborative applications; global co-ordination across clients; strongly consistent, transactional storage. |
-| Vector search (database)      | [Vectorize](/vectorize/) | Storing [embeddings](/workers-ai/models/text-embeddings/) from AI models for semantic search and classification tasks. |
-| Task processing & batching    | [Queues](/queues/) | Background job processing (emails, notifications, APIs) and log processing/batching.
-| Connect to an existing database | [Hyperdrive](/hyperdrive/) | Connecting to an existing database in a cloud or on-prem. |
+| Use-case                        | Product                              | Ideal for                                                                                                              |
+| ------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| Key-value storage               | [Workers KV](/kv/)                   | Configuration data, service routing metadata, personalization (A/B testing)                                            |
+| Object storage                  | [R2](/r2/)                           | User-facing web assets, images, machine learning and training datasets, analytics datasets, log and event data.        |
+| SQL database                    | [D1](/d1/)                           | Relational data, including user profiles, product listings and orders, and/or customer data.                           |
+| Global co-ordination            | [Durable Objects](/durable-objects/) | Building collaborative applications; global co-ordination across clients; strongly consistent, transactional storage.  |
+| Vector search (database)        | [Vectorize](/vectorize/)             | Storing [embeddings](/workers-ai/models/#text-embeddings) from AI models for semantic search and classification tasks. |
+| Task processing & batching      | [Queues](/queues/)                   | Background job processing (emails, notifications, APIs) and log processing/batching.                                   |
+| Connect to an existing database | [Hyperdrive](/hyperdrive/)           | Connecting to an existing database in a cloud or on-prem.                                                              |
 
 {{</table-wrap>}}
-
 
 ## Performance and consistency
 
@@ -52,13 +51,13 @@ The following table highlights the performance and consistency characteristics o
 
 {{<table-wrap>}}
 
-| Feature                                       | Workers KV   | R2           | Durable Objects      | D1           |
-| --------------------------------------------- | ------------ | ------------ |--------------------- | ------------ |
-| Maximum storage per account                   | Unlimited<sup>1</sup> | Unlimited<sup>2</sup> | 50 GiB            | 50GiB <sup>3</sup><sup>beta</sup>
-| Storage grouping name<sup>2</sup>             | Namespace    | Bucket           | Durable Object       | Database |
-| Maximum size per value                        | 25 MiB       | 5 TiB per object | 128 KiB per value    | 2 GiB per database |
-| Consistency model                             | Eventual: updates take up to 60s to be reflected  | Strong (read-after-write)<sup>4</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
-| Supported APIs                                | Workers, HTTP/REST API | Workers, S3 compatible | Workers | Workers, HTTP/REST API | 
+| Feature                           | Workers KV                                       | R2                                    | Durable Objects                  | D1                                                  |
+| --------------------------------- | ------------------------------------------------ | ------------------------------------- | -------------------------------- | --------------------------------------------------- |
+| Maximum storage per account       | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 50GiB <sup>3</sup><sup>beta</sup>                   |
+| Storage grouping name<sup>2</sup> | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
+| Maximum size per value            | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 2 GiB per database                                  |
+| Consistency model                 | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>4</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
+| Supported APIs                    | Workers, HTTP/REST API                           | Workers, S3 compatible                | Workers                          | Workers, HTTP/REST API                              |
 
 {{</table-wrap>}}
 
@@ -75,16 +74,16 @@ Workers KV is an eventually consistent key-value data store that caches on the C
 
 It is ideal for projects that require:
 
-* High volumes of reads and/or repeated reads to the same keys.
-* Per-object time-to-live (TTL).
-* Distributed configuration.
+- High volumes of reads and/or repeated reads to the same keys.
+- Per-object time-to-live (TTL).
+- Distributed configuration.
 
 To get started with KV:
 
-* Read how [KV works](/kv/reference/how-kv-works/).
-* Create a [KV namespace](/kv/reference/kv-namespaces/).
-* Review the [KV Runtime API](/kv/api/).
-* Learn about KV [Limits](/kv/platform/limits/).
+- Read how [KV works](/kv/reference/how-kv-works/).
+- Create a [KV namespace](/kv/reference/kv-namespaces/).
+- Review the [KV Runtime API](/kv/api/).
+- Learn about KV [Limits](/kv/platform/limits/).
 
 ## R2
 
@@ -92,17 +91,16 @@ R2 is S3-compatible blob storage that allows developers to store large amounts o
 
 It is ideal for projects that require:
 
-* Storage for files which are infrequently accessed.
-* Large object storage (for example, gigabytes or more per object).
-* Strong consistency per object.
-* Asset storage for websites (refer to [caching guide](/r2/buckets/public-buckets//#caching))
+- Storage for files which are infrequently accessed.
+- Large object storage (for example, gigabytes or more per object).
+- Strong consistency per object.
+- Asset storage for websites (refer to [caching guide](/r2/buckets/public-buckets//#caching))
 
 To get started with R2:
 
-* Read the [Get started guide](/r2/get-started/).
-* Learn about R2 [Limits](/r2/reference/limits/).
-* Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
-
+- Read the [Get started guide](/r2/get-started/).
+- Learn about R2 [Limits](/r2/reference/limits/).
+- Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
 ## Durable Objects
 
@@ -114,17 +112,16 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 It is ideal for projects that require:
 
-* Real-time collaboration (such as a chat application or a game server).
-* Consistent storage.
-* Data locality.
+- Real-time collaboration (such as a chat application or a game server).
+- Consistent storage.
+- Data locality.
 
 To get started with Durable Objects:
 
-* Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
-* Review the [Durable Objects documentation](/durable-objects/).
-* Get started with [Durable Objects](/durable-objects/get-started/).
-* Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
-
+- Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
+- Review the [Durable Objects documentation](/durable-objects/).
+- Get started with [Durable Objects](/durable-objects/get-started/).
+- Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
 ## D1
 
@@ -132,16 +129,15 @@ To get started with Durable Objects:
 
 D1 is ideal for:
 
-* Persistent, relational storage for user data, account data, and other structured datasets.
-* Use-cases that require querying across your data ad-hoc (using SQL).
-* Workloads with a high ratio of reads to writes (most web applications).
+- Persistent, relational storage for user data, account data, and other structured datasets.
+- Use-cases that require querying across your data ad-hoc (using SQL).
+- Workloads with a high ratio of reads to writes (most web applications).
 
 To get started with D1:
 
-* Read [the documentation](/d1)
-* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-* Review the [D1 client API](/d1/build-databases/query-databases/).
-
+- Read [the documentation](/d1)
+- Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
+- Review the [D1 client API](/d1/build-databases/query-databases/).
 
 ## Queues
 
@@ -149,15 +145,14 @@ Cloudflare Queues allows developers to send and receive messages with guaranteed
 
 Queues is ideal for:
 
-* Offloading work from a request to schedule later.
-* Send data from Worker to Worker (inter-Service communication).
-* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](/queues/examples/send-errors-to-r2/).
+- Offloading work from a request to schedule later.
+- Send data from Worker to Worker (inter-Service communication).
+- Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](/queues/examples/send-errors-to-r2/).
 
 To get started with Queues:
 
-* [Set up your first queue](/queues/get-started/).
-* Learn more [about how Queues works](/queues/reference/how-queues-works/).
-
+- [Set up your first queue](/queues/get-started/).
+- Learn more [about how Queues works](/queues/reference/how-queues-works/).
 
 ## Hyperdrive
 
@@ -165,15 +160,14 @@ Hyperdrive is a service that accelerates queries you make to existing databases,
 
 Hyperdrive allows you to:
 
-* Connect to an existing database from Workers without connection overhead.
-* Cache frequent queries across Cloudflare's global network to reduce response times on highly trafficked content.
-* Reduce load on your origin database with connection pooling.
+- Connect to an existing database from Workers without connection overhead.
+- Cache frequent queries across Cloudflare's global network to reduce response times on highly trafficked content.
+- Reduce load on your origin database with connection pooling.
 
 To get started with Hyperdrive:
 
-* [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
-* Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/configuration/how-hyperdrive-works/).
-
+- [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
+- Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/configuration/how-hyperdrive-works/).
 
 ## Vectorize
 
@@ -181,12 +175,12 @@ Vectorize is a globally distributed vector database that enables you to build fu
 
 Vectorize allows you to:
 
-* Store embeddings from any vector embeddings model (Bring Your Own embeddings) for semantic search and classification tasks.
-* Add context to Large Language Model (LLM) queries by using vector search as part of a [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) (RAG) workflow.
-* [Filter on vector metadata](/vectorize/reference/metadata-filtering/) to reduce the search space and return more relevant results.
+- Store embeddings from any vector embeddings model (Bring Your Own embeddings) for semantic search and classification tasks.
+- Add context to Large Language Model (LLM) queries by using vector search as part of a [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) (RAG) workflow.
+- [Filter on vector metadata](/vectorize/reference/metadata-filtering/) to reduce the search space and return more relevant results.
 
-To get started with Vectorize:  
+To get started with Vectorize:
 
-* [Create your first vector database](/vectorize/get-started/intro/).
-* Combine [Workers AI and Vectorize](/vectorize/get-started/embeddings/) to generate, store and query text embeddings.
-* Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+- [Create your first vector database](/vectorize/get-started/intro/).
+- Combine [Workers AI and Vectorize](/vectorize/get-started/embeddings/) to generate, store and query text embeddings.
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
