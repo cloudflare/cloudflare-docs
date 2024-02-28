@@ -60,4 +60,4 @@ If you are using older versions, note that while hibernatable WebSocket events s
 
 ## Related resources
 
-- Refer to [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/) to learn more about building server using WebSocket Hibernation on Durable Objects and Workers.
+- Refer to [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/) to learn more about building a WebSocket server using WebSocket Hibernation on Durable Objects and Workers.
