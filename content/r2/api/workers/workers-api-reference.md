@@ -149,7 +149,7 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
   - A `R2Checksums` object containing the stored checksums of the object. Refer to [checksums](#checksums).
 
-- {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
 
@@ -234,7 +234,7 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 {{<definitions>}}
 
-- {{<code>}}onlyIf{{</code>}}{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}
+- {{<code>}}onlyIf{{</code>}}{{<param-type>}}R2Conditional{{</param-type>}} |{{<param-type>}}Headers{{</param-type>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
   
