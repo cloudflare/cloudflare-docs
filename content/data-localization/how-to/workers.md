@@ -28,7 +28,7 @@ Regional Services does not apply to [subrequests](/workers/platform/limits/#subr
 
 Customer Metadata Boundary applies to the custom domain configured, as well as the [`*.workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain.
 
-Workers [Metrics and Analytics](/workers/observability/metrics-and-analytics/) are not available outside US region when using Customer Metadata Boundary. 
+Workers [Metrics and Analytics](/workers/observability/metrics-and-analytics/) are not available outside the US region when using Customer Metadata Boundary. 
 
 With Customer Metadata Boundary set to `EU`, **Workers & Pages** > **Workers** > **Metrics** tab the zone dashboard will not be populated.
 

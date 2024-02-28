@@ -18,6 +18,6 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 
 ## Customer Metadata Boundary
 
-DO Logs and Analytics are not available outside US region when using Customer Metadata Boundary. With Customer Metadata Boundary set to `EU`, **Workers & Pages** > **Workers** > **Metrics** tab related to DO in the zone dashboard will not be populated.
+DO Logs and Analytics are not available outside the US region when using Customer Metadata Boundary. With Customer Metadata Boundary set to `EU`, **Workers & Pages** > **Workers** > **Metrics** tab related to DO in the zone dashboard will not be populated.
 
 Refer to the [Durable Objects documentation](/durable-objects/) for more information.
