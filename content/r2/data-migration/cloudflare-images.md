@@ -91,6 +91,7 @@ async function getImagesList(env: Env, continuationToken: string | null = null) 
 }
 
 async function getImageResponse(env: Env, imageId: string) {
+  // Replace with your custom domain to work around rate limits
 	const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.IMAGES_ACCOUNT_ID}/images/v1/${imageId}/blob`, {
 		headers: {
 			"Authorization": `Bearer ${env.IMAGES_API_TOKEN}`
