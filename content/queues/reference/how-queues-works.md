@@ -59,6 +59,8 @@ export default {
 
 You can also use (context.waitUntil)[/workers/runtime-apis/handlers/fetch/#contextwaituntil] to send the message without blocking the response.
 
+Note that because `waitUntil` is non-blocking, any errors raised from the `send` or `sendBatch` methods on a queue will be implicitly ignored.
+
 {{</Aside>}}
 
 A queue can have multiple producer Workers. For example, you may have multiple producer Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue.
