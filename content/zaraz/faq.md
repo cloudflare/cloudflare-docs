@@ -204,13 +204,22 @@ It can take between 15 minutes to several hours for data to appear on Facebookâ€
 ### Google Ads
 
 {{<faq-item>}}
-{{<faq-question level=4 text="What is the expected format for Conversion Id and Conversion Label" >}}
+{{<faq-question level=4 text="What is the expected format for Conversion ID and Conversion Label" >}}
 
 {{<faq-answer>}}
 
-Conversion Id and Conversion Label are usually given by Google Ads in the following format: AW-11111111/22222222  
+Conversion ID and Conversion Label are usually provided by Google Ads as a "gtag script". Here's an example for a $1 USD conversion:
 
-111111111 is the Conversion Id (without the "AW-" prefix) and 222222222 the Conversion Label expected by Zaraz.
+```js
+gtag('event', 'conversion', {
+   'send_to': 'AW-123456789/AbC-D_efG-h12_34-567',
+   'value': 1.0,
+   'currency': 'USD'
+ });
+```
+
+The Conversion ID is the first part of `send_to` parameter, without the `AW-`. In the above example it would be `123456789`. The Conversion Label is the second part of the `send_to` parameter, therefore `AbC-D_efG-h12_34-567` in the above example. When setting up your Google Ads conversions through Zaraz, take the information from the original scripts you were asked to implement.
+
 
 {{</faq-answer>}}
 {{</faq-item>}}
