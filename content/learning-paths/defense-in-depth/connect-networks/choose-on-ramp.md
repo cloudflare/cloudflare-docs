@@ -13,7 +13,7 @@ To on-ramp your networks to Cloudflare, we recommend you use the [WARP connector
 
 [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/), an extension of the WARP client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
 
-WARP Connector supports bidirectional traffic proxies. This means it can proxy traffic initiated from a user running WARP into a private network (like `cloudflared`), or enable traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations.
+WARP Connector supports bidirectional traffic proxies. This means it can proxy traffic initiated from a user running WARP into a private network (like `cloudflared`), or allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations.
 
 ### Magic WAN
 

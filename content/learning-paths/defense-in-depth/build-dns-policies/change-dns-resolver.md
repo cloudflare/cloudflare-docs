@@ -21,7 +21,7 @@ To configure your browser to send traffic to Gateway:
     1. Go to **Gateway** > **DNS Locations**.
     2. Select **Add a location**.
     3. Enter a name for the location.
-    4. Enable **Set as Default DNS Location**.
+    4. Turn on **Set as Default DNS Location**.
     5. Select **Add location**.
     6. Copy your **DNS over HTTPS** hostname: `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`
 2. Follow the configuration instructions for your browser:
@@ -30,6 +30,6 @@ To configure your browser to send traffic to Gateway:
 
 3. Verify that third-party firewall or TLS decryption software does not inspect or block traffic to the DoH endpoint: `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-DNS filtering is now enabled for this browser.
+DNS filtering is now turned on for this browser.
 
 To configure your router or OS, or to add additional DNS endpoints, refer to [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/).
