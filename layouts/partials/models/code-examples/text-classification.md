@@ -1,4 +1,4 @@
-## Code Examples
+<h2>Code Examples</h2>
 
 <details>
   <summary>Worker - TypeScript</summary>

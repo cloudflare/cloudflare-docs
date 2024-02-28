@@ -1,4 +1,3 @@
-
 ## Code Examples
 
 <details>
