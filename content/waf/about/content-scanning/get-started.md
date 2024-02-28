@@ -96,7 +96,7 @@ To check uploaded content in a way that is not covered by the default configurat
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Use a `POST` request like the following:
+Use a `POST` request similar to the following:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
