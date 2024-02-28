@@ -19,7 +19,7 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic scans**, turn on **Malicious uploads**.
+3. Under **Incoming traffic detections**, turn on **Malicious uploads**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -54,7 +54,7 @@ For example, create a custom rule with the _Block_ action and the following expr
 
 This rule will match requests where the WAF detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Content scanning fields](/waf/about/content-scanning/#content-scanning-fields).
 
-{{<details header="Combine with other Rules language fields">}}
+{{<details header="Optional: Combine with other Rules language fields">}}
 
 You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine content scanning with other security features. For example:
 
@@ -76,7 +76,27 @@ For additional examples, refer to [Example rules](/waf/about/content-scanning/ex
 
 ## 4. (Optional) Configure a custom scan expression
 
-To check uploaded content in a way that is not covered by the default configuration, add a [custom scan expression](/waf/about/content-scanning/#custom-scan-expressions) using a `POST` request. For example:
+To check uploaded content in a way that is not covered by the default configuration, add a [custom scan expression](/waf/about/content-scanning/#custom-scan-expressions).
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, select **Malicious uploads**.
+4. Select **Add new location**.
+5. In **Content location**, enter your custom scan expression. For example:
+
+    ```txt
+    lookup_json_string(http.request.body.raw, "file")
+    ```
+
+6. Select **Save**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Use a `POST` request like the following:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
@@ -96,7 +116,10 @@ The above request will add the following expression to the current list of custo
 lookup_json_string(http.request.body.raw, "file")
 ```
 
-This expression will scan any string found in an HTTP body with the following JSON string:
+{{</tab>}}
+{{</tabs>}}
+
+The custom scan expression will scan any string found in an HTTP body with the following JSON string:
 
 ```json
 {"file": "<BASE64_ENCODED_STRING>"}
