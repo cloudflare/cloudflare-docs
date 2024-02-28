@@ -9,7 +9,7 @@ meta:
 
 ## Background
 
-Attach text strings and JSON values as environment variables to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
+Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 Text strings and JSON values are not encrypted and are useful for storing application configuration.
 
