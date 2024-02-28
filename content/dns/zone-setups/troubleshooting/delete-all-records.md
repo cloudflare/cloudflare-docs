@@ -9,7 +9,7 @@ meta:
 
 When you connect your domain to Cloudflare, the [DNS records quick scan](/dns/zone-setups/reference/dns-quick-scan/) may automatically add several records to your zone.
 
-If you realize most of them are not applicable and want to delete all DNS records and start from zero, you can use the following script:
+If you realize most of them are not applicable and want to delete all DNS records, follow the steps below.
 
 ## Steps
 
