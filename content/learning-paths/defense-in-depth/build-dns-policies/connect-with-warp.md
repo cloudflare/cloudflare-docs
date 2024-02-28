@@ -17,7 +17,7 @@ Choose this option if:
 
 Most admins test by downloading the client and authenticating in with a [one-time PIN](/cloudflare-one/identity/one-time-pin/).
 
-1. If you previously [connected without an agent](/learning-paths/dns-filtering/connect-devices/change-dns-resolver/), undo the DoH configuration in your browser or OS. Otherwise, your device will continue to send queries to the DoH endpoint instead of forwarding requests through WARP.
+1. If you previously [connected without an agent](/learning-paths/defense-in-depth/build-dns-policies/onboard-dns/), undo the DoH configuration in your browser or OS. Otherwise, your device will continue to send queries to the DoH endpoint instead of forwarding requests through WARP.
 2. Turn on one-time PIN authentication:
     {{<render file="access/_one-time-pin.md" productFolder="cloudflare-one">}}
 3. Turn on device enrollment:

@@ -40,7 +40,7 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 2. Verify device connectivity
 
-{{<render file="gateway/_verify-connectivity.md" withParameters="DNS">}}
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS;;queries">}}
 
 ## 3. Add recommended policies
 

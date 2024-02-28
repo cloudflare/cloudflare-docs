@@ -7,4 +7,4 @@ _build:
 
 To validate that Cloudflare is receiving traffic from a user device:
 
-{{<render file="gateway/_verify-connectivity.md" withParameters="DNS" productFolder="cloudflare-one">}}
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS;;queries" productFolder="cloudflare-one">}}

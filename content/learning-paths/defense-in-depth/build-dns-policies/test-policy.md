@@ -17,7 +17,9 @@ It is common for a misconfigured Gateway policy to accidentally block traffic to
 5. In the browser, go to `malware.testcategory.com`. You should see a generic Gateway block page.
 
 {{<Aside type="note">}}
+
 [Custom block pages](/cloudflare-one/policies/gateway/configuring-block-page/) require you to install a root certificate on the device.
+
 {{</Aside>}}
 
 6. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.
