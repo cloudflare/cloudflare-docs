@@ -6,45 +6,62 @@ weight: 7
 
 # Read key-value pairs
 
-To get the value for a given key, call the `get()` method on any KV namespace you have bound to your Worker code:
+To get the value for a given key call the `get()` method:
 
 ```js
-env.NAMESPACE.get(key);
+const value = await env.NAMESPACE.get(key, options?);
 ```
 
-The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
-
-The `get()` method may return stale values. If a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to display.
-
-An example of reading a key from within a Worker:
+If the key is not found, the promise will resolve with the literal value `null`.
 
 ```js
 export default {
-    async fetch(request, env, ctx) {
-        try {
-            const value = await env.NAMESPACE.get("first-key");
-
-            if (value === null) {
-                return new Response("Value not found", {status: 404});
-            }
-            return new Response(value);
-        }
-        catch (e)
-        {
-            return new Response(e.message, {status: 500});
-        }
-    },
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.get("first-key");
+    if (value === null) {
+      return new Response("Value not found", { status: 404 });
+    }
+    return new Response(value);
+  }
 };
 ```
 
 You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
 
-#### Types
+{{<Aside type="note">}} 
+This method may return stale values, since changes in any location might take up to 60 seconds to [propagate throught the Cloudflare Network](/kv/reference/how-kv-works/).
+{{</Aside>}}
+
+
+## Parameters
+
+```js
+.get(key, { type, cacheTtl });
+```
+
+{{<definitions>}}
+
+- `key` {{<type>}}string{{</type>}}
+
+  - The key to associate with the value. A key cannot be empty, have a `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
+
+- `type` {{<type>}}"text"{{</type>}} | {{<type>}}"json"{{</type>}} | {{<type>}}"arrayBuffer"{{</type>}} | {{<type>}}"stream"{{</type>}} 
+
+  - Provides different types for the return value to be encoded in. Read below about the details.
+
+- `cacheTtl` {{<type>}}number{{</type>}}
+
+  - Defines the length of time in seconds that a KV result is cached in the global network location it is accessed from.
+
+{{</definitions>}}
+
+
+### Types
 
 You can pass in an options object with a `type` parameter to the `get()` method:
 
 ```js
-env.NAMESPACE.get(key, { type: "text" });
+await env.NAMESPACE.get(key, { type: "text" });
 ```
 
 The `type` parameter can be any of the following:
@@ -58,7 +75,7 @@ For simple values, use the default `text` type which provides you with your valu
 
 For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type` can be ordered from fastest to slowest as `stream`, `arrayBuffer`, `text`, and `json`.
 
-## CacheTtl parameter
+### CacheTtl
 
 `cacheTtl` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. 
 
@@ -73,7 +90,7 @@ A hot read means that the data is cached on Cloudflare's edge network using the 
 The `get()` options object also accepts a `cacheTtl` parameter:
 
 ```js
-env.NAMESPACE.get(key, { cacheTtl: 3600 });
+await env.NAMESPACE.get(key, { cacheTtl: 3600 });
 ```
 
 The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default. 
