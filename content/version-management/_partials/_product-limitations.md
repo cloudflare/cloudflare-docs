@@ -13,7 +13,7 @@ Version Management does not currently support or have limited support for the fo
 {{</details>}}
 
 {{<details header="Authenticated Origin Pull">}}
-- [Authenticated Origin Pull](/ssl/origin-configuration/authenticated-origin-pull/_index.md) does not work with Zone Versioning.
+- [Authenticated Origin Pull](/ssl/origin-configuration/authenticated-origin-pull/) does not work with Zone Versioning.
 - Accessing your domain from an allowlisted IP returns a Cloudflare 520 error.
 {{</details>}}
 
