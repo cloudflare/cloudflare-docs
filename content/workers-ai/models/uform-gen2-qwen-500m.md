@@ -16,7 +16,7 @@ model_display_name: "uform-gen2-qwen-500m"
 layout: "model"
 title: "uform-gen2-qwen-500m"
 json_schema:
-  input: "{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"image\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}},\"prompt\":{\"type\":\"string\"},\"max_tokens\":{\"type\":\"integer\"}}}]}"
-  output: "{\"type\":\"array\",\"contentType\":\"application/json\",\"properties\":{\"description\":{\"type\":\"string\"}}}"
+  input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        },\n        \"prompt\": {\n          \"type\": \"string\"\n        },\n        \"max_tokens\": {\n          \"type\": \"integer\"\n        }\n      }\n    }\n  ]\n}"
+  output: "{\n  \"type\": \"array\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"description\": {\n      \"type\": \"string\"\n    }\n  }\n}"
 
 ---

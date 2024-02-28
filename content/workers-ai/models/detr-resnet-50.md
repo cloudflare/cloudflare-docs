@@ -22,7 +22,7 @@ model_display_name: "detr-resnet-50"
 layout: "model"
 title: "detr-resnet-50"
 json_schema:
-  input: "{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"image\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}]}"
-  output: "{\"type\":\"array\",\"contentType\":\"application/json\",\"items\":{\"type\":\"object\",\"properties\":{\"score\":{\"type\":\"number\"},\"label\":{\"type\":\"string\"},\"box\":{\"type\":\"object\",\"properties\":{\"xmin\":{\"type\":\"number\"},\"ymin\":{\"type\":\"number\"},\"xmax\":{\"type\":\"number\"},\"ymax\":{\"type\":\"number\"}}}}}}"
+  input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  ]\n}"
+  output: "{\n  \"type\": \"array\",\n  \"contentType\": \"application/json\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"score\": {\n        \"type\": \"number\"\n      },\n      \"label\": {\n        \"type\": \"string\"\n      },\n      \"box\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"xmin\": {\n            \"type\": \"number\"\n          },\n          \"ymin\": {\n            \"type\": \"number\"\n          },\n          \"xmax\": {\n            \"type\": \"number\"\n          },\n          \"ymax\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  }\n}"
 
 ---

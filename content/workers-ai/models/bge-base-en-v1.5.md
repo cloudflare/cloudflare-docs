@@ -25,7 +25,7 @@ model_display_name: "bge-base-en-v1.5"
 layout: "model"
 title: "bge-base-en-v1.5"
 json_schema:
-  input: "{\"type\":\"object\",\"properties\":{\"text\":{\"oneOf\":[{\"type\":\"string\"},{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":100}]}},\"required\":[\"text\"]}"
-  output: "{\"type\":\"object\",\"contentType\":\"application/json\",\"properties\":{\"shape\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}}"
+  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"text\": {\n      \"oneOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          },\n          \"maxItems\": 100\n        }\n      ]\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
+  output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"shape\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"number\"\n      }\n    },\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"number\"\n        }\n      }\n    }\n  }\n}"
 
 ---
