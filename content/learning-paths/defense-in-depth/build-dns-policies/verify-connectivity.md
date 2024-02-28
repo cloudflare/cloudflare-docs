@@ -5,6 +5,6 @@ weight: 7
 layout: learning-unit
 ---
 
-To verify that your DNS traffic is sent to Gateway:
+After configuring your users' devices, we recommend you test your Gateway connection. To verify that your DNS traffic is sent to Gateway:
 
 {{<render file="gateway/_verify-connectivity.md" withParameters="DNS" productFolder="cloudflare-one">}}
