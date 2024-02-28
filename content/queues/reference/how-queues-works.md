@@ -57,7 +57,7 @@ export default {
 
 {{<Aside type="note" header="Hint">}}
 
-You can also use (`context.waitUntil`)[/workers/runtime-apis/handlers/fetch/#contextwaituntil] to send the message without blocking the response.
+You can also use (context.waitUntil)[/workers/runtime-apis/handlers/fetch/#contextwaituntil] to send the message without blocking the response.
 
 {{</Aside>}}
 
