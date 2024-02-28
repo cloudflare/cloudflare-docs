@@ -59,7 +59,7 @@ The descriptions below detail the fields available for `http_requests`.
 | EdgeRequestHost | Host header on the request from the edge to the origin. | string |
 | EdgeResponseBodyBytes | Size of the HTTP response body returned to clients. Available in Logpush v2 only. | int |
 | EdgeResponseBytes | Number of bytes returned by the edge to the client. | int |
-| EdgeResponseCompressionRatio | Edge response compression ratio. | float |
+| EdgeResponseCompressionRatio | The edge response compression ratio is calculated as the ratio between the sizes of the original and compressed responses. | float |
 | EdgeResponseContentType | Edge response Content-Type header value. | string |
 | EdgeResponseStatus | HTTP status code returned by Cloudflare to the client. | int |
 | EdgeServerIP | IP of the edge server making a request to the origin. Possible responses are string in IPv4 or IPv6 format, or empty string. Empty string means that there was no request made to the origin server. | string |
