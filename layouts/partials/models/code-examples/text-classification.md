@@ -1,4 +1,5 @@
-<h2>Code Examples</h2>
+{{/* */}}
+## Code Examples
 
 <details>
   <summary>Worker - TypeScript</summary>
