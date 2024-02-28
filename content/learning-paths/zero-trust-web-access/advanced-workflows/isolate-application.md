@@ -83,7 +83,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app
   "require": [
     {
       "device_posture": {
-        "integration_uid": "{serial_number_list_uuid}"
+        "integration_uid": "<SERIAL_NUMBER_LIST_UUID>"
       }
     }
   ],
@@ -139,6 +139,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app
   "isolation_required": true
 }'
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -193,7 +194,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
               "splat": "device_posture.checks.passed"
             },
             "rhs": [
-              "{serial_number_list_uuid}"
+              "<SERIAL_NUMBER_LIST_UUID>"
             ]
           }
         }
@@ -279,7 +280,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
                   "splat": "dlp.profiles"
                 },
                 "rhs": [
-                  "{dlp_profile_uuid}"
+                  "<DLP_PROFILE_UUID>"
                 ]
               }
             }
@@ -296,7 +297,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
               "splat": "device_posture.checks.passed"
             },
             "rhs": [
-              "{serial_number_list_uuid}"
+              "<SERIAL_NUMBER_LIST_UUID>"
             ]
           }
         }
