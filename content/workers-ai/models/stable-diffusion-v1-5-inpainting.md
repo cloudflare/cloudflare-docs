@@ -7,7 +7,7 @@ model:
   task:
     id: "3d6e1f35-341b-4915-a6c8-9a7142a9033a"
     name: "Text-to-Image"
-    description: null
+    description: "Generates images from input text. These models can be used to generate and modify images based on text prompts."
   tags:
     - "text-to-image"
   properties: []
