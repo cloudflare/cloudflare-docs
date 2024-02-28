@@ -83,7 +83,9 @@ Block misused domains to protect your users against sophisticated phishing attac
 
 {{<details header="All-DNS-ResolvedIP-Blocklist" open="true">}}
 
-Block specific IP addresses that are malicious or pose a threat to your organization. You can implement this policy by either creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs). Ideally, your CERTs can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
+Block specific IP addresses that are malicious or pose a threat to your organization.
+
+{{<render file="zero-trust/_threat-intelligence-automation.md">}}
 
 | Selector    | Operator | Value          | Action |
 | ----------- | -------- | -------------- | ------ |

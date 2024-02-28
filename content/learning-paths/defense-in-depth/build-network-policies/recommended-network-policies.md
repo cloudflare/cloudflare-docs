@@ -9,7 +9,7 @@ Add the following recommended network policies.
 
 {{<details header="Quarantined-Users-NET-Restricted-Access" open="true">}}
 
-Restrict the access to the Users included in a specific IdP User Group. So the Security Team can restrict the access to those users where malicious activity was detected.
+Restrict access for users included in a {{<glossary-tooltip term_id="identity provider">}}identity provider (IdP){{</glossary-tooltip>}} user group for risky users. This policy ensures your security team can restrict traffic for users of whom malicious or suspicious activity was detected.
 
 | Selector         | Operator    | Value                               | Logic | Action |
 | ---------------- | ----------- | ----------------------------------- | ----- | ------ |
@@ -22,45 +22,51 @@ Restrict the access to the Users included in a specific IdP User Group. So the S
 
 {{<details header="Posture-Fail-NET-Restricted-Access" open="true">}}
 
-Restrict the access to the Devices where Baseline Posture Checks are not passed. If Posture Checks are integrated with service providers like Crowdstrike or Intune via API, this policy will be dynamically blocking the access to those devices that don't meet the Security Requirements.
+Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically block access for devices that do not meet predetermined security requirements.
 
-| Selector                     | Operator    | Value                                          | Logic | Action |
-| ---------------------------- | ----------- | ---------------------------------------------- | ----- | ------ |
-| Destination IP               | not in list | _Posture-Fail-IPAllowlist_                     | Or    | Block  |
-| SNI                          | not in list | _Posture-Fail-HostAllowlist_                   | Or    |        |
-| Domain SNI                   | not in list | _Posture-Fail-DomainAllowlist_                 | And   |        |
-| Passed Device Posture Checks | not in      | OS-Version \| Domain-Joined \| Disk-Encryption |       |        |
+| Selector                     | Operator    | Value                               | Logic | Action |
+| ---------------------------- | ----------- | ----------------------------------- | ----- | ------ |
+| Destination IP               | not in list | _Posture-Fail-IPAllowlist_          | Or    | Block  |
+| SNI                          | not in list | _Posture-Fail-HostAllowlist_        | Or    |        |
+| Domain SNI                   | not in list | _Posture-Fail-DomainAllowlist_      | And   |        |
+| Passed Device Posture Checks | not in      | _Windows 10 or higher (OS version)_ |       |        |
+
+You can add a number of WARP client device posture checks as needed, such as [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/). For more information on device posture checks, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
 {{</details>}}
 
 {{<details header="FinanceUsers-NET-HTTPS-FinanceServers (example)" open="true">}}
 
-Allow HTTPs Access to the Finance Users to the Applications hosted in the Finance Servers.
+Allow HTTPS access for user groups. For example, the following policy gives finance users access to any known financial applications:
 
 | Selector         | Operator | Value             | Logic | Action |
 | ---------------- | -------- | ----------------- | ----- | ------ |
-| Destination IP   | in list  | _Finance-Servers_ | And   | Allow  |
-| User Group Names | in       | _Finance-Users_   |       |        |
+| Destination IP   | in list  | _Finance Servers_ | And   | Allow  |
+| User Group Names | in       | _Finance Users_   |       |        |
 
 {{</details>}}
 
 {{<details header="All-NET-Internet-Blocklist" open="true">}}
 
-Block the traffic to Destination IPs, SNIs and Domain SNIs known to be malicious or pose a threat to your organization. This policy is usually implemented by creating custom blocklists or by using blocklists provided by threat intelligence partners or regional Computer Emergency and Response Teams (CERTs).
+Block traffic to destination IPs, {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}SNIs{{</glossary-tooltip>}}, and domain SNIs that are malicious or pose a threat to your organization.
 
-| Selector       | Operator | Value             | Logic | Action |
-| -------------- | -------- | ----------------- | ----- | ------ |
-| Destination IP | in list  | _IPBlocklist_     | Or    | Block  |
-| SNI            | in list  | _HostBlocklist_   | Or    |        |
-| Domain SNI     | in list  | _DomainBlocklist_ |       |        |
+{{<render file="zero-trust/_threat-intelligence-automation.md">}}
+
+| Selector       | Operator | Value              | Logic | Action |
+| -------------- | -------- | ------------------ | ----- | ------ |
+| Destination IP | in list  | _IP Blocklist_     | Or    | Block  |
+| SNI            | in list  | _Host Blocklist_   | Or    |        |
+| Domain SNI     | in list  | _Domain Blocklist_ |       |        |
 
 {{</details>}}
 
-{{<details header="All-NET-SSH-Internet-Allowlist" open="true">}}
-
 {{<Aside type="note">}}The Detected Protocol selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).{{</Aside>}}
 
-Allow SSH traffic to specific endpoints in Internet and for Specific users. Similar policy can be used for another Non-Web Endpoints that need to be accessed. Recommended to filter also by Source IP or IdP Group.
+{{<details header="All-NET-SSH-Internet-Allowlist" open="true">}}
+
+Allow SSH traffic to specific endpoints on the Internet for specific users. You can create a similar policy for other non-web endpoints that required access.
+
+Optionally, you can include a selector to filter by source IP or IdP group.
 
 | Selector          | Operator | Value               | Logic | Action |
 | ----------------- | -------- | ------------------- | ----- | ------ |
@@ -73,7 +79,7 @@ Allow SSH traffic to specific endpoints in Internet and for Specific users. Simi
 
 {{<details header="All-NET-NO-HTTP-HTTPS-Internet-Deny" open="true">}}
 
-Block Policy to block all Non-Web Traffic towards Internet. By using Detected Protocol selector we guaranty that alternative ports for HTTP and HTTPs will be allowed as well.
+Block all non-web traffic towards the Internet. By using the **Detected Protocol** selector, you will ensure alternative ports for HTTP and HTTPS are allowed.
 
 | Selector          | Operator    | Value             | Logic | Action |
 | ----------------- | ----------- | ----------------- | ----- | ------ |
@@ -84,10 +90,10 @@ Block Policy to block all Non-Web Traffic towards Internet. By using Detected Pr
 
 {{<details header="All-NET-InternalNetwork-ImplicitDeny" open="true">}}
 
-Implicit Deny Policy for all the Customer's Internal IP Ranges included in a List. It should be defined at the bottom to make sure we allow only the traffic that is explicitly allowed above.
+Implicitly deny all of your internal IP ranges included in a list. We recommend you place this policy at the [bottom of your policy list](/learning-paths/defense-in-depth/build-dns-policies/order-of-precedence/) to ensure you explicitly approve traffic defined in the above policies.
 
-| Selector       | Operator      | Value                                       | Action |
-| -------------- | ------------- | ------------------------------------------- | ------ |
-| Destination IP | in list       | _InternalNetwork_                           | Block  |
+| Selector       | Operator | Value                  | Action |
+| -------------- | -------- | ---------------------- | ------ |
+| Destination IP | in list  | _Internal Network IPs_ | Block  |
 
 {{</details>}}
