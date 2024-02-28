@@ -16,7 +16,7 @@ While there are other use cases for using Workers exclusively with WebSockets, W
 
 When a client connects to your application using a WebSocket, you need a way for server-generated messages to be sent using the existing socket connection. Multiple clients can establish a WebSocket connection with a specific Durable Object addressed by its [unique ID](/durable-objects/configuration/access-durable-object-from-a-worker/#1-create-durable-object-ids). The Durable Object can then send messages to each client over the WebSocket connection.
 
-Durable Objects can use the web standard APIs described in [WebSockets API](/durable-objects/api/websockets/). Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example using Durable Objects with WebSockets.
+Durable Objects can use the web standard APIs described in [WebSockets API](/durable-objects/api/websockets/). Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example of using Durable Objects with WebSockets.
 
 {{<Aside type="warning" header="WebSockets disconnection">}}
 
@@ -34,7 +34,7 @@ Hibernation is only supported when a Durable Object acts as a WebSocket server. 
 
 {{</Aside>}}
 
-A Durable Object with WebSockets created via the Hibernation API will not incur billable [Duration (GB-sec) charges](/durable-objects/platform/pricing/) during periods of inactivity, unlike Durable Objects using the [regular WebSockets API](/workers/runtime-apis/websockets/).
+A Durable Object with WebSockets created via the Hibernation API will not incur billable [Duration (GB-s) charges](/durable-objects/platform/pricing/) during periods of inactivity, unlike Durable Objects using the [regular WebSockets API](/workers/runtime-apis/websockets/).
 
 The WebSocket Hibernation API includes:
 
@@ -44,13 +44,13 @@ The WebSocket Hibernation API includes:
 
 The WebSocket Hibernation API enables you to terminate (not proxy) WebSocket connections within a Durable Object, and push messages to all connected clients based on state stored within the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), HTTP fetches to external services, and/or data stored in [R2](/r2/) and [Workers KV](/kv/api/).
 
-For WebSocket proxy use-cases, refer to the [standard WebSocket API documentation](/workers/examples/websockets/#write-a-websocket-client).
+For WebSocket proxy use cases, refer to the [standard WebSocket API documentation](/workers/examples/websockets/#write-a-websocket-client).
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
 {{<Aside type="warning" header="Support for local development">}}
 
-Prior to `wrangler@3.13.2`, and Miniflare `v3.20231016.0` WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
+Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
 
 If you are using older versions, note that while hibernatable WebSocket events such as [`webSocketMessage()`](/durable-objects/api/websockets/#websocketmessage) will still be delivered, the Durable Object will never be evicted from memory.
 

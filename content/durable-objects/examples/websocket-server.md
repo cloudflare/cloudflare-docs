@@ -13,7 +13,7 @@ This example shows how to build a WebSocket server using Durable Objects and Wor
 
 {{<Aside type="warning">}}
 
-WebSocket connections pin your Durable Object to memory, and so duration charges will be incurred so long as the WebSocket is connected (regardless of activity). To avoid duration charges during periods of inactivity, use the [WebSocket Hibernation API](/durable-objects/examples/websocket-hibernation-server), which only charges for duration when JavaScript is actively executing.
+WebSocket connections pin your Durable Object to memory, and so duration charges will be incurred so long as the WebSocket is connected (regardless of activity). To avoid duration charges during periods of inactivity, use the [WebSocket Hibernation API](/durable-objects/examples/websocket-hibernation-server/), which only charges for duration when JavaScript is actively executing.
 
 {{</Aside>}}
 
@@ -96,7 +96,7 @@ export class WebSocketServer {
     return new Response(`
 This Durable Object supports the following endpoints:
   /websocket
-    - Creates a WebSocket connection, any messages sent to it are echoed with a prefix.
+    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
   /getCurrentConnections
     - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
 `)
@@ -139,7 +139,7 @@ export class WebSocketServer {
     // regular WebSockets do not survive Durable Object resets.
     //
     // WebSockets accepted via the Hibernation API can survive
-    // a certain type of eviction, but we won't cover that here.
+    // a certain type of eviction, but we will not cover that here.
     this.currentlyConnectedWebSockets = 0;
   }
 
@@ -163,7 +163,7 @@ export class WebSocketServer {
       server.accept();
       this.currentlyConnectedWebSockets += 1;
 
-      // Upon receiving a message from the client, we will reply with the same message,
+      // Upon receiving a message from the client, the server replies with the same message,
       // but will prefix the message with "[Durable Object]: ".
       server.addEventListener('message', (event: MessageEvent) => {
         server.send(`[Durable Object]: ${event.data}`);
@@ -190,7 +190,7 @@ export class WebSocketServer {
     return new Response(`
 This Durable Object supports the following endpoints:
   /websocket
-    - Creates a WebSocket connection, any messages sent to it are echoed with a prefix.
+    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
   /getCurrentConnections
     - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
 `)

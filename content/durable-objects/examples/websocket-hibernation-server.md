@@ -9,11 +9,11 @@ weight: 3
 layout: example
 ---
 
-This example is similar to the [Build a WebSocket server](/durable-objects/examples/websocket-server) example, but uses the WebSocket Hibernation API. The WebSocket Hibernation API should be preferred for WebSocket server applications built on Durable Objects, since it significantly decreases duration charge, and provides additional features that pair well with WebSocket applications. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/reference/websockets/).
+This example is similar to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example, but uses the WebSocket Hibernation API. The WebSocket Hibernation API should be preferred for WebSocket server applications built on Durable Objects, since it significantly decreases duration charge, and provides additional features that pair well with WebSocket applications. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/reference/websockets/).
 
 {{<Aside type="note">}}
 
-WebSocket Hibernation is unavailable for outgoing WebSocket use-cases. Hibernation is only supported when the Durable Object acts as a server. For use-cases where outgoing WebSockets are required, refer to [Write a WebSocket client](/workers/examples/websockets/#write-a-websocket-client).
+WebSocket Hibernation is unavailable for outgoing WebSocket use cases. Hibernation is only supported when the Durable Object acts as a server. For use cases where outgoing WebSockets are required, refer to [Write a WebSocket client](/workers/examples/websockets/#write-a-websocket-client).
 
 {{</Aside>}}
 
@@ -61,7 +61,7 @@ export class WebSocketHibernationServer {
       // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
       // request within the Durable Object. It has the effect of "accepting" the connection,
       // and allowing the WebSocket to send and receive messages.
-      // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the websocket
+      // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the WebSocket
       // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
       // the connection is open. During periods of inactivity, the Durable Object can be evicted
       // from memory, but the WebSocket connection will remain open. If at some later point the
@@ -86,7 +86,7 @@ export class WebSocketHibernationServer {
     return new Response(`
 This Durable Object supports the following endpoints:
   /websocket
-    - Creates a WebSocket connection, any messages sent to it are echoed with a prefix.
+    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
   /getCurrentConnections
     - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
 `)
@@ -154,7 +154,7 @@ export class WebSocketHibernationServer {
       // Calling `acceptWebSocket()` tells the runtime that this WebSocket is to begin terminating
       // request within the Durable Object. It has the effect of "accepting" the connection,
       // and allowing the WebSocket to send and receive messages.
-      // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the websocket
+      // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the WebSocket
       // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
       // the connection is open. During periods of inactivity, the Durable Object can be evicted
       // from memory, but the WebSocket connection will remain open. If at some later point the
@@ -179,7 +179,7 @@ export class WebSocketHibernationServer {
     return new Response(`
 This Durable Object supports the following endpoints:
   /websocket
-    - Creates a WebSocket connection, any messages sent to it are echoed with a prefix.
+    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
   /getCurrentConnections
     - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
 `)
