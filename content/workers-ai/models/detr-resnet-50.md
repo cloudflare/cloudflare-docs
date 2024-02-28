@@ -21,4 +21,8 @@ task_type: "object-detection"
 model_display_name: "detr-resnet-50"
 layout: "model"
 title: "detr-resnet-50"
+json_schema:
+  input: "{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"image\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}]}"
+  output: "{\"type\":\"array\",\"contentType\":\"application/json\",\"items\":{\"type\":\"object\",\"properties\":{\"score\":{\"type\":\"number\"},\"label\":{\"type\":\"string\"},\"box\":{\"type\":\"object\",\"properties\":{\"xmin\":{\"type\":\"number\"},\"ymin\":{\"type\":\"number\"},\"xmax\":{\"type\":\"number\"},\"ymax\":{\"type\":\"number\"}}}}}}"
+
 ---

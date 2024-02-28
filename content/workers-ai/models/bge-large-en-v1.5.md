@@ -24,4 +24,8 @@ task_type: "text-embeddings"
 model_display_name: "bge-large-en-v1.5"
 layout: "model"
 title: "bge-large-en-v1.5"
+json_schema:
+  input: "{\"type\":\"object\",\"properties\":{\"text\":{\"oneOf\":[{\"type\":\"string\"},{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":100}]}},\"required\":[\"text\"]}"
+  output: "{\"type\":\"object\",\"contentType\":\"application/json\",\"properties\":{\"shape\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}}"
+
 ---

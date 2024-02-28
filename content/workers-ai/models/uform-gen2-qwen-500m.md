@@ -15,4 +15,8 @@ task_type: "image-to-text"
 model_display_name: "uform-gen2-qwen-500m"
 layout: "model"
 title: "uform-gen2-qwen-500m"
+json_schema:
+  input: "{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"image\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}},\"prompt\":{\"type\":\"string\"},\"max_tokens\":{\"type\":\"integer\"}}}]}"
+  output: "{\"type\":\"array\",\"contentType\":\"application/json\",\"properties\":{\"description\":{\"type\":\"string\"}}}"
+
 ---

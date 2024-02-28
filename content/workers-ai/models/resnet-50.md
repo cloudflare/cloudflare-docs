@@ -20,4 +20,8 @@ task_type: "image-classification"
 model_display_name: "resnet-50"
 layout: "model"
 title: "resnet-50"
+json_schema:
+  input: "{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"image\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}]}"
+  output: "{\"type\":\"array\",\"contentType\":\"application/json\",\"items\":{\"type\":\"object\",\"properties\":{\"score\":{\"type\":\"number\"},\"label\":{\"type\":\"string\"}}}}"
+
 ---

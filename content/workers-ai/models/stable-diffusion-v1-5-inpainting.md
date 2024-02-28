@@ -15,4 +15,8 @@ task_type: "text-to-image"
 model_display_name: "stable-diffusion-v1-5-inpainting"
 layout: "model"
 title: "stable-diffusion-v1-5-inpainting"
+json_schema:
+  input: "{\"type\":\"object\",\"properties\":{\"prompt\":{\"type\":\"string\"},\"image\":{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"image\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}]},\"mask\":{\"oneOf\":[{\"type\":\"string\",\"format\":\"binary\"},{\"type\":\"object\",\"properties\":{\"mask\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}}]},\"num_steps\":{\"type\":\"integer\",\"default\":20,\"maximum\":20}},\"required\":[\"prompt\"]}"
+  output: "{\"type\":\"string\",\"contentType\":\"image/png\",\"format\":\"binary\"}"
+
 ---

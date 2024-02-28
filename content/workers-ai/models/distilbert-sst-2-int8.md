@@ -18,4 +18,8 @@ task_type: "text-classification"
 model_display_name: "distilbert-sst-2-int8"
 layout: "model"
 title: "distilbert-sst-2-int8"
+json_schema:
+  input: "{\"type\":\"object\",\"properties\":{\"text\":{\"type\":\"string\"}},\"required\":[\"text\"]}"
+  output: "{\"type\":\"array\",\"contentType\":\"application/json\",\"items\":{\"type\":\"object\",\"properties\":{\"score\":{\"type\":\"number\"},\"label\":{\"type\":\"string\"}}}}"
+
 ---

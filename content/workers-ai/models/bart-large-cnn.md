@@ -7,7 +7,7 @@ model:
   task:
     id: "6f4e65d8-da0f-40d2-9aa4-db582a5a04fd"
     name: "Summarization"
-    description: null
+    description: "Summarization is the task of producing a shorter version of a document while preserving its important information. Some models can extract text from the original input, while other models can generate entirely new text."
   tags:
     - "summarization"
   properties: []
@@ -15,4 +15,8 @@ task_type: "summarization"
 model_display_name: "bart-large-cnn"
 layout: "model"
 title: "bart-large-cnn"
+json_schema:
+  input: "{\"type\":\"object\",\"properties\":{\"input_text\":{\"type\":\"string\"},\"max_length\":{\"type\":\"integer\"}},\"required\":[\"input_text\"]}"
+  output: "{\"type\":\"object\",\"contentType\":\"application/json\",\"properties\":{\"summary\":{\"type\":\"string\"}}}"
+
 ---
