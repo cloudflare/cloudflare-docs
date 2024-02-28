@@ -37,6 +37,10 @@ entries:
   general_definition: |-
     [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with `wrangler.toml`.
 
+- term: environment variable
+  general_definition: |-
+    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker. 
+
 - term: handler
   general_definition: |-
     [Handlers](/workers/runtime-apis/handlers/) are methods on Workers that can receive and process external inputs, and can be invoked from outside your Worker.
@@ -80,6 +84,10 @@ entries:
     [R2](/r2/) is an S3-compatible distributed object storage designed to eliminate the obstacles of sharing data across clouds.
   associated_products:
     - R2
+
+- term: secret
+  general_definition: |-
+    [Secrets](/workers/configuration/secrets/) are a type of binding that allow you to attach encrypted text values to your Worker.
 
 - term: service Worker
   general_definition: |-
