@@ -103,7 +103,7 @@ TypeScript class: **AiImageToTextInput**
 
 ```json
 {
-  "type": "array",
+  "type": "object",
   "contentType": "application/json",
   "properties": {
     "description": {

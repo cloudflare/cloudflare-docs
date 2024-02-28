@@ -130,6 +130,14 @@ The following schema is based on [JSON Schema](https://json-schema.org/)
       "type": "integer",
       "default": 20,
       "maximum": 20
+    },
+    "strength": {
+      "type": "number",
+      "default": 1
+    },
+    "guidance": {
+      "type": "number",
+      "default": 7.5
     }
   },
   "required": [
