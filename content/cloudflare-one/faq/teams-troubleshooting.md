@@ -110,7 +110,9 @@ If you see this warning, you may have to disable DNS over HTTPS setting in Firef
 
 ## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
 
-Advanced security features including HTTPS traffic inspection require browsers to present a valid [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/). Chrome loads and caches the system certificate list when it starts, so existing browser sessions may show invalid certificate errors if you recently installed a new certificate or enrolled the WARP client. To load the new certificate, restart your browser.
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+
+Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if a root certificate is installed while the browser is already running, your browser may not detect the new certificate. To resolve the error, restart the browser.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
