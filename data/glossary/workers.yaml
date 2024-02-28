@@ -5,6 +5,10 @@ entries:
   general_definition: |-
     [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
+- term: Cron Triggers
+  general_definition: |-
+    [Cron Triggers](/workers/configuration/cron-triggers/) allow users to map a cron expression to a Worker using a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) that enables Workers to be executed on a schedule.
+
 - term: C3
   general_definition: |-
     [C3](/learning-paths/workers/get-started/first-worker/#c3-and-wrangler) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
@@ -15,11 +19,19 @@ entries:
 
 - term: Durable Objects
   general_definition: |-
-    A [globally distributed coordination API](/durable-objects/) with strongly consistent storage.
+    [Durable Objects](/durable-objects/) is a globally distributed coordination API with strongly consistent storage.
+  associated_products:
+    - Durable Objects
+
+- term: duration
+  general_definition: |-
+    [Duration](/workers/platform/limits/#duration) is a measurement of wall-clock time — the total amount of time from the start to end of an invocation of a Worker.
 
 - term: D1
   general_definition: |-
     [D1](/d1/) is Cloudflare's native serverless database.
+  associated_products:
+    - D1
 
 - term: environment
   general_definition: |-
@@ -33,6 +45,12 @@ entries:
   general_definition: |-
     [Isolates](/workers/reference/how-workers-works/#isolates) are lightweight contexts that provide your code with variables it can access and a safe environment to be executed within.
 
+- term: KV
+  general_definition: |-
+    [Workers KV](/kv/) is Cloudflare's key-value data storage.
+  associated_products:
+    - KV
+
 - term: module Worker
   general_definition: |-
     Refers to a Worker written in [module syntax](/workers/reference/migrate-to-module-workers/).
@@ -41,6 +59,18 @@ entries:
   general_definition: |-
     [Origin](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) generally refers to the web server behind Cloudflare where your application is hosted.
 
+- term: Pages
+  general_definition: |-
+    [Cloudflare Pages](/pages/) is Cloudflare's product offering for building and deploying full-stack applications.
+  associated_products:
+    - Pages
+
+- term: Queues
+  general_definition: |-
+    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery. 
+  associated_products:
+    - Queues
+
 - term: rollback
   general_definition: |-
     [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network. 
@@ -48,10 +78,12 @@ entries:
 - term: R2
   general_definition: |-
     [R2](/r2/) is an S3-compatible distributed object storage designed to eliminate the obstacles of sharing data across clouds.
+  associated_products:
+    - R2
 
-- term: service worker
+- term: service Worker
   general_definition: |-
-    Refers to [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) [syntax](/workers/reference/migrate-to-module-workers/).
+    Refers to a Worker written in [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) [syntax](/workers/reference/migrate-to-module-workers/).
 
 - term: subrequest
   general_definition: |-
@@ -59,11 +91,11 @@ entries:
 
 - term: Tail Worker
   general_definition: |-
-    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to console.log() or uncaught exceptions. 
+    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. 
 
 - term: V8
   general_definition: |-
-    Chrome V8 is a [JavaScript engine](https://www.cloudflare.com/learning/serverless/glossary/what-is-chrome-v8/), which means that it [executes JavaScript code]().
+    Chrome V8 is a [JavaScript engine](https://www.cloudflare.com/learning/serverless/glossary/what-is-chrome-v8/), which means that it [executes JavaScript code](/workers/reference/how-workers-works/).
 
 - term: wall-clock time
   general_definition: |-
@@ -80,7 +112,3 @@ entries:
 - term: wrangler.toml
   general_definition: |-
     The [configuration](/workers/wrangler/configuration/) file used to customize the development and deployment setup for a Worker or a Pages Function.
-
-
-- term: environment
-  general_definition: |-
