@@ -1,18 +1,20 @@
 ---
 pcx_content_type: reference
-title: URL Scanner (beta)
+title: URL Scanner
 weight: 7
 ---
 
-{{<heading-pill style="beta">}} Radar's URL Scanner {{</heading-pill>}}
+# URL Scanner
 
-In order to better understand Internet usage around the world, Radar provides a URL Scanner at [https://radar.cloudflare.com/scan](https://radar.cloudflare.com/scan).
+In order to better understand Internet usage around the world, you can use Cloudflare's URL Scanner. With this too, you have the ability to investigate deeper into the details of a domain, IP, URL, or ASN. It is available in the Cloudflare Dashboard in Security Center, [Cloudflare Radar](https://radar.cloudflare.com/scan) and our [API](/api/operations/urlscanner-search-scans).
+
+## Using the API
 
 To make your first URL scan using the API, you must obtain a URL Scanner specific [API token](/fundamentals/api/get-started/create-token/). Create a Custom Token with _Account_ > _URL Scanner_ in the **Permissions** group, and select _Edit_ as the access level.
 
 Once you have the token, and you know your `accountId`, you are ready to make your first request to the API at `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/`.
 
-## Submit URL to scan
+### Submit URL to scan
 
 In order to submit a URL to scan, the only required information is the URL to be scanned in the `POST` request body:
 
@@ -49,7 +51,7 @@ A successful response will have a status code of `200` and be similar to the fol
 
 The `result.uuid` property in the response above identifies the scan and will be required when fetching the scan report.
 
-### Submit a custom URL Scan
+#### Submit a custom URL Scan
 
 Here's an example request body with some custom configuration options:
 
@@ -70,7 +72,7 @@ Above, the visibility level is set as `Unlisted`, which means that the scan repo
 
 There will also be three screenshots taken of the webpage, one per target device type. The [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) HTTP Header will be set as "My-custom-user-agent". Note that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
-## Get scan report
+### Get scan report
 
 Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan/<scanId>`. The `scanId` will be the `result.uuid` value returned in the previous response.
 
@@ -113,7 +115,7 @@ The [Get URL Scan](/api/operations/urlscanner-get-scan) API endpoint documentati
 In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-screenshot) or full [network log](/api/operations/urlscanner-get-scan-har), please visit the corresponding endpoints' documentation.
 
 
-## Search scans
+### Search scans
 
 `Public` scans can also be searched for. In order to search for scans to the hostname `google.com`, use the query parameter `page_hostname=google.com`:
 
