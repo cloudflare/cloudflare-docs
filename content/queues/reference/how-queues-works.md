@@ -57,7 +57,7 @@ export default {
 
 {{<Aside type="note" header="Hint">}}
 
-You can also use (context.waitUntil)[/workers/runtime-apis/handlers/fetch/#contextwaituntil] to send the message without blocking the response.
+You can also use [context.waitUntil](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to send the message without blocking the response.
 
 Note that because `waitUntil` is non-blocking, any errors raised from the `send` or `sendBatch` methods on a queue will be implicitly ignored.
 
