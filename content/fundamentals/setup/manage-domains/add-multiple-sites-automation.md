@@ -54,7 +54,7 @@ ___
       -H 'X-Auth-Key: <CLOUDFLARE_API_KEY>' \
       --data '{
       "account": {
-        "id":"<ACCOUNT_ID" 
+        "id":"<ACCOUNT_ID>" 
       },
       "name": "'"$domain"'",
       "type": "full"
