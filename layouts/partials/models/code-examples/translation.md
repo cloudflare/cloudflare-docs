@@ -58,8 +58,8 @@ print(output)
 <details>
   <summary>curl</summary>
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID}/ai/run/{{ .Page.Params.model.name }} \
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Page.Params.model.name }} \
     -X POST \
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
     -d '{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }'

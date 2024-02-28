@@ -38,8 +38,8 @@ export default {
 <details>
   <summary>curl</summary>
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID}/ai/run/{{ .Page.Params.model.name }} \
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Page.Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --data-binary @talking-llama.mp3

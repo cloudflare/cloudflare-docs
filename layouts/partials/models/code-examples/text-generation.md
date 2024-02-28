@@ -100,7 +100,7 @@ return result.response
 <details>
   <summary>curl</summary>
 
-```sh
+```bash
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
