@@ -9,7 +9,7 @@ meta:
 
 Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
-There are multiple types of bindings available today, including [text and JSON values](/workers/configuration/environment-variables/) as well as [secrets](/workers/configuration/secrets/).
+There are multiple types of bindings available today, including [environment variables (text and JSON values)](/workers/configuration/environment-variables/) as well as [secrets](/workers/configuration/secrets/).
 
 To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
