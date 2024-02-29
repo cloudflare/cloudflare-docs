@@ -37,18 +37,7 @@ classDef blue fill:#add8e6
 classDef red fill:#ff6900
 ```
 
-<br>
-
-```mermaid
-flowchart TB
-accTitle: Routed subnets
-accDescr: Some LANs are complex, and might have additional subnets behind L3 routers.
-a(Blue color represents <br> directly connected subnets):::blue
-b(Red color represents <br> routed subnets):::red
-
-classDef blue fill:#add8e6
-classDef red fill:#ff6900
-```
+{{<Aside type="note">}}Blue color represents directly connected subnets, and red color represents routed subnets.{{</Aside>}}
 
 To add a routed subnet to your LAN, you need:
 
