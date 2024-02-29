@@ -8,7 +8,7 @@ weight: 3
 
 Advanced nameservers included with Foundation DNS are an opt-in configuration. Consider the sections below to understand how you can enable advanced nameservers.
 
-Having advanced namservers configured is a requirement for you to have access to the new [GraphQL DNS analytics](#use-graphql-dns-analytics).
+Having advanced namservers configured is a requirement for you to have access to the new [GraphQL DNS analytics](/dns/foundation-dns/graphql-analytics/).
 
 ## Enable on a zone
 
@@ -31,7 +31,7 @@ To manually update your nameservers:
 Make sure the values for your assigned nameservers are copied exactly.
 {{</Aside>}}
 
-## Set new zones as default
+## Set as default for new zones
 
 **DNS Zone Dafaults** allow you to specify which configurations will be automatically enabled to new zones added to your account.
 
@@ -44,5 +44,3 @@ To select advanced namerserver as default:
 5. Select (TBD)**Save** to confirm.
 
 All new zones added to your account will be automatically assigned advanced nameservers. This can be changed later, for each zone, from **DNS** > **Settings**.
-
-## Use GraphQL DNS analytics
