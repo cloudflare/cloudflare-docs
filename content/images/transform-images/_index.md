@@ -60,9 +60,11 @@ Hard limits refers to the maximum image size to process. Soft limits refers to t
 
 File format  | Hard limits on the longest side (width or height) | Soft limits on the longest side (width or height)
 ------------ | ------------------------------------------------- | -------------------------------------------------
-AVIF         | 1,200 pixels                                      | 640 pixels
+AVIF         | 1,200 pixels<sup>1</sup>    | 640 pixels
 Other        | 12,000 pixels                                     | N/A
 WebP         | N/A                                               | 2,560 pixels for lossy; 1920 pixels for lossless
+
+<sup>1</sup>Hard limit is 1,600 pixels when `format=avif` is explicitly used with [image transformations](/images/transform-images/).
 
 All images have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
