@@ -35,8 +35,8 @@ To customize the default settings:
 | Directly route Microsoft 365 traffic | Disabled                | Usually disabled to allow inspection of Microsoft 365 traffic.                                                                                                                                                                                                                                 |
 {{</table-wrap>}}
 
-1. Save the profile.
-2. Under **Global settings**,
+4. Save the profile.
+5. Under **Global settings**,
     1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
     2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 
