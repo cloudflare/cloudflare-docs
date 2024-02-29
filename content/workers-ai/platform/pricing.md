@@ -33,7 +33,9 @@ You can monitor your Neuron usage in the [Workers AI dashboard](https://dash.clo
 ## What are Neurons?
 Neurons are our way of measuring AI outputs across different models. To give you a sense of what you can accomplish with 10K Neurons, you can: generate 100-200 LLM responses, 500 translations, 500 seconds of speech-to-text audio, 10,000 text classifications, or 1,500 - 15,000 embeddings depending on which models you use. Our serverless platform allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
 
-To estimate how many Neurons your requests will consume, try our [pricing calculator](ai.cloudflare.com).
+To estimate how many Neurons your requests will consume, try our [pricing calculator](ai.cloudflare.com/#pricing-calculator).
+
+![Workers AI Pricing Calculator](images/workers-ai/pricing-calculator.png)
 
 ## Non-beta Models
 Beginning April 1st, 2024, we will begin charging $0.011/1K Neurons for all usage exceeding 10K Neurons per day for the following models: 
