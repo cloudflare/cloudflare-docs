@@ -114,7 +114,7 @@ The main chart displays the following data for the selected time frame, accordin
 
 Security Analytics shows request logs for the selected time frame and applied filters, along with detailed information and security analyses of those requests.
 
-By default, Security Analytics uses sampled logs for the logs table. If you are subscribed to [Log Explorer](#) (beta), you may also have access to [raw logs](#raw-logs).
+By default, Security Analytics uses sampled logs for the logs table. If you are subscribed to [Log Explorer](#) {{<inline-pill style="beta">}}, you may also have access to [raw logs](#raw-logs).
 
 #### Sampled logs
 
@@ -149,7 +149,7 @@ To switch from raw logs back to sampled logs, select **Switch back to sampled lo
 
 ##### Query raw logs using Log Explorer
 
-You can switch to [Log Explorer](#) (beta) to dive deeper on your analysis while applying the same filters you used in Security Analytics. Raw logs in Security Analytics are based on the same data source used in Log Explorer.
+You can switch to [Log Explorer](#) {{<inline-pill style="beta">}} to dive deeper on your analysis while applying the same filters you used in Security Analytics. Raw logs in Security Analytics are based on the same data source used in Log Explorer.
 
 {{<Aside type="note" header="Note">}}
 Currently, changing the time frame or the applied filters while showing raw logs may cause the Cloudflare dashboard to switch automatically to sampled logs. This happens if the total number of request logs for the selected time frame is high.
