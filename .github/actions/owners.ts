@@ -36,7 +36,7 @@ export const OWNERS: Record<string, string[]> = {
   firewall: ["pedrosousa"],
   fundamentals: ["jason-cf"],
   "health-checks": ["RebeccaTamachiro"],
-  "hyperdrive": ["elithrar", "a-robinson", "Maddy-Cloudflare"],
+  "hyperdrive": ["Maddy-Cloudflare"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
   kv: ["Maddy-Cloudflare"],
@@ -81,7 +81,7 @@ export const OWNERS: Record<string, string[]> = {
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
   "vectorize": ["Maddy-Cloudflare"],
-  "workers-ai": ["irvinebroque", "pdwittig", "deadlypants1973"],
+  "workers-ai": ["deadlypants1973"],
   zaraz: ["kodster28"],
 };
 
@@ -102,4 +102,5 @@ export const REVIEWERS: Record<string, string[]> = {
   turnstile: ["migueldemoura", "punkeel", "worenga"],
   vectorize: ["elithrar", "pdwittig"],
   "waiting-room": ["aolache"],
+  "workers-ai": ["irvinebroque", "pdwittig"]
 };
