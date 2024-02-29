@@ -65,7 +65,7 @@ In Vectorize, a database and an index are the same concept. Each index you creat
 
 Vector embeddings represent the features of a machine learning model as a numerical vector (array of numbers). They are a one-way representation that encodes how a machine learning model understands the input(s) provided to it, based on how the model was originally trained and its' internal structure.
 
-For example, a [text embedding model](/workers-ai/models/text-embeddings/) available in Workers AI is able to take text input and represent it as a 768-dimension vector. The text `This is a story about an orange cloud`, when represented as a vector embedding, resembles the following:
+For example, a [text embedding model](/workers-ai/models/#text-embeddings) available in Workers AI is able to take text input and represent it as a 768-dimension vector. The text `This is a story about an orange cloud`, when represented as a vector embedding, resembles the following:
 
 ```json
 [-0.019273685291409492,-0.01913292706012726,<764 dimensions here>,0.0007094172760844231,0.043409910053014755]
@@ -85,7 +85,7 @@ Refer to the [dimensions](/vectorize/configuration/create-indexes/#dimensions) d
 
 The distance metric is an index used for vector search. It defines how it determines how close your query vector is to other vectors within the index.
 
-- Distance metrics determine how the vector search engine assesses similarity between vectors. 
+- Distance metrics determine how the vector search engine assesses similarity between vectors.
 - Cosine, Euclidean (L2), and Dot Product are the most commonly used distance metrics in vector search.
 - The machine learning model and type of embedding you use will determine which distance metric is best suited for your use-case.
 - Different metrics determine different scoring characteristics. For example, the `cosine` distance metric is well suited to text, sentence similarity and/or document search use-cases. `euclidean` can be better suited for image or speech recognition use-cases.

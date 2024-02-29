@@ -53,12 +53,16 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 Cloudflare Snippets are lightweight compared to [Cloudflare Workers](/workers/). The following limits apply:
 
-Description                | All plans
----------------------------|----------
-Maximum execution time     | 5 ms
-Maximum memory             | 2 MB
-Maximum total package size | 32 KB
-Subrequests                | 1
+Description                                | All plans
+-------------------------------------------|----------
+Maximum execution time                     | 5 ms
+Maximum memory                             | 2 MB
+Maximum total package size                 | 32 KB
+Subrequests<br>_(refer to the note below)_ | 1
+
+{{<Aside type="warning" header="Redirects will count as subrequests">}}
+Each subrequest in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
+{{</Aside>}}
 
 ## Execution order
 
