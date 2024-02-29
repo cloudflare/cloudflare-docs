@@ -25,6 +25,7 @@ Ordering and Timing Rules is currently in private beta. If you would like to be 
 The short ID will not be visible until our account team has enabled this feature for you. 
 {{</Aside>}}
 4. Enable the sequence cookie by adding your API token and zone ID to the following API call.
+
 ```bash
 ---
 header: API call
@@ -32,7 +33,7 @@ header: API call
 
 curl --request PUT \
   --url https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_detection/sequence_cookies \
-  --header 'Authorization: Bearer <API_TOKEN> \
+  --header 'Authorization: Bearer <API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{"enabled": true}'
 ```
@@ -176,4 +177,3 @@ curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_de
 Since the sequence data is stored in a cookie on the client, it is possible for the client to delete the cookies to hide or remove operations from their sequence. However, it is not possible for clients to insert operations into a sequence cookie. 
 
 Also, Cloudflare only supports HTTPS requests since our cookies set the `Secure` attribute.
-
