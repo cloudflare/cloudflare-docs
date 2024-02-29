@@ -269,8 +269,8 @@ wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 
 Execute a query on a D1 database.
 
-```sh
-$ npx wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```txt
+wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<Aside type="note">}} 
@@ -288,7 +288,7 @@ You must provide either `--command` or `--file` for this command to run successf
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to the SQL file you wish to execute.
 - `-y, --yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Answer "yes" to any prompts.
+  - Answer `yes` to any prompts.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute commands/files against a local database for use with [wrangler dev](#dev).
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
