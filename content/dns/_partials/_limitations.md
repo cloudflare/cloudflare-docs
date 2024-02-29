@@ -7,7 +7,7 @@ _build:
 
 #### Proxy eligibility
 
-By default, `A`, `AAAA`, and `CNAME` DNS records that serve `HTTP/S` traffic can be proxied.
+By default, `A`, `AAAA`, and `CNAME` DNS records that serve `HTTP/HTTPS` traffic can be proxied.
 
 If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
@@ -30,7 +30,7 @@ The following types of DNS records may be in your DNS configuration, but cannot 
 
 #### Ports and protocols
 
-To proxy `HTTP/S` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
+To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
 
 #### Pending domains
 
