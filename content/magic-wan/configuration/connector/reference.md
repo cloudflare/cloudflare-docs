@@ -29,6 +29,8 @@ This feature allows you to have multiple [virtual LANs](https://www.cloudflare.c
 
 A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN/LAN.
 
+You can setup VLAN IDs both for WAN and LAN. Refer to [Configure hardware connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure software connector](/magic-wan/configuration/connector/configure-virtual-connector/) to learn where you can set up VLAN IDs.
+
 ---
 
 ## Device metrics
