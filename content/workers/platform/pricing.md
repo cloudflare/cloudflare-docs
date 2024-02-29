@@ -37,7 +37,7 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 | **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation                    |
 
 {{</table-wrap>}}
-<sup>1</sup>  Inbound requests to your Worker. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but do impact the duration (wall-clock time) of your Worker.
+<sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
 ### Example pricing: Standard Usage Model
 
