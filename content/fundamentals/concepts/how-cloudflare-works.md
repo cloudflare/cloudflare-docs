@@ -38,6 +38,8 @@ Proxying is on by default for records that serve HTTP/S traffic (A, AAAA, and CN
 
 {{</Aside>}}
 
+#### Example DNS table 
+
 | Type | Name | Content | Proxy status | TTL | Actions |
 | :---: |  :---: |  :---: |  :---: |  :---: |  ---: |
 | `A` | `blog` | `192.0.2.1` | `Proxied` | `Auto` | `Edit` | 
