@@ -1249,7 +1249,7 @@
 /workers/runtime-apis/R2/ /workers/runtime-apis/bindings/R2/ 301
 /workers/runtime-apis/durable-objects/ /workers/runtime-apis/bindings/durable-objects/ 301
 /workers/runtime-apis/kv/ /workers/runtime-apis/bindings/kv/ 301
-/workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/ 301
+/workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/
 /workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 
