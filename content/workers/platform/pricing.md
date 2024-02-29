@@ -206,7 +206,9 @@ Vectorize is currently only available on the Workers paid plan.
 
 ## Service bindings
 
-Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet.
+
+If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
 
 For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
 
