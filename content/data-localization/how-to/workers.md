@@ -24,6 +24,8 @@ Regional Services only applies to the custom domain configured for a Workers pro
 
 Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests).
 
+Regional Services does not apply to other Worker triggers, like [Queues](/queues/) or [Cron Triggers](/workers/configuration/cron-triggers/).
+
 ## Customer Metadata Boundary
 
 Customer Metadata Boundary applies to the custom domain configured, as well as the [`*.workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain.
