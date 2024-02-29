@@ -31,7 +31,7 @@ The command above will output the ID of your Hyperdrive, which you will need to 
 node_compat = true # required for database drivers to function
 
 [[hyperdrive]]
-name = "HYPERDRIVE"
+binding = "HYPERDRIVE"
 id = "<your-hyperdrive-id-here>"
 ```
 
