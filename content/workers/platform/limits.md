@@ -147,7 +147,7 @@ Routes in fail open mode will bypass the failing Worker and prevent it from oper
 
 Routes in fail closed mode will display a Cloudflare `1027` error page to visitors, signifying the Worker has been temporarily disabled. Cloudflare recommends this option if your Worker is performing security related tasks.
 
-{{<Aside type="note" header="Trying to run a load test? Read this.">}}
+{{<Aside type="warning" header="Trying to run a load test? Read this.">}}
 Running simulated single client load tests with tools like [`k6`](https://k6.io/) is not an accurate way to understand how many requests per second Cloudflare Workers is capable of serving.
 
 When you run a load test like this, the thousands of requests you generate per second all come from a single client IP address. Incoming requests to Cloudflare pass through [DDOS protection](/ddos-protection/) — mitigating DDOS attacks on your behalf. Your load test, with thousands of requests per second coming from a single client, all with the same characteristics, landing on the same server in the same location, does not represent what real-world traffic looks like.
