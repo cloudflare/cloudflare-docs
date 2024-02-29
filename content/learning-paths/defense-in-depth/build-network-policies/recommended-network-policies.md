@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-Add the following recommended network policies.
+We recommend you add the following network policies to build a defense-in-depth strategy for your organization.
 
 {{<details header="Quarantined-Users-NET-Restricted-Access" open="true">}}
 

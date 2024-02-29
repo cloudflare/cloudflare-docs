@@ -7,8 +7,10 @@ layout: learning-module
 
 # Build network security policies
 
-To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
+After creating policies to secure your organization's DNS queries, you can add network-level policies to secure your organization's endpoint traffic.
 
 ## Objectives
 
 By the end of this module, you will be able to:
+
+- Add recommended network security policies
