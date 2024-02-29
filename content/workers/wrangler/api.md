@@ -343,7 +343,7 @@ All supported bindings found in your `wrangler.toml` are available to you via `e
 
 The bindings supported by `getPlatformProxy` are:
 
- * [Environmental variables](/workers/configuration/environment-variables/)
+ * [Environment variables](/workers/configuration/environment-variables/)
 
  * [Service bindings](/workers/configuration/bindings/#service-bindings)
 
