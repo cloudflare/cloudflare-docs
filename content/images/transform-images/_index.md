@@ -60,7 +60,7 @@ Hard limits refers to the maximum image size to process. Soft limits refers to t
 
 File format  | Hard limits on the longest side (width or height) | Soft limits on the longest side (width or height)
 ------------ | ------------------------------------------------- | -------------------------------------------------
-AVIF         | 3,200 pixels                                      | 640 pixels
+AVIF         | 1,200 pixels                                      | 640 pixels
 Other        | 12,000 pixels                                     | N/A
 WebP         | N/A                                               | 2,560 pixels for lossy; 1920 pixels for lossless
 
