@@ -1,23 +1,50 @@
 ---
 pcx_content_type: concept
-title: Deployments
+title: Versions & Deployments
 meta:
-  description: View a log of and rollback to past versions of your Worker.
+  description: Upload versions of Workers and create deployments to release new versions. 
 ---
 
-# Deployments
+# Versions & Deployments
 
-Deployments are a log of static historical versions of your Worker. Deployments track changes to the [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#workers) associated with a Worker over time.
 
-Deployments also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
+## Versions
+Versions track the state of code as well as the state of config defined in a script’s wrangler.toml file. They track historical changes to [bundled code](/workers/wrangler/bundling/), [bindings](/workers/configuration/bindings/), [compatibility date](/workers/configuration/compatibility-dates/), and [usage model](/workers/platform/pricing/#workers) associated with a Worker over time.
 
-The latest deployment for a Worker is considered the active deployment. You can view your latest 10 deployments [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`npx wrangler deployments list` command](#via-wrangler).
+Versions also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
 
 {{<Aside type="note">}}
 
-Associated resources for a Worker such as [KV](/kv/), [R2](/r2/), and [Durable Objects](/durable-objects/) are not tracked with deployments.
+State changes for associated Workers resources such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/) and D1 are not tracked with versions.
 
 {{</Aside>}}
+
+## Deployments
+
+Deployments track the version(s) of your Worker that are actively serving traffic. 
+
+By default, new versions uploaded with the [Workers Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module), `wrangler deploy` or via the Cloudflare dashboard are automatically deployed to 100% of traffic.
+
+
+## Using Versions and Deployments
+Together, versions and deployments are used to track changes to your Worker and configure how those changes are deployed to your traffic. With the introduction of versions and deployments, it is now possible to upload changes to your Worker independent of changing the version that's actively serving traffic. This is useful if:
+
+- You have a CI pipeline configured for Workers, but want to cut manual releases
+- You're running critical applications on Workers and want to [gradually deploy](/gradual-deployments) versions of your Worker
+
+### Create a new version
+
+There are two ways to create a new version:
+
+**Uploading a new version and deploying it immediately**
+
+By default, new versions uploaded with the [Workers Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module), `wrangler deploy` or via the Cloudflare dashboard are automatically deployed to 100% of traffic. 
+
+**Uploading a new version to be [gradually deployed](/gradual-deployments) or deployed at a later time** 
+
+In order to upload a new version that is not deployed immediately, use the new [Worker Versions API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module), new `wrangler versions upload` command or upload via the Cloudflare dashboarding using the "Save changes" buttons. 
+
+
 
 ## Create a new deployment
 
@@ -96,3 +123,10 @@ Bound resources will not be changed during a rollback. This means if the structu
 
 * [`npx wrangler deploy` documentation](/workers/wrangler/commands#deploy) - Deploy your Worker with the Wrangler CLI.
 * [`npx wrangler deployments` documentation](/workers/wrangler/commands#deployments) - List your deployments and view details about a specific deployment.
+
+
+
+You can view your latest 10 versions [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`npx wrangler versions list` command](#via-wrangler).
+
+
+
