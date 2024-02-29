@@ -7,7 +7,7 @@ meta:
 
 # WebAssembly (Wasm)
 
-[WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
+[WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like [Rust](/workers/languages/rust/), Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
 
 On Workers and in [Cloudflare Pages Functions](https://blog.cloudflare.com/pages-functions-with-webassembly/), you can use WebAssembly to:
 - Execute code written in a language other than JavaScript, via `WebAssembly.instantiate()`.
@@ -37,4 +37,29 @@ Compiling to WebAssembly often requires including additional runtime dependencie
 
 The [WebAssembly System Interface](https://wasi.dev/) (abbreviated WASI) is a modular system interface for WebAssembly that standardizes a set of underlying system calls for networking, file system access, and more. Applications can depend on the WebAssembly System Interface to behave identically across host environments and operating systems.
 
-WASI is an earlier and more rapidly evolving set of standards than Wasm. WASI support is experimental on Cloudflare Workers, with only some syscalls implemented. Refer to our [open source implementation of WASI](https://github.com/cloudflare/workers-wasi), and [blog post about WASI on Workers](https://blog.cloudflare.com/announcing-wasi-on-workers/) demonstrating its use. 
+WASI is an earlier and more rapidly evolving set of standards than Wasm. WASI support is experimental on Cloudflare Workers, with only some syscalls implemented. Refer to our [open source implementation of WASI](https://github.com/cloudflare/workers-wasi), and [blog post about WASI on Workers](https://blog.cloudflare.com/announcing-wasi-on-workers/) demonstrating its use.
+
+### Resources on WebAssembly
+
+- [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
+- [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
+
+## Compile languages to JavaScript
+
+You can write Workers with any language that can compile to JavaScript, including the languages below.
+
+{{<table-wrap>}}
+
+| Language     | Example project                                                                                 |
+| ------------ | ----------------------------------------------------------------------------------------------- |
+| Rust         | [cloudflare/workers-rs/examples](https://github.com/cloudflare/workers-rs/tree/main/examples) |
+| Kotlin       | [cloudflare/kotlin-worker-hello-world](https://github.com/cloudflare/kotlin-worker-hello-world) |
+| Dart         | [cloudflare/dart-worker-hello-world](https://github.com/cloudflare/dart-worker-hello-world)     |
+| Python       | [cloudflare/python-worker-hello-world](https://github.com/cloudflare/python-worker-hello-world) |
+| Scala        | [cloudflare/scala-worker-hello-world](https://github.com/cloudflare/scala-worker-hello-world)   |
+| Reason/OCaml | [cloudflare/reason-worker-hello-world](https://github.com/cloudflare/reason-worker-hello-world) |
+| Perl         | [cloudflare/perl-worker-hello-world](https://github.com/cloudflare/perl-worker-hello-world)     |
+| PHP          | [cloudflare/php-worker-hello-world](https://github.com/cloudflare/php-worker-hello-world)       |
+| FSharp       | [fable-compiler/cfworker-hello-world](https://github.com/fable-compiler/cfworker-hello-world)   |
+
+{{</table-wrap>}}

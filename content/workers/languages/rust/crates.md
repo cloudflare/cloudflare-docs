@@ -8,7 +8,6 @@ meta:
 
 # `workers-rs` supported Rust crates
 
-
 ## Background
 
 Learn about popular Rust crates which have been confirmed to work on Workers when using [`workers-rs`](https://github.com/cloudflare/workers-rs) (or in some cases just `wasm-bindgen`), to write Workers in WebAssembly.
@@ -23,14 +22,14 @@ Many crates which have been made Wasm-friendly, will use the `time` crate instea
 
 ## `tracing`
 
-Tracing can be enabled by using the `tracing-web` crate and the `time` feature for `tracing-subscriber`. 
+Tracing can be enabled by using the `tracing-web` crate and the `time` feature for `tracing-subscriber`.
 Due to [timing limitations](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading) on Workers, spans will have identical start and end times unless they encompass I/O.
 
 [Refer to the `tracing` example](https://github.com/cloudflare/workers-rs/tree/main/examples/tracing) for more information.
 
 ## `reqwest`
 
-The [`reqwest` library](https://docs.rs/reqwest/latest/reqwest/) can be compiled to Wasm, and hooks into the JavaScript `fetch` API automatically using `wasm-bindgen`. 
+The [`reqwest` library](https://docs.rs/reqwest/latest/reqwest/) can be compiled to Wasm, and hooks into the JavaScript `fetch` API automatically using `wasm-bindgen`.
 
 ## `tokio-postgres`
 
@@ -40,8 +39,8 @@ The [`reqwest` library](https://docs.rs/reqwest/latest/reqwest/) can be compiled
 
 ## `hyper`
 
-The `hyper` crate contains two HTTP clients, the lower-level `conn` module and the higher-level `Client`. 
+The `hyper` crate contains two HTTP clients, the lower-level `conn` module and the higher-level `Client`.
 The `conn` module can be used with Workers `Socket`, however `Client` requires timing dependencies which are
-not yet Wasm friendly. 
+not yet Wasm friendly.
 
 [Refer to the `hyper` example](https://github.com/cloudflare/workers-rs/tree/main/examples/hyper) for more information.
