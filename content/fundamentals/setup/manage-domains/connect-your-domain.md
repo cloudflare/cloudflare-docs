@@ -27,16 +27,16 @@ Your configurations will only affect live traffic (i.e., when your domain's stat
 Use the Cloudflare dashboard or [API](/api/) to modify, test, or [version](/version-management/) your configuration.
 
 {{<Aside header="Account-level configurations">}}
-Some configurations can be set at the account-level (if available in your plan), which are applied to all domains under your account, such as the [Web Application Firewall (WAF)](/waf/). 
+Some configurations can be set at the account-level (if available in your plan), which can be applied to all domains under your account. 
 
-Account-level configurations are processed before domain-level services. Refer to [Traffic sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first) to learn more. 
+Account-level configurations are applied to incoming traffic before your domain-level configurations. Refer to [traffic sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first) to learn more. 
 {{</Aside>}}
 
 ## Activating your domain
 
 In a [full setup](/dns/zone-setups/full-setup/), your domain will be pending until you update its nameservers at your domain registrar with the assigned Cloudflare nameservers. This step is essential for two reasons:
 1. First, to inform DNS resolvers that your traffic should route through Cloudflare
-2. And second, to verify that you are the domains owner. Only the owner or administrator of a domain can access  its registrar and change its nameservers.
+2. And second, to verify that you are the domain's owner. Only the owner or administrator of a domain can access  its registrar and change its nameservers.
 
 {{<Aside>}}
 
@@ -44,9 +44,9 @@ Note: The activation process involves different steps if you are using a [second
 
 {{</Aside>}}
 
-Registrars take up to 24 hours to process nameserver changes (quicker in most cases). You will receive an email when your domain becomes active. While your domain is pending, your `HTTP/S` traffic is not live, but Cloudflare will respond to DNS queries on your assigned nameservers.
+Registrars take up to 24 hours to process nameserver changes (quicker in most cases). You will receive an email when your domain becomes active. While your domain is pending, your `HTTP/S` traffic is not proxying through Cloudflare, but Cloudflare will respond to DNS queries on your assigned nameservers.
 
-By activating your domain in full mode, your traffic will immediately start using [Cloudflare's DNS services](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-handles-dns-queries), so it's important to review how to [avoid downtime](/fundamentals/setup/manage-domains/connect-your-domain/#avoiding-downtime) and what [proxying traffic](/fundamentals/concepts/how-cloudflare-works/#proxying-traffic) means. 
+By activating your domain on a full setup, your traffic will immediately start using [Cloudflare's DNS services](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-handles-dns-queries), so it's important to review how to [avoid downtime](/fundamentals/setup/manage-domains/connect-your-domain/#avoiding-downtime) and what [proxying traffic](/fundamentals/concepts/how-cloudflare-works/#proxying-traffic) means. 
 
 ## Avoiding downtime
 
