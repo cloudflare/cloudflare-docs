@@ -19,13 +19,14 @@ end
 c --> e(subnet x):::blue
 d --> f(subnet 192.168.100.0/24):::blue
 
-f --> g(192.168.100.10):::blue
+f-->|192.168.100.10|g(Layer 3 router)
 
 g --> h(routed subnet x):::red
 g --> i(192.168.200.0/24):::red
-g --> j(routed subnet y):::red
+g --> j(layer 3 router)
 j --> k(routed subnet z):::red
 
+linkStyle 3 color:blue
 classDef blue fill:#add8e6
 classDef red fill:#ff6900
 ```
