@@ -9,7 +9,7 @@ meta:
 
 ## Background
 
-Secrets are a type of binding that allow you to attach encrypted text values to your Worker. Secrets are not visible after they are set. Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
+Secrets are a type of binding that allow you to attach encrypted text values to your Worker. You cannot see secrets after you set them and can only [access secrets programmatically](/workers/wrangler/commands/#secret). Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 ## Add secrets to your project
 
