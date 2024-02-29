@@ -562,7 +562,7 @@
     },
     "custom_nameservers": {
       "title": "Custom nameservers",
-      "link": "/dns/additional-options/custom-nameservers/",
+      "link": "/dns/nameservers/custom-nameservers/",
       "properties": {
         "availability": {
           "title": "Availability",
