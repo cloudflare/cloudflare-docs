@@ -22,12 +22,18 @@ The values you select for the listed settings will be automatically applied to n
 
 ## Available settings
 
-- Nameserver assignment: Select your preferred nameserver type or assignment method that you want Cloudflare to use for your new zones.
+- Nameserver assignment: Select your preferred nameserver type or assignment method that you want Cloudflare to use for your new zones. This setting applies both to primary zones ([full setup](/dns/zone-setups/full-setup/)) and [secondary zones](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
+
+For primary zones:
+
 - Multi-provider DNS: Control whether or not Cloudflare will consider `NS` records you add on the zone apex and if zones that contain external nameservers listed in the registrar will be activated.
-- NS record TTL: Control how long, in minutes, Cloudflare nameservers are cached. The default time-to-live (TTL) is 24 hours.
+- NS record TTL: Control how long, in minutes, your nameserver (`NS`) records are cached. The default time-to-live (TTL) is 24 hours. This setting applies both to Cloudflare nameservers and [custom nameservers](/dns/additional-options/custom-nameservers/).
 - SOA record: Adjust values for the Start of Authority ([SOA](/dns/manage-dns-records/reference/dns-record-types/#soa)) record that Cloudflare creates for your zone.
 
 For secondary zones:
 
-- Multi-provider DNS does not apply, as this is already a required behaviour for this type of zone.
-- You also have the option to select the status (TBD)(`on`/`off`) for [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/).
+- [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/): Enable the option use Cloudflare [proxy](/dns/manage-dns-records/reference/proxied-dns-records/) and add `CNAME` records at your zone apex.
+
+{{<Aside type="note">}}
+Multi-provider DNS does not apply as a setting for secondary zones, as this is already a required behaviour for this setup.
+{{</Aside>}}
