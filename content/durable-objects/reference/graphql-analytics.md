@@ -1,10 +1,31 @@
 ---
-title: GraphQL analytics
+title: Metrics and analytics
 pcx_content_type: concept
 weight: 16
 ---
 
-# GraphQL analytics
+# Metrics and analytics
+Durable Objects expose analytics for Durable Object namespace-level and request-level metrics. 
+
+The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
+
+{{<Aside type="note" header="Durable Object namespace">}}
+A Durable Object namespace is a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
+{{</Aside>}}
+
+## View via the dashboard
+
+Per-namespace analytics for Durable Objects are available in the Cloudflare dashboard. To view current and historical metrics for a namespace:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Workers & Pages** > **Durable Objects**](https://dash.cloudflare.com/?to=/:account/workers/durable-objects).
+3. View account-level Durable Objects usage. 
+4. Select an existing namespace.
+5. Select the **Metrics** tab.
+
+You can optionally select a time window to query. This defaults to the last 24 hours.
+
+## Query via the GraphQL API
 
 Durable Object metrics are powered by GraphQL.
 
