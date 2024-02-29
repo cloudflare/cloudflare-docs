@@ -110,9 +110,9 @@ example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignht
 
 Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certificates/troubleshooting/caa-records/) for more information.
 
-### Zone Holds
+### Zone holds
 
-A [Zone hold](/fundamentals/account-and-billing/account-security/zone-holds/) will prevent Pages from adding a custom domain for a hostname under a zone hold.
+A [zone hold](/fundamentals/account-and-billing/account-security/zone-holds/) will prevent Pages from adding a custom domain for a hostname under a zone hold.
 
 To add a Custom Domain for a hostname with a zone hold, temporarily [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the custom domain setup process.
 
