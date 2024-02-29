@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Redirect one domain to another
-meta:
-    title:
 ---
 
 # Redirect one domain to another

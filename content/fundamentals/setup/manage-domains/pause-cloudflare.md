@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Pause Cloudflare
-meta:
-    title:
 ---
 
 # Pause Cloudflare

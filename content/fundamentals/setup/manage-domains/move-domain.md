@@ -1,8 +1,6 @@
 ---
 pcx_content_type: reference
 title: Move a domain between Cloudflare accounts
-meta:
-    title:
 ---
 
 # Move a domain between Cloudflare accounts
