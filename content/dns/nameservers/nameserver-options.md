@@ -6,7 +6,7 @@ weight: 2
 
 # Nameserver options
 
-## Nameserver assignment method
+## Assignment method
 
 ## Multi-provider DNS
 

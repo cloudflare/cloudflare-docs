@@ -9,4 +9,5 @@ _build:
   render:
 ---
 
-Will add a link to Foundation DNS > Advanced nameservers
+This is just to render the option on the side navigation.
+This page will actually not render but instead redirect to `Foundation DNS > Advanced nameservers`
