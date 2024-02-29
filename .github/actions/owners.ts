@@ -36,7 +36,7 @@ export const OWNERS: Record<string, string[]> = {
   firewall: ["pedrosousa"],
   fundamentals: ["jason-cf"],
   "health-checks": ["RebeccaTamachiro"],
-  "hyperdrive": ["Maddy-Cloudflare"],
+  "hyperdrive": ["elithrar", "a-robinson", "Maddy-Cloudflare"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
   kv: ["Maddy-Cloudflare"],
