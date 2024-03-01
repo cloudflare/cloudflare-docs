@@ -768,12 +768,15 @@ index_name = "<INDEX_NAME>"
 Example:
 
 ```toml
+---
+header: wrangler.toml
+---
 
 node_compat = true # required for database drivers to function
 
 [[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "a76a99bc342644deb02c38d66082262a" # the ID associated with the Hyperdrive you just created
+binding = "<BINDING_NAME>"
+id = "<ID>" # the ID associated with the Hyperdrive you just created
 ```
 
 ### Service bindings
