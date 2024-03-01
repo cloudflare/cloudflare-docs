@@ -6,7 +6,7 @@ weight: 2
 
 # sFlow DDoS Alerts
 
-Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of DDoS attack is detected within their network traffic. Cloudflare uses the same DDoS attack detection rules that protect our own network edge to generate these alerts for customers.
+Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of DDoS attack is detected within their network traffic. Cloudflare uses the same DDoS attack detection rules that protect our own global network to generate these alerts for customers.
 
 ## Send sFlow data from your network to Cloudflare
 
@@ -23,9 +23,9 @@ To configure sFlow DDoS alerts:
 1. Login to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Notifications**, and select **Add**.
 3. Select **Magic Transit** from the product dropdown menu.
-4. Find the **Magic Network Monitoring: DDoS Attack** alert.
-5. Select **Select**.
-6. Fill in the notification configuration details, and select **Save**.
+4. Find the **Magic Network Monitoring: DDoS Attack** alert, and select **Select**.
+6. Fill in the notification configuration details.
+7. Select **Save**.
 
 ## Tune the sFlow DDoS alert thresholds
 
