@@ -20,12 +20,12 @@ Customers can configure sFlow DDoS alerts and receive notifications if a DDoS at
 
 To configure sFlow DDoS alerts:
 
-1. Login to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Notifications**, and select **Add**.
 3. Select **Magic Transit** from the product dropdown menu.
 4. Find the **Magic Network Monitoring: DDoS Attack** alert, and select **Select**.
-6. Fill in the notification configuration details.
-7. Select **Save**.
+5. Fill in the notification configuration details.
+6. Select **Save**.
 
 ## Tune the sFlow DDoS alert thresholds
 
