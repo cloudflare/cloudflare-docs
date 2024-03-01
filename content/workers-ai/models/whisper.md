@@ -21,6 +21,7 @@ model:
 task_type: "automatic-speech-recognition"
 model_display_name: "whisper"
 layout: "model"
+weight: 100
 title: "whisper"
 json_schema: ""
 

@@ -16,6 +16,7 @@ model:
 task_type: "object-detection"
 model_display_name: "detr-resnet-50"
 layout: "model"
+weight: 0
 title: "detr-resnet-50"
 json_schema:
   input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  ]\n}"

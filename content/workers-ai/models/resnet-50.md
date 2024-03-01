@@ -21,6 +21,7 @@ model:
 task_type: "image-classification"
 model_display_name: "resnet-50"
 layout: "model"
+weight: 100
 title: "resnet-50"
 json_schema:
   input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  ]\n}"

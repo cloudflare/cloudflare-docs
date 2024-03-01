@@ -16,6 +16,7 @@ model:
 task_type: "summarization"
 model_display_name: "bart-large-cnn"
 layout: "model"
+weight: 0
 title: "bart-large-cnn"
 json_schema:
   input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"input_text\": {\n      \"type\": \"string\"\n    },\n    \"max_length\": {\n      \"type\": \"integer\",\n      \"default\": 1024\n    }\n  },\n  \"required\": [\n    \"input_text\"\n  ]\n}"

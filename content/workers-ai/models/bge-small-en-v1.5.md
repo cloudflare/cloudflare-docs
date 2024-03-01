@@ -25,6 +25,7 @@ model:
 task_type: "text-embeddings"
 model_display_name: "bge-small-en-v1.5"
 layout: "model"
+weight: 100
 title: "bge-small-en-v1.5"
 json_schema:
   input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"text\": {\n      \"oneOf\": [\n        {\n          \"type\": \"string\"\n        },\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          },\n          \"maxItems\": 100\n        }\n      ]\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
