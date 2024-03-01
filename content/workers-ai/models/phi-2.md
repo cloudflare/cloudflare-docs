@@ -13,6 +13,8 @@ model:
   properties:
     - property_id: "info"
       value: "https://huggingface.co/microsoft/phi-2"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "phi-2"
 layout: "model"

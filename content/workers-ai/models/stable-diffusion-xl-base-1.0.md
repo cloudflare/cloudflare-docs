@@ -18,6 +18,8 @@ model:
       value: "https://stability.ai/stable-diffusion"
     - property_id: "constellation_config"
       value: "# infer_response_cache: r2\n\nmax_requests_per_min:\n  default: 120\n  accounts:\n    32118455: 1440 # ai.cloudflare.com staging\n    50147400: 1440 # ai.cloudflare.com\n    13852056: 1440 # Firewall Team for `@RespectTables ai`\n\nneurons:\n  metrics:\n    - name: inference_steps\n      neuron_cost: 0\nmax_concurrent_requests: 1"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-to-image"
 model_display_name: "stable-diffusion-xl-base-1.0"
 layout: "model"

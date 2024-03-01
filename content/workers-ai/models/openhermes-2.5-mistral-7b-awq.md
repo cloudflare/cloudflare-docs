@@ -11,7 +11,9 @@ model:
   tags:
     - "huggingface"
     - "text-generation"
-  properties: []
+  properties:
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "openhermes-2.5-mistral-7b-awq"
 layout: "model"

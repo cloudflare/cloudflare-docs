@@ -15,6 +15,8 @@ model:
       value: "https://huggingface.co/runwayml/stable-diffusion-v1-5"
     - property_id: "terms"
       value: "https://github.com/runwayml/stable-diffusion/blob/main/LICENSE"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-to-image"
 model_display_name: "stable-diffusion-v1-5-img2img"
 layout: "model"

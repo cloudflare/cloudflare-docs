@@ -15,6 +15,8 @@ model:
       value: "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
     - property_id: "info"
       value: "https://huggingface.co/defog/sqlcoder-7b-2"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "sqlcoder-7b-2"
 layout: "model"

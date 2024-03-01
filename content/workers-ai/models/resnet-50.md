@@ -16,6 +16,8 @@ model:
       value: "https://www.microsoft.com/en-us/research/blog/microsoft-vision-model-resnet-50-combines-web-scale-data-and-multi-task-learning-to-achieve-state-of-the-art/"
     - property_id: "constellation_config"
       value: "max_requests_per_min:\n  default: 180\n  accounts:\n    32118455: 2160 # ai.cloudflare.com staging\n    50147400: 2160 # ai.cloudflare.com\n\nneurons:\n  cost_per_infer: 0.2280555556\nmax_concurrent_requests: 100"
+    - property_id: "beta"
+      value: "false"
 task_type: "image-classification"
 model_display_name: "resnet-50"
 layout: "model"

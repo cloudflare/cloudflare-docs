@@ -13,6 +13,8 @@ model:
   properties:
     - property_id: "info"
       value: "https://huggingface.co/ByteDance/SDXL-Lightning"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-to-image"
 model_display_name: "stable-diffusion-xl-lightning"
 layout: "model"

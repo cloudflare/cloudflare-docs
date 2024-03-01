@@ -16,6 +16,8 @@ model:
       value: "https://mistral.ai/news/announcing-mistral-7b/"
     - property_id: "constellation_config"
       value: "max_concurrent_requests: 10"
+    - property_id: "beta"
+      value: "false"
 task_type: "text-generation"
 model_display_name: "mistral-7b-instruct-v0.1"
 layout: "model"

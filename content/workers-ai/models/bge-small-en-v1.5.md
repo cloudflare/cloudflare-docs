@@ -20,6 +20,8 @@ model:
       value: "384"
     - property_id: "constellation_config"
       value: "infer_response_cache: in_memory\n\nmax_requests_per_min:\n  default: 180\n\nneurons:\n  metrics:\n    - name: input_tokens\n      neuron_cost: 0.001840833333\nmax_concurrent_requests: 100"
+    - property_id: "beta"
+      value: "false"
 task_type: "text-embeddings"
 model_display_name: "bge-small-en-v1.5"
 layout: "model"

@@ -13,6 +13,8 @@ model:
   properties:
     - property_id: "info"
       value: "https://huggingface.co/qwen/qwen1.5-7b-chat-awq"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "qwen1.5-7b-chat-awq"
 layout: "model"

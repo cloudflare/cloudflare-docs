@@ -14,6 +14,8 @@ model:
   properties:
     - property_id: "terms"
       value: "https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "deepseek-coder-6.7b-base-awq"
 layout: "model"

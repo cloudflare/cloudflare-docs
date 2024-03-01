@@ -14,6 +14,8 @@ model:
   properties:
     - property_id: "info"
       value: "https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "zephyr-7b-beta-awq"
 layout: "model"

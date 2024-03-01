@@ -11,7 +11,9 @@ model:
   tags:
     - "huggingface"
     - "text-generation"
-  properties: []
+  properties:
+    - property_id: "beta"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "neural-chat-7b-v3-1-awq"
 layout: "model"

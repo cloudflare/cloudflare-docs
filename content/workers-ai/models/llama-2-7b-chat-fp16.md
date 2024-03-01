@@ -22,6 +22,8 @@ model:
       value: "2500"
     - property_id: "constellation_config"
       value: "infer_response_cache: in_memory\n\nmax_requests_per_min:\n  default: 5\n  accounts:\n    32118455: 60 # ai.cloudflare.com staging\n    50147400: 60 # ai.cloudflare.com\n\nneurons:\n  metrics:\n    - name: input_tokens\n      neuron_cost: 0.3672\n    - name: output_tokens\n      neuron_cost: 0.3672\nmax_concurrent_requests: 1"
+    - property_id: "beta"
+      value: "false"
 task_type: "text-generation"
 model_display_name: "llama-2-7b-chat-fp16"
 layout: "model"
