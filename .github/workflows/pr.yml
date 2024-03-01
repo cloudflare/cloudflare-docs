@@ -24,7 +24,7 @@ jobs:
           path: .github/CODEOWNERS
 
       - name: Output
-        run: echo ${{ steps.codeowners.outputs.codeowners }}
+        run: echo ${{ steps.codeowners.outputs.filematches }}
 
             
             
