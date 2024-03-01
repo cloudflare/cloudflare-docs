@@ -21,8 +21,6 @@ jobs:
       - name: Setup CODEOWNERS action
         id: codeowners
         uses: SvanBoxel/codeowners-action@2.1
-
-      - name: Run CODEOWNERS action
         run: echo ${{ steps.codeowners.outputs.codeowners }}
 
             
