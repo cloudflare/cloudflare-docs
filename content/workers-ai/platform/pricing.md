@@ -32,7 +32,7 @@ All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, 
 
 ## What are Neurons?
 
-Neurons are our way of measuring AI outputs across different models. To give you a sense of what you can accomplish with 10,000 Neurons, you can: generate 100-200 LLM responses, 500 translations, 500 seconds of speech-to-text audio, 10,000 text classifications, or 1,500 - 15,000 embeddings depending on which models you use. Our serverless platform allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
+Neurons are our way of measuring AI outputs across different models. To give you a sense of what you can accomplish with 10,000 Neurons, you can: generate 100-200 LLM responses, 500 translations, 500 seconds of speech-to-text audio, 10,000 text classifications, or 1,500 - 15,000 embeddings depending on which models you use. Our serverless model allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
 
 To estimate how many Neurons your requests will consume, use the [pricing calculator](https://ai.cloudflare.com/#pricing-calculator).
 
@@ -42,24 +42,24 @@ To estimate how many Neurons your requests will consume, use the [pricing calcul
 
 Beginning April 1, 2024, Cloudflare will begin charging $0.011/1,000 Neurons for all usage exceeding 10,000 Neurons per day for the following models:
 
-- bge-small-en-v1.5
-- bge-base-en-v1.5
-- bge-large-en-v1.5
-- distilbert-sst-2-int8
-- llama-2-7b-chat-int8
-- llama-2-7b-chat-fp16
-- mistral-7b-instruct
-- m2m100-1.2b
-- resnet-50
-- whisper
+- [bge-small-en-v1.5](/workers-ai/models/bge-small-en-v1.5/)
+- [bge-base-en-v1.5](/workers-ai/models/bge-base-en-v1.5/)
+- [bge-large-en-v1.5](/workers-ai/models/bge-large-en-v1.5/)
+- [distilbert-sst-2-int8](/workers-ai/models/distilbert-sst-2-int8/)
+- [llama-2-7b-chat-int8](/workers-ai/models/llama-2-7b-chat-int8/)
+- [llama-2-7b-chat-fp16](/workers-ai/models/llama-2-7b-chat-fp16/)
+- [mistral-7b-instruct-v0.1](/workers-ai/models/mistral-7b-instruct-v0.1/)
+- [m2m100-1.2b](/workers-ai/models/m2m100-1.2b/)
+- [resnet-50](/workers-ai/models/resnet-50/)
+- [whisper](/workers-ai/models/whisper/)
 
 Cloudflare will continue to add Neuron calculations for the other models in the catalog and graduate them out of beta in the future.
 
 ## Pricing comparison
 
-To give you an idea of how pricing compares to other providers, take a look at the tables below.
+Cloudflare uses Neurons to measure and bill for inference on Workers AI. This may differ from the input-based pricing you might see from other providers. We’ve prepared the below tables to help you understand and evaluate the estimated cost of Neurons and usage on Workers AI compared with the inputs used for the models available in our catalog. 
 
-Note that Cloudflare only charges in Neurons, the pricing below is **only meant for comparison purposes**.
+**Please note that the below is provided for informational purposes only.** All conversions are based on Cloudflare’s public fees as of March 1, 2024, and do not include taxes and any other fees.
 
 ### Automatic Speech Recognition
 
@@ -119,4 +119,4 @@ All users receive free allocation of 10k Neurons a day (totaling to 300k Neurons
 
 If a user uses 50k Neurons per day, every day of the month, the Workers AI usage charge will be $13.20.
 
-_(50k Neurons - 10k included daily Neurons) _ 30 days _ $0.011 / 1k Neurons_
+`(50k Neurons - 10k included daily Neurons) * 30 days * $0.011 / 1k Neurons = $13.20`
