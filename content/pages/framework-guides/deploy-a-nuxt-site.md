@@ -108,6 +108,12 @@ In order to access bindings in a deployed application, you will need to [configu
 
 ### Add bindings to TypeScript projects
 
+{{<Aside type="note">}}
+
+Projects created with C3 have a default `env.d.ts` file.
+
+{{</Aside>}}
+
 To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
 
 The following is an example of adding a `KVNamespace` binding:
