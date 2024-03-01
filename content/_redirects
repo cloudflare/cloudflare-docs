@@ -1265,6 +1265,9 @@
 /workers-ai/models/translation/  /workers-ai/models/#translation 301
 /workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
 /workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
+/workers-ai/models/codellama-7b-instruct-awq/ /workers-ai/models/ 301
+/workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
+
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301

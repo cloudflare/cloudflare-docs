@@ -22,9 +22,12 @@ model:
       value: "1800"
     - property_id: "constellation_config"
       value: "infer_response_cache: in_memory\n\nmax_requests_per_min:\n  default: 5\n  accounts:\n    32118455: 60 # ai.cloudflare.com staging\n    50147400: 60 # ai.cloudflare.com\n    48546443: 1000 # workers ai\n    56599770: 1000 # talkmap\n\nneurons:\n  metrics:\n    - name: input_tokens\n      neuron_cost: 0.1836\n    - name: output_tokens\n      neuron_cost: 0.1836\nmax_concurrent_requests: 4"
+    - property_id: "beta"
+      value: "false"
 task_type: "text-generation"
 model_display_name: "llama-2-7b-chat-int8"
 layout: "model"
+weight: 100
 title: "llama-2-7b-chat-int8"
 json_schema:
   input: "{\n  \"type\": \"object\",\n  \"oneOf\": [\n    {\n      \"properties\": {\n        \"prompt\": {\n          \"type\": \"string\",\n          \"maxLength\": 4096\n        },\n        \"raw\": {\n          \"type\": \"boolean\",\n          \"default\": false\n        },\n        \"stream\": {\n          \"type\": \"boolean\",\n          \"default\": false\n        },\n        \"max_tokens\": {\n          \"type\": \"integer\",\n          \"default\": 256\n        }\n      },\n      \"required\": [\n        \"prompt\"\n      ]\n    },\n    {\n      \"properties\": {\n        \"messages\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"role\": {\n                \"type\": \"string\"\n              },\n              \"content\": {\n                \"type\": \"string\",\n                \"maxLength\": 4096\n              }\n            },\n            \"required\": [\n              \"role\",\n              \"content\"\n            ]\n          }\n        },\n        \"stream\": {\n          \"type\": \"boolean\",\n          \"default\": false\n        },\n        \"max_tokens\": {\n          \"type\": \"integer\",\n          \"default\": 256\n        }\n      },\n      \"required\": [\n        \"messages\"\n      ]\n    }\n  ]\n}"

@@ -14,9 +14,12 @@ model:
   properties:
     - property_id: "info"
       value: "https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static"
+    - property_id: "beta"
+      value: "false"
 task_type: "text-classification"
 model_display_name: "distilbert-sst-2-int8"
 layout: "model"
+weight: 100
 title: "distilbert-sst-2-int8"
 json_schema:
   input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"text\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
