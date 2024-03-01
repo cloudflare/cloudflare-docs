@@ -15,8 +15,9 @@ jobs:
     name: CODEOWNERS action
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - id: changed-files
+        uses: tj-actions/changed-files@v29.0.3
 
       - id: codeowners
         uses: SvanBoxel/codeowners-action@2.1
