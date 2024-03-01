@@ -18,9 +18,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup CODEOWNERS action
-        id: codeowners
+      - id: codeowners
         uses: SvanBoxel/codeowners-action@2.1
+        with: 
+          file_match_info: 'true'
+
+      - name: Output
         run: echo ${{ steps.codeowners.outputs.codeowners }}
 
             
