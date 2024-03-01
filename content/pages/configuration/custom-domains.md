@@ -112,7 +112,7 @@ Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certifi
 
 ### Change DNS entry away from Pages and then back again
 
-Once a custom domain is set up, if you change the DNS entry to point to something else (for example, your origin) the custom domain will then become inactive. If you then change that DNS entry to point back at your custom domain, anybody using that DNS entry to visit your website will get errors until it becomes active again. If you want to redirect traffic away from your Pages project temporarily instead of changing the DNS entry, it would be better to use an [Origin rule](/rules/origin-rules/) or a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) instead.
+Once a custom domain is set up, if you change the DNS entry to point to something else (for example, your origin), the custom domain will become inactive. If you then change that DNS entry to point back at your custom domain, anybody using that DNS entry to visit your website will get errors until it becomes active again. If you want to redirect traffic away from your Pages project temporarily instead of changing the DNS entry, it would be better to use an [Origin rule](/rules/origin-rules/) or a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) instead.
 
 ## Relevant resources
 
