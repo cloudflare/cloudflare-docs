@@ -4,6 +4,7 @@ title: Routed subnets
 ---
 
 # Routed Subnets
+
 Each LAN interface (physical port + VLAN tag) is part of a directly-attached subnet. When you specify a static address for the LAN interface, you indicate both the interface’s address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has address `192.168.100.13` and is part of the subnet `192.168.100.0/24`.
 
 Some LAN networks are more complex; in addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the Magic WAN Connector. We call these routed subnets.
@@ -60,3 +61,4 @@ In the dash, enable NAT for a subnet by populating its Static NAT Prefix field.
 
 {{<Aside type="note">}}
 Even if NAT is enabled, a subnet’s local prefix must be unique within its LAN. It can be reused on other LANs or other sites. Overlay-facing prefixes — that is, a subnet’s NAT prefix if NAT is enabled and its local prefix otherwise — must always be unique across your whole Magic WAN.
+{{</Aside>}}
