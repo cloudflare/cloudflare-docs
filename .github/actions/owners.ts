@@ -102,5 +102,5 @@ export const REVIEWERS: Record<string, string[]> = {
   turnstile: ["migueldemoura", "punkeel", "worenga"],
   vectorize: ["elithrar", "pdwittig"],
   "waiting-room": ["aolache"],
-  "workers-ai": ["irvinebroque", "pdwittig"]
+  "workers-ai": ["irvinebroque", "pdwittig"],
 };
