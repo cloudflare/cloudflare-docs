@@ -1,20 +1,28 @@
-name: PR Opened
+name: Codeowner Assignment
 
-# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
-on: 
-  pull_request_target:
-    types: [opened, reopened]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches:
+      - production
 
 jobs:
-  compile:
-    name: Assign PCX
+  assign-users:
+
     runs-on: ubuntu-latest
+
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/assign-pr
+
+      - name: CodeOwnersParser
+        id: CodeOwnersParser
+        uses: Gamer025/CodeOwnersParser@v1
+          
+      #Assign users
+      - name: Assign users
+        if: steps.CodeOwnersParser.outputs.owners != ''
+        uses: Gamer025/AssignUser@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          separator: ' '
+          users: ${{ steps.CodeOwnersParser.outputs.owners }}
