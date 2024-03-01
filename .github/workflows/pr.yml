@@ -10,16 +10,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install Git
-        run: sudo apt-get install git -y
-
-      - name: Determine Changed Files
-        id: changed_files
+      - name: Get Changed Files from Pull Request
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/merge
-          git diff --name-only HEAD...origin/pull/${{ github.event.pull_request.number }}/merge > changed_files.txt
+          # get file names and structure as JSON
+          files=$(gh api /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files -q '.[] | select(.status != "removed") | .filename | select(test("(.yaml|yml|md)$"))')
+          filesArray="[$(echo "$files" | sed -e 's/^/"/' -e 's/$/"/' -e 's/ /", "/g' | tr '\n' , | sed 's/,$//')]"
+          echo "CHANGED_FILES=$filesArray" >> "$GITHUB_ENV"
+
+      - name: Output Changed Files
+        run: echo ${{ env.CHANGED_FILES }}
 
       - name: Get Codeowners
         id: codeowners
@@ -29,7 +33,7 @@ jobs:
         id: associated_users
         run: |
           codeowners=$(echo "${{ steps.codeowners.outputs.codeowners }}")
-          changed_files=$(cat changed_files.txt)
+          changed_files=$(echo "${{ env.CHANGED_FILES }}" | jq -r '.[]')
           users=""
           for file in $changed_files; do
             users+="$(grep -F "$file" <<< "$codeowners" | cut -d ' ' -f 2- | tr '\n' ' ')"
