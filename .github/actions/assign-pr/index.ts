@@ -77,8 +77,7 @@ function parse(filename: string): string | void {
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
     const payload = github.context.payload;
-    console.log("event payload:", JSON.stringify(payload, null, 2));
-
+    
     const { repository, pull_request } = payload;
     if (!pull_request) throw new Error('Missing "pull_request" object!');
 
