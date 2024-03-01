@@ -152,11 +152,11 @@ example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignht
 
 ### Zone holds
 
-A [zone hold](/fundamentals/account-and-billing/account-security/zone-holds/) will prevent Pages from adding a custom domain for a hostname under a zone hold.
+A [zone hold](/fundamentals/setup/account/account-security/zone-holds/) will prevent Pages from adding a custom domain for a hostname under a zone hold.
 
-To add a Custom Domain for a hostname with a zone hold, temporarily [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the custom domain setup process.
+To add a custom domain for a hostname with a zone hold, temporarily [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) during the custom domain setup process.
 
-Once the custom domain has been successfully completed, you may [reinstate the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#enable-zone-holds).
+Once the custom domain has been successfully completed, you may [reinstate the zone hold](/fundamentals/setup/account/account-security/zone-holds/#enable-zone-holds).
 
 {{<Aside type="warning" header="Still having issues">}}
 
