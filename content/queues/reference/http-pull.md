@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Pull consumers
-weight: 10
+weight: 15
 meta:
   title: Cloudflare Queues - Pull consumers
 ---
@@ -12,7 +12,12 @@ A pull-based consumer allows you to pull from a queue over HTTP from any environ
 
 ## Push or pull?
 
-TODO - which one?
+Deciding whether to configure a push-based consumer or a pull-based consumer will intend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
+
+As a general rule-of-thumb, starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. You 
+
+
+Note that you can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
 
 # Configuration
 

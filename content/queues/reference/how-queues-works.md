@@ -134,7 +134,7 @@ To remove a queue from your project, run `wrangler queues consumer remove <queue
 
 ### Pull consumers
 
-A queue can have a HTTP-based consumer that pulls from the queue. This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumers](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer.
+A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker. This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumers](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer.
 
 ## Messages
 
