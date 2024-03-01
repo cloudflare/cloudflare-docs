@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: API
 weight: 2
 meta:
-  description: An experimental API to programmatically manage your Cloudflare Workers.
+  description: A set of programmatic APIs that can be integrated with local Cloudflare Workers-related workflows.
 ---
 
 # Wrangler API
@@ -23,10 +23,9 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 {{<Aside type="note">}}
 
-The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future.
+The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future.
 
-`unstable_dev()` no known bugs at the moment and is safe to use. If you discover any bugs, open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-
+`unstable_dev()` has no known bugs and is safe to use. If you discover any bugs, open a [GitHub issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</Aside>}}
 

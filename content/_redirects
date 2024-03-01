@@ -345,7 +345,8 @@
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
-/fundamentals/internet/ /fundamentals/reference/the-internet/ 301
+/fundamentals/internet/ /fundamentals/concepts/the-internet/ 301
+/fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
@@ -485,6 +486,7 @@
 /fundamentals/setup/account-setup/verify-email-address/ /fundamentals/setup/account/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
+/fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -1247,17 +1249,22 @@
 /workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 /workers/learning/security-model/ /workers/reference/security-model/ 301
 /workers/runtime-apis/R2/ /workers/runtime-apis/bindings/R2/ 301
-/workers/runtime-apis/durable-objects/ /workers/runtime-apis/bindings/durable-objects/ 301
-/workers/runtime-apis/kv/ /workers/runtime-apis/bindings/kv/ 301
-/workers/runtime-apis/mTLS/ /workers/runtime-apis/bindings/mTLS/ 301
+/workers/runtime-apis/durable-objects/ /durable-objects/api/ 301
+/workers/runtime-apis/kv/ /kv/api/ 301
+/workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/ 301
 /workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 
 # workers ai
-/workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
-/workers-ai/models/speech-to-text/ /workers-ai/models/speech-recognition/ 301
-/workers-ai/models/sentiment-analysis/ /workers-ai/models/text-classification/ 301
-/workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
+/workers-ai/models/llm/ /workers-ai/models/#text-generation 301
+/workers-ai/models/speech-to-text/ /workers-ai/models/#automatic-speech-recognition 301
+/workers-ai/models/sentiment-analysis/ /workers-ai/models/#text-classification 301
+/workers-ai/models/embedding/ /workers-ai/models/#text-embeddings 301
+/workers-ai/models/text-embeddings/ /workers-ai/models/#text-embeddings 301
+/workers-ai/models/speech-recognition/ /workers-ai/models/#automatic-speech-recognition 301
+/workers-ai/models/translation/  /workers-ai/models/#translation 301
+/workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
+/workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
