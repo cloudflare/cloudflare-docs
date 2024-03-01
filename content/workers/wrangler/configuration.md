@@ -749,6 +749,33 @@ binding = "<BINDING_NAME>"
 index_name = "<INDEX_NAME>"
 ```
 
+### Hyperdrive
+
+[Hyperdrive](/hyperdrive/) bindings allow you to interact with and query any Postgres database from within a Worker.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name.
+
+- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the Hyperdrive configuration.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+
+node_compat = true # required for database drivers to function
+
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "a76a99bc342644deb02c38d66082262a" # the ID associated with the Hyperdrive you just created
+```
+
 ### Service bindings
 
 A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
