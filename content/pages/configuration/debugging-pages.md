@@ -150,6 +150,14 @@ example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
 example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```
 
+### Zone holds
+
+A [zone hold](/fundamentals/account-and-billing/account-security/zone-holds/) will prevent Pages from adding a custom domain for a hostname under a zone hold.
+
+To add a Custom Domain for a hostname with a zone hold, temporarily [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the custom domain setup process.
+
+Once the custom domain has been successfully completed, you may [reinstate the zone hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#enable-zone-holds).
+
 {{<Aside type="warning" header="Still having issues">}}
 
 If you have done the steps above and your domain is still verifying after 15 minutes, join our [Discord](https://discord.cloudflare.com) for support or contact our support team through the [Support Portal](https://dash.cloudflare.com/?to=/:account/support).
