@@ -144,7 +144,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's `wrangler.toml` will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies. 
 
-Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must  be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
+Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
 
 
 ## Non-inheritable keys

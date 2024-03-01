@@ -12,8 +12,8 @@ meta:
 
 All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024. 
 
-- To learn what this means for Workers pricing head [here](/workers/platform/pricing/). 
-- To learn about how this impacts Worker limits head [here](/workers/platform/limits/). 
+- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/). 
+- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/). 
 
 
 {{</Aside>}}
@@ -32,7 +32,7 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 
 ## Workers
 
-Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of CPU time your Worker can use per invocation. 
+Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation. 
 
 Users on the Workers Paid plan only have access to the Standard usage model. 
 
@@ -67,7 +67,7 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
-If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, we've automatically added a 50ms CPU limit on your Worker. 
+If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker. 
 
 {{</Aside>}}
 

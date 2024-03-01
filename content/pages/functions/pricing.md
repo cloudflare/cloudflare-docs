@@ -12,11 +12,11 @@ Requests to your Functions are billed as Cloudflare Workers requests. Workers pl
 
 Requests to your Pages functions count towards your quota for Workers Paid plans, including requests from your Function to KV or Durable Object bindings.
 
-Pages supports the [Standard Usage Model](workers/platform/pricing/#example-pricing-standard-usage-model).
+Pages supports the [Standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model).
 
 {{<Aside type="note">}}
 
-Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to [change usage models](/workers/platform/pricing/#how-to-switch-the-usage-model).
+Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your Customer Success Manager (CSM). Some Workers Enterprise customers maintain the ability to [change usage models](/workers/platform/pricing/#how-to-switch-the-usage-model).
 
 {{</Aside>}}
 
