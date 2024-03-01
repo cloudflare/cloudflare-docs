@@ -17,7 +17,7 @@ These examples exclude the costs for the Workers calling the Durable Objects. Wh
 * Inactive objects receiving no requests do not incur any duration charges.
 * The [WebSocket Hibernation API](/durable-objects/reference/websockets/#websocket-hibernation) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occassionally at sparse intervals.
 
-### Example 1
+### Example: Starter app
 
 This example represents a simple Durable Object used as a co-ordination service invoked via HTTP.
 
@@ -35,7 +35,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 **Estimated total**: ~$0.075 (requests) + $0.00 (compute duration) + minimum $5/mo usage = $5.08 per month
 
-### Example 2
+### Example: Small-scale real-time app
 
 This example represents a moderately trafficked Durable Objects based application using WebSockets to broadcast game, chat or real-time user state across connected clients:
 
@@ -56,28 +56,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 **Estimated total**: $10.65 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $148.89 per month.
 
-### Example 3
-
-This example represents a horizontally scaled Durable Objects based application using WebSockets to communicate user-specific state to a single client connected to each Durable Object.
-
-* 100 Durable Objects each have a single WebSocket connection established to each of them.
-* Clients sent one message every second of the month so that the Durable Objects were active for the entire month.
-
-In this scenario, the estimated monthly cost would be calculated as:
-
-**Requests**:
-- 100 requests to establish the WebSockets.
-- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
-- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
-
-**Compute Duration**:
-- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
-- 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
-- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
-
-**Estimated total**: $38.73 (requests) + $409.72 (compute duration) = $453.45 per month
-
-### Example 4
+### Example: Medium-scale real-time app
 
 This example represents a moderately trafficked Durable Objects based application using WebSocket Hibernation to broadcast game, chat or real-time user state across connected clients:
 
@@ -101,6 +80,27 @@ In this scenario, the estimated monthly cost would be calculated as:
 <sup>1</sup> 100 messages per minute comes from the fact that 100 clients connect to each DO, and each sends 1 message per minute.
 
 <sup>2</sup> The example uses 1 second because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10 ms to execute (4,320,000 seconds).
+
+### Example 4: Large-scale real-time app
+
+This example represents a horizontally scaled Durable Objects based application using WebSockets to communicate user-specific state to a single client connected to each Durable Object.
+
+* 100 Durable Objects each have a single WebSocket connection established to each of them.
+* Clients sent one message every second of the month so that the Durable Objects were active for the entire month.
+
+In this scenario, the estimated monthly cost would be calculated as:
+
+**Requests**:
+- 100 requests to establish the WebSockets.
+- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
+- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
+
+**Compute Duration**:
+- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
+- 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
+- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
+
+**Estimated total**: $38.73 (requests) + $409.72 (compute duration) = $453.45 per month
 
 ## Transactional Storage API billing
 
