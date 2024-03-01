@@ -1,31 +1,40 @@
-name: PR Opened
+name: Determine Codeowners for Changed Files
 
-# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 on:
   pull_request:
-    branches:
-      - production
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+    types: [opened, synchronize]
 
 jobs:
-  assign:
-    name: CODEOWNERS action
+  determine-codeowners:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - id: codeowners
-        uses: SvanBoxel/codeowners-action@2.1
-        with: 
-          file_match_info: 'true'
-          path: .github/CODEOWNERS
+      - name: Install Git
+        run: sudo apt-get install git -y
 
-      - name: Output
-        run: echo ${{ steps.codeowners.outputs.filematches }}
+      - name: Determine Changed Files
+        id: changed_files
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/merge
+          git diff --name-only HEAD...origin/pull/${{ github.event.pull_request.number }}/merge > changed_files.txt
 
-            
-            
+      - name: Get Codeowners
+        id: codeowners
+        run: echo "::set-output name=codeowners::$(cat .github/CODEOWNERS)"
+
+      - name: Determine Associated Users
+        id: associated_users
+        run: |
+          codeowners=$(echo "${{ steps.codeowners.outputs.codeowners }}")
+          changed_files=$(cat changed_files.txt)
+          users=""
+          for file in $changed_files; do
+            users+="$(grep -F "$file" <<< "$codeowners" | cut -d ' ' -f 2- | tr '\n' ' ')"
+          done
+          echo "::set-output name=users::$users"
+
+      - name: Output Associated Users
+        run: echo "Associated Users: ${{ steps.associated_users.outputs.users }}"
