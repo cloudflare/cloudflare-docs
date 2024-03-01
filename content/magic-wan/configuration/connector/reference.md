@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Reference
-weight: 8
+weight: 9
 ---
 
 # Magic WAN Connector device information

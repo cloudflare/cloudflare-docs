@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Device metrics
+weight: 8
 ---
 
 # Device metrics
