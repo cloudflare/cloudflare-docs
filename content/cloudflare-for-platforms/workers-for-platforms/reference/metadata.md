@@ -94,9 +94,3 @@ At a minimum, the `main_module` key is required to publish a user Worker.
 ## Bindings
 
 Analogue to regular Workers, user Workers can also interact with other Cloudflare resources using Bindings. Refer to [metadata.json example](#sample-metadatajson) and the [Wrangler configuration documentation](/workers/wrangler/configuration/#bindings) for more information.
-
-
-
-
-
-
