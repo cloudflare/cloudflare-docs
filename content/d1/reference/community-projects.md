@@ -16,6 +16,13 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 
 ## Projects
 
+### D1 Manager
+
+D1 Manager is a web UI and API tool for Cloudflare D1, featuring a user-friendly interface for database management that can be deployed on [Cloudflare Pages](https://developers.cloudflare.com/pages/). It supports SQL and semantic queries, data editing, and internationalization. A key feature of D1 Manager is its ability to run semantic queries using the [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) or the OpenAI API, enabling natural language querying.
+
+* [GitHub](https://github.com/JacobLinCool/d1-manager)
+* [Example](https://d1-manager.pages.dev/)
+
 ### Backup/export tools
 
 Two community tools are available for creating backups/exports of D1 databases as `.sql` files. D1 exports can be restored using Wrangler.
