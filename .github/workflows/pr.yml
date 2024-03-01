@@ -11,11 +11,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  compile:
-    name: Assign PCX
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/assign-pr
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  assign:
+    id: codeowners
+    name: CODEOWNERS action
+    uses: SvanBoxel/codeowners-action@2.1
+  - run: |
+      echo ${{ steps.codeowners.outputs.codeowners }};
+            
+            
