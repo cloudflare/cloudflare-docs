@@ -21,7 +21,6 @@ jobs:
       - id: codeowners
         uses: SvanBoxel/codeowners-action@2.1
         with: 
-          file_match_info: 'true'
           path: .github/CODEOWNERS
 
       - name: Output
