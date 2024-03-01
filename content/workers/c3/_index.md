@@ -1,11 +1,12 @@
 ---
+title: C3
 pcx_content_type: navigation
-title: Reference
-weight: 13
+layout: wide
+weight: 11
 ---
 
-# Reference
+# C3
 
-Conceptual knowledge about how Workers works.
+Review the C3 documentation.
 
 {{<directory-listing showDescriptions="true">}}

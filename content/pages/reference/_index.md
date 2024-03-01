@@ -6,6 +6,6 @@ weight: 13
 
 # Reference
 
-Conceptual knowledge about how Workers works.
+Conceptual knowledge about how `<product>` works.
 
 {{<directory-listing showDescriptions="true">}}
