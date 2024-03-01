@@ -21,14 +21,14 @@ By default, all queues have concurrency enabled. Queue consumers will automatica
 The number of consumers concurrently invoked for a queue will autoscale based on several factors, including:
 
 * The number of messages in the queue (backlog) and its rate of growth.
-* The ratio of failed (versus successful) invocations.
+* The ratio of failed (versus successful) invocations. A failed invocation is when your `queue()` handler returns an uncaught exception instead of `void` (nothing).
 * The value of `max_concurrency` set for that consumer.
 
 Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
 
-{{<Aside type="warning" header="Consumer concurrency and retried messages">}}
+{{<Aside type="note" header="Consumer concurrency and retried messages">}}
 
-Retrying messages with `retry()` or calling `retryAll()` on a batch will count as a failed invocation and cause the consumer to cease any increase in autoscaling. Continued `retry()` / `retryAll()` invocations will cause the consumers autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+[Retrying messages with `retry()`](/queues/reference/batching-retries/#retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
 
 {{</Aside>}}
 
