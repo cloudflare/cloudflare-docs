@@ -11,14 +11,16 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 
 {{<table-wrap>}}
 
-|          | Paid plan                                         |
-| -------- | ------------------------------------------------- |
-| Requests<sup>1</sup> | 1 million, + $0.15/million                        |
-| Duration<sup>2</sup> | 400,000 GB-s, + $12.50/million GB-s<sup>3,4</sup> |
+|                                               | Paid plan                                         |
+| --------------------------------------------- | ------------------------------------------------- |
+| HTTP Requests<sup>1</sup>                     | 1 million, + $0.15/million                        |
+| Incoming WebSocket messages and RPC method calls | 1 million, + $0.15/million                        |
+| Alarm invocations                             | 1 million, + $0.15/million                        |
+| Duration<sup>2</sup>                          | 400,000 GB-s, + $12.50/million GB-s<sup>3,4</sup> |
 
 {{</table-wrap>}}
 
-<sup>1</sup> Requests include all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
+<sup>1</sup> Requests include all incoming HTTP requests, WebSocket messages, RPC method calls and alarm invocations. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2).
 
 <sup>2</sup> Application-level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/websockets/) will not incur additional wall-clock time, and will not be charged.
 
