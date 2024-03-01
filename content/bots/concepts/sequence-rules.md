@@ -15,15 +15,6 @@ Sequence rules is currently in private beta. If you would like to be included in
 - Each zone must have an API Shield subscription as it relies on [Endpoint Management](/api-shield/management-and-monitoring/).
 - Each zone must configure the endpoints to track via Endpoint Management.
 
-## Availability
-
-These sequence fields are available in:
-
-- [Custom Rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
-- [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
-- [Bulk Redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
-- [HTTP Request Header Modification Rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)
-
 ---
 
 ## Enable sequence cookies via the API
@@ -48,7 +39,7 @@ curl --request PUT \
   --data '{"enabled": true}'
 ```
 
-5. Use the expression editor to write sequence or timing based rules. You can put these rules in log only mode to monitor.
+5. Use the expression editor to write sequence or timing based rules via [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), or [transform rules](/rules/transform/). You can put these rules in log only mode to monitor.
 
 {{<Aside type="note">}}
 When you enable sequence cookies, Cloudflare will start setting cookies for all requests that match your endpoints. 
@@ -63,6 +54,15 @@ Once you have enabled sequence cookies, the rules fields will be populated and y
 Sequence rules introduces three new fields to Cloudflare Rules. All of these fields reference operations by their short ID. Accounts that have the Fraud Detection subscription can refer to the short ID by viewing the endpoint details via **API Shield** > **Endpoint Management** in the Cloudflare dashboard. Accounts without Fraud Detection do not have access to this field.
 
 Cloudflare only stores up to the 10 most recent operations in a sequence for up to one hour. If there are more than 10 operations in the sequence, older operations will be dropped and will not be included in the following fields. Similarly, if an operation happened more than one hour ago, it will also not be included in the following fields.
+
+## Availability
+
+These sequence fields are available in:
+
+- [Custom rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
+- [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
+- [Bulk redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
+- [HTTP request header modification rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)
 
 <table>
   <thead>
