@@ -8,7 +8,7 @@ weight: 3
 
 {{<Aside type="note">}}
 
-Workers AI will begin charging for usage on non-beta models on April 1st, 2024. 
+Workers AI will begin billing for usage on non-beta models after April 1st, 2024. 
 
 {{</Aside>}}
 
@@ -18,7 +18,7 @@ Our free allocation allows anyone to use a total of **10K Neurons per day at no 
 
 If you’d like to use more than 10K Neurons per day for non-beta models, you will need to sign up for the $5 Workers Paid plan. On Workers Paid, you will be charged at $0.011 / 1K Neurons for any usage above the free allocation of 10K neurons per day for the non-beta models. 
 
-You can monitor your Neuron usage in the [Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, you can use our [pricing calculator](ai.cloudflare.com).
+You can monitor your Neuron usage in the [Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, you can use our [pricing calculator](ai.cloudflare.com/#pricing-calculator).
 
 {{<table-wrap>}}
 
@@ -56,32 +56,32 @@ We will continue to add Neuron calculations for the other models in the catalog 
 ## Pricing Comparison
 To give you an idea of how pricing compares to other providers, take a look at the tables below.
 
-Note that we only charge in Neurons, this token pricing is only meant to be **for comparison purposes only**.
+Note that we only charge in Neurons, the pricing below is **only meant for comparison purposes**.
 
 ### Automatic Speech Recognition
 {{<table-wrap>}}
 | Model   | Price per <br> minute of audio |
-| -----   | -----   |
-| whisper | $0.0022 |
+| ------- | ------------------------- |
+| whisper | $0.0022                   |
 {{</table-wrap>}}
 
 ### Image Classification
 {{<table-wrap>}}
 | Model     | Price per image |
-| -----| ----- |
+| --------- | --------------- |
 | Resnet-50 | $0.0000025      |
 {{</table-wrap>}}
 
 ### Text Classification
 {{<table-wrap>}}
-| Model| Price per 1M<br>input tokens |
-| -----| ---------|
+| Model                 | Price per 1M <br> input tokens |
+| --------------------- | ------------------------- |
 | distilbert-sst-2-int8 | $0.33                     |
 {{</table-wrap>}}
 
 ### Text Embeddings
 {{<table-wrap>}}
-| Model             | Price per 1M<br> input tokens |
+| Model             | Price per 1M <br> input tokens |
 | ----------------- | ------------------------- |
 | bge-small-en-v1.5 | $0.003                    |
 | bge-base-en-v1.5  | $0.014                    |
@@ -90,11 +90,11 @@ Note that we only charge in Neurons, this token pricing is only meant to be **fo
 
 ### Text Generation
 {{<table-wrap>}}
-| Model                | Price per 1M<br>input tokens | Price per 1M <br> output tokens |
-| ------------- | -------- | --------- |
-| llama-2-7b-chat-int8 | $0.28    | $1.72     |
-| llama-2-7b-chat-fp16 | $0.56    | $6.66     |
-| mistral-7b-instruct  | $0.28    | $3.33     |
+| Model                | Price per 1M <br> input tokens | Price per 1M <br> output tokens |
+| -------------------- | ------------------------------ | ------------------------------- |
+| llama-2-7b-chat-fp16 | $0.56                          | $6.66                           |
+| llama-2-7b-chat-int8 | $0.28                          | $1.72                           |
+| mistral-7b-instruct  | $0.28                          | $3.33                           |
 {{</table-wrap>}}
 
 ### Translation

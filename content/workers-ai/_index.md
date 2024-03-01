@@ -17,7 +17,7 @@ Run machine learning models, powered by serverless GPUs, on Cloudflare's global 
 
 {{<Aside type="note">}}
 
-Workers AI will begin charging for usage on non-beta models on April 1st, 2024. Read [pricing page](developers.cloudflare.com/workers-ai/platform/pricing) for more details.
+Workers AI will begin billing for usage on non-beta models after April 1st, 2024. Read [pricing page](/workers-ai/platform/pricing) for more details.
 
 {{</Aside>}}
 
