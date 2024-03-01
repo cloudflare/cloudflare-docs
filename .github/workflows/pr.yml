@@ -37,4 +37,5 @@ jobs:
           echo "::set-output name=users::$users"
 
       - name: Output Associated Users
-        run: echo "Associated Users: ${{ steps.associated_users.outputs.users }}"
+        run: |
+          echo "Associated Users: ${{ steps.associated_users.outputs.users }}"
