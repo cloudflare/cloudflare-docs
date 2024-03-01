@@ -108,6 +108,8 @@ function parse(filename: string): string | void {
       pull_number: prnumber,
     });
 
+    console.log(products)
+
     for (const slug of products) {
       let owners_list = OWNERS[slug];
 
