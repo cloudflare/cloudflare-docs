@@ -14,6 +14,8 @@ This tutorial will guide you through install and setup of the [`@cloudflare/vite
 
 - Open your Worker project's root folder or create a new project via our [Get Started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
 
+- In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
+
 ## Install Vitest and `@cloudflare/vitest-pool-workers`
 
 Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
