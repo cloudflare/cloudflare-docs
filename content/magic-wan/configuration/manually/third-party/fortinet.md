@@ -26,7 +26,7 @@ Before proceeding, ensure that you have the Anycast IPs associated with your acc
 Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router — one to each of the two Anycast IP addresses.
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to  to **Magic WAN** > **Configuration**.
+2. Go to **Magic WAN** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
 4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
     - **Customer Endpoint**: Enter your external/egress interface of the firewall.
@@ -35,7 +35,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
     - **Health check type**: _Reply_.
     - **Health check target**: _Custom_.
     - **Target address**: The target address for the first tunnel is always `172.64.240.253`.
-    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for more information.
+    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for more information.
 
     ![The first IPsec tunnel should have the values mentioned above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
 
@@ -89,7 +89,7 @@ end
 
 ### Disable anti-replay protection
 
-For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet’s documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
+For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet's documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
 
 
 ```txt
@@ -489,7 +489,7 @@ filters=[host 172.64.240.254]
 
 Flow debugging can be helpful when it comes to determining whether or not traffic is ingressing/egressing the firewall via the expected path. It takes steps much further than the sniffer packet captures in the previous section, but it creates a tremendous amount of logging and should only be enabled when absolutely necessary.
 
-Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application’s requirements.
+Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application's requirements.
 
 ```txt
 fortigate # diagnose debug disable

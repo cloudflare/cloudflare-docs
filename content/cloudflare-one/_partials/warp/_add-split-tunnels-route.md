@@ -9,11 +9,11 @@ _build:
 
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
 
-3. Under **Split Tunnels**, check whether your [Split Tunnels mode](#change-split-tunnels-mode) is set to **Exclude** or **Include**.
+3. Under **Split Tunnels**, check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude** or **Include**.
 
 4. Select **Manage**.
 
-5. You can exclude or include routes based on either their IP address or domain. When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](#domain-based-split-tunnels).
+5. You can exclude or include routes based on either their IP address or domain. When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
 
 {{<tabs labels="Add an IP | Add a domain">}}
 {{<tab label="add an ip" no-code="true">}}
@@ -32,7 +32,7 @@ Traffic to this IP address is now excluded or included from the WARP tunnel.
 To add a domain to Split Tunnels:
 
 1. Select _Domain_.
-2. Enter a [valid domain](#valid-domains) to exclude or include.
+2. Enter a [valid domain](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#valid-domains) to exclude or include.
 3. Select **Save destination**.
 4. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 

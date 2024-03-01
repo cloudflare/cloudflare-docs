@@ -19,6 +19,7 @@ export const OWNERS: Record<string, string[]> = {
   "browser-rendering": ["deadlypants1973"],
   byoip: ["patriciasantaana"],
   cache: ["angelampcosta"],
+  calls: ["dcpena"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["jason-cf"],
@@ -80,7 +81,7 @@ export const OWNERS: Record<string, string[]> = {
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
   "vectorize": ["Maddy-Cloudflare"],
-  "workers-ai": ["irvinebroque", "pdwittig"],
+  "workers-ai": ["irvinebroque", "pdwittig", "deadlypants1973"],
   zaraz: ["kodster28"],
 };
 
@@ -91,6 +92,7 @@ export const REVIEWERS: Record<string, string[]> = {
   "data-localization": ["soheiokamoto", "tlozoot"],
   "hyperdrive": ["elithrar", "a-robinson", "rts-rob"],
   radar: ["meddulla", "G4brym"],
+  "reference-architecture": ["securitypedant"],
   kv: ["CharlieBurnett", "elithrar", "rts-rob"],
   logs: ["jherre", "bharatnc", "victor-perov", "soheiokamoto", "tlozoot"],
   pages: ["WalshyDev"],

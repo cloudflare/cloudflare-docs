@@ -8,11 +8,26 @@ meta:
 
 # Install a certificate using the WARP client
 
-The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
+{{<details header="Feature availability">}}
 
-## Supported platforms
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| All modes| All plans  |
 
-This feature is available on Windows, macOS, and Linux using a client version of 2023.3.381 or higher. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2023.3.381.0         |
+| macOS    | ✅           | 2023.3.381.0         |
+| Linux    | ✅           | 2023.3.381.0         |
+| iOS      | ❌           |       |
+| Android  | ❌           |       |
+| ChromeOS | ❌           |       |
+
+{{</details>}}
+
+The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on Windows, macOS, and Linux devices enrolled in your Zero Trust organization. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
+
+The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), display custom block pages, and more.
 
 ## Install the certificate using WARP
 
@@ -48,10 +63,14 @@ The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` 
 1. Open **Keychain Access**.
 2. Go to **System** > **Certificates**.
 3. Double-click your certificate. (The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.)
-4. You should see **This certificate is marked as trusted for all users**. If the certificate is not trusted:
-    1. Select **Trust**.
-    2. Set **When using this certificate** to _Always Trust_.
-  
+4. You should see **This certificate is marked as trusted for all users**.
+
+{{<Aside type="note">}}
+Certain macOS versions (`13.5` for example) do not allow WARP to automatically trust the certificate. To manually trust the certificate:
+1. Select **Trust**.
+2. Set **When using this certificate** to _Always Trust_.
+{{</Aside>}}
+
 The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
 
 ### Linux

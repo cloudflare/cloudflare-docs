@@ -31,7 +31,9 @@ Cloudflare offers a variety of options for your application's edge certificates:
 - [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): {{<render file="_custom-certificates-definition.md">}}
 - [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): {{<render file="_keyless-ssl-definition.md">}}
 
-{{<Aside type="note" header="Note:">}}
+Refer to [Edge certificates](/ssl/edge-certificates/) for more information on how different certificate types can respond to common use cases.
+
+{{<Aside type="note" header="For SaaS providers">}}
 
 {{<render file="_ssl-for-saas-definition.md" productFolder="cloudflare-for-platforms" >}}
 

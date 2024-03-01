@@ -126,7 +126,7 @@ Specifically:
 
 ## 4. Set up Workers AI
 
-Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/text-embeddings/) built-in.
+Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
 From within the `embeddings-tutorial` directory, install the `Workers AI` package:
 
@@ -227,7 +227,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -252,7 +252,7 @@ With the URL for your deployed Worker (for example,`https://embeddings-tutorial.
 This should return the following JSON:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.896888444,"id":"1"}]}}
+{ "matches": { "count": 1, "matches": [{ "score": 0.896888444, "id": "1" }] } }
 ```
 
 Extend this example by:

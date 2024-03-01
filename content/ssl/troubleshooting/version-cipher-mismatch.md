@@ -9,7 +9,7 @@ meta:
 
 # ERR_SSL_VERSION_OR_CIPHER_MISMATCH
 
-After you [add a new domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
+After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
 - `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome)
 - `Unsupported protocol The client and server don’t support a common SSL protocol version or cipher suite` (Chrome)
 - `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox)

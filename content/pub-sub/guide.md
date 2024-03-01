@@ -25,7 +25,7 @@ Before you begin, you should be familiar with using the command line and running
 
 ## Prerequisite: Create a Cloudflare account
 
-In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/setup/account-setup/). If you already have an account, you can skip this step.
+In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/setup/account/). If you already have an account, you can skip this step.
 
 ## 1. Enable Pub/Sub
 

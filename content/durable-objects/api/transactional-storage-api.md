@@ -1,7 +1,7 @@
 ---
 title: Transactional Storage
 pcx_content_type: concept
-weight: 16
+weight: 2
 ---
 
 # Transactional Storage
@@ -107,6 +107,8 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     
     - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed` to `true` to opt out of the default behavior. 
 
+    - If you want to allow some outgoing network messages to proceed immediately but not others, you can use the allowUnconfirmed option to avoid blocking the messages that you want to proceed and then separately call the [`sync()`](/durable-objects/api/transactional-storage-api/#sync) method, which returns a promise that only resolves once all previous writes have successfully been persisted to disk.
+
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
     - If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. 
@@ -184,7 +186,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Synchronizes any pending writes to disk.
 
-  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+  - This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with [the `allowUnconfirmed` option](/durable-objects/api/transactional-storage-api/#supported-options-1)), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
 
 ### getAlarm
 
@@ -219,4 +221,4 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 ### Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
-- [Hibernatable WebSockets API](/durable-objects/api/websockets/).
+- [WebSockets API](/durable-objects/api/websockets/).

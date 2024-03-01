@@ -19,7 +19,7 @@ Service bindings allow you to:
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
-For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/service-bindings).
+For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/bindings/service-bindings).
 
 ![Service bindings are a zero-cost abstraction](/images/workers/platform/bindings/service-bindings-comparison.png)
 
@@ -40,8 +40,14 @@ To configure a Service binding in your `wrangler.toml`, use the following syntax
 
 ```toml
 services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", environment = "<ENVIRONMENT_NAME>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
+
+# or
+
+[[services]]
+binding = "<BINDING_NAME>"
+service = "<WORKER_NAME>"
 ```
 The `wrangler.toml` options are:
 
@@ -53,9 +59,19 @@ The `wrangler.toml` options are:
 For the example outlined above, a `wrangler.toml` might look like this:
 
 ```toml
+[[services]]
+binding = "AUTH"
+service = "<AUTH_WORKER>"
+
+[[services]]
+binding = "LOGOUT"
+service = "<LOGOUT_WORKER>"
+
+# or
+
 services = [
-  { binding = "auth", service = "authentication" },
-  { binding = "logout", service = "logout" }
+  { binding = "AUTH", service = "<AUTH_WORKER>" },
+  { binding = "LOGOUT", service = "<LOGOUT_WORKER>" }
 ]
 ```
 
@@ -143,6 +159,6 @@ This `auth` Worker does not need to have a `*.workers.dev` or other public endpo
 
 ## Related resources
 
-- [Runtime API documentation](/workers/runtime-apis/service-bindings)
+- [Runtime API documentation](/workers/runtime-apis/bindings/service-bindings)
 - [Migrate from Service Workers to ES Modules](/workers/reference/migrate-to-module-workers/)
 - [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)

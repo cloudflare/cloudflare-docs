@@ -35,7 +35,7 @@ To solve this error, you can either do less work per request, or send fewer requ
 
 ### Your account is generating too much load on Durable Objects. Please back off and try again later.
 
-There is a limit on how quickly you can [create new Durable Objects or lookup different existing Durable Objects](/durable-objects/how-to/create-durable-object-stubs/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+There is a limit on how quickly you can [create new Durable Objects or lookup different existing Durable Objects](/durable-objects/configuration/create-durable-object-stubs/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
 
 ### Durable Object reset because its code was updated.
 

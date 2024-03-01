@@ -6,7 +6,7 @@ weight: 6
 
 # Find zone and account IDs
 
-Once you [set up a new account](/fundamentals/setup/account-setup/) and [add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, you may need access to your zone and account IDs for API operations.
+Once you [set up a new account](/fundamentals/setup/account/) and [add your domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, you may need access to your zone and account IDs for API operations.
 
 To find your zone and account IDs:
 

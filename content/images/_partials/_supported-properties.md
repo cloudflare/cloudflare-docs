@@ -400,7 +400,7 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
 
 {{<Aside type="note">}}
 
-Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. More information can be found [here](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
+Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. For more details, refer to [JFIF Compatibility](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
 
 {{</Aside>}}
 
