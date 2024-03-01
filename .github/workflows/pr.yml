@@ -19,14 +19,10 @@ jobs:
       - id: changed-files
         uses: tj-actions/changed-files@v29.0.3
 
-      - id: codeowners
-        uses: SvanBoxel/codeowners-action@2.1
-        with: 
-          file_match_info: 'true'
-          path: .github/CODEOWNERS
-
-      - name: Output
-        run: echo ${{ steps.codeowners.outputs.codeowners }}
+      - uses: austenstone/codeowners-coverage@main
+        with:
+          ignore-default: 'true'
+          files: ${{ steps.changed-files.outputs.all_changed_files }}
 
             
             
