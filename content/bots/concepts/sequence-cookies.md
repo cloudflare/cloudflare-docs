@@ -1,12 +1,11 @@
 ---
 pcx_content_type: reference
 title: Order and Time Rules
-weight: 0
 ---
 
 # Order and Time Rules
 
-Ordering and Timing Rules uses cookies to track the order of requests a user has made and the time between requests and makes them available via [Cloudflare Rules](/rules/). This allows you to write rules that match valid or invalid sequences.
+Ordering and Timing Rules uses cookies to track the order of requests a user has made and the time between requests and makes them available via [Cloudflare Rules](/rules/). This allows you to write rules that match valid or invalid sequences. The specific cookies used to validate sequences are called sequence cookies.
 
 Ordering and Timing Rules is currently in private beta. If you would like to be included in the beta, contact your account team.
 
@@ -20,7 +19,7 @@ Ordering and Timing Rules is currently in private beta. If you would like to be 
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
 2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence cookies.
-3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your ordering and timing rules using API Shield’s Endpoint Management and make note of the short ID.
+3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your ordering and timing rules using API Shield's Endpoint Management and make note of the short ID.
 {{<Aside type="note">}}
 The short ID will not be visible until our account team has enabled this feature for you. 
 {{</Aside>}}
@@ -50,9 +49,18 @@ Once you have enabled sequence cookies, the rules fields will be populated and y
 
 ## Rules fields
 
-Ordering and Timing Rules introduces three new fields to Cloudflare Rules. All of these fields reference operations by their short ID. Accounts that have the Fraud Detection subscription can refer to the short ID by viewing the endpoint details via **API Shield** > **Endpoint Management** in the Cloudflare dashboard. Accounts without Fraud Detection cannot see this field.
+Ordering and Timing Rules introduces three new fields to Cloudflare Rules. All of these fields reference operations by their short ID. Accounts that have the Fraud Detection subscription can refer to the short ID by viewing the endpoint details via **API Shield** > **Endpoint Management** in the Cloudflare dashboard. Accounts without Fraud Detection do not have access to this field.
 
 Cloudflare only stores up to the 10 most recent operations in a sequence for up to one hour. If there are more than 10 operations in the sequence, older operations will be dropped and will not be included in the following fields. Similarly, if an operation happened more than one hour ago, it will also not be included in the following fields.
+
+### Availability
+
+These sequence fields are available in:
+
+- [Custom Rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
+- [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
+- [Bulk Redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
+- [HTTP Request Header Modification Rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)`
 
 <table>
   <thead>
@@ -64,7 +72,7 @@ Cloudflare only stores up to the 10 most recent operations in a sequence for up 
   </thead>
   <tbody style='vertical-align:top'>
     <tr>
-        <td><p><code>cf.sequence.current_op</code><br />{{<type>}}string{{</type>}}</p>
+        <td><p><code>cf.sequence.current_op</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
           <p>This field contains the ID of the operation that matches the current request. If the current request does not match any operations defined in Endpoint Management, it will be an empty string.
@@ -75,7 +83,7 @@ Cloudflare only stores up to the 10 most recent operations in a sequence for up 
         </td>
     </tr>
     <tr>
-        <td><p><code>cf.sequence.previous_ops</code><br />{{<type>}}Array&lt;string>{{</type>}}</p>
+        <td><p><code>cf.sequence.previous_ops</code><br />{{<type>}}Array&lt;String>{{</type>}}</p>
         </td>
         <td>
           <p>This field contains an array of the prior operation IDs in the sequence, ordered from most to least recent. It does not include the current request. <br /><br /> If an operation is repeated, it will appear multiple times in the sequence. 
@@ -86,7 +94,7 @@ Cloudflare only stores up to the 10 most recent operations in a sequence for up 
         </td>
     </tr>
     <tr>
-        <td><p><code>cf.sequence.msec_since_op</code><br />{{<type>}}Array&lt;string>&lt;number>{{</type>}}</p>
+        <td><p><code>cf.sequence.msec_since_op</code><br />{{<type>}}Map&lt;Number>{{</type>}}</p>
         </td>
         <td>
           <p>This field contains a map where the keys are operation IDs and the values are the number of milliseconds since that operation has most recently occurred. <br /><br /> This does not include the current request or operation as it only factors in previous operations in the sequence. 
@@ -98,13 +106,6 @@ Cloudflare only stores up to the 10 most recent operations in a sequence for up 
     </tr>
     </tbody>
 </table>
-
-These sequence fields are available in:
-
-- [Custom Rules](/waf/custom-rules/) (`http_request_firewall_custom`)
-- [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
-- [Bulk Redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
-- [HTTP Request Header Modification Rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)`
 
 ### Example rules
 
@@ -154,7 +155,7 @@ To disable sequence cookies:
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
 2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence cookies.
-3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your ordering and timing rules using API Shield’s Endpoint Management and make note of the short ID.
+3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your ordering and timing rules using API Shield's Endpoint Management and make note of the short ID.
 {{<Aside type="note">}}
 The short ID will not be visible until our account team has enabled this feature for you. 
 {{</Aside>}}
