@@ -22,7 +22,7 @@ These sequence fields are available in:
 - [Custom Rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
 - [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
 - [Bulk Redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
-- [HTTP Request Header Modification Rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)`
+- [HTTP Request Header Modification Rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)
 
 ---
 
