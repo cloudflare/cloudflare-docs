@@ -107,6 +107,7 @@ function parse(filename: string): string | void {
       pull_number: prnumber,
     });
 
+    console.log('hi')
     console.log(products)
 
     for (const slug of products) {
