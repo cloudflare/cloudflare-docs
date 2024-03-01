@@ -19,13 +19,14 @@ For example, for a zone `domain.test`, the ZCNS can be `ns1.domain.test` and `ns
 
 To add zone custom nameservers to a specific zone:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
-2.  Go to **DNS** > **Records**.
-3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the ZCNS names (for example, `ns1`, `ns2`, `ns3`).
-4.  Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automatically create the associated `A` or `AAAA` records (visible after you refresh the page).
-5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
+2. Go to **DNS** > **Records**.
+3. On **Custom nameservers**, select **Configure**.
+4. Select **Create custom nameservers just for <YOUR_ZONE>** and enter the subdomains used for the ZCNS names (for example, `ns1`, `ns2`, `ns3`).
+5. Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automatically create the associated `A` or `AAAA` records (visible after you refresh the page).
+6. The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
     - If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
-    - If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
+    - If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records]([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
 
 ### Using the API
 
@@ -51,7 +52,7 @@ To remove zone custom nameservers (and their associated, read-only DNS records) 
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2.  Go to **DNS** > **Records**.
-3.  On **Custom Nameservers**, click **Remove Custom Nameservers**.
+3.  On **Custom nameservers**, select **Remove custom nameservers**.
 4.  Cloudflare will remove your ZCNS and their associated read-only `A` or `AAAA` records.
 
 ### Using the API
