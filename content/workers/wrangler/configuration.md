@@ -102,14 +102,6 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Cron definitions to trigger a Worker's `scheduled` function. Refer to [triggers](#triggers).
 
-- `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
-
-{{<Aside type="note">}}
-After you have opted into the [Workers Standard](/workers/platform/pricing/#workers) usage model, the usage model configured in your Worker's `wrangler.toml` will be ignored . Your usage model must instead be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
-  {{</Aside>}}
-
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
@@ -147,6 +139,13 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
 {{</definitions>}}
+
+### Usage model
+
+As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's `wrangler.toml` will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies. 
+
+Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must  be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
+
 
 ## Non-inheritable keys
 
