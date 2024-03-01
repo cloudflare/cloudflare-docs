@@ -18,7 +18,7 @@ Our free allocation allows anyone to use a total of **10K Neurons per day at no 
 
 To use more than 10,000 Neurons per day for non-beta models, you need to sign up for the [Workers Paid plan](/workers/platform/pricing/#workers). On Workers Paid, you will be charged at $0.011 / 1K Neurons for any usage above the free allocation of 10K neurons per day for the non-beta models.
 
-You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, use the [pricing calculator](ai.cloudflare.com/#pricing-calculator).
+You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, use the [pricing calculator](https://ai.cloudflare.com/#pricing-calculator).
 
 {{<table-wrap>}}
 
