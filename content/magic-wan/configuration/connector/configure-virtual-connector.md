@@ -60,7 +60,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
     3. Take note of your configuration. You will need this information to configure your network in the Cloudflare dashboard.
 9. In **Disk provisioning**, select **Thin**.
 10. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
-9. Configure the virtual machine with the license key your account team provided you:
+11. Configure the virtual machine with the license key your account team provided you:
     1. Select the Virtual Connector's VM > **Settings**.
     2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
     3. Select **Add parameter** to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
@@ -69,8 +69,8 @@ The following instructions assume you already have VMware ESXi hypervisor instal
 
   {{<Aside type="note">}} You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.{{</Aside>}}
 
-10. Select **Save** to finish configuring your Virtual Connector.
-11. Continue set up in your [Cloudflare dashboard](#3-set-up-cloudflare-dashboard).
+12. Select **Save** to finish configuring your Virtual Connector.
+13. Continue set up in your [Cloudflare dashboard](#3-set-up-cloudflare-dashboard).
 
 ## 3. Set up Cloudflare dashboard
 
