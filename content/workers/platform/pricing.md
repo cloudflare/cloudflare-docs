@@ -8,11 +8,13 @@ meta:
 
 # Pricing
 
-{{<Aside type="warning" header="Workers Standard pricing is now available">}}
+{{<Aside type="warning">}}
 
-New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today.
+All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024. 
 
-For users on the Workers Paid plan: You **have until March 1, 2024 to switch to new pricing on your own**, after which all of your Workers and Pages Functions currently under the [Bundled and Unbound pricing models](/workers/platform/pricing/#deprecated-usage-models) will be **automatically migrated** to the [Standard model](/workers/platform/pricing/#example-pricing-standard-usage-model). 
+- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/). 
+- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/). 
+
 
 {{</Aside>}}
 
@@ -29,6 +31,13 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 {{</Aside>}}
 
 ## Workers
+
+Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation. 
+
+Users on the Workers Paid plan only have access to the Standard usage model. 
+
+Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models. 
+
 
 {{<table-wrap>}}
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
@@ -58,14 +67,11 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
+If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker. 
+
 {{</Aside>}}
 
 ### Deprecated usage models
-
-Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of CPU time your Worker can use per invocation. 
-
-Starting October 31, 2023, the Bundled and Unbound usage models are deprecated. Workers and Pages Functions using Bundled and Unbound will continue to be billed at the rates below until March 1, 2024. After March 1, 2024, all Workers and Pages Functions will be automatically migrated to Workers Standard.
-
 
 {{<table-wrap>}}
 
@@ -117,16 +123,9 @@ Resulting in the following estimated costs:
 
 {{</table-wrap>}}
 
-### How to switch usage model
+### How to switch the usage model
 
-When an account is first upgraded to the Workers Paid plan, the Standard model is used as the default usage model. If you have Workers on Bundled or Unbound, their usage model can be changed all at once to Standard or their usage model can be changed the individual Worker level.
-
-To migrate all Workers to the Standard Usage model:
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. Find **Usage Model** on the right-side menu > **Migrate**. 
-
-To change the usage model for individual Workers:
+Usage models can be changed at the individual Worker level: 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
