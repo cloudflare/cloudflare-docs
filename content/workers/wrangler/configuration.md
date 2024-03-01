@@ -397,6 +397,14 @@ cpu_ms = 100
 
 ## Bindings
 
+### Environment variables
+
+[Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
+
+Example:
+
+{{<render file="_envvar-example.md">}}
+
 ### D1 databases
 
 [D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-databases/query-databases/).
@@ -1002,9 +1010,11 @@ port = 8080
 local_protocol = "http"
 ```
 
-### Environmental variables
+### Secrets
 
-When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
+[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
+
+When developing your Worker or Pages Function, create a `.dev.vars` file in the root of your project to define secrets that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using [environment variables in `wrangler.toml`](/workers/configuration/environment-variables/#compare-secrets-and-environment-variables). This works both in the local and remote development modes.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
