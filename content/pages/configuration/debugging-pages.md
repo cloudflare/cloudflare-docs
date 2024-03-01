@@ -156,7 +156,7 @@ A [zone hold](/fundamentals/account-and-billing/account-security/zone-holds/) wi
 
 To add a Custom Domain for a hostname with a zone hold, temporarily [release the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) during the custom domain setup process.
 
-Once the custom domain has been successfully completed, you may [reinstate the zone hold](https://developers.cloudflare.com/fundamentals/account-and-billing/account-security/zone-holds/#enable-zone-holds).
+Once the custom domain has been successfully completed, you may [reinstate the zone hold](/fundamentals/account-and-billing/account-security/zone-holds/#enable-zone-holds).
 
 {{<Aside type="warning" header="Still having issues">}}
 
