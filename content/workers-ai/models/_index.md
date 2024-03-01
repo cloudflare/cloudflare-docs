@@ -9,10 +9,6 @@ hideChildren: true
 
 Browse our entire catalog of models.
 
-{{<Aside type="note">}}
-
-Workers AI will begin billing for usage on non-beta models after April 1st, 2024. Read [pricing page](workers-ai/platform/pricing) for more details.
-
-{{</Aside>}}
+{{<render file="_billing-announcement.md">}}
 
 {{% models-grouped-by-task %}}
