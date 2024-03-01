@@ -15,7 +15,7 @@ export default {
   async fetch(request: Request, env: Env) {
     const ai = new Ai(env.AI);
 
-    const response = await ai.run<"{{ .Params.model.name }}">(
+    const response = await ai.run(
       "{{ .Page.Params.model.name }}",
       {
         text: "I'll have an order of the moule frites",
