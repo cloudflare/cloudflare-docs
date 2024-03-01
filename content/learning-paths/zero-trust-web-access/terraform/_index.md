@@ -1,7 +1,7 @@
 ---
 title: Terraform automation
 pcx_content_type: overview
-weight: 9
+weight: 8
 layout: learning-module
 ---
 
