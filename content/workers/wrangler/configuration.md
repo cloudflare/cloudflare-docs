@@ -776,7 +776,7 @@ node_compat = true # required for database drivers to function
 
 [[hyperdrive]]
 binding = "<BINDING_NAME>"
-id = "<ID>" # the ID associated with the Hyperdrive you just created
+id = "<ID>"
 ```
 
 ### Service bindings
