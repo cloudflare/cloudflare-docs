@@ -9,7 +9,7 @@ weight: 3
 While there are default values for DNS settings that Cloudflare applies to all new zones, Enterprise accounts have the option to configure their own DNS zone defaults according to their preference.
 
 {{<Aside type="warning">}}
-These settings are only applied at the moment a new zone is created. Editing DNS zone defaults will not impact already existing zones and any of the values specified as default can later be adjusted on the respective **DNS > Settings** or **DNS** > **Records** for each zone.
+DNS zone defaults are only applied at the moment a new zone is created and will not impact already existing zones. Any of the values specified as default can later be adjusted on the respective **DNS > Settings** or **DNS** > **Records** for each zone.
 {{</Aside>}}
 
 ## Steps
@@ -32,8 +32,6 @@ For primary zones:
 
 For secondary zones:
 
-- [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/): Enable the option use Cloudflare [proxy](/dns/manage-dns-records/reference/proxied-dns-records/) and add `CNAME` records at your zone apex.
+- [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/): Enable the options to use Cloudflare [proxy](/dns/manage-dns-records/reference/proxied-dns-records/) and add `CNAME` records at your zone apex.
 
-{{<Aside type="note">}}
-Multi-provider DNS does not apply as a setting for secondary zones, as this is already a required behaviour for this setup.
-{{</Aside>}}
+Multi-provider DNS does not apply as a setting for secondary zones, as this is already a required behaviour for this setup. `SOA` record and the `NS` record TTL are defined on your external DNS provider and only transferred into Cloudflare.
