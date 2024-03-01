@@ -1,16 +1,16 @@
 ---
-title: Design Guides
+title: Reference Architecture Diagrams
 pcx_content_type: navigation
-weight: 3
+weight: 2
 ---
 
-# Cloudflare Design Guides
+# Cloudflare Reference Architecture Diagrams
 
 {{<description>}}
 Diagrams, design patterns and detailed best practices to help you generate solutions with Cloudflare products.
 {{</description>}}
 
-{{<render file="_description-of-design-guides.md" productFolder="reference-architecture">}}
+{{<render file="_description-of-ref-architecture-diagrams.md" productFolder="reference-architecture">}}
 <br/>
 
 {{<directory-listing>}}
