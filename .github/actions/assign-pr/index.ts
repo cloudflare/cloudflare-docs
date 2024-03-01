@@ -33,6 +33,7 @@ async function list(
     len = res.data.length;
   for (let file, tmp: string | void; i < len; i++) {
     file = res.data[i];
+    console.log(file)
 
     tmp = parse(file.filename);
     if (tmp) products.add(tmp);
@@ -106,9 +107,6 @@ function parse(filename: string): string | void {
       owner: repository.owner.login,
       pull_number: prnumber,
     });
-
-    console.log('hi')
-    console.log(products)
 
     for (const slug of products) {
       let owners_list = OWNERS[slug];
