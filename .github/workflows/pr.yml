@@ -12,10 +12,18 @@ concurrency:
 
 jobs:
   assign:
-    id: codeowners
     name: CODEOWNERS action
-    uses: SvanBoxel/codeowners-action@2.1
-  - run: |
-      echo ${{ steps.codeowners.outputs.codeowners }};
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup CODEOWNERS action
+        id: codeowners
+        uses: SvanBoxel/codeowners-action@2.1
+
+      - name: Run CODEOWNERS action
+        run: echo ${{ steps.codeowners.outputs.codeowners }}
+
             
             
