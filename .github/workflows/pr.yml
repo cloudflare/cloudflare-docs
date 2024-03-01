@@ -18,8 +18,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           files=$(gh api /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files -q '.[] | select(.status != "removed") | .filename | select(test("(.yaml|yml|md)$"))')
-          filesArray=$(echo "$files" | jq -R -s 'split("\n")[:-1]')
-          echo "CHANGED_FILES=$filesArray" >> "$GITHUB_ENV"
+          echo "CHANGED_FILES=$files" >> "$GITHUB_ENV"
 
       - name: Output Changed Files
         run: echo ${{ env.CHANGED_FILES }}
@@ -32,7 +31,7 @@ jobs:
         id: associated_users
         run: |
           codeowners=$(echo "${{ steps.codeowners.outputs.codeowners }}")
-          changed_files=("${{ split(env.CHANGED_FILES, '\n') }}")
+          IFS=$'\n' read -rd '' -a changed_files <<< "${{ env.CHANGED_FILES }}"
           users=""
           for file in "${changed_files[@]}"; do
             users+="$(grep -F "$file" <<< "$codeowners" | cut -d ' ' -f 2- | tr '\n' ' ')"
