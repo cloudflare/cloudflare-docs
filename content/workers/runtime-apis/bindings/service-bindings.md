@@ -12,7 +12,7 @@ meta:
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings/) facilitate Worker-to-Worker communication. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
 
-Service bindings provide the separation of concerns that microservice or service-oriented architectures provide, without configuration pain, performance overhead or knowledge of RPC protocols.
+Service bindings provide the separation of concerns that microservice or service-oriented architectures provide, without configuration pain, performance overhead or need to learn RPC protocols.
 
 - **Service bindings are fast.** When you use Service Bindings, communication between two Workers stays within Cloudflare. When one Worker invokes another, there is no network delay and the request is executed immediately.
 - **Service bindings are not just HTTP.** Worker A can expose methods that can be directly called by Worker B. Communicating between services only requires writing JavaScript methods and classes.
@@ -27,6 +27,9 @@ Service bindings are commonly used to:
 
 ## Configuration
 
+You add a Service binding by modifying the `wrangler.toml` of the caller — the Worker that you want to be able to initiate requests.
+
+For example, if you want Worker A to be able to call Worker B — you'd add the following to the `wrangler.toml` for Worker A:
 ```toml
 ---
 filename: wrangler.toml
@@ -48,7 +51,7 @@ Worker A that declares a Service binding to Worker B can call Worker B in two di
 
 ### RPC (`WorkerEntrypoint`)
 
-If you write your Worker as a JavaScript class that extends the built-in `WorkerEntryptoint` class, public methods on the class you export are exposed via Service bindings and can be called.
+If you write your Worker as a JavaScript class that extends the built-in `WorkerEntrypoint` class, public methods on the class you export are exposed via Service Bindings and can be called.
 
 For example, the following Worker implements the public method `add(a, b)`:
 
