@@ -23,13 +23,13 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-02-20</td>
       <td>2024-02-26</td>
+      <td>2024-03-04</td>
       <td>Block</td>
-      <td>100546_BETA</td>
-      <td>...07c62aeb</td>
-      <td>XSS - HTML Encoding BETA</td>
-      <td>This will replace ...1d870399 in NEW WAF</td>
+      <td>100135D_BETA</td>
+      <td>...9c1c14e6</td>
+      <td>XSS - JS On Events Beta</td>
+      <td>This will replace ...aa290ad9 in NEW WAF</td>
     </tr>
   </tbody>
 </table>
