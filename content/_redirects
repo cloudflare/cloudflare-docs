@@ -1119,7 +1119,7 @@
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
 /workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
 /workers/platform/scripts/ /api/operations/worker-script-list-workers 301
-/workers/platform/services/ /workers/configuration/bindings/about-service-bindings/ 301
+/workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
 /workers/platform/web-assembly/rust/ /workers/platform/webassembly/rust/ 301
 /workers/quickstart/ /workers/get-started/quickstarts/ 301
@@ -1239,7 +1239,8 @@
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
-/workers/platform/bindings/about-service-bindings/ /workers/configuration/bindings/about-service-bindings/ 301
+/workers/platform/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
+/workers/runtime-apis/bindings/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/cron-triggers/ /workers/configuration/cron-triggers/ 301
 /workers/platform/compatibility-dates/ /workers/configuration/compatibility-dates/ 301

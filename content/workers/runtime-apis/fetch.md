@@ -17,7 +17,7 @@ Asynchronous tasks such as `fetch` must be executed within a [handler](/workers/
 
 {{<Aside type="warning" header="Worker to Worker">}}
 
-Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 {{</Aside>}}
 

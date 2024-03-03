@@ -24,7 +24,7 @@ Bindings can be configured in one of two ways:
 
 Service bindings allow for communication with another Worker.
 
-* Learn more about [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+* Learn more about [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 * Configure Service bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#service-bindings).
 
 ### KV namespace bindings

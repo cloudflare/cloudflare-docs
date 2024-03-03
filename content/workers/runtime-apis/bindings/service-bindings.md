@@ -10,7 +10,7 @@ meta:
 
 ## About Service bindings
 
-[Service bindings](/workers/configuration/bindings/about-service-bindings/) facilitate Worker-to-Worker communication. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) facilitate Worker-to-Worker communication. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
 
 Service bindings provide the separation of concerns that microservice or service-oriented architectures provide, without configuration pain, performance overhead or knowledge of RPC protocols.
 
@@ -19,8 +19,8 @@ Service bindings provide the separation of concerns that microservice or service
 
 Service bindings are commonly used to:
 
-- *Provide a shared internal service to multiple Workers.* For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings. 
-- *Isolate services from the public Internet.* You can deploy a Worker that is not reachable via the public Internet, and can only be reached via an explicit Service binding that another Worker declares. 
+- *Provide a shared internal service to multiple Workers.* For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
+- *Isolate services from the public Internet.* You can deploy a Worker that is not reachable via the public Internet, and can only be reached via an explicit Service binding that another Worker declares.
 - *Allow teams to deploy code independently.* Team A can deploy their Worker on their own release schedule, and Team B can deploy their Worker separately.
 
 ## Configuration
