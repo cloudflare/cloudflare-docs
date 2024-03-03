@@ -1239,6 +1239,7 @@
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
 /workers/platform/bindings/ /workers/configuration/bindings/ 301
+/workers/configuration/bindings/ /workers/runtime-apis/bindings/ 301
 /workers/platform/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/runtime-apis/bindings/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/platform/triggers/cron-triggers/ /workers/configuration/cron-triggers/ 301
