@@ -102,14 +102,6 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Cron definitions to trigger a Worker's `scheduled` function. Refer to [triggers](#triggers).
 
-- `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
-
-{{<Aside type="note">}}
-After you have opted into the [Workers Standard](/workers/platform/pricing/#workers) usage model, the usage model configured in your Worker's `wrangler.toml` will be ignored . Your usage model must instead be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
-  {{</Aside>}}
-
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
@@ -130,6 +122,12 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
 
   - Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
 
+- `preserve_file_names` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
+    The default is to prepend filenames with a content hash.
+    For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
+
 - `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Whether Wrangler should send usage metrics to Cloudflare for this project.
@@ -147,6 +145,13 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
 {{</definitions>}}
+
+### Usage model
+
+As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's `wrangler.toml` will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies. 
+
+Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
+
 
 ## Non-inheritable keys
 
@@ -392,6 +397,14 @@ cpu_ms = 100
 
 ## Bindings
 
+### Environment variables
+
+[Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
+
+Example:
+
+{{<render file="_envvar-example.md">}}
+
 ### D1 databases
 
 [D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-databases/query-databases/).
@@ -462,7 +475,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Worker where the Durable Object is defined, if it is external to this Worker. When using this option a local instance of the Durable Object will not be created, and instead a remote binding is used.
+  - The name of the Worker where the Durable Object is defined, if it is external to this Worker. This option can be used both in local and remote development. In local development, you must run the external Worker in a separate process (via `wrangler dev`). In remote development, the appropriate remote binding must be used.
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -997,9 +1010,11 @@ port = 8080
 local_protocol = "http"
 ```
 
-### Environmental variables
+### Secrets
 
-When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
+[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
+
+When developing your Worker or Pages Function, create a `.dev.vars` file in the root of your project to define secrets that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using [environment variables in `wrangler.toml`](/workers/configuration/environment-variables/#compare-secrets-and-environment-variables). This works both in the local and remote development modes.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
