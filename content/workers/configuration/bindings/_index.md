@@ -9,7 +9,7 @@ meta:
 
 Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
-There are multiple types of bindings available today.
+There are multiple types of bindings available today, including [environment variables (text and JSON values)](/workers/configuration/environment-variables/) as well as [secrets](/workers/configuration/secrets/).
 
 To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
@@ -80,7 +80,7 @@ Dispatch namespace bindings allow for communication between a dynamic dispatch W
 
 mTLS certificate bindings enable Worker subrequests to present a client certificate when communicating with a service that requires client authentication.
 
-- Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
+- Learn more about [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).
 - Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).
 
 ### Email bindings

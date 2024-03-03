@@ -45,7 +45,7 @@ You can also [modify HTTP response headers](/rules/transform/response-header-mod
 
 ### Cloudflare Workers
 
-Additionally, Workers can provide details around the [client certificate](/workers/runtime-apis/mtls/).
+Additionally, Workers can provide details around the [client certificate](/workers/runtime-apis/bindings/mtls/).
 
 ```js
 const tlsHeaders = {

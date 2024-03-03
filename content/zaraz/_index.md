@@ -43,8 +43,8 @@ Zaraz provides a Consent Management platform to help you address and manage requ
 
 {{<resource-group>}}
 
-{{<resource header="Discord channel" href="https://discord.cloudflare.com" icon="logo-Discord">}}
-If you have any comments, questions, or bugs to report, contact the Zaraz team on their discord channel.
+{{<resource header="Discord Channel" href="https://discord.cloudflare.com" icon="logo-Discord">}}
+If you have any comments, questions, or bugs to report, contact the Zaraz team on their Discord channel.
 {{</resource>}}
 
 {{<resource header="Community Forum" href="https://community.cloudflare.com/c/developers/zaraz/67" icon="learning-center-book">}}

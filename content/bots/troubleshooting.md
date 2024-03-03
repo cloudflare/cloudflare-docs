@@ -106,7 +106,7 @@ ___
 The difference is significant:
 
 -   Threat score (_cf.threat\_score_) is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).
--   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script**.** The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
+-   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script. The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
 
 These fields are available via [WAF custom rules](/waf/custom-rules/) and other products based on the Ruleset Engine.
 
