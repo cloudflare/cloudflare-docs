@@ -55,6 +55,7 @@ Caching the build output from frameworks can speed up subsequent build times. Th
 | Next.js   | `.next/cache`              |
 | Astro     | `node_modules/.astro`      |
 | Nuxt      | `node_modules/.cache/nuxt` |
+| Eleventy  | `.cache`                   |
 
 ## Limits
 
