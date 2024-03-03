@@ -18,6 +18,7 @@ Service bindings provide the separation of concerns that microservice or service
 - **Service bindings are not just HTTP.** Worker A can expose methods that can be directly called by Worker B. Communicating between services only requires writing JavaScript methods and classes.
 
 ![Service bindings are a zero-cost abstraction](/images/workers/platform/bindings/service-bindings-comparison.png)
+
 Service bindings are commonly used to:
 
 - **Provide a shared internal service to multiple Workers.** For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
