@@ -8,5 +8,5 @@ _build:
   render: never
 
 meta:
-  description: Workers AI bindings.
+  description: Run generative AI inference and machine learning models on GPUs, without managing servers or infrastructure.
 ---
