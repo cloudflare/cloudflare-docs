@@ -17,6 +17,7 @@ Service bindings provide the separation of concerns that microservice or service
 - *Service bindings are fast.* When you use Service Bindings, communication between two Workers stays within Cloudflare. When one Worker invokes another, there is no network delay and the request is executed immediately.
 - *Service bindings are not just HTTP.* Worker A can expose methods that can be directly called by Worker B. Communicating between services only requires writing JavaScript methods and classes.
 
+![Service bindings are a zero-cost abstraction](/images/workers/platform/bindings/service-bindings-comparison.png)
 Service bindings are commonly used to:
 
 - *Provide a shared internal service to multiple Workers.* For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
@@ -197,6 +198,15 @@ The Service bindings API is asynchronous — you must `await` any method you ca
 ## Local development
 
 Local development is supported for Service bindings. For each Worker, open a new terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+## Smart Placement
+
+[Smart Placement](/workers/configuration/smart-placement) automatically places your Worker in an optimal location that minimizes latency.
+
+You can use Smart Placement together with Service bindings to split your Worker into two services:
+
+![Smart Placement and Service Bindings](/images/workers/platform/smart-placement-service-bindings.png)
+
+Refer to the [docs on Smart Placement](/workers/configuration/smart-placement/#best-practices) for more.
 
 ## Limits
 
