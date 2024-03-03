@@ -14,15 +14,15 @@ meta:
 
 Service bindings provide the separation of concerns that microservice or service-oriented architectures provide, without configuration pain, performance overhead or knowledge of RPC protocols.
 
-- *Service bindings are fast.* When you use Service Bindings, communication between two Workers stays within Cloudflare. When one Worker invokes another, there is no network delay and the request is executed immediately.
-- *Service bindings are not just HTTP.* Worker A can expose methods that can be directly called by Worker B. Communicating between services only requires writing JavaScript methods and classes.
+- **Service bindings are fast.** When you use Service Bindings, communication between two Workers stays within Cloudflare. When one Worker invokes another, there is no network delay and the request is executed immediately.
+- **Service bindings are not just HTTP.** Worker A can expose methods that can be directly called by Worker B. Communicating between services only requires writing JavaScript methods and classes.
 
 ![Service bindings are a zero-cost abstraction](/images/workers/platform/bindings/service-bindings-comparison.png)
 Service bindings are commonly used to:
 
-- *Provide a shared internal service to multiple Workers.* For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
-- *Isolate services from the public Internet.* You can deploy a Worker that is not reachable via the public Internet, and can only be reached via an explicit Service binding that another Worker declares.
-- *Allow teams to deploy code independently.* Team A can deploy their Worker on their own release schedule, and Team B can deploy their Worker separately.
+- **Provide a shared internal service to multiple Workers.** For example, you can deploy an authentication service as its own Worker, and then have any number of separate Workers communicate with it via Service bindings.
+- **Isolate services from the public Internet.** You can deploy a Worker that is not reachable via the public Internet, and can only be reached via an explicit Service binding that another Worker declares.
+- **Allow teams to deploy code independently.** Team A can deploy their Worker on their own release schedule, and Team B can deploy their Worker separately.
 
 ## Configuration
 
