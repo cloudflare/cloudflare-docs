@@ -6,7 +6,7 @@ weight: 2
 
 # Deploy a Browser Rendering Worker with Durable Objects
 
-By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/). 
+By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
 
 Using Durable Objects to persist browser sessions improves performance by eliminating the time that it takes to spin up a new browser session. Since Durable Objects re-uses sessions, it reduces the number of concurrent sessions needed.
 
@@ -41,7 +41,7 @@ $ yarn create cloudflare@latest
 To enable Durable Objects, you will need to purchase the Workers Paid plan:
 
  1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
- 2. Go to **Workers & Pages** > **Plans**. 
+ 2. Go to **Workers & Pages** > **Plans**.
  3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
 ## 3. Install Puppeteer
@@ -74,7 +74,7 @@ After running the `list` command, you will see all bucket names, including the o
 
 ## 5. Configure `wrangler.toml`
 
-Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/configuration/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
 Update your `wrangler.toml` configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
@@ -168,7 +168,7 @@ export class Browser {
 
 		const page = await this.browser.newPage();
 
-		// take screenshots of each screen size 
+		// take screenshots of each screen size
 		for (let i = 0; i < width.length; i++) {
 			await page.setViewport({ width: width[i], height: height[i] });
 			await page.goto("https://workers.cloudflare.com/");

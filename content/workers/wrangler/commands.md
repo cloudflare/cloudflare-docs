@@ -2484,7 +2484,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a [binding](/workers/configuration/bindings/) in your `wrangler.toml`:
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
 
 ```toml
 mtls_certificates = [

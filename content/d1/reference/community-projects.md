@@ -1,5 +1,5 @@
 ---
-title: Community projects 
+title: Community projects
 pcx_content_type: concept
 weight: 7
 ---
@@ -21,7 +21,7 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 Two community tools are available for creating backups/exports of D1 databases as `.sql` files. D1 exports can be restored using Wrangler.
 
 * [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](https://developers.cloudflare.com/api/operations/cloudflare-d1-query-database) (slower but simpler.)
-* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](https://developers.cloudflare.com/workers/configuration/bindings/) (faster but more complex.)
+* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) (faster but more complex.)
 
 ### D1 adapter for Kysely ORM
 
@@ -55,11 +55,11 @@ Object Relational Mapping (ORM) is a technique to query and manipulate data by u
 ### workers-qb
 
 `workers-qb` is a zero-dependency query builder that provides a simple standardized interface while keeping the benefits and speed of using raw queries over a traditional ORM. While not intended to provide ORM-like functionality, `workers-qb` makes it easier to interact with your database from code for direct SQL access.
- 
+
 * [GitHub](https://github.com/G4brym/workers-qb)
 * [Documentation](https://workers-qb.massadas.com/)
 
-### d1-console 
+### d1-console
 
 Instead of running the `wrangler d1 execute` command in your terminal every time you want to interact with your database, you can interact with D1 from within the `d1-console`. Created by a Discord Community Champion, this gives the benefit of executing multi-line queries, obtaining command history, and viewing a cleanly formatted table output.
 
@@ -81,4 +81,6 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 
 ## Feedback
 
-To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 
+To report a bug or file feature requests for these community projects, create an issue directly on the project's repository.
+
+To report a bug or file feature requests for these community projects, create an issue directly on the project's repository.

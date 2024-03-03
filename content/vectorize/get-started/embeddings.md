@@ -100,11 +100,11 @@ binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "embeddings-index"
 ```
 
-This will create a new vector database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+This will create a new vector database, and output the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
 
 To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
 

@@ -98,11 +98,11 @@ database_name = prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
-This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+This will create a new D1 database, and output the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 ## 4. Bind your Worker to your D1 database
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -158,6 +158,7 @@ Then validate your data is in your database by running:
 $ npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
 ```
 
+You should see the following output:
 You should see the following output:
 
 ```sh
