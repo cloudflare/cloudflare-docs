@@ -5,13 +5,15 @@ updated: 2023-04-04
 weight: 4
 ---
 
-# Public Peering an Private Network Interconnection
+# Public Peering an Private Network Interconnection (PNI)
 
 Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-policy/). There is no requirement to be a Cloudflare customer for public peering, or a Private Network Interconnect (PNI).
 
-If you operate a public autonomous system on the Border Gateway Protocol (BGP) table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing [peering@cloudflare.com](peering@cloudflare.com).
+You can use BGP to peer with Cloudflare at any of the Public Internet Exchanges listed on [Cloudflare’s PeeringDB page](https://www.peeringdb.com/net/4224). If you have many users accessing websites protected and proxied by Cloudflare, then peering with Cloudflare may help you remove bandwidth from your Internet transit links, and increase performance by reducing latency to Cloudflare.
 
-If you peer with Cloudflare, you can signup to use our [Peering Portal](https://www.cloudflare.com/partners/peering-portal/) which can be used to monitor where your network exchanges with Cloudflare.
+You may also optionally sign up for the [Cloudflare Peering Portal](https://www.cloudflare.com/partners/peering-portal/), which allows operators of public BGP Autonomous System Number (ASN) listed on PeeringDB to view where their network exchanges traffic with Cloudflare. Finally, if our networks exchange more than 1 Gbps of traffic in a single location, we can move your peering from the Internet Exchange to a Private Network Interconnect (PNI).
+
+If you operate a public autonomous system on the BGP table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing [peering@cloudflare.com](peering@cloudflare.com).
 
 ## PNI and peering setup
 
