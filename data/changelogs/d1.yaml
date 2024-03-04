@@ -2,6 +2,17 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-03-05"
+    title: Billing for D1 usage
+    description: |-
+      As of 2024-03-05, D1 usage can incur charges for an account's future billing cycle.
+      
+      Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](https://developers.cloudflare.com/d1/platform/pricing). 
+      
+      Developers on the Workers Free plan can use up to the included limits. Usage beyond the limits below requires signing up for the $5/month Workers Paid plan.
+
+      Account billable metrics are available in the [Cloudflare Dashboard](https://dash.cloudflare.com) and [GraphQL API](/d1/observability/metrics-analytics/#metrics).
+
   - publish_date: "2024-02-16"
     title: API changes to `.run()`
     description: |-
