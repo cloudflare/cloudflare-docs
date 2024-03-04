@@ -35,3 +35,9 @@ If you choose this option, you should also make sure to set up [multi-signer DNS
 {{</Aside>}}
 
 ## NS record TTL
+
+For both Cloudflare nameservers (standard or advanced) and custom nameservers, the `NS` record time-to-live (TTL) is controlled by the specific setting you find in **DNS** > **Records**.
+
+The default TTL is 24 hours (or 86,400 seconds), but you have the option to lower this value depending on your needs. Shorter TTLs can be useful when you are changing nameservers or migrating a zone, for example. Accepted values range from 30 to 86,400 seconds.
+
+This setting can also be configured as a [DNS zone default](/dns/additional-options/dns-zone-defaults/), meaning new zones created in your account will automatically start with the value defined by you.
