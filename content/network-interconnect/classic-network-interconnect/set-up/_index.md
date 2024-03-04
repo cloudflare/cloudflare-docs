@@ -11,5 +11,5 @@ meta:
 Setup starts with onboarding, which is broken out into a few steps. During onboarding, Cloudflare works closely with your organization to accomplish the onboarding tasks:
 - [Scope your configuration](/network-interconnect/classic-network-interconnect/set-up/scope-config/) (Kickoff call)
 - [Configure the network cross-connect](/network-interconnect/classic-network-interconnect/set-up/configure-cross-connect/) (Duration: 1-2 weeks)
-- [Configure Cloudflare Border Gateway Protocol (BGP) and Generic Route Encapsulation (GRE)](/network-interconnect/classic-network-interconnect/set-up/configure-bgp/) (Duration: 1 week)
-- [Go live](/network-interconnect/classic-network-interconnect/set-up/configure-bgp/#go-live) (Duration: 1-2 days)
+- [Configure Cloudflare Border Gateway Protocol (BGP)](/network-interconnect/classic-network-interconnect/set-up/configure-bgp-bfd/) (Duration: 1 week)
+- [Go live](/network-interconnect/classic-network-interconnect/set-up/configure-bgp-bfd/#go-live) (Duration: 1-2 days)

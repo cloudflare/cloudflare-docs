@@ -13,7 +13,7 @@ You can use BGP to peer with Cloudflare at any of the Public Internet Exchanges 
 
 You may also optionally sign up for the [Cloudflare Peering Portal](https://www.cloudflare.com/partners/peering-portal/), which allows operators of public BGP Autonomous System Number (ASN) listed on PeeringDB to view where their network exchanges traffic with Cloudflare. Finally, if our networks exchange more than 1 Gbps of traffic in a single location, we can move your peering from the Internet Exchange to a Private Network Interconnect (PNI).
 
-If you operate a public autonomous system on the BGP table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing [peering@cloudflare.com](peering@cloudflare.com).
+If you operate a public autonomous system on the BGP table, and would like to peer with Cloudflare at a Public Internet Exchange listed on [Cloudflare's PeeringDB page](https://www.peeringdb.com/asn/13335), you can request peering by emailing `peering@cloudflare.com`.
 
 ## PNI and peering setup
 
