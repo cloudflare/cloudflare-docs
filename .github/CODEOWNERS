@@ -101,7 +101,7 @@
 
 # Docs team areas
 /content/docs-guide/ @kodster28 @crwaters16 @cloudflare/pcx-technical-writing
-/content/style-guide/ @crwaters16 @cloudflare/pcx-technical-writing
+/content/style-guide/ @kodster28 @crwaters16 @cloudflare/pcx-technical-writing
 
 # Magic products
 /content/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
