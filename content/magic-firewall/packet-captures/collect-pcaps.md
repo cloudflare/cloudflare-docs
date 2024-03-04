@@ -10,7 +10,7 @@ After a {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}
 
 {{<Aside type="note">}}
 
-This feature is available for Advanced Magic Firewall users. For access, contact your account team.
+Packet captures are available for Advanced Magic Firewall users. For access, contact your account team.
 
 {{</Aside>}}
 
