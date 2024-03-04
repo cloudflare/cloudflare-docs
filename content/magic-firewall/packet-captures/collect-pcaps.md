@@ -18,12 +18,7 @@ This feature is available for Advanced Magic Firewall users. For access, contact
 
 Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured. The default API field for this is `"system": "magic-transit"`, both for the request and response.
 
-Cloudflare supports two types of packet captures:
-
-- **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all data centers from Cloudflare's global network to build a PCAP file.
-- **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center or set of data centers and sent to either a GCP or AWS bucket specified by the user.
-
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note" header="Note">}}
 
 For help determining which data center to select for a packet capture, visit https://cloudflare.com/cdn-cgi/trace and refer to the `colo` field. Note some data centers can be regional such as `ORD` while other names may be more specific like `ord02`. Either of these names can be used for this same field.
 
@@ -31,7 +26,7 @@ For help determining which data center to select for a packet capture, visit htt
 
 ### Packet capture limits
 
-**Simple and Full**
+**Sampled and full**
 
 - `time_limit`: The minimum value is `1` seconds and maximum value is `300` seconds.
 - `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
@@ -57,13 +52,13 @@ The main **Packet captures** page displays a list of captures.
 
 The PCAPs API needs both `system` and `type` to be specified to start a capture. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
 
-Currently, you can only send one collect request per minute for simple PCAPs, and you can only have one running or pending full PCAP at a time.
+Currently, you can only send one collect request per minute for sampled PCAPs, and you can only have one running or pending full PCAP at a time.
 
 {{<details header="Full PCAP">}}
 
-For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than simple packets.
+For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than sampled packets.
 
-The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and simple packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
+The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and sampled packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
 
 Leave `filter_v1` empty to collect all packets without any filtering.
 
@@ -115,15 +110,15 @@ header: Full PCAP example response
 
 {{</details>}}
 
-{{<details header="Simple PCAP">}}
+{{<details header="Sampled PCAP">}}
 
-To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](/api/operations/magic-pcap-collection-create-pcap-request).
+To create a sampled PCAP request, send a JSON body with the required parameter listed at [Create sampled PCAP request](/api/operations/magic-pcap-collection-create-pcap-request).
 
 Leave `filter_v1` to collect all packets without any filtering.
 
 ```bash
 ---
-header: Simple PCAP example request
+header: Sampled PCAP example request
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
 --header 'Content-Type: application/json' \
@@ -148,7 +143,7 @@ The response is a JSON body that contains the details of the job running to buil
 
 ```json
 ---
-header: Simple PCAP example response
+header: Sampled PCAP example response
 ---
 {
   "result": {
@@ -204,7 +199,7 @@ The response will be similar to the one received when requesting a PCAP collecti
 
 ```json
 ---
-header: Simple PCAP example result
+header: Sampled PCAP example result
 ---
 {
   "result": {
@@ -262,9 +257,9 @@ For more information on how to process multiple saved capture files into a singl
 
 To obtain full PCAPs, download the files from the bucket specified in `destination_conf` after the PCAP's status is `success`. You may find multiple files named `pcap_<pcap_id>.pcap` per capture as captures can occur across multiple machines.
 
-**Simple PCAPs**
+**Sampled PCAPs**
 
-Once the simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
+Once the sampled PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/download \
