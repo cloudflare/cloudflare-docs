@@ -6,7 +6,7 @@ weight: 5
 
 # Packet captures
 
-Cloudflare supports two types of packet captures: full, and sampled.
+Cloudflare supports two types of packet captures: full, and sampled. Full packet captures is the default behavior.
 
 ## Sampled packet capture
 
