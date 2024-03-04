@@ -7,8 +7,6 @@ import * as codeOwnersUtils from 'codeowners-utils';
 import { OWNERS, REVIEWERS } from "../owners";
 // import fs from "fs";
 
-let codeowners = codeOwnersUtils.loadOwners(process.cwd())
-console.log(codeowners)
 type Octokit = ReturnType<typeof github.getOctokit>;
 
 type Options = {
@@ -77,10 +75,12 @@ function parse(filename: string): string | void {
 
 (async function () {
   try {
+    let cwd = process.cwd();
+    let codeowners = codeOwnersUtils.loadOwners(cwd)
+    console.log(codeowners)
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
     const payload = github.context.payload;
-    console.log("event payload:", JSON.stringify(payload, null, 2));
 
     const { repository, pull_request } = payload;
     if (!pull_request) throw new Error('Missing "pull_request" object!');
