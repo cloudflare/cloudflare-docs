@@ -14,7 +14,7 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 A Durable Object namespace is a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
 {{</Aside>}}
 
-## View via the dashboard
+## View metrics and analytics via the dashboard
 
 Per-namespace analytics for Durable Objects are available in the Cloudflare dashboard. To view current and historical metrics for a namespace:
 
