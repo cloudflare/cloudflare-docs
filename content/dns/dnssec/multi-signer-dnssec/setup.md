@@ -20,7 +20,7 @@ Note that:
 
 ## 1. Set up Cloudflare zone
 
-### Cloudflare as Primary
+### Cloudflare as Primary (full setup)
 
 If you use Cloudflare as a primary DNS provider, meaning that you manage your DNS records in Cloudflare, do the following:
 
