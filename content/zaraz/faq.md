@@ -204,7 +204,7 @@ In your Google Analytics 4 action, select **Add field** > **Add custom field...*
 
 {{<faq-answer>}}
 
-Zaraz supports Google Consent Mode for both Google Analytics and Google Ads. Go to your tool page and select **Settings**. Click **Add field**, and select **Consent Mode** from the drop-down, then **Confirm**.
+Zaraz supports Google Consent Mode for both Google Analytics and Google Ads. Go to your tool page and select **Settings**. Select **Add field**, and select **Consent Mode** from the drop-down menu. Then, select **Confirm**.
 
 The value for Consent Mode must adhere to Google's defined format, which is a 4-character string starting with `G1`, followed by two characters indicating consent status for Marketing and Analytics. `1` indicates consent, `0` indicates no consent, and `-` indicates no consent was required. For example, setting the value to `G111` means the user has granted consent for both Marketing and Analytics, `G101` means consent for Analytics only, and `G10-` means no consent for Marketing but no required consent for Analytics.
 
