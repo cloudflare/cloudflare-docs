@@ -71,10 +71,13 @@ async function list(
 
     for (const file of files) {
       const match = codeOwnersUtils.matchFile(file, codeowners)
+      console.log(match)
       for (const owner of match.owners) {
         assignees.add(owner)
       }
     }
+
+    console.log(assignees)
 
     // don't self-assign
     assignees.delete(author);
