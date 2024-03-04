@@ -1,7 +1,7 @@
 ---
 title: Cloud Network Interconnect
 pcx_content_type: concept
-weight: 3
+weight: 4
 ---
 
 # Cloud Network Interconnect

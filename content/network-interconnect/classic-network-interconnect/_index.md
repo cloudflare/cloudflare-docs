@@ -1,7 +1,7 @@
 ---
 title: Types of interconnect
 pcx_content_type: concept
-weight: 4
+weight: 5
 ---
 
 # Types of interconnect
