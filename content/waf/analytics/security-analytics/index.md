@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 1
 ---
 
-{{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}
+# Security Analytics
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
