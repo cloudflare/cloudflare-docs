@@ -24,6 +24,5 @@ Magic Transit is a network security and performance solution that offers DDoS pr
 {{</related>}}
 
 {{<related header="Magic WAN" href="/magic-wan/" product="magic-wan">}}
-Improve security and performance for your entire corporate networking, reducing cost and operation complexity.
+Improve security and performance for your entire corporate network, reducing cost and operation complexity.
 {{</related>}}
-
