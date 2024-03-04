@@ -8,51 +8,18 @@ meta:
 
 # About Cloudlfare Network Interconnect
 
-Cloudflare supports a variety of options to connect your network to Cloudflare Network Interconnect (CNI), and peering via either an Internet exchange, or a private network interconnect (PNI). Below is a brief overview of the options to help you decide which method best fits your network. Some customers may find that it makes sense to deploy both CNI and PNI.
+Cloudflare supports a variety of options to connect your network to Cloudflare:
 
-## Public Peering, Internet Exchanges, and Private Network Interconnects (PNIs)
+- Enterprise Network Interconnect (ENI) for Magic WAN and Magic Transit
+- Classic Network Interconnect for Magic Transit (Classic CNI)
+- Cloud Network Interconnect (Cloud CNI) for Magic WAN and Magic Transit
+- Peering via either an internet exchange, or a private network interconnect (PNI).
 
-Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-policy/). We will peer with anyone we exchange traffic with, and there is no requirement to be a Cloudflare customer. You can use BGP to peer with Cloudflare at any of the Public Internet Exchanges listed on [Cloudflare’s PeeringDB page](https://www.peeringdb.com/net/4224). If you have many users accessing websites protected and proxied by Cloudflare, then peering with Cloudflare may help you remove bandwidth from your Internet transit links, and increase performance by reducing latency to Cloudflare. You may also optionally sign up for the [Cloudflare Peering Portal](https://www.cloudflare.com/partners/peering-portal/), which allows operators of public [BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) listed on PeeringDB to view where their network exchanges traffic with Cloudflare. Finally, if our networks exchange more than 1 Gbps of traffic in a single location, we can move your peering from the Internet Exchange to a Private Network Interconnect.
+Below is a brief overview of the options to help you decide which method best fits your network.
 
-### Peering requirements:
-
-- Operate a public BGP autonomous system (no obligation to be a customer)
-- Connect to Cloudflare at a public internet exchange
-
-## Cloudflare Network Interconnect 2.0
-
-[Cloudflare Network Interconnect 2.0 (CNI 2.0)](/network-interconnect/cni-2.0/) is the fastest and easiest way to physically connect your Magic Transit or Magic WAN connected network directly to Cloudflare. You can use your Cloudflare account to find a Cloudflare data center near you, and order a CNI 2.0 directly from the Interconnects section of the [Cloudflare dashboard](/network-interconnect/cni-2.0/create-interconnects/) in three minutes. Once deployed, you can view any CNI 2.0 connections from the dashboard. CNI 2.0 integrates with Magic Transit and Magic WAN, and removes the requirement for a GRE tunnel for all traffic over the circuit.
-
-### CNI 2.0 requirements
-
-To be able to use CNI 2.0, you need:
-
-- A Cloudflare Enterprise account
-- To be a Magic Transit or Magic WAN customer
-- To be able to physically connect to Cloudflare at a CNI 2.0 capable location
-
-## Cloudflare Network Interconnect 1.0
-
-Cloudflare Network Interconnect 1.0 enables customers to connect their network directly to Cloudflare. You will need to work with an implementation manager to discover the best location to connect to Cloudflare, and to order a circuit. In addition to physically connecting to Cloudflare with a cross-connect, CNI 1.0 also supports virtual CNIs via our technology partners like Megaport and Equinix. If you are a Magic Transit customer, Cloudflare can send you clean traffic over a CNI 1.0 without a GRE tunnel.
-
-### CNI 1.0 requirements
-
-To be able to use CNI 1.0, you need:
-
-- A Cloudflare Enterprise account
-- To be able to physically or virtually connect to Cloudflare at a CNI 1.0 capable location
-- To coordinate circuit provisioning with your Cloudflare Implementation Manager
-
-## Compare CNI Versions
-
-Below, you can compare the several CNI options.
-
-Capability                                  | CNI 2.0                               | CNI 1.0
----                                         | ---                                   | ---
-**Supported port speeds**                   | 1 Gbps, 10 Gbps, 100 Gbps             | 10 Gbps, 100 Gbps
-**Circuit ordering and management**         | Self-service via Cloudflare dashboard | Manual with implementation manager
-**Magic Transit integration**               | No GRE tunnel required                | No GRE required to receive clean traffic from Cloudflare. <br> Outbound Internet traffic through Magic Transit requires a GRE tunnel.
-**Magic WAN integration**                   | No GRE tunnel required                | Not supported. Refer to IPsec over PNI.
-**Virtual CNI via Technology Partners**     | Not supported (coming soon)           | Console Connect, Equinix Users, Megaport, PacketFabric
-BGP and BFD | Not supported (coming soon)   | BGP route reflector signaling for Magic Transit
-LACP Bundling | Not supported (coming soon) | Supported
+Network Interconnect Mode | Use cases | Capabilities
+--- | --- | ---
+Enterprise Network Interconnect (ENI) | Use for Magic WAN and/or Magic Transit, interconnecting directly with on-premises locations. |  &#x2022; 1, 10, 100 Gbps <br>  &#x2022; Available at ENI capable Cloudflare edge locations <br>  &#x2022; No tunnel required <br>  &#x2022; Self-service via Dashboard in less than 3 minutes
+Classic Network Interconnect (Classic CNI) | Use for Magic Transit, interconnecting directly or virtually (via a partner) with on-premises locations. |  &#x2022; 10, 100 Gbps <br>  &#x2022; Available at classic CNI capable Cloudflare edge locations <br>  &#x2022; Overlay GRE tunnel required for egress <br>  &#x2022; BGP route reflector signaling <br>  &#x2022; Contact Implementation Manager
+Cloud Network Interconnect (Cloud CNI) | Use for Magic WAN and/or Magic Transit, interconnecting directly with major cloud service provider virtual networks / VPCs. |  &#x2022; Speed depends on cloud provider <br>  &#x2022; Available at Cloud CNI capable Cloudflare edge locations <br>  &#x2022; Contact Implementation Manager
+Peering, or private network interconnect (PNI) | Use for connecting your users to any Cloudflare services, via a more direct, performant and potentially cost-effective network path. |  &#x2022; Speed depends on IX or PNI <br>  &#x2022; Available at PNI capable Cloudflare edge locations (PNI) and any Internet Exchange (IX) where Cloudflare peer today. <br>  &#x2022; Contact [peering@cloudflare.com](peering@cloudflare.com)
