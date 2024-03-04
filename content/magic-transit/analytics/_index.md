@@ -4,6 +4,8 @@ title: Analytics
 weight: 11
 ---
 
+# GRE and IPsec tunnel analytics
+
 {{<render file="_network-analytics.md" productFolder="magic-wan" withParameters="Magic Transit">}}
 
 ## Query analytics with GraphQL
