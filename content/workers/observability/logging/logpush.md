@@ -7,7 +7,7 @@ meta:
 
 # Workers Trace Events Logpush
 
-[Cloudflare Logpush](/logs/about/) supports the ability to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
+[Cloudflare Logpush](/logs/about/) supports the ability to send [Workers Trace Event Logs](/logs/reference/log-fields/account/workers_trace_events/) to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
 
 {{<Aside type="warning">}}
 

@@ -1,31 +1,37 @@
 {{ define "main" }}
-  <div class="DocsPage">
-    {{- partial "skipcontent" . -}}
-    {{- partial "topbar.mobile" . -}}
-    {{- partial "sidebar.nav" . -}}
+<div class="DocsPage">
+  {{- partial "skipcontent" . -}}
+  {{- partial "topbar.mobile" . -}}
+  {{- partial "sidebar.nav" . -}}
 
-    <div class="DocsToolbar">
-      {{- partial "topbar.search" . -}}
-      {{- partial "topbar.tools" . -}}
-    </div>
-
-    <main class="DocsBody">
-      {{ partial "sidebar.toc" . }}
-
-      <div id="docs-content" data-reach-skip-nav-content></div>
-      {{- partial "breadcrumbs" . -}}
-
-      <div class="DocsContent" id="main" page-type="document">
-        <h1>{{ .Title }}</h1>
-
-        <article class="DocsMarkdown">
-          {{ partial "models/header.md" . | markdownify }}
-          {{- .Content -}}
-          {{ partial "models/footer.md" .| markdownify }}
-        </article>
-      </div>
-    </main>
-
-    {{ partial "footer" . }}
+  <div class="DocsToolbar">
+    {{- partial "topbar.search" . -}}
+    {{- partial "topbar.tools" . -}}
   </div>
+
+  <main class="DocsBody">
+    {{ partial "sidebar.toc" . }}
+
+    <div id="docs-content" data-reach-skip-nav-content></div>
+    {{- partial "breadcrumbs" . -}} 
+    <div class="DocsContent" id="main" page-type="document">
+      <article class="DocsMarkdown">
+        <div class="DocsMarkdown-beta">
+          <h1>{{ .Title }}</h1>
+          {{ range .Params.model.properties }} 
+            {{ if and (eq .property_id "beta") (eq .value "true") }}
+              {{/* Cannot use heading-pill shortcode outside of content dir */}}
+              <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
+            {{ end }} 
+          {{ end }}
+        </div>
+        {{ partial "models/header.md" . | markdownify }}
+        {{- .Content -}}
+        {{ partial "models/footer.md" .| markdownify }}
+      </article>
+    </div>
+  </main>
+
+  {{ partial "footer" . }}
+</div>
 {{ end }}

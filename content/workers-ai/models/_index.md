@@ -9,4 +9,6 @@ hideChildren: true
 
 Browse our entire catalog of models.
 
+{{<render file="_billing-announcement.md">}}
+
 {{% models-grouped-by-task %}}
