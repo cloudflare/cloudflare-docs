@@ -9,7 +9,7 @@ meta:
 
 ## Background
 
-Attach text strings and JSON values as environment variables to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
+Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 Text strings and JSON values are not encrypted and are useful for storing application configuration.
 
@@ -17,17 +17,7 @@ Text strings and JSON values are not encrypted and are useful for storing applic
 
 Text and JSON values are defined via the `[vars]` configuration in your `wrangler.toml` file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker-dev"
-
-[vars]
-API_HOST = "example.com"
-API_ACCOUNT_ID = "example_user"
-SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
-```
+{{<render file="_envvar-example.md">}}
 
 Refer to the following example on how to access the `API_HOST` environment variable in your Worker code:
 

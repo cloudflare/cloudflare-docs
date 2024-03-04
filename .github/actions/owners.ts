@@ -19,6 +19,7 @@ export const OWNERS: Record<string, string[]> = {
   "browser-rendering": ["deadlypants1973"],
   byoip: ["patriciasantaana"],
   cache: ["angelampcosta"],
+  calls: ["dcpena"],
   "china-network": ["pedrosousa"],
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["jason-cf"],
@@ -80,7 +81,7 @@ export const OWNERS: Record<string, string[]> = {
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
   "vectorize": ["Maddy-Cloudflare"],
-  "workers-ai": ["irvinebroque", "pdwittig"],
+  "workers-ai": ["irvinebroque", "pdwittig", "deadlypants1973"],
   zaraz: ["kodster28"],
 };
 

@@ -356,7 +356,8 @@
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
-/fundamentals/internet/ /fundamentals/reference/the-internet/ 301
+/fundamentals/internet/ /fundamentals/concepts/the-internet/ 301
+/fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
@@ -496,6 +497,7 @@
 /fundamentals/setup/account-setup/verify-email-address/ /fundamentals/setup/account/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
+/fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -654,6 +656,12 @@
 /magic-wan/get-started/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-static-routes/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
+/magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ 301
+/magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
+/magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/
+/magic-wan/configuration/manually/how-to/tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/
+/magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
+/magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
@@ -668,6 +676,7 @@
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
+/pages/get-started/guide/ /pages/get-started/git-integration/ 301
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
 /pages/how-to/deploy-a-hugo-site/ /pages/framework-guides/deploy-a-hugo-site/ 301
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
@@ -1169,6 +1178,7 @@
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
+/workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
@@ -1185,7 +1195,6 @@
 /workers/learning/service-worker/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrating-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrate-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
-/workers/runtime-apis/durable-objects/ /durable-objects/ 301
 /workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
 /workers/platform/headers/ /workers/runtime-apis/headers/ 301
 /workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/ 301
@@ -1243,7 +1252,6 @@
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301
 /workers/runtime-apis/add-event-listener/ /workers/reference/migrate-to-module-workers/ 301
 /workers/runtime-apis/tail-event/ /workers/runtime-apis/handlers/tail/ 301
-/workers/runtime-apis/kv/ /kv/api/ 301
 /workers/wrangler/workers-kv/ /kv/ 301
 /workers/databases/native-integrations/momento/ /workers/configuration/integrations/momento/ 301
 /workers/databases/connect-to-postgres/ /hyperdrive/learning/connect-to-postgres/ 301
@@ -1252,12 +1260,26 @@
 /workers/runtime-apis/websockets/websockets/ /workers/runtime-apis/websockets/ 301
 /workers/learning/continuous-integration/ /workers/configuration/continuous-integration/ 301
 /workers/learning/security-model/ /workers/reference/security-model/ 301
+/workers/runtime-apis/R2/ /workers/runtime-apis/bindings/R2/ 301
+/workers/runtime-apis/durable-objects/ /durable-objects/api/ 301
+/workers/runtime-apis/kv/ /kv/api/ 301
+/workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/ 301
+/workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
+/workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 
 # workers ai
-/workers-ai/models/llm/ /workers-ai/models/text-embeddings/ 301
-/workers-ai/models/speech-to-text/ /workers-ai/models/speech-recognition/ 301
-/workers-ai/models/sentiment-analysis/ /workers-ai/models/text-classification/ 301
-/workers-ai/models/embedding/ /workers-ai/models/text-embeddings/ 301
+/workers-ai/models/llm/ /workers-ai/models/#text-generation 301
+/workers-ai/models/speech-to-text/ /workers-ai/models/#automatic-speech-recognition 301
+/workers-ai/models/sentiment-analysis/ /workers-ai/models/#text-classification 301
+/workers-ai/models/embedding/ /workers-ai/models/#text-embeddings 301
+/workers-ai/models/text-embeddings/ /workers-ai/models/#text-embeddings 301
+/workers-ai/models/speech-recognition/ /workers-ai/models/#automatic-speech-recognition 301
+/workers-ai/models/translation/  /workers-ai/models/#translation 301
+/workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
+/workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
+/workers-ai/models/codellama-7b-instruct-awq/ /workers-ai/models/ 301
+/workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
+
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
