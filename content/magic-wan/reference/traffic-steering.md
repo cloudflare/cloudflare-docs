@@ -11,4 +11,4 @@ meta:
 
 By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the Magic WAN Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
 
-For more information, refer to [Applications and app types](/cloudflare-one/policies/gateway/application-app-types/).
+For more information, refer to [Application-aware policies](/magic-wan/configuration/connector/network-options/application-based-policies/).
