@@ -72,7 +72,7 @@ async function list(
     for (const file of files) {
       const match = codeOwnersUtils.matchFile(file, codeowners)
       for (const owner of match.owners) {
-        assignees.add(owner)
+        assignees.add(owner.replace(/^@/, ''))
       }
     }
 
