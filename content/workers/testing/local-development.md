@@ -3,15 +3,14 @@ title: Local development
 weight: 2
 pcx_content_type: concept
 meta:
-  description: Test your Worker in local development.
+  description: Develop your Workers locally via Wrangler.
 ---
 
 # Local development
 
-Cloudflare Workers can be fully developed and tested locally - providing confidence that the applications you develop locally work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to test against remote resources. Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
+Cloudflare Workers and most connected resources can be fully developed and tested locally - providing confidence that the applications you build locally will work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to test against remote resources. Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
 In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
-
 
 ## Start a local development server
 
@@ -29,7 +28,24 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. 
+
+Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data. Wrangler will automatically create local versions of bindings found in `wrangler.toml`. These will not have data in them initially, so you will need to add data manually.
+
+### Supported resource bindings in local development
+
+| Product                                   | Supported |
+| ----------------------------------------- | --------- |
+| R2                                        | ✅        |
+| KV                                        | ✅        |
+| D1                                        | ✅        |
+| Durable Objects                           | ✅        |
+| Queues                                    | ✅        |
+| Service Bindings (multiple workers)       | ✅        |
+| AI                                        | ✅[^1]    |
+| Hyperdrive                                | ✅        |
+
+[^1]: Support for local AI development includes accessing remote resources that count against usage.
 
 ### Clear Wrangler's local storage
 
@@ -63,61 +79,6 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 {{</Aside>}}
 
-## DevTools
-
-Wrangler supports using the [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. With `wrangler dev` running, press the <kbd>d</kbd> key in your terminal to open a DevTools session connected to your Worker from any Chromium-based browser.
-
-## Debug via breakpoints
-
-As of Wrangler 3.9.0, you can debug via breakpoints in your Worker. Breakpoints provide the ability to see exactly what is happening at a given point in the execution of your Worker. This functionality exists in both DevTools and VS Code.
-
-For more information on breakpoint debugging via Chrome's DevTools, refer to [Chrome's article on breakpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints/).
-
-### Setup VS Code to use breakpoints
-
-To setup VS Code for breakpoint debugging in your Worker project:
-
-1. Create a `.vscode` folder in your project's root folder if one does not exist.
-2. Within that folder, create a `launch.json` file with the following content:
-
-```json
-{
-  "configurations": [
-      {
-          "name": "Wrangler",
-          "type": "node",
-          "request": "attach",
-          "port": 9229,
-          "cwd": "/",
-          "resolveSourceMapLocations": null,
-          "attachExistingChildren": false,
-          "autoAttachChildProcesses": false,
-          "sourceMaps": true // works with or without this line
-      }
-  ]
-}
-```
-
-3. Open your project in VS Code, open a new terminal window from VS Code, and run `npx wrangler dev` to start the local dev server.
-
-4. At the top of the **Run & Debug** panel, you should see an option to select a configuration. Choose **Wrangler**, and select the play icon. You should see **Wrangler: Remote Process [0]** show up in the Call Stack panel on the left.
-
-5. Go back to a `.js` or `.ts` file in your project and add at least one breakpoint.
-
-5. Open your browser and go to the Worker's local URL (default `http://127.0.0.1:8787`). The breakpoint should be hit, and you should see details about your code at the specified line.
-
-{{<Aside type="warning">}}
-
-Note that breakpoint debugging in `wrangler dev` using `--remote` could extend Worker CPU time and incur additional costs. It is recommended to use `wrangler dev` in local mode by specifying no `--remote` option or with `--local`.
-
-{{</Aside>}}
-
-{{<Aside type="note">}}
-
-The `.vscode/launch.json` file only applies to a single workspace. If you prefer, you can add the above launch configuration to your User Settings (per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) to have it available for all your workspaces.
-
-{{</Aside>}}
-
 ## Related resources
 
-* [Log from Workers](/workers/observability/logging/real-time-logs) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
+* [Debugging Tools](/workers/testing/debugging-tools) - tools to help you gain insight into your Workers in order to diagnose issues.
