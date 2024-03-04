@@ -138,7 +138,7 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
     - Use regular Workers module resolution semantics—refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/#modules) page for more information
     - Cannot access the `cloudflare:test` module
     - Do not require specific compatibility dates or flags
-    - Can be written with the [Service Worker syntax](https://developers.cloudflare.com/workers/reference/migrate-to-module-workers/#service-worker-syntax)
+    - Can be written with the [Service Worker syntax](/workers/reference/migrate-to-module-workers/#service-worker-syntax)
     - Are not affected by global mocks defined in your tests
 
 - {{<code>}}wrangler: {{<type>}}{ configPath?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
