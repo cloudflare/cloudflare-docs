@@ -5,6 +5,7 @@ weight: 16
 ---
 
 # Metrics and analytics
+
 Durable Objects expose analytics for Durable Object namespace-level and request-level metrics. 
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
