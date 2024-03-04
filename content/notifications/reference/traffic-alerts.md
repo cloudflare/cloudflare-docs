@@ -33,7 +33,7 @@ Your traffic levels impact the accuracy of high sensitivity alerts. High sensiti
 
 Some alerts support grouping by status code. When status code grouping is enabled, a notification policy will calculate SLO violations and send alerts for each status code matched by the notification separately.
 
-For example, if an Advanced Error Rate policy is filtered to status codes between 500 and 599, and your domain received spikes to 503s and 504s, you would receive a separate alert for each status code. To receive a single alert, alert grouping should be disabled.
+For example, if an Advanced Error Rate policy is filtered to status codes between `500` and `599`, and your domain received spikes to `503` and `504`, you would receive a separate alert for each status code. To receive a single alert, alert grouping should be disabled.
 
 Because SLIs are calculated separately for each status code when grouping is enabled, it may be the case that a notification policy with status code grouping is not in violation, but the same policy without status code grouping is in violation. This can happen if there are spikes in the rates of multiple status codes, but no individual spike is large enough.
 
