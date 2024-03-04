@@ -38,6 +38,10 @@ The WAF currently provides the following detections for finding security threats
 
 To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
 
+{{<Aside type="note" header="Note">}}
+Currently, you cannot manage the [Bots](/bots/reference/bot-management-variables/#ruleset-engine-fields) and [Attacks](/waf/about/waf-attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details.
+{{</Aside>}}
+
 ### WAF mitigation features
 
 The WAF provides the following mitigation features for traffic posing as a security threat:
