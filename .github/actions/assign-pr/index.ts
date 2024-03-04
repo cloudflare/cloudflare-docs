@@ -34,14 +34,7 @@ async function list(
     len = res.data.length;
   for (let file, tmp: string | void; i < len; i++) {
     file = res.data[i];
-
-    tmp = parse(file.filename);
-    if (tmp) products.add(tmp);
-
-    if ((tmp = file.previous_filename)) {
-      tmp = parse(tmp);
-      if (tmp) products.add(tmp);
-    }
+    products.add(file.filename);
   }
 
   // if less than limit, stop
@@ -51,25 +44,6 @@ async function list(
   return list(client, options, products);
 }
 
-/**
- * Get the product slug from a file path.
- * @note code runs in posix environment ("/" not "\\")
- */
-function parse(filename: string): string | void {
-  let changelogEntry = /^data[/]changelogs[/](.*)\.ya?ml$/.exec(filename);
-
-  if (changelogEntry) {
-    // handle special cases of changelog filenames
-    return changelogEntry[1]
-      .replace("ddos-http", "ddos-protection")
-      .replace("ddos-network", "ddos-protection");
-  }
-
-  return (/^data[/]([^\/]+)\.ya?ml$/.exec(filename) ||
-    /^content[/]([^\/]+)[/]/.exec(filename) ||
-    [])[1];
-}
-
 // https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#webhook-payload-object-34
 // const ACTIONS = new Set(['ready_for_review', 'reopened', 'opened']);
 
@@ -77,7 +51,6 @@ function parse(filename: string): string | void {
   try {
     let cwd = process.cwd();
     let codeowners = await codeOwnersUtils.loadOwners(cwd);
-    console.log(codeowners)
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
     const payload = github.context.payload;
@@ -105,31 +78,18 @@ function parse(filename: string): string | void {
     // Determine reviewers based on files in PR diff.
 
     // https://octokit.github.io/rest.js/v18#pulls-list-files
-    const products = await list(client, {
+    
+    const files = await list(client, {
       repo: repository.name,
       owner: repository.owner.login,
       pull_number: prnumber,
     });
 
-    for (const slug of products) {
-      let owners_list = OWNERS[slug];
-
-      if (!owners_list) {
-        throw new Error(`Unknown "${slug}" product!`);
-      }
-
-      if (owners_list.length > 0) {
-        owners_list.forEach((x) => reviewers.add(x));
-      }
-
-      let reviewers_list = REVIEWERS[slug];
-
-      if (reviewers_list && reviewers_list.length > 0) {
-        reviewers_list.forEach((x) => reviewers.add(x));
-      }
+    for (const file of files) {
+      console.log(codeOwnersUtils.matchFile(file, codeowners))
     }
 
-    if (PCX.has(author)) {
+    /* if (PCX.has(author)) {
       console.log("~> request PCX team review");
       await client.rest.issues.addLabels({
         ...github.context.repo,
@@ -173,7 +133,7 @@ function parse(filename: string): string | void {
       });
     }
 
-    console.log("DONE~!");
+    console.log("DONE~!"); */
   } catch (error) {
     core.setFailed(error.message);
   }
