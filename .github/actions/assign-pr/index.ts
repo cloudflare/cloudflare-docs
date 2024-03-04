@@ -71,7 +71,6 @@ async function list(
 
     for (const file of files) {
       const match = codeOwnersUtils.matchFile(file, codeowners)
-      console.log(match)
       for (const owner of match.owners) {
         assignees.add(owner)
       }
@@ -82,12 +81,16 @@ async function list(
     // don't self-assign
     assignees.delete(author);
 
-    await client.rest.issues.addAssignees({
-      repo: repository.name,
-      owner: repository.owner.login,
-      issue_number: prnumber,
-      assignees: [...assignees],
-    });
+    for (const assignee of assignees) {
+      await client.rest.issues.addAssignees({
+        repo: repository.name,
+        owner: repository.owner.login,
+        issue_number: prnumber,
+        assignees: [assignee],
+      });
+    }
+
+    
 
     console.log("DONE~!");
   } catch (error) {
