@@ -82,13 +82,17 @@ async function list(
     assignees.delete(author);
 
     for (const assignee of assignees) {
-      await client.rest.issues.addAssignees({
+      console.log(assignee)
+      try { await client.rest.issues.addAssignees({
         repo: repository.name,
         owner: repository.owner.login,
         issue_number: prnumber,
         assignees: [assignee],
       });
+    } catch (error) {
+      core.setFailed(error.message);
     }
+  }
 
     
 
