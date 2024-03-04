@@ -6,6 +6,8 @@ meta:
     title: How to view GRE and IPsec tunnel analytics
 ---
 
+# GRE and IPsec tunnel analytics
+
 {{<render file="_network-analytics.md" withParameters="Magic WAN">}}
 
 ## Query analytics with GraphQL
