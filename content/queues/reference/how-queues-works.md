@@ -58,49 +58,6 @@ A queue can have multiple producer Workers. For example, you may have multiple p
 
 Additionally, multiple queues can be bound to a single Worker. That single Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
 
-### Content types
-
-Messages published to a queue can be published in different formats, depending on what interoperability is needed with your consumer. The default content type is `json`, which means that any object that can be passed to `JSON.stringify()` will be accepted. 
-
-To explicitly set the content type or specify an alternative content type, pass the `contentType` option to the `send()` method of your queue:
-
-```ts
-type Environment = {
-  readonly MY_FIRST_QUEUE: Queue;
-};
-
-export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
-    let message = {
-      url: req.url,
-      method: req.method,
-      headers: Object.fromEntries(req.headers),
-    };
-    try {
-      await env.MY_FIRST_QUEUE.send(message, { contentType: "json" }); // "json" is the default
-    } catch (e) {
-      // Catch cases where send fails, including due to a mismatched content type
-      console.log(e)
-      return Response.json({"msg": e}, { status: 500 })
-    }
-  },
-};
-```
-
-To only accept simple strings when writing to a queue, set `{ contentType: "string" }` instead:
-
-```ts
-    try {
-      // This will throw an exception (error) if you write to pass a non-string to the queue, such as a
-      // native JavaScript object or ArrayBuffer.
-      await env.MY_FIRST_QUEUE.send("hello there", { contentType: "string" }); // explicitly set 'string'
-    } catch (e) {
-      console.log(e)
-      return Response.json({"msg": e}, { status: 500 })
-```
-
-The [`QueuesContentType`](/queues/reference/javascript-apis/#queuescontenttype) API documentation describes how each format is serialized to a queue.
-
 ## Consumers
 
 ### Create a consumer
