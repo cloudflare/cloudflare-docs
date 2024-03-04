@@ -2,7 +2,7 @@
 title: PNI and peering setup
 pcx_content_type: tutorial
 updated: 2023-04-04
-weight: 4
+weight: 5
 ---
 
 # Public Peering an Private Network Interconnection (PNI)

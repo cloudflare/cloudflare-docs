@@ -1,10 +1,12 @@
 ---
-title: Types of interconnect
+title: Classic Network Interconnect
 pcx_content_type: concept
 weight: 5
 ---
 
-# Types of interconnect
+# Classic Network Interconnect
+
+## Types of interconnect
 
 Cloudflare supports two classic CNI connectivity options: physical and virtual. The network interconnect is the link between your infrastructure and Cloudflare's network.
 
