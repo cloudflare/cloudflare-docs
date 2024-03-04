@@ -6,7 +6,7 @@ weight: 9
 
 # Testing
 
-There are many ways of testing Workers and Pages projects. This section gives an overview of the different types of tools we provide for testing and debugging.
+This section provides an overview of the different types of tools that can be used for testing and debugging Workers.
 
 {{<directory-listing showDescriptions="true">}}
 
