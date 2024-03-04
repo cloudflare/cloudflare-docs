@@ -47,11 +47,12 @@ To be able to use CNI 1.0, you need:
 
 Below, you can compare the several CNI options.
 
-Capability                              | CNI 2.0                               | CNI 1.0
----                                     | ---                                   | ---
-**Supported port speeds**               | 1 Gbps, 10 Gbps, 100 Gbps             | 10 Gbps, 100 Gbps
-**Circuit ordering and management**     | Self-service via Cloudflare dashboard | Manual with implementation manager
-**Magic Transit integration**           | No GRE tunnel required                | No GRE required to receive clean traffic from Cloudflare. <br> Outbound Internet traffic through Magic Transit requires a GRE tunnel.
-**Magic WAN integration**               | No GRE tunnel required                | Not supported. Refer to IPsec over PNI.
-**Virtual CNI via Technology Partners** | Not supported (coming soon)           | Console Connect, Equinix Users, Megaport, PacketFabric
-
+Capability                                  | CNI 2.0                               | CNI 1.0
+---                                         | ---                                   | ---
+**Supported port speeds**                   | 1 Gbps, 10 Gbps, 100 Gbps             | 10 Gbps, 100 Gbps
+**Circuit ordering and management**         | Self-service via Cloudflare dashboard | Manual with implementation manager
+**Magic Transit integration**               | No GRE tunnel required                | No GRE required to receive clean traffic from Cloudflare. <br> Outbound Internet traffic through Magic Transit requires a GRE tunnel.
+**Magic WAN integration**                   | No GRE tunnel required                | Not supported. Refer to IPsec over PNI.
+**Virtual CNI via Technology Partners**     | Not supported (coming soon)           | Console Connect, Equinix Users, Megaport, PacketFabric
+BGP and BFD | Not supported (coming soon)   | BGP route reflector signaling for Magic Transit
+LACP Bundling | Not supported (coming soon) | Supported
