@@ -14,9 +14,9 @@ Listed below are the specific insights currently available:
 | Insight Name | Description | 
 | ------------ | ----------- |
 | [CASB integration status](/cloudflare-one/applications/scan-apps/troubleshooting/) | We detect unhealthy CASB integrations. | 
-| [Dangling 'A' Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A `A` DNS record is pointing to an IPv4 address that you might no longer control. You are at risk of a subdomain takeover. |
-| [Dangling 'AAAA' Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A `AAAA` DNS record is pointing to an IPv6 address that you might no longer control. You are at risk of a subdomain takeover. |
-| [Dangling CNAME Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A `CNAME` DNS record is pointing to a resource that cannot be found. You are at risk of a subdomain takeover. |
+| [Dangling `A` Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A record is pointing to an IPv4 address that you might no longer control. You are at risk of a subdomain takeover. |
+| [Dangling `AAAA` Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A record is pointing to an IPv6 address that you might no longer control. You are at risk of a subdomain takeover. |
+| [Dangling `CNAME` Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | A record is pointing to a resource that cannot be found. You are at risk of a subdomain takeover. |
 | [DMARC Record Errors](/dns/manage-dns-records/reference/dns-record-types/#dmarc) | We detect an incorrect or missing `DMARC` record. |
 | [Domains missing TLS Encryption](/ssl/get-started/) | We detect that there is no TLS encryption for this domain. |
 | [Domains supporting older TLS version](/ssl/reference/protocols/) | This domain supports older versions of the TLS protocol. |
