@@ -24,8 +24,8 @@ The two main roles of the Cloudflare WAF are the following:
 
 - **Mitigation**: Blocks, challenges, or throttles requests through different [mitigation features](#waf-mitigation-features) such as custom rules, WAF Managed Rules, and rate limiting rules. Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
 
-{{<Aside type="note" header="Note">}}
-Enabling traffic detections will not apply any mitigation measures to incoming traffic; they only provide signals that you can use to define your attack mitigation strategy.
+{{<Aside type="warning" header="Warning">}}
+Enabling traffic detections will not apply any mitigation measures to incoming traffic; detections only provide signals that you can use to define your attack mitigation strategy.
 {{</Aside>}}
 
 ### Available traffic detections
