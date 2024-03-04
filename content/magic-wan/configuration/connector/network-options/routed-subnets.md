@@ -60,3 +60,7 @@ Outbound traffic from host `192.168.100.13` in the subnet is translated to `10.1
 {{<Aside type="note">}}
 Even if NAT is enabled, a subnet’s local prefix must be unique within its LAN. It can be reused on other LANs or other sites. Overlay-facing prefixes — that is, a subnet’s NAT prefix if NAT is enabled and its local prefix otherwise — must always be unique across your whole Magic WAN.
 {{</Aside>}}
+
+## Create routed subnets
+
+For more information on how to create routed subnets, refer to **Create a LAN**, either in [Configure hardware Connector](/magic-wan/configuration/connector/configure-hardware-connector/#3-create-a-lan) or [Configure virtual Connector](/magic-wan/configuration/connector/configure-virtual-connector/#3-create-a-lan).
