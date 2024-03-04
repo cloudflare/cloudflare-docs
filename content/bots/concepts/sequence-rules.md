@@ -17,10 +17,10 @@ Sequence rules is currently in private beta. If you would like to be included in
 
 ---
 
-## Enable sequence cookies via the API
+## Enable sequence rules via the API
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
-2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence cookies.
+2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID.
 {{<Aside type="note">}}
 The short ID will not be visible until our account team has enabled this feature for you. 
@@ -42,10 +42,10 @@ curl --request PUT \
 5. Use the expression editor to write sequence or timing based rules via [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), or [transform rules](/rules/transform/). You can put these rules in log only mode to monitor.
 
 {{<Aside type="note">}}
-When you enable sequence cookies, Cloudflare will start setting cookies for all requests that match your endpoints. 
+When you enable sequence rules, Cloudflare will start setting cookies for all requests that match your endpoints. 
 {{</Aside>}}
 
-Once you have enabled sequence cookies, the rules fields will be populated and you can now use the new fields in your rules.
+Once you have enabled sequence rules, the rules fields will be populated and you can now use the new fields in your rules.
 
 ---
 
@@ -149,14 +149,14 @@ not cf.sequence.msec_since_op["aaaaaaaa"] ge 1000
 
 ---
 
-## Disable sequence cookies via the API
+## Disable sequence rules via the API
 
-Disabling sequence cookies will stop the rules fields from being populated. If you still have rules deployed which depend on these fields, those rules may not behave as intended. Remove or disable any rules that rely on sequence fields before disabling sequence cookies.
+Disabling sequence rules will stop the rules fields from being populated. If you still have rules deployed which depend on these fields, those rules may not behave as intended. Remove or disable any rules that rely on sequence fields before disabling sequence rules.
 
-To disable sequence cookies:
+To disable sequence rules:
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
-2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence cookies.
+2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID.
 {{<Aside type="note">}}
 The short ID will not be visible until our account team has enabled this feature for you. 
