@@ -76,7 +76,7 @@ function parse(filename: string): string | void {
 (async function () {
   try {
     let cwd = process.cwd();
-    let codeowners = codeOwnersUtils.loadOwners(cwd)
+    let codeowners = await codeOwnersUtils.loadOwners(cwd);
     console.log(codeowners)
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
