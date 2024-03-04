@@ -3,9 +3,12 @@
 
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import * as codeOwnersUtils from 'codeowners-utils';
 import { OWNERS, REVIEWERS } from "../owners";
 // import fs from "fs";
 
+let codeowners = codeOwnersUtils.loadOwners(process.cwd())
+console.log(codeowners)
 type Octokit = ReturnType<typeof github.getOctokit>;
 
 type Options = {
