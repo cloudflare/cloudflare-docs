@@ -68,7 +68,7 @@ For most users, Cloudflare recommends using our [custom Vitest pool](/workers/te
 
 {{<Aside type="warning">}}
 
-The Workers Vitest pool does not support testing Workers using the Service Worker format. Please [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) first.
+The Workers Vitest integration does not support testing Workers using the Service Worker format. Please [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) first.
 
 {{</Aside>}}
 

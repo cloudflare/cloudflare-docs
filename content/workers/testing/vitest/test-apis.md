@@ -6,7 +6,7 @@ weight: 5
 
 # Test APIs
 
-The Workers Vitest pool provides runtime helpers for writing tests in the `cloudflare:test` module. This module can only be imported from within test files run by the Workers Vitest pool.
+The Workers Vitest integration provides runtime helpers for writing tests in the `cloudflare:test` module. This module can only be imported from within test files run by the Workers Vitest integration.
 
 ## `cloudflare:test` module definition
 

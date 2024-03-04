@@ -25,7 +25,7 @@ $ npm install vitest@1.3.0 --save-dev --save-exact
 $ npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
-This will add the packages to your `package.json` file and install them as dev dependencies. 
+This will add the packages to your `package.json` file and install them as dev dependencies.
 
 {{<Aside type="note">}}
 
@@ -94,7 +94,7 @@ For a full list of available configuration options, read the [Configuration guid
 
 ### Add Configuration Options via Miniflare
 
-Under the hood, the Workers Vitest pool uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/) local mode. Options can be passed directly to Miniflare for advanced configuration.
+Under the hood, the Workers Vitest integration uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/) local mode. Options can be passed directly to Miniflare for advanced configuration.
 
 For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersPoolOptions` like this:
 
@@ -119,7 +119,7 @@ export default defineConfig({
 });
 ```
 
-This configuration would add a KV namespace `TEST_NAMESPACE` that was only accessible in tests. Using this method, you can add or override existing bindings like Durable Objects or service bindings.  
+This configuration would add a KV namespace `TEST_NAMESPACE` that was only accessible in tests. Using this method, you can add or override existing bindings like Durable Objects or service bindings.
 
 {{<Aside type="note">}}
 
@@ -266,7 +266,7 @@ export default {
     }
 
 		return new Response('Hello World!');
-	} 
+	}
 } satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}

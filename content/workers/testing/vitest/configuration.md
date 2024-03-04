@@ -6,7 +6,7 @@ weight: 4
 
 # Configuration
 
-The Workers Vitest pool provides additional configuration on top of Vitest's usual options.
+The Workers Vitest integration provides additional configuration on top of Vitest's usual options.
 All configuration exists under the `poolOptions.workers` key.
 The `defineWorkersPoolOptions()` function from the `@cloudflare/vitest-pool-workers/config` module can optionally be used for type checking and completions.
 An example configuration would be:
@@ -35,13 +35,13 @@ export default defineConfig({
 
 {{<Aside type="note">}}
 
-Use the [`poolMatchGlobs` option](https://vitest.dev/config/#poolmatchglobs-0-29-4) to only use the Workers Vitest pool for certain tests.
+Use the [`poolMatchGlobs` option](https://vitest.dev/config/#poolmatchglobs-0-29-4) to only use the Workers Vitest integration for certain tests.
 
 {{</Aside>}}
 
 {{<Aside type="warning">}}
 
-Custom `environment`s or `runner`s are not supported when using the Workers Vitest pool.
+Custom `environment`s or `runner`s are not supported when using the Workers Vitest integration.
 
 {{</Aside>}}
 
@@ -143,7 +143,7 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
 {{<Aside type="warning">}}
 
-You must define a compatibility date of `2022-10-31` or higher, and include `nodejs_compat` in your compatibility flags to use the Workers Vitest pool.
+You must define a compatibility date of `2022-10-31` or higher, and include `nodejs_compat` in your compatibility flags to use the Workers Vitest integration.
 
 {{</Aside>}}
 

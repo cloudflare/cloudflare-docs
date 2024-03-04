@@ -10,7 +10,7 @@ meta:
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach for users wanting to run integration tests against their Workers. The `@cloudflare/vitest-pool-workers` package provides a more ergonomic API and better developer experience for users wanting to write a wide variety of tests.
 
-This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest pool. For more information on writing tests with the Workers Vitest pool read [this guide](/workers/testing/vitest/get-started/write-your-first-test/).
+This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration read [this guide](/workers/testing/vitest/get-started/write-your-first-test/).
 
 ## Referencing a Worker for Integration Testing
 
@@ -29,7 +29,7 @@ it("dispatches fetch event", () => {
 })
 ```
 
-With the Workers Vitest pool, now you can do the same thing using the `SELF` fetcher from `cloudflare:test`:
+With the Workers Vitest integration, now you can do the same thing using the `SELF` fetcher from `cloudflare:test`:
 
 ```js
 ---
@@ -46,7 +46,7 @@ it("dispatches fetch event", async () => {
 
 ## Stopping a Worker
 
-With the Workers Vitest pool there is no need to stop a Worker via `worker.stop()`. This is handled automatically after tests run.
+With the Workers Vitest integration there is no need to stop a Worker via `worker.stop()`. This is handled automatically after tests run.
 
 ## Importing Wrangler Config
 
@@ -61,7 +61,7 @@ await unstable_dev("src/index.ts", {
 });
 ```
 
-With the Workers Vitest pool, you can now set this in `vitest.config.js` for all of your tests.
+With the Workers Vitest integration, you can now set this in `vitest.config.js` for all of your tests.
 
 ```js
 ---
@@ -86,7 +86,7 @@ export default defineConfig({
 
 ## Testing Service Workers
 
-Unlike the `unstable_dev` API, Workers Vitest pool does not support testing Workers using the Service Worker format. You will need to first [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) in order to use it.
+Unlike the `unstable_dev` API, Workers Vitest integration does not support testing Workers using the Service Worker format. You will need to first [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) in order to use it.
 
 ## Defining Types
 
