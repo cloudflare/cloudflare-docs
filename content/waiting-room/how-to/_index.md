@@ -11,5 +11,3 @@ meta:
 When working with Cloudflare Waiting Room, you will commonly perform the following tasks:
 
 {{<directory-listing>}}
-
-TEST

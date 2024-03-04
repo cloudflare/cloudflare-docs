@@ -3,7 +3,7 @@
 
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import * as codeOwnersUtils from 'codeowners-utils';
+import * as codeOwnersUtils from "codeowners-utils";
 
 type Octokit = ReturnType<typeof github.getOctokit>;
 
@@ -62,7 +62,7 @@ async function list(
     // Determine assignees based on files in PR diff.
 
     // https://octokit.github.io/rest.js/v18#pulls-list-files
-    
+
     const files = await list(client, {
       repo: repository.name,
       owner: repository.owner.login,
@@ -70,32 +70,25 @@ async function list(
     });
 
     for (const file of files) {
-      const match = codeOwnersUtils.matchFile(file, codeowners)
+      const match = codeOwnersUtils.matchFile(file, codeowners);
       for (const owner of match.owners) {
-        assignees.add(owner.replace(/^@/, ''))
+        assignees.add(owner.replace(/^@/, ""));
       }
     }
-
-    console.log(assignees)
 
     // don't self-assign
     assignees.delete(author);
 
-    for (const assignee of assignees) {
-      console.log(assignee)
-      try { await client.rest.issues.addAssignees({
+    try {
+      await client.rest.issues.addAssignees({
         repo: repository.name,
         owner: repository.owner.login,
         issue_number: prnumber,
-        assignees: [assignee],
+        assignees: [...assignees],
       });
     } catch (error) {
       core.setFailed(error.message);
     }
-  }
-
-    
-
     console.log("DONE~!");
   } catch (error) {
     core.setFailed(error.message);

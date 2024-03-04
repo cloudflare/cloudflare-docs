@@ -38,6 +38,7 @@
 
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/gateway/ @cloudflare/pcx-technical-writing @maxvp
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
