@@ -6,7 +6,7 @@ weight: 5
 
 # Test APIs
 
-The Workers Vitest integration provides runtime helpers for writing tests in the `cloudflare:test` module. This module can only be imported from within test files run by the Workers Vitest integration.
+The Workers Vitest integration provides runtime helpers for writing tests in the `cloudflare:test` module. This module is provided by the `@cloudflare/vitest-pool-workers` package, but can only be imported from test files that execute in the Workers runtime.
 
 ## `cloudflare:test` module definition
 
@@ -14,9 +14,23 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}env: {{<type>}}import("cloudflare:test").ProvidedEnv{{</type>}}{{</code>}}
 
-  - 2nd argument passed to modules-format exported handlers. Contains bindings configured in top-level `miniflare` pool options. To configure the type of this value, use an ambient module type:
+  - Exposes the [`env` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the 2nd argument passed to modules-format exported handlers. This provides access to [bindings](/workers/runtime-apis/bindings/) that you have defined in your [Vitest configuration file](/workers/testing/vitest/configuration/).
 
     <br>
+
+    ```js
+    ---
+    filename: index.spec.js
+    ---
+    import { env } from "cloudflare:test";
+
+    it("uses binding", async () => {
+      await env.KV_NAMESPACE.put("key", "value");
+      expect(await env.KV_NAMESPACE.get("key")).toBe("value");
+    });
+    ```
+
+    To configure the type of this value, use an ambient module type:
 
     ```ts
     ---
@@ -24,7 +38,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
     ---
     declare module "cloudflare:test" {
       interface ProvidedEnv {
-        NAMESPACE: KVNamespace;
+        KV_NAMESPACE: KVNamespace;
       }
       // ...or if you have an existing `Env` type...
       interface ProvidedEnv extends Env {}
@@ -35,13 +49,27 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
   - [Service binding](/workers/runtime-apis/service-bindings/) to the default export defined in the `main` Worker. Use this to write integration tests against your Worker. Note this `main` Worker runs in the same isolate/context as tests so any global mocks will apply to it too.
 
+    <br>
+
+    ```js
+    ---
+    filename: index.spec.js
+    ---
+    import { SELF } from "cloudflare:test";
+
+    it("dispatches fetch event", async () => {
+      const response = await SELF.fetch("https://example.com");
+      expect(await response.text()).toMatchInlineSnapshot(...);
+    });
+    ```
+
 - {{<code>}}fetchMock: {{<type>}}import("undici").MockAgent{{</type>}}{{</code>}}
 
-  - Declarative interface for mocking outbound `fetch()` requests. Deactivated by default and reset before running each test file. Refer to [`undici`'s `MockAgent` documentation](https://undici.nodejs.org/#/docs/api/MockAgent) for more information. Note this only mocks `fetch()` requests for the current test runner worker. Auxiliary workers should mock `fetch()`es using the Miniflare `fetchMock`/`outboundService` options.
+  - Declarative interface for mocking outbound `fetch()` requests. Deactivated by default and reset before running each test file. Refer to [`undici`'s `MockAgent` documentation](https://undici.nodejs.org/#/docs/api/MockAgent) for more information. Note this only mocks `fetch()` requests for the current test runner worker. Auxiliary workers should mock `fetch()`es using the Miniflare `fetchMock`/`outboundService` options. Refer to the [Configuration](/workers/testing/vitest/configuration/#workerspooloptions) page for more information.
 
     <br>
 
-    ```ts
+    ```js
     ---
     filename: index.spec.js
     ---
@@ -77,11 +105,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}createExecutionContext(): {{<type>}}ExecutionContext{{</type>}}{{</code>}}
 
-  - Creates an instance of `ExecutionContext` for use as the 3rd argument to modules-format exported handlers.
+  - Creates an instance of the [`context` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the 3rd argument to modules-format exported handlers.
 
 - {{<code>}}waitOnExecutionContext(ctx:{{<param-type>}}ExecutionContext{{</param-type>}}): {{<type>}}Promise\<void>{{</type>}}{{</code>}}
 
-  - Waits for all `ExecutionContext#waitUntil()`ed `Promise`s to settle. Only accepts instances of `ExecutionContext` returned by `createExecutionContext()`.
+  - Use this to wait for all promises passed to `ctx.waitUntil()` to settle, before running test assertions on any side effects. Only accepts instances of `ExecutionContext` returned by `createExecutionContext()`.
 
     <br>
 
@@ -171,7 +199,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}runInDurableObject\<O extends DurableObject, R>(stub:{{<param-type>}}DurableObjectStub{{</param-type>}}, callback:{{<param-type>}}(instance: O, state: DurableObjectState) => R | Promise\<R>{{</param-type>}}): {{<type>}}Promise\<R>{{</type>}}{{</code>}}
 
-  - Runs `callback` inside the Durable Object pointed-to by `stub`'s context. Conceptually, this temporarily replaces your Durable Object's `fetch()` handler with `callback`, then sends a request to it, returning the result. This can be used to call/spy-on Durable Object instance methods or seed/get persisted data. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` worker.
+  - Runs the provided `callback` inside the Durable Object instance that corresponds to the provided `stub`.
+
+    <br>
+
+    This temporarily replaces your Durable Object's `fetch()` handler with `callback`, then sends a request to it, returning the result. This can be used to call/spy-on Durable Object instance methods or seed/get persisted data. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` worker.
 
     <br>
 
