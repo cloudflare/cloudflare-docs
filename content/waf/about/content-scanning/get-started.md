@@ -48,6 +48,12 @@ Create a WAF [custom rule](/waf/custom-rules/) that blocks detected malicious co
 
 For example, create a custom rule with the _Block_ action and the following expression:
 
+Field                        | Operator | Value
+-----------------------------|----------|------
+Has malicious content object | equals   | True
+
+If you use the Expression Editor, enter the following expression:
+
 ```txt
 (cf.waf.content_scan.has_malicious_obj)
 ```
@@ -58,13 +64,27 @@ This rule will match requests where the WAF detects a suspicious or malicious co
 
 You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine content scanning with other security features. For example:
 
-- The following expression will match requests with malicious content objects uploaded to the specified endpoint:
+- The following expression will match requests with malicious content objects uploaded to a specific endpoint:
+
+    Field                        | Operator | Value        | Logic
+    -----------------------------|----------|--------------|------
+    Has malicious content object | equals   | True         | And
+    URI Path                     | contains | `upload.php` |
+
+    Expression when using the editor:
 
     ```txt
     (cf.waf.content_scan.has_malicious_obj and http.request.uri.path contains "upload.php")
     ```
 
 - The following expression will match requests from bots uploading content objects:
+
+    Field                        | Operator  | Value        | Logic
+    -----------------------------|-----------|--------------|------
+    Has malicious content object | equals    | True         | And
+    Bot Score                    | less than | `10`         |
+
+    Expression when using the editor:
 
     ```txt
     (cf.waf.content_scan.has_obj and cf.bot_management.score lt 10)
