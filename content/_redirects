@@ -650,6 +650,7 @@
 /magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/
 /magic-wan/configuration/manually/how-to/tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
+/magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
