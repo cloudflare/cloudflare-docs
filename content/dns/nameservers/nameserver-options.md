@@ -8,6 +8,20 @@ weight: 2
 
 ## Assignment method
 
+When you add a domain on a full or secondary setup, Cloudflare automatically assigns your nameservers.
+
+The [default assignment method](/dns/zone-setups/reference/nameserver-assignment/) is to use standard nameservers and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts - for example, if someone else has already added the same zone to a different account - you may get different nameserver names.
+
+To have control over what nameservers are assigned for different zones within an account, you can use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/).
+
+### DNS zone defaults
+
+If you have an Enterprise account, you also have the option to configure your own [DNS zone defaults](TBD) and change how Cloudflare handles nameserver assignment when you add a new zone to your account:
+
+- Standard nameservers randomized: instead of attempting consistency, Cloudflare assigns random pairs of nameservers names every time you add a new domain to your account.
+- Advanced nameservers: Cloudflare uses the same method as the default - trying to keep nameserver names consistent for different zones within an account - but uses the specific Foundation DNS nameservers.
+- Account custom nameservers: You specify a set of account custom nameservers that you have previously configured for your account and Cloudflare automatically assigns them during new zone creation.
+
 ## Multi-provider DNS
 
 Multi-provider DNS is an optional setting for zones using [full setup](/dns/zone-setups/full-setup/) and is an enforced default behaviour for zones using [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
