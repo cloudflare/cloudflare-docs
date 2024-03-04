@@ -138,10 +138,8 @@
 /content/security-center/ @jason-cf @cloudflare/pcx-technical-writing
 /content/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
-/content/waf/change-log/ 
-@pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
-/data/changelogs/waf.yaml
-@pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/content/waf/change-log/ @pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/data/changelogs/waf.yaml @pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
