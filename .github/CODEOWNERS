@@ -54,9 +54,9 @@
 /content/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/fundamentals/ @jason-cf @cloudflare/pcx-technical-writing
 /content/learning-paths/ @kodster28 @cloudflare/pcx-technical-writing
-/content/network-error-logging/
+/content/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
 /content/network-interconnect/ @dcpena @cloudflare/pcx-technical-writing
-/content/notifications/ @dcpena @cloudflare/pcx-technical-writing@patriciasantaana @cloudflare/pcx-technical-writing
+/content/notifications/ @patriciasantaana @cloudflare/pcx-technical-writing
 /content/registrar/ @jason-cf @cloudflare/pcx-technical-writing
 /content/rules/ @pedrosousa @cloudflare/pcx-technical-writing
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
