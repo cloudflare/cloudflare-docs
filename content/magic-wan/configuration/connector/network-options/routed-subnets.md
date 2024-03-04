@@ -42,8 +42,8 @@ classDef red fill:#ff6900
 
 To add a routed subnet to your LAN, you need:
 
-- **Network prefix**: The subnet’s CIDR prefix; Cloudflare will automatically install static routes to this prefix in our global network (to forward packets for this subnet to the right Connector) and in your Connector (to forward packets for this subnet to the right LAN interface). In the figure above, the routed subnet on the right has prefix `192.168.200.0/24`.
-- **Next-hop address**: The address of the L3 router to which the Connector should forward packets for this subnet. In the figure, the routed subnet on the right has next-hop address `192.168.100.10`.
+- **Prefix**: The subnet’s CIDR prefix; Cloudflare will automatically install static routes to this prefix in our global network (to forward packets for this subnet to the right Connector) and in your Connector (to forward packets for this subnet to the right LAN interface). In the figure above, the routed subnet on the right has the prefix `192.168.200.0/24`.
+- **Next-hop address**: The address of the L3 router to which the Connector should forward packets for this subnet. In the figure, the routed subnet on the right has the next-hop address `192.168.100.10`.
 
 Optionally, you can also enable NAT for this subnet by providing a static overlay prefix.
 
@@ -56,8 +56,6 @@ For example:
 - **Static NAT prefix**: `10.10.100.0/24`
 
 Outbound traffic from host `192.168.100.13` in the subnet is translated to `10.10.100.13` in the Connector (and vice versa for incoming traffic).
-
-In the dash, enable NAT for a subnet by populating its Static NAT Prefix field.
 
 {{<Aside type="note">}}
 Even if NAT is enabled, a subnet’s local prefix must be unique within its LAN. It can be reused on other LANs or other sites. Overlay-facing prefixes — that is, a subnet’s NAT prefix if NAT is enabled and its local prefix otherwise — must always be unique across your whole Magic WAN.
