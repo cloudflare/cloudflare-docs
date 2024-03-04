@@ -8,12 +8,13 @@ meta:
 
 # Technology Partner Program
 
-## Virtual Cloudflare Network Interconnect 1.0
+## Virtual Classic CNI
 
 Cloudflare partners with multiple network fabric providers to offer as many connectivity options and locations as possible. During the [configure the cross-connect](/network-interconnect/set-up-cni/configure-cross-connect/) step, you will initiate a connection from your chosen provider's admin portal.
 
+
 {{<Aside type="note">}}
-You can read more about the partner program on our website. See
+You can read more about the partner program on our website. Refer to
 the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
 {{</Aside>}}
 
