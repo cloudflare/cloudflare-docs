@@ -12,7 +12,7 @@ The Cloudflare infrastructure uses your information to configure the cross-conne
 
 ## Physical links
 
-To configure the network cross-connect for physical links, Cloudflare generates a Letter of Agency (LOA)/service key - sometimes referred to as a Letter of Authorization - and sends it to you. After you receive the LOA, you can:
+To configure the network cross-connect for physical links, Cloudflare generates a Letter of Authorization (LOA)/service key - sometimes referred to as a Letter of Agency - and sends it to you. After you receive the LOA, you can:
 
 - Order cross-connects at the locations the LOA specifies.
 - Verify when the cross-connects are complete.
