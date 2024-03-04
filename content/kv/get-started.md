@@ -134,7 +134,9 @@ Refer to [Environment](/kv/reference/environments/) for more information.
 4. Enter a name for your namespace. 
 5. Select **Add**.
 
-{{<Aside type="note">}}KV namespaces prior to version 7 cannot be edited via the dashboard. To do so use the [KV API](/kv/api/){{</Aside>}}
+{{<Aside type="note">}}
+KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/).
+{{</Aside>}}
 
 ## 4. Interact with your KV namespace
 
