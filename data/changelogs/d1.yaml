@@ -5,7 +5,7 @@ entries:
   - publish_date: "2024-03-05"
     title: Billing for D1 usage
     description: |-
-      As of 2024-03-05, D1 usage can incur charges for an account's future billing cycle.
+      As of 2024-03-05, D1 usage will start to be counted and may incur charges for an account's future billing cycle.
       
       Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](https://developers.cloudflare.com/d1/platform/pricing). 
       
