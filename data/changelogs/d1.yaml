@@ -7,7 +7,7 @@ entries:
     description: |-
       As of 2024-03-05, D1 usage will start to be counted and may incur charges for an account's future billing cycle.
       
-      Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](https://developers.cloudflare.com/d1/platform/pricing). 
+      Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](/d1/platform/pricing). 
       
       Developers on the Workers Free plan can use up to the included limits. Usage beyond the limits below requires signing up for the $5/month Workers Paid plan.
 
