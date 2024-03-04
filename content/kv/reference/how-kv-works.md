@@ -48,7 +48,7 @@ KV does not perform like an in-memory datastore, such as [Redis](https://redis.i
 
 ## Consistency
 
-KV achieves high performance by being eventually-consistent. At the Cloudflare global network location at which changes are made, these change are usually immediately visible. However, this is not guaranteed and therefore it is not advised to rely on this behaviour. In other global network locations Ccanges may take up to 60 seconds or more to be visible as their cached versions of the data time out. 
+KV achieves high performance by being eventually-consistent. At the Cloudflare global network location at which changes are made, these change are usually immediately visible. However, this is not guaranteed and therefore it is not advised to rely on this behaviour. In other global network locations changes may take up to 60 seconds or more to be visible as their cached versions of the data time out. 
 
 
 
