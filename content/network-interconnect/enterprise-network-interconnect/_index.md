@@ -1,6 +1,6 @@
 ---
-title: CNI 2.0
-pcx_content_type: navigation
+title: Enterprise Network Interconnect
+pcx_content_type: concept
 weight: 3
 ---
 
