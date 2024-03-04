@@ -8,8 +8,6 @@ meta:
 
 # Gateway policies
 
-TEST
-
 Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, Network, HTTP, and Egress traffic.
 
 - **DNS policies** inspect DNS queries. You can block domains and IP addresses from resolving on your devices. For more information on DNS filtering, refer to our [Learning Center article](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/).
