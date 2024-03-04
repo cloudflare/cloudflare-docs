@@ -4,10 +4,12 @@ pcx_content_type: navigation
 weight: 3
 ---
 
-# Cloudflare Network Interconnect 2.0
+# Enterprise Network Interconnect
 
-Cloudflare Network Interconnect 2.0 (CNI 2.0) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
+Enterprise Network Interconnect (ENI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
 
-Connecting to Cloudflare directly with a CNI reduces latency, makes your network more stable by bypassing potential bottlenecks in Internet performance, and may even reduce your ISP bandwidth bills. CNI also gives you more control over how Cloudflare routes traffic back to your network.
+Connecting to Cloudflare directly with a ENI reduces latency, makes your network more stable by bypassing Internet performance potential bottlenecks, and may even reduce your ISP bandwidth bills. ENI also gives you more control over how Cloudflare routes traffic back to your network.
 
-CNI 2.0 allows you to directly order a CNI connection from the Cloudflare dashboard. In the Cloudflare dashboard you can find Cloudflare's nearest Cloudflare data center, and order a CNI connection with speeds up to 100 gigabits per second, as well as create a Letter of Authorization.
+The use case for Enterprise CNI is Magic Transit or Magic WAN. If you have publicly routable origins that are behind Magic Transit over an Enterprise CNI, then all Cloudflare services that work with public origins will run over the CNI (for example, Load Balancer, WAF, Cache, etc).
+
+In the Cloudflare dashboard you can find Cloudflare's nearest Cloudflare data center, and order a physical ENI connection with speeds up to 100 gigabits per second, as well as create a Letter of Authorization (LoA).
