@@ -18,7 +18,7 @@ meta:
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
+| [Worker size](#worker-size)                                                     | 5 MB      | 25 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 400 ms    | 400 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
@@ -247,7 +247,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan, and up to 1 MB on the Workers Free plan.
+A Worker can be up to 25 MB in size _after compression_ on the Workers Paid plan, and up to 5 MB on the Workers Free plan.
 
 You can assess the size of your Worker bundle after compression by performing a dry-run with `wrangler` and reviewing the final compressed (`gzip`) size output by `wrangler`:
 
