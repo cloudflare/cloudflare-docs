@@ -51,7 +51,7 @@
 /content/hyperdrive/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/hyperdrive.yaml @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/content/images/ @dcpenda @cloudflare/pcx-technical-writing
+/content/images/ @dcpena @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/kv/ @elithrar @rts-rob  @Maddy-Cloudflare @cloudflare/pcx-technical-writing
@@ -100,8 +100,8 @@
 /data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
 
 # Reference architecture
-/content/reference-architecture/ @securitypedant @cwaters @cloudflare/pcx-technical-writing
-/assets/images/reference-architecture/ @securitypedant @cwaters @cloudflare/pcx-technical-writing
+/content/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing
+/assets/images/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
