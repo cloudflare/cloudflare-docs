@@ -8,7 +8,7 @@ meta:
 
 # Write Your First Test
 
-This tutorial will guide you through install and setup of the [`@cloudflare/vitest-pool-workers`](https://workers.cloudflare.com) package, and will help you get started writing tests against your Workers using Vitest.
+This tutorial will guide you through install and setup of the [`@cloudflare/vitest-pool-workers`](https://workers.cloudflare.com) package, and will help you get started writing tests against your Workers using Vitest. This package works by running code that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html) inside a Cloudflare Worker instead.
 
 ## Prerequisites
 

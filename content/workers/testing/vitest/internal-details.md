@@ -1,10 +1,10 @@
 ---
-title: Internal details
+title: Isolation and concurrency
 pcx_content_type: concept
 weight: 6
 ---
 
-# Internal details
+# Isolation and concurrency
 
 This page gives an overview of how the Workers Vitest integration runs your tests, how it isolates tests from each other and how it imports modules.
 
@@ -17,31 +17,33 @@ When you run your tests with the Workers Vitest integration, Vitest will...
 3. Collect and sequence test files
 4. For each Vitest project, depending on its configured isolation and concurrency, start one or more `workerd` processes each running one or more Workers
 5. Run [`setupFiles`](https://vitest.dev/config/#setupfiles) and test files in `workerd` using the appropriate Workers
-6. Watch for changes, re-running test files using the same Workers if the configuration has not changed
+6. Watch for changes and re-run test files using the same Workers if the configuration has not changed
 
 ## Isolation and concurrency models
 
 The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest/configuration/#workerspooloptions-definition) configuration options both control isolation and concurrency. The Workers Vitest integration tries to minimise the number of `workerd` processes it starts, reusing Workers and their module caches between test runs where possible. Our current implementation of isolated storage requires each `workerd` process to run one test file at a time, and does not support `.concurrent` tests. A copy of all auxiliary `workers` exists in each `workerd` process.
 
-### `isolatedStorage: ❌ singleWorker: ❌`
+Cloudflare recommends you enable the `isolatedStorage: true` option, and enable the `singleWorker: true` option if you have lots of small test files.
+
+### `isolatedStorage: false, singleWorker: false` (Default)
 
 In this model, a single `workerd` process is started with a Worker for each test file. Tests files are executed concurrently and `.concurrent` tests are supported. Every test will read/write from the same shared storage, and bind to the same auxiliary `workers`.
 
 ![Isolation Model #1: No Isolated Storage & No Single Worker](/images/workers/testing/vitest/isolation-model-1-no-isolated-storage-no-single-worker.svg)
 
-### `isolatedStorage: ❌ singleWorker: ✅`
+### `isolatedStorage: false, singleWorker: true`
 
 In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial but `.concurrent` tests are supported. Every test will read/write from the same shared storage, and bind to the same auxiliary `workers`.
 
 ![Isolation Model #2: No Isolated Storage & Single Worker](/images/workers/testing/vitest/isolation-model-2-no-isolated-storage-single-worker.svg)
 
-### `isolatedStorage: ✅ singleWorker: ❌`
+### `isolatedStorage: true, singleWorker: false`
 
 In this model, a `workerd` process is started for each test file. Test files are executed concurrently but `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and bind to its own set of auxiliary `workers`.
 
 ![Isolation Model #3: Isolated Storage & No Single Worker](/images/workers/testing/vitest/isolation-model-3-isolated-storage-no-single-worker.svg)
 
-### `isolatedStorage: ✅ singleWorker: ✅`
+### `isolatedStorage: true, singleWorker: true`
 
 In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial and `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and binding to the same auxiliary `workers`.
 
@@ -52,7 +54,7 @@ In this model, a single `workerd` process is started with a single Worker for al
 
 Each Worker has its own module cache. As Workers are reused between test runs, so too are their module caches. Vitest invalidates parts of the module cache at the start of each test run based on changed files.
 
-The Workers Vitest integration works by running code that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html) inside a Cloudflare Worker instead. To make this work, the pool requires the `nodejs_compat` and `export_commonjs_default` compatibility flags to be enabled. It also configures `workerd` to use Node-style module resolution and polyfill required `node:*` modules not provided by `nodejs_compat`.
+The Workers Vitest pool works by running code that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html) inside a Cloudflare Worker instead. To make this possible, the pool requires the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) and [`export_commonjs_default`](/workers/configuration/compatibility-dates/#commonjs-modules-do-not-export-a-module-namespace) compatibility flags to be enabled. It also configures `workerd` to use Node-style module resolution and polyfills required `node:*` modules not provided by `nodejs_compat`.
 
 {{<Aside type="warning">}}
 

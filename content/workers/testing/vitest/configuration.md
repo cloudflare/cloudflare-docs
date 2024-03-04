@@ -67,7 +67,7 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
 - {{<code>}}isolatedStorage: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}} — Defaults to `false`
 
-  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Internal details](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
+  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
 
     <details>
     <summary>Illustrative example</summary>
@@ -128,14 +128,14 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
 - {{<code>}}singleWorker: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}} — Defaults to `false`
 
-  - Runs all tests in this project serially in the same Worker, using the same module cache. This can significantly speed up execution if you have lots of small test files. Refer to the [Internal details](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
+  - Runs all tests in this project serially in the same Worker, using the same module cache. This can significantly speed up execution if you have lots of small test files. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
 
 - {{<code>}}miniflare: {{<type>}}SourcelessWorkerOptions & { workers?: WorkerOptions[]; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - Miniflare sourceless-[`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) for configuring bindings and compatibility settings. Use the `main` option above to configure the entrypoint, instead of the Miniflare `script`, `scriptPath`, or `modules` options.<br><br>
     If your project makes use of multiple Workers, you can configure _auxiliary Workers_ that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
     - Cannot have TypeScript entrypoints—you must compile them to JavaScript first
-    - Use regular Workers module resolution semantics—refer to the [Internal details](/workers/testing/vitest/internal-details/#modules) page for more information
+    - Use regular Workers module resolution semantics—refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/#modules) page for more information
     - Cannot access the `cloudflare:test` module
     - Do not require specific compatibility dates or flags
     - Can be written with the [Service Worker syntax](https://developers.cloudflare.com/workers/reference/migrate-to-module-workers/#service-worker-syntax)
