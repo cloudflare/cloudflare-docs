@@ -67,7 +67,7 @@ routes = [
 
 ## Worker to Worker communication
 
-On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/configuration/bindings/about-service-bindings/). 
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 
@@ -105,9 +105,9 @@ A Worker running on a Custom Domain is treated as an origin. Any Workers running
 
 For example, consider the following workflow:
 
-1. A Custom Domain for `api.example.com` points to your `api-worker` Worker. 
-2. A route added to `api.example.com/auth` points to your `auth-worker` Worker. 
-3. A request to `api.example.com/auth` will trigger your `auth-worker` Worker. 
+1. A Custom Domain for `api.example.com` points to your `api-worker` Worker.
+2. A route added to `api.example.com/auth` points to your `auth-worker` Worker.
+3. A request to `api.example.com/auth` will trigger your `auth-worker` Worker.
 4. Using `fetch(request)` within the `auth-worker` Worker will invoke the `api-worker` Worker, as if it was a normal application server.
 
 ```js

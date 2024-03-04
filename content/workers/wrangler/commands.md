@@ -279,7 +279,7 @@ Execute a query on a D1 database.
 wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
 
 You must provide either `--command` or `--file` for this command to run successfully.
 
@@ -1452,7 +1452,7 @@ wrangler r2 bucket sippy get <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to get the status of Sippy.
-  
+
 {{</definitions>}}
 
 ---
@@ -1655,7 +1655,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-  
+
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1810,7 +1810,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-  
+
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
@@ -2326,7 +2326,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a [binding](/workers/configuration/bindings/) in your `wrangler.toml`:
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
 
 ```toml
 mtls_certificates = [

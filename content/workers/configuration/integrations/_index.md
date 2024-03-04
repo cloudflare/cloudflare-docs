@@ -34,5 +34,5 @@ To help you get the most out of using integrations with Cloudflare Workers:
 
 * Secure your integrations and protect sensitive data. Ensure you use secure authentication and authorization where possible, and ensure the validity of libraries you import.
 * Use [caching](/workers/reference/how-the-cache-works) to improve performance and reduce the load on an external service.
-* Split your Workers into service-oriented architecture using [Service bindings](/workers/configuration/bindings/about-service-bindings/) to make your application more modular, easier to maintain, and more performant.
+* Split your Workers into service-oriented architecture using [Service bindings](/workers/runtime-apis/bindings/service-bindings/) to make your application more modular, easier to maintain, and more performant.
 * Use [Custom Domains](/workers/configuration/routing/custom-domains/) when communicating with external APIs and services, which create a DNS record on your behalf and treat your Worker as an application instead of a proxy.

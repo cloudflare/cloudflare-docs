@@ -6,13 +6,13 @@ weight: 7
 
 # KV bindings
 
-KV [bindings](/workers/configuration/bindings/) allow for communication between a Worker and a KV namespace. 
+KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a Worker and a KV namespace.
 
-Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml). 
+Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml).
 
 ## Reference KV from Workers
 
-A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare's global network. 
+A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
 
 To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 
@@ -20,7 +20,7 @@ The name of your binding does not need to match the KV namespace's name. Instead
 
 A KV namespace will have a name you choose (for example, `My tasks`), and an assigned ID (for example, `06779da6940b431db6e566b4846d64db`).
 
-To execute your Worker, define the binding. 
+To execute your Worker, define the binding.
 
 In the following example, the binding is called `TODO`. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
@@ -55,7 +55,7 @@ export default {
 
 ## Reference KV from Durable Objects and Workers using ES modules format
 
-[Durable Objects](/durable-objects/) use ES modules format. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object). 
+[Durable Objects](/durable-objects/) use ES modules format. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
 An example might look like:
 

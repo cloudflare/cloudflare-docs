@@ -15,7 +15,7 @@ Review the following environments flow:
 
 1. You have created a Worker application named `my-worker`.
 2. You create an environment, for example, `dev`, in the Worker's `wrangler.toml` configuration file.
-3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/configuration/bindings/) and/or [routes](/workers/configuration/routing/routes/).
+3. In `wrangler.toml`, you configure the `dev` environment by [adding bindings](/workers/runtime-apis/bindings/) and/or [routes](/workers/configuration/routing/routes/).
 4. You deploy the Worker using `npx wrangler deploy -e dev`.
 5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
 6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
@@ -55,7 +55,7 @@ After you have configured your environment, run `npx wrangler deploy` in your Wo
 
 [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 
-[Bindings](/workers/configuration/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml`](/workers/wrangler/configuration/) file.
+[Bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
 Review the following example `wrangler.toml` file:
 

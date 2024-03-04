@@ -3,7 +3,7 @@ productName: Workers
 entries:
 - term: binding
   general_definition: |-
-    [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
+    [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
 - term: Cron Triggers
   general_definition: |-
@@ -39,7 +39,7 @@ entries:
 
 - term: environment variable
   general_definition: |-
-    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker. 
+    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
 
 - term: handler
   general_definition: |-
@@ -71,13 +71,13 @@ entries:
 
 - term: Queues
   general_definition: |-
-    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery. 
+    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery.
   associated_products:
     - Queues
 
 - term: rollback
   general_definition: |-
-    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network. 
+    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network.
 
 - term: R2
   general_definition: |-
@@ -99,7 +99,7 @@ entries:
 
 - term: Tail Worker
   general_definition: |-
-    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. 
+    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
 
 - term: V8
   general_definition: |-

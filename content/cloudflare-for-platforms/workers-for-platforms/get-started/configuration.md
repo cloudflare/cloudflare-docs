@@ -32,7 +32,7 @@ To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/pack
 
 Refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/) for more information.
 
-## 2. Create dispatch namespace 
+## 2. Create dispatch namespace
 
 Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). A dispatch namespace is made up of a collection of user Workers. User Workers are Workers that your end users (end developers) create.
 
@@ -54,7 +54,7 @@ To create a Worker, run `wrangler init` followed by your Worker project name:
 $ npx wrangler init <YOUR_WORKER>
 ```
 
-To create a dynamic dispatch Worker, create a [binding](/workers/configuration/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
+To create a dynamic dispatch Worker, create a [binding](/workers/runtime-apis/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
 
 ```toml
 ---
@@ -117,7 +117,7 @@ You will use the Cloudflare API to upload the user Worker. This will upload the 
 Update the necessary fields and run the following command:
 
 1. Add your Cloudflare account email to the value of the `X-Auth-Email` header.
-2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**. 
+2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**.
 3. Add your Cloudflare account ID found in your site's **Overview**.
 4. Add the namespace name you created in step 2 to `<NAMESPACE_NAME>`.
 5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
@@ -130,7 +130,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 -F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
 ```
 
-If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header. 
+If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header.
 
 
 ```bash

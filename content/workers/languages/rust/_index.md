@@ -41,7 +41,7 @@ You will find the following files and folders in the `hello-world-rust` director
 * `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
-* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/runtime-apis/webassembly/rust/#bundling-worker-build)).
+* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/languages/rust/#bundling-worker-build)).
 * `src` - Rust source directory, pre-populated with Hello World Worker.
 
 ## 2. Develop locally
@@ -78,7 +78,7 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
 There is some counterintuitive behavior going on here:
 
 1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers.
-1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/runtime-apis/webassembly/rust/#async-wasm-bindgen-futures)).
+1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/languages/rust/#async-wasm-bindgen-futures)).
 {{</Aside>}}
 
 ### Related runtime APIs
@@ -110,7 +110,7 @@ Provides access to Worker [bindings](https://developers.cloudflare.com/workers/r
 * [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
 * [`KvStore`](https://docs.rs/worker-kv/latest/worker_kv/struct.KvStore.html) - Workers [KV](/kv/api/) namespace binding.
 * [`ObjectNamespace`](https://docs.rs/worker/latest/worker/durable/struct.ObjectNamespace.html) - [Durable Object](/durable-objects/) binding.
-* [`Fetcher`](https://docs.rs/worker/latest/worker/struct.Fetcher.html) - [Service binding](/workers/runtime-apis/bindings/service-bindings/) to another Worker.
+* [`Fetcher`](https://docs.rs/worker/latest/worker/struct.Fetcher.html) - [Service binding](/workers/runtime-apis/service-bindings/) to another Worker.
 * [`Bucket`](https://docs.rs/worker/latest/worker/struct.Bucket.html) - [R2](/r2/) Bucket binding.
 
 3. **[`Context`](https://docs.rs/worker/latest/worker/struct.Context.html)**

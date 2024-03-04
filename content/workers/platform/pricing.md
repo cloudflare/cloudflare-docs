@@ -10,10 +10,10 @@ meta:
 
 {{<Aside type="warning">}}
 
-All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024. 
+All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024.
 
-- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/). 
-- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/). 
+- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/).
+- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/).
 
 
 {{</Aside>}}
@@ -25,18 +25,18 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 All included usage is on a monthly basis.
 
 {{<Aside type="note" header="Pages Functions billing">}}
-  
+
 All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Pricing](/pages/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
 ## Workers
 
-Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation. 
+Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation.
 
-Users on the Workers Paid plan only have access to the Standard usage model. 
+Users on the Workers Paid plan only have access to the Standard usage model.
 
-Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models. 
+Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models.
 
 
 {{<table-wrap>}}
@@ -67,7 +67,7 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
-If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker. 
+If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker.
 
 {{</Aside>}}
 
@@ -125,7 +125,7 @@ Resulting in the following estimated costs:
 
 ### How to switch the usage model
 
-Usage models can be changed at the individual Worker level: 
+Usage models can be changed at the individual Worker level:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
@@ -133,14 +133,14 @@ Usage models can be changed at the individual Worker level:
 To change your default account-wide usage model:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. Find **Usage Model** on the right-side menu > **Change**. 
+3. Find **Usage Model** on the right-side menu > **Change**.
 
 Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 
 
 ## Workers Trace Events Logpush
 
-Workers Logpush is only available on the Workers Paid plan. 
+Workers Logpush is only available on the Workers Paid plan.
 
 {{<table-wrap>}}
 
@@ -150,7 +150,7 @@ Workers Logpush is only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling.
 
 ## Workers KV
 
@@ -173,7 +173,7 @@ To learn more about Queues pricing and review billing examples, refer to [Queues
 
 ## D1
 
-D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans. 
+D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans.
 
 {{<render file="_d1-pricing.md">}}
 
@@ -209,7 +209,7 @@ Service bindings cost the same as any normal Worker. Each invocation is charged 
 
 If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
 
-For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
+For more information on how service bindings work, refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ## Fine Print
 

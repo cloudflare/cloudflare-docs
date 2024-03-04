@@ -17,7 +17,7 @@ It is important to note that the developer platform product offering is growing 
 
 ### Bindings
 
-Workers interact with other products on the Cloudflare Developer Platform through [bindings](/workers/configuration/bindings/). 
+Workers interact with other products on the Cloudflare Developer Platform through [bindings](/workers/runtime-apis/bindings/).
 
 You can configure bindings through the Cloudflare dashboard or `wrangler.toml`. After you configure your bindings, access them through the `env` parameter that is provided at the entry point to your Worker. Refer to [Bindings in ES modules format](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) to learn more.
 

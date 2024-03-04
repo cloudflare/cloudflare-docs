@@ -12,7 +12,7 @@ By following this guide, you will create a Worker through which your application
 This example worker could serve as a basis for your own use case where you can add authentication to the worker, or even add extra validation logic when uploading each part.
 This guide also contains an example Python application that uploads files to this worker.
 
-This guide assumes you have set up the [R2 binding](/workers/configuration/bindings/) for your Worker. Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage) for instructions on setting up an R2 binding.
+This guide assumes you have set up the [R2 binding](/workers/runtime-apis/bindings/) for your Worker. Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage) for instructions on setting up an R2 binding.
 
 ## An example Worker using the multipart API
 
@@ -180,7 +180,7 @@ export default {
 };
 ```
 
-After you have updated your Worker with the above code, run `npx wrangler deploy`. 
+After you have updated your Worker with the above code, run `npx wrangler deploy`.
 
 You can now use this Worker to perform multipart uploads. You can either send requests from your existing application to this Worker to perform uploads or use a script to upload files through this Worker.
 
@@ -271,7 +271,7 @@ upload_file(worker_endpoint, filename, partsize)
 
 ## State management
 
-The stateful nature of multipart uploads does not easily map to the usage model of Workers, which are inherently stateless. In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application. This is different from multipart uploads in a Worker, which will often be completed over multiple invocations of that Worker. This makes state management more challenging. 
+The stateful nature of multipart uploads does not easily map to the usage model of Workers, which are inherently stateless. In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application. This is different from multipart uploads in a Worker, which will often be completed over multiple invocations of that Worker. This makes state management more challenging.
 
 To overcome this, the state associated with a multipart upload, namely the `uploadId` and which parts have been uploaded, needs to be kept track of somewhere outside of the Worker.
 
