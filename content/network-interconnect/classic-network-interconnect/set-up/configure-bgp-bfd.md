@@ -8,7 +8,7 @@ meta:
 
 # BGP and Bidirectional Forwarding Detection
 
-You can use BGP with CNI 1.0 if you are a Magic Transit customer. You can build a BGP session over your CNI 1.0 connection to signal when Cloudflare should advertise and anycast your IP prefixes for DDoS mitigation. You can also optionally use Bidirectional Forwarding Detection (BFD) on this BGP session.
+You can use BGP with classic CNI if you are a Magic Transit customer. You can build a BGP session over your CNI 1.0 connection to signal when Cloudflare should advertise and anycast your IP prefixes for DDoS mitigation. You can also optionally use BFD on this BGP session.
 
 ## BGP
 
@@ -17,6 +17,7 @@ You can use BGP with CNI 1.0 if you are a Magic Transit customer. You can build 
 After establishing your connection, the next steps include provisioning the Generic Route Encapsulation (GRE) IPs and configuring the Border Gateway Protocol (BGP) peering information. This process takes approximately one week.
 
 ### Provision the IP
+
 Cloudflare sends a set of IPs that you assign to your connection before Cloudflare establishes the BGP connection. The set of IPs will look similar to the example below.
 
 ```txt
@@ -27,6 +28,7 @@ Acme: 2001:db8:12:3::7ac2:d64b/127
 ```
 
 Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/network-interconnect/set-up-cni/configure-cross-connect/), the ping tests confirm packets are flowing over the link.
+
 If you have a virtual link via Megaport, the IP provisioning may fail if you have not configured the VLAN with the VLAN provided by your Customer Success Manager.
 
 ### Configure the BGP session
@@ -48,5 +50,7 @@ When traffic begins flowing over the connection, you are fully set up with CNI.
 ## BFD
 
 Bidirectional Forwarding Detection (BFD) is a networking protocol that constantly monitors links and BGP sessions down to the second by sending a constant stream of traffic across the session.
+
 If a small number of packets does not make it to the other side of the session, the session is considered down. This solution is useful for users who cannot tolerate any amount of packet loss during a session.
+
 Bidirectional Forwarding Detection is only supported for users with physical CNI 1.0 connections. To begin using BFD, contact your Implementation Manager.
