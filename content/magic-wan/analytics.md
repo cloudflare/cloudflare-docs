@@ -1,5 +1,5 @@
 ---
-title: View network analytics
+title: Analytics
 pcx_content_type: how-to
 weight: 7
 meta:
