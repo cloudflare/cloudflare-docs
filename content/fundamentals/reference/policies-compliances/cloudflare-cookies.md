@@ -43,6 +43,10 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 {{<render file="_disable-cf-bm-cookie.md" productFolder="bots" >}}
 
+### \_\_cfseq cookie for Cloudflare bot products
+
+{{<render file="_sequence-rules.md" productFolder="bots" withParameters="[Sequence rules](/bots/concepts/sequence-rules/)">}}
+
 ### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
 The `cf_ob_info` cookie provides information on:

@@ -5,7 +5,8 @@ title: Sequence rules
 
 # Sequence rules
 
-Sequence rules uses cookies to track the order of requests a user has made and the time between requests and makes them available via [Cloudflare Rules](/rules/). This allows you to write rules that match valid or invalid sequences. The specific cookies used to validate sequences are called sequence cookies.
+{{<render file="_sequence-rules.md" productFolder="bots" withParameters="Sequence rules">}}
+<br />
 
 Sequence rules is currently in private beta. If you would like to be included in the beta, contact your account team.
 
