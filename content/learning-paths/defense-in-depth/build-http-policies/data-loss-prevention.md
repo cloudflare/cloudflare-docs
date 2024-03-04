@@ -5,8 +5,19 @@ weight: 1
 layout: learning-unit
 ---
 
-In order to use Data Loss Prevention tools within the Cloudflare Zero Trust platform, you need to first define your objects. DLP Profiles are complex objects with dictionaries, pre-built detections, and custom logic that you reference as selectors within your Gateway policies.
-[docs broken into module steps for creating a dlp profile]
+In order to use Data Loss Prevention tools within Cloudflare Zero Trust, you first need to define your DLP profiles. [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) are complex objects with dictionaries, pre-built detections, and custom logic that you can reference as selectors within your Gateway policies.
+
+## Configure a DLP profile
+
+You may either use DLP profiles predefined by Cloudflare, or create your own custom profiles based on regex, predefined detection entries, and DLP datasets.
+
+### Configure a predefined profile
+
+{{<render file="data-loss-prevention/_predefined-profile.md" productFolder="cloudflare-one">}}
+
+### Build a custom profile
+
+{{<render file="data-loss-prevention/_custom-profile.md" productFolder="cloudflare-one">}}
 
 ## Best practices: building ideal data loss prevention security measures with minimal overhead
 
