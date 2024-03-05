@@ -5,9 +5,14 @@
 
 {{ $firstPage.Params.model.task.description }}
 
-| Model                    | Description        |
-| ------------------------ | ------------------ |
-| <div style="width:10em"> | <div style="flex"> |
+<style>
+table th:first-of-type {
+    width: 10em;
+}
+</style>
+
+| Model | Description |
+| ----- | ----------- |
 
 {{- $pages := .Pages -}}
 {{- range sort $pages "Params.weight" "desc" -}}
