@@ -20,23 +20,13 @@ Allowlist any trusted domains and hostnames. With this policy, you ensure that y
 
 {{<details header="All-DNS-SecurityCategories-Blocklist" open="true">}}
 
-Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories), such as **Command and Control & Botnet** and **Malware**, based on Cloudflare's threat intelligence.
-
-| Selector            | Operator | Value                | Action |
-| ------------------- | -------- | -------------------- | ------ |
-| Security Categories | in       | _All Security Risks_ | Block  |
+{{<render file="zero-trust/_blocklist-security-categories.md">}}
 
 {{</details>}}
 
 {{<details header="All-DNS-ContentCategories-Blocklist" open="true">}}
 
-Entries in the [security risk content subcategory](/cloudflare-one/policies/gateway/domain-categories/#security-risk-subcategories), such as **New Domains**, do not always pose a security threat. We recommend you first create an Allow policy to track policy matching and identify any false positives. You can add false positives to your **Trusted Domains** list used in **All-DNS-Domain-Allowlist**.
-
-After your test is complete, we recommend you change the action to Block to minimize risk to your organization.
-
-| Selector           | Operator | Value            | Action |
-| ------------------ | -------- | ---------------- | ------ |
-| Content Categories | in       | _Security Risks_ | Allow  |
+{{<render file="zero-trust/_blocklist-content-categories.md" withParameters="DNS;;_Security Risks_">}}
 
 {{</details>}}
 
@@ -95,12 +85,6 @@ Block specific IP addresses that are malicious or pose a threat to your organiza
 
 {{<details header="All-DNS-DomainHost-Blocklist" open="true">}}
 
-Block specific domains or hosts that are malicious or pose a threat to your organization. Like **All-DNS-ResolvedIP-Blocklist**, this blocklist can be updated manually or via API automation.
-
-| Selector | Operator      | Value              | Logic | Action |
-| -------- | ------------- | ------------------ | ----- | ------ |
-| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
-| Host     | in list       | _Host Blocklist_   | Or    |        |
-| Host     | matches regex | `.*example\.com`   |       |        |
+{{<render file="zero-trust/_blocklist-domain-host.md" withParameters="DNS">}}
 
 {{</details>}}
