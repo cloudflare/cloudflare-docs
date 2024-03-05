@@ -31,7 +31,7 @@
     },
     "zone_holds": {
       "title": "Zone holds",
-      "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
+      "link": "/fundamentals/setup/account/account-security/zone-holds/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -465,7 +465,7 @@
     "link": "/fundamentals/global-configurations/",
     "custom_pages": {
       "title": "Custom error/challenge pages",
-      "link": "https://support.cloudflare.com/hc/articles/200172706",
+      "link": "/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -539,7 +539,7 @@
     "title": "DNS",
     "link": "/dns/",
     "cname_flattening": {
-      "title": "CNAME Flattening",
+      "title": "CNAME flattening",
       "link": "/dns/cname-flattening/",
       "properties": {
         "availability": {
@@ -575,7 +575,7 @@
       }
     },
     "dns_analytics": {
-      "title": "DNS Analytics",
+      "title": "DNS analytics",
       "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
@@ -723,18 +723,18 @@
       }
     },
     "zone_transfers": {
-      "title": "DNS Zone Transfers",
+      "title": "DNS zone transfers",
       "link": "/dns/zone-setups/zone-transfers/",
       "paid_add_on": true,
       "paid_add_on_plans": ["ent"],
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Paid add-on for Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Paid add-on"
+          "ent": "Yes"
         }
       }
     },
@@ -2046,8 +2046,8 @@
       }
     },
     "image_resizing": {
-      "title": "Image Resizing",
-      "link": "/images/image-resizing/",
+      "title": "Image Optimization",
+      "link": "/images/",
       "paid_add_on": true,
       "paid_add_on_plans": ["pro", "biz", "ent"],
       "properties": {
@@ -2114,20 +2114,6 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
-        }
-      }
-    },
-    "railgun": {
-      "title": "Railgun (deprecated)",
-      "link": "/railgun/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Business and above",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -2943,22 +2929,6 @@
           "pro": "500,000 HTTP requests",
           "biz": "500,000 HTTP requests",
           "ent": "1,000,000 HTTP requests"
-        }
-      }
-    },
-    "polygon": {
-      "title": "Polygon Gateways",
-      "link": "/web3/polygon-gateway/",
-      "paid_add_on": true,
-      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Paid add-on for Enterprise",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Yes"
         }
       }
     }

@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Node.js compatibility
-layout: single
 meta:
   description: Implemented Node.js runtime APIs and enablement instructions for your Worker project.
 ---
@@ -43,7 +42,7 @@ compatibility_flags = [ "nodejs_compat" ]
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
 ```sh
-$ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
+$ npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
 ```
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
@@ -56,6 +55,17 @@ To enable Node.js for your Pages Function from the Cloudflare dashboard:
 2. Select **Workers & Pages** and in **Overview**, select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+
+### Enable only AsyncLocalStorage
+
+To enable the Node.js `AsyncLocalStorage` API only, use the `nodejs_als` compatibility flag.
+
+```toml
+---
+header:wrangler.toml
+---
+compatibility_flags = [ "nodejs_als" ]
+```
 
 ## Related resources
 

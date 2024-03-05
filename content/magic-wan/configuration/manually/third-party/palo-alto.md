@@ -512,7 +512,7 @@ Multiple DH groups and authentication settings are defined in the desired order.
 
 | Name                | Option                        | Value                                      |
 | ------------------- | ----------------------------- | ------------------------------------       |
-| `CF_IKE_Crypto_CBC` | DH Group                      | **group14** <br> **group5**                |
+| `CF_IKE_Crypto_CBC` | DH Group                      | **group14**                                |
 |                     | Authentication                | **sha512** <br> **sha384** <br> **sha256** |
 |                     | Encryption                    | **aes-256-cbc**                            |
 |                     | Key Lifetime                  | 8 hours                                    |
@@ -526,7 +526,7 @@ You can also set up the crypto profile for Phase 1 via the command line:
 
 ```bash
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC hash [ sha512 sha384 sha256 ]
-set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC dh-group [ group14 group5 ]
+set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC dh-group [ group14 ]
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC encryption aes-256-cbc
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC lifetime hours 8
 set network ike crypto-profiles ike-crypto-profiles CF_IKE_Crypto_CBC authentication-multiple 0

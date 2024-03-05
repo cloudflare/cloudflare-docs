@@ -69,7 +69,7 @@ For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --g
 
 ## 3. Create a KV namespace 
 
-A [KV namespace](/kv/learning/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
+A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
 
 You can create a KV namespace via Wrangler or the dashboard.
 
@@ -120,9 +120,9 @@ Binding names do not need to correspond to the namespace you created. Binding na
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/learning/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
+A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/reference/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
 
-Refer to [Environment](/kv/platform/environments/) for more information.
+Refer to [Environment](/kv/reference/environments/) for more information.
 
 {{</Aside>}}
 
@@ -133,6 +133,10 @@ Refer to [Environment](/kv/platform/environments/) for more information.
 3. Select **Create a namespace**. 
 4. Enter a name for your namespace. 
 5. Select **Add**.
+
+{{<Aside type="note">}}
+KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/).
+{{</Aside>}}
 
 ## 4. Interact with your KV namespace
 
@@ -180,7 +184,7 @@ wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --name
 Exactly one of `--binding` or `--namespace-id` is required.
 {{</Aside>}}
 
-Refer to the [`kv:bulk` documentation](/kv/platform/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
+Refer to the [`kv:bulk` documentation](/kv/reference/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
 
 ### Interact with your KV namespace via a Worker
 
@@ -256,7 +260,7 @@ To have `wrangler dev` connect to your Workers KV namespace running on Cloudflar
 While in your project directory, test your KV locally by running:
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see your value printed on the browser.
@@ -277,8 +281,8 @@ By finishing this tutorial, you have created a KV namespace, a Worker that write
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
 * Learn more about the [KV API](/kv/api/).
-* Understand how to use [Environments](/kv/platform/environments/) with Workers KV.
-* Read the wrangler [`kv` command documentation](/kv/platform/kv-commands/).
+* Understand how to use [Environments](/kv/reference/environments/) with Workers KV.
+* Read the wrangler [`kv` command documentation](/kv/reference/kv-commands/).

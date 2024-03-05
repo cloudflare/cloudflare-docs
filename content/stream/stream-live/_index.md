@@ -2,7 +2,6 @@
 title: Stream live video
 pcx_content_type: navigation
 weight: 4
-layout: single
 ---
 
 # Stream live video

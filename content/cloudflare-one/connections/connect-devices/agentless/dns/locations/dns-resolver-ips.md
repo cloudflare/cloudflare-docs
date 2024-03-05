@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: DNS resolver IPs and hostnames
-layout: single
 weight: 2
 ---
 
@@ -71,20 +70,11 @@ By default, all queries from a configured DNS location will be sent to its DNS r
 1. [Create an IP list](/cloudflare-one/policies/gateway/lists/) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
 2. Add a [Source IP](/cloudflare-one/policies/gateway/dns-policies/#source-ip) condition to your DNS policies.
 
-For example, if you want to block security threats for specific networks, you could create the following policy:
+For example, to block security threats for specific networks, you could create the following policy:
 
-**Condition 1**:
-
-| Selector            | Operator | Value                            |
-| ------------------- | -------- | -------------------------------- |
-| Security Categories | In       | Select all categories that apply |
-
-**Condition 2**:
-
-| Selector  | Operator | Value                                                           |
-| --------- | -------- | --------------------------------------------------------------- |
-| Source IP | In List  | The name of the IP list containing your organization's networks |
-
-**Action**: Block
+| Selector            | Operator | Value                                                           | Logic | Action |
+| ------------------- | -------- | --------------------------------------------------------------- | ----- | ------ |
+| Security Categories | in       | Select all categories that apply                                | And   | Block  |
+| Source IP           | in list  | The name of the IP list containing your organization's networks |       |        |
 
 DNS queries made from IP addresses that are not in your IP list will not be filtered or populate your organization’s [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).

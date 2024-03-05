@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: IPFS Gateway
 weight: 3
+layout: wide
 ---
 
 # IPFS Gateway

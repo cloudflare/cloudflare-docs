@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Rinkeby deprecation
 weight: 5
-layout: list
+layout: wide
 ---
 
 # Rinkeby deprecation

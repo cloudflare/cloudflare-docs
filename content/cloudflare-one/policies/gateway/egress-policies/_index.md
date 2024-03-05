@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Egress policies
-layout: single
 weight: 5
 ---
 
@@ -27,11 +26,13 @@ The following egress policy configures all traffic destined for a third-party ne
 | --------------------------- | -------------- | -------- | ---------------- | ------------------------------- |
 | Access third-party provider | Destination IP | is       | `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
 
+### Catch-all policy
+
 For the best performance, we recommend creating a catch-all policy to route all other users through the default Zero Trust IP range:
 
-| Policy name           | Selector       | Operator | Value     | Egress method                    |
-| --------------------- | -------------- | -------- | --------- | -------------------------------- |
-| Default egress policy | Destination IP | is not   | `0.0.0.0` | Cloudflare default egress method |
+| Policy name           | Selector | Operator | Value                    | Egress method                    |
+| --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
+| Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
 Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will use the closest dedicated egress IP location.
 

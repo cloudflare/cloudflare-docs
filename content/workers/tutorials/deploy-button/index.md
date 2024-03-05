@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a deploy button with GitHub Actions
-layout: single
 ---
 
 # Deploy button

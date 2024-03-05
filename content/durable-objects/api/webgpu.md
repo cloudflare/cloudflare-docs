@@ -1,6 +1,7 @@
 ---
 pcx_content_type: configuration
 title: WebGPU
+weight: 4
 ---
 
 # WebGPU

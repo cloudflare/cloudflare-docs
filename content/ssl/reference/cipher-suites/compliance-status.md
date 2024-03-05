@@ -1,7 +1,7 @@
 ---
 title: Compliance status
 pcx_content_type: reference
-layout: list
+layout: wide
 weight: 6
 meta:
   title: Compliance status — Edge cipher suites

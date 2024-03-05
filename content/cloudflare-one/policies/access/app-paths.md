@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Application paths
 weight: 5
-layout: single
 ---
 
 # Application paths

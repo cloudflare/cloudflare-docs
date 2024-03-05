@@ -1,5 +1,5 @@
 ---
-title: Deprecation of old rate limiting
+title: Rate limiting (previous version) deprecation
 pcx_content_type: reference
 weight: 3
 meta:
@@ -13,7 +13,7 @@ meta:
 
 ![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/images/waf/reference/rate-limiting-both-versions.png)
 
-Cloudflare recommends that you create new rate limiting rules (**A**) in the Cloudflare dashboard to replace any existing rate limiting rules you may have configured in the previous version of the feature (**B**). Refer to [Migrating to the new rate limiting rules](#migrating-to-the-new-rate-limiting-rules) for details.
+Cloudflare recommends that you create new rate limiting rules (**A**) in the Cloudflare dashboard to replace any existing rate limiting rules you may have configured in the previous version of the feature (**B**). Refer to [Migrate to the new rate limiting rules](#migrate-to-the-new-rate-limiting-rules) for details.
 
 The old and new implementation of rate limiting rules have separate rules lists, since the two implementations do not offer the same set of features. You will need to recreate your rate limiting configuration (in the previous version) using the new rate limiting rules, either using the Cloudflare dashboard, the [Rulesets API](/ruleset-engine/rulesets-api/), or a different Terraform resource ([`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset)).
 
@@ -66,7 +66,7 @@ To configure the new rate limiting rules with Terraform, you must use the [`clou
 
 **The [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource is now deprecated.** You will not be able to perform configuration updates via Terraform using this resource after 2024-05-01.
 
-## Migrating to the new rate limiting rules
+## Migrate to the new rate limiting rules
 
 Cloudflare recommends that you migrate your rules to the new system. Migration must be done manually. Since the new version of rate limiting rules is more powerful and offers additional controls, we encourage customers to reevaluate their rate limiting logic considering all the capabilities of the new Cloudflare rate limiting rules.
 

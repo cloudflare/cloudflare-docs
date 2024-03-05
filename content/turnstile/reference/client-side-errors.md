@@ -1,14 +1,12 @@
 ---
 title: Client-side error codes
 pcx_content_type: reference
-weight: 14
-layout: single
+weight: 7
 ---
 
 # Turnstile client-side error codes
 
 There are instances where Turnstile may encounter problems, invoking `error-callback`. Refer to the list of [common error codes](/turnstile/reference/client-side-errors/#error-codes) below for troubleshooting steps to address them. 
-
 
 ## Error handling
 
@@ -27,7 +25,8 @@ An error callback will retrieve an error code as its first parameter.
 By default, Turnstile will automatically retry upon encountering a problem. When subsequent failures due to retries are observed, the error callback can be invoked multiple times.
 
 You can adjust the retry behavior by setting the `retry` value to `never` instead of the default `auto`. This will result in Turnstile not automatically retrying.
-An implementation may call `turnstile.reset()` in their corresponding `error-callback` to manually trigger a retry.
+
+An implementation may call `turnstile.reset()` in the corresponding `error-callback` to manually trigger a retry.
 
 The interval in between retries of Turnstile can be configured by the `retry-interval` option. 
 

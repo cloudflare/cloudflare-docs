@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: WARP settings
 weight: 2
-layout: single
 ---
 
 # WARP settings
@@ -71,15 +70,17 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 {{</details>}}
 
-Overrides the default IP address of the [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) created by WARP.
+Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
+
+This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
 
 **Value:**
 
-- `Disabled`: (default) The local interface IP is set to `172.16.0.2` on all devices.
+- `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices.
 
-- `Enabled`: Each device in your organization is assigned a unique IP address in the `100.96.0.0/12` range. The new local interface IP takes effect when the user reconnects or re-enrolls the WARP client.
+- `Enabled`: Sets the local interface IP on each device to its {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}}.  The change takes effect within 24 hours.
 
-This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
 
 ## Device settings
 
@@ -101,7 +102,7 @@ Since captive portal implementations vary, WARP may not detect all captive porta
 
 {{</details>}}
 
-When `Enabled`, end users have the option to switch between [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh). This feature does not support switching between any other modes.
+When `Enabled`, users have the option to switch between [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh). This feature does not support switching between any other modes.
 
 ### Lock WARP switch
 
@@ -189,8 +190,39 @@ Configures the WARP client to redirect DNS requests to a private DNS resolver. F
 
 Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
 
-### Directly route Office 365 traffic
+### Directly route Microsoft 365 traffic
 
 {{<render file="warp/_all-systems-modes-plans.md">}}
 
-Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.
+Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Microsoft 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Microsoft 365 network traffic will bypass WARP and Gateway.
+
+### Allow users to enable local network exclusion
+
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2024.1.159.0         |
+| macOS    | ✅           | 2024.1.160.0         |
+| Linux    | ❌           |       |
+| iOS      | ❌           |       |
+| Android  | ✅           | 1.4   |
+| ChromeOS | ✅           | 1.4   |
+
+{{</details>}}
+
+This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
+
+When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user’s home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires.
+
+{{<Aside type="warning" header="Warning">}}
+Enabling this setting comes with two major consequences:
+
+- **Device is exposed to security threats.** The user may be unaware that traffic to what used to be their company's private network is now actually being routed to their local network. This leaves the device vulnerable to [on-path attackers](https://www.cloudflare.com/learning/security/threats/on-path-attack/) and other security vulnerabilities. For example, imagine that a user's typical workflow involves logging into a remote desktop on the corporate network at `10.0.0.30`. A bad actor could set up a fake server on the local network at `10.0.0.30`. If the user goes to `10.0.0.30` while **Access local network** is enabled, the attacker can now steal their credentials.
+- **User loses access to corporate resources.** — While accessing their local network, the user will be unable to connect to corporate resources that fall within the same IP/CIDR range.
+
+{{</Aside>}}

@@ -8,6 +8,71 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Name-Related Data Fields on SRV (DNS) Records
+**End of life date: May 31st, 2024**
+
+The name of an SRV record normally consists of three parts: the service (e.g., `_xmpp`), the protocol (e.g., `_tcp`), and the base name (`example.com`).
+The complete name would then be, e.g., `_xmpp._tcp.example.com`.
+
+When interacting with DNS records through the [API](/api/operations/dns-records-for-a-zone-create-dns-record), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
+
+```
+{
+  "name": "_xmpp._tcp.example.com",
+  "data": {
+    "service": "_xmpp",
+    "proto": "_tcp",
+    "name": "example.com",
+    ...
+  },
+  ...
+}
+```
+
+We are deprecating the `service`, `proto` and `name` fields *within* the `data` map in favor of the `name` field *outside* the data map, which is the same name field that's used by all other record types.
+
+Before the end of life date, please ensure that:
+
+- when reading SRV records, you use only the `name` outside of the data map and ignore `service`, `proto` and `name` within the data map if they exist; and
+- when writing SRV records, you set the `name` outside of the data map and **do not set** `service`, `proto` or `name` within the data map.
+
+After the end of life date, the API will stop producing the `service`, `proto` and `name` data fields, and if any of them are received from a client, an error will be returned.
+
+This deprecation does not affect other SRV data fields not mentioned above (`priority`, `weight`, `port`, `target`) or data fields for any other record type other than SRV.
+
+Modified API:
+ - GET /zones/:zone_id/dns_records
+ - POST /zones/:zone_id/dns_records
+ - GET /zones/:zone_id/dns_records/:dns_record_id
+ - PATCH /zones/:zone_id/dns_records/:dns_record_id
+ - PUT /zones/:zone_id/dns_records/:dns_record_id
+
+## Mobile Redirect 
+**End of life date: June 30th, 2024**
+
+This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+
+Deprecated API:
+ - GET /zones/:zone_identifier/settings/mobile_redirect
+ - PATCH /zones/:zone_identifier/settings/mobile_redirect
+
+Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
+
+## Privacy Pass API Removal
+**End of life date: March 31st, 2024**
+
+In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to
+provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time
+since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no 
+longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting
+is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
+In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
+
+Deprecated API:
+ - GET zones/:zone_identifier/settings/privacy_pass
+ - POST zones/:zone_identifier/settings/privacy_pass
+
+
 ## ChaCha20 TLS Cipher Removal
 **End of life Date: July 1st, 2023**
 

@@ -10,7 +10,7 @@ title: Status codes
 Status Codes analytics by data center is exclusive to the [enterprise level of service](https://www.cloudflare.com/plans/enterprise/contact/).
 {{</Aside>}}
 
-Status Codes metrics in the Cloudflare dashboard **Analytics** app provide customers with a deeper insight into the distribution of errors that are occurring on their website per data center. A data center facility is where Cloudflare runs its servers that make up our edge network ([current locations](https://www.cloudflarestatus.com/)).
+Status Codes metrics in the Cloudflare dashboard **Analytics** app provide customers with a deeper insight into the distribution of errors that are occurring on their website per data center. A data center facility is where Cloudflare runs its servers that make up our edge network ([current locations](https://www.cloudflare.com/network/)).
 
 HTTP status codes that appear in a response passing through our edge are displayed in analytics. These codes can be split into three groups: ‘edge network errors’, ‘origin errors’ and '52x errors'.
 

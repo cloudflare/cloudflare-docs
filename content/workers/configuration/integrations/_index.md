@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Integrations
-layout: single
 meta:
   description: Integrate with third-party services and products.
 ---

@@ -3,7 +3,7 @@ title: Preview rules
 pcx_content_type: concept
 type: table
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Preview firewall rules
 ---

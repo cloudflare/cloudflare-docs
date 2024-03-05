@@ -62,8 +62,8 @@ build_configs:
     icon: /icons/framework-icons/logo-astro.svg
   angular-cli:
     display_name: Angular (Angular CLI)
-    build_command: npx ng build --prod
-    build_output_directory: dist
+    build_command: npx ng build --configuration production
+    build_output_directory: dist/cloudflare
     icon: /icons/framework-icons/logo-angular-cli.svg
   brunch:
     display_name: Brunch

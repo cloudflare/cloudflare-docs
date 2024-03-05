@@ -2,7 +2,6 @@
 weight:  1
 pcx_content_type: reference
 title: Make API requests to 1.1.1.1
-layout: single
 meta:
     title: Make API requests to 1.1.1.1 over DoH
 ---

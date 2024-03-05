@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: DLP datasets
 weight: 3
-layout: single
 ---
 
 # DLP datasets

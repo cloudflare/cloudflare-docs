@@ -2,7 +2,7 @@
 title: Available products and features
 pcx_content_type: reference
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Available products and features
@@ -15,7 +15,7 @@ The following products and features are available on the Cloudflare China Networ
 |---|---|---|
 | DNS | [DNS resolution service](/china-network/concepts/china-dns/) | Authoritative DNS resolution inside mainland China. |
 | CDN | [Caching](/cache/) | Core cache features. Static cache only. Does not support Cache Reserve or Tiered Cache. |
-| CDN | [Image Resizing](/images/) | Optimize image format at the edge to fit a domain’s layout. |
+| CDN | [Image transformations](/images/) | Optimize image format at the edge to fit a domain’s layout. |
 | [DDoS Protection](/ddos-protection/) | Layer 7 (HTTP/HTTPS) DDoS protection | Layer 7 (application layer) protection against DDoS attacks such as HTTP flood attacks, WordPress Pingback attacks, HULK attacks, and LOIC attacks. |
 | Web Application Firewall (WAF) | [WAF Managed Rules](/waf/managed-rules/) | Pre-configured OWASP rulesets and Cloudflare managed rulesets. |
 | Web Application Firewall (WAF) | [WAF custom rules](/waf/custom-rules/) | Custom WAF rules. Supports uploaded content scanning and managed challenges. |

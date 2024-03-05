@@ -2,7 +2,6 @@
 pcx_content_type: troubleshooting
 title: Common error codes
 weight: 51
-layout: single
 ---
 
 # Common error codes

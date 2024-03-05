@@ -18,6 +18,10 @@ This is especially useful if you already have mTLS implemented and client certif
 * This process is only available on Enterprise accounts.
 * Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
+## CA certificate requirements
+
+{{<render file="_byo-ca-mtls-cert-requirements.md">}}<br />
+
 ## Set up mTLS with your CA
 
 1. Use the [Upload mTLS certificate endpoint](/api/operations/m-tls-certificate-management-upload-m-tls-certificate) to upload the CA root certificate.

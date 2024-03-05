@@ -6,6 +6,13 @@ weight: 5
 
 # Playground
 
+
+{{<Aside type="note" header="Browser support">}}
+
+The Cloudflare Workers Playground is currently only supported in Firefox and Chrome desktop browsers. In Safari, it will show a `PreviewRequestFailed` error message.
+
+{{</Aside>}}
+
 The quickest way to experiment with Cloudflare Workers is in the [Playground](https://workers.cloudflare.com/playground). It does not require any setup or authentication. The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser.
 
 The Playground uses the same editor as the authenticated experience. The Playground provides the ability to [share](#share) the code you write as well as [deploy](#deploy) it instantly to Cloudflare's global network. This way, you can try new things out and deploy them when you are ready.

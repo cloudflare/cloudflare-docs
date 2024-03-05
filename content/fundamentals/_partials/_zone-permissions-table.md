@@ -32,8 +32,8 @@ inputParameters: editWord
 | DMARC Management $1            | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
 | DNS Read                         | Grants read access to [DNS](/dns/).                                                                                                        |
 | DNS Write                        | Grants write access to [DNS](/dns/).                                                                                                       |
-| Dynamic Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
-| Dynamic Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
+| Dynamic URL Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
+| Dynamic URL Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
 | Email Routing Rules Read         | Grants read access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                                |
 | Email Routing Rules $1         | Grants write access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                               |
 | Firewall Services Read           | Grants read access to Firewall resources.                                                                                                  |

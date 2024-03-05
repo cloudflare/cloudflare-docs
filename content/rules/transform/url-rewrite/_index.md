@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Rewrite URL
 weight: 1
-layout: single
 meta:
   title: Rewrite URL rules
 ---

@@ -4,7 +4,6 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use Workers KV directly from Rust
-layout: single
 ---
 
 # Use Workers KV directly from Rust
@@ -29,9 +28,9 @@ $ git commit -m 'Initial commit'
 ```
 ## 1. Create and bind a KV namespace
 
-To access KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#3-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory. 
+To access KV, you have to define a binding for a particular [KV namespace](/kv/get-started/#3-create-a-kv-namespace) in the `wrangler.toml` file generated in your new project's directory.
 
-If you do not have an existing KV namespace, create one using [Wrangler](/workers/wrangler/install-and-update/). 
+If you do not have an existing KV namespace, create one using [Wrangler](/workers/wrangler/install-and-update/).
 
 For example, a KV namespace called `KV_FROM_RUST` would be created by running:
 
@@ -100,7 +99,7 @@ async function handleRequest(request) {
 }
 ```
 
-The signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side. 
+The signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side.
 
 To pass the request directly to the wasm handler, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features:
 

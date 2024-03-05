@@ -20,15 +20,17 @@ Note that this process only refers to connections [between clients and the Cloud
 
 ## Setup
 
+Custom cipher suites is a hostname-level setting, which implies that:
+
+- When you customize cipher suites for a [zone](/fundamentals/setup/accounts-and-zones/#zones), this will affect all hostnames within that zone.
+- The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of certificate type (universal, advanced, or custom).
+- If you need to use a per-hostname cipher suite customization, you must ensure that the hostname is specified on the certificate.
+
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
-- [Custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) (Cloudflare for SaaS zones only)
-
-When you customize cipher suites for a [zone](/fundamentals/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
-
-If you need to use a [per-hostname](/api/operations/per-hostname-tls-settings-put) cipher suite customization, ensure that the [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) specifies the hostname. It is not possible to restrict ciphers on a hostname if you only have a wildcard certificate.
+- [Custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) (Cloudflare for SaaS zones only)
 
 ## Cipher suite selection
 

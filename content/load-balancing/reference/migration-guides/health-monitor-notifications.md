@@ -96,7 +96,7 @@ If using the Cloudflare API, [re-create all your existing notifications](/api/op
 
 {{<details header="No code">}}
 
-On the pool you located in [Step 1](#step-1---find-existing-notifications), look for **Pool Notifications**. Click **Create a Health Alert** to start [creating a notification](/notifications/create-notifications/).
+On the pool you located in [Step 1](#step-1---find-existing-notifications), look for **Pool Notifications**. Click **Create a Health Alert** to start [creating a notification](/notifications/get-started/#create-a-notification).
 
 {{</details>}}
 

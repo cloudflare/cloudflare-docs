@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Product compatibility
-layout: list
+layout: wide
 weight: 3
 meta:
     title: Product compatibility | Orange-to-Orange zones
@@ -9,9 +9,9 @@ meta:
 
 # Product compatibility
 
-The following table provides a list of compatibility guidelines for various Cloudflare products and features.
+As a general rule, settings on the customer zone will override settings on the SaaS zone. In addition, [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/) does not permit traffic directed to a custom hostname zone into another custom hostname zone.
 
-As a general rule, settings on the customer zone will override settings on the SaaS zone.
+The following table provides a list of compatibility guidelines for various Cloudflare products and features.
 
 {{<Aside type="note">}}
 
@@ -32,7 +32,7 @@ This is not an exhaustive list of Cloudflare products and features.
 | [China Network](/china-network/) | No | No |
 | [DNS](/dns/) | Yes* | Yes | As a SaaS customer, do not remove the records related to your Cloudflare for SaaS setup.<br/><br/>Otherwise, your traffic will begin routing away from your SaaS provider. |
 | [HTTP/2 prioritization](https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/) | Yes | Yes* | This feature must be enabled on the customer zone to function. |
-| [Image resizing](/images/image-resizing/) | Yes | Yes |
+| [Image resizing](/images/transform-images/) | Yes | Yes |
 | IPv6 | Yes | Yes |
 | [IPv6 Compatibility](/network/ipv6-compatibility/) | Yes | Yes* | If the customer zone has **IPv6 Compatibility** enabled, generally the SaaS zone should as well.<br/><br/>If not, make sure the SaaS zone enables [Pseudo IPv4](/network/pseudo-ipv4/). |
 | [Load Balancing](/load-balancing/) | No | Yes | Customer zones can still use Load Balancing for non-O2O traffic. |
@@ -49,6 +49,6 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Waiting Room](/waiting-room/) | Yes | Yes |
 | [Websockets](/network/websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
-| [Zaraz](/zaraz/) | Yes | No | 
+| [Zaraz](/zaraz/) | Yes | No |
 
 {{</table-wrap>}}

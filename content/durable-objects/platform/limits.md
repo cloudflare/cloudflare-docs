@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Limits
-weight: 9
+weight: 2
 ---
 
 # Limits
@@ -35,7 +35,7 @@ Durable Objects can scale horizontally across many Durable Objects. Each individ
 * A simple [storage](/durable-objects/api/transactional-storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
 * Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
 
-A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/platform/troubleshooting/#durable-object-is-overloaded) error to the caller.
+A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/reference/troubleshooting/#durable-object-is-overloaded) error to the caller.
 
 ## How many Durable Objects can I create?
 

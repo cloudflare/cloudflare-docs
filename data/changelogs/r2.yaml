@@ -20,7 +20,7 @@ entries:
 - publish_date: '2023-04-01'
   description: |-
     - [GetBucket](/api/operations/r2-get-bucket) is now available for use through the Cloudflare API.
-    - [Location hints](https://developers.cloudflare.com/r2/buckets/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
+    - [Location hints](https://developers.cloudflare.com/r2/reference/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
 - publish_date: '2023-03-16'
   description: |-
     - The ListParts API has been implemented and is available for use.

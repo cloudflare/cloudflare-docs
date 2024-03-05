@@ -59,6 +59,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Orange-to-Orange (O2O) | ✘ | ✘ | ✘ |
 | Stream Delivery | ✅ | ✅ | ✅ |
 | Tiered Caching | ✅ | 🚧{{<fnref num="2">}} | 🚧{{<fnref num="30">}} |
+| Trace | ✘ | ✘ | ✘ |
 | Waiting Room | ⚫️ | ✅ | ✅ |
 | Zaraz | ✅ | ✅ | ✅ |
 
@@ -138,11 +139,11 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="3">}}Network Analytics (including DoS analytics) will not be sent outside the region. However, these are only viewable today in US region.{{</fnentry>}}
 {{<fnentry num="4">}}API shield will not yet work with Customer Metadata Boundary enabled outside of US region.{{</fnentry>}}
 {{<fnentry num="5">}}Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.{{</fnentry>}}
-{{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/platform/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
+{{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
 {{<fnentry num="8">}}Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).{{</fnentry>}}
 {{<fnentry num="9">}}Argo cannot be used with Regional Services.{{</fnentry>}}
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}
-{{<fnentry num="11">}}Only when using [Custom Domain](/pages/platform/custom-domains/) set to a region.{{</fnentry>}}
+{{<fnentry num="11">}}Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.{{</fnentry>}}
 {{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2024.{{</fnentry>}}
 {{<fnentry num="13">}}Logpush available with Customer Metadata Boundary for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.{{</fnentry>}}
 {{<fnentry num="14">}}Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.{{</fnentry>}}

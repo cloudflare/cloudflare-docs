@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Log the payload of matched rules
 weight: 11
-layout: single
 ---
 
 # Log the payload of matched rules

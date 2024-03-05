@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Manage findings
-layout: single
 weight: 1
 meta:
   title: Manage security findings
@@ -29,6 +28,15 @@ Findings are security issues detected within SaaS applications that involve user
 3. To resolve the finding, expand the **Remediation Guide** and follow the step-by-step instructions in the UI.
 
 Other actions you can take include [creating an HTTP block policy](#resolve-finding-with-a-gateway-policy), updating the finding's [severity level](#severity-levels), or [hiding irrelevant findings](#hide-findings) from view.
+
+### View shared files
+
+File findings for some integrations (such as [Microsoft 365](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/#file-sharing) and [Box](/cloudflare-one/applications/scan-apps/casb-integrations/box/#file-sharing)) may link to an inaccessible file. To access the actual shared file:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+2. Locate the individual finding, then select **View**.
+3. In **Active Instances**, select the file name.
+4. In **Shared Links**, select the linked file instance.
 
 ## Severity levels
 

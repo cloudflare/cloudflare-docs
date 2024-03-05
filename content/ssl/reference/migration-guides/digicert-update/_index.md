@@ -12,7 +12,7 @@ In the latter half of 2023, Cloudflare will begin deprecating DigiCert as a Cert
 
 {{<Aside type="warning">}}
 
-The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023.
+The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
 
 The SSL for SaaS renewals offboarding has been postponed and started gradually rolling out on November 1, 2023.
 
@@ -40,9 +40,9 @@ Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloud
 |------------------------------|--------------------------------------------------------------------------------------------|------------|
 | Advanced certificate | New Cloudflare accounts will not have DigiCert as an option for advanced certificates.     | August 31, 2023 |
 | Advanced certificate | Cloudflare will stop using DigiCert as a CA for new advanced certificate orders.           | October 5, 2023 |
-| Advanced certificate | Cloudflare will stop using DigiCert as the CA for advanced certificate renewals.           | October 26, 2023 |
+| Advanced certificate | Cloudflare will gradually stop using DigiCert as the CA for advanced certificate renewals.           | October 26, 2023 |
 | SSL for SaaS                 | New Cloudflare accounts will not have DigiCert as an option for SSL for SaaS certificates. | September 7, 2023 |
 | SSL for SaaS                 | Cloudflare will stop using DigiCert as a CA for new SSL for SaaS certificate orders.       | October 18, 2023 |
-| SSL for SaaS                 | Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals.       | November 1, 2023 |
+| SSL for SaaS                 | Cloudflare will gradually stop using DigiCert as a CA for SSL for SaaS certificate renewals.       | November 1, 2023 |
 
 {{</table-wrap>}}

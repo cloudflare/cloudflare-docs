@@ -376,7 +376,7 @@ span a img {
     </fieldset>
     <fieldset>
       <legend class="FilterLegend">Enterprise preview
-        <span><a href="/fundamentals/account-and-billing/preview-services/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
+        <span><a href="/fundamentals/subscriptions-and-billing/preview-services/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
         <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available" onclick="zarazTrackSelect('product grid select filter', 'preview available | preview available')">
@@ -553,7 +553,7 @@ function hideElement(id) {
 function triggerSearch() {
   let searchBox = document.getElementById('search');
   zaraz.track('product grid additional search', {input: searchBox.value})
-  document.querySelector(".DocSearch.DocSearch-Button").click()
+  window.location.assign(`/search/?q=${searchBox.value}`)
 }
 
 function zarazTrackSelect(eventName, selectedOption) {

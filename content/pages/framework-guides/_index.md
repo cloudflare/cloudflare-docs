@@ -16,7 +16,7 @@ weight: 3
 * [Deploy a Hono site](/pages/framework-guides/deploy-a-hono-site/)
 * [**Deploy a Hugo site**](/pages/framework-guides/deploy-a-hugo-site/)
 * [Deploy a Jekyll site](/pages/framework-guides/deploy-a-jekyll-site/)
-* [**Deploy a Next.js site**](/pages/framework-guides/deploy-a-nextjs-site/)
+* [**Deploy a Next.js site**](/pages/framework-guides/nextjs/)
 * [**Deploy a Nuxt site**](/pages/framework-guides/deploy-a-nuxt-site/)
 * [Deploy a Pelican site](/pages/framework-guides/deploy-a-pelican-site/)
 * [Deploy a Preact site](/pages/framework-guides/deploy-a-preact-site/)

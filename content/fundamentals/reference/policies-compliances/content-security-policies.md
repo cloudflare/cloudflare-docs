@@ -22,7 +22,7 @@ Cloudflare’s [CDN](/cache/) is compatible with CSP.
 
 Cloudflare does not:
 
-* Modify CSP headers from the origin web server.
+* Modify CSP headers from the origin web server (except when using Zaraz, to ensure the [Zaraz script is always running](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).
 * Require changes to acceptable sources for first or third-party content.
 * Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/reference/cdn-cgi-endpoint/) and [Cloudflare Fonts](/speed/optimization/content/fonts/#cloudflare-fonts) that rewrites Google Fonts urls).
 * Interfere with locations specified in your CSP.
@@ -39,4 +39,4 @@ To use certain Cloudflare features, however, you may need to update the headers 
 | [Bot products](/bots/) | Refer to [JavaScript detections and CSPs](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp).|
 | [Page Shield](/page-shield/) | Refer to [Page Shield CSP Header format](/page-shield/reference/csp-header/). |
 | [Zaraz](/zaraz/) | No updates required ([details](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).|
-| [Turnstile](/turnstile/) | Refer to [Turnstile FAQ](/turnstile/frequently-asked-questions/#how-does-content-security-policy-need-to-be-configured-for-turnstile).|
+| [Turnstile](/turnstile/) | Refer to [Turnstile CSP](/turnstile/reference/content-security-policy/).|

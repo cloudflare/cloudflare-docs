@@ -28,7 +28,7 @@ Changes made to your Split Tunnel configuration are immediately propagated to cl
 
 Use Split Tunnels when you need to bypass Gateway entirely for a site or allow traffic through the [firewall that WARP creates](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall). Common scenarios include:
 
-- Connect to a third-party application which requires the actual IP address of the end-user device (for example, [Office 365](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-office-365-traffic)).
+- Connect to a third-party application which requires the actual IP address of the end-user device (for example, [Microsoft 365](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic)).
 - Optimize voice and video.
 - Connect to a [third-party VPN](/cloudflare-one/connections/connect-devices/warp/deployment/vpn/) endpoint.
 

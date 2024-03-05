@@ -5,7 +5,11 @@ title: Mobile Redirect
 weight: 4
 ---
 
-# Mobile Redirect
+{{<heading-pill style="deprecated">}} Mobile Redirect {{</heading-pill>}}
+
+{{<Aside type="warning" header="Deprecation notice">}}
+Mobile Redirect is deprecated and will be removed on 2024-06-30. You should configure [Single Redirects](/rules/url-forwarding/single-redirects/) instead of using Mobile Redirect. Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) for examples of performing mobile redirects with Single Redirects.
+{{</Aside>}}
 
 Mobile Redirect allows you to automatically redirect mobile device visitors to a mobile-optimized website or subdomain home page. The redirect is done at the edge of Cloudflare's network, improving the user experience by eliminating a roundtrip to your server.
 
@@ -21,12 +25,12 @@ ___
 2. Select your account and zone.
 3. Go to **Speed** > **Optimization** > **Other**.
 4. For **Mobile Redirect**, select the subdomain that you would like to redirect from the drop down list.
-5. Choose **Keep Path** or **Drop Path**:
+5. Choose **Keep Path** or **Drop Path**:
 
     - **Keep Path** will redirect all mobile requests to the same resource hosted on your mobile-optimized website. 
     - **Drop Path** will redirect all mobile requests to your mobile-optimized website homepage.
 
-6. Toggle switch to **On**.
+6. Toggle switch to **On**.
 
 {{<Aside type="note">}}
 
@@ -59,7 +63,7 @@ ___
 
 ## Allow full site view
 
-To allow your end users to view the full site on mobile, you will need to set the value of the following cookie _on the apex domain only_ to 0 (zero) at your origin server:
+To allow your end users to view the full site on mobile, you will need to set the value of the following cookie _on the apex domain only_ to 0 (zero) at your origin server:
 
 `__cf_mob_redir = 0; domain=.example.com`
 

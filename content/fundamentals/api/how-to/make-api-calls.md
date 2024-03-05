@@ -6,7 +6,7 @@ weight: 2
 
 # Make API calls
 
-Once you create your API token, all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <API_TOKEN>` interface. An example request is shown below.
+Once you [create your API token](/fundamentals/api/get-started/create-token/), all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <API_TOKEN>` interface. An example request is shown below.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}" \
@@ -70,7 +70,7 @@ To use the Cloudflare API with curl on a Command Prompt window, you must use dou
 A typical `PATCH` request will be similar to the following:
 
 ```txt
-C:\> curl --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "X-Auth-Email: <EMAIL>" --header "X-Auth-Key: <API_KEY>" --data "{""status"": ""accepted""}"
+C:\>curl --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "X-Auth-Email: <EMAIL>" --header "X-Auth-Key: <API_KEY>" --data "{""status"": ""accepted""}"
 ```
 
 To escape a double quote character in a request body (for example, a body specified with `-d` or `--data` in a `POST`/`PATCH` request), prepend it with another double quote (`"`) or a backslash (`\`) character.
@@ -78,7 +78,7 @@ To escape a double quote character in a request body (for example, a body specif
 To break a single command in two or more lines, use `^` as the line continuation character at the end of a line:
 
 ```txt
-C:\> curl --request PATCH ^
+C:\>curl --request PATCH ^
 "https://api.cloudflare.com/client/v4/user/invites/{id}" ^
 --header "X-Auth-Email: <EMAIL>" ^
 --header "X-Auth-Key: <API_KEY>" ^
@@ -95,9 +95,14 @@ PowerShell has specific cmdlets (`Invoke-RestMethod` and `ConvertFrom-Json`) for
 
 The following example uses the `Invoke-RestMethod` cmdlet:
 
-```txt
-PS C:\> Invoke-RestMethod -URI https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'}
+```powershell
+PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'}
+```
 
+```txt
+---
+header: Example output
+---
 result      : {@{id=78411cfa-5727-4dc1-8d4a-773d01f17c7c; type=universal; hosts=System.Object[];
               primary_certificate=c173c8a1-9724-4e96-a748-2c4494186098; status=active; certificates=System.Object[];
               created_on=2022-12-09T23:11:06.010263Z; validity_days=90; validation_method=txt;
@@ -110,9 +115,13 @@ messages    : {}
 
 By default, the output will only contain the first level of the JSON object hierarchy (in the above example, the content of objects such as `hosts` and `certificates` is not shown). To show additional levels and format the output like the `jq` tool, you can use the `ConvertFrom-Json` cmdlet specifying the desired maximum depth (by default, `2`):
 
-```txt
-PS C:\> Invoke-RestMethod -URI https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'} | ConvertTo-Json -Depth 5
-
+```powershell
+PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'} | ConvertTo-Json -Depth 5
+```
+```json
+---
+header: Example output
+---
 {
     "result":  [
                    {
@@ -160,7 +169,7 @@ You can also use the curl tool in PowerShell. However, in PowerShell `curl` is a
 
 A typical `PATCH` request with curl will be similar to the following:
 
-```txt
+```powershell
 PS C:\> curl.exe --request PATCH "https://api.cloudflare.com/client/v4/user/invites/{id}" --header "Authorization: Bearer <API_TOKEN>" --data '{\"status\": \"accepted\"}'
 ```
 
@@ -168,7 +177,7 @@ To escape a double quote (`"`) character in a request body (specified with `-d` 
 
 To break a single command in two or more lines, use a backtick (`` ` ``) character as the line continuation character at the end of a line:
 
-```txt
+```powershell
 PS C:\> curl.exe --request PATCH `
 "https://api.cloudflare.com/client/v4/user/invites/{id}" `
 --header "X-Auth-Email: <EMAIL>" `

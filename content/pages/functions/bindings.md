@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/learning/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
@@ -16,7 +16,7 @@ Local development uses local storage. It cannot access data stored on Cloudflare
 
 ## KV namespaces
 
-[Workers KV](/kv/learning/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
+[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -54,6 +54,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ### Interact with your KV namespaces locally
 
 While developing locally, interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv=<BINDING_NAME>` to your run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
+
+Alternatively, you can interact with a KV namespace locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#kv-namespaces) for more information.
+
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## Durable Object namespaces
 
@@ -147,7 +151,17 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your R2 buckets locally
 
-While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NAME>` to your run command.
+
+{{<Aside type="note">}}
+By default, `wrangler dev` automatically persists data.
+{{</Aside>}}
+
+If your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+
+Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#r2-buckets) for more information.
+
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## D1 databases
 
@@ -194,10 +208,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your D1 databases locally
 
-While developing locally, interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
+While [developing locally](/d1/configuration/local-development/#develop-locally-with-pages), interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
 
 {{<Aside type="note">}}
-By default, `wrangler dev` automatically persists data.
+By default, [`wrangler dev`](/workers/wrangler/commands/#dev-1) automatically persists data.
 {{</Aside>}}
 
 Specifically:
@@ -205,13 +219,18 @@ Specifically:
 * If your database is bound to `NORTHWIND_DB` and the `database_id` in your `wrangler.toml` file is `xxxx-xxxx-xxxx-xxxx-xxxx`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1 NORTHWIND_DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
-Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API methods available on your D1 binding.
+Refer to the [D1 client API documentation](/d1/build-databases/query-databases/) for the API methods available on your D1 binding.
+
+Alternatively, you can interact with a D1 database locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#d1-databases) for more information.
+
+{{<render file="_pages_local_bindings_warning.md">}}
 
 ## Workers AI
-[Workers AI](/workers-ai/) allows you to run powerful AI models. To bind Workers AI to your Pages Function:
+
+[Workers AI](/workers-ai/) allows you to run  AI models. To bind Workers AI to your Pages Function:
 
 {{<Aside type="warning">}}
-While pages currently supports Workers AI bindings, they do not work in local dev mode. We'll provide local dev support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime
+While Pages currently supports Workers AI bindings, they do not work in local dev mode. Cloudflare aims to provide local dev support soon, but recommends you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -221,8 +240,7 @@ While pages currently supports Workers AI bindings, they do not work in local de
 5. Give your binding a name under **Variable name**.
 7. Redeploy your project for the binding to take effect.
 
-Install the Workers AI client library
-
+### Install the Workers AI client library
 
 Below is an example of how to use Workers AI in your Function. Your Workers AI binding is `AI`:
 
@@ -269,7 +287,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ## Service bindings
 
-[Service bindings](/workers/runtime-apis/service-bindings/) enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -306,9 +324,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 To interact with a [service binding](/workers/configuration/bindings/about-service-bindings/) while developing locally, run the Worker you want to bind to via `wrangler dev` and in parallel, run `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `SCRIPT_NAME` indicates the name of the Worker. For example, if your Worker is called `my-worker`, connect with this Worker by running it via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_SERVICE`).
 
+Alternatively, you can interact with a service binding locally via a `wrangler.toml` file. Refer to [Wrangler configuration](/workers/wrangler/configuration/#service-bindings) for more information.
+
+{{<render file="_pages_local_bindings_warning.md">}}
+
 ## Queue Producers
 
-[Queue Producers](/queues/platform/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
+[Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -479,7 +501,7 @@ To add secrets to your Pages project:
 5. Select **Encrypt** to create your secret.
 6. Select **Save**.
 
-You use secrets the same way as environment variables, [see here](#environment-variables) for how to use them.
+You use secrets the same way as environment variables. For more guidance, refer to [Environment variables](#environment-variables).
 
 ### Interact with your secrets locally
 

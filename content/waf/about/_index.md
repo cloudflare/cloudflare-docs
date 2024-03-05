@@ -2,7 +2,6 @@
 title: Concepts
 pcx_content_type: concept
 weight: 2
-layout: single
 ---
 
 # Concepts
@@ -30,9 +29,14 @@ WAF Managed Rules allows you to deploy [managed rulesets](/waf/managed-rules/) p
 
 When you enable these managed rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
 
-You can override the default action or disable one or more rules included in managed rulesets. To customize the rules behavior you define specific **configurations** or **overrides**.
+Rules of managed rulesets have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
 
-You can define a configuration that affects an entire managed ruleset, or configure the action and status of one or more rules in the ruleset. Rules have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
+To customize the behavior of managed rulesets, do one of the following:
+
+- [Create exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of WAF managed rulesets or some of their rules under certain conditions.
+- [Configure overrides](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
+
+Exceptions have priority over overrides.
 
 ## Rule execution order
 

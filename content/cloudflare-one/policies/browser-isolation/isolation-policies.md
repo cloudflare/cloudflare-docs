@@ -106,7 +106,7 @@ Isolate high risk content categories such as newly registered domains.
 
 ### Isolate news and media
 
-Isolate news and media sites, which are targets for malvertising attacks:
+Isolate news and media sites, which are targets for malvertising attacks.
 
 | Selector           | Operator | Value          | Action  |
 | ------------------ | -------- | -------------- | ------- |
@@ -114,8 +114,14 @@ Isolate news and media sites, which are targets for malvertising attacks:
 
 ### Isolate uncategorized content
 
-Isolate content that has not been categorized by Cloudflare Radar:
+Isolate content that has not been categorized by [Cloudflare Radar](/radar/).
 
 | Selector           | Operator | Value                  | Action  |
 | ------------------ | -------- | ---------------------- | ------- |
 | Content categories | not in   | All content categories | Isolate |
+
+### Isolate ChatGPT
+
+Isolate the use of ChatGPT.
+
+{{<render file="gateway/policies/_isolate-chatgpt.md">}}

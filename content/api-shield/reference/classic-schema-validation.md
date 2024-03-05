@@ -2,7 +2,7 @@
 title: Classic Schema Validation
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure Classic Schema Validation
 ---

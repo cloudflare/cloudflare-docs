@@ -73,9 +73,11 @@ flowchart TB
 
 Gateway applies your policies in the following order:
 
-1. DNS
-2. HTTP
-3. Network
+1. DNS policies with selectors evaluated before resolution
+2. DNS policies with selectors evaluated after resolution
+3. HTTP policies
+4. Network policies
+5. Egress policies (if applicable)
 
 DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
 
@@ -87,9 +89,9 @@ Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against
 
 For proxied [HTTP/3 traffic](/cloudflare-one/policies/gateway/http-policies/http3/), Gateway applies your policies in the following order:
 
-1. DNS
-2. Network
-3. HTTP
+1. DNS policies
+2. Network policies
+3. HTTP policies
 
 ## Priority within a policy builder
 

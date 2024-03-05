@@ -15,9 +15,8 @@ Cloudflare detects route leaks by using several sources of routing data to creat
 You must be a user who has brought your own IP address to Cloudflare, which includes Magic Transit, Spectrum, and WAF users. Only prefixes advertised by Cloudflare qualify for Route Leak Detection.
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2.  Click **Manage Account** > **Notifications**.
-3.  From **Notifications**, click **Add**.
-4.  Locate **Route Leak Detection** from the list and click **Select**.
-5.  Enter a name and description for the notification.
-6.  Enter one or more email addresses to receive the notifications.
-7.  Click **Create**.
+2.  Select **Notifications** > **Add**.
+3.  Locate **Route Leak Detection** from the list > **Select**.
+4.  Enter a name and description for the notification.
+5.  Enter one or more email addresses to receive the notifications.
+6.  Select **Save**.

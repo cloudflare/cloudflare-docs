@@ -1,13 +1,12 @@
 ---
 pcx_content_type: configuration
 title: HTTP policies
-layout: single
 weight: 4
 ---
 
 # HTTP policies
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/">Cloudflare Root Certificate</a> before creating HTTP policies.
 
@@ -66,6 +65,10 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 | Application      | in            | `Google Drive` | And   | Block  |
 | Upload Mime Type | matches regex | `.*`           |       |        |
 
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
+
+{{<render file="gateway/_client-notifications.md">}}
+
 ### Isolate
 
 API value: `isolate`
@@ -102,7 +105,7 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 
 | Selector | Operator      | Value           | Action      |
 | -------- | ------------- | --------------- | ----------- |
-| Hostname | Matches Regex | `.*example.com` | Do Not Scan |
+| Hostname | matches regex | `.*example.com` | Do Not Scan |
 
 When a Do Not Scan rule matches, nothing is scanned, regardless of file size or whether the file type is supported or not.
 
@@ -170,7 +173,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Download and Upload File Type
 
-These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office/Microsoft 365 documents, PDF files, and ZIP files.
 
 | UI name            | API example                                             |
 | ------------------ | ------------------------------------------------------- |

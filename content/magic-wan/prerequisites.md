@@ -6,13 +6,9 @@ weight: 2
 
 # Prerequisites
 
-Magic WAN is an Enterprise-only product. [Contact Cloudflare](https://www.cloudflare.com/magic-wan/) to acquire Magic WAN. If you plan on using Magic WAN Connector to onboard your locations to Cloudflare, you will need to purchase Magic WAN first.
+Magic WAN is an Enterprise-only product. [Contact Cloudflare](https://www.cloudflare.com/magic-wan/) to acquire Magic WAN. If you plan on using Magic WAN Connector to automatically onboard your locations to Cloudflare, you will need to purchase Magic WAN first.
 
-You can purchase Magic WAN Connector software pre-installed on a Cloudflare-certified device. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
-
-Before you can begin using Magic WAN, verify that you meet Cloudflare’s onboarding requirements. The list below is for customers configuring Magic WAN manually:
-
-{{<Aside type="note">}}Skip the list of prerequisites below if you use [Magic WAN Connector](/magic-wan/configuration/connector/) to onboard your network locations to Cloudflare.{{</Aside>}}
+The preferred way to onboard your network locations to Cloudflare One is through [Magic WAN Connector](/magic-wan/configuration/connector/). The list of prerequisites below is only for customers planning to connect manually to Cloudflare with a third-party device.
 
 ## Use compatible tunnel endpoint routers
 

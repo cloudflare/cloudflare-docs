@@ -13,7 +13,7 @@
 
       {{ with $DATA.resources.discord }}
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := "https://discord.gg/cloudflaredev" -}} {{- partial
+        {{- $url := "https://discord.cloudflare.com" -}} {{- partial
         "external.link" (dict "text" "Discord" "url" $url) }}
       </span>
 
@@ -35,7 +35,7 @@
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := "https://dash.cloudflare.com/?to=/:account/support" -}} {{- partial
+        {{- $url := "/support/contacting-cloudflare-support/" -}} {{- partial
         "external.link" (dict "text" "Support Portal" "url" $url) }}
       </span>
 

@@ -16,7 +16,7 @@ To complete the steps in this guide, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
 - [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
-- [A zone on Cloudflare](/fundamentals/setup/account-setup/add-site/).
+- [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 - [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
 
 ## 1. Install Ansible

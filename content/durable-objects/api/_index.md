@@ -1,7 +1,7 @@
 ---
 title: API
 pcx_content_type: navigation
-weight: 7
+weight: 3
 ---
 
 # API

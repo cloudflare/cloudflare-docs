@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: WARP
 weight: 1
-layout: single
 meta:
   title: About Cloudflare WARP
 ---

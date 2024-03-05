@@ -19,62 +19,62 @@ To set up an integration with Xata:
 
 3. Add the Xata integration to your Worker:
 
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-    2. In **Account Home**, select **Workers & Pages**.
-    3. In **Overview**, select your Worker.
-    4. Select **Integrations** > **Xata**. 
-    5. Follow the setup flow, selecting the database created in step 1.
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+   2. In **Account Home**, select **Workers & Pages**.
+   3. In **Overview**, select your Worker.
+   4. Select **Integrations** > **Xata**.
+   5. Follow the setup flow, selecting the database created in step 1.
 
-4. Install the [Xata CLI](https://xata.io/docs/getting-started/installation) and authenticate the CLI by running the following commands: 
+4. Install the [Xata CLI](https://xata.io/docs/getting-started/installation) and authenticate the CLI by running the following commands:
 
-  ```sh
-  npm install -g @xata.io/cli
+   ```sh
+   npm install -g @xata.io/cli
 
-  xata auth login
-  ```
+   xata auth login
+   ```
 
 5. Once you have the CLI set up, In your Worker, run the following code in the root directory of your project:
 
-    ```sh
-    xata init
-    ```
+   ```sh
+   xata init
+   ```
 
-  Accept the default settings during the configuration process. After completion, a `.env` and `.xatarc` file will be generated in your project folder. 
+   Accept the default settings during the configuration process. After completion, a `.env` and `.xatarc` file will be generated in your project folder.
 
 6. To enable Cloudflare access the secret values generated when running in development mode, create a `.dev.vars` file in your project's root directory and add the following content, replacing placeholders with the specific values:
 
-  ```sh
-  XATA_API_KEY=<YOUR_API_KEY_HERE>
-  XATA_BRANCH=<YOUR_BRANCH_HERE>
-  XATA_DATABASE_URL=<YOUR_DATABASE_URL_HERE>
-  ```
+   ```sh
+   XATA_API_KEY=<YOUR_API_KEY_HERE>
+   XATA_BRANCH=<YOUR_BRANCH_HERE>
+   XATA_DATABASE_URL=<YOUR_DATABASE_URL_HERE>
+   ```
 
-7. The following example shows how to make a query to your Xata database in a Worker. The credentials needed to connect to Xata have been automatically added as secrets to your Worker through the integration. 
+7. The following example shows how to make a query to your Xata database in a Worker. The credentials needed to connect to Xata have been automatically added as secrets to your Worker through the integration.
 
-    ```ts
-    ---
-    filename: Worker code
-    ---
-    export default {
-      async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-        const xata = new XataClient({
-          apiKey: env.XATA_API_KEY,
-          branch: env.XATA_BRANCH,
-          databaseURL: env.XATA_DATABASE_URL,
-        });
-        const records = await xata.db.Posts.select([
-          'id',
-          'title',
-          'author.name',
-          'author.email',
-          'author.bio',
-        ]).getAll();
+   ```ts
+   ---
+   filename: Worker code
+   ---
+   export default {
+     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+       const xata = new XataClient({
+         apiKey: env.XATA_API_KEY,
+         branch: env.XATA_BRANCH,
+         databaseURL: env.XATA_DATABASE_URL,
+       });
+       const records = await xata.db.Posts.select([
+         'id',
+         'title',
+         'author.name',
+         'author.email',
+         'author.bio',
+       ]).getAll();
 
-        return new Response(JSON.stringify(records), {
-          status: 200
-        });
-      },
-    };
-    ```
+       return new Response(JSON.stringify(records), {
+         status: 200
+       });
+     },
+   };
+   ```
 
-To learn more about Xata, refer to [Xata's official documentation](https://xata.io/docs). 
+To learn more about Xata, refer to [Xata's official documentation](https://xata.io/docs).

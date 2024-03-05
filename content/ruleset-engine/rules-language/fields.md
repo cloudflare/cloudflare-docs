@@ -31,7 +31,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 {{<Aside type="note" header="Availability notes">}}
 
-- Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+- Geolocation information is provided and maintained by MaxMind. Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 - Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -97,7 +97,7 @@ The Cloudflare Rules language supports these standard fields:
       </td>
    </tr>
    <tr id="field-http-request-cookies">
-      <td valign="top"><code>http.request.cookies</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.cookies</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
          </p>
@@ -551,7 +551,7 @@ The Cloudflare Rules language supports these standard fields:
               <td>Mayotte</td>
             </tr>
           </table>
-          <p>{{<markdown>}}This list was obtained from MaxMind's GeoIP2 database on 2023-12-05. This information is maintained by MaxMind. For details on obtaining up-to-date country information, refer to [MaxMind GeoLite2 Free Geolocation Data](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).{{</markdown>}}</p>
+          <p>{{<markdown>}}The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).{{</markdown>}}</p>
          </div>
          </details>
          <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is deprecated. The <code>ip.geoip.is_in_european_union</code> field is still available for new and existing rules, but you should use the <code>ip.src.is_in_european_union</code> field instead.</p>
@@ -973,6 +973,10 @@ The Cloudflare Rules language supports these dynamic fields:
   </tbody>
 </table>
 
+### Corporate Proxy
+
+{{<render file="_corporate_proxy.md" productFolder="/bots/">}}
+
 ## Magic Firewall fields
 
 {{<Aside type="note">}}Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.{{</Aside>}}
@@ -1256,7 +1260,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
   </thead>
   <tbody>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><code>http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.uri.args</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
        <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
         </p>
@@ -1311,7 +1315,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
       </td>
     </tr>
     <tr id="field-raw-http-request-uri-args">
-      <td valign="top"><code>raw.http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>raw.http.request.uri.args</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
        <td>
         <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
         </p>
@@ -1349,7 +1353,7 @@ The Cloudflare Rules language supports these HTTP header fields:
   </thead>
   <tbody>
    <tr id="field-http-request-headers">
-      <td valign="top"><code>http.request.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.headers</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).</p>
          <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
@@ -1435,7 +1439,7 @@ The Cloudflare Rules language supports these HTTP header fields:
       <td valign="top"><code>http.request.accepted_languages</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
       <td>
          <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
-         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/ruleset-engine/rules-language/values/#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/ruleset-engine/rules-language/values/#array-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
          <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
          <p>Example 1:<br/>
          Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>
@@ -1511,7 +1515,7 @@ The Cloudflare Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr id="field-http-request-body-form">
-      <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
@@ -1634,7 +1638,7 @@ The Cloudflare Rules language supports these HTTP response fields:
       </td>
    </tr>
    <tr id="field-http-response-headers">
-      <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents HTTP response headers as a Map (or associative array).
          </p>
