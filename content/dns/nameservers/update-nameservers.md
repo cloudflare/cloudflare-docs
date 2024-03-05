@@ -8,11 +8,11 @@ weight: 2
 
 To use Cloudflare DNS as an authoritative DNS provider - be it in a primary (full) setup or secondary setup -, your domain nameservers must point to nameservers that you get from your Cloudflare account.
 
-## Where and how
+## Specific processes
 
-Although Cloudflare will provide you the nameserver names or allow you to create your own custom nameservers, the final step to make Cloudflare an authoritative DNS provider for your domain may have to be done outside of Cloudflare.
+Although Cloudflare will provide you the nameservers or allow you to create your own custom nameservers, the final step to make Cloudflare an authoritative DNS provider for your domain may have to be done outside of Cloudflare.
 
-Unless you are using Cloudflare Registrar, consider which of the following sections correspond to your use case:
+Unless you are using Cloudflare Registrar, consider which of the following sections correspond to your use case.
 
 ### Your domain uses a different registrar
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Nameserver options
-weight: 2
+weight: 3
 ---
 
 # Nameserver options
