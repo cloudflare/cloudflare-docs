@@ -8,4 +8,7 @@ weight: 5
 
 What they are. How they make CF work.
 
+## Types of nameservers
+
+
 ## Related resources

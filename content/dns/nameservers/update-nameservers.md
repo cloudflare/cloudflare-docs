@@ -1,18 +1,20 @@
 ---
 pcx_content_type: concept
-title: Basic tasks
+title: Update nameservers
 weight: 2
 ---
 
-# Basic tasks OR Update nameservers OR...
+# Update your nameservers
 
-## Update your nameservers
+To use Cloudflare DNS as an authoritative DNS provider - be it in a primary (full) setup or secondary setup -, your domain nameservers must point to nameservers that you get from your Cloudflare account.
+
+## Where and how
 
 ### Registrar
 
 ### Parent zone
 
-## Add glue records (Custom NS only)
+### Reseller
 
 
 <!--- suggested outline from Content Strategy previous work
