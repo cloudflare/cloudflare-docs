@@ -11,7 +11,7 @@ enable_flag: "fetcher_no_get_put_delete"
 disable_flag: "fetcher_has_get_put_delete"
 ---
 
-Some objects in the Workers API implement a method `fetch()` which behaves similarly to the global `fetch()` method, but the requests are sent to the destination represented by the object, rather than being routed based on the hostname. In particular, [Durable Object](https://developers.cloudflare.com/durable-objects/) stubs and [Service Bindings](https://developers.cloudflare.com/workers/configuration/bindings/about-service-bindings/) both have such `fetch()` methods.
+Some objects in the Workers API implement a method `fetch()` which behaves similarly to the global `fetch()` method, but the requests are sent to the destination represented by the object, rather than being routed based on the URL. In particular, [Durable Object](/durable-objects/) stubs and [Service Bindings](/workers/configuration/bindings/about-service-bindings/) both have such `fetch()` methods.
 
 Historically, API objects that had such a `fetch()` method also had methods `get()`, `put()`, and `delete()`. These methods were thin wrappers around `fetch()` which would perform the corresponding HTTP method and automatically handle writing/reading the request/response bodies as needed.
 
