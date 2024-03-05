@@ -66,7 +66,7 @@ Use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-
 2. Make sure the nameservers are updated:
 
   * If your domain uses [Cloudflare Registrar](/registrar/), the respective `A` and `AAAA` records are automatically created.
-  * If your domain uses a different registrar, also update the nameservers at your registrar to use the account custom nameserver names.
+  * If your domain uses a different registrar, also update the nameservers at your registrar to use the account custom nameservers.
   * If your zone is delegated from a parent zone, update the corresponding `NS` record at the parent zone.
 
 ### 3. (Optional) Make ACNS default for new zones
@@ -100,7 +100,7 @@ Content.....
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-  * If you are using [Cloudflare Registrar](/registrar/), use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) and set the `enabled` parameter to `false`.
+  * If you are using [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers and then use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to change the `enabled` parameter to `false`.
   * If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to set the `enabled` parameter to `false`.
 
 {{</tab>}}
