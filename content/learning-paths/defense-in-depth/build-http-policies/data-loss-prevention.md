@@ -9,7 +9,7 @@ In order to use Data Loss Prevention (DLP) tools within Cloudflare Zero Trust, y
 
 ## Configure a DLP profile
 
-You may either use DLP profiles predefined by Cloudflare, or create your own custom profiles based on regex, predefined detection entries, and DLP datasets.
+You may either use DLP profiles predefined by Cloudflare, or create your own custom profiles based on regular expressions (regex), predefined detection entries, and DLP datasets.
 
 ### Configure a predefined profile
 
@@ -25,9 +25,19 @@ For many Cloudflare users, Cloudflare Zero Trust is often one of the only measur
 
 ### Define your sensitive data
 
-#### Various data forms
+#### Existing data patterns
 
-If your data patterns take many different forms and contexts, consider building a custom profile using one or multiple regular expressions (regex).
+If your organization is most concerned about general data patterns that fit existing classifications such as personal identifiable information (PII), protected health information (PHI), financial information, or source code, we recommend using the [default predefined profiles](#configure-a-predefined-profile).
+
+To help this better match the needs of your organization, you can also build a complex profile that matches data to both an existing library and a custom string detection or database. For example:
+
+policy table
+
+API call
+
+#### Assorted data patterns
+
+If your data patterns take many different forms and contexts, consider building a custom profile using one or multiple regexes.
 
 {{<Aside type="note" header="Rust regular expressions">}}
 Cloudflare implements regular expressions with Rust. Make sure you account for this difference when writing expressions or using regular expression builders and generative AI.
@@ -35,12 +45,13 @@ Cloudflare implements regular expressions with Rust. Make sure you account for t
 To validate your regex, use [Rustexp](https://rustexp.lpil.uk/).
 {{</Aside>}}
 
-Here's an example of using a custom expression to detect [a good example]. This will look for…
+For example, you can use a custom expression to detect [a good example]:
+
 [screenshot and matching api call]
 
-#### Predefined datasets
+#### DLP datasets
 
-If your data is a distinct [predefined dataset](/cloudflare-one/policies/data-loss-prevention/datasets/), you can build a profile by uploading a database to use in an Exact Data Match or Custom Wordlist function. Exact Data Match and Custom Wordlist feature some key differences:
+If your data is a distinct [dataset](/cloudflare-one/policies/data-loss-prevention/datasets/) you have defined, you can build a profile by uploading a database to use in an Exact Data Match or Custom Wordlist function. Exact Data Match and Custom Wordlist feature some key differences:
 
 |                     | Exact Data Match                                        | Custom Wordlist                                                    |
 | ------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ |
@@ -56,12 +67,9 @@ As your datasets change and grow, we recommend building a pipeline to update the
 
 #### Microsoft Information Protection (MIP) labels
 
-If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. Simply build a M365 CASB integration [link], and we'll automatically pull in your existing MIP definitions into the Cloudflare dashboard, which can then be used to build DLP profiles, and put to use in any Gateway HTTP policies.
+If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. To get started, connect your Microsoft 365 account with a [CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/). Cloudflare will automatically pull in your existing MIP definitions into Zero Trust. You can then use the MIP definitions to build DLP profiles for use in Gateway policies.
 
-#### Existing detection libraries
-
-If your organization is most concerned about general data patterns that fit existing classifications such as PII, PHI, financial information, or source code, we recommend using our existing detection libraries. To help this better match the needs of your organization, you can build a complex profile that both checks for the presence of data matching an existing library, while also looking for data that matches a custom string detection or data from a database. Here's an example of that type of policy:
-[screenshot and api call]
+For more information, refer to [Integration profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/).
 
 ## Build functional Gateway DLP policies
 
