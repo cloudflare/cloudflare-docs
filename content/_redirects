@@ -201,11 +201,11 @@
 /network-interconnect/about/interconnect-types/ /network-interconnect/about/ 301
 /network-interconnect/about/route-leak-detection/ /network-interconnect/about/ 301
 /network-interconnect/about/argo-for-packets/ /network-interconnect/about/ 301
-/network-interconnect/about/bfd/ /network-interconnect/classic-network-interconnect/set-up/configure-bgp-bfd/ 301
-/network-interconnect/set-up-cni/ /network-interconnect/classic-network-interconnect/set-up/ 301
-/network-interconnect/set-up-cni/scope-config/ /network-interconnect/classic-network-interconnect/set-up/scope-config/ 301
-/network-interconnect/set-up-cni/configure-cross-connect/ /network-interconnect/classic-network-interconnect/set-up/configure-cross-connect/ 301
-/network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/classic-network-interconnect/set-up/configure-bgp-bfd/ 301
+/network-interconnect/about/bfd/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
+/network-interconnect/set-up-cni/ /network-interconnect/classic-cni/set-up/ 301
+/network-interconnect/set-up-cni/scope-config/ /network-interconnect/classic-cni/set-up/scope-config/ 301
+/network-interconnect/set-up-cni/configure-cross-connect/ /network-interconnect/classic-cni/set-up/configure-cross-connect/ 301
+/network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/peering-portal/ /network-interconnect/pni-and-peering/ 301
 
 # Constellation
@@ -1534,7 +1534,7 @@
 /cloudflare-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
 
 # CNI cloudflare Network Interconnect
-/network-interconnect/partners/* /network-interconnect/classic-network-interconnect/set-up/partners/:splat 301
+/network-interconnect/partners/* /network-interconnect/classic-cni/set-up/partners/:splat 301
 
 # Magic WAN
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
