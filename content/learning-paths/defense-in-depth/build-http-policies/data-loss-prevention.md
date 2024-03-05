@@ -19,7 +19,7 @@ You may either use DLP profiles predefined by Cloudflare, or create your own cus
 
 {{<render file="data-loss-prevention/_custom-profile.md" productFolder="cloudflare-one">}}
 
-## Best practices to build DLP security measures
+## Build effective DLP profiles
 
 For many Cloudflare users, Cloudflare Zero Trust is often one of the only measures in tackling preventing the loss of sensitive data. For other users, Zero Trust may be the one of the early in-line measures of a complex orchestration of a defense-in-depth strategy. No matter which journey you most resemble, developing effective and appropriate DLP policies and practices starts with first-principles definitions.
 
@@ -71,13 +71,14 @@ If your data already contains Microsoft Information Protection (MIP) labeling sc
 
 For more information, refer to [Integration profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/).
 
-## Build functional Gateway DLP policies
+## Build DLP policies
 
-The best way to begin applying data loss prevention inspection to your traffic and to minimize the chance of false positives and begin collecting actionable data is to start with the "known knowns" within your sensitive data policies. This means that rather than building policies to detect sensitive data like SSNs or financial information across all of your traffic to start, you should start by building policies that target both sensitive data types and destinations that are known data sources or points of high risk, inside or external to your organization.
+The best way to start applying data loss prevention to your traffic, minimize the chance of false positives, and collect actionable data is to start with the known knowns in your sensitive data policies. Rather than building policies to detect sensitive data like SSNs or financial information across all of your traffic, you should start by building policies that target both sensitive data types and destinations that are known data sources or points of high risk. These sources can be inside or outside your organization.
 
-For example, this might look for most organizations like an interest in detecting financial information egressing from user devices to a series of critical SaaS applications. To limit the risk of false positives, and to filter out logging 'noise' in the system, we'd recommend building your first series of policies to specify both target data and target destination.
+### Example
+
+Many organizations want to detect and log financial information egressing from user devices to critical SaaS applications. To limit the risk of false positives and to filter out logging noise, Cloudflare recommends building your first series of policies to specify both target data and target destination:
+
 [api and example docs]
 
-Once you've analyzed the flow and magnitude of data from the known sources, you can begin focusing on more specialized or explicit datasets for more generalized sources. This might look like inspecting for multiple matching data loss deterministic attributes to all external sources (potentially excepting those that are known internal locations where sensitive data is intentionally transferred).
-
-After developing a level of confidence from reviewing the logs and evaluating a rate of false positives for both types of policies, you can feel more confident in experimenting more broadly with data loss prevention policies.
+Once you have analyzed the flow and magnitude of data from the known sources, you can begin focusing on more specialized or explicit datasets for more generalized sources. This might look like inspecting for multiple matching data loss deterministic attributes to all external sources. You may want to except sources that are known internal locations where sensitive data is intentionally transferred. After developing a level of confidence from reviewing the logs and evaluating a rate of false positives for both types of policies, you can feel more confident in experimenting more broadly with data loss prevention policies.
