@@ -105,17 +105,18 @@ Use the [Update Account endpoint](/api/operations/accounts-update-account) and s
 
 ### 1. Remove ACNS assignment from zones
 
-To remove ACNS and their associated DNS records from a zone:
+To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Content.....
+* If you are using [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
+* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-  * If you are using [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers and then use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to change the `enabled` parameter to `false`.
+  * If you are using [Cloudflare Registrar](/registrar/), use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to change the `enabled` parameter to `false`.
   * If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to set the `enabled` parameter to `false`.
 
 {{</tab>}}
@@ -126,7 +127,11 @@ Content.....
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Content.....
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Manage Account** > **Configurations**.
+3. For **Account custom nameservers**, select **Delete** next to the ACNS name.
+
+Note that each set must have between two and five different nameserver names. When you delete all names or leave a set with only one nameserver name, it will no longer be listed as an option.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
