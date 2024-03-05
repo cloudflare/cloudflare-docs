@@ -6,7 +6,7 @@ layout: learning-unit
 ---
 
 {{<Aside type="note">}}
-Requires Browser Isolation add-on.
+Requires the Browser Isolation add-on.
 {{</Aside>}}
 
 [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) integrates with your web-delivered Access applications to protect sensitive applications from data loss. You can build Access policies that require certain users to access your application exclusively through Browser Isolation, while other users matching different policies continue to access the application directly. For example, you may wish to layer on additional security measures for third-party contractors or other users without a corporate device.
