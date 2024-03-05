@@ -302,7 +302,7 @@ The command to install the certificate with Python on Windows automatically incl
 1. Download the Cloudflare root certificate:
 
    ```powershell
-   curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
+   curl.exe -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
    ```
 
 2. To update the bundle to include the Cloudflare certificate, run the following command:
