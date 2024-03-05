@@ -95,6 +95,7 @@
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @deadlypants1973 @cloudflare/pcx-technical-writing
 
 # DDoS Protection
+/content/ddos-protection @pedrosousa @cloudflare/pcx-technical-writing
 /content/ddos-protection/change-log/ @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
 /data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
 /data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
