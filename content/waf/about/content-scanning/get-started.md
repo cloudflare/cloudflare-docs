@@ -79,10 +79,10 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 
 - The following expression will match requests from bots uploading content objects:
 
-    Field                        | Operator  | Value        | Logic
-    -----------------------------|-----------|--------------|------
-    Has malicious content object | equals    | True         | And
-    Bot Score                    | less than | `10`         |
+    Field              | Operator  | Value        | Logic
+    -------------------|-----------|--------------|------
+    Has content object | equals    | True         | And
+    Bot Score          | less than | `10`         |
 
     Expression when using the editor:
 
