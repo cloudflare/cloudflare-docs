@@ -16,9 +16,15 @@ Unless you are using Cloudflare Registrar, consider which of the following secti
 
 ### Your domain uses a different registrar
 
-If you have not acquired your domain from Cloudflare Registrar - and it has not been delegated to another zone -, you need to update your nameservers on your registrar.
+If you have acquired your domain from a registrar other than Cloudflare Registrar - and it has not been [delegated to another zone](#your-domain-is-delegated-to-another-zone) -, you need to update your nameservers at your registrar.
 
 {{<render file="_ns-update-providers.md">}}
+
+If you do not know who your registrar is, you can use a Whois search such as [ICANN Lookup](https://lookup.icann.org/). If the registrar indicated on your Whois search is not a service that you have interacted directly with, you may [have acquired your domain from a reseller](#you-have-acquired-your-domain-from-a-reseller).
+
+### You have acquired your domain from a reseller
+
+Some services, such as website builders, are not registrars but act as a [reseller](https://www.icann.org/resources/pages/reseller-2013-05-03-en), allowing you to buy domains directly from them. In that case, you may have to update your nameservers directly in the reseller platform.
 
 ### Your domain is delegated to another zone
 
@@ -27,8 +33,6 @@ If you are onboarding `shop.example.com` as a child domain, instead of having a 
 Delegation means that `shop.example.com` has specific `NS` records set up for it within the DNS records management of the parent zone (`example.com`).
 
 If that is the case, when setting up your zone in Cloudflare or opting for a different set of nameservers, you have to update the `NS` records in the parent domain, and not at the registrar.
-
-### Reseller
 
 
 <!--- suggested outline from Content Strategy previous work
