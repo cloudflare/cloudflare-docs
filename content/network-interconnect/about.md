@@ -10,9 +10,9 @@ meta:
 
 Cloudflare supports a variety of options to connect your network to Cloudflare:
 
-- Express CNI for Magic WAN and Magic Transit.
-- Classic CNI for Magic Transit.
-- Cloud CNI for Magic WAN and Magic Transit.
+- Express CNI, for Magic WAN and Magic Transit.
+- Classic CNI, for Magic Transit.
+- Cloud CNI, for Magic WAN and Magic Transit.
 - Peering via either an internet exchange, or a private network interconnect (PNI).
 
 Below is a brief overview of the options to help you decide which method best fits your network.
