@@ -70,14 +70,14 @@ header: Query
 {
   viewer {
     zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdaptiveGroups( 
-            limit: 100, 
-            filter: {   
-                datetime_geq: "2021-06-26T00:00:00Z", 
+         loadBalancingRequestsAdaptiveGroups(
+            limit: 100,
+            filter: {
+                datetime_geq: "2021-06-26T00:00:00Z",
                 datetime_leq: "2021-06-26T03:00:00Z",
                 lbName:"lb.example.com"
             },
-            orderBy: [datetimeFifteenMinutes_DESC] 
+            orderBy: [datetimeFifteenMinutes_DESC]
         ) {
           count
           dimensions {
@@ -122,7 +122,11 @@ header: Response (truncated)
 
 {{<details header="Requests per data center">}}
 
-This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
+This query shows the weighted, round-trip time (RTT) measurement (`avgRttMs`) for monitor requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
+
+{{<Aside type="warning">}}
+Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. `avgRttMs` is different from the raw RTT for individual requests that reach the Cloudflare network.
+{{</Aside>}}
 
 ```graphql
 ---
@@ -131,15 +135,15 @@ header: Query
 {
   viewer {
     zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdaptive( 
-            limit: 100, 
-            filter: { 
-                datetime_geq: "2021-06-26T00:00:00Z", 
+         loadBalancingRequestsAdaptive(
+            limit: 100,
+            filter: {
+                datetime_geq: "2021-06-26T00:00:00Z",
                 datetime_leq: "2021-06-26T03:00:00Z",
                 lbName:"lb.example.com",
                 coloCode: "SIN"
             },
-            orderBy: [datetime_DESC] 
+            orderBy: [datetime_DESC]
         ) {
         selectedPoolName
         pools {

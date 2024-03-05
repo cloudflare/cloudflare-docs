@@ -217,33 +217,57 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
-- `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Use the new experimental storage backend for this database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
+
+### `info`
+
+Get information about a D1 database, including the current database size and state.
+
+```txt
+wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to get information about.
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `list`
 
 List all D1 databases in your account.
 
 ```txt
-wrangler d1 list
+wrangler d1 list [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `delete`
 
 Delete a D1 database.
 
 ```txt
-wrangler d1 delete <DATABASE_NAME>
+wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to delete.
+- `-y, --skip-confirmation` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Skip deletion confirmation prompt.
 
 {{</definitions>}}
 
@@ -255,6 +279,12 @@ Execute a query on a D1 database.
 wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
+{{<Aside type="note">}} 
+
+You must provide either `--command` or `--file` for this command to run successfully.
+
+{{</Aside>}}
+
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -263,8 +293,20 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
   - The SQL query you wish to execute.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to the SQL file you wish to execute.
-- Note that you must provide either `--command` or `--file` for this command to run successfully.
-  {{</definitions>}}
+- `-y, --yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Answer `yes` to any prompts.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a local database for use with [wrangler dev](#dev).
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ### `time-travel restore`
 
@@ -282,7 +324,10 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `time-travel info`
 
@@ -298,7 +343,10 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `backup create`
 
@@ -312,7 +360,8 @@ wrangler d1 backup create <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to backup.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup list`
 
@@ -326,7 +375,8 @@ wrangler d1 backup list <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to list the backups of.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup restore`
 
@@ -342,7 +392,8 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database to restore the backup into.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to restore.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup download`
 
@@ -364,7 +415,10 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database you wish to download the backup of.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
-    {{</definitions>}}
+- `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
+
+{{</definitions>}}
 
 ### `migrations create`
 
@@ -386,7 +440,8 @@ wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
   - The name of the D1 database you wish to create a migration for.
 - `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A descriptive name for the migration you wish to create.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `migrations list`
 
@@ -402,7 +457,12 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+
+{{</definitions>}}
 
 ### `migrations apply`
 
@@ -426,7 +486,14 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to apply your migrations on.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ---
 
@@ -1803,13 +1870,13 @@ After starting `wrangler pages deployment tail`, you will receive a live stream 
 Deploy a directory of static assets as a Pages deployment.
 
 ```txt
-wrangler pages deploy <DIRECTORY> [OPTIONS]
+wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The directory of static files to upload.
+- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2227,7 +2294,7 @@ wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 
 Manage client certificates used for mTLS connections in subrequests.
 
-These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
 ### `upload`
 
@@ -2326,8 +2393,21 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```txt
-wrangler types
+```sh
+wrangler types [<PATH>] [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
+  - The path to where the declaration file for your Worker will be written.
+  - The path to the declaration file must have a `d.ts` extension.
+
+- `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
+  - The name of the interface to generate for the environment object.
+  - Not valid if the Worker uses the Service Worker syntax.
+
+{{</definitions>}}
+
 
 <!--TODO Add examples of DTS generated output -->

@@ -473,7 +473,7 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:1200px) {
     .HeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         background-repeat: no-repeat;
@@ -484,14 +484,14 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:1200px) {
     [theme=dark] .HeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
 }
 
-@media (max-width:768px) {
+@media (max-width:1100px) {
     .HeroImage {
         background-image: none;
     }
@@ -2503,7 +2503,7 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-    max-width: 692px;
+    max-width: 100%;
     margin-bottom: 1em
 }
 

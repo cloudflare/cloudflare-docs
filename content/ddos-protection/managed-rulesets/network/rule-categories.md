@@ -1,7 +1,7 @@
 ---
 title: Rule categories
 pcx_content_type: reference
-weight: 4
+weight: 5
 layout: wide
 meta:
     title: Rule categories — Network-layer DDoS

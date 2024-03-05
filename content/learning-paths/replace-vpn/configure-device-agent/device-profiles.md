@@ -20,19 +20,19 @@ To customize the default settings:
 2. Under **Device settings**, select the default profile and select **Configure**.
 3. Many customers running Cloudflare Zero Trust as a VPN replacement have a default profile that resembles the following. Refer to [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) for a description of each setting.
 {{<table-wrap style="font-size: 92%">}}
-| Setting | State | Notes |
-| ------- | ----- | ----- |
-| Captive portal detection | Enabled | |
-| Mode switch | Disabled | Usually disabled for a VPN replacement use case. If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network. |
-| Lock WARP switch | Enabled | Should be enabled unless users have an explicit reason to disable WARP, such as a conflicting VPN client on the device or other extenuating circumstances. If disabled for concerns about user experience, **Auto Connect** should be enabled and set on a short interval, like 10-15 minutes.  |
-| Allow device to leave organization | Disabled | |
-| Allow updates | Disabled | Usually disabled on managed devices. If enabled, users who are local administrators on their device can update the WARP client on their own — this can introduce version consistency control issues if WARP versions are centrally managed by IT. |
-| Auto connect | Enabled | Timeout is usually set between 10min - 30min. |
-| Support URL | Enabled | |
-| Service mode | Gateway with WARP |  Proxies device traffic to Cloudflare according to your Split Tunnel rules. |
-| Local Domain Fallback | | Refer to [Resolve Private DNS](/learning-paths/replace-vpn/configure-device-agent/private-dns/). |
-| Split Tunnels | Exclude IPs and domains | Refer to [Define Split Tunnels settings](/learning-paths/replace-vpn/configure-device-agent/split-tunnel-settings/). |
-| Directly route Office 365 traffic | Disabled | Usually disabled to allow inspection of Microsoft Office 365 traffic. |
+| Setting                              | State                   | Notes                                                                                                                                                                                                                                                                                          |
+| ------------------------------------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Captive portal detection             | Enabled                 |                                                                                                                                                                                                                                                                                                |
+| Mode switch                          | Disabled                | Usually disabled for a VPN replacement use case. If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network.                                                                                                                              |
+| Lock WARP switch                     | Enabled                 | Should be enabled unless users have an explicit reason to disable WARP, such as a conflicting VPN client on the device or other extenuating circumstances. If disabled for concerns about user experience, **Auto Connect** should be enabled and set on a short interval, like 10-15 minutes. |
+| Allow device to leave organization   | Disabled                |                                                                                                                                                                                                                                                                                                |
+| Allow updates                        | Disabled                | Usually disabled on managed devices. If enabled, users who are local administrators on their device can update the WARP client on their own — this can introduce version consistency control issues if WARP versions are centrally managed by IT.                                              |
+| Auto connect                         | Enabled                 | Timeout is usually set between 10min - 30min.                                                                                                                                                                                                                                                  |
+| Support URL                          | Enabled                 |                                                                                                                                                                                                                                                                                                |
+| Service mode                         | Gateway with WARP       | Proxies device traffic to Cloudflare according to your Split Tunnel rules.                                                                                                                                                                                                                     |
+| Local Domain Fallback                |                         | Refer to [Resolve Private DNS](/learning-paths/replace-vpn/configure-device-agent/private-dns/).                                                                                                                                                                                               |
+| Split Tunnels                        | Exclude IPs and domains | Refer to [Define Split Tunnels settings](/learning-paths/replace-vpn/configure-device-agent/split-tunnel-settings/).                                                                                                                                                                           |
+| Directly route Microsoft 365 traffic | Disabled                | Usually disabled to allow inspection of Microsoft 365 traffic.                                                                                                                                                                                                                                 |
 {{</table-wrap>}}
 
 4. Save the profile.
@@ -80,7 +80,6 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/settings \
   "root_certificate_installation_enabled": true
 }'
 ```
-
 
 {{</tab>}}
 {{</tabs>}}

@@ -34,7 +34,7 @@ Many of these limits will increase during D1's [public beta](/workers/platform/b
 
 If you would like to explore other storage solutions for your application, Cloudflare also offers [Workers KV](/kv/api/), [Durable Objects](/durable-objects/), and [R2](/r2/get-started/). 
 
-Refer to the [Storage options guide](/workers/platform/storage-options/) to review which storage option is right for your use case.
+Refer to the [Choose a data or storage product](/workers/platform/storage-options/) to review which storage option is right for your use case.
 
 {{</Aside>}}
 

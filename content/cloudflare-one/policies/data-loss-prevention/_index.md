@@ -29,7 +29,7 @@ To get started, refer to our [CASB documentation](/cloudflare-one/applications/s
 ### Formats
 
 - Text and CSV
-- Microsoft Office 2007 and later (`.docx`, `.xlsx,` `.pptx`)
+- Microsoft Office 2007 and later (`.docx`, `.xlsx,` `.pptx`), including Microsoft 365
 - PDF
 - ZIP files containing the above
 

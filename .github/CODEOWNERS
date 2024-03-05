@@ -17,9 +17,9 @@
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
-/content/workers-ai/tutorials @craigsdennis @logangrasby @cloudflare/pcx-technical-writing
-/content/workers-ai/static @craigsdennis @logangrasby @cloudflare/pcx-technical-writing
+/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing @craigsdennis @markdembo
+/content/workers-ai/tutorials @logangrasby @cloudflare/pcx-technical-writing
+/content/workers-ai/static @logangrasby @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
@@ -68,6 +68,7 @@
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
+/content/pages/framework-guides/ @igorminar @dario-piotrowicz @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing

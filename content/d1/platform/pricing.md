@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="note" header="D1 public beta">}}
 
-Billing will be enabled on March 4, 2024 for developers using D1 on the Workers Paid plan. D1 billing will only apply to usage on and after March 4th.
+Billing will be enabled on March 5, 2024 for developers using D1 on the Workers Paid plan. D1 billing will only apply to usage on and after March 5th.
 
 Developers using the Workers Free plan and D1's Free plan will not be charged.
 

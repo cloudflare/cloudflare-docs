@@ -20,7 +20,7 @@ updated: 2024-01-11
 {{<tab label="ts">}}
 
 ```ts
-export default <ExportedHandler>{
+export default {
   async fetch(request: Request) {
     const html = `<!DOCTYPE html>
 		<body>
@@ -34,7 +34,7 @@ export default <ExportedHandler>{
       },
     });
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

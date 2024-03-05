@@ -189,13 +189,7 @@ Below are definitions of the priority levels Cloudflare assigns to tickets and t
 -   P3 - initial response in 48 hours
 -   P4 - initial response in 48 hours
 
-### **Business SLO**
-
--   P1 - initial response in 8 hours
--   P2 - initial response in 12 hours
--   P3 - initial response in 72 hours
--   P4 - initial response in 72 hours
 
 ### SLOs for other plans
 
--   Pro and Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).
+-   PAYGO and Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).

@@ -151,13 +151,13 @@ INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds
 You will initialize your database to run and test locally first. Bootstrap your new D1 database by running:
 
 ```sh
-$ npx wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
+$ npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
 ```
 
 Then validate your data is in your database by running:
 
 ```sh
-$ npx wrangler d1 execute <DATABASE_NAME> --local --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
 ```
 
 You should see the following output: 
@@ -174,6 +174,7 @@ You should see the following output:
 │ 11         │ Bs Beverages        │ Victoria Ashworth │
 ├────────────┼─────────────────────┼───────────────────┤
 │ 13         │ Bs Beverages        │ Random Name       │
+└────────────┴─────────────────────┴───────────────────┘
 ```
 
 ### Write queries within your Worker
@@ -182,7 +183,7 @@ After you have set up your database, you will run an SQL query from within your 
 
 First, go to your `d1-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 
-Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file:
 
 ```typescript
 ---

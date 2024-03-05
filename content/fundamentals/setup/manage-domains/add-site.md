@@ -1,7 +1,6 @@
 ---
 title: Add a site
 pcx_content_type: tutorial
-weight: 1
 ---
 
 # Add site to Cloudflare

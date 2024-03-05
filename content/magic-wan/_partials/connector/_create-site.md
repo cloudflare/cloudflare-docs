@@ -20,14 +20,14 @@ To add a site:
 4. Add a name and description for your new site.
 5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. $3
 6. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
-7. The Connector will be added to your site with an **Interrupt service window** defined. This is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt Service Window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details.
+7. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 8. Select **Next** to proceed to creating your WAN and LAN networks.
 
 ### 2. Create a WAN
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Network name**, enter a descriptive name for your WAN.
-3. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
+3. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 4. **Physical port** $1
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
@@ -49,17 +49,21 @@ To add a site:
 5. **Overlay subnet** is the subnet behind Magic WAN Connector. This should match the static address if you choose to set up your Connector with a static address.
 6. In **Addressing** define if the IP address for the Connector is fetched from a DHCP server, or if it is a static address:
     - **DHCP**: Choose this option if the IP address for your Connector is fetched from a DHCP server.
-    - **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](/magic-wan/configuration/connector/dhcp/dhcp-server/).
+    - **Static**: Choose this option if your Connector needs a static address. Enter the IP address in **Static address**. When you use a static address, you can also set up the Connector to be a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
 7. Select **Save**.
 8. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+
+#### Network segmentation
+
+After setting up your LANs, you can configure your Connector to enable communication between them without traffic leaving your premises. Refer to [Network segmentation](/magic-wan/configuration/connector/network-options/network-segmentation/) for more information.
 
 #### DHCP options
 
 Magic WAN Connector supports different types of DHCP configurations. Connector can:
 
 - Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
-- Act as a [DHCP server](/magic-wan/configuration/connector/dhcp/dhcp-server/).
-- Use [DHCP relay](/magic-wan/configuration/connector/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
-- [Reserve IP addresses](/magic-wan/configuration/connector/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
+- Act as a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+- Use [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
 
-Refer to [DHCP options](/magic-wan/configuration/connector/dhcp/) to learn more.
+Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.

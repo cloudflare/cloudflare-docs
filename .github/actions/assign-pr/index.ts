@@ -133,57 +133,44 @@ function parse(filename: string): string | void {
         issue_number: prnumber,
         labels: ["pcx_team_review"],
       });
-      // Hold out of this PR for codeowners
-      /* const templatePath = ".github/review-template.md";
-      const templateContent = fs.readFileSync(templatePath, "utf8");
-      await client.rest.issues.createComment({
-        ...github.context.repo,
-        issue_number: prnumber,
-        body: templateContent,
-      }); */
-    } else {
-      // ---
-      // At this point, author is external and/or not PCX member.
-      // ---
+    }
+    const requested = new Set<string>();
 
-      const requested = new Set<string>();
+    // will throw if already assigned
+    for (const u of pull_request.requested_reviewers) {
+      requested.add(u.login);
+      reviewers.delete(u.login);
+    }
 
-      // will throw if already assigned
-      for (const u of pull_request.requested_reviewers) {
-        requested.add(u.login);
-        reviewers.delete(u.login);
-      }
+    // cannot self-review
+    reviewers.delete(author);
 
-      // cannot self-review
-      reviewers.delete(author);
+    console.log({ products, reviewers, requested });
 
-      console.log({ products, reviewers, requested });
-
-      if (reviewers.size === 0) {
-        if (requested.size > 0) {
-          console.log("~> had reviewers at creation");
-        } else if (products.size > 0) {
-          console.log('~> ping "kodster28" for assignment');
-          await client.rest.issues.addAssignees({
-            repo: repository.name,
-            owner: repository.owner.login,
-            issue_number: prnumber,
-            assignees: ["kodster28"],
-          });
-        } else {
-          console.log("~> no products changed; engineering?");
-        }
-      } else {
+    if (reviewers.size === 0) {
+      if (requested.size > 0) {
+        console.log("~> had reviewers at creation");
+      } else if (products.size > 0) {
+        console.log('~> ping "kodster28" for assignment');
         await client.rest.issues.addAssignees({
           repo: repository.name,
           owner: repository.owner.login,
           issue_number: prnumber,
-          assignees: [...reviewers],
+          assignees: ["kodster28"],
         });
+      } else {
+        console.log("~> no products changed; engineering?");
       }
-
-      console.log("DONE~!");
+    } else {
+      await client.rest.issues.addAssignees({
+        repo: repository.name,
+        owner: repository.owner.login,
+        issue_number: prnumber,
+        assignees: [...reviewers],
+      });
     }
+
+    console.log("DONE~!");
   } catch (error) {
     core.setFailed(error.message);
   }

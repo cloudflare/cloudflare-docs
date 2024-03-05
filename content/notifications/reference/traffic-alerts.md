@@ -29,6 +29,14 @@ SLOs determine the sensitivity of an alert.  For example, if you want to be aler
 
 Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5XX error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), High Sensitivity SLOs are recommended.
 
+### Alert Grouping recommendations
+
+Some alerts support grouping by status code. When status code grouping is enabled, a notification policy will calculate SLO violations and send alerts for each status code matched by the notification separately.
+
+For example, if an Advanced Error Rate policy is filtered to status codes between `500` and `599`, and your domain received spikes to `503` and `504`, you would receive a separate alert for each status code. To receive a single alert, alert grouping should be disabled.
+
+Because SLIs are calculated separately for each status code when grouping is enabled, it may be the case that a notification policy with status code grouping is not in violation, but the same policy without status code grouping is in violation. This can happen if there are spikes in the rates of multiple status codes, but no individual spike is large enough.
+
 ___
 
 ## Traffic Anomalies
