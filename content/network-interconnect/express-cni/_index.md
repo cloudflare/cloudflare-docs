@@ -12,4 +12,4 @@ Connecting to Cloudflare directly with an Express CNI reduces latency, makes you
 
 The use case for Express CNI is Magic Transit or Magic WAN. If you have publicly routable origins that are behind Magic Transit over an Express CNI, then all Cloudflare services that work with public origins will run over the CNI (for example, Load Balancer, WAF, Cache, etc).
 
-In the Cloudflare dashboard you can find Cloudflare's nearest Cloudflare data center, and order a physical ENI connection with speeds up to 100 gigabits per second, as well as create a Letter of Authorization (LoA).
+In the Cloudflare dashboard you can find Cloudflare's nearest Cloudflare data center, and order an Express CNI connection with speeds up to 100 gigabits per second, as well as create a Letter of Authorization (LoA).
