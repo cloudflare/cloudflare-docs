@@ -6,7 +6,7 @@ weight: 4
 
 # Cloud CNI
 
-Cloud CNI allows you to connect your cloud provider virtual private cloud (VPC) virtual networks directly with Cloudflare – for a more reliable and secure experience.
+Cloud CNI allows you to connect your virtual private cloud (VPC) virtual networks directly with Cloudflare – for a more reliable and secure experience.
 
 Connecting to Cloudflare directly with a Cloud CNI reduces latency, makes your network more stable by bypassing Internet performance potential bottlenecks, and will often reduce your cloud provider network egress bandwidth charges.
 
