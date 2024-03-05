@@ -8,7 +8,7 @@ meta:
 
 # BGP and Bidirectional Forwarding Detection
 
-You can use Border Gateway Protocol (BGP) with classic CNI if you are a Magic Transit customer. You can build a BGP session over your CNI 1.0 connection to signal when Cloudflare should advertise and anycast your IP prefixes for DDoS mitigation. You can also optionally use [Bidirectional Forwarding Detection (BFD)](#bfd) on this BGP session.
+You can use Border Gateway Protocol (BGP) with classic CNI if you are a Magic Transit customer. You can build a BGP session over your Classic CNI connection to signal when Cloudflare should advertise and anycast your IP prefixes for DDoS mitigation. You can also optionally use [Bidirectional Forwarding Detection (BFD)](#bfd) on this BGP session.
 
 ## BGP
 
@@ -53,4 +53,4 @@ Bidirectional Forwarding Detection (BFD) is a networking protocol that constantl
 
 If a small number of packets does not make it to the other side of the session, the session is considered down. This solution is useful for users who cannot tolerate any amount of packet loss during a session.
 
-Bidirectional Forwarding Detection is only supported for users with physical CNI 1.0 connections. To begin using BFD, contact your Implementation Manager.
+Bidirectional Forwarding Detection is only supported for users with direct connections. To begin using BFD, contact your Implementation Manager.
