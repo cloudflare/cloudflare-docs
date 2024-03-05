@@ -7,7 +7,7 @@ title: Access a web application via its private hostname without WARP
 
 # Access a web application via its private hostname without WARP
 
-With Cloudflare Browser Isolation and Resolver Policies, users can connect to private web-based applications via their private hostnames without needing to install the WARP client. By the end of this tutorial, users who pass your Gateway DNS and Network policies will be able to access your private application at `https://<your-team-name>.cloudflareaccess.com/browser/https://internalrecord.com`.
+With Cloudflare Browser Isolation and resolver policies, users can connect to private web-based applications via their private hostnames without needing to install the WARP client. By the end of this tutorial, users who pass your Gateway DNS and network policies will be able to access your private application at `https://<your-team-name>.cloudflareaccess.com/browser/https://internalrecord.com`.
 
 {{<tutorial>}}
 
