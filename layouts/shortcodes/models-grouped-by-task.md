@@ -5,8 +5,9 @@
 
 {{ $firstPage.Params.model.task.description }}
 
-| Model | Description |
-| ----- | ----------- |
+| Model                    | Description        |
+| ------------------------ | ------------------ |
+| <div style="width:10em"> | <div style="flex"> |
 
 {{- $pages := .Pages -}}
 {{- range sort $pages "Params.weight" "desc" -}}
@@ -17,6 +18,6 @@
 {{- $betaFlag = true }}
 {{- end }}
 {{- end }}
-| [{{ $params.model_display_name }}{{ if $betaFlag }} <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
+| [{{ $params.model_display_name }}{{ if $betaFlag }} <div class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</div>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
 {{- end -}}
 {{- end -}}
