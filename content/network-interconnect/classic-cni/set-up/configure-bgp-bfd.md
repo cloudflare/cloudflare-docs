@@ -8,13 +8,13 @@ meta:
 
 # BGP and Bidirectional Forwarding Detection
 
-You can use BGP with classic CNI if you are a Magic Transit customer. You can build a BGP session over your CNI 1.0 connection to signal when Cloudflare should advertise and anycast your IP prefixes for DDoS mitigation. You can also optionally use BFD on this BGP session.
+You can use Border Gateway Protocol (BGP) with classic CNI if you are a Magic Transit customer. You can build a BGP session over your CNI 1.0 connection to signal when Cloudflare should advertise and anycast your IP prefixes for DDoS mitigation. You can also optionally use [Bidirectional Forwarding Detection (BFD)](#bfd) on this BGP session.
 
 ## BGP
 
 ### Configure the BGP session
 
-After establishing your connection, the next steps include provisioning the Generic Route Encapsulation (GRE) IPs and configuring the Border Gateway Protocol (BGP) peering information. This process takes approximately one week.
+After establishing your connection, the next steps include provisioning the Generic Route Encapsulation (GRE) IPs and configuring the BGP peering information. This process takes approximately one week.
 
 ### Provision the IP
 
