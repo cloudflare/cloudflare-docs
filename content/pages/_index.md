@@ -46,6 +46,12 @@ Set up redirects for your Cloudflare Pages project.
 
 ## Related products
 
+{{<related header="Workers AI" href="/workers-ai/" product="workers-ai">}}
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+
+{{</related>}}
+
 {{<related header="Workers" href="/workers/" product="workers">}}
 
 Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
@@ -54,13 +60,31 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 {{<related header="R2" href="/r2/" product="r2">}}
 
-Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 {{</related>}}
 
 {{<related header="D1" href="/d1/" product="d1">}}
 
-D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+Create new serverless SQL databases to query from your Workers and Pages projects.
+
+{{</related>}}
+
+{{<related header="Durable Objects" href="/durable-objects/" product="durable-objects">}}
+
+A globally distributed coordination API with strongly consistent storage.
+
+{{</related>}}
+
+{{<related header="KV" href="/kv/" product="kv">}}
+
+Create a global, low-latency, key-value data storage.
+
+{{</related>}}
+
+{{<related header="Queues" href="/queues/" product="queues">}}
+
+Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
 
 {{</related>}}
 
