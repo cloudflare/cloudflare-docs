@@ -6,7 +6,7 @@ meta:
   title: Classic Network Interconnect Setup
 ---
 
-# Classic Network Interconnect Setup
+# Classic CNI setup
 
 Setup starts with onboarding, which is broken out into a few steps. During onboarding, Cloudflare works closely with your organization to accomplish the onboarding tasks:
 - [Scope your configuration](/network-interconnect/classic-network-interconnect/set-up/scope-config/) (Kickoff call)
