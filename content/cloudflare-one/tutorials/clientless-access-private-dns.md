@@ -16,7 +16,7 @@ With Cloudflare Browser Isolation and resolver policies, users can connect to pr
 Make sure you have:
 
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) enabled on your account
-- [Resolver Policies](/cloudflare-one/policies/gateway/resolver-policies/) enabled on your account
+- [Resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) enabled on your account
 - An HTTP or HTTPS application that users access through a browser
 
 {{</tutorial-prereqs>}}
