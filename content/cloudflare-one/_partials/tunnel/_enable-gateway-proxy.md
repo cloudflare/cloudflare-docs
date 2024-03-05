@@ -17,7 +17,7 @@ _build:
 
     ```sh
     $ sudo sysctl net.ipv4.ping_group_range
-    net.ipv4p.ping_group_range= 0 10000
+    net.ipv4.ping_group_range= 0 10000
     ```
     3.  Either add the user to a group within that range, or update the range to encompass a group the user is already in. To update `ping_group_range`:
     ```sh
