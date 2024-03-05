@@ -87,6 +87,10 @@ To test, open a browser and go to `https://<team-name>.cloudflareaccess.com/brow
 | Destination Port | in | `80` | Or | |
 | User Email | matches regex | `.*example.com` | |
 
+{{<Aside type="note">}}
+Device posture checks are not supported because they require the WARP client.
+{{</Aside>}}
+
 For best practices on securing private applications, refer to [Build secure access policies](/learning-paths/replace-vpn/build-policies/).
 
 {{</tutorial-step>}}
