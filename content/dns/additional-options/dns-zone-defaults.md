@@ -16,7 +16,7 @@ DNS zone defaults are only applied at the moment a new zone is created and will 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
-3. For **DNS zone defaults**, select (TBD)**Configure defaults**.
+3. For **DNS zone defaults**, select **Configure defaults**.
 
 The values you select for the listed settings will be automatically applied to new zones as you add them to the respective Cloudflare account.
 

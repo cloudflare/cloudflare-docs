@@ -24,10 +24,16 @@ For this configuration to be possible, a few conditions apply:
 ### 1. Set up ACNS names and sets
 
 1. Create ACNS names and sets:
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Content.....
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Manage Account** > **Configurations**.
+3. For **Account custom nameservers**, select **Configure custom nameservers**.
+4. Insert a fully qualified domain name for **Nameserver name** and choose a **Nameserver set**. Follow the [configuration conditions](#configuration-conditions).
+
+Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these nameservers will be listed as options that you can [enable on existing zones](#2-enable-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -36,7 +42,7 @@ Use the [Add account custom nameserver endpoint](/api/operations/account-level-c
 
 {{<render file="_ns-set-omission-callout.md">}}
 
-Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name.
+Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these nameservers will be listed as options that you can [enable on existing zones](#2-enable-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
 
 {{</tab>}}
 {{</tabs>}}
@@ -50,10 +56,14 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name.
 ### 2. Enable ACNS on existing zones
 
 1. Choose an ACNS set as custom nameservers for a zone:
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Content.....
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
+2. Go to **DNS** > **Records**.
+3. For **Custom nameservers**, select **Configure**.
+4. Select **Use the custom nameservers created for all DNS zones under your account** and choose a nameserver set from the list.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -76,7 +86,12 @@ To make a ACNS set the default nameservers for all new zones added to your accou
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-Content.....
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Manage Account** > **Configurations**.
+3. For **DNS zone defaults**, select **Configure defaults**.
+4. Change the **Nameserver assignment method** to **Account custom nameservers** and specify the set that should be used.
+
+Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for more details.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
