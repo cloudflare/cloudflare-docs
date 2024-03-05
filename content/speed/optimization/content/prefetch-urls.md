@@ -49,9 +49,9 @@ To do this, include a Link HTTP response header pointing to a manifest file with
 Example HTTP response header:<br/>
 `Link: <http://www.example.com/manifest.txt>; rel="prefetch"`
 
-Example `manifest.txt`:<br/>
+Example `manifest.txt` file:
 
-```
+```txt
 /static/fetch1
 //other.example.com/fetch2
 http://another.example.com/fetch3
