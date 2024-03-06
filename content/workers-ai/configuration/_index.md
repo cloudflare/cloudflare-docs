@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
 title: Configuration
-weight: 5
+weight: 3
 ---
 
-# Configuration
+# Get started
 
 {{<directory-listing>}}

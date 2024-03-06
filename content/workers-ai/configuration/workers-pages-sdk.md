@@ -1,18 +1,19 @@
 ---
 pcx_content_type: configuration
-title: Workers + Pages SDK
-weight: 1
+title: Workers & Pages SDK
+meta:
+    description: An SDK that provides an interface between a [Worker](/workers/) or [Pages Function](/pages/functions/).
 ---
 
-# Workers + Pages SDK
+# Workers & Pages SDK
 
-This SDK provides an interface between a Worker or Pages function and Workers AI.
+The Workers & Pages SDK provides an interface between a [Worker](/workers/) or [Pages Function](/pages/functions/) and Workers AI.
 
 ```javascript
 import { run } from "@cloudflare/ai";
 ```
 
-## Ai class
+## `Ai` class
 
 Workers AI requires an `Ai` instance before you can run a model.
 
@@ -26,9 +27,9 @@ export type Ai = {
 };
 ```
 
-### Ai methods
+### `Ai` methods
 
-#### new Ai()
+#### new `Ai()`
 
 To create a new `Ai` instance:
 
@@ -38,7 +39,7 @@ import { Ai } from "@cloudflare/ai";
 const ai = new Ai(env.AI);
 ```
 
-* **env.AI** is the project [binding](/workers-ai/platform/bindings/) defined in your `wrangler.toml` configuration.
+* **env.AI** is the project [binding](/workers-ai/configuration/bindings/) defined in your `wrangler.toml` configuration.
 
 #### async ai.run()
 
