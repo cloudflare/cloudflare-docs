@@ -40,8 +40,8 @@ A member of the Product Content Experience team will review the pull request. If
 
 
 ## Workers Playground
-If you're adding a code snippet to the docs that's:
-1. A fully contained, valid Worker (i.e. it doesn't require external dependencies or specific bindings)
+If you are adding a code snippet to the docs that is:
+1. A fully contained, valid Worker (i.e. it does not require external dependencies or specific bindings)
 2. Only JavaScript
 
 you can add `playground: true` to the code block metadata to render a button to let users open the Worker in the [Playground](https://workers.new). For example:
