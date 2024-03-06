@@ -5,7 +5,7 @@ title: Routed subnets
 
 # Routed Subnets
 
-Each LAN interface (physical port + VLAN tag) on a Magic WAN Connector is part of a *directly-attached subnet*. When you specify a static address for the LAN interface, you indicate both the interface’s address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
+Each LAN interface (physical port + VLAN tag) on a Magic WAN Connector is part of a *directly-attached subnet*. When you specify a static address for the LAN interface, you indicate both the interface's address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
 
 Some LANs are more complex. In addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the Magic WAN Connector. We call these *routed subnets*.
 
