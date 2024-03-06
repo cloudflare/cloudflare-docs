@@ -32,12 +32,11 @@ We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
 
-Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
-This will help avoid any certificate pinning errors that may arise from an initial rollout.
+Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations). This will help avoid any incompatibilities that may arise from an initial rollout. By the _Do Not Inspect_ app type, Gateway will filter any new applications when they are added to the group.
 
-| Selector    | Operator | Value          | Action         |
-| ----------- | -------- | -------------- | -------------- |
-| Application | in       | Do Not Inspect | Do Not Inspect |
+| Selector    | Operator | Value            | Action         |
+| ----------- | -------- | ---------------- | -------------- |
+| Application | in       | _Do Not Inspect_ | Do Not Inspect |
 
 ### Block all security categories
 

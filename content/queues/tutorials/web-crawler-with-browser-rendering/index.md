@@ -82,7 +82,6 @@ name = "queues-web-crawler"
 main = "src/index.ts"
 compatibility_date = "2023-06-09"
 node_compat = true
-usage_model = "unbound"
 
 browser = { binding = "CRAWLER_BROWSER", type = "browser" }
 

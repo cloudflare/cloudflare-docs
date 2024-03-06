@@ -81,7 +81,7 @@ export const OWNERS: Record<string, string[]> = {
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
   "vectorize": ["Maddy-Cloudflare"],
-  "workers-ai": ["irvinebroque", "pdwittig"],
+  "workers-ai": ["irvinebroque", "pdwittig", "deadlypants1973"],
   zaraz: ["kodster28"],
 };
 

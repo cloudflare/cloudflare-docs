@@ -9,7 +9,7 @@ meta:
 
 Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
-There are multiple types of bindings available today.
+There are multiple types of bindings available today, including [environment variables (text and JSON values)](/workers/configuration/environment-variables/) as well as [secrets](/workers/configuration/secrets/).
 
 To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
@@ -69,6 +69,13 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 - Create your first [Vectorize binding](/vectorize/get-started/).
 - Configure a Vectorize binding via your [`wrangler.toml` file](/workers/wrangler/configuration/#vectorize-indexes).
 - Learn more about how to query a Vectorize index using the [client API](/vectorize/reference/client-api/).
+
+### Hyperdrive bindings
+
+[Hyperdrive](/hyperdrive/) bindings allow you to interact with and query any Postgres database from within a Worker.
+
+- Create your first [Hyperdrive binding](/hyperdrive/get-started/#4-bind-your-worker-to-hyperdrive).
+- Configure a Hyperdrive binding via your [`wrangler.toml` file](/workers/wrangler/configuration/#hyperdrive).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 

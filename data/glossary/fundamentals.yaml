@@ -53,6 +53,7 @@ entries:
     a DDoS attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
   associated_products:
     - DDoS Protection
+    - Magic Network Monitoring
 
 - term: domain
   general_definition: |-
@@ -69,7 +70,7 @@ entries:
 - term: HTTP request
   general_definition: |-
     an HTTP request is the way Internet communications platforms such as web browsers ask for the information they need to load a website.
-  associated_products:   
+  associated_products:
      - Logs
 
 - term: IP address
