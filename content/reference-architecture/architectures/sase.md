@@ -292,9 +292,9 @@ There may also be situations where network-layer encryption is not necessary —
 
 Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Cloudflare [supports a variety of options](/network-interconnect/about) to connect your network to Cloudflare:
 
-- Enterprise Network Interconnect (ENI) for Magic WAN and Magic Transit
-- Classic Network Interconnect for Magic Transit (Classic CNI)
-- Cloud Network Interconnect (Cloud CNI) for Magic WAN and Magic Transit
+- Express CNI for Magic WAN and Magic Transit
+- Classic CNI for Magic Transit
+- Cloud CNI for Magic WAN and Magic Transit
 - Peering via either an internet exchange, or a private network interconnect (PNI).
 
 The following table summarizes the different methods of connecting networks to Cloudflare:
