@@ -7,11 +7,11 @@ title: Routed subnets
 
 Each LAN interface (physical port + VLAN tag) on a Magic WAN Connector is part of a directly-attached subnet. When you specify a static address for the LAN interface, you indicate both the interface’s address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
 
-Some LAN networks are more complex. In addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the Magic WAN Connector. We call these routed subnets.
+Some LAN networks are more complex. In addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the Magic WAN Connector. We call these *routed subnets*.
 
 Refer to the diagram below for an example of how this might work:
 
-{{<Aside type="note">}}Blue represents directly connected subnets, and red represents routed subnets.{{</Aside>}}
+{{<Aside type="note">}}Blue represents directly-attached subnets, and red represents routed subnets.{{</Aside>}}
 
 ```mermaid
 flowchart TB
@@ -31,7 +31,7 @@ d --> f(subnet 192.168.100.0/24):::blue
 
 f-->|192.168.100.10|g(Layer 3 router)
 
-g --> h(routed subnet x):::red
+g --> h(routed subnet y):::red
 g --> i(192.168.200.0/24):::red
 g --> j(layer 3 router)
 j --> k(routed subnet z):::red
@@ -43,7 +43,7 @@ classDef red fill:#ff6900,color: black
 
 To add a routed subnet to your LAN, you need:
 
-- **A prefix**: The subnet’s CIDR prefix; Cloudflare will automatically install static routes to this prefix in our global network (to forward packets for this subnet to the right Connector), and in your Connector (to forward packets for this subnet to the right LAN interface). In the figure above, the routed subnet on the right has the prefix `192.168.200.0/24`.
+- **A prefix**: The subnet's CIDR prefix; Cloudflare will automatically install static routes to this prefix in our global network (to forward packets for this subnet to the right Connector), and in your Connector (to forward packets for this subnet to the right LAN interface). In the figure above, the routed subnet on the right has the prefix `192.168.200.0/24`.
 - **A next-hop address**: The address of the L3 router to which the Connector should forward packets for this subnet. In the figure, the routed subnet on the right has the next-hop address `192.168.100.10`.
 
 Optionally, you can also enable NAT for a subnet by providing a static overlay prefix.
