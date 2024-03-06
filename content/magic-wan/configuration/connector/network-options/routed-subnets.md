@@ -26,15 +26,15 @@ c(LAN 1)
 d(LAN n)
 end
 
-c --> e(subnet x):::blue
-d --> f(subnet 192.168.100.0/24):::blue
+c --- e(subnet x):::blue
+d --- f(subnet 192.168.100.0/24):::blue
 
-f-->|192.168.100.10|g(Layer 3 router)
+f---|192.168.100.10|g(Layer 3 router)
 
-g --> h(routed subnet y):::red
-g --> i(192.168.200.0/24):::red
-g --> j(layer 3 router)
-j --> k(routed subnet z):::red
+g --- h(routed subnet y):::red
+g --- i(192.168.200.0/24):::red
+g --- j(layer 3 router)
+j --- k(routed subnet z):::red
 
 classDef blue fill:#add8e6,color: black
 classDef red fill:#ff6900,color: black
