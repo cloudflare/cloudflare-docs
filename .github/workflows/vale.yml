@@ -1,6 +1,41 @@
-name: Style guide
-on:
-  pull_request:
+
+الاسم : دليل وذهب
+على :
+  طلب الطلب :
+    أنواع :
+      - افتتح
+      - نيران
+
+التزامن :
+  المجموعة : ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  الإلغاء قيد التقدم : صحيح
+
+الوظائف :
+  مراجعة :
+    يعمل على : أوبونتو-أحدث
+    : المتابعة
+      - الاسم : مستودع الخروج
+        التدابير العلاجية /الخروج@v3
+
+      - الاسم : احصل على الملفات المتغيرة من طلب الانسحاب
+        إذا : ${{ !cancelled() }}
+        البيئة :
+          GITHUB_TOKEN : ${{ Secrets.GITHUB_TOKEN }}
+        التشغيل : |
+          # احصل على أسماء الملفات وبنيتها JSON
+          files=$(gh api /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files -q '.[] | حدد(.status != "removed" ) | .اسم الملف |حدد(اختبار("(.yaml|yml|md)$"))')
+          filesArray="[$(echo "$files" | sed -e 's/^/"/' -e 's/$/"/' -e 's/ /", "/g' | tr '\n ' , | sed 's/,$//')]"
+          صدى "CHANGED_FILES=$filesArray" >> "$GITHUB_ENV"
+      - الاسم : الملفات التي تم تغييرها
+        تشغيل : صدى ${{ env.CHANGED_FILES }}
+
+      - الاسم : فالي
+        منتجع : errata-ai/vale-action@reviewdog
+        إذا : ${{ !cancelled() }}
+        مع :
+          الملفات : ${{ env.CHANGED_FILES }}
+          المراسل : تفاصيل جيثب للعلاقات العامة
+          وضع التصفية : diff_context
     types:
       - opened
       - synchronize
