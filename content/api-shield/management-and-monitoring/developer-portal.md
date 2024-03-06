@@ -7,7 +7,7 @@ weight: 4
 
 # Build developer portals
 
-Once endpoints are saved into Endpoint Management, API Shield doubles as an API catalog. API Shield can build an interactive documentation portal with the knowledge it has of your APIs, or you can upload a new OpenAPI schema file to build a documentation portal ad-hoc.
+Once {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} are saved into Endpoint Management, API Shield doubles as an API catalog. API Shield can build an interactive documentation portal with the knowledge it has of your APIs, or you can upload a new OpenAPI schema file to build a documentation portal ad-hoc.
 
 ## Process
 
@@ -19,7 +19,7 @@ Once endpoints are saved into Endpoint Management, API Shield doubles as an API 
     {{<Aside type="note">}} 
 If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters. 
 
-Only API schemas uploaded to Schema Validation 2.0 are available when selecting existing schemas
+Only {{<glossary-tooltip term_id="API schema">}}API schemas{{</glossary-tooltip>}} uploaded to Schema Validation 2.0 are available when selecting existing schemas
     {{</Aside>}}
 
 5. Select **Download project files** to save a local copy of the files that will be uploaded to Cloudflare Pages. Downloading the project files can be helpful if you wish to modify the project in any way and then upload the new version manually to Pages.
@@ -28,7 +28,7 @@ Only API schemas uploaded to Schema Validation 2.0 are available when selecting 
 
 ### Custom domains
 
-To create a vanity domain instead of using the pages.dev domain, refer to the [Pages custom domain documentation](/pages/platform/custom-domains/).
+To create a vanity domain instead of using the pages.dev domain, refer to the [Pages custom domain documentation](/pages/configuration/custom-domains/).
 
 ## Availability
 

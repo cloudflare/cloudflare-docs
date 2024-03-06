@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 pcx_content_type: troubleshooting
-weight: 8
+weight: 9
 meta:
   title: Troubleshooting client certificates
 ---

@@ -47,7 +47,7 @@ $ npm install -g wrangler
 To check that you have installed the correct Wrangler version, run:
 
 ```sh
-$ wrangler --version
+$ npx wrangler --version
 ```
 
 ## Test Wrangler v2 on your previous projects
@@ -60,7 +60,7 @@ Run the `wrangler dev` command. This will show any warnings or errors that shoul
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
 
 - Errors need to be fixed before Wrangler can build your Worker.

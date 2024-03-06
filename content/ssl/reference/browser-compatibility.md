@@ -38,4 +38,4 @@ Unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certi
     
 {{</Aside>}}
 
-* (Paid plans only) [Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.
+* (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.

@@ -129,7 +129,7 @@ Published my-worker-staging
 ```
 
 ```sh
-~/my-worker $ wrangler deploy --env production
+~/my-worker $ npx wrangler deploy --env production
 Uploaded my-worker-production
 Published my-worker-production
   example.com/*

@@ -1,7 +1,6 @@
 ---
 title: Use your own player
 weight: 1
-layout: single
 pcx_content_type: how-to
 ---
 
@@ -77,7 +76,7 @@ Refer to the example below to display only the video representation with a bitra
 ---
 header: Example
 ---
-https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8?clientBandwidthHint=1.8
+https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8?clientBandwidthHint=1.8
 ```
 
 

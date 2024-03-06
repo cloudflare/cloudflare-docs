@@ -73,7 +73,7 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 For matched configurations in trace results, each step corresponds to one of the following:
 
 * Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
-* [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) (execution of one or more rules)
+* [Page Rules](/rules/page-rules/) (execution of one or more rules)
 
 The following steps are planned for future additions:
 
@@ -85,9 +85,8 @@ The following steps are planned for future additions:
 
 Currently, you cannot perform traces for:
 
-* Domains or subdomains associated with [BYOIP](/byoip/) addresses
-* [Custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
 * [Spectrum](/spectrum/) applications
+* Hostnames using [Data Localization Suite](/data-localization/)
 
 Also, the following products will not appear in trace results:
 

@@ -6,11 +6,9 @@ weight: 86
 
 # Parse Cloudflare Logs JSON data
 
-## Overview
-
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
 
-In this tutorial, you will learn how to parse your JSON log data using _jq_. To get started with _jq_, visit the [_jq_ official site](https://stedolan.github.io/jq/).
+In this tutorial, you will learn how to parse your JSON log data using _jq_. To get started with _jq_, visit the [_jq_ official site](https://jqlang.github.io/jq/).
 
 {{<Aside type="note" header="Note">}}
 
@@ -75,7 +73,7 @@ $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort
 To find out the top IP addresses blocked by the Cloudflare WAF, use the following query:
 
 ```sh
-$ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
+$ jq -r 'select(.SecurityAction == "block") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
 1 127.0.0.1
 ```
 

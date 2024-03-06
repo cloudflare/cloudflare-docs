@@ -4,6 +4,8 @@ entries:
 - term: JSON web token (JWT)
   general_definition: |-
     a common authentication and authorization method used in web applications and APIs.
+  associated_products:
+    - API Shield
 
 - term: URL normalization
   general_definition: |-

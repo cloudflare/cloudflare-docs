@@ -6,12 +6,13 @@ function copyCode(e: MouseEvent) {
   const highlightedCode = (
     e.target as HTMLElement
   )?.parentElement?.parentElement?.querySelector("pre code");
-  
+
   if (highlightedCode) {
     // the markdown's code blocks adds a class "CodeBlock--token-unselectable", if it is not supposed to be copied.
     // clone the code node, we do not want to modify the DOM.
     const code = highlightedCode.cloneNode(true) as HTMLElement;
-    const unselectableTokens: HTMLCollectionOf<Element> = code.getElementsByClassName("CodeBlock--token-unselectable");
+    const unselectableTokens: HTMLCollectionOf<Element> =
+      code.getElementsByClassName("CodeBlock--token-unselectable");
 
     // Convert the HTMLCollection to an array for easier manipulation
     const elementsToRemove: Element[] = Array.from(unselectableTokens);
@@ -52,40 +53,28 @@ function copyCode(e: MouseEvent) {
   >
     <svg
       v-if="isCopying"
-      stroke="currentColor"
+      class="icon-ok"
       fill="currentColor"
-      stroke-width="0"
-      viewBox="0 0 16 16"
-      height="1em"
-      width="1em"
       xmlns="http://www.w3.org/2000/svg"
-      style="width: 1rem; pointer-events: none"
-      aria-label="Copied to clipboard button"
-      focusable="true"
+      viewBox="0 0 16 16"
     >
-      <title>Copied Button</title>
+      <title>Copied</title>
       <path
-        d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"
+        fill-rule="evenodd"
+        d="M14.485 4.347l-8.324 8.625-4.648-4.877.724-.69 3.929 4.123 7.6-7.875.72.694z"
       ></path>
     </svg>
+
     <svg
       v-else
-      stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
-      viewBox="0 0 24 24"
-      height="1em"
-      width="1em"
       xmlns="http://www.w3.org/2000/svg"
-      style="width: 1rem; pointer-events: none"
-      aria-label="Copy to clipboard button"
-      focusable="true"
+      viewBox="0 0 16 16"
+      class="icon-copy"
     >
       <title>Copy Button</title>
-      <path fill="none" d="M0 0h24v24H0z"></path>
-      <path
-        d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-      ></path>
+      <path d="M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z"></path>
+      <path d="M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z"></path>
     </svg>
   </button>
 </template>
@@ -95,15 +84,16 @@ function copyCode(e: MouseEvent) {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
-  height: calc(var(--code-font-size) * var(--line-height));
+  height: 2rem;
+  width: 2rem;
   font-size: 0.9rem;
-  padding: 0.15rem;
-  background: transparent;
+  padding: 0.5rem;
+  background: #d9d9d9;
   color: #1e1e1e;
   border: none;
-  box-shadow: 0 0 0 1px var(--gray-6);
+  /* box-shadow: 0 0 0 1px var(--gray-6); */
   border-radius: 3px;
-  text-shadow: #c4c4c4 0 0 2px;
+  /* text-shadow: #c4c4c4 0 0 2px; */
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -116,12 +106,13 @@ function copyCode(e: MouseEvent) {
 }
 
 [theme="dark"] .copyCode-button {
-  background: transparent;
+  background: #313131;
+
   color: var(--gray-7);
   border: none;
-  box-shadow: 0 0 0 1px var(--gray-3);
+  /* box-shadow: 0 0 0 1px var(--gray-3); */
   border-radius: 3px;
-  text-shadow: #c4c4c4 0 0 2px;
+  /* text-shadow: #c4c4c4 0 0 2px; */
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -136,18 +127,29 @@ function copyCode(e: MouseEvent) {
 .copyCode-button:hover,
 .copyCode-button:focus {
   cursor: pointer;
-  background-color: #828282;
+  background-color: #b6b6b6;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 [theme="dark"] .copyCode-button:hover,
 [theme="dark"] .copyCode-button:focus {
   cursor: pointer;
-  background-color: var(--code-block-background-color);
+  background-color: #3d3d3d;
   --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 .copyCode-button::after::-webkit-scrollbar {
   display: none;
+}
+
+.icon-copy,
+.icon-ok {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.icon-ok {
+  color: #2db35e;
 }
 </style>

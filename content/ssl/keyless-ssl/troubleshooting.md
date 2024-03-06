@@ -92,4 +92,4 @@ However, if you do, you will need to add the hostname and the Zone ID of the new
 
 ## Additional questions
 
-Contact your account team or [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/).

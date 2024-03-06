@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Protocols per plan
-layout: list
+layout: wide
 weight: 2
 ---
 

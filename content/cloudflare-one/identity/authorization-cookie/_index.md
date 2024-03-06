@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Authorization cookie
 weight: 12
-layout: single
 ---
 
 # Cloudflare authorization cookie

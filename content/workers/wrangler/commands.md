@@ -11,7 +11,7 @@ meta:
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
-- [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -35,7 +35,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
-- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 
@@ -60,7 +60,7 @@ The following global flags work on every command.
 
 ---
 
-## Background
+## How to run Wrangler commands
 
 This page provides a reference for Wrangler commands.
 
@@ -68,7 +68,7 @@ This page provides a reference for Wrangler commands.
 wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 ```
 
-Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager. 
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
 
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
@@ -153,7 +153,7 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
-Create a skeleton Wrangler project, including the `wrangler.toml` file.
+Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
 wrangler init [<NAME>] [OPTIONS]
@@ -174,7 +174,13 @@ wrangler init [<NAME>] [OPTIONS]
 
 ## `generate`
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+{{<Aside type="note">}}
+
+This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
+
+{{</Aside>}}
+
+Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```txt
 wrangler generate [<NAME>] [TEMPLATE]
@@ -211,33 +217,57 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
-- `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Use the new experimental storage backend for this database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Provide an optional [location hint](/d1/learning/data-location/) for your database leader.
+  - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
+
+### `info`
+
+Get information about a D1 database, including the current database size and state.
+
+```txt
+wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to get information about.
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `list`
 
 List all D1 databases in your account.
 
 ```txt
-wrangler d1 list
+wrangler d1 list [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `delete`
 
 Delete a D1 database.
 
 ```txt
-wrangler d1 delete <DATABASE_NAME>
+wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to delete.
+- `-y, --skip-confirmation` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Skip deletion confirmation prompt.
 
 {{</definitions>}}
 
@@ -249,6 +279,12 @@ Execute a query on a D1 database.
 wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
+{{<Aside type="note">}} 
+
+You must provide either `--command` or `--file` for this command to run successfully.
+
+{{</Aside>}}
+
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -257,12 +293,24 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
   - The SQL query you wish to execute.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to the SQL file you wish to execute.
-- Note that you must provide either `--command` or `--file` for this command to run successfully.
-  {{</definitions>}}
+- `-y, --yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Answer `yes` to any prompts.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a local database for use with [wrangler dev](#dev).
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ### `time-travel restore`
 
-Restore a database to a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
+Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
 
 ```txt
 wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
@@ -276,11 +324,14 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `time-travel info`
 
-Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/learning/time-travel/).
+Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
 
 ```txt
 wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
@@ -292,7 +343,10 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `backup create`
 
@@ -306,7 +360,8 @@ wrangler d1 backup create <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to backup.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup list`
 
@@ -320,7 +375,8 @@ wrangler d1 backup list <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to list the backups of.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup restore`
 
@@ -336,14 +392,15 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database to restore the backup into.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to restore.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup download`
 
 {{<Aside type="warning">}}
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/learning/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
+This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
 {{</Aside>}}
 
 Download existing data to your local machine.
@@ -358,7 +415,10 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database you wish to download the backup of.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
-    {{</definitions>}}
+- `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
+
+{{</definitions>}}
 
 ### `migrations create`
 
@@ -380,7 +440,8 @@ wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
   - The name of the D1 database you wish to create a migration for.
 - `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A descriptive name for the migration you wish to create.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `migrations list`
 
@@ -396,7 +457,12 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+
+{{</definitions>}}
 
 ### `migrations apply`
 
@@ -420,7 +486,14 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to apply your migrations on.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ---
 
@@ -638,7 +711,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
 - `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - IP address to listen on, defaults to `*` (all interfaces).
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Port to listen on.
 - `--inspector-port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1308,6 +1381,80 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `sippy enable`
+
+{{<Aside type="note">}}
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+{{</Aside>}}
+
+Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy enable <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to enable Sippy.
+- `--provider` {{<type>}}"AWS"|"GCS"{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The provider of your source object storage bucket.
+- `--bucket` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of your source object storage bucket.
+- `--r2-key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Access Key ID. Requires read and write access.
+- `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Your R2 Secret Access Key. Requires read and write access.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+- **AWS S3 provider-specific options:**
+- `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--region` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- **Google Cloud Storage provider-specific options:**
+- `--service-account-key-file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path to your Google Cloud service account key JSON file. This will read the service account key file and populate `client_email` and `private_key` options. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--client-email` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The client email for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--private-key` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
+
+{{</definitions>}}
+
+### `sippy disable`
+
+Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy disable <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to disable Sippy.
+
+{{</definitions>}}
+
+### `sippy get`
+
+Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get the status of Sippy.
+  
+{{</definitions>}}
+
 ---
 
 ## `r2 object`
@@ -1508,7 +1655,7 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-
+  
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1583,7 +1730,7 @@ Configure Cloudflare Pages.
 
 ### `dev`
 
-Develop your full stack Pages application locally.
+Develop your full-stack Pages application locally.
 
 ```txt
 wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
@@ -1608,9 +1755,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
 - `--r2` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
+  - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
 - `--d1` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Binding name of [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
+  - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
 - `--do` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -1663,7 +1810,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-
+  
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
@@ -1723,13 +1870,13 @@ After starting `wrangler pages deployment tail`, you will receive a live stream 
 Deploy a directory of static assets as a Pages deployment.
 
 ```txt
-wrangler pages deploy <DIRECTORY> [OPTIONS]
+wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The directory of static files to upload.
+- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1817,7 +1964,7 @@ Manage queue consumer configurations.
 
 ### `consumer add <script-name>`
 
-Add a Worker script as a [queue consumer](/queues/learning/how-queues-works/#consumers).
+Add a Worker script as a [queue consumer](/queues/reference/how-queues-works/#consumers).
 
 ```txt
 wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
@@ -1867,7 +2014,7 @@ wrangler login [OPTIONS]
   - List all the available OAuth scopes with descriptions.
 - `--scopes $SCOPES` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
-    for example, `$ wrangler login --scopes account:read user:read`.
+    for example, `$ npx wrangler login --scopes account:read user:read`.
 
 {{</definitions>}}
 
@@ -2043,6 +2190,8 @@ wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
 
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the deployment you wish to view.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
     {{</definitions>}}
@@ -2145,7 +2294,7 @@ wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
 
 Manage client certificates used for mTLS connections in subrequests.
 
-These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
 ### `upload`
 
@@ -2244,8 +2393,21 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```txt
-wrangler types
+```sh
+wrangler types [<PATH>] [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
+  - The path to where the declaration file for your Worker will be written.
+  - The path to the declaration file must have a `d.ts` extension.
+
+- `--env-interface` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `Env`){{</prop-meta>}}
+  - The name of the interface to generate for the environment object.
+  - Not valid if the Worker uses the Service Worker syntax.
+
+{{</definitions>}}
+
 
 <!--TODO Add examples of DTS generated output -->

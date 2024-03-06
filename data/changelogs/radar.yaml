@@ -2,6 +2,11 @@
 link: "/radar/changelog/"
 productName: Radar
 entries:
+- publish_date: '2023-11-27'
+  title: Add more meta information's
+  description: |-
+    * Added meta.lastUpdated to all summaries and top endpoints (timeseries and timeseriesGroups already had this).
+    * Fix meta.dateRange to return date ranges for all requested series.
 - publish_date: '2023-11-16'
   title: Add new Layer 3 endpoints and Layer 7 dimensions
   description: |-

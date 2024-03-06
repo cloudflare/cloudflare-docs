@@ -3,16 +3,16 @@ pcx_content_type: concept
 title: How it works
 weight: 2
 meta:
-  title: How exposed credential checks work
+  title: How exposed credentials checks work
 ---
 
-# How exposed credential checks work
+# How exposed credentials checks work
 
 WAF rules can include a check for exposed credentials. When enabled in a given rule, exposed credentials checking happens when there is a match for the rule expression (that is, the rule expression evaluates to `true`).
 
 At this point, the WAF looks up the username/password pair in the request against a database of publicly available stolen credentials. When both the rule expression and the exposed credentials check are true, there is a rule match, and Cloudflare performs the action configured in the rule.
 
-For example, the following rule blocks `POST` requests to the `/login.php` URI when Cloudflare identifies the submitted credentials as previously exposed:
+For example, the following rule matches `POST` requests to the `/login.php` URI when Cloudflare identifies the submitted credentials as previously exposed:
 
 {{<example>}}
 

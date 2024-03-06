@@ -2,7 +2,6 @@
 title: Security Analytics
 pcx_content_type: concept
 weight: 1
-layout: single
 ---
 
 {{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}
@@ -91,7 +90,7 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack analysis**, **Bot analysis**, and **Uploaded content** analysis sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
+The **Attack analysis**, **Bot analysis**, and **Uploaded content analysis** sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
 
 You can examine different traffic segments according to the current metric (attack, bot, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
@@ -101,7 +100,7 @@ Additionally, you can use the slider tool below the chart to filter incoming req
 
 The main chart displays the following data for the selected time frame, according to the selected tab:
 
-* **HTTP requests**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
+* **Traffic analysis**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
 
     * **Mitigated by WAF**: Requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. It does not include requests that had the following actions applied: _Log_, _Skip_, and _Allow_.
     * **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.

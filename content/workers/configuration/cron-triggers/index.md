@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Cron Triggers
-layout: single
 meta:
   description: Enable your Worker to be executed on a schedule.
 ---
@@ -129,7 +128,7 @@ Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or dele
 Test  Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
-$ wrangler dev --test-scheduled
+$ npx wrangler dev --test-scheduled
 
 $ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 ```
@@ -173,3 +172,4 @@ Renewable energy can be purchased in a number of ways, including through on-site
 ## Related resources
 
 * [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
+* Learn how to access Cron Triggers in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

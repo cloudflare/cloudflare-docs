@@ -53,12 +53,13 @@ curl --request POST \
 
 ### 2. (Optional) Configure a custom scan expression
 
-If you wish to check uploaded content in a way that is not covered by the [default configuration](#default-configuration), add a custom scan expression. For example:
+If you wish to check uploaded content in a way that is not covered by the [default configuration](#default-configuration), add a custom scan expression using a `POST` request. For example:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '[
   {
     "payload": "lookup_json_string(http.request.body.raw, \"file\")"
@@ -66,7 +67,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/p
 ]'
 ```
 
-The above `POST` request will add the following expression to the current list of custom scan expressions:
+The above request will add the following expression to the current list of custom scan expressions:
 
 ```txt
 lookup_json_string(http.request.body.raw, "file")
@@ -288,6 +289,7 @@ header: Example request
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '[
   {
     "payload": "lookup_json_string(http.request.body.raw, \"file\")"

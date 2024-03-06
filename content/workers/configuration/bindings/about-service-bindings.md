@@ -19,7 +19,7 @@ Service bindings allow you to:
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
-For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/service-bindings).
+For more information, refer to the [Runtime API documentation for Service bindings](/workers/runtime-apis/bindings/service-bindings).
 
 ![Service bindings are a zero-cost abstraction](/images/workers/platform/bindings/service-bindings-comparison.png)
 
@@ -40,12 +40,18 @@ To configure a Service binding in your `wrangler.toml`, use the following syntax
 
 ```toml
 services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", environment = "<ENVIRONMENT_NAME>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
 ]
+
+# or
+
+[[services]]
+binding = "<BINDING_NAME>"
+service = "<WORKER_NAME>"
 ```
 The `wrangler.toml` options are:
 
-* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [ES modules format](/workers/learning/migrate-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
+* `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [ES modules format](/workers/reference/migrate-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
 * `service`: Name of the target Worker you would like to communicate with. This Worker should be on your account.
 
 ### `wrangler.toml` example
@@ -53,9 +59,19 @@ The `wrangler.toml` options are:
 For the example outlined above, a `wrangler.toml` might look like this:
 
 ```toml
+[[services]]
+binding = "AUTH"
+service = "<AUTH_WORKER>"
+
+[[services]]
+binding = "LOGOUT"
+service = "<LOGOUT_WORKER>"
+
+# or
+
 services = [
-  { binding = "auth", service = "authentication" },
-  { binding = "logout", service = "logout" }
+  { binding = "AUTH", service = "<AUTH_WORKER>" },
+  { binding = "LOGOUT", service = "<LOGOUT_WORKER>" }
 ]
 ```
 
@@ -75,9 +91,7 @@ To review Workers bound to your Worker in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select your **Worker**.
-3. Go to **Triggers** > **Bound Services**. Your team can easily view cross-service dependencies in this manner.
-
-![Your team can view cross-service dependencies in the Cloudflare dashboard Account Home > Workers & Pages > your Worker > Triggers](/images/workers/platform/bindings/service-bindings-triggers.png)
+3. Go to **Triggers** > **Bound Services**. Your team can view cross-service dependencies in this manner.
 
 ## Compose an example Worker
 
@@ -93,8 +107,6 @@ To manage Service bindings:
 2. In Account Home, select **Workers & Pages**. 
 3. Select your Worker > **Settings**.
 4. In **Variables**, find **Service bindings** > **Edit variables**.
-
-![Selecting Edit variables to create new bindings and edit existing bindings that enable Worker-to-Worker communication](/images/workers/platform/bindings/service-bindings.png)
 
 Once added, the `gateway` Worker can access the Workers Service binding directly from the code, as in the example below. It utilizes the `fetch` API.
 
@@ -128,7 +140,7 @@ In this setup, only the `gateway` Worker is exposed to the Internet and privatel
 
 ### Authentication Workers Service
 
-The following authentication Worker code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke `FetchEvent` on the target Worker.
+The following authentication Worker code responds with a status code `200` in the case that `x-custom-token` in the incoming request matches a `SECRET_TOKEN` secret binding. Note that you implement `fetch` here, since a Service binding will invoke the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) on the target Worker.
 
 ```js
 export default {
@@ -147,5 +159,6 @@ This `auth` Worker does not need to have a `*.workers.dev` or other public endpo
 
 ## Related resources
 
-- [Runtime API documentation](/workers/runtime-apis/service-bindings)
+- [Runtime API documentation](/workers/runtime-apis/bindings/service-bindings)
+- [Migrate from Service Workers to ES Modules](/workers/reference/migrate-to-module-workers/)
 - [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)

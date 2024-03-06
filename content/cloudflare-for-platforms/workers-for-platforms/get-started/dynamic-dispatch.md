@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Create a dynamic dispatch Worker
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Create a dynamic dispatch Worker

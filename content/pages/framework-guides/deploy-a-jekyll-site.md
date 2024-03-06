@@ -56,7 +56,7 @@ Optionally, you may use a theme with your new Jekyll site if you would like to s
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 If you are migrating an existing Jekyll project to Pages, confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
 
@@ -70,7 +70,7 @@ To deploy your site to Pages:
 
 {{<pages-build-preset framework="jekyll">}}
 
-Add an [environment variable](/pages/platform/language-support-and-tools/) that matches the Ruby version that you are using locally. Set this as `RUBY_VERSION` on both your preview and production deployments. Below, `3.1.3` is used as an example:
+Add an [environment variable](/pages/configuration/language-support-and-tools/) that matches the Ruby version that you are using locally. Set this as `RUBY_VERSION` on both your preview and production deployments. Below, `3.1.3` is used as an example:
 
 | Environment variable | Value          |
 | -------------------- | -------------- |
@@ -85,6 +85,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Jekyll">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Jekyll">}}

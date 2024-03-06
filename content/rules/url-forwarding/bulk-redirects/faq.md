@@ -10,7 +10,7 @@ meta:
 
 Below you will find answers to the most commonly asked questions regarding Bulk Redirects.
 
-To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshooting Cloudflare 10XXX Errors](https://support.cloudflare.com/hc/articles/4425107232525).
+To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshooting Cloudflare 10XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/).
 
 ## What happens if the same source URL appears in two different Bulk Redirect Lists?
 

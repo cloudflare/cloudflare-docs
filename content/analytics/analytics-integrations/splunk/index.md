@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Splunk
 weight: 104
-layout: single
 ---
 
 # Splunk
@@ -295,3 +294,9 @@ The available fields are:
 - WorkerSubrequest
 
 - ZoneID
+
+---
+
+## More resources
+
+{{<render file="_video-send-network-analytics-logs-to-splunk.md" productFolder="logs">}}

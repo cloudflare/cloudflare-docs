@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: About Cloudflare
-weight: 1
+weight: 2
 ---
  
 # Welcome to the Support About Cloudflare section

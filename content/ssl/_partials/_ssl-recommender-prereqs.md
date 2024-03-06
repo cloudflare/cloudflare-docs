@@ -9,4 +9,4 @@ To make sure you do not inadvertently block the **SSL/TLS Recommender**, review 
 
 - Is accessible.
 - Is not blocking requests from our bot (which uses a user agent of `Cloudflare-SSLDetector`).
-- Does not have any active, SSL-specific [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) or [Configuration rules](/rules/configuration-rules/).
+- Does not have any active, SSL-specific [Page Rules](/rules/page-rules/) or [Configuration rules](/rules/configuration-rules/).

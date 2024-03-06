@@ -3,7 +3,7 @@ title: 2023-08-01 - Emergency
 type: table
 pcx_content_type: changelog
 weight: 859
-layout: list
+layout: wide
 ---
 
 # 2023-08-01 - Emergency Release

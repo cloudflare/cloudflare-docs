@@ -27,13 +27,19 @@ Enterprise customers can use Magic Network Monitoring with [Magic Transit on-dem
 
 {{<feature header="Rules" href="/magic-network-monitoring/rules/">}}
 
-Create rules to configure the threshold for data flowing from your network. 
+Create rules to configure the threshold for data flowing from your network.
+
+{{</feature>}}
+
+{{<feature header="Magic Transit integration" href="/magic-network-monitoring/magic-transit-integration/">}}
+
+Magic Transit On Demand customers can use Magic Network Monitoring to enable DDoS mitigation when a DDoS attack is detected.
 
 {{</feature>}}
 
 {{<feature header="Notifications" href="/magic-network-monitoring/notifications/">}}
 
-Set up notifications to learn about an attack. 
+Set up notifications to learn about an attack.
 
 {{</feature>}}
 
@@ -57,9 +63,9 @@ Connects your network infrastructure directly with Cloudflare – rather than us
 {{</related>}}
 
 ## More resources
- 
+
 {{<resource-group>}}
- 
+
 {{<resource header="Discord" href="https://discord.com/invite/cloudflaredev" icon="logo-Discord">}}Connect with the Magic Network Monitoring community on Discord to ask questions, and share feedback.{{</resource>}}
- 
+
 {{</resource-group>}}

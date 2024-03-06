@@ -19,22 +19,18 @@ Before you can protect your API or web application with mTLS rules, you need to:
 - [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) to use your Cloudflare-issued client certificate.
 - [Enable mutual Transport Layer Security (mTLS) for a host](/ssl/client-certificates/enable-mtls/) in your zone.
 
+{{<render file="_mtls-api-shield-support.md">}}
+
 {{<render file="_cloudflare-managed-client-cert.md" productFolder="ssl" >}}
 
 ## Create an mTLS rule
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-
 2. Go to **SSL/TLS** > **Client Certificates**.
-
 3. Select **Create a mTLS rule**.
-
 4. In **Custom rules**, several rule parameters have already been filled in. Enter the URI path you want to protect in **Value**.
-
 5. (Optional) Add a `Hostname` field and enter the mTLS-enabled hostnames you wish to protect in **Value**.
-
 6. In **Choose action**, select `Block`.
-
 7. Select **Deploy** to make the rule active.
 
 Once you have deployed your mTLS rule, any requests without a [valid client certificate](/ssl/client-certificates/) will be blocked.
@@ -53,7 +49,7 @@ Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _
 
 ### Check for revoked certificates
 
-To check for [revoked client certificates](/ssl/client-certificates/revoke-client-certificate/), you can either add a new mTLS rule or add a new expression to the [default rule](#expression-builder).
+To check for [revoked client certificates](/ssl/client-certificates/revoke-client-certificate/), you can either add a new mTLS rule or add a new expression to the [default rule](#expression-builder). To check for revoked certificates, you must use the Expression Builder.
 
 When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revoked` field is set to `true`. If you combined this with the [default mTLS rule](#expression-builder), it would look similar to the following:
 
@@ -61,6 +57,6 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 ((not cf.tls_client_auth.cert_verified or cf.tls_client_auth.cert_revoked) and http.request.uri.path in {"/admin"})
 ```
 
-{{<Aside type="note">}}
-To check for revoked certificates, you must use the [Expression Builder](#expression-builder).
+{{<Aside type="warning">}}
+This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca-api-shield/).
 {{</Aside>}}

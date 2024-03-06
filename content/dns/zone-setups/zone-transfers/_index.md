@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: DNS Zone transfers
 weight: 3
-layout: single
 meta:
    title: Zone transfers - Multi-provider DNS
 ---

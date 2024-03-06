@@ -28,7 +28,7 @@ usage and billing may vary. Your monthly invoice is the most reliable
 source for billing information.
 {{</Aside>}}
 
-For help creating usage-based billing alerts, refer to our [Notifications documentation](/notifications/create-notifications/). For the _Event Type_ of your notification, you would select **Usage-Based Billing**.
+For help creating usage-based billing alerts, refer to our [Notifications documentation](/notifications/). For the _Event Type_ of your notification, you would select **Usage-Based Billing**.
 
 ---
 

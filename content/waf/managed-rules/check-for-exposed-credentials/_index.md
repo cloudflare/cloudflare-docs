@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Check for exposed credentials
 weight: 12
-layout: single
 ---
 
 # Check for exposed credentials
@@ -42,10 +41,10 @@ The default action for the rules in the Exposed Credentials Check Managed Rulese
 
 Cloudflare recommends that you only use the following actions: *Exposed-Credential-Check Header* (named `rewrite` in the API) and *Log* (`log`).
 
-## Exposed credential checks in custom rules
+## Exposed credentials checks in custom rules
 
 {{<Aside type="note">}}
-Exposed credential checks in custom rules are only available via API.
+Exposed credentials checks in custom rules are only available via API.
 {{</Aside>}}
 
 Besides enabling the [Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/), you can also check for exposed credentials in [custom rules](/waf/custom-rules/). One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials. Rules that check for exposed credentials run before rate limiting rules.

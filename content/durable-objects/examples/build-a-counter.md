@@ -168,7 +168,7 @@ export class Counter {
     // You do not have to worry about a concurrent request having modified the value in storage. 
     // "input gates" will automatically protect against unwanted concurrency. 
     // Read-modify-write is safe. 
-    await this.state.storage.put("value", value);
+    this.state.storage.put("value", value);
 
     return new Response(value.toString());
   }
@@ -178,7 +178,7 @@ export class Counter {
 {{</tab>}}
 {{</tabs>}}
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/learning/durable-objects-migrations/) based on the namespace and class name chosen previously.
+Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 ```toml
 ---

@@ -262,7 +262,7 @@ External communications during an incident are critical for:
 Major types of communications during an incident include:
 
 -   [StatusPage](https://www.cloudflarestatus.com/)
--   [Support tickets](https://support.cloudflare.com/hc/articles/200172476)
+-   [Support tickets](/support/contacting-cloudflare-support/)
 -   Incident Reports 
 
 Status Page will be created using templates by CSUP team member on-call as soon as an incident is identified.

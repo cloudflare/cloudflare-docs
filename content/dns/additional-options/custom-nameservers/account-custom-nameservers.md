@@ -27,7 +27,7 @@ For this configuration to be possible, a few conditions apply:
 
 2. This step depends on whether you are using [Cloudflare Registrar](/registrar/) for the domain that provides the ACNS names:
 
-    * If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to add glue records to your ACNS and update your nameservers.
+    * If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add glue records to your ACNS and update your nameservers.
 
     * If you are not using Cloudflare Registrar, add the account custom nameservers and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
 

@@ -7,7 +7,7 @@ title: Add custom HTTP headers
 
 {{<Aside type="note">}}
 
-Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/platform/headers/) for more information.
+Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/configuration/headers/) for more information.
 
 {{</Aside>}}
 
@@ -15,7 +15,7 @@ More advanced customization of HTTP headers is available through Cloudflare Work
 
 If you have not deployed a Worker before, get started with our [tutorial](/workers/get-started/guide/). For the purpose of this tutorial, accomplish steps one (Sign up for a Workers account) through four (Generate a new project) before returning to this page.
 
-Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/platform/custom-domains/#add-a-custom-domain).
+Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
 ## Writing a Workers function
 

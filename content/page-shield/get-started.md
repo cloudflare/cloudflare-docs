@@ -2,7 +2,6 @@
 title: Get started
 pcx_content_type: get-started
 weight: 2
-layout: single
 meta:
   title: Get started with Cloudflare Page Shield
   description: Learn how to set up Page Shield.

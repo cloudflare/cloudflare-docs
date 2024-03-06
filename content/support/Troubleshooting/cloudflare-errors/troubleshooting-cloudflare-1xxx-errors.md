@@ -10,7 +10,7 @@ ___
 
 ## Overview
 
-The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](https://api.cloudflare.com/). HTTP 409, 530, 403, 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
+The errors described in this document might occur when visiting a website proxied by Cloudflare. For Cloudflare API or dashboard errors, review our [Cloudflare API documentation](/api/). HTTP 409, 530, 403, and 429 errors are the HTTP error codes returned in the HTTP status header for a response. 1XXX errors appear in the HTML body of the response.
 
 {{<Aside type="note">}}
 Cloudflare **[Custom Error
@@ -19,12 +19,12 @@ customers to change the appearance of the default error pages discussed
 in this article.
 {{</Aside>}}
 
-If the resolutions within each error description below do not resolve the error, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the resolutions within each error description below do not resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{<Aside type="note">}}
 Only the site owner may contact Cloudflare for technical support. Lookup
 contact information for a domain via the [Whois
-database](https://whois.icann.org/en/lookup).
+database](https://lookup.icann.org/).
 {{</Aside>}}
 
 {{<Aside type="note">}}
@@ -139,7 +139,7 @@ ___
 
 ### Resolution
 
-If the issue persists beyond 5 minutes, [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the issue persists beyond 5 minutes, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ___
 
@@ -203,7 +203,7 @@ A website owner blocked your request based on your client's web browser.
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup). Site owners disable **Browser** **Integrity Check** via the **Settings** tab of the **Security** app.
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/). Site owners disable **Browser** **Integrity Check** via the **Settings** tab of the **Security** app.
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support
@@ -220,7 +220,7 @@ A request is made for a resource that uses [Cloudflare hotlink protection](ht
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup).  **Hotlink Protection** is managed via the Cloudflare **Scrape Shield** app.
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/).  **Hotlink Protection** is managed via the Cloudflare **Scrape Shield** app.
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support
@@ -237,7 +237,7 @@ A website owner forbids access based on malicious activity detected from the vi
 
 ### Resolution
 
-Update your antivirus software and run a full system scan. Cloudflare can not override the security settings the site owner has set for the domain. To request website access, contact the site owner to allow your IP address. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://whois.icann.org/en/lookup).
+Update your antivirus software and run a full system scan. Cloudflare can not override the security settings the site owner has set for the domain. To request website access, contact the site owner to allow your IP address. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/).
 
 {{<Aside type="note">}}
 Since the website owner performed the blocking, Cloudflare support
@@ -263,7 +263,7 @@ Test for an SNI mismatch via an online tool such as: [SSL Shopper](https://www.
 
 Provide Cloudflare Support the following information:
 
-1.  A [HAR file](https://support.cloudflare.com/hc/articles/203118044) captured while duplicating the error.
+1.  A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error.
 
 ___
 
@@ -298,7 +298,7 @@ The site owner implemented [Rate Limiting](/waf/reference/legacy/old-rate-limit
 cache
 purge](/cache/how-to/purge-cache).
 Retry the cache purge and contact [Cloudflare
-support](https://support.cloudflare.com/hc/articles/200172476) if errors
+support](/support/contacting-cloudflare-support/) if errors
 persist.
 {{</Aside>}}
 
@@ -308,7 +308,7 @@ persist.
 -   If you are the site owner, review [Cloudflare Rate Limiting thresholds](/waf/reference/legacy/old-rate-limiting/) and adjust your Rate Limiting configuration.
 -   If your Rate Limiting blocks requests in a short time period (i.e. 1 second) try increasing the time period to 10 seconds.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If you expect a new Cloudflare Worker to exceed rate limits, refer to
 the [Workers
 documentation](/workers/platform/limits)
@@ -353,7 +353,7 @@ Error 1018 is returned via a HTTP 409 response code.
 
 ### Resolution
 
-Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) with the following details:
+Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the following details:
 
 1.  Your domain name
 2.  A screenshot of the 1018 error including the **RayID** mentioned in the error message
@@ -389,7 +389,7 @@ If you are the website owner:
 2.  Search the [**Security Events log**](/waf/analytics/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
 
 {{<Aside type="note">}}
-Convert the UTC timestamp of the 1005 error to your local timezone when
+Convert the UTC timestamp of the 1020 error to your local timezone when
 searching in the **Security Events log**.
 {{</Aside>}}
 
@@ -410,7 +410,7 @@ Error 1023 is returned via a HTTP 409 response code.
 
 ### Resolution
 
-Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) with the following details:
+Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the following details:
 
 1.  Your domain name
 2.  A screenshot of the 1023 error including the **RayID** mentioned in the error message
@@ -538,7 +538,7 @@ A Cloudflare Worker throws a runtime JavaScript exception.
 
 ### Resolution:
 
-[Provide appropriate issues details](https://support.cloudflare.com/hc/articles/200172476) to Cloudflare Support.
+[Provide appropriate issues details](/support/contacting-cloudflare-support/) to Cloudflare Support.
 
 ___
 
@@ -580,5 +580,5 @@ ___
 
 ## Related resources
 
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)
+-   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Customizing Cloudflare error pages](https://support.cloudflare.com/hc/articles/200172706)

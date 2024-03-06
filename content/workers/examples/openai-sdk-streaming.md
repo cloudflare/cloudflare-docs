@@ -35,7 +35,7 @@ export default {
 			console.log(part.choices[0]?.delta?.content || '');
 			writer.write(textEncoder.encode(part.choices[0]?.delta?.content || ''));
 		}
-		
+
 		writer.close();
 
 		// Send readable back to the browser so it can read the stream content
@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 
 In order to run this code, you must install the OpenAI SDK by running `npm i openai`.
 

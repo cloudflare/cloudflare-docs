@@ -13,7 +13,9 @@ layout: example
 
 {{<Aside type="warning" header="Caution when using in production">}}
 
-This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, refer to the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
+* This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, refer to the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
+
+* The example code contains a generic header key and value of `X-Custom-PSK` and `mypresharedkey`. To best protect your resources, change the header key and value in the Workers editor before saving your code.
 
 {{</Aside>}}
 
@@ -48,8 +50,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request) {
     /**
      * @param {string} PRESHARED_AUTH_HEADER_KEY Custom header to check for key
      * @param {string} PRESHARED_AUTH_HEADER_VALUE Hard coded key value
@@ -68,9 +70,7 @@ const handler: ExportedHandler = {
       status: 403,
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

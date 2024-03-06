@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 {{<render file="_vectorize-beta.md">}}
 
-Vectorize allows you to generate [vector embeddings](/vectorize/learning/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
+Vectorize allows you to generate [vector embeddings](/vectorize/reference/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
@@ -29,7 +29,7 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 
 ## 1. Create a Worker
 
@@ -122,11 +122,11 @@ Specifically:
 
 - The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/platform/client-api/) is exposed on this binding for use within your Workers application.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
 
 ## 4. Set up Workers AI
 
-Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/text-embeddings/) built-in.
+Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
 From within the `embeddings-tutorial` directory, install the `Workers AI` package:
 
@@ -227,7 +227,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -238,7 +238,7 @@ From here, deploy your Worker to make your project accessible on the Internet. T
 $ npx wrangler deploy
 ```
 
-Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`. 
+Preview your Worker at `https://embeddings-tutorial.<YOUR_SUBDOMAIN>.workers.dev`.
 
 ## 7. Query your index
 
@@ -252,17 +252,17 @@ With the URL for your deployed Worker (for example,`https://embeddings-tutorial.
 This should return the following JSON:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.896888444,"vectorId":"1"}]}}
+{ "matches": { "count": 1, "matches": [{ "score": 0.896888444, "id": "1" }] } }
 ```
 
 Extend this example by:
 
 - Adding more inputs and generating a larger set of vectors.
 - Accepting a custom query parameter passed in the URL, for example via `URL.searchParams`.
-- Creating a new index with a different [distance metric](/vectorize/learning/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
+- Creating a new index with a different [distance metric](/vectorize/configuration/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
 
 ## Next steps
 
 - Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
-- Learn more about [how vector databases work](/vectorize/learning/what-is-a-vector-database/).
-- Read [examples](/vectorize/platform/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+- Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.

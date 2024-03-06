@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list JAMstack application
-layout: single
 ---
 
 # Build a todo list JAMstack application
@@ -36,7 +35,7 @@ In your terminal, create a Worker project with your desired project name; for ex
 ---
 header: Generate a project
 ---
-$ wrangler init todos
+$ npx wrangler init todos
 $ cd todos
 ```
 
@@ -89,7 +88,7 @@ To get started with KV, set up a namespace. All of your cached data will be stor
 ---
 header: Create a new KV namespace
 ---
-$ wrangler kv:namespace create "TODOS" --preview
+$ npx wrangler kv:namespace create "TODOS" --preview
 ```
 
 Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:

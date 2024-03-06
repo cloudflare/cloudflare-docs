@@ -6,40 +6,47 @@
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
+/.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
 /components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
 /assets/json-collector.ts @cloudflare/pcx-technical-writing
+/data/calculations/ @kristianfreeman @kodster28 @pedrosousa
+/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing
+/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing @craigsdennis @markdembo
+/content/workers-ai/tutorials @logangrasby @cloudflare/pcx-technical-writing
+/content/workers-ai/static @logangrasby @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
+/data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
-/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
-/content/data-localization/ @soheiokamoto @tlozoot @cloudflare/pcx-technical-writing
-/content/logs/ @bharatnc @jherre @soheiokamoto @tlozoot @victor-perov @cloudflare/pcx-technical-writing
+/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
+/content/data-localization/ @soheiokamoto @cloudflare/pcx-technical-writing
+/content/logs/ @bharatnc @jherre @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
 
 # API & Zones
 /content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
 /content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
-/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
-/content/cloudflare-one/ @kennyj42 @shrutinejad @abelinkinbio @kkrum @cloudflare/pcx-technical-writing
+/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @cloudflare/pcx-technical-writing
 
 # Developer platform
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
 /content/hyperdrive/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
+/data/changelogs/hyperdrive.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
-/content/images/ @GregBrimble @cloudflare/pcx-technical-writing
+/content/images/ @cloudflare/pcx-technical-writing
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /content/kv/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
@@ -52,15 +59,16 @@
 /data/changelogs/stream.yaml @tsmith512 @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing @irvinebroque @admah
-/content/zaraz/ @bjesus @cloudflare/pcx-technical-writing
-/data/changelogs/zaraz.yaml @bjesus @cloudflare/pcx-technical-writing
+/content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
+/data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
 /content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/learning/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
+/content/workers/reference/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
+/content/pages/framework-guides/ @igorminar @dario-piotrowicz @cloudflare/pcx-technical-writing
 
 # Firewall Rules & WAF
 /content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
@@ -81,6 +89,10 @@
 # Radar
 /content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
 /data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
+
+# Reference architecture
+/content/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
+/assets/images/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing

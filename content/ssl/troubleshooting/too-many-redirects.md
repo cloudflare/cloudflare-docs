@@ -8,7 +8,7 @@ meta:
 
 # ERR_TOO_MANY_REDIRECTS
 
-After you [add a new domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. 
+After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. 
 
 This error occurs when visitors get stuck in a redirect loop.
 
@@ -164,7 +164,7 @@ end
 ```
 <br/>
 
-To solve this issue, review your various [URL forwarding rules](/rules/url-forwarding/) and [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) to make sure no rules are not in conflict with each other.
+To solve this issue, review your various [URL forwarding rules](/rules/url-forwarding/) and [Page Rules](/rules/page-rules/) to make sure no rules are not in conflict with each other.
 
 {{<Aside type="note">}}
 

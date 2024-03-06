@@ -8,7 +8,7 @@ meta:
 
 # How we do it
 
-Cloudflare uses the following automations to streamline our documentation process. 
+Cloudflare uses the following automations to streamline our documentation process.
 
 ## Content maintenance
 
@@ -37,5 +37,5 @@ The following resources help contributors and stakeholders when they are making 
 | [Build check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml) | Verifies that our docs site builds correctly. | GitHub Actions | Every commit |
 | [Show before/after links](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/show-changed-files.yml) | Provides a comparison table that shows the current page in production and the changed page in a preview build. | GitHub Actions | Every Pages build |
 | [Flag needed redirects](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/comment-changed-filenames.yml) | Comments with a list of changed or deleted files that might need a redirect. | GitHub Actions | Every commit |
-| [Infinite redirect check](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/find-infinite-redirects.ts) | Verifies whether the commit adds conflicting redirects.  | GitHub Actions | Every commit |
+| [Validate redirects](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/validate-redirects.ts) | Verifies whether the commit adds conflicting or invalid redirects.  | GitHub Actions | Every commit |
 | [Spell check](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/spell-check.yml) | Flags issues with spelling, casing, or insensitive language. | GitHub Actions | Every commit |

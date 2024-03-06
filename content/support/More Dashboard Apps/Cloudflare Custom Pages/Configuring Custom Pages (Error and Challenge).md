@@ -8,7 +8,7 @@ title: Configuring Custom Pages (Error and Challenge)
 
 ## Overview
 
-Cloudflare uses a wide range of [error codes](https://support.cloudflare.com/hc/en-us/sections/200820298-Error-Pages) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
+Cloudflare uses a wide range of [error codes](/support/troubleshooting/cloudflare-errors/) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
 
 If you are on the Pro, Business, or Enterprise plan you can customize and brand these pages for your whole account or for specific domains. You can design custom error pages to appear during a security challenge or when an error occurs.
 
@@ -41,11 +41,11 @@ You can use the following custom error template to start building your page:
 ```
 
 {{<Aside type="warning" header="Warnings">}}
-* Your custom error page must include a custom error token and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
+* Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.43 MB. Also, it must include HTML `<head>` and `</head>` tags.
 * Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/): `<meta name="referrer" (...) />`
 {{</Aside>}}
 
-When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
+When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%.
 
 ### Custom Page example
 
@@ -98,11 +98,9 @@ ___
 
 Each custom error token has a default look and feel. However, you can use CSS to stylize each custom error tag using each tag's class ID. If you are familiar with CSS styling, you can customize the look and feel of the error page using each tag’s class ID. Please keep in mind that all the external resources like images, CSS, and scripts will be inlined during the process. As such, all external resources need to be available (i.e. return a 200 OK) otherwise an error will be thrown.
 
-You can check if your page is fine using the following tool: [Collapsify](https://github.com/cloudflare/collapsify)
-
 ___
 
-## Step 4: Publish your custom page
+## Step 4: Preview and Publish your custom page
 
 After customizing your custom error page, there are two options for adding the page to Cloudflare:
 
@@ -121,9 +119,11 @@ To publish an account level custom error page:
 
 1.  Log into your Cloudflare account.
 2.  Click the **Configurations** tab.
-3.  In the left navigation, click **Custom Pages.**
+3.  In the left navigation, click **Custom Pages**.
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
-5.  Enter the URL of the custom error page you customized in your origin server, then click **Publish.**
+5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.
+6.  Ensure all your styles and images are showing up as desired in the preview.
+7.  Once you are happy with the page preview, return to the **Custom Page** dialog, and click **Publish**.
 
 ### Domain level custom error page
 
@@ -133,7 +133,9 @@ To publish a domain level custom error page:
 2.  Choose the domain for which you would like to publish a custom error page.
 3.  Click the **Custom Pages** app.
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
-5.  Enter the URL of the custom error page you customized in your origin server, then click **Publish.**
+5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.
+6.  Ensure all your styles and images are showing up as desired in the preview.
+7.  Once you are happy with the page preview, return to the **Custom Page** dialog, and click **Publish**.
 
 ### Update custom error page after publishing
 
@@ -166,7 +168,7 @@ If you block countries or IP addresses with a firewall rule (now deprecated), af
 
 ### Custom error page size
 
-Your custom error page cannot be blank and cannot exceed 1.43 MB. To avoid exceeding the custom error page limit, download [collapsify](https://github.com/cloudflare/collapsify) to test your page size before publishing. 
+Your custom error page cannot be blank and cannot exceed 1.43 MB. To avoid exceeding the custom error page limit, preview your page before publishing to test your page size before publishing.
 
 ### General troubleshooting advice
 
@@ -182,5 +184,4 @@ ___
 -   [Troubleshooting Cloudflare errors](/support/troubleshooting/cloudflare-errors/)
 -   [IP Access rules](/waf/tools/ip-access-rules/)
 -   [Rate limiting rules](/waf/rate-limiting-rules/)
--   [Collapsify](https://github.com/cloudflare/collapsify)
 -   [Firewall rules](/firewall/cf-firewall-rules/) (deprecated)

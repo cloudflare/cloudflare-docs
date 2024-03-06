@@ -32,8 +32,8 @@ inputParameters: editWord
 | DMARC Management $1            | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
 | DNS Read                         | Grants read access to [DNS](/dns/).                                                                                                        |
 | DNS Write                        | Grants write access to [DNS](/dns/).                                                                                                       |
-| Dynamic Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
-| Dynamic Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
+| Dynamic URL Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
+| Dynamic URL Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
 | Email Routing Rules Read         | Grants read access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                                |
 | Email Routing Rules $1         | Grants write access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                               |
 | Firewall Services Read           | Grants read access to Firewall resources.                                                                                                  |
@@ -50,8 +50,8 @@ inputParameters: editWord
 | Managed Headers $1             | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                                            |
 | Origin Rules Read                | Grants read access to [Origin Rules](/rules/origin-rules/).                                                                                |
 | Origin Rules $1                | Grants write access to [Origin Rules](/rules/origin-rules/).                                                                               |
-| Page Rules Read                  | Grants read access to [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).          |
-| Page Rules $1                  | Grants write access to [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).         |
+| Page Rules Read                  | Grants read access to [Page Rules](/rules/page-rules/).          |
+| Page Rules $1                  | Grants write access to [Page Rules](/rules/page-rules/).         |
 | Page Shield Read                 | Grants read access to [Page Shield](/page-shield/).                                                                                        |
 | Page Shield $1                 | Grants write access to [Page Shield](/page-shield/).                                                                                       |
 | Response Compression Read        | Grants read access to [Response Compression](/rules/compression-rules/).                                                                   |

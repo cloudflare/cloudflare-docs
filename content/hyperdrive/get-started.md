@@ -1,5 +1,5 @@
 ---
-weight: 1
+weight: 2
 title: Get started
 pcx_content_type: get-started
 ---
@@ -30,8 +30,8 @@ To continue, you will need:
 
 1. A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you do not have one already.
 2. [`npm`](https://docs.npmjs.com/getting-started) installed on your local machine.
-3. [`Node.js`](https://nodejs.org/en/) installed. Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
-4. **A publicly accessible PostgreSQL (or PostgreSQL compatible) database**. Cloudflare recommends [Neon](https://neon.tech/) if you do not have an existing database. Read the [Neon's documentation to create your first database](https://neon.tech/docs/introduction).
+3. [`Node.js`](https://nodejs.org/en/) installed. Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+4. **A publicly accessible PostgreSQL (or PostgreSQL compatible) database**. Cloudflare recommends [Neon](https://neon.tech/) if you do not have an existing database. Read the [Neon documentation to create your first database](https://neon.tech/docs/introduction).
 
 ## 1. Log in
 
@@ -47,7 +47,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 
@@ -145,7 +145,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -221,7 +221,7 @@ export default {
 			await client.connect();
 
 			// Test query
-			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
@@ -257,8 +257,8 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 ## Next steps
 
-- Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/).
-- How to [configure query caching](/hyperdrive/learning/query-caching/).
-- [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
+- Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+- How to [configure query caching](/hyperdrive/configuration/query-caching/).
+- [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

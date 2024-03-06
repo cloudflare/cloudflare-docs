@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Databases
-weight: 9
+weight: 8
 ---
 
 # Databases

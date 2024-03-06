@@ -116,7 +116,7 @@ The following is an example of suggested rules, but you should only make changes
 
 **Rule ID**: 2 <br/>
 **Description**: Allows UDP replies for DNS and NTP to web servers <br/>
-**Match**: `ip.dst in $web_servers and ip.proto eq “udp” and udp.srcport in {53 123} and udp.dstport in {1024..65535}` <br/>
+**Match**: `ip.dst in $web_servers and ip.proto eq "udp" and udp.srcport in {53 123} and udp.dstport in {1024..65535}` <br/>
 **Action**: Allow if necessary but Disable if under attack <br/>
 
 **Rule ID**: 3 <br/>

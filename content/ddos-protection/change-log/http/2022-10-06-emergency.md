@@ -2,7 +2,7 @@
 title: 2022-10-06 - Emergency
 pcx_content_type: changelog
 weight: 28211
-layout: list
+layout: wide
 ---
 
 # 2022-10-06 - Emergency

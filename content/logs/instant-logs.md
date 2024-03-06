@@ -44,7 +44,7 @@ Instant Logs has a maximum data rate supported. For high volume domains, we samp
 
 {{</Aside>}}
 
-- **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **Client ASN**, **CacheCacheStatus**, **ClientCountry**, **ClientIP**, **ClientRequestHost**, **ClientRequestMethod**, **ClientRequestPath**, **EdgeResponseStatus**, **FirewallMatchesAction**, and **FirewallMatchesRuleIDs**.
+- **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **Client ASN**, **CacheCacheStatus**, **ClientCountry**, **ClientIP**, **ClientRequestHost**, **ClientRequestMethod**, **ClientRequestPath**, **EdgeResponseStatus**, **SecurityActions**, and **SecurityRuleIDs**.
 
 This is the list of the supported operators that we have available:
 
@@ -161,4 +161,4 @@ If either of these limits are reached, the logs stream will automatically stop.
 
 ## Connect with us
 
-If you have any feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

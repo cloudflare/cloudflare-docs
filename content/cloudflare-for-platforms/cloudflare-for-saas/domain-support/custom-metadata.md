@@ -116,8 +116,10 @@ There are some limitations to the metadata that can be provided to Cloudflare:
 - It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
 - Custom metadata cannot be set on custom hostnames that contain wildcards.
 
-You should not modify the schema — which includes adding/removing keys or changing possible values — without notifying Cloudflare. Changing the shape of the data will typically cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
-  
+{{<Aside type="note">}}
+Be careful when modifying the schema. Adding, removing, or changing keys and possible values may cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
+{{</Aside>}} 
+
 ### Terraform support
   
 [Terraform](/terraform/) only allows maps of a single type, so Cloudflare's Terraform support for custom metadata for custom hostnames is limited to string keys and values.

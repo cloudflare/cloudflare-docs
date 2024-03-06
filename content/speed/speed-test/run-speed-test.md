@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Run test
-layout: list
+layout: wide
 weight: 2
 ---
 

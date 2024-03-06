@@ -1,0 +1,30 @@
+name: No Response
+
+# Both `issue_comment` and `scheduled` event types are required for this Action
+# to work properly.
+
+# This action helps us flag issues for more information.
+# To trigger, add the `more-information-needed` label to an issue.
+# The label will be removed if the author comments.
+# If the author does not respond for a specific number of days, the issue will be automatically closed.
+# However, if they do respond, the issue will be re-opened automatically and the label will be removed.
+
+on:
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '0 0 * * *' # Runs at 12:00 AM UTC every day
+
+jobs:
+  noResponse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lee-dohm/no-response@v0.5.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          daysUntilClose: 14
+          closeComment: >
+            This issue was closed automatically because there has been no response
+            from the original author. As it stands currently, we don't have enough information
+            to take action. If you believe this issue was closed in error, a) apologies and b) open a new issue 
+            and reference this one in the body.

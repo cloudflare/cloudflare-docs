@@ -18,13 +18,15 @@ Use overrides to configure the HTTP DDoS Attack Protection managed ruleset. Over
 
 Overrides can have a ruleset, tag, or rule scope. Tag and rule configurations have greater priority than ruleset configurations.
 
-You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/#ip-lists) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be applied for that zone.
+You can create overrides at the zone level and at the account level. Account-level overrides allow you to apply the same override to several zones in your account with a single rule. For example, you can use an account-level override to lower the sensitivity of a specific managed ruleset rule or exclude an [IP list](/waf/tools/lists/custom-lists/#ip-lists) for multiple zones. However, if a given zone has overrides for the HTTP DDoS Attack Protection managed ruleset, the account-level overrides will not be evaluated for that zone.
 
 {{<Aside type="warning" header="Important">}}
 
 * The HTTP DDoS Attack Protection managed ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
+* If you configure both account-level and zone-level overrides, only the zone-level overrides (the most specific ones) will be evaluated.
 * Currently, account-level overrides for the HTTP DDoS Attack Protection managed ruleset are only available via API.
+
 {{</Aside>}}
 
 ### Creating multiple rules

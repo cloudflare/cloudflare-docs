@@ -2,6 +2,7 @@
 pcx_content_type: changelog
 title: Changelog
 layout: changelog
+weight: 3
 changelog_file_name: [pages]
 outputs:
     - html
