@@ -22,14 +22,14 @@ Python file named `entry.py`.
 ```python
 from js import Response
 
-def fetch(request):
+def on_fetch(request):
     return Response.new("Hello World!")
 ```
 
 Now, we can run the worker locally using Wrangler.
 
 ```bash
-$ wrangler dev entry.py --compatibility-flag experimental
+$ wrangler dev entry.py --compatibility-flag python_workers
 ```
 
 Similar to JavaScript workers, the main entry point for a Python worker is the
@@ -53,7 +53,7 @@ Now, we can modify `entry.py` to make use of the new module.
 from hello import hello
 from js import Response
 
-def fetch(request):
+def on_fetch(request):
     return Response.new(hello("World"))
 ```
 
@@ -75,7 +75,7 @@ available to Python workers!
 from js import Response
 from hello import hello
 
-async def fetch(request):
+async def on_fetch(request):
     name = (await request.json()).name
     return Response.new(hello(name))
 ```
@@ -105,7 +105,7 @@ worker. First, let's create a `wrangler.toml` file for our worker.
 ```toml
 name = "hello-python-worker"
 main = "entry.py"
-compatibility_flags = ["experimental"]
+compatibility_flags = ["python_workers"]
 compatibility_date = "2024-01-29"
 
 [vars]
@@ -118,7 +118,7 @@ environment variable.
 ```python
 from js import Response
 
-async def fetch(request, env):
+async def on_fetch(request, env):
     return Response.new(env.API_HOST)
 ```
 
@@ -154,7 +154,7 @@ Now, we can simply import and use the package within our Python worker!
 from js import Response
 import numpy as np
 
-def fetch(request):
+def on_fetch(request):
     arr = np.array([1, 2, 3])
     return Response.new(str(arr))
 ```
