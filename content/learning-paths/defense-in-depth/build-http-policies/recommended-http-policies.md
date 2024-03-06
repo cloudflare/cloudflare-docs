@@ -82,6 +82,6 @@ Isolate high risk domains or create a custom list of known risky domains to avoi
 | Selector           | Operator | Value                              | Logic | Action  |
 | ------------------ | -------- | ---------------------------------- | ----- | ------- |
 | Content Categories | in       | _New Domain_, _Newly Seen Domains_ | Or    | Isolate |
-| Domain             | in list  | _DomainIsolation_                  |       |         |
+| Domain             | in list  | _Domain Isolation_                 |       |         |
 
 {{</details>}}

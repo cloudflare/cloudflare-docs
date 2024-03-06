@@ -16,7 +16,7 @@ By the end of this module, you will be able to:
 - Create your first Gateway DNS policy
 - Build an allow or block list for use in firewall policies
 - Understand the order of precedence within policy builders
-- Add recommended network security policies
+- Add recommended DNS security policies
 - Onboard user devices to Gateway DNS filtering
 - Connect user devices to Gateway DNS filtering with the WARP client
 - Validate your ability to filter DNS queries for your organization
