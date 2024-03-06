@@ -16,7 +16,7 @@ pcx_content_type: how-to
 6. In **Choose your interconnect speed**, select either **1 Gigabit** or **10 Gigabit**.
 7. After choosing a speed, give your interface a name and select **Continue**.
 
-    {{<Aside type="note">}}Contact your implementation manager if you need 100 Gigabit connections.{{</Aside>}}
+    {{<Aside type="note">}}Contact your account team if you need 100 Gigabit connections.{{</Aside>}}
 
 8. Review the options you have chosen, and select **Confirm order**.
 9. Download the Letter of Authorization that Cloudflare created with your settings. You will need this document to contact your data center and provide them the IP addresses for the CNI connection.

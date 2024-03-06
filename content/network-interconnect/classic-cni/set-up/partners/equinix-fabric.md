@@ -10,7 +10,7 @@ meta:
 
 ## Order an Equinix Fabric Connection
 
-After you confirm the locations and speed with you account team, order the Equinix Fabric connections to Cloudflare.
+After you confirm the locations and speed with your account team, order the Equinix Fabric connections to Cloudflare.
 
 1. Go to [Equinix Fabric](https://fabric.equinix.com/)
 2. Under **I want to connect to:**, select **A Service Provider**.

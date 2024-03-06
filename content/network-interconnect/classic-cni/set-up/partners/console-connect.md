@@ -14,4 +14,4 @@ meta:
 4. For **Rate Limit (speed)**, choose your rate limit.
 5. Select **Next**.
 6. Review the pricing information, and when you are done, select **Save Payment**.
-7. Cloudflare will accept the connection and your Account Team will get in touch with next steps for BGP session establishment.
+7. Cloudflare will accept the connection and your account team will get in touch with next steps for BGP session establishment.
