@@ -114,5 +114,3 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 ## Logical operators
 
 {{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}
-
-test

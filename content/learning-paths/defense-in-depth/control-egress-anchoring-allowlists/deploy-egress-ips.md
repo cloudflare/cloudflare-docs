@@ -21,16 +21,16 @@ You should also reserve multiple egress IPs if you have locations that need expl
 
 ## Access allowlisted sources
 
-One of the most common use cases for custom egress policies is to ensure a consistent egress IP for users accessing SaaS applications that may not support SAML, or vendor services that can only use IP-level controls. If given the option (or if your business controls the application), we strongly recommend using Cloudflare Access to move from IP-level authentication to identity-aware authentication that uses continuous evaluation.
+One of the most common use cases for egress policies is to ensure a consistent egress IP for users accessing SaaS applications that may not support SAML (or vendor services that can only use IP-level controls). If given the option -- or if your business controls the application -- Cloudflare strongly recommends using [Access](/cloudflare-one/policies/access/) to move from IP-level authentication to identity-aware authentication that uses continuous evaluation.
 
-In building these policies, we recommend building "baseline" policies that can cover a majority of your use cases without making policy management overly complex. If all of your end-users need to access a series of applications that all require a specific egress IP, you should build a policy explicit to those users (or to all your users) that ensure that all of their traffic egresses using those IPs.
+We recommend building baseline policies that can cover a majority of your use cases without making policy management overly complex. If all of your users need to access a series of applications that all require a specific egress IP, you should build a policy explicit to those users (or to all of your users) to ensure that all of their traffic egresses using those egress IPs.
 
 [screenshot and api example]
 
-## QA, testing, and needs for changing egress location
+## Change user egress location
 
-Customers often have use cases in which specific groups of users may need to change the location from which they egress. We see this frequently with QA teams for applications or web development that need to test resources as though they are accessing from different, predetermined locales. This can be managed ad-hoc via Egress Policy, but most customers prefer to manage this without ongoing changes to the administrative panel and existing policies.
-
-To accommodate this, you can build Virtual Networks that can be used as selectors in Egress Policies, to allow users to change their attached Virtual Network, and subsequently change their Egress IP deterministically.
+You may have use cases in which specific groups of your users may need to change the location from which they egress. Cloudflare observes this frequently with quality assurance (QA) teams for applications or sites that need to test resources as if they are accessing from different, predetermined locales. You can manage this ad-hoc via an egress policy, but most Cloudflare users prefer to manage this without ongoing changes to the administrative panel and existing policies. To accommodate this, you can build virtual networks for use as selectors in egress policies. This will allow your users to change their attached virtual network and subsequently change their egress IP as they choose.
 
 [screenshot of policy and user experience]
+
+For more information, refer to the [tutorial](#).
