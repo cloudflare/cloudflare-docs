@@ -5,8 +5,4 @@ weight: 2
 layout: learning-unit
 ---
 
-{{<Aside type="note">}}
-Only available on Enterprise plans.
-{{</Aside>}}
-
-Docs on egress policies.
+{{<render file="gateway/_egress-policies.md" productFolder="cloudflare-one">}}
