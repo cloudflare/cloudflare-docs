@@ -75,7 +75,7 @@ $ curl --request POST https://api.cloudflare.com/client/v4/tenants/{tenant_id}/c
 
 {{<render file="_ns-set-omission-callout.md">}}
 
-2. Add the account custom nameservers and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt)
+2. Add the account custom nameservers and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3)
 
 3. If the domain or domains that are used for the tenant custom nameservers do not exist within the same account, you must create the `A/AAAA` records on the configured nameserver names (e.g. `ns1.example.com`) at the authoritative DNS provider.
 
