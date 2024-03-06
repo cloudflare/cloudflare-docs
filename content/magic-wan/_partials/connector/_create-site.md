@@ -49,7 +49,7 @@ To add a site:
 5. In **Static address** give your Connector its IP address. You can also enable the following options if they suit your use case:
     - **This is a DHCP server**: If your Connector is a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
     - **This is a DHCP relay**: If your Connector is a [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/).
-6. (Optional) In **Static NAT prefix**, enter an IP address if you plan to enable NAT (network address translation). The IP address you enter here should be the same size of the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
+6. (Optional) In **Static NAT prefix**, enter a CIDR prefix to enable NAT (network address translation). The prefix you enter here should be the same size as the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
 7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnet** to add them:
     - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
     - **Next hop**:  The address of the L3 router to which the Connector should forward packets for this subnet.
