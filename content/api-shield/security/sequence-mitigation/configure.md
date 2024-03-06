@@ -53,6 +53,10 @@ header: Example of a rule object
 }
 ```
 
+This rule enforces that a request to endpoint `0d9bf70c-92e1-4bb3-9411-34a3bcc59003` must come before a request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9`. 
+
+Otherwise, the request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9` is blocked.
+
 ### Fields
 
 |  <div style="width:115px">Field name</div> | Description | Possible Values | Example |
