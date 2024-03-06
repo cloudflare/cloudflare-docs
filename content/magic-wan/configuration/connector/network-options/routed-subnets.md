@@ -50,7 +50,7 @@ Optionally, you can also enable NAT for a subnet by providing a static overlay p
 
 ## Enable NAT for a subnet
 
-Each subnet (directly-attached or routed) must have a unique address space within your Magic WAN. You can re-use address spaces locally by enabling static network address translation (NAT) for a subnet. Subnet NAT is 1:1. To enable it, supply an address prefix the same size as the subnet’s prefix, and the Magic WAN Connector will translate between the two.
+Each subnet (directly-attached or routed) must have a unique address space within your Magic WAN. You can re-use address spaces locally by enabling static network address translation (NAT) for a subnet. Subnet NAT is 1:1. To enable it, supply an address prefix the same size as the subnet's prefix, and the Magic WAN Connector will translate between the two.
 
 For example:
 - **Prefix**: `192.168.100.0/24`
@@ -59,7 +59,7 @@ For example:
 With the example above, outbound traffic from host `192.168.100.13` in the subnet is translated to `10.10.100.13` in the Connector (and vice versa for incoming traffic).
 
 {{<Aside type="note">}}
-Even if NAT is enabled, the local prefix for a subnet must be unique within its LAN. It can, however, be reused on other LANs or other sites. Overlay-facing prefixes — that is, a subnet’s NAT prefix if NAT is enabled, and its local prefix otherwise — must always be unique across your whole Magic WAN.
+Even if NAT is enabled, the local prefix for a subnet must be unique within its LAN. It can, however, be reused on other LANs or other sites. Overlay-facing prefixes — that is, a subnet's NAT prefix if NAT is enabled, and its local prefix otherwise — must always be unique across your whole Magic WAN.
 {{</Aside>}}
 
 ## Create routed subnets
