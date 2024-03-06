@@ -44,9 +44,9 @@ To add a site:
 
 1. In **LAN configuration**, select **Create**.
 2. Enter a descriptive name for your LAN in **Network name**.
-3. **Physical port** $2
+3. **Physical interface** $2
 4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
-5. In **Static addressing** give your Connector its IP address. You can also enable the following options if they suit your use case:
+5. In **Static address** give your Connector its IP address. You can also enable the following options if they suit your use case:
     - **This is a DHCP server**: If your Connector is a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
     - **This is a DHCP relay**: If your Connector is a [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/).
 6. (Optional) In **Static NAT prefix**, enter an IP address if you plan to enable NAT (network address translation). The IP address you enter here should be the same size of the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
