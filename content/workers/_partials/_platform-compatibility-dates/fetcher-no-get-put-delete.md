@@ -11,10 +11,11 @@ enable_flag: "fetcher_no_get_put_delete"
 disable_flag: "fetcher_has_get_put_delete"
 ---
 
-Some objects in the Workers API implement a method `fetch()` which behaves similarly to the global `fetch()` method, but the requests are sent to the destination represented by the object, rather than being routed based on the URL. In particular, [Durable Object](/durable-objects/) stubs and [Service Bindings](/workers/configuration/bindings/about-service-bindings/) both have such `fetch()` methods.
+[Durable Object](/durable-objects/) stubs and [Service Bindings](/workers/configuration/bindings/about-service-bindings/) both implement a `fetch()` method which behaves similarly to the global `fetch()` method, but requests are instead sent to the destination represented by the object, rather than being routed based on the URL.
 
 Historically, API objects that had such a `fetch()` method also had methods `get()`, `put()`, and `delete()`. These methods were thin wrappers around `fetch()` which would perform the corresponding HTTP method and automatically handle writing/reading the request/response bodies as needed.
 
-These methods were thought to be a neat idea but were never actually documented. In retrospect, they don't seem so great anymore. Moreover, they may soon get in the way: we would like for applications to define their own methods on these types, and applications may be surprised if they cannot define `get`, `put`, and `delete` due to conflicting with these helpers.
+These methods were a very early idea from many years ago, but were never actually documented, and therefore rarely (if ever) used. Enabling the `fetcher_no_get_put_delete`, or setting a compatibility date on or after `2024-03-26` disables these methods for your Worker.
 
-Therefore, these methods are being removed. Since they were never documented, it's unlikely anyone relies on them.
+This change paves a future path for you to be able to define your own custom methods using these names. Without this change, you would be unable to define your own `get`, `put`, and `delete` methods, since they would conflict with these built-in helper methods.
+
