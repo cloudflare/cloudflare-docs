@@ -40,7 +40,10 @@
 
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
 /content/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/browser-isolation/ @maxvp @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /content/email-security/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Consumer products
@@ -53,6 +56,7 @@
 /content/cloudflare-for-platforms/ @jason-cf @cloudflare/pcx-technical-writing
 /content/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/fundamentals/ @jason-cf @cloudflare/pcx-technical-writing
+/content/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
 /content/learning-paths/ @kodster28 @cloudflare/pcx-technical-writing
 /content/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
 /content/network-interconnect/ @dcpena @cloudflare/pcx-technical-writing
@@ -66,7 +70,6 @@
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/email-routing/ @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/vectorize/ @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/hyperdrive/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/hyperdrive.yaml @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @Maddy-Cloudflare @cloudflare/pcx-technical-writing
@@ -95,7 +98,7 @@
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @deadlypants1973 @cloudflare/pcx-technical-writing
 
 # DDoS Protection
-/content/ddos-protection @pedrosousa @cloudflare/pcx-technical-writing
+/content/ddos-protection/ @pedrosousa @cloudflare/pcx-technical-writing
 /content/ddos-protection/change-log/ @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
 /data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
 /data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
@@ -107,17 +110,15 @@
 # Magic products
 /content/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-firewall/ @arges @marciocloudflare @cloudflare/pcx-technical-writing
-/content/magic-network/monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Performance products
-/content/analytics/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/argo-smart-routing/ @dcpena @cloudflare/pcx-technical-writing
 /content/automatic-platform-optimization/ @kodster28 @cloudflare/pcx-technical-writing
 /content/cache/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/health-checks/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/load-balancing/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
-/content/logs/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/spectrum/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/speed/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/web3/ @kodster28 @cloudflare/pcx-technical-writing

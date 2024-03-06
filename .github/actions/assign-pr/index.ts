@@ -72,14 +72,16 @@ async function list(
     for (const file of files) {
       const match = codeOwnersUtils.matchFile(file, codeowners);
       for (const owner of match.owners) {
-        assignees.add(owner.replace(/^@/, ""));
+        if (!owner.includes("/")) {
+          assignees.add(owner.replace(/^@/, ""));
+        }
       }
     }
 
     // don't self-assign
     assignees.delete(author);
 
-    if (assignees.size === 1) {
+    if (assignees.size === 0) {
       assignees.add("kodster28")
     }
 
