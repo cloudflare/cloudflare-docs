@@ -68,9 +68,8 @@ With the Workers Vitest integration, you can now set this in `vitest.config.js` 
 filename: vitest.config.js
 highlight: [7-9]
 ---
-export default defineConfig({
+export default defineWorkersConfig({
   test: {
-    pool: "@cloudflare/vitest-pool-workers",
     poolOptions: {
       workers: defineWorkersPoolOptions({
         isolatedStorage: true,

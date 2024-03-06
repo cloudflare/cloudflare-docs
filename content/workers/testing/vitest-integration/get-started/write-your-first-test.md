@@ -38,29 +38,28 @@ The `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.3.0.
 Next, if you don't already have a `vitest.config` file setup, you'll need to create one. In that file, you'll need the following `import` statements:
 
 ```js
-import { defineWorkersPoolOptions } from "@cloudflare/vitest-pool-workers/config";
-import { defineConfig } from "vitest/config";
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 ```
 
-Then, you will add the following within `defineConfig` to define the pool and its options:
+Then, you will add the following within `defineWorkersConfig` to define the pool and its options:
 
 ```js
 ---
 filename: vitest.config.js
 ---
-export default defineConfig({
+export default defineWorkersConfig({
   test: {
-    pool: "@cloudflare/vitest-pool-workers",
     poolOptions: {
       workers: defineWorkersPoolOptions({
-        // to be configured
+        isolatedStorage: true,
+        wrangler: { configPath: "./wrangler.toml" },
       }),
     },
   },
 });
 ```
 
-This tells Vitest which pool you are using (ie. `@cloudflare/vitest-pool-workers`). Next, we will add configuration options via `defineWorkersPoolOptions` to support our tests.
+Next, we will add configuration options via `defineWorkersPoolOptions` to support our tests.
 
 ### Add Configuration Options via Wrangler
 
@@ -69,17 +68,14 @@ You can reference a `wrangler.toml` to leverage its `main` entrypoint, its compa
 ```js
 ---
 filename: vitest.config.js
-highlight: [6-9]
+highlight: [6]
 ---
-export default defineConfig({
+export default defineWorkersConfig({
   test: {
-    pool: "@cloudflare/vitest-pool-workers",
     poolOptions: {
       workers: defineWorkersPoolOptions({
         isolatedStorage: true,
-        wrangler: {
-          configPath: "../wrangler.toml",
-        },
+        wrangler: { configPath: "../wrangler.toml" },
       }),
     },
   },
@@ -103,9 +99,8 @@ For example, to add bindings that will be used in tests, you can add `miniflare`
 filename: vitest.config.js
 highlight: [8-10]
 ---
-export default defineConfig({
+export default defineWorkersConfig({
   test: {
-    pool: "@cloudflare/vitest-pool-workers",
     poolOptions: {
       workers: defineWorkersPoolOptions({
         isolatedStorage: true,

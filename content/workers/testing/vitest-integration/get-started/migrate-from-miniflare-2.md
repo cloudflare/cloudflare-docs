@@ -39,14 +39,12 @@ After that, update your Vitest configuration file to use the pool instead. Most 
 ---
 filename: vitest.config.js
 ---
-+ import { defineWorkersPoolOptions } from "@cloudflare/vitest-pool-workers/config";
-  import { defineConfig } from "vitest/config";
++ import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 
-  export default defineConfig({
+  export default defineWorkersConfig({
     test: {
 -     environment: "miniflare",
 -     environmentOptions: { ... },
-+     pool: "@cloudflare/vitest-pool-workers",
 +     poolOptions: {
 +       workers: defineWorkersPoolOptions({
 +         miniflare: { ... },
@@ -117,12 +115,10 @@ If you were previously using isolated storage, enable the `isolatedStorage` opti
 ---
 filename: vitest.config.js
 ---
-  import { defineWorkersPoolOptions } from "@cloudflare/vitest-pool-workers/config";
-  import { defineConfig } from "vitest/config";
+  import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 
-  export default defineConfig({
+  export default defineWorkersConfig({
     test: {
-      pool: "@cloudflare/vitest-pool-workers",
       poolOptions: {
         workers: defineWorkersPoolOptions({
 +         isolatedStorage: true,
