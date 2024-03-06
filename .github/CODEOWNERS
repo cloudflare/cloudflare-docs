@@ -17,7 +17,7 @@
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @elithrar @rita3ko @pdwittig @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers-ai/ @elithrar @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @cloudflare/pcx-technical-writing
 /content/workers-ai/tutorials @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers-ai/static @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing

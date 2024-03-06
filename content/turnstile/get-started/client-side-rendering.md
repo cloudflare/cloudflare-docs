@@ -223,7 +223,7 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information. |
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
-| `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge expires. |
+| `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge presents an interactive challenge but was not solved within a given time. A callback will reset the widget to allow a visitor to solve the challenge again. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
 | `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |

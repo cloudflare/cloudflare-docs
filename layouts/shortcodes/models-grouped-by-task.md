@@ -5,8 +5,14 @@
 
 {{ $firstPage.Params.model.task.description }}
 
-| Model | Model ID | Description |
-| ----- | -------- | ----------- |
+<style>
+table th:first-of-type {
+    width: 10em;
+}
+</style>
+
+| Model | Description |
+| ----- | ----------- |
 
 {{- $pages := .Pages -}}
 {{- range sort $pages "Params.weight" "desc" -}}
@@ -17,6 +23,6 @@
 {{- $betaFlag = true }}
 {{- end }}
 {{- end }}
-| [{{ $params.model_display_name }}{{ if $betaFlag }} <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>{{ end }}]({{ .RelPermalink }}) | `{{$params.model.name}}` | {{ $params.model.description }} |
+| [{{ $params.model_display_name }}{{ if $betaFlag }} <div class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</div>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
 {{- end -}}
 {{- end -}}
