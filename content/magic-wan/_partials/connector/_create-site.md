@@ -55,7 +55,7 @@ To add a site:
     - **Next hop**:  The address of the L3 router to which the Connector should forward packets for this subnet.
     - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, you need to have an "external" prefix for the overlay-facing side of the NAT to use.
 
-    Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
+        Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
 
 8. Select **Save**.
 9. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
