@@ -52,7 +52,6 @@ When setting up your `d1-tutorial` Worker, answer the questions as below:
 - Your directory has been titled `d1-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
-- Select `yes` to using Git.
 - Select `no` to deploying.
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
@@ -121,9 +120,9 @@ database_id = "<unique-ID-for-your-database>"
 
 Specifically:
 
-- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
-- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-databases/query-databases/) is exposed on this binding.
+- The value (string) you set for `binding` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+- The `binding` value must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+- Your binding is available in your Worker at `env.DB` and the D1 [client API](/d1/build-databases/query-databases/) is exposed on this binding.
 
 {{<Aside type="note">}}
 
