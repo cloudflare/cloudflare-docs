@@ -199,6 +199,24 @@ In your Google Analytics 4 action, select **Add field** > **Add custom field...*
 {{</faq-answer>}}
 {{</faq-item>}}
 
+{{<faq-item>}}
+{{<faq-question level=4 text="How can I enable Google Consent Mode signals?" >}}
+
+{{<faq-answer>}}
+
+Zaraz supports Google Consent Mode for both Google Analytics and Google Ads. Go to your tool page and select **Settings**. Select **Add field**, and select **Consent Mode** from the drop-down menu. Then, select **Confirm**.
+
+The value for Consent Mode must adhere to Google's defined format, which is a four-character string starting with `G1`, followed by two characters indicating consent status for Marketing and Analytics. `1` indicates consent, `0` indicates no consent, and `-` indicates no consent was required. For example, setting the value to `G111` means the user has granted consent for both Marketing and Analytics, `G101` means consent for Analytics only, and `G10-` means no consent for Marketing but no required consent for Analytics.
+
+Since the value for Consent Mode may change per user or session, it is recommended to dynamically set this value using `zaraz.set` in your website code. For instance, use `zaraz.set("google_consent", "G100")` on page load, and `zaraz.set("google_consent", "G111")` after the user granted consent for Marketing and Analytics. In the **Consent Mode** field, select the **+** symbol, choose **Event Property**, and type `google_consent` as the property name. Zaraz will then use the latest value of the `google_consent` Event Property as the Consent Mode string.
+
+Note that you can always use Google Analytics without cookies by selecting **Permissions** and disabling **Access client key-value store**.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+
+
 ### Facebook Pixel
 
 {{<faq-item>}}
@@ -207,6 +225,29 @@ In your Google Analytics 4 action, select **Add field** > **Add custom field...*
 {{<faq-answer>}}
 
 It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [debug mode](/zaraz/web-api/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+### Google Ads
+
+{{<faq-item>}}
+{{<faq-question level=4 text="What is the expected format for Conversion ID and Conversion Label" >}}
+
+{{<faq-answer>}}
+
+Conversion ID and Conversion Label are usually provided by Google Ads as a "gtag script". Here's an example for a $1 USD conversion:
+
+```js
+gtag('event', 'conversion', {
+   'send_to': 'AW-123456789/AbC-D_efG-h12_34-567',
+   'value': 1.0,
+   'currency': 'USD'
+ });
+```
+
+The Conversion ID is the first part of `send_to` parameter, without the `AW-`. In the above example it would be `123456789`. The Conversion Label is the second part of the `send_to` parameter, therefore `AbC-D_efG-h12_34-567` in the above example. When setting up your Google Ads conversions through Zaraz, take the information from the original scripts you were asked to implement.
+
 
 {{</faq-answer>}}
 {{</faq-item>}}

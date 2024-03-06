@@ -44,7 +44,7 @@ Some Cloudflare Developer storage products include:
 * [Durable Objects](/durable-objects/): Globally distributed coordination API with strongly consistent storage.
 * [D1](/d1/): Cloudflare’s native serverless database.
 
-To understand which storage option is right for you, refer to the [Storage options guide](/workers/platform/storage-options/).
+To understand which storage option is right for you, refer to the [Choose a data or storage product](/workers/platform/storage-options/).
 
 To explore possible database integrations, refer to [Databases](/workers/databases/) in the Workers documentation.
 

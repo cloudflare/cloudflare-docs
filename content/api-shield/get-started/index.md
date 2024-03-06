@@ -33,7 +33,7 @@ After setting up session identifiers and allowing some time for Cloudflare to le
 
 Schema Validation protects your APIs by ensuring only requests matching your {{<glossary-tooltip term_id="API schema">}}API schema{{</glossary-tooltip>}} are allowed to communicate with your origin.
 
-While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/reference/classic-schema-validation/). 
+While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/security/schema-validation/). 
 
 {{<Aside type="note">}}
 It is recommended to start with Schema Validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
@@ -81,17 +81,19 @@ We recommend proceeding with [additional configurations](/api-shield/get-started
 
 You can observe Cloudflare suggested rate limits in Endpoint Management for endpoints using session identifiers. Unlike many security tools, these recommended rate limits are per-endpoint and per-session, not site-wide and not based on IP address. When creating a rule, it will be based on only traffic to that specific endpoint from unique visitors during their session. This feature allows you to be very specific and targeted with your rate limit enforcement, both lowering abusive traffic and false positives due to broadly scoped rules. 
 
-## Export learned schema from Endpoint Management
+## Import a learned schema to Schema Validation
 
-Cloudflare learns schema parameters via traffic inspection for all endpoints stored in Endpoint Management. You can export OpenAPI schemas in OpenAPI v3.0.0 format by hostname. 
+Cloudflare learns schema parameters via traffic inspection for all endpoints stored in Endpoint Management. You can export OpenAPI schemas in OpenAPI v3.0.0 format by hostname.
 
-Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield’s rate limit threshold recommendations.
+By importing the learned schema, you can protect API endpoints found via API Discovery that were never previously possible to protect due to not knowing about their presence or schema.
 
-### Import learned schema to Schema Validation
+You can import the learned schema of an entire hostname using the [Cloudflare dashboard](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname). Alternatively, you can [apply learned schemas to individual endpoints](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-a-single-endpoint). Before applying the learned schema, Cloudflare suggests exporting the schema to review what will validate your traffic.
 
-By importing the learned schema, you can protect API endpoints found via API Discovery. You can protect API endpoints that were never previously possible to protect due to not knowing about their presence or schema.
+## Export a learned schema from Endpoint Management
 
-You can import your learned schemas to Schema Validation 2 using the [API](/api-shield/security/schema-validation/) or the classic version of Schema Validation using the [Cloudflare dashboard](/api-shield/reference/classic-schema-validation/). Schema Validation 2 focuses on giving you granular control and lets you set mitigation actions for each endpoint individually. 
+Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield’s rate limit threshold recommendations. 
+
+You can export your learned schemas in the [Cloudflare dashboard](/api-shield/management-and-monitoring/#export-a-schema) or via the [API](/api/operations/api-shield-endpoint-management-retrieve-operations-and-features-as-open-api-schemas).
 
 ## View and configure Sequence Analytics
 
