@@ -41,7 +41,7 @@ header: Example of a rule object
 {
     "id": "d4909253-390f-4956-89fd-92a5b0cd86d8",
     "title": "<RULE_TITLE>",
-    "kind": "block",
+    "kind": "allow",
     "action": "block",
     "sequence": [
      "0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
