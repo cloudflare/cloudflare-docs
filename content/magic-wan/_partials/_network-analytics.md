@@ -6,8 +6,6 @@ _build:
 inputParameters: productName
 ---
 
-# GRE and IPsec tunnel analytics
-
 [Network Analytics](/analytics/network-analytics/) gives you real-time visibility into $1 traffic entering and leaving Cloudflare’s network through {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. Start by inspecting information from the source and destination tunnel panels in Network Analytics to learn more about your data.
 
 Source / destination tunnel data in Network Analytics includes:

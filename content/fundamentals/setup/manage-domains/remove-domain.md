@@ -27,7 +27,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
 ### Actions within Cloudflare
 
-* [Cancel active add-on subscriptions]/fundamentals/subscriptions-and-billing/cancel-subscription/.
+* [Cancel active add-on subscriptions](/fundamentals/subscriptions-and-billing/cancel-subscription/).
 
 * [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#optional---delete-a-job)
 
