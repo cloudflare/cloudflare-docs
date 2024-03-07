@@ -1,11 +1,11 @@
 ---
-title: Migrate legacy applications
+title: Migrate applications
 pcx_content_type: overview
 weight: 5
 layout: learning-module
 ---
 
-# Migrate legacy applications
+# Migrate applications
 
 Publish internal applications that users currently access from a traditional corporate network.
 
