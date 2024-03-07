@@ -31,7 +31,7 @@ Check your settings at your authoritative DNS provider to make sure that:
 As mentioned in [Certificate authorities](/ssl/reference/certificate-authorities/), specific CAs may have their own limitations. If you use Let’s Encrypt and find the following error, it means you hit their [duplicate certificate limit](https://letsencrypt.org/docs/duplicate-certificate-limit/).
 
 ```txt
-too many certificates (5) already issued for this exact set of domains in the last 168 hours
+The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority.
 ```
 
 A certificate is considered a duplicate of an earlier certificate if it contains the exact same set of hostnames.
