@@ -200,7 +200,7 @@
 # CNI - Cloudflare Network Interconnect
 /network-interconnect/about/interconnect-types/ /network-interconnect/about/ 301
 /network-interconnect/about/route-leak-detection/ /network-interconnect/about/ 301
-/network-interconnect/about/argo-for-packets/ /network-interconnect/about/ 301
+/network-interconnect/about/argo-for-packets/ /argo-smart-routing/argo-for-packets/ 301
 /network-interconnect/about/bfd/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/ /network-interconnect/classic-cni/set-up/ 301
 /network-interconnect/set-up-cni/scope-config/ /network-interconnect/classic-cni/set-up/scope-config/ 301
