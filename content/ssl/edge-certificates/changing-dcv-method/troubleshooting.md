@@ -28,12 +28,8 @@ Check your settings at your authoritative DNS provider to make sure that:
 
 ## Rate limiting
 
-As mentioned in [Certificate authorities](/ssl/reference/certificate-authorities/), specific CAs may have their own limitations. If you use Let’s Encrypt and find the following error, it means you hit their [duplicate certificate limit](https://letsencrypt.org/docs/duplicate-certificate-limit/).
+{{<render file="_error-rate-limiting.md">}}
 
-```txt
-The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority.
-```
+## Other errors
 
-A certificate is considered a duplicate of an earlier certificate if it contains the exact same set of hostnames.
-
-In this case, you can either wait for the rate limit window to end or choose a different certificate authority.
+Refer to [Certificate issuance errors](/ssl/edge-certificates/troubleshooting/certificate-issuance-errors/) for a list of error messages displayed when a certificate issuance fails and the respective troubleshooting steps.
