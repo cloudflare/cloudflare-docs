@@ -6,9 +6,9 @@ weight: 7
 
 # URL Scanner
 
-In order to better understand Internet usage around the world, you can use Cloudflare's URL Scanner. With this too, you have the ability to investigate deeper into the details of a domain, IP, URL, or ASN. It is available in the Cloudflare Dashboard in Security Center, [Cloudflare Radar](https://radar.cloudflare.com/scan) and our [API](/api/operations/urlscanner-search-scans).
+To better understand Internet usage around the world, use Cloudflare's URL Scanner. With Cloudflare's URL Scanner, you have the ability to investigate the details of a domain, IP, URL, or ASN. Cloudflare's URL Scanner is available in the Security Center of the Cloudflare dashboard, [Cloudflare Radar](https://radar.cloudflare.com/scan) and the Cloudflare [API](/api/operations/urlscanner-search-scans).
 
-## Using the API
+## Use the API
 
 To make your first URL scan using the API, you must obtain a URL Scanner specific [API token](/fundamentals/api/get-started/create-token/). Create a Custom Token with _Account_ > _URL Scanner_ in the **Permissions** group, and select _Edit_ as the access level.
 

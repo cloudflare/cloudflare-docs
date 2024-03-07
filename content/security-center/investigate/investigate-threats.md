@@ -20,11 +20,11 @@ Search methods are also available through the [API](/security-center/intel-apis/
 
 An [IP address](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/) is a unique address that identifies a server. It stands for [Internet Protocol](https://www.cloudflare.com/learning/network-layer/internet-protocol/), which is the set of rules that allows servers to communicate with each other. 
 
-IP address search allows you to search both [IPv4 and IPv6](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/) addresses and retrieve relevant information such as their pointer records, AS numbers and passive DNS records. 
+IP address search allows you to search both [IPv4 and IPv6](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/) addresses and retrieve relevant information such as their pointer records, AS numbers and passive DNS records.
 
 ## Domain
 
-A [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is a string of text that maps to an IP address. They are used to help us remember where websites are hosted. Domain names are purchased through [Registrars](/registrar/) and can be acquired easily by anyone. 
+A [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is a string of text that maps to an IP address. Domain names are used to help people remember where websites are hosted. Domain names are purchased through [registrars](/registrar/) and can be acquired easily by anyone. 
 
 By searching for a domain name, Cloudflare will provide an overview with the domain's category and IP addresses it currently resolves to.
 
@@ -34,11 +34,11 @@ A domain can have multiple categories. Cloudflare displays both the parent categ
 
 {{</Aside>}}
 
-As part of the domain search results, we show the WHOIS details and a history of its category changes over time. 
+As part of the domain search results, Cloudflare show the WHOIS details and a history of its category changes over time. 
 
 ## AS Number
 
-An [AS number](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) is a group of IP addresses belonging and controlled by a single organization. The entire group of networks have a single unified routing policy. The [Internet Assigned Numbers Authority](https://www.iana.org/) (IANA) is the organization responsible for managing the assignment and distribution of AS numbers. The AS number's routing policies are used by [BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) which is how Cloudflare's [anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works. 
+An [AS number](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) is a group of IP addresses belonging to and controlled by a single organization. The entire group of networks have a single unified routing policy. The [Internet Assigned Numbers Authority](https://www.iana.org/) (IANA) is the organization responsible for managing the assignment and distribution of AS numbers. The AS number's routing policies are used by [BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) which is how Cloudflare's [anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works. 
 
 By searching for an AS number, Cloudflare will return registration data such as its country, description and type. It will also display data such as domain count, top 10 domains and subnets. 
 

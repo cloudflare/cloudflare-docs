@@ -7,7 +7,7 @@ meta:
 
 # Scan limits
 
-URL scans are limited by search history, Public and Unlisted visibility and requests per second across different Cloudflare plans. 
+URL scans are limited by search history, Public and Unlisted visibility, and requests per second across different Cloudflare plans. 
 
 {{<table-wrap>}}
 
