@@ -26,7 +26,7 @@ IP address search allows you to search both [IPv4 and IPv6](https://www.cloudfla
 
 A [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is a string of text that maps to an IP address. Domain names are used to help people remember where websites are hosted. Domain names are purchased through [registrars](/registrar/) and can be acquired easily by anyone. 
 
-By searching for a domain name, Cloudflare will provide an overview with the domain's category and IP addresses it currently resolves to.
+When you search for a domain name, Cloudlare will provide an overview of the domain's category and IP addresses it currently resolves to.
 
 {{<Aside>}}
 
@@ -40,13 +40,13 @@ As part of the domain search results, Cloudflare show the WHOIS details and a hi
 
 An [AS number](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) is a group of IP addresses belonging to and controlled by a single organization. The entire group of networks have a single unified routing policy. The [Internet Assigned Numbers Authority](https://www.iana.org/) (IANA) is the organization responsible for managing the assignment and distribution of AS numbers. The AS number's routing policies are used by [BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) which is how Cloudflare's [anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works. 
 
-By searching for an AS number, Cloudflare will return registration data such as its country, description and type. It will also display data such as domain count, top 10 domains and subnets. 
+When you search for an AS number, Cloudflare will return registration data such as its country, description and type. It will also display data such as domain count, top 10 domains and subnets. 
 
 With sufficient data, AS number search results will also return the geographical distribution of traffic in its network, application level attacks and network level attacks, each broken down by Cloudflare mitigation techniques and network protocols, respectively. 
 
 ## URL
 
-By searching for a URL, we will provide a list of recent scan reports for that specific URL, limited to the past 30 days. You can view a previously generated report or scan again to generate a new one.
+When you search for a URL, Cloudflare will provide a list of recent scan reports for that specific URL, limited to the past 30 days. You can view previously generated reports or scan again to generate a new report.
 
 Different Cloudflare plans will have different [scan limitations](/security-center/investigate/scan-limits/).
 
@@ -58,4 +58,4 @@ We recommend choosing `Unlisted` if you are scanning infrastructure that is not 
 
 ### Filters
 
-While viewing the most recent scans, you have the ability to filter scan reports initiated from your Cloudflare account, `All account scans`, or `All global scans`, which includes all `Public` scans.
+While viewing the most recent scans, you can use the filtering options. Selecting `All account scans` will display both `Unlisted` or `Public` scans initiated from your Cloudflare account. However, by selecting `All global scans`, only `Public` scans are displayed.
