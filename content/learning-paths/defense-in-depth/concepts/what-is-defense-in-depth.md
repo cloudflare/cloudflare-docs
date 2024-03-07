@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-Learn concepts related to defense-in-depth.
+Learn about concepts related to defense-in-depth.
 
 ## What is recursive DNS?
 

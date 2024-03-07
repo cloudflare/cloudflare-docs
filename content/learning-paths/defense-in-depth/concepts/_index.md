@@ -13,5 +13,5 @@ Learn the core concepts of using Cloudflare Zero Trust functionality to provide 
 
 By the end of this module, you will be able to:
 
-- Understand what Cloudflare Zero Trust products are available.
-- How Cloudflare implements a defense-in-depth approach to security.
+- Understand what products and features Cloudflare offers.
+- Describe how Cloudflare implements a defense-in-depth approach to security.
