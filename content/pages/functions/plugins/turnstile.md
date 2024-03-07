@@ -37,8 +37,7 @@ export const onRequestPost = [
         (async (context) => {
           // Request has been validated as coming from a human
           const formData = await context.request.formData()
-      // Additional solve metadata data is available at context.data.turnstile
-          
+          // Additional solve metadata data is available at context.data.turnstile
           return new Response(`Successfully verified! ${JSON.stringify(context.data.turnstile)}`)
         })
 ];
