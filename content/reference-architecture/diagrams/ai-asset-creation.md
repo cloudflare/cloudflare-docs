@@ -1,13 +1,13 @@
 ---
 title: >
-  AI: Retrieval Augmented Generation (RAG)
+  AI: Content-based asset creation
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
-  title: "Reference Architecture Diagram: Retrieval Augmented Generation (RAG)"
+  title: "Reference Architecture Diagram: Content-based asset creation"
 ---
 
-# Retrieval Augmented Generation (RAG) Architecture
+# Content-based asset creation
 
 ## Introduction
 
