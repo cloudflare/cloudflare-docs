@@ -60,7 +60,7 @@ Additionally, multiple queues can be bound to a single Worker. That single Worke
 
 ### Content types
 
-Messages published to a queue can be published in different formats, depending on what interoperability is needed with your consumer. The default content type is `json`, which means that any object that can be passed to `JSON.stringify()` will be accepted. 
+Messages published to a queue can be published in different formats, depending on what interoperability is needed with your consumer. The default content type is `json`, which means that any object that can be passed to `JSON.stringify()` will be accepted.
 
 To explicitly set the content type or specify an alternative content type, pass the `contentType` option to the `send()` method of your queue:
 
@@ -87,13 +87,13 @@ export default {
 };
 ```
 
-To only accept simple strings when writing to a queue, set `{ contentType: "string" }` instead:
+To only accept simple strings when writing to a queue, set `{ contentType: "text" }` instead:
 
 ```ts
     try {
       // This will throw an exception (error) if you write to pass a non-string to the queue, such as a
       // native JavaScript object or ArrayBuffer.
-      await env.MY_FIRST_QUEUE.send("hello there", { contentType: "string" }); // explicitly set 'string'
+      await env.MY_FIRST_QUEUE.send("hello there", { contentType: "text" }); // explicitly set 'text'
     } catch (e) {
       console.log(e)
       return Response.json({"msg": e}, { status: 500 })

@@ -5,8 +5,8 @@ _build:
   list: never
 
 name: "Queues send messages in `JSON` format"
-sort_date: "2024-03-04"
-enable_date: "2024-03-04"
+sort_date: "2024-03-18"
+enable_date: "2024-03-18"
 enable_flag: "queues_json_messages"
 disable_flag: "no_queues_json_messages"
 ---
