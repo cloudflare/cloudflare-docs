@@ -78,12 +78,12 @@ async function list(
       }
     }
 
-    // don't self-assign
-    assignees.delete(author);
-
     if (assignees.size === 0) {
       assignees.add("kodster28")
     }
+
+    // don't self-assign
+    assignees.delete(author);
 
     try {
       await client.rest.issues.addAssignees({
