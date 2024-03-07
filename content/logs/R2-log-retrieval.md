@@ -8,6 +8,10 @@ weight: 117
 
 Logs Engine gives you the ability to store your logs in R2 and query them directly.
 
+{{<Aside type="note">}}
+Logs Engine is going to be replaced by Log Explorer. For further details, consult the [Log Explorer](/logs/log-explorer/) documentation and to request access, complete the [sign-up form](https://cloudflare.com/lp/log-explorer/).
+{{</Aside>}}
+
 ## Store logs in R2
 
 - Set up a [Logpush to R2](/logs/get-started/enable-destinations/r2/) job.
