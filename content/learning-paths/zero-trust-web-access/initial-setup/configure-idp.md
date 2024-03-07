@@ -5,5 +5,4 @@ weight: 5
 layout: learning-unit
 ---
 
-Placeholder
 {{<render file="zero-trust/_configure-idp.md">}}

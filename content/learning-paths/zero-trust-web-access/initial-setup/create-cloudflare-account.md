@@ -5,5 +5,4 @@ weight: 2
 layout: learning-unit
 ---
 
-Placeholder
-{{<render file="zero-trust/_create-cloudflare-account.md">}}
+{{<render file="_create-cloudflare-account.md">}}

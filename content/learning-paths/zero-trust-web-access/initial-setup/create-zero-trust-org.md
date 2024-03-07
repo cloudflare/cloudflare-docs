@@ -5,5 +5,4 @@ weight: 4
 layout: learning-unit
 ---
 
-(Placeholder)
 {{<render file="zero-trust/_create-zero-trust-org.md">}}
