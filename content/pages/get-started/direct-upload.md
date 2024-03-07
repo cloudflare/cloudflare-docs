@@ -132,7 +132,21 @@ After you have your project created, select **Create a new deployment** to begin
 
 {{</table-wrap>}}
 
+
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
+
+{{<Aside type="warning">}}
+
+Projects configured with [Direct Upload](/pages/get-started/direct-upload/) currently cannot have their production branch changed through the Cloudflare dashboard, however this can be changed using the [Update project](/api/operations/pages-project-update-project) API endpoint:
+
+```sh
+$ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUNT_IDENTIFIER_HERE>/pages/projects/<PROJECT_NAME> \
+ --header 'Content-Type: application/json' \
+ --header 'Authorization: Bearer <API_TOKEN>' \
+ --data '{ "production_branch": "<PROD_BRANCH_NAME>" }'
+```
+
+{{</Aside>}}
 
 ### Functions
 
