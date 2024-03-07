@@ -7,11 +7,10 @@ layout: learning-module
 
 # Terraform automation
 
-Publish apps with Terraform
+Integrate Cloudflare Access into your private application development pipeline.
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
--
-
+- Publish internal applications to Cloudflare using Terraform.
