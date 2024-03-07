@@ -228,7 +228,7 @@ You can combine multiple features of Zaraz to effectively disable Consent Manage
 ```html
 <script>
 function handleZarazConsentAPIReady() {
-  if ({{system.device.location.isEUCountry}} === 1) {
+  if (eval({{ system.device.location.isEUCountry }})) {
     zaraz.consent.modal = true
   } else {
     zaraz.consent.setAll(true)
