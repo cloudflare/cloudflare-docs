@@ -6,7 +6,9 @@ weight: 2
 
 # Advanced nameservers
 
-TBD >> Might make sense to change title and structure
+Advanced nameservers included with Foundation DNS offer improved resiliency and more consistent nameserver assignment.
+
+Consider the sections below for more details and refer to [Set up advanced nameservers](/dns/foundation-dns/setup/) to learn how to enable this feature.
 
 ## Anycast network groups
 

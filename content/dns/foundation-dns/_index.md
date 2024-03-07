@@ -15,13 +15,13 @@ With Foundation DNS, you get access to increased reliability, security, and insi
     * Reduced exposure to incidents or software regression
     * More consistent nameserver assignment
 * DNSSEC keys unique to your account
-* GraphQL DNS analytics
+* [GraphQL DNS analytics](/dns/foundation-dns/graphql-analytics/)
 
 ## Availability
 
 Foundation DNS is only available to Enterprise plans.
 
-Depending on your account settings or specific options you made when onboarding a zone, advanced nameservers may not be enabled. Refer to [Setup TBD](/dns/foundation-dns/setup/).
+Depending on your account settings or specific options you made when onboarding a zone, advanced nameservers may not be enabled. Refer to [Set up advanced nameservers](/dns/foundation-dns/setup/) for details.
 
 ## Related resources
 

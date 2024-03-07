@@ -41,6 +41,6 @@ To select advanced namerserver as default:
 2. Go to **Manage Account** > **Configurations** > **DNS Settings**
 3. Select **Configure defaults**
 4. For **Nameserver assignment method** choose **Cloudflare advanced nameservers**
-5. Select (TBD)**Save** to confirm.
+5. Select **Save** to confirm.
 
 All new zones added to your account will be automatically assigned advanced nameservers. This can be changed later, for each zone, from **DNS** > **Settings**.
