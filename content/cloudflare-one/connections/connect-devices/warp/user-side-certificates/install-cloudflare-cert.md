@@ -275,7 +275,9 @@ Some applications require the use of a publicly trusted certificate — they do 
 
 #### Chrome
 
-In macOS and Windows, [Chrome uses the operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows). In other operating systems, such as Linux and ChromeOS, you may have to install the Cloudflare certificate to your browser manually.
+Versions of Chrome before Chrome 113 use the [operating system root store](https://support.google.com/chrome/answer/95617?visit_id=638297158670039236-3119581239&p=root_store&rd=1#zippy=%2Cmanage-device-certificates-on-mac-windows) on macOS and Windows. Chrome 113 and newer on macOS and Windows -- and all versions on Linux and ChromeOS -- use the [Chrome internal trust store](https://www.chromium.org/Home/chromium-security/root-ca-policy/#introduction).
+
+To install the Cloudflare certificate to Chrome manually:
 
 1. Download the [Cloudflare certificate](/cloudflare-one/static/Cloudflare_CA.pem) in `.pem` format.
 2. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
@@ -299,13 +301,13 @@ The command to install the certificate with Python on Windows automatically incl
 
 1. Download the Cloudflare root certificate:
 
-   ```bash
-   curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
+   ```powershell
+   curl.exe -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.crt
    ```
 
 2. To update the bundle to include the Cloudflare certificate, run the following command:
 
-   ```bash
+   ```powershell
    gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
    ```
 
@@ -352,8 +354,8 @@ The command to install the certificate with Python on Windows automatically incl
 
 2. Run the following command:
 
-```sh
-$ git config -l
+```powershell
+git config -l
 ```
 
 This command will output:
@@ -380,7 +382,7 @@ This command will output:
 
 3. The `http.sslcainfo` defines the CA Certificate store. To append the Cloudflare certificate to the CA bundle, update `http.sslcainfo`.
 
-```git
+```powershell
 gc .\Cloudflare_CA.pem | ac $(git config --get http.sslcainfo)
 ```
 
@@ -478,20 +480,20 @@ $ defaults read /Library/Preferences/com.google.drivefs.settings
 2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
 3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
 
-    ```sh
-    $ cat ~\Downloads\Cloudflare_CA.pem >> path\to\roots.pem
+    ```powershell
+    cat ~\Downloads\Cloudflare_CA.pem >> path\to\roots.pem
     ```
 
 4. Update the Google Drive registry key.
 
-   ```sh
-   $ reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
+   ```powershell
+   reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
    ```
 
 You can verify the update with the following command.
 
-```sh
-$ reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
+```powershell
+reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
 ```
 
 {{</details>}}
@@ -576,13 +578,13 @@ To install the Cloudflare root certificate on Eclipse IDE for Java Developers, y
 
 1. In a terminal, add the `java.home` value you copied as an environment variable.
 
-```bash
+```powershell
 set JAVA_HOME="\path\to\java.home"
 ```
 
 2. Run `keytool` to install and trust the Cloudflare certificate.
 
-```bash
+```powershell
 "%JAVA_HOME%\bin\keytool.exe" -import -file "%UserProfile%\Downloads\Cloudflare_CA.crt" -alias CloudflareRootCA -keystore "%JAVA_HOME%\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
 ```
 
@@ -626,19 +628,19 @@ To trust the Cloudflare root certificate in RubyGems, follow the procedure for y
 1. Install [OpenSSL for Windows](https://slproweb.com/products/Win32OpenSSL.html).
 2. In a terminal, format the Cloudflare certificate for Ruby.
 
-   ```bash
+   ```powershell
    openssl x509 -inform DER -in %UserProfile%\Downloads\Cloudflare_CA.pem -out ruby-root-ca.crt
    ```
 
 3. Add your RubyGems directory as an environment variable.
 
-   ```bash
+   ```powershell
    set RUBY_DIR=gem which rubygems
    ```
 
 4. Copy the Cloudflare certificate to your RubyGems certificate store.
 
-    ```bash
+    ```powershell
     copy %UserProfile%\Downloads\ruby-root-ca.crt %RUBY_DIR%\ssl_cert\rubygems.org
     ```
 

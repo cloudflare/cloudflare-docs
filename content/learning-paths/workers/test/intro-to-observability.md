@@ -17,7 +17,7 @@ Refer to [Local development and testing](/workers/observability/local-developmen
 
 ### Logs
 
-Read [Log from Workers](/workers/observability/log-from-workers/) to learn how to debug your Worker by accessing logs and exceptions through the Cloudflare dashboard or `wrangler tail`.
+Read [Log from Workers](/workers/observability/logging/real-time-logs) to learn how to debug your Worker by accessing logs and exceptions through the Cloudflare dashboard or `wrangler tail`.
 
 ### Related resources
 

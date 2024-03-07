@@ -95,20 +95,17 @@ To address these challenges, origins can be upgraded with more compute resources
 
 Figure 1 shows how load might be distributed without a load balancer:
 
-![Origin load is not distributed evenly without a load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-1.png)
-_Figure 1: Origin performance can suffer without a load balancer_
+![Origin load is not distributed evenly without a load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-1.png "Figure 1: Origin performance can suffer without a load balancer")
 
 Load balancers allow organizations to host several origins and portion out traffic between them, ensuring no single server gets overwhelmed. The load balancer handles all incoming requests and forwards them to the appropriate server. The client doesn’t need any knowledge of server availability or load — it just needs to send the request to the load balancer and the load balancer handles the rest. Figure 2 shows how a load balancer can evenly distribute traffic from users across a set of origins.
 
-![A load balancer helps evenly distribute requests across multiple origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-2.png)
-_Figure 2: Load balancers help distribute load across origins_
+![A load balancer helps evenly distribute requests across multiple origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-2.png "Figure 2: Load balancers help distribute load across origins")
 
 Another performance-related issue has to do with the distance between a client and an origin. Whether due to the mere fact of traveling farther, or having to make more network hops, a request that travels a longer distance generally has a higher round-trip time (RTT).
 
 RTT becomes important at scale. For example, if a client and server are both located in the United States, it would be reasonable to expect a RTT of 25ms. If the client has 20 requests it needs responses to, the total time required to handle them sequentially (not including compute time) would be 500ms (20 x 25ms). And if the same client connected from the APAC region the RTT might be upwards of 150ms, resulting in an undesirable total loading time of 3000ms (20 x 150ms). (Certainly, request streaming enhancements in HTTP/2 and HTTP/3 might change this math — but in websites with dynamic or interactive content, where a response’s information is used to generate additional requests, the example still holds in general.) Figure 3 illustrates how this happens.
 
-![Latency compounds based on the number of requests](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-3.png)
-_Figure 3: How latency can compound and affect the total time it takes to load a resource_
+![Latency compounds based on the number of requests](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-3.png "Figure 3: How latency can compound and affect the total time it takes to load a resource")
 
 In the same way a load balancer can pass traffic to a less-busy server, it can also pass traffic to a geographically closer server, resulting in a more responsive experience for the client. Specifically, the load balancer performs a lookup of the IP address that sent the request, determines its location, and selects the closest or most region-appropriate server to send it to. (This is similar to functionality provided by DNS solutions like GeoDNS.
 
@@ -143,8 +140,7 @@ A Global Traffic Manager is responsible for routing requests, generally from the
 
 Figure 4 shows how a GTM load balancer is used to select a data center based on the client location or region.
 
-![Global traffic management steers traffic to the proper region or data center](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-4.png)
-_Figure 4: Global traffic management load balancer overview_
+![Global traffic management steers traffic to the proper region or data center](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-4.png "Figure 4: Global traffic management load balancer overview")
 
 Global Traffic Managers can also proxy traffic and perform a variety of inspections, including reading/changing/deleting headers in HTTP requests and modifying URLs based on region or geographic location. GTM functionality is best implemented by cloud-based load balancers (like Cloudflare) since the goal is to steer traffic from anywhere in the world. Hardware load balancers exist in a single physical location, which means the further traffic originates from the load balancer, the slower the end-user experience. A cloud-based load balancer can run in many different geographic locations, helping it provide a performant solution for DNS-only, layer 4, and layer 7 contexts.
 
@@ -153,8 +149,7 @@ Global Traffic Managers can also proxy traffic and perform a variety of inspecti
 
 A Local Traffic Manager steers traffic within a data center or geographic location. A LTM can be responsible for load balancing, SSL/TLS offloading, content switching, and other application delivery functions. LTM ensures efficient distribution of client requests across multiple origins to improve performance and ensure high availability. LTM load balancers are usually placed inside private networks and are used to load balance publicly or privately accessible resources. In Figure 5 below, the GTM load balancer has selected the Europe data center to direct a request to the Europe data center’s LTM load balancer which will then steer it to the appropriate origin.
 
-![Local traffic management is responsible for steering to the final origin or destination](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-5.png)
-_Figure 5: Local traffic management load balancer overview_
+![Local traffic management is responsible for steering to the final origin or destination](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-5.png "Figure 5: Local traffic management load balancer overview")
 
 Local traffic managers and their origins usually sit behind firewalls. But while origins may be protected on private networks, accessibility to the LTM load balancer can be either public or private depending on deployment requirements. A LTM load balancer will monitor total requests, connections, and server health to ensure requests are steered towards origins capable of responding in a timely manner. 
 
@@ -190,35 +185,29 @@ By contrast, many other SaaS-based load balancing providers use Unicast routing 
 
 Figure 6 shows how using the Cloudflare network allows geographically disparate users to connect to their resources as fast as possible.
 
-![Cloudflare’s global Anycast network ensures that the closest data center is always selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-6.png)
-_Figure 6: Load balancers hosted on Cloudflare’s Global Anycast Network_
+![Cloudflare’s global Anycast network ensures that the closest data center is always selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-6.png "Figure 6: Load balancers hosted on Cloudflare’s Global Anycast Network")
 
 Figure 6, above, shows other Cloudflare services are also running in each of these data centers since Cloudflare runs every service in every data center so users have a consistent experience everywhere. For example, Cloudflare’s layer 7 load balancer will also be able to take advantage of other services such as DDoS protection, CDN/Cache, Bot Management, or WAF. All of these additional services can help protect your service from unnecessary traffic whether it be malicious requests (blocked by DDoS Protection, Bot Management, or WAF) or requests that can be served via cache rather than a request to origin. All of these services can be combined as needed to make a service or offering as protected, resilient, and performant as possible.
 
-![Cloudflare Layer 7 features can be used together to further secure a service](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-7.png)
-_Figure 7: Some of the processes a HTTP request passes through in the Cloudflare layer 7 stack_
+![Cloudflare Layer 7 features can be used together to further secure a service](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-7.png "Figure 7: Some of the processes a HTTP request passes through in the Cloudflare layer 7 stack")
 
 Cloudflare also has a [network optimization service](https://blog.cloudflare.com/orpheus-saves-internet-requests-while-maintaining-speed/) that is constantly running at all data centers to ensure that Cloudflare provides the best path between Cloudflare data centers and also track all the available paths to origins. This allows Cloudflare to ensure that origins can always be reached and reroute traffic to alternate Cloudflare data centers, if necessary, to reach an origin. After the load balancer has made a decision on which origin to steer the traffic, the traffic is then forwarded to Cloudflare’s network optimization service to determine the best path to reach the destination. The path can be affected by a feature called Argo Smart Routing which, when enabled, uses timed TCP connections to find the Cloudflare data center with the fastest RTT to the origin server. Figure 8 shows how Argo Smart Routing can help improve connection time to origins.
 
-![Argo Smart Routing finds the fastest path between requester and origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-8.png)
-_Figure 8: Argo Smart Routing reduces latency to origins_
+![Argo Smart Routing finds the fastest path between requester and origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-8.png "Figure 8: Argo Smart Routing reduces latency to origins")
 
 Another way traffic flow can be affected is by the use of Cloudflare Tunnels. This document covers Cloudflare Tunnels in depth in the following section. Because Cloudflare Tunnels connect origins to specific Cloudflare data centers, traffic destined for those origins must traverse those data centers to reach the origin. Figure 9 shows how connections to private origins connected via Cloudflare Tunnel must pass through the data center where the tunnel terminates.
 
-![Requests take different paths depending on whether the origin is public or connected over Cloudflare Tunnel](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-9.png)
-_Figure 9: Paths to origins differ when connecting origins via Cloudflare Tunnel_
+![Requests take different paths depending on whether the origin is public or connected over Cloudflare Tunnel](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-9.png "Figure 9: Paths to origins differ when connecting origins via Cloudflare Tunnel")
 
 Usually, GTM and LTM load balancers are either separate hardware or separate SaaS (GTM) and hardware (LTM) components. Cloudflare’s GTM and LTM load balancing capabilities are combined into a single SaaS offering which greatly simplifies configuration and management. There is no need to create a GTM load balancer and steer traffic to more local LTM load balancers. All origins can be directly connected to Cloudflare and traffic is steered to the correct region, data center, and origin all from a single load balancer configuration. While the concepts of GTM and LTM features will persist, their implementation in Cloudflare will be done in a way that keeps load balancer configurations as simple and straightforward as possible. Figure 10 illustrates how global traffic can be steered from any geographic region to a specific origin as needed.
 
-![Combining GTM and LTM load balancing functions into a single load balancer configuration](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-10.png)
-_Figure 10: Cloudflare combines the function of GTM and LTM load balancing_
+![Combining GTM and LTM load balancing functions into a single load balancer configuration](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-10.png "Figure 10: Cloudflare combines the function of GTM and LTM load balancing")
 
 ### The structure of a Cloudflare Load Balancer
 
 A Cloudflare Load Balancer, often referred to as a Virtual IP (VIP), is configured with an entrypoint . Typically, this entrypoint is a DNS record. The load balancer first applies a defined traffic steering algorithm to select an origin pool, which is a group of origins selected based on function, geographic area, or region. A load balancer configuration can have one or multiple origin pools, and each origin pool can have one or many origins. After selecting an origin pool, the load balancer applies an origin steering algorithm to the list of origins and selects an origin to steer the traffic towards. Figure 11 shows the basic steps from client request to origin within a Cloudflare Load Balancer.
 
-![The steps within a Cloudflare Load Balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-11.png)
-_Figure 11: The basic process flow through a Cloudflare Load Balancer_
+![The steps within a Cloudflare Load Balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-11.png "Figure 11: The basic process flow through a Cloudflare Load Balancer")
 
 The definition of a Cloudflare Load Balancer is divided into three main components:
 1. Health monitors: these components are responsible for observing the health of origins and categorizing them as healthy or critical (unhealthy).
@@ -254,8 +243,7 @@ Weighted steering takes into account the differences in origin pools and origins
 
 Weight influences the randomness of origin pool or origin selection for a single request or connection within a load balancer. Weight does not consider historical data or current connection information, which means that weight may have variations in distribution over shorter timeframes. However, over longer periods of time and with significant traffic, the distribution will more closely resemble the desired weights applied in configuration. It’s important to note that session affinity will also override weight settings after the initial connection, as session affinity is intended to direct subsequent requests to the same origin pool or origin. Figure 12 shows a weight example for two origin pools with equal capacity and probability of being selected.
 
-![A pair of origin pools with equal probability of being selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-12.png)
-_Figure 12: A pair of origin pools with equal capacity_
+![A pair of origin pools with equal probability of being selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-12.png "Figure 12: A pair of origin pools with equal capacity")
 
 Specific algorithms, such as Least Outstanding Request Steering, take into account the number of open requests and connections. Weight is used to determine which origins or origin pools can handle a greater number of open requests or connections. Essentially, weight defines the capacity of origins or origin pools, regardless of the selected steering method.
 
@@ -271,8 +259,7 @@ Example 1:
 
 Example math for weight of 1: (1) ÷ (1 + 1 + 1) = (.3333) (or 33.33%)
 
-![A set of three origin pools all with equal probability](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-13.png)
-_Figure 13: Three origin pools with equal weight_
+![A set of three origin pools all with equal probability](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-13.png "Figure 13: Three origin pools with equal weight")
 
 In this example, it was simple to apply 1 to all the weight values for each of the origin pools. However, it should be noted that any number between 0.01 and 1.00 could have been used as long as the same number was used across all three origin pools. For instance, setting all three pools to .1 or even .7 would have resulted in an equal probability that each pool would be selected to receive traffic.
 
@@ -283,8 +270,7 @@ Example 2
 * Each origin pool has a different number of origins, but all origins have equal capacity
 * To evenly distribute load across origins, each origin pool needs a different probability 
 
-![Three origin pools with different numbers of origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-14.png)
-_Figure 14: Illustrates how to use weight to balance load across origin pools with different capacity_
+![Three origin pools with different numbers of origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-14.png "Figure 14: Illustrates how to use weight to balance load across origin pools with different capacity")
 
 Example math for weight of .4 : (.4) ÷ (.4 + .5 + .6) = (.2667) (or 26.67%)
 
@@ -300,8 +286,7 @@ Example 3
 * The goal is to place double the amount of traffic to origin pool 1 per origin
 * Origin pool 1 has 4 origins but with double capacity, the weight of each origin will be valued at .2 for a total of .8 for the origin pool
 
-![Three origin pools with different numbers of origins and origins of different capacity](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-15.png)
-_Figure 15: Using weight to balance load across origin pools with different capacities and origins_
+![Three origin pools with different numbers of origins and origins of different capacity](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-15.png "Figure 15: Using weight to balance load across origin pools with different capacities and origins")
 
 Example math for weight of .8 : (.4) ÷ (.8 + .5 + .6) = (.4211) (or 42.11%)
 
@@ -413,8 +398,7 @@ By default, health monitors probes are sent directly to the origin address, bypa
 
 The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire stack. This is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also allows health monitor probes to use the path provided by [Argo Smart Routing](/argo-smart-routing/), ensuring that probes will follow the same path to the origin as actual requests.
 
-![HTTPS health monitor to monitor the status of an origin web server](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-16.png)
-_Figure 16: HTTPS health monitor configuration_
+![HTTPS health monitor to monitor the status of an origin web server](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-16.png "Figure 16: HTTPS health monitor configuration")
 
 Health monitor Probes can be configured as the following types:
 * HTTP
@@ -435,8 +419,7 @@ Once a health monitor is defined, it can be assigned to an origin and the probes
     * Contains healthy origins below the health threshold 
     * Not capable of handling traffic; removed from all steering decisions.
 
-![Comparison of three origin pools with different numbers of healthy origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-17.png)
-_Figure 17: When origins pool are considered healthy, degraded, or critical_
+![Comparison of three origin pools with different numbers of healthy origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-17.png "Figure 17: When origins pool are considered healthy, degraded, or critical")
 
 The second setting after defining the health monitor in the origin pool is to define which regions the health monitor probes should source from inside the Cloudflare global network. The available selections are listed below:
 * All Regions (Default)
@@ -455,8 +438,7 @@ The second setting after defining the health monitor in the origin pool is to de
 * Southeast Asia
 * Northeast Asia
 
-![Origin pool settings to further customize the health monitors](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-18.png)
-_Figure 18: Health Threshold and region selection for an origin pool configuration_
+![Origin pool settings to further customize the health monitors](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-18.png "Figure 18: Health Threshold and region selection for an origin pool configuration")
 
 With the exception of “All Regions” and “All Data Centers”, health monitor probes will only originate from data centers in the selected region or regions. For locally relevant services, it may not matter whether or not a data center on the other side of the world can reach the origins. Therefore, limiting checks to a specific region or a set of regions may make sense. The selection of “All Regions” or “All Data Centers” is intended to be used for globally available services where reaching a set of origins could be crucial to the function of the application.
 
@@ -475,8 +457,7 @@ Cloudflare origins can be defined in two ways, by IP address or by hostname. IP 
 
 As mentioned in the “HTTP(S) Load Balancing” section above, load balancing is the very last process run before a request is sent to an origin. In the case of however, even if an origin is proxied via Cloudflare’s edge, after the load balancer, the request is forwarded directly to the origin without passing through the layer 7 stack again. This doesn’t mean the origin is unprotected or uncached, however. As long as the load balancer itself is proxied then all those protections are provided to the load balancer rather than the origins. Any direct communication with the origin can still be proxied and treated with Cloudflare’s layer 7 stack, but communication with an origin places all the processing in front of the load balancer, not the origin. Figure 19 illustrates the difference of where the Cloudflare layer 7 stack is placed in relation to the origin(s).
 
-![Load balancing is the last process before dispatching to the origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-19.png)
-_Figure 19: Differences in the Layer 7 paths between load balancer and origin_
+![Load balancing is the last process before dispatching to the origin](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-19.png "Figure 19: Differences in the Layer 7 paths between load balancer and origin")
 
 There are very few differences from a load balancer perspective when it comes to what type of origin is defined as part of an origin pool. Once the traffic and origin steering policies and the load balancer rules are applied, the Cloudflare Load Balancing service instructs the L7 stack where to forward the incoming request or connection . This request is sent directly to the origin. Depending on the type of connection to the origin, there may be a different path. Features like Argo Smart Routing or tunnel-connected origins that are terminated at different Cloudflare data centers will route traffic differently rather than sending the request out of the Cloudflare edge, over the internet, directly to the origin. Regardless of the path, however, load balancing is the last process in the stack and this means that traffic doesn’t receive any additional treatment. So while the connection to origin can change the path from Cloudflare to the origin, the treatment or processing doesn’t change once an origin is selected.
 
@@ -489,8 +470,7 @@ Cloudflare Tunnel (cloudflared) can be installed directly on the origin server o
 
 Cloudflare Tunnel can be installed on the origin itself or on any server with layer 3 (IP) connectivity to the origin or origins that need to be connected to Cloudflare. The decision to separate cloudflared could be made for many different reasons including but not limited to isolating the origin(s) and ensuring their performance, having separate teams that manage network level connectivity and origins, or separation for architectural simplicity where servers have segregated roles or responsibilities.
 
-![A single cloudflared instance tunnels traffic for multiple origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-20.png)
-_Figure 20: A shared cloudflared deployed on a separate server tunnels traffic for multiple origins_
+![A single cloudflared instance tunnels traffic for multiple origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-20.png "Figure 20: A shared cloudflared deployed on a separate server tunnels traffic for multiple origins")
 
 A single cloudflared instance will create 4 different tunnels, two tunnels in two different Cloudflare data centers. This model ensures high availability and mitigates the risk of individual connection failures. This means in event a single connection, server, or data center goes offline, the origins will remain available. Cloudflare Tunnel also allows organizations to deploy additional instances of cloudflared, for availability and failover scenarios. These unique instances are called replicas. Each replica establishes four new connections which serve as additional points of ingress to the origin(s). Each of the replicas will point to the same tunnel. This ensures that your network remains up in the event a single host running cloudflared goes down. By design, replicas do not offer any level of traffic steering (random, hash, or round-robin).
 
@@ -571,8 +551,7 @@ For example:
 
 Figure 21 highlights the potential problem of mismatched Host headers:
 
-![Mismatched Host headers may result in the origin rejecting the request](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-21.png)
-_Figure 21: How the load balancer can rewrite the Host header to match the origin_
+![Mismatched Host headers may result in the origin rejecting the request](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-21.png "Figure 21: How the load balancer can rewrite the Host header to match the origin")
 
 Also, at the origin pool, GPS coordinates for the pool (which are used with proximity traffic steering) can be defined. If proximity steering is not being used, then these coordinates are not required. (Please refer to the [Proximity Steering](#proximity-steering)
 
@@ -603,8 +582,7 @@ Depending on their specific use case, organizations can leverage different types
 
 Figure 22 highlights all the possible combinations of load balancers and origins supported by Cloudflare: 
 
-![All the possible combinations of load balancer and origin types](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-22-ALT.png)
-_Figure 22: The combinations of public and private load balancers and origins and how they connect_
+![All the possible combinations of load balancer and origin types](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-22-ALT.png "Figure 22: The combinations of public and private load balancers and origins and how they connect")
 
 #### Deployment models
 
@@ -627,8 +605,7 @@ Because this same layer 7 security stack also provides WAF, DDoS protection, Bot
 
 In this layer 7 stack, load balancing can further improve the performance, reliability, and reachability of an organization’s public-facing web assets. The origins for these load balancers may be deployed in public cloud, private cloud, on-premises, or any combination thereof within the same load balancer. (Please refer to [Connecting origins to Cloudflare](#connecting-origins-to-cloudflare) for more details about how to connect origins to Cloudflare’s edge network).
 
-![Layer 7 load balancing request flow to two different types of origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-23-ALT.png)
-_Figure 23: How Cloudflare’s Layer 7 load balancers can steer traffic to both public and private origins_
+![Layer 7 load balancing request flow to two different types of origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-23-ALT.png "Figure 23: How Cloudflare’s Layer 7 load balancers can steer traffic to both public and private origins")
 
 As illustrated in Figure 23 above, the load balancing component of the layer 7 stack is the last process run on a request as it moves towards the origin. This can have a large positive impact on increasing performance and reducing load on origins. 
 
@@ -651,16 +628,13 @@ Cloudflare’s DNS-only load balancer is an unproxied load balancer. This means 
 
 Because all the traffic between the client and the origin will travel directly between the two and not through Cloudflare’s layer 7 stack, any type of IP traffic can be supported by a DNS-only load balancer.
 
-![The orange cloud icon represents a proxied Layer 7 Cloudflare Load Balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-24.png)
-_Figure 24: A proxied load balancer configuration_
+![The orange cloud icon represents a proxied Layer 7 Cloudflare Load Balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-24.png "Figure 24: A proxied load balancer configuration")
 
-![The gray cloud icon represents an unproxied (DNS-only) load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-25.png)
-_Figure 25: An unproxied (DNS-only) load balancer configuration_
+![The gray cloud icon represents an unproxied (DNS-only) load balancer](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-25.png "Figure 25: An unproxied (DNS-only) load balancer configuration")
 
 Even though Cloudflare does not proxy these types of load balancer connections, the health monitor service is still monitoring the health on all the origins in the pool. Based on the health or availability of an origin, a Cloudflare DNS-only load balancer will either add or remove an applicable origin to a DNS response to ensure that traffic is being steered to healthy origins.
 
-![DNS-only load balancers only use Cloudflare to respond to a DNS request](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-26.png)
-_Figure 26: How Cloudflare’s DNS-only load balancer functions_
+![DNS-only load balancers only use Cloudflare to respond to a DNS request](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-26.png "Figure 26: How Cloudflare’s DNS-only load balancer functions")
 
 After a DNS-only load balancer has selected an origin pool via traffic steering, one or many IP addresses may be returned in the DNS response. 
 
@@ -672,8 +646,7 @@ This gives organizations the flexibility to allow applications to be aware of al
 
 Figure 27 shows how the defined weight within an origin pool can affect how a DNS-only load balancer responds. 
 
-![DNS-only load balancers can respond to DNS requests with one or many IP addresses](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-27.png)
-_Figure 27: How weight affects the DNS response from a DNS-only load balancer_
+![DNS-only load balancers can respond to DNS requests with one or many IP addresses](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-27.png "Figure 27: How weight affects the DNS response from a DNS-only load balancer")
 
 Please note that DNS-only load balancers have a few limitations compared to proxied load balancers: 
 * The load balancer no longer hides the origin’s IP address from the client as it is sent back to the client directly.
@@ -704,8 +677,7 @@ Where the layer 7 stack only supported HTTP(S) and WebSockets, Spectrum offers s
 
 Given the breadth of services and protocols this represents, the treatment provided is more generalized than what is offered with the layer 7 HTTP(S) stack. For example, Cloudflare Spectrum supports features such as TLS/SSL offloading, DDoS protection, IP Access lists, Argo Smart Routing, and session persistence with our layer 4 load balancers.
 
-![Spectrum-based load balancing supports public origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-28-ALT.png)
-_Figure 28: Spectrum Layer 4 load balancers support both TCP and UDP protocols_
+![Spectrum-based load balancing supports public origins](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-28-ALT.png "Figure 28: Spectrum Layer 4 load balancers support both TCP and UDP protocols")
 
 Cloudflare layer 4 Spectrum load balancers are publicly accessible. Access to these load balancing resources can be managed using a Spectrum configuration called _IP Access Rules,_ which can be defined as part of a WAF configuration, but are limited to rules created with the “allow” or “block” action for specific IP addresses, subnets, countries, or [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) Autonomous System Numbers (ASNs). 
 
@@ -763,14 +735,13 @@ Origin draining is a subfeature of session affinity. It allows for sessions to g
 
 The origin drain TTL is the amount of time that origins will be allowed to maintain active sessions before being forcefully terminated. Once the origin drain TTL is set, origin draining is started by disabling an origin (or multiple origins) within an origin pool. As seen in the below image, administrators can monitor the time remaining on an origin drawing operation from the load balancer UI.
 
-![Origin draining in process from web user interface](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-30.png)
-_Figure 30: Origin draining occurring within a Cloudflare Load Balancer_
+![Origin draining in process from web user interface](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-30.png "Figure 30: Origin draining occurring within a Cloudflare Load Balancer")
 
 Origin draining is only applicable for session affinity because without session affinity, subsequent requests or connections are not guaranteed to be steered to the same origin. Thus, disabling an origin does not have an impact on user experience.
 
 ##### Zero-downtime failover
 
-Zero-downtime failover automatically sends traffic to origin servers within an origin pool during transient network issues. The decision to retry another origin in the pool is driven by Cloudflare returning a [521, 522, or 523 response code](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-521-web-server-is-down). Any other response code will not result in a zero-downtime failover operation. These response codes are not returned from the origin, but from requests made by upstream Cloudflare services to an organization's origins.
+Zero-downtime failover automatically sends traffic to origin servers within an origin pool during transient network issues. {{<render file="_zero-downtime-failover-retry-on-error.md" productFolder="fundamentals">}} These response codes are not returned from the origin, but from requests made by upstream Cloudflare services to an organization's origins.
 
 Zero-downtime failover has three modes of operation:
 1. **None (Off):** No failover will take place and users may receive error messages or a poor user experience.

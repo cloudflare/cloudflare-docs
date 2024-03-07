@@ -16,7 +16,7 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.gg/2TRr6nSxdd
+  discord: https://discord.cloudflare.com
 
 externals:
   - title: Cloudflare homepage

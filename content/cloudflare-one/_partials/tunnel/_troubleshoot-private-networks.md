@@ -90,7 +90,7 @@ If `telnet` fails to open the connection, check your infrastructure for firewall
 
 Open PowerShell and run the following command:
 
-```bash
+```powershell
 PS C:\Users\JohnDoe> Test-NetConnection test.example.com -port 443
 ```
 

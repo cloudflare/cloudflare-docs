@@ -7,11 +7,11 @@ title: Tail Handler
 
 ## Background
 
-The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/logging/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
 
 The `tail()` handler is called once each time the connected producer Worker is invoked.
 
-To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/tail-workers/).
+To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/logging/tail-workers/).
 
 ## Syntax
 
@@ -223,4 +223,4 @@ Records an unhandled exception that occurred during the Worker invocation.
 
 ## Related resources
 
-* [Tail Workers](/workers/observability/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.
+* [Tail Workers](/workers/observability/logging/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.

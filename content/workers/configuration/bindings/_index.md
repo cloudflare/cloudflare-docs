@@ -9,7 +9,7 @@ meta:
 
 Bindings allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
-There are multiple types of bindings available today.
+There are multiple types of bindings available today, including [environment variables (text and JSON values)](/workers/configuration/environment-variables/) as well as [secrets](/workers/configuration/secrets/).
 
 To learn how to access bindings in your code, refer to [Bindings](/workers/reference/migrate-to-module-workers/#bindings) in the Migrate to ES Modules guide.
 
@@ -60,7 +60,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 - Create your first [D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
 - Configure a D1 bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#d1-databases).
-- Learn more about how to query a D1 database using the [client API](/d1/how-to/query-databases/).
+- Learn more about how to query a D1 database using the [client API](/d1/build-databases/query-databases/).
 
 ### Vectorize database bindings
 
@@ -69,6 +69,13 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 - Create your first [Vectorize binding](/vectorize/get-started/).
 - Configure a Vectorize binding via your [`wrangler.toml` file](/workers/wrangler/configuration/#vectorize-indexes).
 - Learn more about how to query a Vectorize index using the [client API](/vectorize/reference/client-api/).
+
+### Hyperdrive bindings
+
+[Hyperdrive](/hyperdrive/) bindings allow you to interact with and query any Postgres database from within a Worker.
+
+- Create your first [Hyperdrive binding](/hyperdrive/get-started/#4-bind-your-worker-to-hyperdrive).
+- Configure a Hyperdrive binding via your [`wrangler.toml` file](/workers/wrangler/configuration/#hyperdrive).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 
@@ -80,7 +87,7 @@ Dispatch namespace bindings allow for communication between a dynamic dispatch W
 
 mTLS certificate bindings enable Worker subrequests to present a client certificate when communicating with a service that requires client authentication.
 
-- Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
+- Learn more about [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).
 - Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).
 
 ### Email bindings

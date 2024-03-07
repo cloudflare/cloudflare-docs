@@ -38,13 +38,13 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
    1. Run the following command to obtain your `A` record values:
 
-   ```bash
+   ```powershell
    nslookup -type=A <your-subdomain>.cloudflare-gateway.com
    ```
 
    2. Obtain your `AAAA` record values.
 
-   ```bash
+   ```powershell
    nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
    ```
 
@@ -54,13 +54,13 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
    1. Run the following command for each address:
 
-   ```bash
+   ```powershell
    Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
    ```
 
    2. Confirm the addresses were added.
 
-   ```bash
+   ```powershell
    Get-DnsClientDohServerAddress
    ```
 
@@ -80,13 +80,13 @@ Obtain the `A` and `AAAA` record values associated with your location's DoH endp
 
 1. Run the following command to obtain your `A` record values:
 
-```bash
+```powershell
 nslookup -type=A <your-subdomain>.cloudflare-gateway.com
 ```
 
 2. Obtain your `AAAA` record values.
 
-```bash
+```powershell
 nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 ```
 

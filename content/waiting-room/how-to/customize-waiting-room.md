@@ -51,7 +51,7 @@ The template text contains [code to display the wait time](#display-wait-time). 
 #### Upload an HTML file
 
 1.  Select **Import** to upload a HTML file from your computer.
-2.  Select the file in the dialog and select **Open**.
+2.  Select the file in the dialog and select **Open**. The HTML file size limit is 1,048,576 bytes (1 MB).
 
 Make further edits in the text box. Include the [code to display the wait time](#display-wait-time) to display the estimated queue time on the waiting room page or create your own custom page using [available variables](#available-variables).
 
