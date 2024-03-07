@@ -12,7 +12,7 @@ Consider a list of error messages displayed when a certificate issuance fails an
 
 > CAA records block issuance. Please remove all CAA records or add records for this authority.
 
-A Certificate authority authorization (CAA) DNS record specifies which certificate authorities (CAs) are allowed to issue certificates for a domain. If you or someone else in your organization has added CAA records that do not include the certificate authority trying to issue a certificate, the issuance will be blocked.
+If you or someone else in your organization has added {{<glossary-tooltip term_id="Certification Authority Authorization (CAA) record">}}certification authority authorization (CAA){{</glossary-tooltip>}} records that do not include the certificate authority trying to issue a certificate, the issuance will be blocked.
 
 You can find a list of CAA records content for all CAs used by Cloudflare in [Certificate authorities](/ssl/reference/certificate-authorities/#caa-records)
 
