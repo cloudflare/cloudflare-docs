@@ -538,6 +538,28 @@
   "dns": {
     "title": "DNS",
     "link": "/dns/",
+    "advanced_nameservers": {
+      "title": "Advanced nameservers",
+      "link": "/dns/foundation-dns/advanced-nameservers/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Included with [Foundation DNS](/dns/foundation-dns/)"
+        },
+        "graphql_analytics": {
+          "title": "GraphQL DNS analytics",
+          "summary": "Advanced nameservers analytics are accessible by GraphQL",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
     "cname_flattening": {
       "title": "CNAME flattening",
       "link": "/dns/cname-flattening/",
