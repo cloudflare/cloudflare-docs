@@ -5,7 +5,7 @@ pcx_content_type: reference
 
 # Nameserver assignment
 
-When you add a domain on a [full setup](/dns/zone-setups/full-setup/) or [Secondary DNS setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/), Cloudflare automatically assigns your nameservers. You should then add the assigned nameservers to your registrar and, once Cloudflare can detect they have been placed, your zone is activated.
+When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) DNS setup, Cloudflare automatically assigns your nameservers. You should then add the assigned nameservers to your registrar and, once Cloudflare can detect they have been placed, your zone is activated.
 
 Each domain's assigned nameservers may be different than other domains, even if those domains are within the same account.
 
