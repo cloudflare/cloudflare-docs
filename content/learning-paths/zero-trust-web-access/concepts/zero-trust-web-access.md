@@ -5,7 +5,6 @@ weight: 3
 layout: learning-unit
 ---
 
-
 Zero Trust Web Access (ZTWA), also known as Zero Trust Application Access (ZTAA), provides users with secure access to internal applications using Zero Trust principles. ZTWA authenticates users to applications by integrating with [identity providers](https://www.cloudflare.com/learning/access-management/what-is-an-identity-provider/), encrypting connections, considering each access request for an application individually, and blocking or allowing on a request-by-request basis.
 
 ## ZTNA vs. ZTWA

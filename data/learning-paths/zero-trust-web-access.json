@@ -2,7 +2,7 @@
   "title": "Zero Trust Web Access (ZTWA)",
   "path": "/learning-paths/zero-trust-web-access/",
   "priority": 2,
-  "description": "Secure aaccess to internal web applications without a device client.",
+  "description": "Secure access to internal web applications without a device client.",
   "products": [
     "Cloudflare Access",
     "Cloudflare Gateway",
