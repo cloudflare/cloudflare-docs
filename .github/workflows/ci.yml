@@ -22,7 +22,7 @@ jobs:
           node-version: 18.1
       - uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.123.5'
+          hugo-version: '0.110'
           extended: true
 
       - name: (env) pnpm
