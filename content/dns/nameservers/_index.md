@@ -6,9 +6,32 @@ weight: 5
 
 # Nameservers
 
-What they are. How they make CF work.
+As explained in [How DNS works](https://www.cloudflare.com/learning/dns/what-is-dns/), from the moment a user types an address (`www.example.com`) into their web browser, the resolution of a DNS query takes place. Also, the process behind a DNS resolution involves different computers (or servers).
 
-## Types of nameservers
+In the context of Cloudflare DNS, nameservers refer to authoritative nameservers, which are the last stop in the DNS query resolution. When a nameserver is authoritative for `example.com`, it means that DNS resolvers will consider responses from this nameserver when a user tries to access `example.com`.
 
+## Authoritative nameservers offering
+
+Within Cloudflare, and depending on your plan, you can choose between using Cloudflare-branded nameservers or setting up your own custom nameservers.
+
+Regardless of the type you choose, for these nameservers to be authoritative for your domain, you need to [update your domain nameservers](/dns/nameservers/update-nameservers/).
+
+### Standard nameservers
+
+Unless your account has specific [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) configurations, when you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) DNS setup, Cloudflare automatically assigns two standard nameservers for your zone.
+
+Standard nameservers are hosted on `ns.cloudflare.com` (Cloudflare-branded) and follow the pattern `<proper_name>.ns.cloudflare.com`.
+
+### Advanced nameservers
+
+If you are on a Enterprise plan, you have Foundation DNS, which includes advanced nameservers.
+
+Advanced nameservers are hosted on `foundationdns.com`, `foundationdns.net` and `foundationdns.org` and each zone that uses advanced nameservers is assigned a set of three nameservers names: `<color>.foundationdns.com`, `<color>.foundationdns.net`, and `<color>.foundationdns.org`.
+
+### Custom nameservers
+
+With custom nameservers, your nameservers are hosted on your own domain (or domains) and, in this sense, are not Cloudflare-branded.
+
+You provide the nameserver fullly qualified domain names (`ns1.mydomain.com`) and Cloudflare assigns one IPv4 and one IPv6 to each of your custom nameservers.
 
 ## Related resources
