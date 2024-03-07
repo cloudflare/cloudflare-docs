@@ -18,9 +18,12 @@ model:
       value: "https://stability.ai/stable-diffusion"
     - property_id: "constellation_config"
       value: "# infer_response_cache: r2\n\nmax_requests_per_min:\n  default: 120\n  accounts:\n    32118455: 1440 # ai.cloudflare.com staging\n    50147400: 1440 # ai.cloudflare.com\n    13852056: 1440 # Firewall Team for `@RespectTables ai`\n\nneurons:\n  metrics:\n    - name: inference_steps\n      neuron_cost: 0\nmax_concurrent_requests: 1"
+    - property_id: "beta"
+      value: "true"
 task_type: "text-to-image"
 model_display_name: "stable-diffusion-xl-base-1.0"
 layout: "model"
+weight: 0
 title: "stable-diffusion-xl-base-1.0"
 json_schema:
   input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"prompt\": {\n      \"type\": \"string\"\n    },\n    \"image\": {\n      \"oneOf\": [\n        {\n          \"type\": \"string\",\n          \"format\": \"binary\"\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"image\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"number\"\n              }\n            }\n          }\n        }\n      ]\n    },\n    \"mask\": {\n      \"oneOf\": [\n        {\n          \"type\": \"string\",\n          \"format\": \"binary\"\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"mask\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"number\"\n              }\n            }\n          }\n        }\n      ]\n    },\n    \"num_steps\": {\n      \"type\": \"integer\",\n      \"default\": 20,\n      \"maximum\": 20\n    },\n    \"strength\": {\n      \"type\": \"number\",\n      \"default\": 1\n    },\n    \"guidance\": {\n      \"type\": \"number\",\n      \"default\": 7.5\n    }\n  },\n  \"required\": [\n    \"prompt\"\n  ]\n}"

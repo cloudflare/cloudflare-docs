@@ -197,6 +197,17 @@
 /support/third-party-software/e-commerce/using-cloudflare-with-shopify/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-wp-engine/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/wpengine/ 301
 
+# CNI - Cloudflare Network Interconnect
+/network-interconnect/about/interconnect-types/ /network-interconnect/about/ 301
+/network-interconnect/about/route-leak-detection/ /network-interconnect/about/ 301
+/network-interconnect/about/argo-for-packets/ /argo-smart-routing/argo-for-packets/ 301
+/network-interconnect/about/bfd/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
+/network-interconnect/set-up-cni/ /network-interconnect/classic-cni/set-up/ 301
+/network-interconnect/set-up-cni/scope-config/ /network-interconnect/classic-cni/set-up/scope-config/ 301
+/network-interconnect/set-up-cni/configure-cross-connect/ /network-interconnect/classic-cni/set-up/configure-cross-connect/ 301
+/network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
+/network-interconnect/set-up-cni/peering-portal/ /network-interconnect/pni-and-peering/ 301
+
 # Constellation
 /constellation/platform/wrangler/ /constellation/ 301
 /constellation/platform/ /constellation/ 301
@@ -237,6 +248,8 @@
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/policies/data-loss-prevention/datasets/ 301
 
 # ddos-protection
+/ddos-protection/change-log/http/2022-09-19-emergency-emergency/ /ddos-protection/change-log/http/2022-09-19-emergency/
+/ddos-protection/change-log/http/2022-12-07-emergency-emergency/ /ddos-protection/change-log/http/2022-12-07-emergency/
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
@@ -649,7 +662,8 @@
 /magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
 /magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/
 /magic-wan/configuration/manually/how-to/tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/
-/magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/configuration/common-settings/view-analytics/ 301
+/magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
+/magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
@@ -1265,6 +1279,12 @@
 /workers-ai/models/translation/  /workers-ai/models/#translation 301
 /workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
 /workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
+/workers-ai/models/codellama-7b-instruct-awq/ /workers-ai/models/ 301
+/workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
+/workers-ai/platform/workers-pages-sdk/ /workers-ai/configuration/workers-pages-sdk/ 301
+/workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
+/workers-ai/platform/rest-api/ /workers-ai/rest-api/ 301
+
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
@@ -1517,6 +1537,9 @@
 /ssl/ssl-for-saas/reference/* /cloudflare-for-platforms/cloudflare-for-saas/reference/ 301
 /ssl/ssl-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
 /cloudflare-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
+
+# CNI cloudflare Network Interconnect
+/network-interconnect/partners/* /network-interconnect/classic-cni/set-up/partners/:splat 301
 
 # Magic WAN
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301

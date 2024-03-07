@@ -173,7 +173,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Download and Upload File Type
 
-These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office/Microsoft 365 documents, PDF files, and ZIP files.
 
 | UI name            | API example                                             |
 | ------------------ | ------------------------------------------------------- |

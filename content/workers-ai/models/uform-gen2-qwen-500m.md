@@ -13,9 +13,12 @@ model:
   properties:
     - property_id: "info"
       value: "https://www.unum.cloud/"
+    - property_id: "beta"
+      value: "true"
 task_type: "image-to-text"
 model_display_name: "uform-gen2-qwen-500m"
 layout: "model"
+weight: 0
 title: "uform-gen2-qwen-500m"
 json_schema:
   input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        },\n        \"prompt\": {\n          \"type\": \"string\"\n        },\n        \"max_tokens\": {\n          \"type\": \"integer\",\n          \"default\": 512\n        }\n      }\n    }\n  ]\n}"
