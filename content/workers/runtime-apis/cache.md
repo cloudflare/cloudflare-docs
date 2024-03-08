@@ -13,11 +13,7 @@ The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows f
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
-{{<Aside type="warning" header="Tiered caching">}}
 
-The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/reference/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/reference/how-the-cache-works/#interact-with-the-cloudflare-cache).
-
-{{</Aside>}}
 
 However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
 
