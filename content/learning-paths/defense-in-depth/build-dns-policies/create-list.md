@@ -16,5 +16,3 @@ The following DNS policy will allow access to all approved corporate domains inc
 | Selector | Operator | Value               | Action |
 | -------- | -------- | ------------------- | ------ |
 | Domain   | in list  | *Corporate Domains* | Allow  |
-
-Next, learn what order Gateway policies of the same type take precedence.
