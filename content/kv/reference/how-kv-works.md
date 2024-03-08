@@ -16,7 +16,7 @@ While reads are periodically revalidated in the background, requests which are n
 
 When you write to KV, your data is written to central data stores. Your data is not sent automatically to every location’s cache, but regional tiers are notified within seconds to do a purge of that key.
 
-![Your data is written to central data stores when you write to KV.](/images/kv/kv-write.svg)
+[![Your data is written to central data stores when you write to KV.](/images/kv/kv-write.svg)](/images/kv/kv-write.svg)
 
 Initial reads from a location do not have a cached value. Data must be read from the nearest regional tier, followed by a central tier, degrading finally to the central store for a truly cold global read. While the first access is slow globally, subsequent requests are faster, especially if requests are concentrated in a single region.
 
