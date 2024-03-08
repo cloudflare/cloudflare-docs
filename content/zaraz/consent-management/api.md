@@ -234,13 +234,13 @@ function getCookie(name) {
 }
 
 function handleZarazConsentAPIReady() {
-  if ({{system.device.location.isEUCountry}} === 1) {
-    zaraz.consent.modal = true;
+  if (system.device.location.isEUCountry === 1) {
+    zaraz.consent.modal = true
   } else {
-    const shouldSendQueuedEvents = !getCookie("cf_consent");
-    zaraz.consent.setAll(true);
+    const shouldSendQueuedEvents = !getCookie("cf_consent")
+    zaraz.consent.setAll(true)
     if (shouldSendQueuedEvents) {
-      zaraz.consent.sendQueuedEvents();
+      zaraz.consent.sendQueuedEvents()
     }
   }
 }
