@@ -7,4 +7,8 @@ layout: learning-unit
 
 {{<render file="zero-trust/_create-list.md">}}
 
+{{<Aside type="note" header="Create lists in advance">}}
+
 Before moving on to create security policies, we recommend you create lists for your trusted domains, hosts, and IP addresses, as well as privileged users and user groups.
+
+{{</Aside>}}

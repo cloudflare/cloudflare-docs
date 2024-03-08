@@ -7,7 +7,7 @@ layout: learning-module
 
 # Understand and streamline policy creation
 
-Before you begin building security policies, there are a few key details about Gateway to understand.
+Before you begin building security policies, there are a few key details about Gateway to review.
 
 ## Objectives
 
