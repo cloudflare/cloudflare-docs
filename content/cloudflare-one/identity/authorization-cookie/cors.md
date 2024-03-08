@@ -188,7 +188,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
     };
    ```
 
-5. Deploy the Worker to your Cloudflare account:
+4. Deploy the Worker to your Cloudflare account:
 
    ```sh
    $ npx wrangler@latest deploy
