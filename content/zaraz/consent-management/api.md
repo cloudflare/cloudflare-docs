@@ -234,12 +234,17 @@ function getCookie(name) {
 }
 
 function handleZarazConsentAPIReady() {
-  const shouldSendQueuedEvents = !getCookie("cf_consent")
-  zaraz.consent.setAll(true)
-  if (shouldSendQueuedEvents) {
-    zaraz.consent.sendQueuedEvents()
+  if (system.device.location.isEUCountry === 1) {
+    zaraz.consent.modal = true;
+  } else {
+    const shouldSendQueuedEvents = !getCookie("cf_consent");
+    zaraz.consent.setAll(true);
+    if (shouldSendQueuedEvents) {
+      zaraz.consent.sendQueuedEvents();
+    }
   }
 }
+
 
 if (zaraz.consent?.APIReady) {
   handleZarazConsentAPIReady()
