@@ -41,11 +41,11 @@ Subrequests are requests triggered by calling `fetch` from within a Worker. A su
 - **Cached**: The number of cached responses returned.
 - **Uncached**: The number of uncached responses returned.
 
-### Wall Clock time per execution
+### Wall time per execution
 
-{{<glossary-tooltip term_id="wall-clock time">}}Wall-clock time{{</glossary-tooltip>}} represents the elapsed time in milliseconds between the start of a Worker invocation, and when the Workers Runtime determines that no more JavaScript needs to run. Specifically, wall-clock time per execution chart measures the wall-clock time that the JavaScript context remained open — including time spent waiting on I/O, and time spent executing in your Worker's [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) handler. Wall-clock time is not the same as the time it takes your Worker to send the final byte of a response back to the client - wall-clock time can be higher, if tasks within `waitUntil()` are still running after the response has been sent, or it can be lower. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JavaScript context before all the bytes have passed through and been sent.
+{{<glossary-tooltip term_id="wall-clock time">}}Wall time{{</glossary-tooltip>}} represents the elapsed time in milliseconds between the start of a Worker invocation, and when the Workers runtime determines that no more JavaScript needs to run. Specifically, wall time per execution chart measures the wall time that the JavaScript context remained open — including time spent waiting on I/O, and time spent executing in your Worker's [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) handler. Wall time is not the same as the time it takes your Worker to send the final byte of a response back to the client - wall time can be higher, if tasks within `waitUntil()` are still running after the response has been sent, or it can be lower. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JavaScript context before all the bytes have passed through and been sent.
 
-The Wall-Clock Time per execution chart shows historical wall time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
+The Wall Time per execution chart shows historical wall time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
 
 ### CPU Time per execution
 
