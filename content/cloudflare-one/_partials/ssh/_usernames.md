@@ -20,7 +20,7 @@ SSH certificates include one or more `principals` in their signature which indic
 By default, SSH servers authenticate the Unix username against the principals listed in the user's certificate. You can configure your SSH server to accept principals that do not match the Unix username.
 
 {{<Aside type="note">}}
-If you would like to use short-lived certificates with the browser-based terminal, the Unix username needs to matches the email address prefix.
+If you would like to use short-lived certificates with the browser-based terminal, the user's email address prefix needs to matches their Unix username.
 {{</Aside>}}
 
 **Username matches a different email**
