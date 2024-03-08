@@ -23,7 +23,7 @@ export default {
       },
     ];
 
-    const stream = await ai.run<"{{ .Params.model.name }}">(
+    const stream = await ai.run(
       "{{ .Params.model.name }}",
       {
         messages,
