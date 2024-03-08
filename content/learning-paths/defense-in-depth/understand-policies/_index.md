@@ -13,6 +13,6 @@ Before you begin building security policies, there are a few key details about G
 
 By the end of this module, you will be able to:
 
-- Understand the order Gateway enforces policies for filtering traffic
-- Create reusable lists for Gateway policies
-- Subscribe to indicator feeds for advanced threat intelligence
+- Understand the order Gateway enforces policies for filtering traffic.
+- Create reusable lists for Gateway policies.
+- Subscribe to indicator feeds for advanced threat intelligence.
