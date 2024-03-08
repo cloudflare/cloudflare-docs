@@ -15,25 +15,14 @@ meta:
 Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
 {{</description>}}
 
+{{<plan type="workers_all">}}
+
+Workers AI allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from [Workers](/workers/), [Pages](/pages/), or anywhere via [the Cloudflare API](/api/operations/workers-ai-post-run-model).
+
 {{<render file="_billing-announcement.md">}}
 
-Workers AI allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from Workers, Pages, or anywhere via REST API.
-
-### Designed for developers
-
-You shouldn't have to understand the ins and outs of machine learning to leverage the power of it. With a focus on developer experience, it's powerful, yet simple, and only a few lines of code to get started:
-
-```js
-import { Ai } from "@cloudflare/ai";
-
-const ai = new Ai(env.AI);
-
-const output = await ai.run("@cf/meta/llama-2-7b-chat-int8", {
-  prompt: "Tell me about Workers AI",
-});
-```
-
-### Models you know and love
+---
+### Models
 
 Workers AI comes with a curated set of popular open-source models that _just work_.
 
