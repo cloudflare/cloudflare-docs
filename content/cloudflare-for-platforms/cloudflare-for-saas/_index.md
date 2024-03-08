@@ -31,6 +31,8 @@ If your customers already have their applications on Cloudflare, they cannot con
 *   Page Shield
 *   Spectrum
 *   Wildcard DNS
+*   Page Rules
+*   Redirect Rules
 
 ## How it works
 
