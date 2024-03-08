@@ -43,7 +43,7 @@ PAC files are usually hosted in a centralized location where all of the devices 
 
 For detailed instructions on creating a PAC file, refer to [Enable Gateway proxy with PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/).
 
-### Deployment and creation best practices
+### Best practices
 
 - Avoid complex logic and nested conditions, as they might slow down processing time.
 - Place frequently accessed URLs and conditions at the top for faster processing.

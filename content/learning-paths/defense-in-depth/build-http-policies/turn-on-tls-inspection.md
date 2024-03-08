@@ -33,7 +33,7 @@ If you already have a source-of-truth certificate that you use for other inspect
 - Assuming the root certificate is already deployed on the relevant fleet of devices, using a single certificate streamlines your IT management.
 - When using Cloudflare Zero Trust as a [comprehensive VPN replacement](/learning-paths/replace-vpn/), your users  may be required to establish a TLS connection with origin servers using certificates not signed by a public CA. To filter this traffic, you'll have the option to "pass through” to these origins while maintaining your security posture.
 - External services like Git workflows or CLI tools rely on an existing certificate store, presenting the same cert in inspection is far less likely to interrupt their traffic flow, although these are things that you may wish to exempt from inspection.
-- If you are using Cloudflare Gateway for Direct Internet Access, egressing traffic to Cloudflare from a network using the [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel, devices behind those tunnels will not be able to leverage HTTP policies that require decrypting TLS unless they have a certificate that matches either your uploaded certificate or the Cloudflare root certificate. It is more likely that your network infrastructure already has your own device certificates deployed, so using your own existing PKI infrastructure for inspection will reduce the steps necessary to better protect services leveraging this use case.
+- If you are using Cloudflare Gateway for Direct Internet Access, egressing traffic to Cloudflare from a network using the [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel, devices behind those tunnels will not be able to leverage HTTP policies that require decrypting TLS unless they have a certificate that matches either your uploaded certificate or the Cloudflare root certificate. It is more likely that your network infrastructure already has your own device certificates deployed, so using your own existing PKI infrastructure for inspection will reduce the steps necessary to better protect services leveraging this use case.
 
 ### 3. Build a baseline Do Not Inspect policy
 
@@ -131,7 +131,7 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 
 If certain devices will be subject to policies but won't have the certificate installed, you'll need to accommodate by creating inverse-logic policies.
 
-For example, if you are using Magic WAN tunnels or the WARP connector to filter your network connected devices typically not all devices connecting through will have the relevant certificate installed. For those devices you should explicitly exempt TLS decryption for the source network IP range from which that traffic will be originating.
+For example, if you are using Magic WAN tunnels or the WARP Connector to filter your network connected devices typically not all devices connecting through will have the relevant certificate installed. For those devices you should explicitly exempt TLS decryption for the source network IP range from which that traffic will be originating.
 
 ## Begin using TLS inspection
 
