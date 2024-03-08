@@ -234,7 +234,7 @@ function getCookie(name) {
 }
 
 function handleZarazConsentAPIReady() {
-  if ({{system.device.location.isEUCountry}} === 1) {
+  if (eval({{ system.device.location.isEUCountry }})) {
     zaraz.consent.modal = true
   } else {
     const shouldSendQueuedEvents = !getCookie("cf_consent")
