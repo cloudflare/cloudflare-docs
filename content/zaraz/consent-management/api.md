@@ -227,12 +227,21 @@ You can combine multiple features of Zaraz to effectively disable Consent Manage
 
 ```html
 <script>
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  return value?.split(`; ${name}=`)[1]?.split(";")[0];
+}
+
 function handleZarazConsentAPIReady() {
   if ({{system.device.location.isEUCountry}} === 1) {
     zaraz.consent.modal = true
   } else {
+    const shouldSendQueuedEvents = !getCookie("cf_consent");
     zaraz.consent.setAll(true)
-    zaraz.consent.sendQueuedEvents()
+    if(shouldSendQueuedEvents){
+      zaraz.consent.sendQueuedEvents()
+    }
   }
 }
 
