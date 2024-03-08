@@ -13,7 +13,7 @@ Page load time summary gives you an overview of how long your web page takes to 
 
 Below is a list of all the components you can inspect:
 
-- **Page load**: The total amount of time required to load the page.(Note: The Page load time does not match the sum of the other timings available in Web Analytics. This is because the page load time also includes timings that are not shown. These include Pre-DNS-lookup timings and unattributed gaps between timing metrics.)
+- **Page load**: The total amount of time required to load the page. Note that page load time does not correspond to the sum of the other timings available in Web Analytics. This happens because the page load time also includes timings that are not displayed, such as pre-DNS lookup timings and unattributed gaps between timing metrics.
 - **DNS** (`domainLookupEnd` - `domainLookupStart`): How long a DNS query takes. This could appear as zero for reused connections or content stored in the local cache (memory or disk).
 - **TCP** (`connectEnd` - `connectStart`): How long it takes to establish a TCP connection with the server. If using HTTPS, this process includes TLS negotiation time.
 - **Request** (`responseStart` - `requestStart`): The time elapsed between making an HTTP request and receiving the first byte of the response.
