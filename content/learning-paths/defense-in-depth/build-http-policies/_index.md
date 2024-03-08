@@ -13,7 +13,7 @@ After securing your organization's DNS queries and network-level traffic, you ca
 
 By the end of this module, you will be able to:
 
-- Understand when and how to use TLS inspection to decrypt HTTPS traffic
-- Configure and enable Data Loss Prevention to protect your organization's sensitive data
-- Isolate risky traffic with Browser Isolation
-- Add recommended HTTP security policies
+- Understand when and how to use TLS inspection to decrypt HTTPS traffic.
+- Configure and enable Data Loss Prevention to protect your organization's sensitive data.
+- Isolate risky traffic with Browser Isolation.
+- Add recommended HTTP security policies.

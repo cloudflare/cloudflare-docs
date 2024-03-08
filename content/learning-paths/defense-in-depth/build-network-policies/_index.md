@@ -13,4 +13,4 @@ After creating policies to secure your organization's DNS queries, you can add n
 
 By the end of this module, you will be able to:
 
-- Add recommended network security policies
+- Add recommended network security policies.
