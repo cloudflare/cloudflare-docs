@@ -23,7 +23,7 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 
 1. **Client upload**: Send POST request with documents to API endpoint.
 2. **Input processing**: Process incoming request using [Workers](/workers/) and send messages to [Queues](/queues/) to add processing backlog.
-3. **Batch processing**: Use [Queues](/queues/) to trigger a [consumer](queues/reference/how-queues-works/#consumers) that process input documents in batches to prevent downstream overload.
+3. **Batch processing**: Use [Queues](/queues/) to trigger a [consumer](/queues/reference/how-queues-works/#consumers) that process input documents in batches to prevent downstream overload.
 4. **Embedding generation**: Generate embedding vectors by calling [Workers AI](/workers-ai/) [text embedding models](/workers-ai/models/#text-embeddings) for the documents.
 5. **Vector storage**: Insert the embedding vectors to [Vectorize](/vectorize/).
 6. **Document storage**: Insert documents to [D1](/d1/) for persistent storage.
