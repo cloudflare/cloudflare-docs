@@ -59,11 +59,15 @@ it("dispatches fetch event", async () => {
 });
 ```
 
+When using `SELF` for integration tests, your worker code runs in the same context as the test runner. This means you can use global mocks to control your worker, but also means your worker uses the same subtly different module resolution behavior provided by Vite. 
+
+Usually this isn't a problem, but if you'd like to run your worker in a fresh environment that's as close to production as possible, using an auxiliary worker may be a good idea - although auxiliary Workers have some DX limitations.
+
 ### Testing via auxilliary workers
 
 It's also possible to configure Workers for integration testing via `vitest.config.js`. An example config file can be seen [here](https://github.com/cloudflare/workers-sdk/blob/bcoll/vitest-pool-workers-examples/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary/vitest.config.ts).
 
-The Worker can then be referenced like this: 
+The Worker can then be referenced like this:
 
 ```js
 ---
@@ -76,7 +80,16 @@ it("dispatches fetch event", async () => {
 });
 ```
 
-This method is useful when you're testing multiple workers.
+Instead of running the Worker-under-test in the same Worker as the test runner like `SELF`, this example defines the Worker-under-test as an _auxiliary_ Worker. This means the Worker runs in a separate isolate to the test runner, with a different global scope. The Worker-under-test runs in an environment closer to production, but Vite transformations and hot-module-reloading aren't applied to the Worker—you must compile your TypeScript to JavaScript beforehand.
+
+Auxiliary workers also cannot be configured from `wrangler.toml` files—you must use Miniflare `WorkerOptions` in `vite.config.ts`.
+
+{{<Aside type="note">}}
+
+This method can be useful when you're testing multiple workers. You can define multiple Workers by different names in `vitest.config.js` and reference them via `env`.
+
+{{</Aside>}}
+
 
 ## Wrangler's `unstable_dev()` API
 

@@ -50,7 +50,7 @@ With the Workers Vitest integration there is no need to stop a Worker via `worke
 
 ## Importing Wrangler Config
 
-Via the `unstable_dev` API, users can reference a `wrangler.toml` config file by adding it as an option like this:
+Via the `unstable_dev` API, you can reference a `wrangler.toml` config file by adding it as an option like this:
 
 ```js
 ---
