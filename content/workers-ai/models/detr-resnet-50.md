@@ -13,6 +13,8 @@ model:
   properties:
     - property_id: "beta"
       value: "true"
+    - property_id: "constellation_config"
+      value: "{}"
 task_type: "object-detection"
 model_display_name: "detr-resnet-50"
 layout: "model"
