@@ -17,12 +17,22 @@ Using the Consent API, you can integrate Zaraz Consent preferences with an exter
 
 ## Events
 
-### `Zaraz Consent API Ready`
+### `Consent API Ready`
 It can be useful to know when the Consent API is fully loaded on the page so that code interacting with its methods and properties is not called prematurely.
 
 ```js
 document.addEventListener("zarazConsentAPIReady", () => {
   // do things with the Consent API
+});
+
+```
+
+### `Consent Choices Updated`
+This event is fired every time the user makes changes to their consent preferences. It can be used to act on changes to the consent, for example when updating a tool with the new consent preferences.
+
+```js
+document.addEventListener("zarazConsentChoicesUpdated", () => {
+  // read the new consent preferences using `zaraz.consent.getAll();` and do things with it
 });
 
 ```
@@ -234,7 +244,7 @@ function getCookie(name) {
 }
 
 function handleZarazConsentAPIReady() {
-  if ({{system.device.location.isEUCountry}} === 1) {
+  if ('{{system.device.location.isEUCountry}}' === 1) {
     zaraz.consent.modal = true
   } else {
     const shouldSendQueuedEvents = !getCookie("cf_consent")
@@ -254,4 +264,4 @@ if (zaraz.consent?.APIReady) {
 </script>
 ```
 
-By letting this Custom HTML tool to run without consent requirements, the modal will appear to all EU consent, while for other visitors consent will be automatically granted. The `{{ system.device.location.isEUCountry }}` property will be `1` if the visitor is from an EU country and `0` otherwise. You can use any other property or variable to customize the Consent Management behavior in a similar manner, such as `{{ system.device.location.country }}` to restrict consent checks based on country code.
+By letting this Custom HTML tool to run without consent requirements, the modal will appear to all EU visitors, while for other visitors consent will be automatically granted. The `{{ system.device.location.isEUCountry }}` property will be `1` if the visitor is from an EU country and `0` otherwise. You can use any other property or variable to customize the Consent Management behavior in a similar manner, such as `{{ system.device.location.country }}` to restrict consent checks based on country code.
