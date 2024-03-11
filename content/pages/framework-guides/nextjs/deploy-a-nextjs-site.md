@@ -295,8 +295,9 @@ The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to r
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
-## Debugging
+## Troubleshooting
 
+The following section presents a common mistakes and issues that developer might encounter when developing a Next.js application using `next-on-pages`.
 
 ### Edge runtime
 
