@@ -31,7 +31,7 @@ zaraz.set("google_consent_default",  {
 })
 ```
 
-After the above code is executed, the consent status will be saved to localStorage and will be included with every subsequent Zaraz event.
+After the above code is executed, the consent status will be saved to `localStorage` and will be included with every subsequent Zaraz event.
 
 ### Updating the consent status
 
