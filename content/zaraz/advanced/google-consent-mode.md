@@ -6,7 +6,7 @@ weight: 4
 
 # Google Consent Mode
 
-### Background
+## Background
 
 [Google Consent Mode](https://developers.google.com/tag-platform/security/concepts/consent-mode) is used by Google tools to manage consent regarding the usage of private data and Personally Identifiable Information (PII). Zaraz provides automatic support for Consent Mode v2, as well as manual support for Consent Mode v1.
 
