@@ -214,6 +214,7 @@
 /constellation/ /workers-ai/ 301
 
 # D1
+/d1/changelog /d1/platform/changelog/ 301
 /d1/client-api/ /d1/build-databases/query-databases/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
