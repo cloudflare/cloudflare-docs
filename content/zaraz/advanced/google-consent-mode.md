@@ -10,7 +10,7 @@ weight: 4
 
 [Google Consent Mode](https://developers.google.com/tag-platform/security/concepts/consent-mode) is used by Google tools to manage consent regarding the usage of private data and Personally Identifiable Information (PII). Zaraz provides automatic support for Consent Mode v2, as well as manual support for Consent Mode v1.
 
-Note that you can also use Google Analytics and Google Ads without cookies by selecting **Permissions** and disabling **Access client key-value store**.
+You can also use Google Analytics and Google Ads without cookies by selecting **Permissions** and disabling **Access client key-value store**.
 
 ---
 
