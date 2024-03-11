@@ -283,15 +283,25 @@ To install the Cloudflare certificate to Chrome manually:
 2. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
 3. Select **Manage certificates**.
 4. Go to **Authorities**. Select **Import**.
-5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded and select **Open**.
-6. In the dialog box, enable **Trust this certificate for identifying websites**, **Trust this certificate for identifying email users**, and **Trust this certificate for identifying software makers**. Select **OK**.
+5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded.
+6. In the dialog box, turn on _Trust this certificate for identifying websites_, _Trust this certificate for identifying email users_, and _Trust this certificate for identifying software makers_. Select **OK**.
 7. To verify the certificate was installed and trusted, locate it in **Authorities**.
 
 For information on installing the Cloudflare certificate for organizations, refer to [Google's Chrome Enterprise and Education documentation](https://support.google.com/chrome/a/answer/3505249).
 
 #### Firefox
 
-If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, refer to this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
+To install the Cloudflare certificate to Firefox manually:
+
+1. Download the [Cloudflare certificate](/cloudflare-one/static/Cloudflare_CA.pem) in `.pem` format.
+2. In Firefox, go to **Settings** > **Privacy & Security**.
+3. In **Security**, select **Certificates** > **View Certificates**.
+4. In **Authorities**, select **Import**.
+5. In the file open dialog, choose the `Cloudflare_CA.pem` file you downloaded.
+6. In the dialog box, turn on _Trust this CA to identify websites_ and _Trust this CA to identify email users_. Select **OK**.
+7. To verify the certificate was installed and trusted, locate it in the table under **Cloudflare**.
+
+For information on installing the Cloudflare certificate for organizations, refer to this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
 
 ### Python
 
