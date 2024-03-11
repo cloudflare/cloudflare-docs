@@ -46,6 +46,7 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 | Driver               | Documentation              | Minimum Version Required |
 | -------------------- | -------------------------- | ------------------------ |
 | node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |
+| Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |
 
