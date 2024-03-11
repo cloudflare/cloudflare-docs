@@ -1,13 +1,12 @@
 ---
 title: Meet Us
 pcx_content_type: get-started
+hidden: true
 ---
 
-
+[comment]: <> (This is a temporary event page)
 
 # Meet Us
-
-{{/* This is a temporary event page */}}
 
 ## In Person
 
