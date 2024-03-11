@@ -18,7 +18,7 @@ You can also use Google Analytics and Google Ads without cookies by selecting **
 
 Consent Mode v2 specifies a "default" consent status that is usually set when the session starts, and an "updated" status that is set when the visitor configures their consent preferences. Consent Mode v2 will turn on automatically when the correct event properties are available, meaning there is no need to change any settings in the respective tools or their actions.
 
-### Setting default consent status
+### Set the default consent status
 
 Set the default consent status with the reserved `google_consent_default` property:
 
