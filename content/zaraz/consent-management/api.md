@@ -17,12 +17,22 @@ Using the Consent API, you can integrate Zaraz Consent preferences with an exter
 
 ## Events
 
-### `Zaraz Consent API Ready`
+### `Consent API Ready`
 It can be useful to know when the Consent API is fully loaded on the page so that code interacting with its methods and properties is not called prematurely.
 
 ```js
 document.addEventListener("zarazConsentAPIReady", () => {
   // do things with the Consent API
+});
+
+```
+
+### `Consent Choices Updated`
+This event is fired every time the user makes changes to their consent preferences. It can be used to act on changes to the consent, for example when updating a tool with the new consent preferences.
+
+```js
+document.addEventListener("zarazConsentChoicesUpdated", () => {
+  // read the new consent preferences using `zaraz.consent.getAll();` and do things with it
 });
 
 ```
