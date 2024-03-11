@@ -38,7 +38,7 @@ The `feathers-kysely` database adapter follows the FeathersJS Query Syntax stand
 * [feathers-kysely on GitHub](https://github.com/marshallswain/feathers-kysely)
 
 ### Drizzle ORM
-Drizzle is a headless TypeScript ORM with a head. Runs on Node, Bun and Deno. Lives on the Edge and yes, it's a JavaScript ORM too! It comes with a drizzle-kit CLI companion for automatic SQL migrations generation. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
+Drizzle is a headless TypeScript ORM with a head which runs on Node, Bun and Deno. Drizzle ORM lives on the Edge and it is a JavaScript ORM too. It comes with a drizzle-kit CLI companion for automatic SQL migrations generation. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
 
 * [Website](https://orm.drizzle.team)
 * [Docs](https://orm.drizzle.team/docs)
