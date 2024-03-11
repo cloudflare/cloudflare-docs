@@ -35,7 +35,7 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 
 ## Privacy
 
-Zaraz offers privacy settings you can turn on, such as:
+Zaraz offers privacy settings you can configure, such as:
 
 - **Remove URL query parameters**: Removes all query parameters from URLs. For example, `https://example.com/?q=hello` becomes `https://example.com/`.
 
@@ -44,6 +44,8 @@ Zaraz offers privacy settings you can turn on, such as:
 - **Clean User Agent strings**: Clear sensitive information from the User Agent string by removing information such as operating system version, extensions installed, among others.
 
 - **Remove external referrers**: Hides the page referrers URL if the hostname is different from the website's.
+
+- **Cookie domain**: Choose the domain on which Zaraz will set your tools' cookies. By default, Zaraz will attepmt to save the cookies on highest-level domain possible, meaning that if your website is on `foo.example.com`, the cookies will be saved on `example.com`. You can change this behavior and configure the cookies to be saved on `foo.example.com` by entering a custom domain here.
 
 ## Injection
 
