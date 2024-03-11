@@ -18,6 +18,7 @@ We are at [Nvidia GTC](https://www.cloudflare.com/nvidia-gtc-2024/?utm_medium=or
 
 ## Online
 
+- Visit our [virtual booth for more resources](https://www.nvidia.com/gtc/sponsors/#/exhibitor/1705605454927001B4OW?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_virtual)
 - Get started with Cloudflare: [Sign up](https://dash.cloudflare.com/sign-up/workers-and-pages?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_signup)
 - Attend our upcoming webinar | March 26th at 9am PT: [Composable AI - Navigating the Future](https://event.on24.com/wcc/r/4519110/3D531CDBCD648AA5FAB6D374131324E2?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_webinar)
 - Discord: [discord.cloudflare.com](https://discord.cloudflare.com?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_discord)
