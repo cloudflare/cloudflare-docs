@@ -2268,26 +2268,6 @@ You must delete all user Workers in the dispatch namespace before it can be dele
 
 {{</definitions>}}
 
-### `rename`
-
-Rename a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
-```
-
-{{<definitions>}}
-
-- `OLD_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The previous name of the dispatch namespace.
-
-- `NEW_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The new name of the dispatch namespace.
-
-{{</definitions>}}
-
 ---
 
 ## `mtls-certificate`
