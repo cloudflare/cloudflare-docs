@@ -33,7 +33,7 @@ zaraz.set("google_consent_default",  {
 
 After the above code is executed, the consent status will be saved to `localStorage` and will be included with every subsequent Zaraz event.
 
-### Updating the consent status
+### Update the consent status
 
 After the user has provided their consent preferences you can set the new status using the reserved `google_consent_update` property. If you are using the Zaraz Consent Management Platform, you can use the [Consent Choices Updated event](/zaraz/consent-management/api/#consent-choices-updated) to know when to update the Google Consent status.
 
