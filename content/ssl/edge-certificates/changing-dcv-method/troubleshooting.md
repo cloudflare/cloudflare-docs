@@ -29,7 +29,3 @@ Check your settings at your authoritative DNS provider to make sure that:
 ## Rate limiting
 
 {{<render file="_error-rate-limiting.md">}}
-
-## Other errors
-
-Refer to [Certificate issuance errors](/ssl/edge-certificates/troubleshooting/certificate-issuance-errors/) for a list of error messages displayed when a certificate issuance fails and the respective troubleshooting steps.
