@@ -15,6 +15,7 @@ Sample packet captures collects historical data on network traffic that has alre
 Sample packet captures can be viewed in the Cloudflare dashboard. They only include the first 160 bytes of data. This is useful for capturing packet headers, but will not provide detailed packet data. The sample data is collected across all Cloudflare's data centers to build a PCAP file. This allows you to get a global picture of traffic across all data centers.
 
 You should use full packet captures if you need to collect data on packets that pass through your network less frequently.
+
 ## Full packet captures
 
 Full packet captures will actively monitor Cloudflare's network for packets that match the selected filters, and will capture the matching packet data. The matching packet data is saved to a cloud storage bucket that is owned and configured by you.
