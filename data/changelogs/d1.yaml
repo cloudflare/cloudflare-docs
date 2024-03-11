@@ -2,6 +2,13 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+ - publish_date: "2024-03-12"
+    title: Change in `wrangler d1 execute` default
+    description: |-
+      As of `wrangler@3.33.0`, `wrangler d1 execute` and `wrangler d1 migrations apply` now default to using a local database, to match the default behavior of `wrangler dev`.
+
+      It is also now possible to specify one of `--local` or `--remote` to explicitly tell wrangler which environment you wish to run your commands against.
+
   - publish_date: "2024-03-05"
     title: Billing for D1 usage
     description: |-
