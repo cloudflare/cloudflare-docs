@@ -11,7 +11,7 @@ meta:
 Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
 
 {{<Aside type="note">}}
-If you are using the Cloudflare API, the API responses present error messages under `validation_errors`.
+If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
 {{</Aside>}}
 
 ## Blocked validation URL
