@@ -22,7 +22,7 @@ These metrics show changes in the solve rate, widget traffic, and top actions fo
 
 ## Change in Solve Rate
 
-View the history of your website’s widget Solve Rate with Turnstile Analytics. 
+View the history of your website’s widget Solve Rate with Turnstile analytics. 
 
 {{<Aside type="note">}}
 You can filter the data by `Action=(free input)` or by time.
