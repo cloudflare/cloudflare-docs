@@ -56,7 +56,7 @@ You can verify that Zaraz is processing the Consent Mode settings by enabling th
 
 Consent Mode v1 was deprecated by Google in November 2023, but is still supported. Integration with Zaraz is more complex than Consent Mode v2. You do not need to use Consent Mode v1 if you have implemented Consent Mode v2.
 
-### Setting up
+### Set up Consent Mode v1
 
 Configuring Consent Mode v1 is done manually for each tool. Go to the tool page and select **Settings**. Select **Add field**, and select **Consent Mode** from the drop-down menu. Then, select **Confirm**.
 
