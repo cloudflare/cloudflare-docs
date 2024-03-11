@@ -15,7 +15,7 @@ _build:
 
 ### Definitions
 1. Rows read measure how many rows a query reads (scans), regardless of the size of each row. For example, if you have a table with 5000 rows and run a `SELECT * FROM table` as a full table scan, this would count as 5,000 rows read. A query that filters on an [unindexed column](/d1/build-databases/use-indexes/) may return fewer rows to your Worker, but is still required to read (scan) more rows to determine which subset to return.
-2. Rows written also includes any rows deleted. A `DELETE * FROM <table>` on a table with 10,000 rows would count as 10,000 rows written and 10,000 rows read (scanned).
+2. Rows written also include any rows deleted. A `DELETE * FROM <table>` on a table with 10,000 rows would count as 10,000 rows written and 10,000 rows read (scanned).
 3. Rows written measure how many rows were written to D1 database. A query that `INSERT` 10 rows into a `users` table would count as 10 rows written.
 4. Row size or the number of columns in a row does not impact how rows are counted. A row that is 1 KB and a row that is 100 KB both count as one row.
 5. Defining [indexes](/d1/build-databases/use-indexes/) on your table(s) reduces the number of rows read by a query when filtering on that indexed field. For example, if the `users` table has an index on a timestamp column `created_at`, the query `SELECT * FROM users WHERE created_at > ?1` would only need to read a subset of the table.
