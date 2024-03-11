@@ -196,7 +196,7 @@ Local and remote bindings can be accessed using the [`getRequestContext` functio
 ```js
 ---
 filename: app/api/hello/route.js
-highlight: [1, 7]
+highlight: [1, 9]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
@@ -221,7 +221,7 @@ export async function GET(request) {
 ```ts
 ---
 filename: app/api/hello/route.ts
-highlight: [1, 7]
+highlight: [1, 9]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
