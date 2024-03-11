@@ -14,7 +14,7 @@ API Shield’s JWT Validation stops JWT replay attacks and JWT tampering by cryp
 
 Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for JWT Validation to protect them.
 
-A JWT Validation configuration consists of creating a Token Validation Configuration by adding your JWT signer’s public keys and a JWT Validation Rule by specifying which hostnames and endpoints should be included for validation.
+A JWT Validation configuration consists of creating a Token Validation Configuration by adding your JWT signer’s public JSON Web Key Set (JWKS) and a JWT Validation Rule by specifying which hostnames and endpoints should be included for validation.
 
 ### Add a Token Validation Configuration
 
@@ -25,11 +25,9 @@ A JWT Validation configuration consists of creating a Token Validation Configura
 5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
 6. Copy and paste your JWT issuer’s public key(s).
 
-{{<Aside type="note">}}
-Each JWT issuer typically publishes public keys for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.
-{{</Aside>}}
+Each JWT issuer typically publishes public keys (JWKS) for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.
 
-To automatically keep your keys up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
+To automatically keep your JWKS up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 
 ### Add a JWT Validation Rule
 
