@@ -352,6 +352,47 @@ filename: app/my-example-page/[slug]/page.jsx
 // ...
 ```
 
+#### Top Level `getRequestContext`
+
+The `getRequestContext` function can't be called at the top level of a route file or in any manner that triggers the function call as part of the file's initialization.
+
+In other words `getRequestContext` must be called inside the request handling process logic and not in a global/unconditional manner that gets triggered as soon as the file is imported.
+
+For example the following represents an erroneous usage of `getRequestContext`:
+
+```js
+---
+filename: app/api/myvar/route.js
+highlight: [5]
+---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+const myVariable = getRequestContext().env.MY_VARIABLE
+
+export async function GET(request) {
+  return new Response(myVariable)
+}
+```
+
+which can be fixed for example in the following way:
+
+```js
+---
+filename: app/api/myvar/route.js
+highlight: [6]
+---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+export async function GET(request) {
+  const myVariable = getRequestContext().env.MY_VARIABLE
+  return new Response(myVariable)
+}
+```
+
 ### Pages router
 
 #### `getStaticPaths`
