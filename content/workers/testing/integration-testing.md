@@ -1,12 +1,12 @@
 ---
-title: Integration Testing
+title: Integration testing
 weight: 3
 pcx_content_type: concept
 meta:
   description: Test multiple units of your Worker working together.
 ---
 
-# Integration Testing
+# Integration testing
 
 Integration tests test multiple units of your Worker together by sending HTTP requests to your Worker and asserting on the HTTP responses. As an example, consider the following Worker:
 
@@ -28,7 +28,7 @@ export default {
 }
 ```
 
-An integration test might look like...
+An integration test for this Worker might look like the following example:
 
 ```js
 // Start Worker HTTP server on port 8787 running `index.mjs` then...
@@ -37,15 +37,15 @@ const response = await fetch("http://localhost:8787/?a=1&b=2");
 assert((await response.text()) === "3");
 ```
 
-Here, instead of importing the `add` function as a unit test would do, you make a direct call to the endpoint, testing that the Worker responds at the endpoint with the appropriate response.
+In the above example, instead of importing the `add` function as a unit test would do, you make a direct call to the endpoint, testing that the Worker responds at the endpoint with the appropriate response.
 
-## Vitest Integration
+## Vitest integration
 
-The recommended way to write integration tests for your Workers is by using our [custom Vitest integration](/workers/testing/vitest/get-started/). Vitest can be configured to run integrations against a single worker or multiple workers.
+The recommended way to write integration tests for your Workers is by using [the Workers Vitest integration](/workers/testing/vitest/get-started/). Vitest can be configured to run integrations against a single Worker or multiple Workers.
 
 ### Testing via `SELF`
 
-If testing a single worker, you can use the `SELF` fetcher provided by the [`@cloudflare/test` API](/workers/testing/vitest-integration/test-apis/). 
+If testing a single Worker, you can use the `SELF` fetcher provided by the [`@cloudflare/test` API](/workers/testing/vitest-integration/test-apis/). 
 
 ```js
 ---
@@ -63,11 +63,11 @@ When using `SELF` for integration tests, your worker code runs in the same conte
 
 Usually this isn't a problem, but if you'd like to run your worker in a fresh environment that's as close to production as possible, using an auxiliary worker may be a good idea - although auxiliary Workers have some DX limitations.
 
-### Testing via auxilliary workers
+### Testing via auxiliary Workers
 
-It's also possible to configure Workers for integration testing via `vitest.config.js`. An example config file can be seen [here](https://github.com/cloudflare/workers-sdk/blob/bcoll/vitest-pool-workers-examples/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary/vitest.config.ts).
+It is also possible to configure Workers for integration testing via `vitest.config.js`. An [example `vitest.config.js` configuration file](https://github.com/cloudflare/workers-sdk/blob/bcoll/vitest-pool-workers-examples/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary/vitest.config.ts) on GitHub.
 
-The Worker can then be referenced like this:
+The Worker can then be referenced like the following example:
 
 ```js
 ---
@@ -82,7 +82,7 @@ it("dispatches fetch event", async () => {
 
 Instead of running the Worker-under-test in the same Worker as the test runner like `SELF`, this example defines the Worker-under-test as an _auxiliary_ Worker. This means the Worker runs in a separate isolate to the test runner, with a different global scope. The Worker-under-test runs in an environment closer to production, but Vite transformations and hot-module-reloading aren't applied to the Worker—you must compile your TypeScript to JavaScript beforehand.
 
-Auxiliary workers also cannot be configured from `wrangler.toml` files—you must use Miniflare `WorkerOptions` in `vite.config.ts`.
+Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) in `vite.config.ts`.
 
 {{<Aside type="note">}}
 
@@ -93,7 +93,7 @@ This method can be useful when you're testing multiple workers. You can define m
 
 ## Wrangler's `unstable_dev()` API
 
-If you do not want to use Vitest and would like to write integration tests for a single worker, consider using [Wrangler's `unstable_dev()` API](/workers/wrangler/api/#unstable_dev). This allows you to start an HTTP server similar to `wrangler dev` that you can send HTTP requests to. `unstable_dev()` will automatically load options from your Wrangler configuration file. Note this is an experimental API subject to breaking changes.
+If you do not want to use Vitest and would like to write integration tests for a single Worker, consider using [Wrangler's `unstable_dev()` API](/workers/wrangler/api/#unstable_dev). `unstable_dev` allows you to start an HTTP server similar to [`wrangler dev`](/workers/wrangler/commands/#dev) that you can send HTTP requests to. `unstable_dev()` will automatically load options from your Wrangler configuration file. Note that `unstable_dev` is an experimental API subject to breaking changes.
 
 ```js
 import assert from "node:assert";
@@ -110,7 +110,7 @@ try {
 
 {{<Aside type="note">}}
 
-If you have been using `unstable_dev()` for integration testing and want to migrate to our Vitest integration, read this [migration guide](/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/) for more information.
+If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/) for more information.
 
 {{</Aside>}}
 

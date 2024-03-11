@@ -6,7 +6,7 @@ weight: 9
 
 # Testing
 
-This section provides an overview of the different types of tools that can be used for testing and debugging Workers.
+Review the tools available for testing and debugging Workers.
 
 {{<directory-listing showDescriptions="true">}}
 
@@ -20,7 +20,7 @@ This section provides an overview of the different types of tools that can be us
 | Bindings directly in tests                | ✅               | ❌               | ✅                   |
 | Isolated per-test storage                 | ✅               | ❌               | ❌                   |
 | Outbound request mocking                  | ✅               | ❌               | ✅                   |
-| Multiple Workers support                  | ✅               | 🚧[^1]           | ✅                   |
+| Multiple Worker support                   | ✅               | 🚧[^1]           | ✅                   |
 | Direct access to Durable Object instances | ✅               | ❌               | ❌                   |
 | Run Durable Object alarms immediately     | ✅               | ❌               | ❌                   |
 | List Durable Objects                      | ✅               | ❌               | ❌                   |
