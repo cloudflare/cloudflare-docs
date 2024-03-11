@@ -221,8 +221,9 @@ export async function GET(request) {
 ```ts
 ---
 filename: app/api/hello/route.ts
-highlight: [1, 9]
+highlight: [2, 10]
 ---
+import type { NextRequest } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const runtime = 'edge'
