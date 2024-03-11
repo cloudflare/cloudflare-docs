@@ -50,7 +50,7 @@ Performs a dynamic URL redirect, where the target URL is determined by an expres
 
 A dynamic URL redirect has the following configuration parameters:
 
-* **Expression**: An expression that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response.  The expression can be built using [Transformation functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions/#transformation-functions).  Our [Fields reference](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#standard-fields) can also be helpful for building the expression.
+* **Expression**: An [expression](/ruleset-engine/rules-language/expressions/) that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response. Refer to the [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) you can use in expressions.
 
 * **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
 
@@ -75,13 +75,5 @@ The full syntax of the `"action_parameters"` field for a redirect rule performin
 The only required parameter is `<DYNAMIC_URL_EXPRESSION>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
-
-{{</details>}}
-
-{{<details header="Example Expressions">}}
-
-Change example.org to to foo.com: `regex_replace(http.request.full_uri, "example.org", "foo.com")`
- * https://example.org/ to https://foo.com/
- * https://example.org/something/index.html to https://foo.com/something/index.html
 
 {{</details>}}
