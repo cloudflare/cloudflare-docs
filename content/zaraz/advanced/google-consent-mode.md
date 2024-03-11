@@ -48,7 +48,7 @@ zaraz.set("google_consent_update",  {
 
 All subsequent events will include the information about both the default and the updated consent status.
 
-### Verifying
+### Verify if Zaraz is processing Consent Mode v2
 
 You can verify that Zaraz is processing the Consent Mode settings by enabling the [Zaraz Debugger](/zaraz/web-api/debug-mode/). Server-side requests to Google Analytics and Google Ads should include the `gcd` parameter.
 
