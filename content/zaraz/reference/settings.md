@@ -45,7 +45,7 @@ Zaraz offers privacy settings you can configure, such as:
 
 - **Remove external referrers**: Hides the page referrers URL if the hostname is different from the website's.
 
-- **Cookie domain**: Choose the domain on which Zaraz will set your tools' cookies. By default, Zaraz will attepmt to save the cookies on highest-level domain possible, meaning that if your website is on `foo.example.com`, the cookies will be saved on `example.com`. You can change this behavior and configure the cookies to be saved on `foo.example.com` by entering a custom domain here.
+- **Cookie domain**: Choose the domain on which Zaraz will set your tools' cookies. By default, Zaraz will attempt to save the cookies on the highest-level domain possible, meaning that if your website is on `foo.example.com`, the cookies will be saved on `example.com`. You can change this behavior and configure the cookies to be saved on `foo.example.com` by entering a custom domain here.
 
 ## Injection
 
