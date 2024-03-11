@@ -3,11 +3,13 @@ title: Meet Us
 pcx_content_type: get-started
 ---
 
+{{/* This is a temporary event page */}}
+
 # Meet Us
 
 ## In Person
 
-We are at [Nvidia GTC](https://www.cloudflare.com/nvidia-gtc-2024/?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_general), come swing by our booth!
+We are at [Nvidia GTC](https://www.cloudflare.com/nvidia-gtc-2024/?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_general), catch our talks and come swing by our booth!
 
 - Schedule a meeting with us: [Book now](https://www.cloudflare.com/nvidia-gtc-2024/?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_meeting)
 - Cloudflare After Dark | Tuesday, March 19 at 6pm-9pm: [RSVP](https://nvidiagtc2024cloudflareafterda.splashthat.com/?utm_medium=organic-social&utm_source=promo&utm_campaign=2024-q1-dev-namer-general&utm_term=qr_rsvp)
