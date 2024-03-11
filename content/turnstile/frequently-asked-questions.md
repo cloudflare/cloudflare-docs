@@ -177,16 +177,6 @@ You can find special sitekeys to be used for testing in the [testing](/turnstile
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Is there an API to create or manage Turnstile widgets?" >}}
-
-{{<faq-answer>}}
-
-Yes, you can refer to the [Turnstile API documentation](/api/operations/accounts-turnstile-widgets-list) to manage your widgets.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=2 text="I am seeing a 401 error in your console during a Turnstile security check, is this a problem?" >}}
 {{<faq-answer>}}
 
