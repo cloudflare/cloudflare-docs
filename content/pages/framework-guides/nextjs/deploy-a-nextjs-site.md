@@ -200,7 +200,7 @@ highlight: [1, 7]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 // ...
 
@@ -225,7 +225,7 @@ highlight: [1, 7]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 // ...
 
@@ -299,7 +299,7 @@ After you have previewed your application locally, you can deploy it to Cloudfla
 
 ### Edge runtime
 
-All server-side routes in your Next.js project must be configured as "Edge" runtime routes, when running on Cloudflare Pages. You must add `export const runtime = 'edge';` to each individual server-side route.
+All server-side routes in your Next.js project must be configured as "Edge" runtime routes, when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
 
 
 {{<Aside type="note">}}
@@ -321,13 +321,13 @@ To prevent this incompatibility, Cloudflare recommends to always provide a custo
 filename: (src/)app/not-found.(jsx|tsx)
 ---
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 export default async function NotFound() {
     // ...
     return (
         // ...
-    );
+    )
 }
 ```
 
@@ -347,7 +347,7 @@ In such cases you need to instruct Next.js not to do so by specifying a `false` 
 ---
 filename: app/my-example-page/[slug]/page.jsx
 ---
-+ export const dynamicParams = false;
++ export const dynamicParams = false
 
 // ...
 ```
@@ -413,7 +413,7 @@ export async function getStaticPaths() {
     return {
         paths,
 +       fallback: false,
-	};
+	}
 }
 ```
 
