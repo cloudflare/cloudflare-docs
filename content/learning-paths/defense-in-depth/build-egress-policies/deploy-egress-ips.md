@@ -33,4 +33,4 @@ You may have use cases in which specific groups of your users may need to change
 
 [screenshot of policy and user experience]
 
-For more information, refer to the [tutorial](#).
+For more information, refer to our [tutorial for user selectable egress IPs](/cloudflare-one/tutorials/user-selectable-egress-ips).
