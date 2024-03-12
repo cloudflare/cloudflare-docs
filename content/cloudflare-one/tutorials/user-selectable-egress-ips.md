@@ -1,12 +1,12 @@
 ---
-updated: 2024-02-07
+updated: 2024-03-11
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
-title: Allow users to change their egress IP address using virtual networks and egress policies
+title: Use virtual networks to change user egress IPs
 ---
 
-# Allow users to change their egress IP address using virtual networks and egress policies
+# Use virtual networks to change user egress IPs
 
 {{<Aside type="note">}}
 
@@ -14,7 +14,7 @@ Only available on Enterprise plans.
 
 {{</Aside>}}
 
-This tutorial gives administrators an easy way to allow their end-users to change their egress IP address between any of your assigned dedicated egress IP addresses directly from their user interface. This is valuable in QA and other similar scenarios in which users need to constantly switch between their local egress, and imitating the behavior or specific other egress locations.
+This tutorial gives administrators an easy way to allow their users to change their egress IP address between any of your assigned dedicated egress IP addresses directly from their WARP client. Changing egress IPs may be useful in quality assurance (QA) and other similar scenarios in which users both use their local egress location and either switch to or simulate other remote locations.
 
 {{<tutorial>}}
 
@@ -22,9 +22,9 @@ This tutorial gives administrators an easy way to allow their end-users to chang
 
 Make sure you have:
 
-- [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices
-- [Set up `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device (Steps 1 and 2)
-- Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
+- [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
+- [Set up a tunnel using `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device.
+- Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 {{</tutorial-prereqs>}}
 
