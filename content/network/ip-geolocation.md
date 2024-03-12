@@ -14,7 +14,7 @@ IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-req
 
 ## Add IP geolocation information
 
-The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
+The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/#add-visitor-location-headers). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
 
 If you only want the request header for the visitor's country, you can enable **IP Geolocation**.
 
@@ -25,7 +25,7 @@ To enable **IP Geolocation** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Go to **Network**.
-3.  For **IP Geolocation**, switch the toggle to **Off**.
+3.  For **IP Geolocation**, switch the toggle to **On**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

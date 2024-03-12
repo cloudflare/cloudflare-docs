@@ -2,7 +2,6 @@
 title: Compression Rules
 pcx_content_type: concept
 weight: 8
-layout: single
 ---
 
 # Compression Rules

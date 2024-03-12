@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Dedicated egress IPs
-layout: single
 weight: 1
 ---
 
@@ -11,7 +10,9 @@ weight: 1
 Only available on Enterprise plans.
 {{</Aside>}}
 
-Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare’s network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities. An account can have any number of additional dedicated egress IPs.
+Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare’s network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities.
+
+An account can have any number of additional dedicated egress IPs. To request additional dedicated egress IPs, contact your account team to schedule a service window.
 
 ## Enable egress IPs
 
@@ -38,7 +39,7 @@ When testing against another origin, you may see either an IPv4 or IPv6 address.
 ## Limitations
 
 - [DNS queries and tunnel-backed origins](#unsupported-traffic) do not use dedicated egress IPs.
-- [IP geolocation](#ip-geolocation) may take up to four weeks to update.
+- [IP geolocation](#ip-geolocation) will take at least six weeks to update.
 - [Physical egress location](#egress-location) varies depending on whether the connection is over IPv4 or IPv6.
 
 ### Unsupported traffic
@@ -47,14 +48,23 @@ Dedicated egress IPs do not apply to:
 
 - DNS queries resolved through Gateway
 - Zero Trust networks connected via Cloudflare Tunnel or Magic WAN
+- ICMP traffic (such as `ping`)
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
+
+### Traffic resilience
+
+To improve traffic resilience, assign your dedicated egress IPs to different Cloudflare data center locations. If you have multiple IPs in the same city, choose different data centers within that city. For more information, contact your account team.
+
+When creating egress policies with dedicated egress IPs, set your secondary IPv4 address to either _Default Cloudflare egress_ or a Cloudflare location different from your primary IPv4 address. If the physical location of your primary IPv4 address is not available, traffic will be routed to either the location closest to the user (_Default Cloudflare egress_ option) or another location of your choice.
 
 ### IP geolocation
 
 Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
 
-When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process can take anywhere from one week to up to four weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
+When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process will take at least six weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
+
+We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
 
 #### Verify IP geolocation
 

@@ -10,7 +10,7 @@ Administrators can receive an alert when Cloudflare Tunnels in an account change
 
 ## Manage notifications
 
-Tunnel notifications are configured on the [Cloudflare dashboard](https://dash.cloudflare.com/). For more information, refer to [Create a Notification](/notifications/create-notifications/).
+Tunnel notifications are configured on the [Cloudflare dashboard](https://dash.cloudflare.com/). For more information, refer to [Create a notification](/notifications/get-started/#create-a-notification).
 
 ## Available notifications
 

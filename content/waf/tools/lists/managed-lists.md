@@ -2,7 +2,6 @@
 title: Managed Lists
 pcx_content_type: concept
 weight: 3
-layout: single
 ---
 
 # Managed Lists

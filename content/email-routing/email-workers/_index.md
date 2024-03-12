@@ -1,7 +1,6 @@
 ---
 title: Email Workers
 pcx_content_type: concept
-layout: single
 weight: 4
 ---
 
@@ -28,7 +27,7 @@ export default {
 }
 ```
 
-Refer to the [Workers Languages](/workers/learning/languages/) for more information regarding the languages you can use with Workers.
+Refer to the [Workers Languages](/workers/reference/languages/) for more information regarding the languages you can use with Workers.
 
 ## How to use Email Workers
 

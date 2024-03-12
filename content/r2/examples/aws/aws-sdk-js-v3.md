@@ -3,7 +3,7 @@ title: aws-sdk-js-v3
 pcx_content_type: configuration
 ---
 
-# Configure `aws-sdk-js-v3` for R2
+# Configure `aws-sdk-js-v3` for R2 
 
 {{<render file="_keys.md">}}<br>
 
@@ -105,6 +105,8 @@ console.log(
 You can also generate presigned links that can be used to share public read or write access to a bucket temporarily.
 
 ```ts
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+
 // Use the expiresIn property to determine how long the presigned link is valid.
 console.log(
   await getSignedUrl(S3, new GetObjectCommand({Bucket: 'my-bucket-name', Key: 'dog.png'}), { expiresIn: 3600 })

@@ -1,7 +1,7 @@
 ---
 title: Glossary
 pcx_content_type: glossary
-layout: list
+layout: wide
 ---
 
 # Glossary

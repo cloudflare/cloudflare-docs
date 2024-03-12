@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Handlers
-layout: single
 meta:
   description: Methods, such as `fetch()`, on Workers that can receive and process external inputs.
 ---

@@ -28,7 +28,7 @@ $ npx wrangler hyperdrive create $NAME --connection-string="postgres://user:pass
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -98,6 +98,6 @@ export default {
 
 ## Next steps
 
-- Learn more about [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/).
-- Refer to the [troubleshooting guide](/hyperdrive/learning/troubleshooting/) to debug common issues.
-- Understand more about other [storage options](/workers/learning/storage-options/) available to Cloudflare Workers.
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Refer to the [troubleshooting guide](/hyperdrive/reference/troubleshooting/) to debug common issues.
+- Understand more about other [storage options](/workers/platform/storage-options/) available to Cloudflare Workers.

@@ -7,9 +7,13 @@ title: Cloudflare HTTP request headers
 
 Cloudflare passes all HTTP request headers to your origin web server and adds additional headers as specified below.
 
+{{<Aside type="note">}}
+Cloudflare may remove HTTP request headers with names considered invalid [according to NGINX](https://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers) — for example, header names containing a `.` (dot) character.
+{{</Aside>}}
+
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
 
 [^1]: Brotli support between Cloudflare and the origin will be available across all plans by the end of Q4 2023.
 
@@ -90,13 +94,13 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
-Add the [`CF-Ray` header to your origin web server logs](https://support.cloudflare.com/hc/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) to match requests proxied to Cloudflare to requests in your server logs.
+Add the [`CF-Ray` header to your origin web server logs](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) to match requests proxied to Cloudflare to requests in your server logs.
 
 Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 ## CF-IPCountry
 
-The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. 
+The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country.
 
 Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
 
@@ -123,7 +127,7 @@ Currently, this header is a JSON object, containing only one key called “schem
 
 The `CF-Worker` request header is added to an edge Worker subrequest that identifies the host that spawned the subrequest. This is useful when you want to protect yourself against cross-zone worker subrequests. For example: `CF-Worker: example.com`.
 
-You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](https://support.cloudflare.com/hc//articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
+You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
 
 `CF-Worker` is added to all Worker subrequests sent via `fetch()`. It is set to the name of the zone which owns the Worker making the subrequest. For example, a Worker script on route for `foo.example.com/*` from `example.com` will have all subrequests with the header:
 

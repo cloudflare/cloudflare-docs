@@ -41,7 +41,7 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 ### Third-party apps
 
-Identify and get alerted about the third-party apps that have access to at least one service in your Microsoft 365 domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into Shadow IT.
+Identify and get alerted about the third-party apps that have access to at least one service in your Microsoft 365 domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into {{<glossary-tooltip term_id="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">}}shadow IT{{</glossary-tooltip>}}.
 
 | Finding                        | Severity |
 | ------------------------------ | -------- |

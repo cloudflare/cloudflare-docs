@@ -30,7 +30,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/kv/learning/kv-bindings/">}}
+{{<feature header="Bindings" href="/kv/reference/kv-bindings/">}}
 
 Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 

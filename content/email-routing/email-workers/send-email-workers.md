@@ -38,7 +38,7 @@ export default {
  async fetch(request, env) {
    const msg = createMimeMessage();
    msg.setSender({ name: "GPT-4", addr: "<SENDER>@example.com" });
-   msg.setRecipient("<RECIPIENT>@example2.com");
+   msg.setRecipient("<RECIPIENT>@example.com");
    msg.setSubject("An email generated in a worker");
    msg.addMessage({
        contentType: 'text/plain',

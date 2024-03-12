@@ -2,7 +2,6 @@
 title: Analytics
 pcx_content_type: navigation
 weight: 10
-layout: single
 ---
 
 # Analytics

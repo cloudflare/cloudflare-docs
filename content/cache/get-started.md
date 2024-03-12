@@ -8,7 +8,7 @@ meta:
 
 # Get started with Cache
 
-Cloudflare makes customer websites faster by storing a copy of the website’s content on the servers of our globally distributed data centers. Content can be either static or dynamic: static content is “cacheable” or eligible for caching, and dynamic content is “uncacheable” or ineligible for caching. The cached copies of content are stored physically closer to users, optimized to be fast, and do not require recomputing.
+Cloudflare makes customer websites faster by storing a copy of the website's content on the servers of our globally distributed data centers. Content can be either static or dynamic: static content is “cacheable” or eligible for caching, and dynamic content is “uncacheable” or ineligible for caching. The cached copies of content are stored physically closer to users, optimized to be fast, and do not require recomputing.
 
 Cloudflare caches static content based on the following factors:
 
@@ -16,14 +16,14 @@ Cloudflare caches static content based on the following factors:
 * [File extension](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 * Presence of [query strings](/cache/advanced-configuration/query-string-sort/)
 * [Origin cache-control headers](/cache/concepts/cache-control/)
-* Origin headers that indicate [dynamic content](/logs/reference/glossary/#dynamic-content)
+* Origin headers that indicate {{<glossary-tooltip term_id="dynamic content">}}dynamic content{{</glossary-tooltip>}}
 * Page rules that [bypass cache on cookie](/support/third-party-software/content-management-system-cms/caching-html-with-drupal/#set-bypass-cache-on-cookie)
 
 Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/) DNS records.
 
 ## Learn the basics
 
-Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
+Discover the benefits of caching with Cloudflare's CDN and understand the default cache behavior.
 
 - [Understand what is a CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
 - [Understand default cache behavior](/cache/concepts/default-cache-behavior/)
@@ -67,14 +67,14 @@ Review the list of Cloudflare features that function in this manner:
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
 - [Mirage](/speed/optimization/images/mirage/)
-- [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)
-- [Email address obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/)
+- [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)
+- [Email address obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
 - [Bot Management JavaScript Detections](/bots/reference/javascript-detections/)
 
 ## Troubleshoot
 
 Resolve common caching concerns.
 
-- [Learn about Cloudflare's cache response statuses](/cache/concepts/default-cache-behavior/#cloudflare-cache-responses)
+- [Learn about Cloudflare's cache response statuses](/cache/concepts/cache-responses/)
 - [Investigate Cloudflare's cache response with cURL](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl)
 - [Diagnose Always Online issues](/cache/troubleshooting/always-online/)

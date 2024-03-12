@@ -7,7 +7,9 @@ weight: 2
 
 # Content types
 
-The content sections are in prioritized order and should be applied to all new [developers.cloudflare.com](https://developers.cloudflare.com/) products.
+All new [developers.cloudflare.com](https://developers.cloudflare.com/) products should include the required content sections that are listed in the following table. The other sections are available depending on what information users need to successfully use the product.
+
+Templates for each content type are also available in our [Cloudflare-docs GitHub repository](https://github.com/cloudflare/cloudflare-docs/tree/production/static/_templates).
 
 <table>
     <tr>
@@ -39,6 +41,11 @@ The content sections are in prioritized order and should be applied to all new [
         <td><a href="/style-guide/documentation-content-strategy/content-types/reference/">Reference</a></td>
         <td>No</td>
         <td>The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</td>
+    </tr>
+     <tr>
+        <td><a href="/style-guide/documentation-content-strategy/content-types/reference-architecture/">Reference architecture</a></td>
+        <td>No</td>
+        <td>The purpose of a reference architecture is to provide a high-level view of how all or part of the Cloudflare platform is built and how Cloudflare products would fit into a customer's existing infrastructure.</td>
     </tr>
     <tr>
         <td><a href="/style-guide/documentation-content-strategy/content-types/tutorial/">Tutorial</a></td>

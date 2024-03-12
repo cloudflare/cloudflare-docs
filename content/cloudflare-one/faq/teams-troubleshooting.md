@@ -31,7 +31,7 @@ Cloudflare Access requires that the credentials: `same-origin parameter` be adde
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
+To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
 
 ## I see error 526 when browsing to a website.
 
@@ -60,9 +60,9 @@ If none of the above scenarios apply, contact Cloudflare support with the follow
 
 For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
 
-## I see error 504 when browsing to a website.
+## I see error 504 or timeouts when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+Gateway may present an **HTTP response code: 504** error page - or your browser may display generic timeout errors - when a website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
 
 | Selector          | Operator | Value         | Logic | Action |
 | ----------------- | -------- | ------------- | ----- | ------ |
@@ -95,23 +95,6 @@ A browser isolation session is a connection from your local browser to a remote 
 
 This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to Zero Trust. For the integration to work, you will need to configure your identity provider to add the public key.
 
-## I see an error: x509: certificate signed by unknown authority.
-
-This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
-
-- Add the certificate to the system certificate pool.
-- Use the `--origin-ca-pool` flag and specify the path to the certificate.
-- Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
-
-## I see an error 1033 when attempting to run a tunnel.
-
-An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
-
-1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#6-run-the-tunnel)).
-
-For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
-
 ## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
 
 This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/cloudflare-one/identity/users/short-lived-certificates/).
@@ -121,56 +104,26 @@ This error will appear if a certificate has not been generated for the Access ap
 These mobile applications may use {{<glossary-tooltip term_id="certificate pinning">}}certificate pinning{{</glossary-tooltip>}} Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
-## My tunnel fails to authenticate.
-
-To start using Cloudflare Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`. The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
-
-- The public key of the origin certificate for that hostname
-- The private key of the origin certificate for that domain
-- A token that is unique to Cloudflare Tunnel
-
-Those three components are bundled into a single PEM file that is downloaded one time during that login flow. The host certificate is valid for the root domain and any subdomain one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to create DNS records for your domain in Cloudflare.
-
-The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
-
 ## Firefox shows a network protocol violation when I use the WARP client.
 
 If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
-## `cloudflared access` shows an error `websocket: bad handshake`.
+## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
 
-This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin.
-To diagnose this, you should look at the `cloudflared tunnel` logs. A very often root cause is that the `cloudflared tunnel` is unable to proxy to your origin (e.g. because the ingress is mis-configured, or the origin is down, or because the origin HTTPS certificate cannot be validated by `cloudflared tunnel`).
-If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it.
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
 
-There are a few different possible root causes behind the `websocket: bad handshake` error:
-
-- Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
-- WebSockets are not enabled. To enable them, go to `dash.cloudflare.com` > **Network**.
-- Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
-- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
-- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
-
-## My tunnel randomly disconnects.
-
-Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) and contact Support.
-
-## Tunnel connections fail with SSL error.
-
-If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
-
-## Tunnel connections fail with `Too many open files` error.
-
-If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/downloads/system-requirements/#recommended-ulimits) on the machine running `cloudflared`.
+Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
 
-## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
+## WARP on Linux shows `DNS connectivity check failed`.
 
-This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. To solve the issue:
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests.
+
+To solve the issue:
 
 1. Add the following line to `/etc/systemd/resolved.conf`:
 
@@ -178,7 +131,9 @@ This error means that the `systemd-resolved` service on Linux is not allowing WA
 ResolveUnicastSingleLabel=yes
 ```
 
-2. Restart the service:
+2. Make sure that no other DNS servers are configured in `/etc/systemd/resolved.conf`. For example, if the file contains `DNS=X.Y.Z.Q`, comment out the line.
+
+3. Restart the service:
 
 ```sh
 $ sudo systemctl restart systemd-resolved.service
@@ -220,31 +175,3 @@ To disable third-party storage partitioning:
 1. Go to `chrome://flags/#third-party-storage-partitioning`.
 2. Set **Experimental third-party storage partitioning** to _Disabled_.
 3. Select **Relaunch** to apply the change.
-
-## I see `failed to sufficiently increase receive buffer size` in my cloudflared logs.
-
-This buffer size increase is reported by the [quic-go library](https://github.com/quic-go/quic-go) leveraged by [cloudflared](https://github.com/cloudflare/cloudflared). You can learn more about the log message in the [quic-go repository](https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes). This log message is generally not impactful and can be safely ignored when troubleshooting. However, if you have deployed `cloudflared` within a unique, high-bandwidth environment then buffer size can be manually overridden for testing purposes.
-
-To set the maximum receive buffer size on Linux:
-
-1. Create a new file under `/etc/sysctl.d/`:
-
-  ```sh
-  $ sudo vi 98-core-rmem-max.conf
-  ```
-
-2. In the file, define the desired buffer size:
-
-  ```txt
-  net.core.rmem_max=2500000
-  ```
-
-3. Reboot the host machine running `cloudflared`.
-
-4. To validate that these changes have taken effect, use the `grep` command:
-
-  ```sh
-  $ sudo sysctl -a | grep net.core.rmem_max
-  net.core.rmem_max = 2500000
-  ```
-

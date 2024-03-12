@@ -1,7 +1,6 @@
 ---
 title: Get started
 pcx_content_type: get-started
-layout: single
 weight: 3
 meta:
   title: Enabling Cloudflare Web Analytics
@@ -32,7 +31,7 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 
 {{<render file="_web-analytics-proxied-setup.md">}}
 
-Your website is now using Web Analytics through the automatic setup, which is enabled by default. 
+Your website is now using Web Analytics through the automatic setup, which is enabled by default.
 
 To set up Web Analytics manually:
 1. After step 4 (above), expand **Advanced options**.

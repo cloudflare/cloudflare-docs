@@ -30,10 +30,11 @@ Browser Isolation uses WebRTC for low-latency communication between the local br
 
 In order to pass WebRTC traffic, the remoting client must be able to connect to the following IP addresses:
 
-- IPv4 Range: `162.159.201.10 - 162.159.201.255`
-- IPv6 Range: `2606:4700:f2::/48`
+| IP range | Port range | Protocol |
+| -------- | ----- | -------- |
+| IPv4: `162.159.201.10 - 162.159.201.255` </br> IPv6: `2606:4700:f2::/48`        |   10000 - 59999    |  UDP        |
 
-The entire port range of these IP addresses is required. Each remote browser instance is randomly assigned a port, and the port that a user is allocated to will change often and without notice.
+Each remote browser instance is randomly assigned a port, and the port that a user is allocated to will change often and without notice.
 
 {{<Aside type="note">}}
 WebRTC traffic does not flow through proxies specified in local browser HTTP/HTTPS proxy settings. The connecting device needs to be able to directly connect to the WebRTC IP ranges.

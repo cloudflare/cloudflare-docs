@@ -6,7 +6,33 @@ meta:
     description: Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Learn how to configure IPsec or GRE tunnels.
 ---
 
-{{<render file="_tunnel-endpoints.md" withParameters="`169.254.244.0/20`;;Magic Transit;;**Magic Transit** > **Configuration**;;/magic-transit/reference/tunnels/#ipsec-tunnels;;/magic-transit/reference/tunnels/;;/magic-transit/how-to/tunnel-health-checks/;;/magic-transit/reference/tunnel-health-checks/;;/magic-transit/reference/anti-replay-protection/;;unidirectional;;## Network Interconnect (CNI);;Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onboard your traffic to Magic Transit. Refer to [Network Interconnect and Magic Transit](/magic-transit/network-interconnect/) for more information.">}} {{<render file="_mt-egress.md">}}
+# Configure tunnel endpoints
+
+{{<render file="tunnel-endpoints/_tunnel-endpoints.md" withParameters="`169.254.240.0/20`">}}
+
+## Ways to onboard traffic to Cloudflare
+
+### GRE and IPsec tunnels
+
+{{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/">}}
+
+#### Anti-replay protection
+
+{{<render file="tunnel-endpoints/_anti-replay.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/">}}
+
+### Network Interconnect (CNI)
+
+{{<render file="tunnel-endpoints/_cni.md" withParameters="Magic Transit;;[Network Interconnect and Magic Transit](/magic-transit/network-interconnect/)">}}
+
+## Add tunnels
+
+{{<render file="tunnel-endpoints/_add-tunnels.md" withParameters="Magic Transit;;**Magic Transit** > **Configuration**;;/magic-transit/how-to/tunnel-health-checks/;;/magic-transit/reference/tunnel-health-checks/;;/magic-transit/reference/anti-replay-protection/;;unidirectional">}}
+
+## Bidirectional vs unidirectional health checks
+
+{{<render file="tunnel-endpoints/_bi-uni-health-checks.md" withParameters="/magic-transit/reference/tunnel-health-checks/">}}
+
+{{<render file="tunnel-endpoints/_mt-egress.md">}}
 
 ### Legacy health checks system
 

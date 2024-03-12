@@ -37,7 +37,7 @@ export default {
 };
 ```
 
-You can [read key-value pairs from the command line with Wrangler](/kv/platform/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
 
 #### Types
 

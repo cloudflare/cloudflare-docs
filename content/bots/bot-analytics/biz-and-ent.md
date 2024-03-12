@@ -32,7 +32,7 @@ Bot Analytics shows up to 72 hours of data at a time and can display data up to 
 
 Business and Enterprise customers without Bot Management can use Bot Analytics to:
 
-- Understand bot traffic
+- Understand {{<glossary-tooltip term_id="bot">}}bot{{</glossary-tooltip>}} traffic
 - Study recent attacks to find trends and detailed information
 - Learn more about Cloudflare’s detection engines with real data
 

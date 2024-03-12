@@ -125,55 +125,6 @@ No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured from Zero Trust?" >}}
-
-{{<faq-answer>}}
-
-### Ensure that only one instance of `cloudflared` is installed as a service
-
-If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
-
-### Check your DNS records
-
-If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
-
-### View debug logs
-
-Refer to [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
-{{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured through the CLI?" >}}
-
-{{<faq-answer>}}
-
-### View debug logs
-
-Refer to [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
-
-### Check SSL/TLS encryption mode
-
-1.  On the Cloudflare dashboard for your zone, go to **SSL/TLS** > **Overview**.
-1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
-
-When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
-
-### Check location of credentials file
-
-If you encounter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
-
-```sh
-$ cloudflared tunnel run
-2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
-Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
-```
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=2 text="How do I contact support?" >}}
 
 {{<faq-answer>}}

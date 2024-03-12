@@ -35,7 +35,7 @@ addEventListener("email", (event) => {
 
 ## Syntax: ES modules
 
-`EmailEvent` can be handled in Workers functions written using the [ES modules format](/workers/learning/migrate-to-module-workers/) by adding an `email` function to your module's exported handlers:
+`EmailEvent` can be handled in Workers functions written using the [ES modules format](/workers/reference/migrate-to-module-workers/) by adding an `email` function to your module's exported handlers:
 
 ```js
 export default {

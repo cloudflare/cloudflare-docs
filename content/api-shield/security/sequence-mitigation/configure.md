@@ -2,14 +2,14 @@
 title: Configure
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure Sequence Mitigation
 ---
 
 # Configure Sequence Mitigation
 
-You can use Sequence Rules to establish a set of known behavior for API clients. 
+You can use Sequence Rules to establish a set of known behavior for API clients.
 
 For example, you may expect that API requests made during a bank funds transfer could conform to the following order in time:
 
@@ -20,7 +20,7 @@ For example, you may expect that API requests made during a bank funds transfer 
 | 3 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user. |
 | 4 | `POST` | `/api/v1/transferFunds` | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
 
-You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/accounts` before `GET /api/v1/accounts/{account_id}/balance` and that you request `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds`. 
+You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/accounts` before `GET /api/v1/accounts/{account_id}/balance` and that you request `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds`.
 
 Using Sequence Mitigation, you can enforce that request pattern with two new Sequence Mitigation rules.
 
@@ -30,9 +30,9 @@ You can create Sequence Mitigation rules for a sequence even if the sequence is 
 
 You can also set up a negative security model with Sequence Mitigation. See [Configuration](/api-shield/security/sequence-mitigation/configure/#configure) to understand how to distinguish between rule types using the `kind` field.
 
-## Configure 
+## Configure
 
-Configuring Sequence Mitigation is currently available only via API. 
+Configuring Sequence Mitigation is currently available only via API.
 
 ``` json
 ---
@@ -41,7 +41,7 @@ header: Example of a rule object
 {
     "id": "d4909253-390f-4956-89fd-92a5b0cd86d8",
     "title": "<RULE_TITLE>",
-    "kind": "block",
+    "kind": "allow",
     "action": "block",
     "sequence": [
      "0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
@@ -53,15 +53,19 @@ header: Example of a rule object
 }
 ```
 
+This rule enforces that a request to endpoint `0d9bf70c-92e1-4bb3-9411-34a3bcc59003` must come before a request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9`. 
+
+Otherwise, the request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9` is blocked.
+
 ### Fields
 
-| Field name | Description | Possible Values | Example |
+|  <div style="width:115px">Field name</div> | Description | Possible Values | Example |
 | --- | --- | --- | --- |
 | `id` | An opaque identifier that identifies a rule.  | A UUID |  `"d4909253-390f-4956-89fd-92a5b0cd86d8"` |
-| `title` | A string that helps to identify the rule. | A value between 1 and 50 characters | `"Allow checkout sequence"` |  
+| `title` | A string that helps to identify the rule. | A value between 1 and 50 characters | `"Allow checkout sequence"` |
 | `kind` | Defines the semantics of this rule. Block rules have a negative security model and allow to explicitly deny a sequence. Allow rules have a positive security model and deny everything but the configured sequence. | `block`, `allow` | `"block"` |
 | `action` | What firewall action should we do when the rule matches. | `block`,`log` | `"log"` |
-| `sequence` | Denotes the operations (from Endpoint Management) that make up the sequence for this rule. We currently only support sequences of length two. | An array with two valid operation IDs from Endpoint Management |`["0d9bf70c-92e1-4bb3-9411-34a3bcc59003", "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"]` |
+| `sequence` | Denotes the operations (from Endpoint Management) that make up the sequence for this rule. We currently only support sequences of length two. The first operation will be the starting endpoint and the second operation will be the ending endpoint. | An array with two valid operation IDs from Endpoint Management |`["0d9bf70c-92e1-4bb3-9411-34a3bcc59003", "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"]` |
 | `priority` | Denotes the precedence of this rule in relation to all other rules. Rules with a higher priority value are evaluated before those with a lower value. If two rules have the same priority, they are evaluated in the order in which they were added. | A valid integer | `10` |
 | `last_updated` | When this rule was last changed. | A date string | `2023-05-02T12:06:51.796286Z` |
 | `created_at` | When this rule was created. | A date string | `2023-05-02T12:06:51.796286Z` |
@@ -70,7 +74,7 @@ You can find an endpoint's operation ID by exporting the schema in [Endpoint Man
 
 ### List sequence rules
 
-Use the `GET` command to list rules. 
+Use the `GET` command to list rules.
 
 ```bash
 ---
@@ -107,7 +111,7 @@ curl POST "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqru
 
 ### Add multiple sequence rules
 
-Use the `PUT` command to set up new rules in bulk. 
+Use the `PUT` command to set up new rules in bulk.
 
 This will overwrite any existing rules and replace them with the rules specified in the body. Setting an empty array for the rules removes all rules.
 

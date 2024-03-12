@@ -3,7 +3,7 @@ title: Overview
 pcx_content_type: overview
 type: overview
 weight: 1
-layout: list
+layout: wide
 meta:
   title: Cloudflare API Shield
 ---
@@ -29,7 +29,7 @@ Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
 
 ## Features
 
-Cloudflare offers the following features to help secure your APIs: 
+Cloudflare offers the following features to help secure your APIs:
 
 - [Security](/api-shield/security/)
 - [Management, Monitoring, and more](/api-shield/api-gateway/)

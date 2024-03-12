@@ -16,7 +16,7 @@ Cloudflare's [Browser Integrity Check](/waf/tools/browser-integrity-check/) look
 
 ## Blocked hotlink
 
-[Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/) ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your origin server. This feature can be turned on and off by Cloudflare’s customers.
+[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your origin server. This feature can be turned on and off by Cloudflare’s customers.
 
 ## Human challenged
 

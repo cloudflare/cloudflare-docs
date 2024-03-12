@@ -14,7 +14,7 @@ Enabling API Shield features will have no impact on your traffic.
 
 ## Set up session identifiers
 
-While not strictly required, it is recommended that you configure your session identifiers when getting started with API Shield. When Cloudflare inspects your API traffic for individual sessions, we can offer more tools for visibility, management, and control.
+While not strictly required, it is recommended that you configure your {{<glossary-tooltip term_id="session identifier">}}session identifiers{{</glossary-tooltip>}} when getting started with API Shield. When Cloudflare inspects your API traffic for individual sessions, we can offer more tools for visibility, management, and control.
 
 If you are unsure of the session identifiers that your API uses, consult with your development team. A common session identifier for API traffic is the **Authorization** header.
 
@@ -31,9 +31,9 @@ After setting up session identifiers and allowing some time for Cloudflare to le
 
 ## Upload a schema using Schema Validation (optional)
 
-Schema Validation protects your APIs by ensuring only requests matching your API schema are allowed to communicate with your origin.
+Schema Validation protects your APIs by ensuring only requests matching your {{<glossary-tooltip term_id="API schema">}}API schema{{</glossary-tooltip>}} are allowed to communicate with your origin.
 
-While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/reference/classic-schema-validation/). 
+While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/security/schema-validation/). 
 
 {{<Aside type="note">}}
 It is recommended to start with Schema Validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
@@ -43,7 +43,7 @@ If you do not have a schema to upload, continue reading this guide to learn how 
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
-API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify API endpoints that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
+API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected. 
 
 {{<Aside type="note">}}
 A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection.
@@ -81,17 +81,19 @@ We recommend proceeding with [additional configurations](/api-shield/get-started
 
 You can observe Cloudflare suggested rate limits in Endpoint Management for endpoints using session identifiers. Unlike many security tools, these recommended rate limits are per-endpoint and per-session, not site-wide and not based on IP address. When creating a rule, it will be based on only traffic to that specific endpoint from unique visitors during their session. This feature allows you to be very specific and targeted with your rate limit enforcement, both lowering abusive traffic and false positives due to broadly scoped rules. 
 
-## Export learned schema from Endpoint Management
+## Import a learned schema to Schema Validation
 
-Cloudflare learns schema parameters via traffic inspection for all endpoints stored in Endpoint Management. You can export OpenAPI schemas in OpenAPI v3.0.0 format by hostname. 
+Cloudflare learns schema parameters via traffic inspection for all endpoints stored in Endpoint Management. You can export OpenAPI schemas in OpenAPI v3.0.0 format by hostname.
 
-Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield’s rate limit threshold recommendations.
+By importing the learned schema, you can protect API endpoints found via API Discovery that were never previously possible to protect due to not knowing about their presence or schema.
 
-### Import learned schema to Schema Validation
+You can import the learned schema of an entire hostname using the [Cloudflare dashboard](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname). Alternatively, you can [apply learned schemas to individual endpoints](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-a-single-endpoint). Before applying the learned schema, Cloudflare suggests exporting the schema to review what will validate your traffic.
 
-By importing the learned schema, you can protect API endpoints found via API Discovery. You can protect API endpoints that were never previously possible to protect due to not knowing about their presence or schema.
+## Export a learned schema from Endpoint Management
 
-You can import your learned schemas to Schema Validation 2 using the [API](/api-shield/security/schema-validation/) or the classic version of Schema Validation using the [Cloudflare dashboard](/api-shield/reference/classic-schema-validation/). Schema Validation 2 focuses on giving you granular control and lets you set mitigation actions for each endpoint individually. 
+Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield’s rate limit threshold recommendations. 
+
+You can export your learned schemas in the [Cloudflare dashboard](/api-shield/management-and-monitoring/#export-a-schema) or via the [API](/api/operations/api-shield-endpoint-management-retrieve-operations-and-features-as-open-api-schemas).
 
 ## View and configure Sequence Analytics
 
@@ -119,6 +121,6 @@ If your origin uses GraphQL, you may consider setting limits on GraphQL query si
 
 ### Mutual TLS (mTLS) authentication
 
-If you operate an API that requires or would benefit from an extra layer of protection, you may consider using Mutual TLS.
+If you operate an API that requires or would benefit from an extra layer of protection, you may consider using {{<glossary-tooltip term_id="mTLS (mutual TLS)">}}Mutual TLS (mTLS){{</glossary-tooltip>}}.
 
 [Mutual TLS (mTLS) authentication](/api-shield/security/mtls/) uses client certificates to ensure traffic between client and server is bidirectionally secure and trusted. mTLS also allows requests that do not authenticate via an identity provider, such as Internet-of-things (IoT) devices, to demonstrate they can reach a given resource.

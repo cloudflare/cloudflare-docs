@@ -2,7 +2,6 @@
 title: Office 365 - Area 1 as MX Record
 pcx_content_type: integration-guide
 weight: 1
-layout: single
 meta:
    title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
 updated: 2023-01-12
@@ -14,11 +13,13 @@ updated: 2023-01-12
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
 
+{{<render file="deployment/_o365-gcc.md">}}
+
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 {{<render file="_outbound-email.md">}}
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to Allow List
 
@@ -27,9 +28,9 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 2. Go to **Email & collaboration** > **Policies & Rules** > **Threat policies**.
 
 3. Select the [Anti-spam option](https://security.microsoft.com/antispam).
-    
+
     <div class="large-img">
-    
+
     ![Select the anti-spam option](/images/email-security/deployment/inline-setup/o365-area1-mx/step3-anti-spam.png)
 
     </div>
@@ -75,7 +76,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 ## 2. Enhanced Filtering configuration
 
-This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: 
+This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps:
 
 * Creating an inbound connector.
 * Enabling the enhanced filtering configuration of the connector.
@@ -142,7 +143,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
     </div>
 
-2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters. 
+2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters.
 
 3. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
 
@@ -154,7 +155,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 ### Select the disposition you want to quarantine
 
-Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration: 
+Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
@@ -214,8 +215,8 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts. For example:
 
-{{<render file="_mx-deployment-values.md">}}
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
@@ -229,7 +230,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 
 #### Configure domains
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/). 
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -282,7 +283,7 @@ The following steps are only required if you have not previously customized your
 
 1. Run PowerShell as administrator, and execute the following command. Reply `Yes` when prompted:
 
-```txt
+```powershell
 PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 ```
 
@@ -292,19 +293,19 @@ PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 
 2. Run the following commands to execute the policy change and connect to the Office 365 instance:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> set-executionpolicy remotesigned
     ```
 
     Confirm that you want to execute the policy change, and then run the following command:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> Import-Module ExchangeOnlineManagement
     ```
 
     Finally, run the following to authenticate against your Office 365 instance:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> Connect-ExchangeOnline
     ```
 
@@ -316,7 +317,7 @@ PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 
 4. You can verify that the `OrganizationCustomization` is enabled by running the command:
 
-```txt
+```powershell
 PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
 ```
 
@@ -324,7 +325,7 @@ PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
 
 If the result is `false`, `OrganizationCustomization` is already enabled and no further actions are required. If it is true, you need to enable it:
 
-```txt
+```powershell
 PS C:\> Enable-OrganizationCustomization
 ```
 

@@ -3,7 +3,7 @@ title: Supported URL components
 type: overview
 pcx_content_type: reference
 weight: 4
-layout: list
+layout: wide
 meta:
   title: Supported URL components in Bulk Redirects
 ---

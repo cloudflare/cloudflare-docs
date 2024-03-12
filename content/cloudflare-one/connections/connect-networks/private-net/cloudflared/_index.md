@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Connect private networks
 weight: 1
-layout: single
 ---
 
 # Connect private networks
@@ -37,21 +36,7 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 
 ### Enable the Gateway proxy
 
-1. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP.
-2. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
-3. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`:
-
-   1. Select **ICMP**.
-   2. On Linux servers:
-
-   - Ensure that the Group ID for the `cloudflared` process is included in `/proc/sys/net/ipv4/ping_group_range`.
-   - If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
-
-   ```sh
-   $ cloudflared tunnel run --icmpv4-src <IP of primary interface>
-   ```
-
-Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#3-route-private-network-ips-through-warp). For more information on how Gateway forwards traffic, refer to [Gateway proxy](/cloudflare-one/policies/gateway/proxy/).
+{{<render file="tunnel/_enable-gateway-proxy.md">}}
 
 ### Create Zero Trust policies
 
@@ -74,7 +59,7 @@ You can create Zero Trust policies to manage access to specific applications on 
      | Selector       | Operator      | Value            | Logic | Action |
      | -------------- | ------------- | ---------------- | ----- | ------ |
      | Destination IP | in            | `10.128.0.7`     | And   | Allow  |
-     | User email     | Matches regex | `.*@example.com` |       |        |
+     | User Email     | matches regex | `.*@example.com` |       |        |
 
    - **Policy 2**
      | Selector       | Operator | Value        | Action |

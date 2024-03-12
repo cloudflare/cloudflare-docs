@@ -12,7 +12,7 @@ WAF rules can include a check for exposed credentials. When enabled in a given r
 
 At this point, the WAF looks up the username/password pair in the request against a database of publicly available stolen credentials. When both the rule expression and the exposed credentials check are true, there is a rule match, and Cloudflare performs the action configured in the rule.
 
-For example, the following rule blocks `POST` requests to the `/login.php` URI when Cloudflare identifies the submitted credentials as previously exposed:
+For example, the following rule matches `POST` requests to the `/login.php` URI when Cloudflare identifies the submitted credentials as previously exposed:
 
 {{<example>}}
 

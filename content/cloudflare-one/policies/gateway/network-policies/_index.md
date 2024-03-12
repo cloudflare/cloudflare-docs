@@ -2,7 +2,6 @@
 pcx_content_type: configuration
 title: Network policies
 weight: 3
-layout: single
 ---
 
 # Network policies
@@ -37,8 +36,8 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 
 | Selector       | Operator | Value           | Logic | Action |
 | -------------- | -------- | --------------- | ----- | ------ |
-| Destination IP | In       | `92.100.02.102` | And   | Allow  |
-| Email          | In       | `*@example.com` |       |        |
+| Destination IP | in       | `92.100.02.102` | And   | Allow  |
+| Email          | in       | `*@example.com` |       |        |
 
 ### Audit SSH
 
@@ -48,7 +47,7 @@ Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
-| Destination IP | In       | `203.0.113.83` | Audit SSH |
+| Destination IP | in       | `203.0.113.83` | Audit SSH |
 
 For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
 
@@ -62,7 +61,11 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 | Selector         | Operator | Value | Action |
 | ---------------- | -------- | ----- | ------ |
-| Destination Port | In       | `443` | Block  |
+| Destination Port | in       | `443` | Block  |
+
+{{<heading-pill style="early-access" heading="h4">}}WARP client block notifications{{</heading-pill>}}
+
+{{<render file="gateway/_client-notifications.md">}}
 
 ### Network Override
 
@@ -72,8 +75,8 @@ Policies with Network Override actions override traffic directed to, or coming f
 
 | Selector       | Operator | Value           | Logic | Action           |
 | -------------- | -------- | --------------- | ----- | ---------------- |
-| Destination IP | In       | `95.92.143.151` | And   | Network Override |
-| User Email     | In       | `*@example.com` | And   |                  |
+| Destination IP | in       | `95.92.143.151` | And   | Network Override |
+| User Email     | in       | `*@example.com` | And   |                  |
 | Override IP    |          | 10.0.0.1        |       |                  |
 
 ## Selectors
@@ -82,35 +85,35 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Application
 
-{{<render file="gateway/_application.md" withParameters="network">}}
+{{<render file="gateway/selectors/_application.md" withParameters="network">}}
 
 ### Destination Continent
 
-{{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-continent.md" withParameters="net.dst">}}
 
 ### Destination Country
 
-{{<render file="gateway/_destination-country.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-country.md" withParameters="net.dst">}}
 
 ### Destination IP
 
-{{<render file="gateway/_destination-ip.md">}}
+{{<render file="gateway/selectors/_destination-ip.md">}}
 
 ### Destination Port
 
-{{<render file="gateway/_destination-port.md">}}
+{{<render file="gateway/selectors/_destination-port.md">}}
 
 ### Detected Protocol
 
-{{<render file="gateway/_protocol-detection.md">}}
+{{<render file="gateway/selectors/_protocol-detection.md">}}
 
 ### Device Posture
 
-{{<render file="gateway/_device-posture.md">}}
+{{<render file="gateway/selectors/_device-posture.md">}}
 
 ### Protocol
 
-{{<render file="gateway/_protocol.md">}}
+{{<render file="gateway/selectors/_protocol.md">}}
 
 {{<Aside type="note">}}
 
@@ -120,45 +123,45 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 ### Proxy Endpoint
 
-{{<render file="gateway/_proxy-endpoint.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### SNI
 
-{{<render file="gateway/_sni.md">}}
+{{<render file="gateway/selectors/_sni.md">}}
 
 ### SNI Domain
 
-{{<render file="gateway/_sni-domain.md">}}
+{{<render file="gateway/selectors/_sni-domain.md">}}
 
 ### Source Continent
 
 The continent of the user making the request.
-{{<render file="gateway/_source-continent.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="net.src">}}
 
 ### Source Country
 
 The country of the user making the request.
-{{<render file="gateway/_source-country.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="net.src">}}
 
 ### Source Internal IP
 
-{{<render file="gateway/_source-internal-ip.md" withParameters="network;;net">}}
+{{<render file="gateway/selectors/_source-internal-ip.md" withParameters="network;;net">}}
 
 ### Source IP
 
-{{<render file="gateway/_source-ip-net.md">}}
+{{<render file="gateway/selectors/_source-ip-net.md">}}
 
 ### Source Port
 
-{{<render file="gateway/_source-port.md">}}
+{{<render file="gateway/selectors/_source-port.md">}}
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ### Virtual Network
 
-{{<render file="gateway/_virtual-network.md">}}
+{{<render file="gateway/selectors/_virtual-network.md">}}
 
 ## Comparison operators
 
@@ -166,7 +169,7 @@ The country of the user making the request.
 
 {{<Aside type="note">}}
 
-The _In_ operator allows you to specify IP addresses or networks using CIDR notation.
+The _in_ operator allows you to specify IP addresses or networks using CIDR notation.
 
 {{</Aside>}}
 

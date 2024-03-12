@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Handle form submissions with Airtable
-layout: single
 ---
 
 # Handle form submissions with Airtable
@@ -131,7 +130,7 @@ Run `wrangler secret put`, passing `AIRTABLE_ACCESS_TOKEN` as the name of your s
 ---
 header: Set the `AIRTABLE_ACCESS_TOKEN` secret with Wrangler
 ---
-$ wrangler secret put AIRTABLE_ACCESS_TOKEN
+$ npx wrangler secret put AIRTABLE_ACCESS_TOKEN
 Enter the secret text you would like assigned to the variable AIRTABLE_ACCESS_TOKEN on the script named airtable-form-handler:
 ******
 🌀  Creating the secret for script name airtable-form-handler

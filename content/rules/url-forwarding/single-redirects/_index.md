@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Single Redirects
-layout: single
 weight: 2
 meta:
   title: Single Redirects
@@ -9,7 +8,7 @@ meta:
 
 # Single Redirects
 
-Single Redirects allow you to create static or dynamic URL {{<glossary-tooltip term_id="redirect">}}redirects{{</glossary-tooltip>}}. Dynamic URL redirects support advanced features such as string replacement operations and regular expressions (depending on your Cloudflare plan).
+Single Redirects allow you to create static or dynamic URL {{<glossary-tooltip term_id="redirect">}}redirects{{</glossary-tooltip>}}. Dynamic URL redirects support advanced features such as string replacement operations and [regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions) (depending on your Cloudflare plan).
 
 ---
 

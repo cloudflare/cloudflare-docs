@@ -10,7 +10,7 @@ weight: 10
 
 Puppeteer typically connects to a local Chrome or Chromium browser using the DevTools port. Refer to the [Puppeteer API documentation on the `Puppeteer.connect()` method](https://pptr.dev/api/puppeteer.puppeteer.connect) for more information.
 
-The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. Review the The [changes between Workers Puppeteer fork and the Puppeteer core](https://github.com/cloudflare/puppeteer/blob/main/src/puppeteer-core.ts) are minimal. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
+The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. The [changes between Workers Puppeteer fork and the Puppeteer core](https://github.com/cloudflare/puppeteer/blob/main/src/puppeteer-core.ts) are minimal. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
 
 Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer). The npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/puppeteer](https://www.npmjs.com/package/@cloudflare/puppeteer):
 

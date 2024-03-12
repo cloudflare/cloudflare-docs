@@ -64,10 +64,10 @@ const secretValue = env.<SECRET_NAME>;
 
 Use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/bindings/mtls) to present a client certificate.
 
 ## Next steps
 
 * Learn how to connect to [an existing PostgreSQL database](/hyperdrive/) with Hyperdrive.
-* Discover [other storage options available](/workers/learning/storage-options/) for use with Workers.
+* Discover [other storage options available](/workers/platform/storage-options/) for use with Workers.
 * [Create your first database](/d1/get-started/) with Cloudflare D1.

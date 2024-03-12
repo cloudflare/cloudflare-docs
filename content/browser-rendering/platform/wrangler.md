@@ -41,5 +41,5 @@ browser = { binding = "MYBROWSER" }
 After the binding is declared, access the DevTools endpoint using `env.MYBROWSER` in your Worker code:
 
 ```javascript
-const browser = await puppeteer.launch(env.BROWSER);
+const browser = await puppeteer.launch(env.MYBROWSER);
 ```

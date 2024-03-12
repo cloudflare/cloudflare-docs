@@ -31,7 +31,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 {{<Aside type="note" header="Availability notes">}}
 
-- Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+- Geolocation information is provided and maintained by MaxMind. Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 - Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -97,7 +97,7 @@ The Cloudflare Rules language supports these standard fields:
       </td>
    </tr>
    <tr id="field-http-request-cookies">
-      <td valign="top"><code>http.request.cookies</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.cookies</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
          </p>
@@ -405,8 +405,155 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-ip-src-is-in-european-union">
       <td valign="top"><code>ip.src.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
-         </p>
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union (EU).</p>
+         <details>
+         <summary>Countries in EU (from geolocation data)</summary>
+         <div>
+          <table class="Small">
+            <tr>
+              <th>Country code</th>
+              <th>Country name</th>
+            </tr>
+            <tr>
+              <td><code>AT</code></td>
+              <td>Austria</td>
+            </tr>
+            <tr>
+              <td><code>AX</code></td>
+              <td>Åland Islands</td>
+            </tr>
+            <tr>
+              <td><code>BE</code></td>
+              <td>Belgium</td>
+            </tr>
+            <tr>
+              <td><code>BG</code></td>
+              <td>Bulgaria</td>
+            </tr>
+            <tr>
+              <td><code>CY</code></td>
+              <td>Cyprus</td>
+            </tr>
+            <tr>
+              <td><code>CZ</code></td>
+              <td>Czechia</td>
+            </tr>
+            <tr>
+              <td><code>DE</code></td>
+              <td>Germany</td>
+            </tr>
+            <tr>
+              <td><code>DK</code></td>
+              <td>Denmark</td>
+            </tr>
+            <tr>
+              <td><code>EE</code></td>
+              <td>Estonia</td>
+            </tr>
+            <tr>
+              <td><code>ES</code></td>
+              <td>Spain</td>
+            </tr>
+            <tr>
+              <td><code>FI</code></td>
+              <td>Finland</td>
+            </tr>
+            <tr>
+              <td><code>FR</code></td>
+              <td>France</td>
+            </tr>
+            <tr>
+              <td><code>GF</code></td>
+              <td>French Guiana</td>
+            </tr>
+            <tr>
+              <td><code>GP</code></td>
+              <td>Guadeloupe</td>
+            </tr>
+            <tr>
+              <td><code>GR</code></td>
+              <td>Greece</td>
+            </tr>
+            <tr>
+              <td><code>HR</code></td>
+              <td>Croatia</td>
+            </tr>
+            <tr>
+              <td><code>HU</code></td>
+              <td>Hungary</td>
+            </tr>
+            <tr>
+              <td><code>IE</code></td>
+              <td>Ireland</td>
+            </tr>
+            <tr>
+              <td><code>IT</code></td>
+              <td>Italy</td>
+            </tr>
+            <tr>
+              <td><code>LT</code></td>
+              <td>Lithuania</td>
+            </tr>
+            <tr>
+              <td><code>LU</code></td>
+              <td>Luxembourg</td>
+            </tr>
+            <tr>
+              <td><code>LV</code></td>
+              <td>Latvia</td>
+            </tr>
+            <tr>
+              <td><code>MF</code></td>
+              <td>Saint Martin</td>
+            </tr>
+            <tr>
+              <td><code>MQ</code></td>
+              <td>Martinique</td>
+            </tr>
+            <tr>
+              <td><code>MT</code></td>
+              <td>Malta</td>
+            </tr>
+            <tr>
+              <td><code>NL</code></td>
+              <td>The Netherlands</td>
+            </tr>
+            <tr>
+              <td><code>PL</code></td>
+              <td>Poland</td>
+            </tr>
+            <tr>
+              <td><code>PT</code></td>
+              <td>Portugal</td>
+            </tr>
+            <tr>
+              <td><code>RE</code></td>
+              <td>Réunion</td>
+            </tr>
+            <tr>
+              <td><code>RO</code></td>
+              <td>Romania</td>
+            </tr>
+            <tr>
+              <td><code>SE</code></td>
+              <td>Sweden</td>
+            </tr>
+            <tr>
+              <td><code>SI</code></td>
+              <td>Slovenia</td>
+            </tr>
+            <tr>
+              <td><code>SK</code></td>
+              <td>Slovakia</td>
+            </tr>
+            <tr>
+              <td><code>YT</code></td>
+              <td>Mayotte</td>
+            </tr>
+          </table>
+          <p>{{<markdown>}}The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).{{</markdown>}}</p>
+         </div>
+         </details>
          <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is deprecated. The <code>ip.geoip.is_in_european_union</code> field is still available for new and existing rules, but you should use the <code>ip.src.is_in_european_union</code> field instead.</p>
       </td>
   </tr>
@@ -470,6 +617,8 @@ Dynamic fields represent computed or derived values, typically related to threat
 {{<Aside type="note" header="Notes">}}
 
 * Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+* Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [WAF content scanning](/waf/about/content-scanning/) enabled.
 
 * The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
@@ -780,6 +929,75 @@ The Cloudflare Rules language supports these dynamic fields:
         </p>
       </td>
     </tr>
+    <tr id="field-cf-waf-content_scan-has_obj">
+        <td><code>cf.waf.content_scan.has_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+        <td>
+          <p>When true, the request contains at least one {{<markdown>}}{{<glossary-tooltip term_id="content object">}}content object{{</glossary-tooltip>}}{{</markdown>}}.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_malicious_obj">
+        <td><code>cf.waf.content_scan.has_malicious_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+        <td>
+          <p>When true, the request contains at least one malicious content object.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_malicious_obj">
+        <td><code>cf.waf.content_scan.num_malicious_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+        <td>
+          <p>The number of malicious content objects detected in the request (zero or greater).
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_failed">
+      <td><code>cf.waf.content_scan.has_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
+      <td>
+        <p>When true, the file scanner was unable to scan all the content objects detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_obj">
+      <td><code>cf.waf.content_scan.num_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+        <p>The number of content objects detected in the request (zero or greater).
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_sizes">
+      <td><code>cf.waf.content_scan.obj_sizes</code><br />{{<type>}}Array&lt;Integer&gt;{{</type>}}</td>
+      <td>
+        <p>An array of file sizes in bytes, in the order the content objects were detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_types">
+      <td><code>cf.waf.content_scan.obj_types</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+      <td>
+        <p>An array of file types in the order the content objects were detected in the request.
+        </p>
+        <p>If Cloudflare cannot determine the file type of a content object, the corresponding value in the <code>obj_types</code>array will be <code>application/octet-stream</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_results">
+      <td><code>cf.waf.content_scan.obj_results</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+      <td>
+        <p>An array of scan results in the order the content objects were detected in the request.
+        </p>
+        <p>The possible values are: <code>clean</code>, <code>suspicious</code>, <code>infected</code>, and <code>not scanned</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.
+        </p>
+      </td>
+    </tr>
     <tr id="field-cf-waf-score">
         <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
@@ -825,6 +1043,10 @@ The Cloudflare Rules language supports these dynamic fields:
     </tr>
   </tbody>
 </table>
+
+### Corporate Proxy
+
+{{<render file="_corporate_proxy.md" productFolder="/bots/">}}
 
 ## Magic Firewall fields
 
@@ -1109,7 +1331,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
   </thead>
   <tbody>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><code>http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.uri.args</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
        <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
         </p>
@@ -1164,7 +1386,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
       </td>
     </tr>
     <tr id="field-raw-http-request-uri-args">
-      <td valign="top"><code>raw.http.request.uri.args</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>raw.http.request.uri.args</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
        <td>
         <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
         </p>
@@ -1202,7 +1424,7 @@ The Cloudflare Rules language supports these HTTP header fields:
   </thead>
   <tbody>
    <tr id="field-http-request-headers">
-      <td valign="top"><code>http.request.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.headers</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).</p>
          <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
@@ -1288,7 +1510,7 @@ The Cloudflare Rules language supports these HTTP header fields:
       <td valign="top"><code>http.request.accepted_languages</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
       <td>
          <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
-         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/ruleset-engine/rules-language/values/#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/ruleset-engine/rules-language/values/#array-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
          <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
          <p>Example 1:<br/>
          Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>
@@ -1364,7 +1586,7 @@ The Cloudflare Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr id="field-http-request-body-form">
-      <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.request.body.form</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
@@ -1487,7 +1709,7 @@ The Cloudflare Rules language supports these HTTP response fields:
       </td>
    </tr>
    <tr id="field-http-response-headers">
-      <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>
          <p>Represents HTTP response headers as a Map (or associative array).
          </p>

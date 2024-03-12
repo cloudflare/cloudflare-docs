@@ -68,7 +68,7 @@ binding = "AI" # i.e. available in your Worker on env.AI
 ```
 
 <!-- TODO update this once we know if we'll have it -->
-You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#workers-ai).
+You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#workers-ai).
 
 ## 3. Install the Workers AI client library
 
@@ -93,7 +93,7 @@ $ yarn add --dev @cloudflare/ai
 
 ## 4. Run an inference task in your Worker
 
-Now we are ready to run an inference task in our our worker. In this case, we will use an LLM, like lambda-2, to answer a questions.
+Now we are ready to run an inference task in our Worker. In this case, we will use an LLM, like Llama 2, to answer a question.
 
 Go to your `hello-ai` and update the `index.ts` with the following code:
 
@@ -171,4 +171,4 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

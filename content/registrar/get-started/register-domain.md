@@ -10,7 +10,7 @@ weight: 1
 
 * Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
 * Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
-* You must have a [verified account email address](/fundamentals/setup/account-setup/verify-email-address/), to transfer or register domains.
+* You must have a [verified account email address](/fundamentals/setup/account/verify-email-address/), to transfer or register domains.
 
 ---
 

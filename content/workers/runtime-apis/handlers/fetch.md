@@ -49,6 +49,8 @@ When responding to a HTTP request, the `fetch` handler may use any of the follow
 
 The `waitUntil()` method extends the lifetime of the `fetch` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
 
+You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
+
 ```js
 export default {
   async fetch(request, env, context) {
@@ -82,3 +84,7 @@ export default {
   },
 };
 ```
+
+## Related resources
+
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

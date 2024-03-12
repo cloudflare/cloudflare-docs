@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-weight: 10
+weight: 1
 title: Pricing
 ---
 
@@ -8,7 +8,7 @@ title: Pricing
 
 {{<Aside type="note">}}
 
-Vectorize is currently in public beta and is free to use on paid [Workers plans](/workers/platform/pricing/#workers).
+Vectorize is currently in public beta and is free to use on [Workers Paid plans](/workers/platform/pricing/#workers).
 
 {{</Aside>}}
 

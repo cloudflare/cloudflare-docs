@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: CrowdStrike
 weight: 4
-layout: single
 ---
 
 # CrowdStrike

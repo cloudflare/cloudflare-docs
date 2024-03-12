@@ -7,11 +7,11 @@ meta:
 
 # Request
 
-The `Request` interface represents an HTTP request and is part of the Fetch API.
+The [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface represents an HTTP request and is part of the [Fetch API](/workers/runtime-apis/fetch/).
 
 ## Background
 
-The most common way you will encounter a `Request` object is as a property of an incoming `FetchEvent`.
+The most common way you will encounter a `Request` object is as a property of an incoming request:
 
 ```js
 ---
@@ -24,7 +24,7 @@ export default {
 };
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming request parameter is immutable.
 
 ```js
 export default {
@@ -36,14 +36,14 @@ export default {
 };
 ```
 
-The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
+The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#options) and [`RequestInitCfProperties`](#the-cf-property-requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
 
 ---
 
 ## Constructor
 
 ```js
-let request = new Request(input [, init])
+let request = new Request(input, options)
 ```
 
 ### Parameters
@@ -54,23 +54,25 @@ let request = new Request(input [, init])
 
     *   Either a string that contains a URL, or an existing `Request` object.
 
-*   `init` {{<type-link href="#requestinit">}}RequestInit{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `options` {{<type-link href="#options">}}options{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object that contains settings to apply to the `Request`.
 
 {{</definitions>}}
 
-#### `RequestInit`
+#### `options`
+
+An object containing properties that you want to apply to the request.
 
 {{<definitions>}}
 
-*   `cf` {{<type-link href="#requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `cf` {{<type-link href="#the-cf-property-requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
 *   `method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The HTTP request method. The default is `GET`.
+    *   The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -79,6 +81,7 @@ let request = new Request(input [, init])
 *   `body` {{<type>}}string | ReadableStream | FormData | URLSearchParams{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   The request body, if any.
+    *   Note that a request using the GET or HEAD method cannot have a body.
 
 *   `redirect` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -86,7 +89,7 @@ let request = new Request(input [, init])
 
 {{</definitions>}}
 
-#### `RequestInitCfProperties`
+#### The `cf` property (`RequestInitCfProperties`)
 
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
@@ -105,7 +108,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *    Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/articles/200172266). Defaults to `false`.
+    *    Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). Defaults to `false`.
         This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheKey` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -118,7 +121,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheTtlByStatus` {{<type>}}{ \[key: string]: number }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -126,7 +129,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `image` {{<type>}}Object | null{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables [Image Resizing](/images/) for this request. The possible values are described in [Image Resizing with Workers](/images/image-resizing/resize-with-workers) documentation.
+    *   Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
 
 *   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -251,6 +254,14 @@ All plans have access to:
 *   `tlsClientAuth` {{<type>}}Object | null{{</type>}}
 
     *   Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+
+*   `tlsClientHelloLength` {{<type>}}string{{</type>}}
+
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello, after the hexidecimal bytes have been decoded.
+
+*   `tlsClientRandom` {{<type>}}string{{</type>}}
+
+    *   The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). Refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2) for more details.
 
 *   `tlsVersion` {{<type>}}string{{</type>}}
 
@@ -400,6 +411,7 @@ Using any other type of `ReadableStream` as the body of a request will result in
 
 ## Related resources
 
-*   [Examples: Modify request property](/workers/examples/modify-request-property/)
-*   [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
-*   [Reference: `Response`](/workers/runtime-apis/response/)
+* [Examples: Modify request property](/workers/examples/modify-request-property/)
+* [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
+* [Reference: `Response`](/workers/runtime-apis/response/)
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

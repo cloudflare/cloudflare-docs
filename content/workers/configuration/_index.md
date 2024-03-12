@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Configuration
-weight: 7
+weight: 6
 ---
 
 # Configuration

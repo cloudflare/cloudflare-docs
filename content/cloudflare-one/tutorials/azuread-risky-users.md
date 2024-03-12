@@ -162,7 +162,7 @@ Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-po
 
    | Selector         | Operator | Value                                         | Logic | Action  |
    | ---------------- | -------- | --------------------------------------------- | ----- | ------- |
-   | Domain           | In       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
+   | Domain           | in       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
    | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |       |         |
 
 To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk).

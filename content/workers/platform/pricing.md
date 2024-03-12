@@ -1,12 +1,22 @@
 ---
 pcx_content_type: concept
 title: Pricing
-weight: 12
+weight: 1
 meta:
   description: Workers plans and pricing information.
 ---
 
 # Pricing
+
+{{<Aside type="warning">}}
+
+All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024. 
+
+- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/). 
+- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/). 
+
+
+{{</Aside>}}
 
 By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
@@ -16,27 +26,27 @@ All included usage is on a monthly basis.
 
 {{<Aside type="note" header="Pages Functions billing">}}
   
-All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
+All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Pricing](/pages/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
 ## Workers
 
+Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation. 
 
-{{<Aside type="note" header="Workers Standard pricing is now available">}}
-  
-New, [simplified pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) is available for Workers under a new usage model, called Workers Standard. [Opt-in](https://dash.cloudflare.com/?to=/:account/workers/standard/opt-in) to Workers Standard pricing today. 
+Users on the Workers Paid plan only have access to the Standard usage model. 
 
-{{</Aside>}}
+Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models. 
+
 
 {{<table-wrap>}}
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
 | **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
-| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation                    |
+| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation                    |
 
 {{</table-wrap>}}
-<sup>1</sup>  Inbound requests to your Worker. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but do impact the duration (wall-clock time) of your Worker.
+<sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
 ### Example pricing: Standard Usage Model
 
@@ -57,21 +67,18 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
+If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker. 
+
 {{</Aside>}}
 
 ### Deprecated usage models
-
-Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of CPU time your Worker can use per invocation. 
-
-Starting October 31, 2023, the Bundled and Unbound usage models are deprecated. Workers and Pages Functions using Bundled and Unbound will continue to be billed at the rates below until March 1, 2024. After March 1, 2024, all Workers and Pages Functions will be automatically migrated to Workers Standard.
-
 
 {{<table-wrap>}}
 
 |             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | **Bundled** |  10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
-| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/platform/javascript-apis/#consumer) invocation        |
+| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation        |
 
 {{</table-wrap>}}
 
@@ -116,16 +123,9 @@ Resulting in the following estimated costs:
 
 {{</table-wrap>}}
 
-### How to switch usage model
+### How to switch the usage model
 
-When an account is first upgraded to the Workers Paid plan, the Standard model is used as the default usage model. If you have Workers on Bundled or Unbound, their usage model can be changed all at once to Standard or their usage model can be changed the individual Worker level.
-
-To migrate all Workers to the Standard Usage model:
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. Find **Usage Model** on the right-side menu > **Migrate**. 
-
-To change the usage model for individual Workers:
+Usage models can be changed at the individual Worker level: 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
@@ -205,7 +205,9 @@ Vectorize is currently only available on the Workers paid plan.
 
 ## Service bindings
 
-Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet.
+
+If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
 
 For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
 

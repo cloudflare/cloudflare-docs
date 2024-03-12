@@ -2,7 +2,6 @@
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: Page Rules
-layout: single
 weight: 19
 ---
 
@@ -31,7 +30,7 @@ It is important to understand a few Page Rules behaviors.
 
 ### Page Rules require proxied DNS records
 
-Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records) DNS record for your page rule to work. Page Rules will not apply to hostnames that do not exist in DNS or are not being directed to Cloudflare.
+Page Rules require a [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) DNS record for your page rule to work. Page Rules will not apply to hostnames that do not exist in DNS or are not being directed to Cloudflare.
 
 Depending on the record type, you can use different values for the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
 

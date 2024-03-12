@@ -1,7 +1,7 @@
 ---
 title: Alarms
 pcx_content_type: concept
-weight: 16
+weight: 1
 ---
 
 # Alarms 
@@ -22,7 +22,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Using the Alarms API](/durable-objects/examples/alarms-api/).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
 
 ## Transactional Storage methods
 

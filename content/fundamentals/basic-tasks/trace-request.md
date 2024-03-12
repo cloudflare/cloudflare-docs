@@ -85,9 +85,8 @@ The following steps are planned for future additions:
 
 Currently, you cannot perform traces for:
 
-* Domains or subdomains associated with [BYOIP](/byoip/) addresses
-* [Custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
 * [Spectrum](/spectrum/) applications
+* Hostnames using [Data Localization Suite](/data-localization/)
 
 Also, the following products will not appear in trace results:
 

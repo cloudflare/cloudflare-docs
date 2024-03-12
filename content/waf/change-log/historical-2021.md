@@ -4,7 +4,7 @@ title: Historical (2021)
 weight: 10047
 meta:
   description: Changes to WAF managed rulesets done in 2021.
-layout: list
+layout: wide
 ---
 
 # Historical - 2021
