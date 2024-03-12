@@ -6,9 +6,7 @@ weight: 4
 
 # Configuration
 
-The Workers Vitest integration provides additional configuration on top of Vitest's usual options.
-To configure the integration, use the `poolOptions.workers` key.
-Use the `defineWorkersPoolOptions()` function from the `@cloudflare/vitest-pool-workers/config` module for type checking and completions.
+The Workers Vitest integration provides additional configuration on top of Vitest's usual options. To configure the Workers Vitest integration, use the `poolOptions.workers` key. Use the [`defineWorkersPoolOptions()`](/workers/testing/vitest-integration/configuration/#functions) function from the `@cloudflare/vitest-pool-workers/config` module for type checking and completions.
 
 An example configuration would be:
 
@@ -52,7 +50,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 - {{<code>}}defineWorkersPoolOptions(options:{{<param-type>}}WorkersPoolOptions | ((ctx: WorkersPoolOptionsContext) => WorkersPoolOptions | Promise\<WorkersPoolOptions>){{</param-type>}}){{</code>}}
 
-  - Provide type checking and completions for `WorkersPoolOptions`, similar to [`defineConfig()`](https://vitest.dev/config/file.html) from Vitest.
+  - Provides type checking and completions for `WorkersPoolOptions`, similar to [`defineConfig()`](https://vitest.dev/config/file.html) from Vitest.
 
 {{</definitions>}}
 

@@ -46,7 +46,7 @@ it("dispatches fetch event", async () => {
 
 ## Stop a Worker
 
-With the Workers Vitest integration there is no need to stop a Worker via `worker.stop()`. This is handled automatically after tests run.
+With the Workers Vitest integration, there is no need to stop a Worker via `worker.stop()`. This functionality is handled automatically after tests run.
 
 ## Import Wrangler configuration
 

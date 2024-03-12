@@ -37,7 +37,7 @@ const response = await fetch("http://localhost:8787/?a=1&b=2");
 assert((await response.text()) === "3");
 ```
 
-In the above example, instead of importing the `add` function as a unit test would do, you make a direct call to the endpoint, testing that the Worker responds at the endpoint with the appropriate response.
+In the above example, instead of importing the `add` function as a [unit test](/workers/testing/unit-testing/) would do, you make a direct call to the endpoint, testing that the Worker responds at the endpoint with the appropriate response.
 
 ## Vitest integration
 
@@ -59,9 +59,9 @@ it("dispatches fetch event", async () => {
 });
 ```
 
-When using `SELF` for integration tests, your worker code runs in the same context as the test runner. This means you can use global mocks to control your worker, but also means your worker uses the same subtly different module resolution behavior provided by Vite. 
+When using `SELF` for integration tests, your Worker code runs in the same context as the test runner. This means you can use global mocks to control your Worker, but also means your Worker uses the same subtly different module resolution behavior provided by Vite. 
 
-Usually this isn't a problem, but if you'd like to run your worker in a fresh environment that's as close to production as possible, using an auxiliary worker may be a good idea - although auxiliary Workers have some DX limitations.
+Usually this is not a problem, but if you would like to run your Worker in a fresh environment that is as close to production as possible, using an auxiliary Worker may be a good idea. Auxiliary Workers have some developer experience (DX) limitations.
 
 ### Testing via auxiliary Workers
 
@@ -86,7 +86,7 @@ Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use 
 
 {{<Aside type="note">}}
 
-This method can be useful when you're testing multiple workers. You can define multiple Workers by different names in `vitest.config.js` and reference them via `env`.
+This method can be useful when you are testing multiple Workers. You can define multiple Workers by different names in `vitest.config.js` and reference them via `env`.
 
 {{</Aside>}}
 
@@ -142,4 +142,4 @@ If you have been using the test environments from Minflare 2 for integration tes
 
 ## Related Resources
 
-- More examples of integration tests can be found on the Vitest [Recipes page](/workers/testing/vitest-integration/recipes).
+- [Recipes](/workers/testing/vitest-integration/recipes) - Examples of unit tests and integration tests for Workers.

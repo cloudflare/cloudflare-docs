@@ -4,8 +4,6 @@ weight: 2
 pcx_content_type: concept
 meta:
   description: Migrate from [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) to the Workers Vitest integration.
-meta:
-  description: Migrate from [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) to the Workers Vitest integration.
 ---
 
 # Migrate from Miniflare 2's test environments
@@ -165,7 +163,7 @@ filename: index.spec.js
 
 The `getMiniflareFetchMock()` function has been replaced with the new `fetchMock` helper from the `cloudflare:test` module. This has the same type as the return type of `getMiniflareFetchMock()`. There are a couple of differences between `fetchMock` and the previous return value of `getMiniflareFetchMock()`:
 
-- `fetchMock` is deactivated by default, whereas previously it would start activated. This prevents unnecessary buffering of request bodies if you are not using `fetchMock`. You will need to call `fetchMock.activate()` before calling `fetch()` to enable it.
+- `fetchMock` is deactivated by default, whereas previously it would start activated. This deactivation prevents unnecessary buffering of request bodies if you are not using `fetchMock`. You will need to call `fetchMock.activate()` before calling `fetch()` to enable it.
 - `fetchMock` is reset at the start of each test run, whereas previously, interceptors added in previous runs would apply to the current one. This ensures test runs are not affected by previous runs.
 
 ```diff

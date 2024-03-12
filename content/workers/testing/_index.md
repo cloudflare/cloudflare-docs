@@ -6,7 +6,7 @@ weight: 9
 
 # Testing
 
-Review the tools available for testing and debugging Workers.
+Review the tools available for testing and debugging Workers and [Pages Functions](/pages/functions/).
 
 {{<directory-listing showDescriptions="true">}}
 

@@ -6,7 +6,7 @@ weight: 5
 
 # Test APIs
 
-The Workers Vitest integration provides runtime helpers for writing tests in the `cloudflare:test` module. This module is provided by the `@cloudflare/vitest-pool-workers` package, but can only be imported from test files that execute in the Workers runtime.
+The Workers Vitest integration provides runtime helpers for writing tests in the `cloudflare:test` module. The `cloudflare:test` module is provided by the `@cloudflare/vitest-pool-workers` package, but can only be imported from test files that execute in the Workers runtime.
 
 ## `cloudflare:test` module definition
 
@@ -14,7 +14,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}env: {{<type>}}import("cloudflare:test").ProvidedEnv{{</type>}}{{</code>}}
 
-  - Exposes the [`env` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the 2nd argument passed to modules-format exported handlers. This provides access to [bindings](/workers/runtime-apis/bindings/) that you have defined in your [Vitest configuration file](/workers/testing/vitest/configuration/).
+  - Exposes the [`env` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the second argument passed to ES modules format exported handlers. This provides access to [bindings](/workers/runtime-apis/bindings/) that you have defined in your [Vitest configuration file](/workers/testing/vitest/configuration/).
 
     <br>
 
@@ -47,7 +47,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}SELF: {{<type>}}Fetcher{{</type>}}{{</code>}}
 
-  - [Service binding](/workers/runtime-apis/service-bindings/) to the default export defined in the `main` Worker. Use this to write integration tests against your Worker. Note this `main` Worker runs in the same isolate/context as tests so any global mocks will apply to it too.
+  - [Service binding](/workers/runtime-apis/service-bindings/) to the default export defined in the `main` Worker. Use this to write integration tests against your Worker. The `main` Worker runs in the same isolate/context as tests so any global mocks will apply to it too.
 
     <br>
 
@@ -65,7 +65,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}fetchMock: {{<type>}}import("undici").MockAgent{{</type>}}{{</code>}}
 
-  - Declarative interface for mocking outbound `fetch()` requests. Deactivated by default and reset before running each test file. Refer to [`undici`'s `MockAgent` documentation](https://undici.nodejs.org/#/docs/api/MockAgent) for more information. Note this only mocks `fetch()` requests for the current test runner worker. Auxiliary workers should mock `fetch()`es using the Miniflare `fetchMock`/`outboundService` options. Refer to the [Configuration](/workers/testing/vitest/configuration/#workerspooloptions) page for more information.
+  - Declarative interface for mocking outbound `fetch()` requests. Deactivated by default and reset before running each test file. Refer to [`undici`'s `MockAgent` documentation](https://undici.nodejs.org/#/docs/api/MockAgent) for more information. Note this only mocks `fetch()` requests for the current test runner Worker. Auxiliary Workers should mock `fetch()`es using the Miniflare `fetchMock`/`outboundService` options. Refer to [Configuration](/workers/testing/vitest/configuration/#workerspooloptions) for more information.
 
     <br>
 
@@ -105,11 +105,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}createExecutionContext(): {{<type>}}ExecutionContext{{</type>}}{{</code>}}
 
-  - Creates an instance of the [`context` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the 3rd argument to modules-format exported handlers.
+  - Creates an instance of the [`context` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the third argument to ES modules format exported handlers.
 
 - {{<code>}}waitOnExecutionContext(ctx:{{<param-type>}}ExecutionContext{{</param-type>}}): {{<type>}}Promise\<void>{{</type>}}{{</code>}}
 
-  - Use this to wait for all promises passed to `ctx.waitUntil()` to settle, before running test assertions on any side effects. Only accepts instances of `ExecutionContext` returned by `createExecutionContext()`.
+  - Use this to wait for all Promises passed to `ctx.waitUntil()` to settle, before running test assertions on any side effects. Only accepts instances of `ExecutionContext` returned by `createExecutionContext()`.
 
     <br>
 
@@ -203,7 +203,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
     <br>
 
-    This temporarily replaces your Durable Object's `fetch()` handler with `callback`, then sends a request to it, returning the result. This can be used to call/spy-on Durable Object instance methods or seed/get persisted data. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` worker.
+    This temporarily replaces your Durable Object's `fetch()` handler with `callback`, then sends a request to it, returning the result. This can be used to call/spy-on Durable Object instance methods or seed/get persisted data. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` Worker.
 
     <br>
 
@@ -249,11 +249,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}runDurableObjectAlarm(stub:{{<param-type>}}DurableObjectStub{{</param-type>}}): {{<type>}}Promise\<boolean>{{</type>}}{{</code>}}
 
-  - Immediately runs and removes the Durable Object pointed-to by `stub`'s alarm if one is scheduled. Returns `true` if an alarm ran, and `false` otherwise. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` worker.
+  - Immediately runs and removes the Durable Object pointed to by `stub`'s alarm if one is scheduled. Returns `true` if an alarm ran, and `false` otherwise. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` Worker.
 
 - {{<code>}}listDurableObjectIds(namespace:{{<param-type>}}DurableObjectNamespace{{</param-type>}}): {{<type>}}Promise\<DurableObjectId[]>{{</type>}}{{</code>}}
 
-  - Gets the IDs of all objects that have been created in the `namespace`. Respects `isolatedStorage` if enabled, meaning objects created in a different test won't be returned.
+  - Gets the IDs of all objects that have been created in the `namespace`. Respects `isolatedStorage` if enabled, meaning objects created in a different test will not be returned.
 
     <br>
 

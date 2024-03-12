@@ -8,7 +8,7 @@ meta:
 
 # Unit testing
 
-In a Workers context, a unit test imports and directly calls functions from your Worker then asserts on their return values. For example, consider you have the following Worker:
+In a Workers context, a unit test imports and directly calls functions from your Worker. After calling the functions, the unit test then asserts on the functions' return values. For example, consider you have the following Worker:
 
 ```js
 ---

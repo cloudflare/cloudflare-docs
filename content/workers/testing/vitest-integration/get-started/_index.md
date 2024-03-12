@@ -3,7 +3,7 @@ pcx_content_type: navigation
 title: Get started
 weight: 1
 meta:
-  description: Install and set up the Workers Vitest integration - a tool for writing unit and integration tests for Workers.
+  description: Install and set up the Workers Vitest integration - a tool for writing unit and integration tests for Workers and Pages Functions.
 ---
 
 # Get started
