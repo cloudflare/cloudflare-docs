@@ -4,6 +4,8 @@ weight: 2
 pcx_content_type: concept
 meta:
   description: Migrate from [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) to the Workers Vitest integration.
+meta:
+  description: Migrate from [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) to the Workers Vitest integration.
 ---
 
 # Migrate from Miniflare 2's test environments
@@ -19,7 +21,7 @@ Cloudflare no longer provides a Jest testing environment for Workers. If you pre
 
 {{<Aside type="warning">}}
 
-The Workers Vitest integration does not support testing Workers using the Service Worker format. Please [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) first.
+The Workers Vitest integration does not support testing Workers using the service worker format. [Migrate to ES modules format](/workers/reference/migrate-to-module-workers/) first.
 
 {{</Aside>}}
 
