@@ -1,14 +1,14 @@
 ---
-title: Write Your First Test
+title: Write your first test
 weight: 1
 pcx_content_type: concept
 meta:
-  description: A guide to help you get set up to write unit tests against Workers.
+  description: Write unit tests against Workers.
 ---
 
-# Write Your First Test
+# Write your first test
 
-This tutorial will guide you through install and setup of the [`@cloudflare/vitest-pool-workers`](https://workers.cloudflare.com) package, and will help you get started writing tests against your Workers using Vitest. This package works by running code that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html) inside a Cloudflare Worker instead.
+This guide will guide you through install and setup of the [`@cloudflare/vitest-pool-workers`](https://workers.cloudflare.com) package, and will help you get started writing tests against your Workers using Vitest. This package works by running code that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html) inside a Cloudflare Worker instead.
 
 ## Prerequisites
 

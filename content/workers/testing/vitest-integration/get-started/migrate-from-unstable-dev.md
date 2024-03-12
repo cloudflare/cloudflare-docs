@@ -87,9 +87,9 @@ export default defineWorkersConfig({
 
 Unlike the `unstable_dev` API, Workers Vitest integration does not support testing Workers using the Service Worker format. You will need to first [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) in order to use it.
 
-## Defining Types
+## Define types
 
-You can remove `UnstableDevWorker` imports from your code. Instead, follow [the guide](/workers/testing/vitest/get-started/write-your-first-test/#define-types) to define types for all of your tests.
+You can remove `UnstableDevWorker` imports from your code. Instead, follow [Write your first test guide](/workers/testing/vitest/get-started/write-your-first-test/#define-types) to define types for all of your tests.
 
 ```diff
 ---
@@ -104,3 +104,7 @@ describe("Worker", () => {
 ...
 });
 ```
+
+## Related resources
+
+- [Write your first test](/workers/testing/vitest/get-started/write-your-first-test/#define-types) - Write unit tests against Workers.
