@@ -1,14 +1,16 @@
 ---
 title: Rust
-pcx_content_type: tutorial
+pcx_content_type: concept
 meta:
-  title: Rust WebAssembly guide
-updated: 2023-05-10
+  title: Write Cloudflare Workers in Rust
+weight: 4
 ---
 
-# Rust WebAssembly guide
+# Rust
 
-By following this guide, you will learn how to build a Worker entirely in the Rust programming language. You will accomplish this using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+
+By following this guide, you will learn how to build a Worker entirely in the Rust programming language.
 
 ## Prerequisites
 

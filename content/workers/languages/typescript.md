@@ -2,6 +2,8 @@
 pcx_content_type: navigation
 title: TypeScript
 weight: 2
+meta:
+  title: Write Cloudflare Workers in TypeScript
 ---
 
 ## TypeScript

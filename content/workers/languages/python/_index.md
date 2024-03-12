@@ -1,6 +1,8 @@
 ---
 pcx_content_type: navigation
 title: Python
+meta:
+  title: Write Cloudflare Workers in Python
 weight: 3
 ---
 
@@ -174,12 +176,4 @@ def on_fetch(request):
     arr = np.array([1, 2, 3])
     return Response.new(str(arr))
 ```
-
-## Summary and Related Resources
-
-We hope that this small guide demonstrates the full-featured support for Python
-within Cloudflare workers.
-
-If you want to get started building your own projects, review the existing list
-of [Quickstart templates](/workers/get-started/quickstarts).
 
