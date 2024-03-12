@@ -3,13 +3,14 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: productName
 ---
 
-# Querying Magic Transit tunnel bandwidth analytics with GraphQL
+# Querying Magic $1 tunnel bandwidth analytics with GraphQL
 
-In this example, you are going to use the GraphQL Analytics API to query Magic Transit ingress tunnel traffic over a specified time period.
+In this example, you are going to use the GraphQL Analytics API to query $1 ingress tunnel traffic over a specified time period.
 
-The following API call will request Magic Transit ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request $1 ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
 The following example queries for ingress traffic. To query for egress, change the value in the direction filter.
 
@@ -46,7 +47,7 @@ PAYLOAD='{ "query":
       "datetimeEnd": "2022-05-04T12:00:00.000Z"
     }
   }
-}' 
+}'
 
 # curl with Legacy API Key
 curl \
@@ -56,7 +57,7 @@ curl \
   -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
   --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/
- 
+
 # curl with API Token
 curl \
   -X POST \
