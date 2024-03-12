@@ -301,7 +301,7 @@ The following section presents a common mistakes and issues that developer might
 
 ### Edge runtime
 
-All server-side routes in your Next.js project must be configured as "Edge" runtime routes, when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
+All server-side routes in your Next.js project must be configured as "Edge" runtime routes when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
 
 
 {{<Aside type="note">}}
