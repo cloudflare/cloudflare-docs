@@ -901,7 +901,7 @@
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 /support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
-/support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ //support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
 /support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
 /support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
 /support/more-dashboard-apps/cloudflare-apps/troubleshooting-missing-pages-from-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
