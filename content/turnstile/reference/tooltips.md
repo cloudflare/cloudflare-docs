@@ -37,6 +37,3 @@ Action should not contain any personally identifiable information (PII) as this 
 cData is not stored in our analytics. It can contain data that may vary by each challenge instance.
 
 Both cData and action are returned by the siteverify API if a valid token is presented.
-
-{{</faq-answer>}}
-{{</faq-item>}}

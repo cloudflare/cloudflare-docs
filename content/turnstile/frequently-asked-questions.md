@@ -8,38 +8,6 @@ structured_data: true
 # Frequently Asked Questions
 
 {{<faq-item>}}
-{{<faq-question level=2 text="How does Content-Security-Policy need to be configured for Turnstile?" >}}
-
-{{<faq-answer>}}
-
-The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page.
-
-For specifics regarding Turnstile, refer to the [Content Security Policy](/turnstile/reference/content-security-policy/).
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
-{{<faq-question level=2 text="Can a Turnstile token be used twice?" >}}
-
-{{<faq-answer>}}
-
-No, the siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
-{{<faq-question level=2 text="How long is a Turnstile token valid for before it is rejected by siteverify?" >}}
-
-{{<faq-answer>}}
-
-A Turnstile token is valid for 300 seconds.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=2 text="What happens if the user takes longer than five minutes?" >}}
 
 {{<faq-answer>}}
@@ -54,27 +22,12 @@ The Turnstile widget needs to be refreshed to generate a new token. This can be 
 
 {{<faq-answer>}}
 
-The siteverify API must not be called by the front end as this may reveal the secretkey used to authenticate. An attacker may simply modify the front end to not perform the siteverify check at all, rendering Turnstile ineffective.
+The siteverify API must not be called by the front end as this may reveal the secret key used to authenticate. An attacker may simply modify the front end to not perform the siteverify check at all, rendering Turnstile ineffective.
 
 {{</faq-answer>}}
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Can I use Turnstile when developing locally?" >}}
-
-{{<faq-answer>}}
-
-Dummy sitekeys can be used from any domain, including on `localhost`.
-
-Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
-
-Refer to [Testing](/turnstile/reference/testing/) for more information.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
-
 {{<faq-question level=2 text="What is the length of a Turnstile token?" >}}
 
 {{<faq-answer>}}
