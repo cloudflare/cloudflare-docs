@@ -109,13 +109,13 @@ You can then follow the steps to [import an existing database](#import-an-existi
 
 If you receive an error when trying to import an existing schema and/or dataset into D1:
 
-- Ensure you are importing data in SQL format (typically with a `.sql` file extension). See [how to convert SQLite files](#convert-sqlite-database-files) if you have a `.sqlite3` database dump.
+- Ensure you are importing data in SQL format (typically with a `.sql` file extension). Refer to [how to convert SQLite files](#convert-sqlite-database-files) if you have a `.sqlite3` database dump.
 - Make sure the schema is [SQLite3](https://www.sqlite.org/docs.html) compatible. You cannot import data from a MySQL or PostgreSQL database into D1, as the types and SQL syntax are not directly compatible.
-- If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You can't refer to a table that doesn't yet exist.
-- If you get `"cannot start a transaction within a transaction"`, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
+- If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You cannot refer to a table that does not yet exist.
+- If you receive a `"cannot start a transaction within a transaction"` error, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
 
 ## Next Steps
 
-- Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation
-- Learn how to [use the D1 client API](/d1/build-databases/query-databases/) from within a Worker
-- Understand how [database migrations work](/d1/reference/migrations/) with D1
+- Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
+- Learn how to [use the D1 client API](/d1/build-databases/query-databases/) from within a Worker.
+- Understand how [database migrations work](/d1/reference/migrations/) with D1.
