@@ -8,11 +8,11 @@ meta:
 
 # Write your first test
 
-This guide will guide you through install and setup of the [`@cloudflare/vitest-pool-workers`](https://workers.cloudflare.com) package, and will help you get started writing tests against your Workers using Vitest. This package works by running code that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html) inside a Cloudflare Worker instead.
+This guide will guide you through install and setup of the `@cloudflare/vitest-pool-workers` package, and will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html).
 
 ## Prerequisites
 
-- Open your Worker project's root folder or create a new project via our [Get Started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
+- Open your Worker project's root folder or create a new project via [Workers Get started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
 
 - In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
 
@@ -25,17 +25,17 @@ $ npm install vitest@1.3.0 --save-dev --save-exact
 $ npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
-This will add the packages to your `package.json` file and install them as dev dependencies.
+The above commands will add the packages to your `package.json` file and install them as dev dependencies.
 
 {{<Aside type="note">}}
 
-The `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.3.0.
+The `@cloudflare/vitest-pool-workers` package only works with Vitest 1.3.0.
 
 {{</Aside>}}
 
-## Define Vitest Configuration
+## Define Vitest configuration
 
-Next, if you don't already have a `vitest.config` file setup, you'll need to create one. In that file, you'll need the following `import` statements:
+If you do not already have a `vitest.config` file setup, you need to create one. In the `vitest.config` file, you will need the following `import` statements:
 
 ```js
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
@@ -59,11 +59,11 @@ export default defineWorkersConfig({
 });
 ```
 
-Next, we will add configuration options via `defineWorkersPoolOptions` to support our tests.
+Next, you will add configuration options via `defineWorkersPoolOptions` to support our tests.
 
-### Add Configuration Options via Wrangler
+### Add configuration options via Wrangler
 
-You can reference a `wrangler.toml` to leverage its `main` entrypoint, its compatibility settings, and its bindings.
+You can reference a `wrangler.toml` file to leverage its `main` entry point, its compatibility settings, and its {<glossary-tooltip term_id="binding" link="/workers/configuration/bindings/">}}bindings{{</glossary-tooltip>}}.
 
 ```js
 ---
@@ -84,15 +84,15 @@ export default defineWorkersConfig({
 
 {{<Aside type="note">}}
 
-For a full list of available configuration options, read the [Configuration guide](/workers/testing/vitest/configuration/).
+For a full list of available configuration options, refer to [Configuration](/workers/testing/vitest/configuration/).
 
 {{</Aside>}}
 
-### Add Configuration Options via Miniflare
+### Add configuration options via Miniflare
 
-Under the hood, the Workers Vitest integration uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/) local mode. Options can be passed directly to Miniflare for advanced configuration.
+Under the hood, the Workers Vitest integration uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/commands/#dev) local mode. Options can be passed directly to Miniflare for advanced configuration.
 
-For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersPoolOptions` like this:
+For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersPoolOptions`:
 
 ```js
 ---
@@ -122,9 +122,9 @@ For a full list of available Miniflare options, refer to the [Miniflare `Workers
 
 {{</Aside>}}
 
-## Define Types
+## Define types
 
-If you're using TypeScript, you'll need to define types for Cloudflare Workers and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (ie. `test`) and add the following:
+If you are using TypeScript, you will need to define types for Cloudflare Workers and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (that is, `test`) and add the following:
 
 ```js
 ---
@@ -142,9 +142,9 @@ filename: tsconfig.json
 }
 ```
 
-Save this file, and you're ready to write your first test.
+Save this file, and you are ready to write your first test.
 
-## Write Tests
+## Write tests
 
 If you created a basic Worker via the guide listed above, you should have the following fetch handler in the `src` folder:
 
@@ -175,7 +175,7 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-This Worker receives a request, and returns a response of "Hello World!". In order to test this, create a `test` folder with the following test file:
+This Worker receives a request, and returns a response of `'Hello World!'`. In order to test this, create a `test` folder with the following test file:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -226,7 +226,7 @@ escribe("Hello World worker", () => {
 {{</tab>}}
 {{</tabs>}}
 
-Let's add functionality to handle a `404` path on the Worker. This will return the text `Not found` as well as the status code `404`.
+Add functionality to handle a `404` path on the Worker. This functionality will return the text `Not found` as well as the status code `404`.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -267,7 +267,7 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-To test this, we would add the following to our test file:
+To test this, add the following to your test file:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -304,4 +304,4 @@ it("displays not found and proper status for /404", async () => {
 
 ## Related resources
 
-- More examples of tests using this package can be found in the `@cloudflare/vitest-pool-workers` [repo](https://github.com/cloudflare/workers-sdk/tree/main/packages/vitest-pool-workers/test)
+- [`@cloudflare/vitest-pool-workers` GitHub repository](https://github.com/cloudflare/workers-sdk/tree/main/packages/vitest-pool-workers/test) - Examples of tests using the `@cloudflare/vitest-pool-workers` package.
