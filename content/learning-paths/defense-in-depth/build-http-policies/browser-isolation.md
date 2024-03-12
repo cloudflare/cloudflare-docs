@@ -42,7 +42,9 @@ You can control potential risk and shape user behavior without applying heavy-ha
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-api example
+```bash
+
+```
 
 {{</tab>}}
 {{</tabs>}}
@@ -59,7 +61,36 @@ You can accomplish this by creating the following policies:
 
 In this context, if some traffic is unknown to your organization, Cloudflare will isolate it by default. Cloudflare will also prevent any malicious code from being executed client side, with additional controls available.
 
-[screenshot and API example for three policies]
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+- Allow known applications and websites:
+
+    | Selector | Operator | Value             | Action |
+    | -------- | -------- | ----------------- | ------ |
+    | Domain   | in list  | _Trusted Domains_ | Allow  |
+
+- Block security risks:
+
+    | Selector       | Operator | Value                | Action |
+    | -------------- | -------- | -------------------- | ------ |
+    | Security Risks | in       | _All Security Risks_ | Block  |
+
+- Isolate all other traffic:
+
+    | Selector | Operator      | Value | Action  |
+    | -------- | ------------- | ----- | ------- |
+    | Host     | matches regex | `.*`  | Isolate |
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+```bash
+
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ### Vendor-chain using link-based isolation
 
