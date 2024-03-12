@@ -53,7 +53,7 @@ The domain transfer process depends on your DNS settings. If Cloudflare is your 
 
 4. Finalize the nameserver update by selecting your domain in the dashboard > **Overview** > **Re-check now**.
 
-Once the Cloudflare network recognizes the nameserver change, the domain in the new account will be marked as **Active**. In the old account, the domain will be marked as **Moved Away**. After seven days in **Moved Away** status, the domain will be marked as **Deleted**. After seven days in the **Deleted** status, the domain will be permanently removed. For more information, refer to [Domain statuses](/dns/zone-setups/reference/domain-status/).
+Once the Cloudflare network recognizes the nameserver change, the domain in the new account will be marked as **Active**. In the old account, the domain will be marked as **Moved Away**. After seven days in **Moved Away** status, the domain will be marked as **Deleted**. After seven days in the **Deleted** status, the domain will be permanently removed. While the domain in the new account is **Pending**, it cannot proxy traffic through Cloudflare and the origin IP addresses will be returned until the domain is marked as **Active**. For more information, refer to [Domain statuses](/dns/zone-setups/reference/domain-status/).
 
 ## Issue new certificates
 
