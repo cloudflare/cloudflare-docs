@@ -1,14 +1,32 @@
-{{- $wranglerReleases := getJSON "https://api.github.com/repos/cloudflare/workers-sdk/releases" -}}
+{{ $localToken := resources.Get "secrets/github_token.txt" }}
+{{ $opts := dict
+    "headers" (dict "Authorization" (printf "Basic %s" $localToken))
+  }}
+{{ $data := "" }}
+{{ $url := "https://api.github.com/repos/cloudflare/workers-sdk/releases"}}
+{{ with resources.GetRemote $url $opts }}
+  {{ with .Err }}
+    {{ warnf "%s" . }}
+  {{ else }}
+    {{ $data = .Content | transform.Unmarshal }}
+  {{ end }}
+{{ else }}
+  {{ warnf "Unable to get remote resource %q" $url }}
+{{ end }}
+
 <!-- Local cache duration for the JSON content is defined in config.toml. -->
 
 {{- $results := slice -}}
 
-{{- range $index, $item := $wranglerReleases -}}
+{{- if ne $data nil -}}
+
+{{- range $index, $item := $data -}}
 {{- if (in $item.tag_name "wrangler@") -}}
 {{- $item_dict := (dict "publish_date" ($item.published_at | time.Format "2006-01-02") 
 "title" (replaceRE `wrangler@` "" $item.name) "link" $item.html_url 
 "description" (replaceRE `###[^-]+` "" $item.body)) -}}
 {{- $results = $results | append $item_dict -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
