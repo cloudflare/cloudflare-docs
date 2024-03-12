@@ -31,9 +31,52 @@ If your organization is most concerned about general data patterns that fit exis
 
 To help this better match the needs of your organization, you can also build a complex profile that matches data to both an existing library and a custom string detection or database. For example:
 
-policy table
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
-API call
+| Selector    | Operator | Value                     | Logic | Action |
+| ----------- | -------- | ------------------------- | ----- | ------ |
+| DLP Profile | in       | _Credentials and Secrets_ | Or    | Block  |
+| DLP Profile | in       | _AWS Key Dataset_         |       |        |
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl <https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules> \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "name": "Do not inspect corporate devices",
+  "conditions": [
+    {
+      "type": "device_posture",
+      "expression": {
+        "any": {
+          "in": {
+            "lhs": {
+              "splat": "device_posture.checks.passed"
+            },
+            "rhs": [
+              "{serial_number_list_uuid}"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "action": "off",
+  "precedence": 14002,
+  "enabled": true,
+  "filters": [
+    "http"
+  ]
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 #### Assorted data patterns
 
