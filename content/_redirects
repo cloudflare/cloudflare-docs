@@ -1185,7 +1185,6 @@
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
 /workers/runtime-apis/webassembly/rust/ /workers/languages/rust/ 301
 /workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
-/workers/tutorials/hello-world-python/ /workers/languages/python/ 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
