@@ -13,7 +13,9 @@ You must call the siteverify endpoint to validate the Turnstile widget response 
 Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint. The siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed. 
 
 {{<Aside type="note">}}
-A Turnstile token is valid for 300 seconds before it is rejected by siteverify.
+A Turnstile token can have up to 2048 characters. 
+
+It is also valid for 300 seconds before it is rejected by siteverify.
 {{</Aside>}}
 
 The siteverify endpoint needs to be passed a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}} that is associated with the {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}}. The secret key will be provisioned alongside the sitekey when you create a widget. Furthermore, the response needs to be passed to the siteverify endpoint.

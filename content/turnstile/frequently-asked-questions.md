@@ -28,16 +28,6 @@ The siteverify API must not be called by the front end as this may reveal the se
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="What is the length of a Turnstile token?" >}}
-
-{{<faq-answer>}}
-
-Currently, a Turnstile token can have up to 2048 characters.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=2 text="What is challenges.cloudflare.com, and why does my application connect to this origin?" >}}
 
 {{<faq-answer>}}
