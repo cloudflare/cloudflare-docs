@@ -12,7 +12,7 @@ In this example, you are going to use the GraphQL Analytics API to query $1 heal
 
 The following API call will request a particular account's tunnel health checks over a one day period for a particular Cloudflare data center, and outputs the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your API credentials, and adjust the `datetimeStart`, `datetimeEnd` variables as needed.
 
-It will return the tunnel health check results by Cloudflare data center. The result for each data center is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel]($3). These states are used by $1 for [routing]($3). The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
+It will return the tunnel health check results by Cloudflare data center. The result for each data center is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the state of the tunnel. These states are used by $1 for routing. The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy. Refer to the [Reference]($3) section for more information.
 
 ## API Call
 
