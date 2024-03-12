@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Querying Magic Transit tunnel bandwidth analytics with GraphQL
+title: Querying Magic WAN tunnel bandwidth analytics with GraphQL
 ---
 
-{{<render file="graphql/_query-magic-transit-bandwidth-graphql.md" withParameters="Magic Transit">}}
+{{<render file="graphql/_query-magic-transit-bandwidth-graphql.md" withParameters="Magic WAN">}}
