@@ -29,6 +29,8 @@ Turnstile [widget types](/turnstile/reference/widget-types/) include:
 * A non-intrusive interactive challenge (such as clicking a button), if the visitor is a suspected bot.
 * An invisible challenge to the browser.
 
+<div class="medium-img"><img alt="Turnstile gif" src="/images/turnstile/turnstile-gif.gif"/></div>
+
 ---
 
 ## Accessibility
