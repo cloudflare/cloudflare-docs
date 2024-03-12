@@ -234,6 +234,6 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 
 ## React Native application support
 
-We currently do not support embedding Turnstile in a React Native application today.
+Turnstile does not currently support native mobile applications, including those utilizing web views or embedded browsers. This applies to all mobile development frameworks and platforms, such as React Native, Swift for iOS, and Kotlin for Android, among others.
 
 An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/reference/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
