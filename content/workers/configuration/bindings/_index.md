@@ -104,3 +104,12 @@ Email bindings allow you to send emails from your Worker. This is useful for whe
 - Learn more about [Workers AI bindings](/workers-ai/).
 - Create your first [AI binding](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai).
 - Configure Workers AI bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#ai).
+
+### Browser bindings
+
+The [Workers Browser Rendering API](/browser-rendering/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
+
+A browser binding will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+
+- Create your first [browser binding](/browser-rendering/get-started/screenshots/#4-configure-wranglertoml).
+- Configure browser bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#browser-rendering).
