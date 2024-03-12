@@ -104,7 +104,7 @@ An object representing the incoming request. This includes methods for accessing
 
 2. **[`Env`](https://docs.rs/worker/latest/worker/struct.Env.html)**
 
-Provides access to Worker [bindings](https://developers.cloudflare.com/workers/configuration/bindings/).
+Provides access to Worker [bindings](/workers/configuration/bindings/).
 
 * [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
 * [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.

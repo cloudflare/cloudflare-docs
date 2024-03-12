@@ -8,10 +8,11 @@ title: Python
 Cloudflare Workers provides first-class support for Python, including:
 
 - [Built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html)
-- Importing pure Python packages like [numpy](https://pypi.org/project/numpy/) from PyPI by adding them to `requirements.txt`
+- Importing pure Python wheels from PyPI with micropip, by adding them to `requirements.txt`
 - [FastAPI](https://fastapi.tiangolo.com/) compatibility, to build APIs in idiomatic Python
 - [Langchain](https://pypi.org/project/langchain/) compatibility, to build LLM-powered apps easily
 - Bindings, Environment Variables, and Secrets
+- Workers API that you know and love, with a Pythonic feel
 
 Python Workers are currently in open beta, and we'd love your feedback. Join the [#python-workers channel](https://discord.com/channels/595317990191398933/<TODO>) in the Cloudflare Discord community and let us know what you'd like to see next.
 
@@ -25,7 +26,7 @@ npm create cloudflare@latest -- --template cloudflare/workers-sdk/templates/pyth
 ``` -->
 
 ```bash
-gh repo clone garrettgu10/python-workers-demos
+git clone https://github.com/garrettgu10/python-workers-demos.git
 cd hello
 npx wrangler@latest dev
 ```
@@ -35,11 +36,11 @@ A Python Worker can be as simple as three lines of code:
 ```python
 from js import Response
 
-def fetch(request):
+def on_fetch(request):
     return Response.new("Hello World!")
 ```
 
-To run a Python Worker locally, you use [Wrangler](https://developers.cloudflare.com/workers/wrangler/), the CLI for Cloudflare Workers.
+To run a Python Worker locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers.
 
 ```bash
 npx wrangler@latest dev
@@ -67,7 +68,7 @@ Now, we can modify `entry.py` to make use of the new module.
 from hello import hello
 from js import Response
 
-def fetch(request):
+def on_fetch(request):
     return Response.new(hello("World"))
 ```
 
@@ -168,7 +169,7 @@ Now, we can simply import and use the package within our Python worker!
 from js import Response
 import numpy as np
 
-def fetch(request):
+def on_fetch(request):
     arr = np.array([1, 2, 3])
     return Response.new(str(arr))
 ```
