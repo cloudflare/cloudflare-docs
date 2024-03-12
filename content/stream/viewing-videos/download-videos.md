@@ -88,6 +88,8 @@ In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the
 https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4?filename=MY_VIDEO.mp4
 `
 
+The `filename` must be at most 120 characters long, and be composed of `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_` characters. The extension (.mp4) is appended automatically.
+
 ## Retrieve downloads
 
 The generated MP4 download files can be retrieved via the link in the download API response.
