@@ -36,11 +36,17 @@ Make sure you have:
     $ cloudflared tunnel vnet add <VNET_NAME>
     ```
 
-2. Assign an IP route to the virtual network.
+2. Configure your virtual network to use the entire private IP range and assign the corresponding tunnel.
 
     ```sh
-    $ cloudflared tunnel route ip add --vnet <VNET_NAME> 10.0.0.0/8
+    $ cloudflared tunnel route ip add --vnet <VNET_NAME> 10.0.0.0/8 <TUNNEL_NAME>
     ```
+
+    ```sh
+    $ cloudflared tunnel route ip add --vnet <VNET_NAME> 192.168.88.0/24 <TUNNEL_NAME>
+    ```
+
+3. Repeat Steps 1-2 for each dedicated egress IP you would like to use. For example, you can create separate virtual networks for your users in North America and in Europe.
 
 {{</tutorial-step>}}
 
@@ -55,7 +61,7 @@ Make sure you have:
     | --------------- | -------- | ------------- |
     | Virtual Network | is       | _<VNET_NAME>_ |
 
-5. In **Select an egress IP**, select **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
+5. In **Select an egress IP**, choose **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 
 {{</tutorial-step>}}
 
