@@ -211,6 +211,12 @@ If your Worker is on the Unbound usage model, you will be charged a single billa
 
 For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
 
+## Monitoring and controlling your bill
+
+You can configure custom alerts for any metric you are billed for on a usage-basis, such as Workers CPU time or requests, using [Cloudflare's Notifications system](/notifications/notification-available/#billing). Notifications can be automatically sent via email, PagerDuty, or trigger a webhook to be sent to an endpoint you choose.
+
+You can also set a limit on the maximum CPU time that can be used per invocation of a Worker, either in the Cloudflare dashboard or via [Wrangler](/workers/wrangler/configuration/#limits).
+
 ## Fine Print
 
 Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
