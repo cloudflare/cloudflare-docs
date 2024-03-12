@@ -18,7 +18,7 @@ Using Turnstile analytics, you can:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Turnstile** and then navigate to your website to see an overview of its widget metrics.
 
-These metrics show changes in the solve rate, widget traffic, and top actions for your website.
+These metrics show changes in the solve rate, widget traffic, and top actions for your website. Refer to [Tooltips](/turnstile/reference/tooltips) for more information.
 
 ## Change in Solve Rate
 
