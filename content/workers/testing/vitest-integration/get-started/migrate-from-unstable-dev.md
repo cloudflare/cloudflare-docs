@@ -1,18 +1,18 @@
 ---
-title: Migrate from unstable_dev
+title: Migrate from `unstable_dev`
 weight: 3
 pcx_content_type: concept
 meta:
-  description: Test your Worker in local development.
+  description: Migrate from the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests with thhe Workers Vitest integration.
 ---
 
 # Migrate from unstable_dev
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach for users wanting to run integration tests against their Workers. The `@cloudflare/vitest-pool-workers` package provides a more ergonomic API and better developer experience for users wanting to write a wide variety of tests.
 
-This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration read [this guide](/workers/testing/vitest/get-started/write-your-first-test/).
+This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest/get-started/write-your-first-test/).
 
-## Referencing a Worker for Integration Testing
+## Reference a Worker for integration testing
 
 With `unstable_dev`, to trigger a `fetch` event, you would do this:
 
@@ -29,7 +29,7 @@ it("dispatches fetch event", () => {
 })
 ```
 
-With the Workers Vitest integration, now you can do the same thing using the `SELF` fetcher from `cloudflare:test`:
+With the Workers Vitest integration, you can accomplish the same goal using the `SELF` fetcher from `cloudflare:test`:
 
 ```js
 ---
@@ -44,13 +44,13 @@ it("dispatches fetch event", async () => {
 });
 ```
 
-## Stopping a Worker
+## Stop a Worker
 
 With the Workers Vitest integration there is no need to stop a Worker via `worker.stop()`. This is handled automatically after tests run.
 
-## Importing Wrangler Config
+## Import Wrangler configuration
 
-Via the `unstable_dev` API, you can reference a `wrangler.toml` config file by adding it as an option like this:
+Via the `unstable_dev` API, you can reference a `wrangler.toml` configuration file by adding it as an option:
 
 ```js
 ---
@@ -83,9 +83,9 @@ export default defineWorkersConfig({
 ---
 ```
 
-## Testing Service Workers
+## Test service Workers
 
-Unlike the `unstable_dev` API, Workers Vitest integration does not support testing Workers using the Service Worker format. You will need to first [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) in order to use it.
+Unlike the `unstable_dev` API, the Workers Vitest integration does not support testing Workers using the service worker format. You will need to first [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) in order to use the Workers Vitest integration.
 
 ## Define types
 

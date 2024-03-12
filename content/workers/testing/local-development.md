@@ -10,7 +10,7 @@ meta:
 
 Cloudflare Workers and most connected resources can be fully developed and tested locally - providing confidence that the applications you build locally will work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to test against remote resources. Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
-In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
+In addition to testing Workers locally with [`wrangler dev`](/workers/wrangler/commands/#dev), the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
 
 ## Start a local development server
 
@@ -45,7 +45,7 @@ Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted l
 | AI                                        | ✅[^1]    |
 | Hyperdrive                                | ✅        |
 
-[^1]: Support for local AI development includes accessing remote resources that count against usage.
+[^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
 
 ### Clear Wrangler's local storage
 
@@ -81,4 +81,4 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 ## Related resources
 
-* [Debugging Tools](/workers/testing/debugging-tools) - tools to help you gain insight into your Workers in order to diagnose issues.
+* [Debugging tools](/workers/testing/debugging-tools) - Tools to help you diagnose issues and gain insight into your Workers.

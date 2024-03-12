@@ -118,7 +118,7 @@ This configuration would add a KV namespace `TEST_NAMESPACE` that was only acces
 
 {{<Aside type="note">}}
 
-For a full list of available Miniflare options, read the Miniflare [WorkersOptions API docs](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
+For a full list of available Miniflare options, refer to the [Miniflare `WorkersOptions` API documentation](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
 
 {{</Aside>}}
 

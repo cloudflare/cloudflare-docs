@@ -9,6 +9,7 @@ weight: 4
 The Workers Vitest integration provides additional configuration on top of Vitest's usual options.
 To configure the integration, use the `poolOptions.workers` key.
 Use the `defineWorkersPoolOptions()` function from the `@cloudflare/vitest-pool-workers/config` module for type checking and completions.
+
 An example configuration would be:
 
 ```ts
@@ -45,7 +46,7 @@ Custom `environment`s or `runner`s are not supported when using the Workers Vite
 
 ## Functions
 
-These are exported from the `@cloudflare/vitest-pool-workers/config` module.
+The following functions are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
 {{<definitions>}}
 
@@ -59,11 +60,11 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
 {{<definitions>}}
 
-- {{<code>}}main: {{<type>}}string{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}main: {{<type>}}string{{</type>}}{{</code>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Entrypoint to Worker run in the same isolate/context as tests. This is required to use `import { SELF } from "cloudflare:test"` for integration tests, or Durable Objects without an explicit `scriptName` if classes are defined in the same Worker. Note this goes through Vite transforms and can be a TypeScript file. Note also `import module from "<path-to-main>"` inside tests gives exactly the same `module` instance as is used internally for the `SELF` and Durable Object bindings. If `wrangler.configPath` is defined and this option isn't, it will be read from the `main` field in that configuration file.
 
-- {{<code>}}isolatedStorage: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}} — Defaults to `false`
+- {{<code>}}isolatedStorage: {{<type>}}boolean{{</type>}}{{</code>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
 
@@ -124,30 +125,32 @@ These are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
     </details>
 
-- {{<code>}}singleWorker: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}} — Defaults to `false`
+- {{<code>}}singleWorker: {{<type>}}boolean{{</type>}}{{</code>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Runs all tests in this project serially in the same Worker, using the same module cache. This can significantly speed up execution if you have lots of small test files. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
+  
+  - Defaults to `false`.
 
-- {{<code>}}miniflare: {{<type>}}SourcelessWorkerOptions & { workers?: WorkerOptions[]; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}miniflare: {{<type>}}SourcelessWorkerOptions & { workers?: WorkerOptions[]; }{{</type>}}{{</code>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Miniflare sourceless-[`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) for configuring bindings and compatibility settings. Use the `main` option above to configure the entrypoint, instead of the Miniflare `script`, `scriptPath`, or `modules` options.<br><br>
-    If your project makes use of multiple Workers, you can configure _auxiliary Workers_ that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
-    - Cannot have TypeScript entrypoints—you must compile them to JavaScript first
-    - Use regular Workers module resolution semantics—refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/#modules) page for more information
-    - Cannot access the `cloudflare:test` module
-    - Do not require specific compatibility dates or flags
-    - Can be written with the [Service Worker syntax](/workers/reference/migrate-to-module-workers/#service-worker-syntax)
-    - Are not affected by global mocks defined in your tests
+  - Miniflare sourceless-[`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) for configuring bindings and compatibility settings. Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.<br><br>
+    If your project makes use of multiple Workers, you can configure auxiliary Workers that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
+    - Cannot have TypeScript entrypoints. You must compile auxiliary Workers to JavaScript first.
+    - Use regular Workers module resolution semantics. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/#modules) page for more information.
+    - Cannot access the `cloudflare:test` module.
+    - Do not require specific compatibility dates or flags.
+    - Can be written with the [Service Worker syntax](/workers/reference/migrate-to-module-workers/#service-worker-syntax).
+    - Are not affected by global mocks defined in your tests.
 
-- {{<code>}}wrangler: {{<type>}}{ configPath?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+- {{<code>}}wrangler: {{<type>}}{ configPath?: string; }{{</type>}}{{</code>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Path to Wrangler configuration file to load `main`, compatibility settings and bindings from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a service binding named `SERVICE` to a worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
+  - Path to Wrangler configuration file to load `main`, compatibility settings and bindings from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/configuration/bindings/about-service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
 
 {{</definitions>}}
 
 {{<Aside type="warning">}}
 
-You must define a compatibility date of `2022-10-31` or higher, and include `nodejs_compat` in your compatibility flags to use the Workers Vitest integration.
+You must define a compatibility date of `2022-10-31` or higher, and include [`nodejs_compat` in your compatibility flags](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to use the Workers Vitest integration.
 
 {{</Aside>}}
 
@@ -157,7 +160,7 @@ You must define a compatibility date of `2022-10-31` or higher, and include `nod
 
 - {{<code>}}inject: {{<type>}}typeof import("vitest").inject{{</type>}}{{</code>}}
 
-  - The same `inject()` function usually imported from the `vitest` module inside tests. This allows you to define `miniflare` config based on injected values from [`globalSetup`](https://vitest.dev/config/#globalsetup) scripts. Use this if you have a value in your configuration that is dynamically generated and only known at runtime of your tests. For example, a global setup script might start an upstream server on a random port. This port could be `provide()`d and then `inject()`ed in the configuration for an external service binding or Hyperdrive.
+  - The same `inject()` function usually imported from the `vitest` module inside tests. This allows you to define `miniflare` configuration based on injected values from [`globalSetup`](https://vitest.dev/config/#globalsetup) scripts. Use this if you have a value in your configuration that is dynamically generated and only known at runtime of your tests. For example, a global setup script might start an upstream server on a random port. This port could be `provide()`d and then `inject()`ed in the configuration for an external service binding or [Hyperdrive](/hyperdrive/).
 
     <details>
     <summary>Illustrative example</summary>

@@ -116,7 +116,7 @@ If you have been using `unstable_dev()` for integration testing and want to migr
 
 ## Miniflare's API
 
-If you would like to write integration tests for multiple workers, need direct access to bindings outside your worker in tests, or have another advanced use case, consider using [Miniflare's API](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md) directly. Miniflare is the foundation for the other solutions on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
+If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/configuration/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
 
 ```js
 import assert from "node:assert";
@@ -136,7 +136,7 @@ try {
 
 {{<Aside type="note">}}
 
-If you have been using the test environments from Minflare 2 for integration testing and want to migrate to our Vitest integration, read this [migration guide](/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/) for more information.
+If you have been using the test environments from Minflare 2 for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from Miniflare migration guide](/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/) for more information.
 
 {{</Aside>}}
 

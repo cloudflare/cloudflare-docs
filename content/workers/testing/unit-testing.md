@@ -1,12 +1,12 @@
 ---
-title: Unit Testing
+title: Unit testing
 weight: 2
 pcx_content_type: concept
 meta:
   description: Test independent units of your Worker by importing them into your tests.
 ---
 
-# Unit Testing
+# Unit testing
 
 In a Workers context, a unit test imports and directly calls functions from your Worker then asserts on their return values. For example, consider you have the following Worker:
 
@@ -28,7 +28,7 @@ export default {
 }
 ```
 
-A unit test might look like...
+An example unit test for the above Worker may look like the following:
 
 ```js
 import { add } from "./index.mjs";
@@ -36,12 +36,12 @@ import { add } from "./index.mjs";
 assert(add(1, 2) === 3);
 ```
 
-This test only assets that the `add` function is returning the correct value, but doesn't test the Worker itself like an [integration test](/workers/testing/integration-testing) would do.
+This test only assets that the `add` function is returning the correct value, but does not test the Worker itself like an [integration test](/workers/testing/integration-testing) would.
 
-## Vitest Integration
+## Vitest integration
 
-The recommended way to unit test your Workers is by using our custom Vitest integration. For more information on features, as well as installation and setup instructions, please read the [Get Started guide](/workers/testing/vitest/get-started/)
+The recommended way to unit test your Workers is by using the Workers Vitest integration. For more information on features, as well as installation and setup instructions, refer to the [Vitest integration Get Started guide](/workers/testing/vitest/get-started/)
 
 ## Related Resources
 
-- More examples of unit tests can be found on the Vitest [Recipes page](/workers/testing/vitest-integration/recipes).
+- [Recipes](/workers/testing/vitest-integration/recipes) - Examples of integration tests.

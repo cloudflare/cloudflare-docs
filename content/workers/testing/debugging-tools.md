@@ -69,4 +69,4 @@ The `.vscode/launch.json` file only applies to a single workspace. If you prefer
 
 ## Related resources
 
-* [Local Development](/workers/testing/local-development) - Develop your Workers and connected resources locally via Wrangler and the Cloudflare Workers runtime, [`workerd`](https://github.com/cloudflare/workerd), for a fast, accurate feedback loop.
+* [Local Development](/workers/testing/local-development) - Develop your Workers and connected resources locally via Wrangler and {{<glossary-tooltip term_id="workerd" link="https://github.com/cloudflare/workerd">}}`workerd`{{</glossary-tooltip>}}, for a fast, accurate feedback loop.

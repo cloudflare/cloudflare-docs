@@ -1,10 +1,10 @@
 ---
 pcx_content_type: navigation
-title: Vitest Integration
+title: Vitest integration
 weight: 5
 ---
 
-# Vitest Integration
+# Vitest integration
 
 Information about the Workers Vitest integration - the recommended package for writing unit and integration tests for Workers.
 

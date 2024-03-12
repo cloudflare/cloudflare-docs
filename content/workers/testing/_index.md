@@ -24,6 +24,6 @@ Review the tools available for testing and debugging Workers.
 | Direct access to Durable Object instances | ✅               | ❌               | ❌                   |
 | Run Durable Object alarms immediately     | ✅               | ❌               | ❌                   |
 | List Durable Objects                      | ✅               | ❌               | ❌                   |
-| Testing Service Workers                   | ❌               | ✅               | ✅                   |
+| Testing service Workers                   | ❌               | ✅               | ✅                   |
 
-[^1]: Support for multiple workers in `unstable_dev()` relies on `wrangler dev`'s service registry which can be unreliable when running multiple tests in parallel.
+[^1]: Support for multiple Workers in [`unstable_dev()`](/workers/wrangler/api/#unstable_dev) relies on `wrangler dev`'s service registry which can be unreliable when running multiple tests in parallel.

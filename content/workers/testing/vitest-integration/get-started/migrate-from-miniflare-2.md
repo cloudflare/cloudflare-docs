@@ -2,12 +2,14 @@
 title: Migrate from Miniflare 2's test environments
 weight: 2
 pcx_content_type: concept
+meta:
+  description: Migrate from [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) to the Workers Vitest integration.
 ---
 
 # Migrate from Miniflare 2's test environments
 
-Miniflare 2 provided custom environments for Jest and Vitest in the `jest-environment-miniflare` and `vitest-environment-miniflare` packages respectively.
-The `@cloudflare/vitest-pool-workers` package provides similar functionality using modern Miniflare versions and the [`workerd` runtime](https://github.com/cloudflare/workerd). This is the exact same runtime that powers deployed Cloudflare Workers, practically eliminating behaviour mismatches between your tests and deployed code, all whilst giving you new features faster. Refer to the [Miniflare 3 announcement](https://blog.cloudflare.com/miniflare-and-workerd) for more information.
+[Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) provided custom environments for Jest and Vitest in the `jest-environment-miniflare` and `vitest-environment-miniflare` packages respectively.
+The `@cloudflare/vitest-pool-workers` package provides similar functionality using modern Miniflare versions and the [`workerd` runtime](https://github.com/cloudflare/workerd). `workerd` is a JavaScript/Wasm server runtime based on the same code that powers Cloudflare Workers. Using `workerd` practically eliminates behavior mismatches between your tests and deployed code. Refer to the [Miniflare 3 announcement](https://blog.cloudflare.com/miniflare-and-workerd) for more information.
 
 {{<Aside type="warning">}}
 
@@ -21,9 +23,9 @@ The Workers Vitest integration does not support testing Workers using the Servic
 
 {{</Aside>}}
 
-## Installing the integration
+## Install the Workers Vitest integration
 
-First, you will need to uninstall the old _environment_ and install the new _pool_. Vitest environments can only customise the global scope, whereas pools can run tests using a completely different _runtime_. In this case, the pool runs your tests inside [`workerd`](https://github.com/cloudflare/workerd) instead of Node.js.
+First, you will need to uninstall the old environment and install the new pool. Vitest environments can only customize the global scope, whereas pools can run tests using a completely different runtime. In this case, the pool runs your tests inside {{<glossary-tooltip term_id="workerd" link="https://github.com/cloudflare/workerd">}}`workerd`{{</glossary-tooltip>}} instead of Node.js.
 
 ```sh
 $ npm uninstall vitest-environment-miniflare
@@ -31,9 +33,9 @@ $ npm install --save-dev --save-exact vitest@1.3.0
 $ npm install --save-dev @cloudflare/vitest-pool-workers
 ```
 
-## Updating your Vitest configuration file
+## Update your Vitest configuration file
 
-After that, update your Vitest configuration file to use the pool instead. Most Miniflare configuration previously specified `environmentOptions` can be moved to `poolOptions.workers.miniflare` instead. Refer to [Miniflare's `WorkerOptions` interface](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md#interface-workeroptions) for supported options and the [Miniflare version 2 to 3 migration guide](https://miniflare.dev/get-started/migrating#api-changes) for more information. If you relied on configuration stored in a `wrangler.toml` file, set `wrangler.configPath` too.
+After installing the Workers Vitest configuration, update your Vitest configuration file to use the pool instead. Most Miniflare configuration previously specified `environmentOptions` can be moved to `poolOptions.workers.miniflare` instead. Refer to [Miniflare's `WorkerOptions` interface](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md#interface-workeroptions) for supported options and the [Miniflare version 2 to 3 migration guide](https://miniflare.dev/get-started/migrating#api-changes) for more information. If you relied on configuration stored in a `wrangler.toml` file, set `wrangler.configPath` too.
 
 ```diff
 ---
@@ -55,7 +57,7 @@ filename: vitest.config.js
   });
 ```
 
-## Updating your TypeScript configuration file
+## Update your TypeScript configuration file
 
 If you are using TypeScript, update your `tsconfig.json` to include the correct ambient `types`:
 
@@ -75,7 +77,7 @@ filename: tsconfig.json
   }
 ```
 
-## Accessing bindings
+## Access bindings
 
 To access [bindings](/workers/runtime-apis/bindings/) in your tests, use the `env` helper from the `cloudflare:test` module.
 
@@ -92,7 +94,7 @@ filename: index.spec.js
   });
 ```
 
-If your are using TypeScript, add an ambient `.d.ts` declaration file defining a `ProvidedEnv` `interface` in the `cloudflare:test` module to control the type of `env`:
+If you are using TypeScript, add an ambient `.d.ts` declaration file defining a `ProvidedEnv` `interface` in the `cloudflare:test` module to control the type of `env`:
 
 ```ts
 ---
@@ -107,7 +109,7 @@ declare module "cloudflare:test" {
 }
 ```
 
-## Enabling isolated storage
+## Enable isolated storage
 
 If you were previously using isolated storage, enable the `isolatedStorage` option in your Vitest configuration file and remove `setupMiniflareIsolatedStorage()` from your tests:
 
@@ -137,7 +139,7 @@ filename: index.spec.js
 + import { describe } from "vitest";
 ```
 
-## Working with `waitUntil()`
+## Work with `waitUntil()`
 
 The `new ExecutionContext()` constructor and `getMiniflareWaitUntil()` function are now `createExecutionContext()` and `waitOnExecutionContext()` respectively. Note `waitOnExecutionContext()` now returns an empty `Promise<void>` instead of a `Promise` resolving to the results of all `waitUntil()`ed `Promise`s.
 
@@ -157,12 +159,12 @@ filename: index.spec.js
   });
 ```
 
-## Mocking outbound requests
+## Mock outbound requests
 
 The `getMiniflareFetchMock()` function has been replaced with the new `fetchMock` helper from the `cloudflare:test` module. This has the same type as the return type of `getMiniflareFetchMock()`. There are a couple of differences between `fetchMock` and the previous return value of `getMiniflareFetchMock()`:
 
 - `fetchMock` is deactivated by default, whereas previously it would start activated. This prevents unnecessary buffering of request bodies if you are not using `fetchMock`. You will need to call `fetchMock.activate()` before calling `fetch()` to enable it.
-- `fetchMock` is reset at the start of each test run, whereas previously interceptors added in previous runs would apply to the current one. This ensures test runs are not affected by previous runs.
+- `fetchMock` is reset at the start of each test run, whereas previously, interceptors added in previous runs would apply to the current one. This ensures test runs are not affected by previous runs.
 
 ```diff
 ---
@@ -183,7 +185,7 @@ filename: index.spec.js
   afterAll(() => fetchMock.assertNoPendingInterceptors());
 ```
 
-## Using Durable Object helpers
+## Use Durable Object helpers
 
 The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. This functions accepts a `DurableObjectStub` with a callback accepting the Durable Object instance and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest/test-apis/) for more details.
 
