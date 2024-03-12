@@ -19,35 +19,40 @@ Deprecated APIs:
 - PATCH /zones/:zone_id/firewall/rules
 - PUT /zones/:zone_id/firewall/rules
 - DELETE /zones/:zone_id/firewall/rules
-- GET /zones/:zone_id/firewall/rules/:rule_id
-- PATCH /zones/:zone_id/firewall/rules/:rule_id
-- PUT /zones/:zone_id/firewall/rules/:rule_id
-- DELETE /zones/:zone_id/firewall/rules/:rule_id
+- GET /zones/:zone_id/firewall/rules/:id
+- PATCH /zones/:zone_id/firewall/rules/:id
+- PUT /zones/:zone_id/firewall/rules/:id
+- DELETE /zones/:zone_id/firewall/rules/:id
 - GET /zones/:zone_id/filters
 - POST /zones/:zone_id/filters
 - PUT /zones/:zone_id/filters
 - DELETE /zones/:zone_id/filters
-- GET /zones/:zone_id/filters/:filter_id
-- PUT /zones/:zone_id/filters/:filter_id
-- DELETE /zones/:zone_id/filters/:filter_id
+- GET /zones/:zone_id/filters/:id
+- PUT /zones/:zone_id/filters/:id
+- DELETE /zones/:zone_id/filters/:id
 
 Replacement: [WAF custom rules](/waf/custom-rules/)
 
 ## WAF managed rules APIs (previous version)
 **End of life date: May 1st, 2024**
 
-The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, and rules — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
+The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
 
 Deprecated APIs:
 - GET /zones/:zone_id/firewall/waf/packages
-- GET /zones/:zone_id/firewall/waf/packages/:identifier
-- PATCH /zones/:zone_id/firewall/waf/packages/:identifier
+- GET /zones/:zone_id/firewall/waf/packages/:package_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id
 - GET /zones/:zone_id/firewall/waf/packages/:package_id/groups
-- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
-- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:id
 - GET /zones/:zone_id/firewall/waf/packages/:package_id/rules
-- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
-- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:id
+- GET /zones/:zone_id/firewall/waf/overrides
+- POST /zones/:zone_id/firewall/waf/overrides
+- GET /zones/:zone_id/firewall/waf/overrides/:id
+- PUT /zones/:zone_id/firewall/waf/overrides/:id
+- DELETE /zones/:zone_id/firewall/waf/overrides/:id
 
 Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
 
@@ -59,9 +64,9 @@ The Rate Limiting API is deprecated, since the previous version of rate limiting
 Deprecated API:
 - GET /zones/:zone_id/rate_limits
 - POST /zones/:zone_id/rate_limits
-- GET /zones/:zone_id/rate_limits/:rate_limit_id
-- PUT /zones/:zone_id/rate_limits/:rate_limit_id
-- DELETE /zones/:zone_id/rate_limits/:rate_limit_id
+- GET /zones/:zone_id/rate_limits/:id
+- PUT /zones/:zone_id/rate_limits/:id
+- DELETE /zones/:zone_id/rate_limits/:id
 
 Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
