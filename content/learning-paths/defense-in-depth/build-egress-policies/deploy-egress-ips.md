@@ -29,8 +29,8 @@ We recommend building baseline policies that can cover a majority of your use ca
 
 ## Change user egress location
 
-You may have use cases in which specific groups of your users may need to change the location from which they egress. Cloudflare observes this frequently with quality assurance (QA) teams for applications or sites that need to test resources as if they are accessing from different, predetermined locales. You can manage this ad-hoc via an egress policy, but most Cloudflare users prefer to manage this without ongoing changes to the administrative panel and existing policies. To accommodate this, you can build virtual networks for use as selectors in egress policies. This will allow your users to change their attached virtual network and subsequently change their egress IP as they choose.
+You may have use cases in which specific groups of your users may need to change the location from which they egress. Cloudflare observes this frequently with quality assurance (QA) teams for applications or sites that need to test resources as if they are accessing from different, predetermined locales. You can manage this when necessary via an egress policy, but most Cloudflare users prefer to manage this without ongoing changes to the administrative panel and existing policies. To accommodate this, you can build virtual networks for use as selectors in egress policies. This will allow your users to change their attached virtual network and subsequently change their egress IP as they choose.
 
-[screenshot of policy and user experience]
+![Users can choose virtual networks to change their egress IP within the WARP client](/images/learning-paths/defense-in-depth/change-user-egress-warp.png)
 
 For more information, refer to our [tutorial for user selectable egress IPs](/cloudflare-one/tutorials/user-selectable-egress-ips).
