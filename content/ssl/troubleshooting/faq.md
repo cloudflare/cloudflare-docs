@@ -107,6 +107,9 @@ ___
 
 No. Since Cloudflare does not proxy connections made directly to `paypal.com`, enabling Cloudflare for your domain does not affect how TLS connections are made.
 
+But please note that PayPal IPN (Instant Payment Notification) might not support [TLS version 1.3](/ssl/edge-certificates/additional-options/tls-13/) if you have it enabled on your zone. 
+If you are encountering issues with PayPal IPN when the traffic is proxied by Cloudflare, try setting the [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
+
 ___
 
 ## How can I serve an SSL certificate from Cloudflare's China data centers?
