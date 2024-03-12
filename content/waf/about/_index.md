@@ -16,6 +16,44 @@ A Web Application Firewall or WAF creates a shield between a web app and the Int
 
 ---
 
+## Detection versus mitigation
+
+The two main roles of the Cloudflare WAF are the following:
+
+- **Detection**: Run incoming requests through one or more [traffic detections](#available-traffic-detections) to find malicious or potentially malicious activity. The scores from enabled detections are available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, where you can analyze your security posture and determine the most appropriate mitigation rules.
+
+- **Mitigation**: Blocks, challenges, or throttles requests through different [mitigation features](#waf-mitigation-features) such as custom rules, WAF Managed Rules, and rate limiting rules. Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
+
+{{<Aside type="warning" header="Warning">}}
+Enabling traffic detections will not apply any mitigation measures to incoming traffic; detections only provide signals that you can use to define your attack mitigation strategy.
+{{</Aside>}}
+
+### Available traffic detections
+
+The WAF currently provides the following detections for finding security threats in incoming requests:
+
+- [**Bots**](/bots/reference/bot-management-variables/#ruleset-engine-fields): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
+- [**Attacks**](/waf/about/waf-attack-score/): Checks for known attack variations and malicious payloads. Scores traffic on a scale from 1 (likely to be malicious) to 99 (unlikely to be malicious).
+- [**Malicious uploads**](/waf/about/content-scanning/): Scans content objects, such as uploaded files, for malicious signatures like malware.
+
+To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
+
+{{<Aside type="note" header="Note">}}
+Currently, you cannot manage the [Bots](/bots/reference/bot-management-variables/#ruleset-engine-fields) and [Attacks](/waf/about/waf-attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details.
+{{</Aside>}}
+
+### WAF mitigation features
+
+The WAF provides the following mitigation features for traffic posing as a security threat:
+
+- [**Custom rules**](/waf/custom-rules/): Allow you to control incoming traffic by filtering requests to a zone. You can perform actions like Block or Managed Challenge on incoming requests according to rules you define.
+- [**Rate limiting rules**](/waf/rate-limiting-rules/): Allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
+- [**Managed rules**](#waf-managed-rules): Allow you to deploy pre-configured managed rulesets that provide immediate protection against common attacks.
+
+To configure these mitigation features in the Cloudflare dashboard, go to your domain > **Security** > **WAF**.
+
+---
+
 ## Rules and rulesets
 
 Refer to the [Ruleset Engine](/ruleset-engine/about/rules/) documentation for more information on the following concepts:
@@ -37,6 +75,8 @@ To customize the behavior of managed rulesets, do one of the following:
 - [Configure overrides](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
 
 Exceptions have priority over overrides.
+
+---
 
 ## Rule execution order
 

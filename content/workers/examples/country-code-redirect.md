@@ -47,7 +47,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     /**
      * A map of the URLs to redirect to
@@ -69,9 +69,7 @@ const handler: ExportedHandler = {
       return fetch(request);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

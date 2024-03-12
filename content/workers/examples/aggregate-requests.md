@@ -65,8 +65,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request) {
     /**
      * someHost is set up to return JSON responses
      * Replace url1 and url2 with the hosts you wish to send requests to
@@ -109,8 +109,7 @@ const handler: ExportedHandler = {
     ]);
     return new Response(results.join(), init);
   },
-};
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

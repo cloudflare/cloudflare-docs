@@ -41,7 +41,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     try {
       const tlsVersion = request.cf.tlsVersion;
@@ -61,9 +61,7 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
