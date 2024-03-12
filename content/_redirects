@@ -1183,6 +1183,8 @@
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
+/workers/runtime-apis/webassembly/rust/ /workers/languages/rust/ 301
+/workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
@@ -1202,6 +1204,7 @@
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/reference/languages/ 301
 /workers/learning/languages/ /workers/reference/languages/ 301
+/workers/reference/languages/ /workers/languages/ 301
 /workers/platform/protocols/ /workers/reference/protocols/ 301
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
