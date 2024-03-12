@@ -1,6 +1,10 @@
 ---
 productName: Workers
 entries:
+- term: auxiliary Worker
+  general_definition: |-
+    An auxiliary Worker is test test test...
+
 - term: binding
   general_definition: |-
     [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
@@ -95,7 +99,7 @@ entries:
 
 - term: subrequest
   general_definition: |-
-    A subrequest is an additional HTTP requests from the Worker to another resource or another Worker.
+    A subrequest is any request that a Worker makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
 - term: Tail Worker
   general_definition: |-
