@@ -70,7 +70,7 @@ Next, assign dedicated egress IPs to each virtual network using Gateway egress p
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Test your egress policy">}}
+{{<tutorial-step title="Test virtual network egress">}}
 
 1. On your user's machine, log in to your Zero Trust organization in the WARP client.
 2. In a terminal, run the following command to check the default egress IP address.
