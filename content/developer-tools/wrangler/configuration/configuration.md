@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Workers configuration
 meta:
   title: Configuration
-  description: Use a `wrangler.toml` configuration file to customize the development and deployment setup for your Worker project and other Developer Platform products.
+  description: Use a `wrangler.toml` configuration file for your Worker project.
 ---
 
 # Configure `wrangler.toml` in Workers
