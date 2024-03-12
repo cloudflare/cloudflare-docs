@@ -11,4 +11,6 @@ Browse our entire catalog of models.
 
 {{<render file="_billing-announcement.md">}}
 
+{{<render file="_file_issues.md">}}
+
 {{% models-grouped-by-task %}}
