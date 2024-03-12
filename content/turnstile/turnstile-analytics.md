@@ -18,7 +18,7 @@ Using Turnstile analytics, you can:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Turnstile** and then navigate to your website to see an overview of its widget metrics.
 
-These metrics show changes in the solve rate, widget traffic, and top actions for your website. Refer to [Tooltips](/turnstile/reference/tooltips) for more information.
+These metrics show changes in the solve rate, widget traffic, and top actions for your website.
 
 ## Change in Solve Rate
 
@@ -54,9 +54,7 @@ Widget traffic metrics provide you with data on the number of widgets displayed,
 
 Top Actions refer to the custom labels you created for your widgets.
 
-Action can be used in analytics and is more limited in size. It should identify different pages in a website where a widget is used.
-
-Action should not contain any personally identifiable information (PII) as this is placed into the analytics.
+Action can be used in analytics and is more limited in size. It should identify different pages in a website where a widget is used. Action should not contain any personally identifiable information (PII) as this is placed into the analytics.
 
 cData is not stored in our analytics. It can contain data that may vary by each challenge instance.
 
