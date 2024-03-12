@@ -1,6 +1,6 @@
 {{ $localToken := resources.Get "secrets/github_token.txt" }}
 {{ $opts := dict
-    "headers" (dict "Authorization" (printf "Bearer %s" $localToken))
+    "headers" (dict "Authorization" (printf "Basic %s" $localToken))
   }}
 {{ $data := "" }}
 {{ $url := "https://api.github.com/repos/cloudflare/workers-sdk/releases"}}
