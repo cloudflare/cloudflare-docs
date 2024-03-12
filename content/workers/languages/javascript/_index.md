@@ -1,6 +1,7 @@
 ---
 pcx_content_type: navigation
 title: JavaScript
+weight: 1
 ---
 
 ## JavaScript

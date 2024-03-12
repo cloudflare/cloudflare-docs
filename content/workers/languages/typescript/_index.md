@@ -1,6 +1,7 @@
 ---
 pcx_content_type: navigation
 title: TypeScript
+weight: 2
 ---
 
 ## TypeScript

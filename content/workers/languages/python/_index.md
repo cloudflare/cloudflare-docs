@@ -1,6 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Python
+weight: 3
 ---
 
 {{<heading-pill style="beta">}}Python{{</heading-pill>}}
