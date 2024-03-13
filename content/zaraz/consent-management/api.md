@@ -237,24 +237,23 @@ You can combine multiple features of Zaraz to effectively disable Consent Manage
 
 ```html
 <script>
-
 function getCookie(name) {
   const value = `; ${document.cookie}`
   return value?.split(`; ${name}=`)[1]?.split(";")[0]
 }
 
 function handleZarazConsentAPIReady() {
-  if ('{{system.device.location.isEUCountry}}' === 1) {
-    zaraz.consent.modal = true
-  } else {
-    const shouldSendQueuedEvents = !getCookie("cf_consent")
-    zaraz.consent.setAll(true)
-    if (shouldSendQueuedEvents) {
+  const consent_cookie = getCookie("cf_consent")
+  const isEUCountry = "{{system.device.location.isEUCountry}}" === "1"
+  if (!consent_cookie) {
+    if (isEUCountry) {
+      zaraz.consent.modal = true
+    } else {
+      zaraz.consent.setAll(true)
       zaraz.consent.sendQueuedEvents()
     }
   }
 }
-
 
 if (zaraz.consent?.APIReady) {
   handleZarazConsentAPIReady()
@@ -263,5 +262,7 @@ if (zaraz.consent?.APIReady) {
 }
 </script>
 ```
+
+Note: If you've customized the cookie name for the Consent Manager, use that customized name instead of "cf_consent"  in the snippet above.
 
 By letting this Custom HTML tool to run without consent requirements, the modal will appear to all EU visitors, while for other visitors consent will be automatically granted. The `{{ system.device.location.isEUCountry }}` property will be `1` if the visitor is from an EU country and `0` otherwise. You can use any other property or variable to customize the Consent Management behavior in a similar manner, such as `{{ system.device.location.country }}` to restrict consent checks based on country code.

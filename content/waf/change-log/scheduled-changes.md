@@ -23,21 +23,21 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-03-04</td>
-      <td>2024-03-11</td>
+      <td>2024-03-12</td>
+      <td>2024-03-18</td>
       <td>Block</td>
-      <td>100627</td>
-      <td>...dc6877e2</td>
-      <td>Wordpress:Plugin:Bricks Builder Theme - Command Injection - CVE:CVE-2024-25600</td>
+      <td>100629</td>
+      <td>...2bed8cdd</td>
+      <td>JetBrains TeamCity - Auth Bypass, Remote Code Execution - CVE:CVE-2024-27198, CVE:CVE-2024-27199</td>
       <td>N/A</td>
     </tr>
-        <tr>
-      <td>2024-03-04</td>
-      <td>2024-03-11</td>
+    <tr>
+      <td>2024-03-12</td>
+      <td>2024-03-18</td>
       <td>Block</td>
-      <td>100628</td>
-      <td>...ae685218</td>
-      <td>ConnectWise - Auth Bypass</td>
+      <td>100630</td>
+      <td>...1ef425a5</td>
+      <td>Apache OFBiz - Auth Bypass, Remote Code Execution - CVE:CVE-2023-49070, CVE:CVE-2023-51467</td>
       <td>N/A</td>
     </tr>
   </tbody>
