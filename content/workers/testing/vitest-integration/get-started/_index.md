@@ -10,19 +10,19 @@ meta:
 
 {{<directory-listing showDescriptions="true">}}
 
-For most users, Cloudflare recommends using the [Workers Vitest integration](/workers/testing/vitest/get-started/) for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript. In this integration, Cloudflare provides a custom pool that allows your Vitest tests to run _inside_ the Workers runtime. 
+For most users, Cloudflare recommends using the [Workers Vitest integration](/workers/testing/vitest/get-started/) for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript. In this integration, Cloudflare provides a custom pool that allows your Vitest tests to run _inside_ the Workers runtime.
 
 Get started with the [Vitest integration Get started guide](/workers/testing/vitest/get-started/), and refer to [Recipes for testing different types of Workers](/workers/testing/vitest/recipes/).
 
-Features of the Workers Vitest integration:
+The Workers Vitest integration...
 
-- ✅ Supports both **unit tests** and **integration tests**
-- 📚 Provides direct access to Workers runtime APIs and bindings
-- 📦 Implements isolated per-test storage
-- 🔥 Runs tests fully-locally using [Miniflare](https://miniflare.dev/)
-- ⚡️ Leverages Vitest's hot-module reloading for near instant reruns
-- ↩️ Provides a declarative interface for mocking outbound requests
-- 🧩 Supports projects with multiple workers
+- Supports both **unit tests** and **integration tests**.
+- Provides direct access to Workers runtime APIs and bindings.
+- Implements isolated per-test storage.
+- Runs tests fully-locally using [Miniflare](https://miniflare.dev/).
+- Leverages Vitest's hot-module reloading for near instant reruns.
+- Provides a declarative interface for mocking outbound requests.
+- Supports projects with multiple Workers.
 
 {{<Aside type="warning">}}
 

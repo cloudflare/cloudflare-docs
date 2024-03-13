@@ -60,11 +60,13 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 - {{<code>}}main{{</code>}}: {{<type>}}string{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Entrypoint to Worker run in the same isolate/context as tests. This is required to use `import { SELF } from "cloudflare:test"` for integration tests, or Durable Objects without an explicit `scriptName` if classes are defined in the same Worker. Note this goes through Vite transforms and can be a TypeScript file. Note also `import module from "<path-to-main>"` inside tests gives exactly the same `module` instance as is used internally for the `SELF` and Durable Object bindings. If `wrangler.configPath` is defined and this option isn't, it will be read from the `main` field in that configuration file.
+  - Entry point to Worker run in the same isolate/context as tests. This option is required to use `import { SELF } from "cloudflare:test"` for integration tests, or Durable Objects without an explicit `scriptName` if classes are defined in the same Worker. This file goes through Vite transforms and can be TypeScript. Note that `import module from "<path-to-main>"` inside tests gives exactly the same `module` instance as is used internally for the `SELF` and Durable Object bindings. If `wrangler.configPath` is defined and this option is not, it will be read from the `main` field in that configuration file.
 
 - {{<code>}}isolatedStorage{{</code>}}: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
+  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this option is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
+
+  - Defaults to `true`.
 
     <details>
     <summary>Illustrative example</summary>
@@ -126,13 +128,14 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 - {{<code>}}singleWorker{{</code>}}: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Runs all tests in this project serially in the same Worker, using the same module cache. This can significantly speed up execution if you have lots of small test files. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/) page for more information on the isolation model.
-  
+
   - Defaults to `false`.
 
 - {{<code>}}miniflare{{</code>}}: {{<type>}}SourcelessWorkerOptions & { workers?: WorkerOptions[]; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Miniflare sourceless-[`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) for configuring bindings and compatibility settings. Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.<br><br>
-    If your project makes use of multiple Workers, you can configure auxiliary Workers that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
+  - Use this to provide configuration information that is typically stored within the Wrangler configuration file, such as [bindings](/workers/configuration/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-dates/#compatibility-flags). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
+
+  - If your project makes use of multiple Workers, you can configure auxiliary Workers that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
     - Cannot have TypeScript entrypoints. You must compile auxiliary Workers to JavaScript first.
     - Use regular Workers module resolution semantics. Refer to the [Isolation and concurrency](/workers/testing/vitest/internal-details/#modules) page for more information.
     - Cannot access the `cloudflare:test` module.
@@ -210,6 +213,6 @@ Sourceless `WorkerOptions` type without `script`, `scriptPath`, or `modules` pro
 ```ts
 type SourcelessWorkerOptions = Omit<
 	WorkerOptions,
-	"script" | "scriptPath" | "modules" | "modulesRoot" | "modulesRule"
+	"script" | "scriptPath" | "modules" | "modulesRoot"
 >;
 ```

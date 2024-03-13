@@ -8,11 +8,11 @@ meta:
 
 # Write your first test
 
-This guide will guide you through install and setup of the `@cloudflare/vitest-pool-workers` package, and will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html).
+This guide will guide you through install and setup of the `@cloudflare/vitest-pool-workers` package, and will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For example of tests `@cloudflare/vitest-pool-workers`, refer to the [Recipes](/workers/testing/vitest-integration/recipes/) page.
 
 ## Prerequisites
 
-- Open your Worker project's root folder or create a new project via [Workers Get started guide](/workers/get-started/guide/#1-create-a-new-worker-project)
+- Open the root directory of your Worker or [create a new Worker](/workers/get-started/guide/#1-create-a-new-worker-project)
 
 - In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
 
@@ -35,48 +35,21 @@ The `@cloudflare/vitest-pool-workers` package only works with Vitest 1.3.0.
 
 ## Define Vitest configuration
 
-If you do not already have a `vitest.config` file setup, you need to create one. In the `vitest.config` file, you will need the following `import` statements:
+If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
+You can reference a `wrangler.toml` file to leverage its `main` entry point, compatibility settings, and [bindings](/workers/configuration/bindings/).
 
 ```js
+---
+filename: vitest.config.js
+---
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
-```
 
-Then, you will add the following within `defineWorkersConfig` to define the pool and its options:
-
-```js
----
-filename: vitest.config.js
----
 export default defineWorkersConfig({
   test: {
     poolOptions: {
-      workers: defineWorkersPoolOptions({
-        isolatedStorage: true,
+      workers: {
         wrangler: { configPath: "./wrangler.toml" },
-      }),
-    },
-  },
-});
-```
-
-Next, you will add configuration options via `defineWorkersPoolOptions` to support our tests.
-
-### Add configuration options via Wrangler
-
-You can reference a `wrangler.toml` file to leverage its `main` entry point, its compatibility settings, and its [bindings](/workers/configuration/bindings/).
-
-```js
----
-filename: vitest.config.js
-highlight: [6]
----
-export default defineWorkersConfig({
-  test: {
-    poolOptions: {
-      workers: defineWorkersPoolOptions({
-        isolatedStorage: true,
-        wrangler: { configPath: "../wrangler.toml" },
-      }),
+      },
     },
   },
 });
@@ -92,23 +65,22 @@ For a full list of available configuration options, refer to [Configuration](/wo
 
 Under the hood, the Workers Vitest integration uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/commands/#dev) local mode. Options can be passed directly to Miniflare for advanced configuration.
 
-For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersPoolOptions`:
+For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersConfig`:
 
 ```js
 ---
 filename: vitest.config.js
-highlight: [8-10]
+highlight: [7-9]
 ---
 export default defineWorkersConfig({
   test: {
     poolOptions: {
-      workers: defineWorkersPoolOptions({
-        isolatedStorage: true,
-        main: "../src/index.ts",
+      workers: {
+        main: "./src/index.ts",
         miniflare: {
           kvNamespaces: ["TEST_NAMESPACE"],
         },
-      }),
+      },
     },
   },
 });
@@ -133,6 +105,7 @@ filename: tsconfig.json
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "types": [
       "@cloudflare/workers-types/experimental",
       "@cloudflare/vitest-pool-workers"
@@ -183,7 +156,7 @@ This Worker receives a request, and returns a response of `'Hello World!'`. In o
 ---
 filename: index.spec.js
 ---
-import { env, createExecutionContext, waitOnExecutionContext() } from "cloudflare:test";
+import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 // Could import any other source file/function here
 import worker from "../src";
@@ -193,7 +166,7 @@ describe("Hello World worker", () => {
     const request = new Request("http://example.com");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await waitOnExecutionContext()(ctx);
+    await waitOnExecutionContext(ctx);
     expect(await response.text()).toBe("Hello World!");
   });
 });
@@ -204,7 +177,7 @@ describe("Hello World worker", () => {
 ---
 filename: index.spec.ts
 ---
-import { env, createExecutionContext, waitOnExecutionContext() } from "cloudflare:test";
+import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 // Could import any other source file/function here
 import worker from "../src";
@@ -213,12 +186,12 @@ import worker from "../src";
 // `Request` to pass to `worker.fetch()`.
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
-escribe("Hello World worker", () => {
+describe("Hello World worker", () => {
   it("displays Hello World!", async () => {
     const request = new IncomingRequest("http://example.com");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await waitOnExecutionContext()(ctx);
+    await waitOnExecutionContext(ctx);
     expect(await response.text()).toBe("Hello World!");
   });
 });
@@ -238,7 +211,7 @@ export default {
   async fetch(request, env, ctx) {
     const { pathname } = new URL(request.url);
 
-    if(pathname === "/404") {
+    if (pathname === "/404") {
       return new Response('Not found', { status: 404 });
     }
 
@@ -279,7 +252,7 @@ it("displays not found and proper status for /404", async () => {
     const request = new Request("http://example.com/404");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await waitOnExecutionContext()(ctx);
+    await waitOnExecutionContext(ctx);
     expect(await response.text()).toBe("Not found");
     expect(await response.status).toBe(404);
   });
@@ -294,7 +267,7 @@ it("displays not found and proper status for /404", async () => {
     const request = new IncomingRequest("http://example.com/404");
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
-    await waitOnExecutionContext()(ctx);
+    await waitOnExecutionContext(ctx);
     expect(await response.text()).toBe("Not found");
     expect(await response.status).toBe(404);
   });

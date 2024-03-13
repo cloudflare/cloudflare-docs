@@ -9,7 +9,7 @@ meta:
 # Migrate from Miniflare 2's test environments
 
 [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) provided custom environments for Jest and Vitest in the `jest-environment-miniflare` and `vitest-environment-miniflare` packages respectively.
-The `@cloudflare/vitest-pool-workers` package provides similar functionality using modern Miniflare versions and the [`workerd` runtime](https://github.com/cloudflare/workerd). `workerd` is a JavaScript/Wasm server runtime based on the same code that powers Cloudflare Workers. Using `workerd` practically eliminates behavior mismatches between your tests and deployed code. Refer to the [Miniflare 3 announcement](https://blog.cloudflare.com/miniflare-and-workerd) for more information.
+The `@cloudflare/vitest-pool-workers` package provides similar functionality using modern Miniflare versions and the [`workerd` runtime](https://github.com/cloudflare/workerd). `workerd` is the JavaScript/WebAssembly runtime that powers Cloudflare Workers. Using `workerd` practically eliminates behavior mismatches between your tests and deployed code. Refer to the [Miniflare 3 announcement](https://blog.cloudflare.com/miniflare-and-workerd) for more information.
 
 {{<Aside type="warning">}}
 
@@ -161,7 +161,7 @@ filename: index.spec.js
 
 ## Mock outbound requests
 
-The `getMiniflareFetchMock()` function has been replaced with the new `fetchMock` helper from the `cloudflare:test` module. This has the same type as the return type of `getMiniflareFetchMock()`. There are a couple of differences between `fetchMock` and the previous return value of `getMiniflareFetchMock()`:
+The `getMiniflareFetchMock()` function has been replaced with the new `fetchMock` helper from the `cloudflare:test` module. `fetchMock` has the same type as the return type of `getMiniflareFetchMock()`. There are a couple of differences between `fetchMock` and the previous return value of `getMiniflareFetchMock()`:
 
 - `fetchMock` is deactivated by default, whereas previously it would start activated. This deactivation prevents unnecessary buffering of request bodies if you are not using `fetchMock`. You will need to call `fetchMock.activate()` before calling `fetch()` to enable it.
 - `fetchMock` is reset at the start of each test run, whereas previously, interceptors added in previous runs would apply to the current one. This ensures test runs are not affected by previous runs.
@@ -187,7 +187,7 @@ filename: index.spec.js
 
 ## Use Durable Object helpers
 
-The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. This functions accepts a `DurableObjectStub` with a callback accepting the Durable Object instance and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest/test-apis/) for more details.
+The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. The `runInDurableObject()` function accepts a `DurableObjectStub` with a callback accepting the Durable Object instance and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest/test-apis/) for more details.
 
 ```diff
 ---
@@ -222,7 +222,7 @@ filename: index.spec.js
   });
 ```
 
-The `flushMiniflareDurableObjectAlarms()` function has been replaced with the `runDurableObjectAlarm()` function from the `cloudflare:test` module. This function accepts a single `DurableObjectStub` and returns a `Promise` that resolves to `true` if an alarm was scheduled and the `alarm()` handler was executed, or `false` otherwise. To "flush" multiple instances' alarms, call `runDurableObjectAlarm()` in a loop.
+The `flushMiniflareDurableObjectAlarms()` function has been replaced with the `runDurableObjectAlarm()` function from the `cloudflare:test` module. The `runDurableObjectAlarm()`  function accepts a single `DurableObjectStub` and returns a `Promise` that resolves to `true` if an alarm was scheduled and the `alarm()` handler was executed, or `false` otherwise. To "flush" multiple instances' alarms, call `runDurableObjectAlarm()` in a loop.
 
 ```diff
 ---
@@ -239,7 +239,7 @@ filename: index.spec.js
   });
 ```
 
-Finally, the `getMiniflareDurableObjectIds()` function has been replaced with the `listDurableObjectIds()` function from the `cloudflare:test` module. This function now accepts a `DurableObjectNamespace` instance instead of a namespace `string` to provide stricter typing. Note this function now respects isolated storage. If enabled, IDs of objects created in other tests will not be returned.
+Finally, the `getMiniflareDurableObjectIds()` function has been replaced with the `listDurableObjectIds()` function from the `cloudflare:test` module. The `listDurableObjectIds()` function now accepts a `DurableObjectNamespace` instance instead of a namespace `string` to provide stricter typing. Note the `listDurableObjectIds()` function now respects isolated storage. If enabled, IDs of objects created in other tests will not be returned.
 
 ```diff
 ---

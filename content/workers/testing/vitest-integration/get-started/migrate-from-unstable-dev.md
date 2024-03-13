@@ -3,12 +3,12 @@ title: Migrate from `unstable_dev`
 weight: 3
 pcx_content_type: concept
 meta:
-  description: Migrate from the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests with thhe Workers Vitest integration.
+  description: Migrate from the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests with the Workers Vitest integration.
 ---
 
 # Migrate from unstable_dev
 
-The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach for users wanting to run integration tests against their Workers. The `@cloudflare/vitest-pool-workers` package provides a more ergonomic API and better developer experience for users wanting to write a wide variety of tests.
+The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.
 
 This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest/get-started/write-your-first-test/).
 
@@ -29,7 +29,7 @@ it("dispatches fetch event", () => {
 })
 ```
 
-With the Workers Vitest integration, you can accomplish the same goal using the `SELF` fetcher from `cloudflare:test`:
+With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/service-bindings/) to the default export defined by the `main` option in your `wrangler.toml`. This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
 
 ```js
 ---
@@ -61,7 +61,7 @@ await unstable_dev("src/index.ts", {
 });
 ```
 
-With the Workers Vitest integration, you can now set this reference to `wrangler.toml` in `vitest.config.js` for all of your tests.
+With the Workers Vitest integration, you can now set this reference to `wrangler.toml` in `vitest.config.js` for all of your tests:
 
 ```js
 ---
@@ -72,7 +72,6 @@ export default defineWorkersConfig({
   test: {
     poolOptions: {
       workers: defineWorkersPoolOptions({
-        isolatedStorage: true,
         wrangler: {
           configPath: "wrangler.toml",
         },
