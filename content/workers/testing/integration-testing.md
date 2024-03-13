@@ -140,6 +140,8 @@ If you have been using the test environments from Minflare 2 for integration tes
 
 {{</Aside>}}
 
+{{<render file="_testing-pages-functions.md" productFolder="workers">}}
+
 ## Related Resources
 
 - [Recipes](/workers/testing/vitest-integration/recipes) - Examples integration tests for Workers using the Workers Vitest integration.

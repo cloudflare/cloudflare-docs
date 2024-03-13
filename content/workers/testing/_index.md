@@ -6,7 +6,7 @@ weight: 9
 
 # Testing
 
-Review the tools available for testing and debugging Workers and [Pages Functions](/pages/functions/).
+Review the tools available for testing and debugging Workers.
 
 {{<directory-listing showDescriptions="true">}}
 
@@ -27,3 +27,5 @@ Review the tools available for testing and debugging Workers and [Pages Function
 | Testing service Workers                   | ❌               | ✅               | ✅                   |
 
 [^1]: Support for multiple Workers in [`unstable_dev()`](/workers/wrangler/api/#unstable_dev) relies on `wrangler dev`'s service registry which can be unreliable when running multiple tests in parallel.
+
+{{<render file="_testing-pages-functions.md" productFolder="workers">}}
