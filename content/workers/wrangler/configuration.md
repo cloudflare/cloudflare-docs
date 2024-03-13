@@ -1097,16 +1097,7 @@ local_protocol = "http"
 
 [Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
 
-When developing your Worker or Pages Function, create a `.dev.vars` file in the root of your project to define secrets that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using [environment variables in `wrangler.toml`](/workers/configuration/environment-variables/#compare-secrets-and-environment-variables). This works both in the local and remote development modes.
-
-This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
-
-```bash
----
-header: .dev.vars
----
-SECRET_KEY=value
-```
+{{<render file="_secrets-in-dev.md">}}
 
 ## Node compatibility
 
