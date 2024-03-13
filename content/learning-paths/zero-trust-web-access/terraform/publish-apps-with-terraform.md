@@ -9,11 +9,11 @@ This guide covers how to use the [Cloudflare Terraform provider](https://registr
 
 ## Prerequisities
 
-- [Domain on Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
-- [IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
-- [Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) created via the Zero Trust dashboard
-- [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-- [API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
+- [Add your domain to Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
+- [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
+- [Create a Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) via the Zero Trust dashboard
+- Install the [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
 
 ## 1. Create a Terraform configuration directory
 
