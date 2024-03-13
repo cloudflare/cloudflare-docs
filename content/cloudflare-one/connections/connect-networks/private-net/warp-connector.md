@@ -41,7 +41,7 @@ This guide will cover how to connect two independent subnets, for example `10.0.
 ## Prerequisites
 
 - A Linux host{{<fnref num="2">}} on each subnet
-- Your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/)
+- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 ## 1. Create a service token
 
