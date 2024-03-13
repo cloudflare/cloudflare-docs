@@ -263,4 +263,6 @@ if (zaraz.consent?.APIReady) {
 </script>
 ```
 
+Note: If you've customized the cookie name for the Consent Manager, use that customized name instead of "cf_consent"  in the snippet above.
+
 By letting this Custom HTML tool to run without consent requirements, the modal will appear to all EU visitors, while for other visitors consent will be automatically granted. The `{{ system.device.location.isEUCountry }}` property will be `1` if the visitor is from an EU country and `0` otherwise. You can use any other property or variable to customize the Consent Management behavior in a similar manner, such as `{{ system.device.location.country }}` to restrict consent checks based on country code.
