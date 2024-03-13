@@ -246,8 +246,8 @@ Block users on unmanaged devices from downloading files that contain credit card
 | Selector                     | Operator | Value                      | Logic | Action  |
 |------------------------------|----------|----------------------------|-------|---------|
 | Host                         | in       | `internal.site.com`        | And   | Block   |
-| [DLP Profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/)                  | in       | `Financial information`    | And   |         |
-| Passed Device Posture Checks | not in   | `Corporate serial numbers` |       |         |
+| [DLP Profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/)                  | in       | _Financial Information_    | And   |         |
+| Passed Device Posture Checks | not in   | _Corporate serial numbers_ |       |         |
 
 {{</tab>}}
 
