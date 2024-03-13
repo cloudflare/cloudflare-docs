@@ -49,13 +49,9 @@ import * as codeOwnersUtils from "codeowners-utils";
         });
     }
 
-    
-
-    for (const item of answer) {
-      if (item.groups !== undefined) {
-
-      }
-      const match = codeOwnersUtils.matchFile(file, codeowners);
+    for (const item of links) {
+      const updatedLink = "/content".concat(item)
+      const match = codeOwnersUtils.matchFile(updatedLink, codeowners);
       for (const owner of match.owners) {
         if (!owner.includes("/")) {
           assignees.add(owner.replace(/^@/, ""));
