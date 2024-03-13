@@ -45,7 +45,7 @@ The recommended way to write integration tests for your Workers is by using [the
 
 ### Testing via `SELF`
 
-If testing a single Worker, you can use the `SELF` fetcher provided by the [`@cloudflare/test` API](/workers/testing/vitest-integration/test-apis/). 
+If testing a single Worker, you can use the `SELF` fetcher provided by the [`@cloudflare/test` API](/workers/testing/vitest-integration/test-apis/).
 
 ```js
 ---
@@ -65,12 +65,11 @@ Usually this is not a problem, but if you would like to run your Worker in a fre
 
 ### Testing via auxiliary Workers
 
-It is also possible to configure Workers for integration testing via `vitest.config.js`. An [example `vitest.config.js` configuration file](https://github.com/cloudflare/workers-sdk/blob/bcoll/vitest-pool-workers-examples/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary/vitest.config.ts) on GitHub.
+It is also possible to configure Workers for integration testing via `vitest.config.ts`. An [example `vitest.config.ts` configuration file](https://github.com/cloudflare/workers-sdk/blob/main/fixtures/vitest-pool-workers-examples/basics-integration-auxiliary/vitest.config.ts) on GitHub.
 
 The Worker can then be referenced like the following example:
 
 ```js
----
 import { env } from "cloudflare:test";
 import { expect, it } from "vitest";
 
@@ -82,18 +81,18 @@ it("dispatches fetch event", async () => {
 
 Instead of running the Worker-under-test in the same Worker as the test runner like `SELF`, this example defines the Worker-under-test as an _auxiliary_ Worker. This means the Worker runs in a separate isolate to the test runner, with a different global scope. The Worker-under-test runs in an environment closer to production, but Vite transformations and hot-module-reloading aren't applied to the Worker—you must compile your TypeScript to JavaScript beforehand.
 
-Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) in `vite.config.ts`.
+Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) in `vitest.config.ts`.
 
 {{<Aside type="note">}}
 
-This method is less recommended than `SELF` for integration tests because of its developer experience. However, it can be useful when you are testing multiple Workers. You can define multiple Workers by different names in `vitest.config.js` and reference them via `env`.
+This method is less recommended than `SELF` for integration tests because of its developer experience. However, it can be useful when you are testing multiple Workers. You can define multiple Workers by different names in `vitest.config.ts` and reference them via `env`.
 
 {{</Aside>}}
 
 
 ## Wrangler's `unstable_dev()` API
 
-If you do not want to use Vitest and would like to write integration tests for a single Worker, consider using [Wrangler's `unstable_dev()` API](/workers/wrangler/api/#unstable_dev). `unstable_dev` allows you to start an HTTP server similar to [`wrangler dev`](/workers/wrangler/commands/#dev) that you can send HTTP requests to. `unstable_dev()` will automatically load options from your Wrangler configuration file. Note that `unstable_dev` is an experimental API subject to breaking changes.
+If you do not want to use Vitest and would like to write integration tests for a single Worker, consider using [Wrangler's `unstable_dev()` API](/workers/wrangler/api/#unstable_dev). `unstable_dev()` allows you to start an HTTP server similar to [`wrangler dev`](/workers/wrangler/commands/#dev) that you can send HTTP requests to. `unstable_dev()` will automatically load options from your Wrangler configuration file. Note that `unstable_dev()` is an experimental API subject to breaking changes.
 
 ```js
 import assert from "node:assert";
@@ -144,4 +143,4 @@ If you have been using the test environments from Miniflare 2 for integration te
 
 ## Related Resources
 
-- [Recipes](/workers/testing/vitest-integration/recipes) - Example integration tests for Workers using the Workers Vitest integration.
+- [Recipes](/workers/testing/vitest-integration/recipes/) - Example integration tests for Workers using the Workers Vitest integration.

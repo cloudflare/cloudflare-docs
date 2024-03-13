@@ -29,14 +29,14 @@ The above commands will add the packages to your `package.json` file and install
 
 {{<Aside type="note">}}
 
-The `@cloudflare/vitest-pool-workers` package only works with Vitest 1.3.0.
+Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.3.0.
 
 {{</Aside>}}
 
 ## Define Vitest configuration
 
 If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
-You can reference a `wrangler.toml` file to leverage its `main` entry point, compatibility settings, and [bindings](/workers/configuration/bindings/).
+You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/configuration/bindings/).
 
 ```js
 ---
@@ -125,11 +125,11 @@ If you created a basic Worker via the guide listed above, you should have the fo
 {{<tab label="js" default="true">}}
 ```js
 ---
-filename: index.js
+filename: src/index.js
 ---
 export default {
   async fetch(request, env, ctx) {
-    return new Response('Hello World!');
+    return new Response("Hello World!");
   },
 };
 ```
@@ -137,24 +137,24 @@ export default {
 {{<tab label="ts">}}
 ```ts
 ---
-filename: index.ts
+filename: src/index.ts
 ---
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
+		return new Response("Hello World!");
 	},
 } satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}
 
-This Worker receives a request, and returns a response of `'Hello World!'`. In order to test this, create a `test` folder with the following test file:
+This Worker receives a request, and returns a response of `"Hello World!"`. In order to test this, create a `test` folder with the following test file:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
 ---
-filename: index.spec.js
+filename: test/index.spec.js
 ---
 import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
@@ -175,7 +175,7 @@ describe("Hello World worker", () => {
 {{<tab label="ts">}}
 ```ts
 ---
-filename: index.spec.ts
+filename: test/index.spec.ts
 ---
 import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
@@ -212,10 +212,10 @@ export default {
     const { pathname } = new URL(request.url);
 
     if (pathname === "/404") {
-      return new Response('Not found', { status: 404 });
+      return new Response("Not found", { status: 404 });
     }
 
-    return new Response('Hello World!');
+    return new Response("Hello World!");
   },
 };
 ```
@@ -230,10 +230,10 @@ export default {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {
-      return new Response('Not found', { status: 404 });
+      return new Response("Not found", { status: 404 });
     }
 
-		return new Response('Hello World!');
+		return new Response("Hello World!");
 	}
 } satisfies ExportedHandler<Env>;
 ```
@@ -249,13 +249,13 @@ To test this, add the following to your test file:
 filename: index.spec.js
 ---
 it("displays not found and proper status for /404", async () => {
-    const request = new Request("http://example.com/404");
-    const ctx = createExecutionContext();
-    const response = await worker.fetch(request, env, ctx);
-    await waitOnExecutionContext(ctx);
-    expect(await response.text()).toBe("Not found");
-    expect(await response.status).toBe(404);
-  });
+  const request = new Request("http://example.com/404");
+  const ctx = createExecutionContext();
+  const response = await worker.fetch(request, env, ctx);
+  await waitOnExecutionContext(ctx);
+  expect(await response.status).toBe(404);
+  expect(await response.text()).toBe("Not found");
+});
 ```
 {{</tab>}}
 {{<tab label="ts">}}
@@ -264,17 +264,17 @@ it("displays not found and proper status for /404", async () => {
 filename: index.spec.ts
 ---
 it("displays not found and proper status for /404", async () => {
-    const request = new IncomingRequest("http://example.com/404");
-    const ctx = createExecutionContext();
-    const response = await worker.fetch(request, env, ctx);
-    await waitOnExecutionContext(ctx);
-    expect(await response.text()).toBe("Not found");
-    expect(await response.status).toBe(404);
-  });
+  const request = new IncomingRequest("http://example.com/404");
+  const ctx = createExecutionContext();
+  const response = await worker.fetch(request, env, ctx);
+  await waitOnExecutionContext(ctx);
+  expect(await response.status).toBe(404);
+  expect(await response.text()).toBe("Not found");
+});
 ```
 {{</tab>}}
 {{</tabs>}}
 
 ## Related resources
 
-- [`@cloudflare/vitest-pool-workers` GitHub repository](https://github.com/cloudflare/workers-sdk/tree/main/packages/vitest-pool-workers/test) - Examples of tests using the `@cloudflare/vitest-pool-workers` package.
+- [`@cloudflare/vitest-pool-workers` GitHub repository](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples) - Examples of tests using the `@cloudflare/vitest-pool-workers` package.

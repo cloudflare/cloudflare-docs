@@ -46,4 +46,4 @@ The recommended way to unit test your Workers is by using the Workers Vitest int
 
 ## Related Resources
 
-- [Recipes](/workers/testing/vitest-integration/recipes) - Examples of unit tests using the Workers Vitest integration.
+- [Recipes](/workers/testing/vitest-integration/recipes/) - Examples of unit tests using the Workers Vitest integration.

@@ -132,7 +132,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}createScheduledController(options?:{{<param-type>}}FetcherScheduledOptions{{</param-type>}}){{</code>}}: {{<type>}}ScheduledController{{</type>}}
 
-  - Creates an instance of `ScheduledController` for use as the 1st argument to modules-format `scheduled()` exported handlers.
+  - Creates an instance of `ScheduledController` for use as the first argument to modules-format [`scheduled()`](/workers/runtime-apis/handlers/scheduled/) exported handlers.
 
     <br>
 
@@ -157,7 +157,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}createMessageBatch(queueName:{{<param-type>}}string{{</param-type>}}, messages:{{<param-type>}}ServiceBindingQueueMessage[]{{</param-type>}}){{</code>}}: {{<type>}}MessageBatch{{</type>}}
 
-  - Creates an instance of `MessageBatch` for use as the 1st argument to modules-format `queue()` exported handlers.
+  - Creates an instance of `MessageBatch` for use as the first argument to modules-format [`queue()`](/queues/reference/javascript-apis/#consumer) exported handlers.
 
 - {{<code>}}getQueueResult(batch:{{<param-type>}}MessageBatch{{</param-type>}}, ctx:{{<param-type>}}ExecutionContext{{</param-type>}}){{</code>}}: {{<type>}}Promise\<FetcherQueueResult>{{</type>}}
 
@@ -184,10 +184,10 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
       const ctx = createExecutionContext();
       await worker.queue(batch, env, ctx);
       const result = await getQueueResult(batch, ctx);
-      expect(result.retryAll).toBe(false);
       expect(result.ackAll).toBe(false);
-      expect(result.explicitRetries).toStrictEqual([]);
+      expect(result.retryBatch).toMatchObject({ retry: false });
       expect(result.explicitAcks).toStrictEqual(["message-1"]);
+      expect(result.retryMessages).toStrictEqual([]);
     });
     ```
 
@@ -275,5 +275,15 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
       expect(ids[0].equals(id)).toBe(true);
     });
     ```
+
+{{</definitions>}}
+
+### D1
+
+{{<definitions>}}
+
+- {{<code>}}applyD1Migrations(db:{{<param-type>}}D1Database{{</param-type>}}, migrations:{{<param-type>}}D1Migration[]{{</param-type>}}, migrationTableName?:{{<param-type>}}string{{</param-type>}}){{</code>}}: {{<type>}}Promise\<void>{{</type>}}
+
+  - Applies all un-applied [D1 migrations](/d1/reference/migrations/) stored in the `migrations` array to database `db`, recording migrations state in the `migrationsTableName` table. `migrationsTableName` defaults to `d1_migrations`. Call the [`readD1Migrations()`](/workers/testing/vitest-integration/configuration/#functions) function from the `@cloudflare/vitest-pool-workers/config` package inside Node.js to get the `migrations` array. Refer to the [D1&nbsp;recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/d1) for an example project using migrations.
 
 {{</definitions>}}

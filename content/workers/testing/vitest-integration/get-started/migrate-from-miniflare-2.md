@@ -9,7 +9,7 @@ meta:
 # Migrate from Miniflare 2's test environments
 
 [Miniflare 2](https://github.com/cloudflare/miniflare?tab=readme-ov-file) provided custom environments for Jest and Vitest in the `jest-environment-miniflare` and `vitest-environment-miniflare` packages respectively.
-The `@cloudflare/vitest-pool-workers` package provides similar functionality using modern Miniflare versions and the [`workerd` runtime](https://github.com/cloudflare/workerd). `workerd` is the JavaScript/WebAssembly runtime that powers Cloudflare Workers. Using `workerd` practically eliminates behavior mismatches between your tests and deployed code. Refer to the [Miniflare 3 announcement](https://blog.cloudflare.com/miniflare-and-workerd) for more information.
+The `@cloudflare/vitest-pool-workers` package provides similar functionality using modern Miniflare versions and the [`workerd` runtime](https://github.com/cloudflare/workerd). `workerd` is the same JavaScript/WebAssembly runtime that powers Cloudflare Workers. Using `workerd` practically eliminates behavior mismatches between your tests and deployed code. Refer to the [Miniflare 3 announcement](https://blog.cloudflare.com/miniflare-and-workerd) for more information.
 
 {{<Aside type="warning">}}
 
@@ -48,10 +48,10 @@ filename: vitest.config.js
 -     environment: "miniflare",
 -     environmentOptions: { ... },
 +     poolOptions: {
-+       workers: defineWorkersPoolOptions({
++       workers: {
 +         miniflare: { ... },
 +         wrangler: { configPath: "./wrangler.toml" },
-+       }),
++       },
 +     },
     },
   });
@@ -109,27 +109,9 @@ declare module "cloudflare:test" {
 }
 ```
 
-## Enable isolated storage
+## Use isolated storage
 
-If you were previously using isolated storage, enable the `isolatedStorage` option in your Vitest configuration file and remove `setupMiniflareIsolatedStorage()` from your tests:
-
-```diff
----
-filename: vitest.config.js
----
-  import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
-
-  export default defineWorkersConfig({
-    test: {
-      poolOptions: {
-        workers: defineWorkersPoolOptions({
-+         isolatedStorage: true,
-          miniflare: { ... },
-        }),
-      },
-    },
-  });
-```
+Isolated storage is now enabled by default. You no longer need to include `setupMiniflareIsolatedStorage()` in your tests.
 
 ```diff
 ---

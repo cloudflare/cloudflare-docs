@@ -33,7 +33,7 @@ In this model, a `workerd` process is started for each test file. Test files are
 
 ### `isolatedStorage: true, singleWorker: true`
 
-In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial and `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and binding to the same auxiliary `workers`.
+In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial and `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and bind to the same auxiliary `workers`.
 
 ![Isolation Model: Isolated Storage & Single Worker](/images/workers/testing/vitest/isolation-model-4-isolated-storage-single-worker.svg)
 

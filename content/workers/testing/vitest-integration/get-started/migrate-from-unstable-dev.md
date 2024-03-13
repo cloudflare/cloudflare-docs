@@ -1,12 +1,12 @@
 ---
-title: Migrate from `unstable_dev`
+title: Migrate from unstable_dev
 weight: 3
 pcx_content_type: concept
 meta:
   description: Migrate from the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests with the Workers Vitest integration.
 ---
 
-# Migrate from unstable_dev
+# Migrate from `unstable_dev`
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.
 
@@ -57,7 +57,7 @@ Via the `unstable_dev` API, you can reference a `wrangler.toml` configuration fi
 filename: index.spec.ts
 ---
 await unstable_dev("src/index.ts", {
-  	config: "wrangler.toml",
+  config: "wrangler.toml",
 });
 ```
 
@@ -66,16 +66,16 @@ With the Workers Vitest integration, you can now set this reference to `wrangler
 ```js
 ---
 filename: vitest.config.js
-highlight: [7-9]
+highlight: [5-7]
 ---
 export default defineWorkersConfig({
   test: {
     poolOptions: {
-      workers: defineWorkersPoolOptions({
+      workers: {
         wrangler: {
           configPath: "wrangler.toml",
         },
-      }),
+      },
     },
   },
 });
@@ -88,7 +88,7 @@ Unlike the `unstable_dev` API, the Workers Vitest integration does not support t
 
 ## Define types
 
-You can remove `UnstableDevWorker` imports from your code. Instead, follow [Write your first test guide](/workers/testing/vitest/get-started/write-your-first-test/#define-types) to define types for all of your tests.
+You can remove `UnstableDevWorker` imports from your code. Instead, follow the [Write your first test guide](/workers/testing/vitest/get-started/write-your-first-test/#define-types) to define types for all of your tests.
 
 ```diff
 ---
@@ -98,10 +98,10 @@ filename: index.spec.ts
 - import type { UnstableDevWorker } from "wrangler";
 + import worker from "src/index.ts";
 
-describe("Worker", () => {
-- let worker: UnstableDevWorker;
-...
-});
+  describe("Worker", () => {
+-   let worker: UnstableDevWorker;
+    ...
+  });
 ```
 
 ## Related resources
