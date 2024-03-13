@@ -10,7 +10,11 @@ meta:
 
 {{<directory-listing showDescriptions="true">}}
 
-For most users, Cloudflare recommends using the [Workers Vitest integration](/workers/testing/vitest/get-started/) for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript. Cloudflare provides a custom pool that allows your Vitest tests to run _inside_ the Workers runtime. Get started with the [Vitest integration Get started guide](/workers/testing/vitest/get-started/), and refer to [Recipes for testing different types of Workers](/workers/testing/vitest/recipes/).
+For most users, Cloudflare recommends using the [Workers Vitest integration](/workers/testing/vitest/get-started/) for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript. In this integration, Cloudflare provides a custom pool that allows your Vitest tests to run _inside_ the Workers runtime. 
+
+Get started with the [Vitest integration Get started guide](/workers/testing/vitest/get-started/), and refer to [Recipes for testing different types of Workers](/workers/testing/vitest/recipes/).
+
+Features of the Workers Vitest integration:
 
 - ✅ Supports both **unit tests** and **integration tests**
 - 📚 Provides direct access to Workers runtime APIs and bindings
@@ -25,6 +29,8 @@ For most users, Cloudflare recommends using the [Workers Vitest integration](/wo
 The Workers Vitest integration does not support testing Workers using the service worker format. [Migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) to use the Workers Vitest integration.
 
 {{</Aside>}}
+
+Here's an example of a unit-style and integration-style test using the integration:
 
 ```js
 import {

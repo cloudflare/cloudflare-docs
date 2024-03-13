@@ -59,7 +59,7 @@ it("dispatches fetch event", async () => {
 });
 ```
 
-When using `SELF` for integration tests, your Worker code runs in the same context as the test runner. This means you can use global mocks to control your Worker, but also means your Worker uses the same subtly different module resolution behavior provided by Vite. 
+When using `SELF` for integration tests, your Worker code runs in the same context as the test runner. This means you can use global mocks to control your Worker, but also means your Worker uses the same subtly different module resolution behavior provided by Vite.
 
 Usually this is not a problem, but if you would like to run your Worker in a fresh environment that is as close to production as possible, using an auxiliary Worker may be a good idea. Auxiliary Workers have some developer experience (DX) limitations.
 
@@ -142,4 +142,4 @@ If you have been using the test environments from Minflare 2 for integration tes
 
 ## Related Resources
 
-- [Recipes](/workers/testing/vitest-integration/recipes) - Examples of unit tests and integration tests for Workers.
+- [Recipes](/workers/testing/vitest-integration/recipes) - Examples integration tests for Workers using the Workers Vitest integration.

@@ -15,7 +15,7 @@ When you run your tests with the Workers Vitest integration, Vitest will:
 1. Read and evaluate your configuration file using Node.js.
 2. Run any [`globalSetup`](https://vitest.dev/config/#globalsetup) files using Node.js.
 3. Collect and sequence test files.
-4. For each Vitest project, depending on its configured isolation and concurrency, start one or more {{<glossary-tooltip term_id="workerd" link="https://github.com/cloudflare/workerd">}}`workerd`{{</glossary-tooltip>}} processes, each running one or more Workers.
+4. For each Vitest project, depending on its configured isolation and concurrency, start one or more [`workerd`]("https://github.com/cloudflare/workerd") processes, each running one or more Workers.
 5. Run [`setupFiles`](https://vitest.dev/config/#setupfiles) and test files in `workerd` using the appropriate Workers.
 6. Watch for changes and re-run test files using the same Workers if the configuration has not changed.
 

@@ -63,7 +63,7 @@ Next, you will add configuration options via `defineWorkersPoolOptions` to suppo
 
 ### Add configuration options via Wrangler
 
-You can reference a `wrangler.toml` file to leverage its `main` entry point, its compatibility settings, and its {<glossary-tooltip term_id="binding" link="/workers/configuration/bindings/">}}bindings{{</glossary-tooltip>}}.
+You can reference a `wrangler.toml` file to leverage its `main` entry point, its compatibility settings, and its [bindings](/workers/configuration/bindings/).
 
 ```js
 ---

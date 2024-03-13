@@ -12,7 +12,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 {{<definitions>}}
 
-- {{<code>}}env: {{<type>}}import("cloudflare:test").ProvidedEnv{{</type>}}{{</code>}}
+- {{<code>}}env{{</code>}}: {{<type>}}import("cloudflare:test").ProvidedEnv{{</type>}}
 
   - Exposes the [`env` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the second argument passed to ES modules format exported handlers. This provides access to [bindings](/workers/runtime-apis/bindings/) that you have defined in your [Vitest configuration file](/workers/testing/vitest/configuration/).
 
@@ -45,7 +45,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
     }
     ```
 
-- {{<code>}}SELF: {{<type>}}Fetcher{{</type>}}{{</code>}}
+- {{<code>}}SELF{{</code>}}: {{<type>}}Fetcher{{</type>}}
 
   - [Service binding](/workers/runtime-apis/service-bindings/) to the default export defined in the `main` Worker. Use this to write integration tests against your Worker. The `main` Worker runs in the same isolate/context as tests so any global mocks will apply to it too.
 
@@ -63,7 +63,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
     });
     ```
 
-- {{<code>}}fetchMock: {{<type>}}import("undici").MockAgent{{</type>}}{{</code>}}
+- {{<code>}}fetchMock{{</code>}}: {{<type>}}import("undici").MockAgent{{</type>}}
 
   - Declarative interface for mocking outbound `fetch()` requests. Deactivated by default and reset before running each test file. Refer to [`undici`'s `MockAgent` documentation](https://undici.nodejs.org/#/docs/api/MockAgent) for more information. Note this only mocks `fetch()` requests for the current test runner Worker. Auxiliary Workers should mock `fetch()`es using the Miniflare `fetchMock`/`outboundService` options. Refer to [Configuration](/workers/testing/vitest/configuration/#workerspooloptions) for more information.
 
@@ -103,11 +103,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 {{<definitions>}}
 
-- {{<code>}}createExecutionContext(): {{<type>}}ExecutionContext{{</type>}}{{</code>}}
+- {{<code>}}createExecutionContext(){{</code>}}: {{<type>}}ExecutionContext{{</type>}}
 
   - Creates an instance of the [`context` object](/workers/runtime-apis/handlers/fetch/#parameters) for use as the third argument to ES modules format exported handlers.
 
-- {{<code>}}waitOnExecutionContext(ctx:{{<param-type>}}ExecutionContext{{</param-type>}}): {{<type>}}Promise\<void>{{</type>}}{{</code>}}
+- {{<code>}}waitOnExecutionContext(ctx:{{<param-type>}}ExecutionContext{{</param-type>}}){{</code>}}: {{<type>}}Promise\<void>{{</type>}}
 
   - Use this to wait for all Promises passed to `ctx.waitUntil()` to settle, before running test assertions on any side effects. Only accepts instances of `ExecutionContext` returned by `createExecutionContext()`.
 
@@ -130,7 +130,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
     });
     ```
 
-- {{<code>}}createScheduledController(options?:{{<param-type>}}FetcherScheduledOptions{{</param-type>}}): {{<type>}}ScheduledController{{</type>}}{{</code>}}
+- {{<code>}}createScheduledController(options?:{{<param-type>}}FetcherScheduledOptions{{</param-type>}}){{</code>}}: {{<type>}}ScheduledController{{</type>}}
 
   - Creates an instance of `ScheduledController` for use as the 1st argument to modules-format `scheduled()` exported handlers.
 
@@ -155,11 +155,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
     });
     ```
 
-- {{<code>}}createMessageBatch(queueName:{{<param-type>}}string{{</param-type>}}, messages:{{<param-type>}}ServiceBindingQueueMessage[]{{</param-type>}}): {{<type>}}MessageBatch{{</type>}}{{</code>}}
+- {{<code>}}createMessageBatch(queueName:{{<param-type>}}string{{</param-type>}}, messages:{{<param-type>}}ServiceBindingQueueMessage[]{{</param-type>}}){{</code>}}: {{<type>}}MessageBatch{{</type>}}
 
   - Creates an instance of `MessageBatch` for use as the 1st argument to modules-format `queue()` exported handlers.
 
-- {{<code>}}getQueueResult(batch:{{<param-type>}}MessageBatch{{</param-type>}}, ctx:{{<param-type>}}ExecutionContext{{</param-type>}}): {{<type>}}Promise\<FetcherQueueResult>{{</type>}}{{</code>}}
+- {{<code>}}getQueueResult(batch:{{<param-type>}}MessageBatch{{</param-type>}}, ctx:{{<param-type>}}ExecutionContext{{</param-type>}}){{</code>}}: {{<type>}}Promise\<FetcherQueueResult>{{</type>}}
 
   - Gets the acknowledged/retry state of messages in the `MessageBatch`, and waits for all `ExecutionContext#waitUntil()`ed `Promise`s to settle. Only accepts instances of `MessageBatch` returned by `createMessageBatch()`, and instances of `ExecutionContext` returned by `createExecutionContext()`.
 
@@ -197,7 +197,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 {{<definitions>}}
 
-- {{<code>}}runInDurableObject\<O extends DurableObject, R>(stub:{{<param-type>}}DurableObjectStub{{</param-type>}}, callback:{{<param-type>}}(instance: O, state: DurableObjectState) => R | Promise\<R>{{</param-type>}}): {{<type>}}Promise\<R>{{</type>}}{{</code>}}
+- {{<code>}}runInDurableObject\<O extends DurableObject, R>(stub:{{<param-type>}}DurableObjectStub{{</param-type>}}, callback:{{<param-type>}}(instance: O, state: DurableObjectState) => R | Promise\<R>{{</param-type>}}){{</code>}}: {{<type>}}Promise\<R>{{</type>}}
 
   - Runs the provided `callback` inside the Durable Object instance that corresponds to the provided `stub`.
 
@@ -247,11 +247,11 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
     });
     ```
 
-- {{<code>}}runDurableObjectAlarm(stub:{{<param-type>}}DurableObjectStub{{</param-type>}}): {{<type>}}Promise\<boolean>{{</type>}}{{</code>}}
+- {{<code>}}runDurableObjectAlarm(stub:{{<param-type>}}DurableObjectStub{{</param-type>}}){{</code>}}: {{<type>}}Promise\<boolean>{{</type>}}
 
   - Immediately runs and removes the Durable Object pointed to by `stub`'s alarm if one is scheduled. Returns `true` if an alarm ran, and `false` otherwise. Note this can only be used with `stub`s pointing to Durable Objects defined in the `main` Worker.
 
-- {{<code>}}listDurableObjectIds(namespace:{{<param-type>}}DurableObjectNamespace{{</param-type>}}): {{<type>}}Promise\<DurableObjectId[]>{{</type>}}{{</code>}}
+- {{<code>}}listDurableObjectIds(namespace:{{<param-type>}}DurableObjectNamespace{{</param-type>}}){{</code>}}: {{<type>}}Promise\<DurableObjectId[]>{{</type>}}
 
   - Gets the IDs of all objects that have been created in the `namespace`. Respects `isolatedStorage` if enabled, meaning objects created in a different test will not be returned.
 

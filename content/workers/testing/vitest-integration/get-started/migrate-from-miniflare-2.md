@@ -25,7 +25,7 @@ The Workers Vitest integration does not support testing Workers using the servic
 
 ## Install the Workers Vitest integration
 
-First, you will need to uninstall the old environment and install the new pool. Vitest environments can only customize the global scope, whereas pools can run tests using a completely different runtime. In this case, the pool runs your tests inside {{<glossary-tooltip term_id="workerd" link="https://github.com/cloudflare/workerd">}}`workerd`{{</glossary-tooltip>}} instead of Node.js.
+First, you will need to uninstall the old environment and install the new pool. Vitest environments can only customize the global scope, whereas pools can run tests using a completely different runtime. In this case, the pool runs your tests inside [`workerd`]("https://github.com/cloudflare/workerd") instead of Node.js.
 
 ```sh
 $ npm uninstall vitest-environment-miniflare
