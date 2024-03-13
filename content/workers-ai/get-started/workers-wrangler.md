@@ -72,6 +72,8 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 ## 3. Install the Workers AI client library
 
+The Workers AI client library makes Workers AI APIs available for use in your code.
+
 {{<tabs labels="npm | yarn">}}
 {{<tab label="npm" default="true">}}
 
