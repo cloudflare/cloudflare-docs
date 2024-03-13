@@ -24,18 +24,20 @@ import * as codeOwnersUtils from "codeowners-utils";
     if (labels.includes('engineering')) return console.log('ignore "engineering" issues');
 
     // continue for other assignments
+    let cwd = process.cwd();
     let codeowners = await codeOwnersUtils.loadOwners(cwd);
     const assignees = new Set<string>();
     const content = issue.body;
     if (!content) throw new Error('Missing "issue.body" content!');
     if (!issue.number) throw new Error('Missing "issue.number" value!');
 
-    const [, answer] = /\n\n([^\n]+)\n\n/.exec(content) || [];
-    if (!answer) throw new Error('Error parsing "products" response');
+    const [, answer] = /^https?:\/\/developers\.cloudflare\.com(.*?)/.exec(content) || [];
+    if (!answer) throw new Error('Error parsing response');
 
     
 
-    for (const file of files) {
+    for (const item of answer) {
+      if (item.groups != undefined)
       const match = codeOwnersUtils.matchFile(file, codeowners);
       for (const owner of match.owners) {
         if (!owner.includes("/")) {
