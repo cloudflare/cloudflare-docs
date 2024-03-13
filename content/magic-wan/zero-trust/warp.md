@@ -11,7 +11,7 @@ Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an {{<glossary-
 
 Depending on your use case, you will see the following IP addresses when connecting a WARP device to Magic WAN:
 - `100.96.0.0/12`: When connecting a WARP device to an origin behind a GRE or IPsec tunnel.
-- [Cloudflare IP addresses](/magic-wan/zero-trust/cloudflare-gateway/): When you are connecting a WARP device, and using Zero Trust policies - for example, you have Gateway set up.
+- [Cloudflare IP addresses](https://www.cloudflare.com/ips/): When you are connecting a WARP device, and using Zero Trust policies - for example, you have Gateway set up.
 
 ## Prerequisites
 
