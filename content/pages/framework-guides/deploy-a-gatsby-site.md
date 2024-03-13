@@ -58,7 +58,7 @@ If you have a dynamic route, such as `/users/[id]`, create your proxy redirect b
 ---
 filename: _redirects
 ---
-/users/* /users/[id] 200
+/users/* /users/:id 200
 ```
 
 {{<render file="/_framework-guides/_learn-more.md" withParameters="Gatsby">}}

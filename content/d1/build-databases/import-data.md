@@ -40,7 +40,7 @@ insert into users (id, full_name, created_on) values ('01GREFXCNF67KV7FPPSEJVJME
 With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
-$ wrangler d1 execute example-db --file=users_export.sql
+$ wrangler d1 execute example-db --remote --file=users_export.sql
 
 🌀 Mapping SQL input into an array of statements
 🌀 Parsing 1 statements
@@ -51,7 +51,7 @@ $ wrangler d1 execute example-db --file=users_export.sql
 To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
 
 ```sh
-$ wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
+$ wrangler d1 execute example-db --remote --command "SELECT * FROM users LIMIT 100;"
 
 🌀 Mapping SQL input into an array of statements
 🌀 Parsing 1 statements
@@ -92,19 +92,30 @@ For example, if you have a raw SQLite dump called `db_dump.sqlite3`, run the fol
 $ sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
 
+Once you have run the above command, you will need to edit the output SQL file to be compatible with D1:
+
+1. Remove `BEGIN TRANSACTION` and `COMMIT;` from the file
+2. Remove the following table creation statement (if present):
+   ```sql
+   CREATE TABLE _cf_KV (
+   		key TEXT PRIMARY KEY,
+   		value BLOB
+   ) WITHOUT ROWID;
+   ```
+
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
 
 ## Troubleshooting
 
 If you receive an error when trying to import an existing schema and/or dataset into D1:
 
-* Ensure you are importing data in SQL format (typically with a `.sql` file extension). See [how to convert SQLite files](#convert-sqlite-database-files) if you have a `.sqlite3` database dump.
-* Make sure the schema is [SQLite3](https://www.sqlite.org/docs.html) compatible. You cannot import data from a MySQL or PostgreSQL database into D1, as the types and SQL syntax are not directly compatible.
-* If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You can't refer to a table that doesn't yet exist.
-* If you get `"cannot start a transaction within a transaction"`, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
+- Ensure you are importing data in SQL format (typically with a `.sql` file extension). Refer to [how to convert SQLite files](#convert-sqlite-database-files) if you have a `.sqlite3` database dump.
+- Make sure the schema is [SQLite3](https://www.sqlite.org/docs.html) compatible. You cannot import data from a MySQL or PostgreSQL database into D1, as the types and SQL syntax are not directly compatible.
+- If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You cannot refer to a table that does not yet exist.
+- If you receive a `"cannot start a transaction within a transaction"` error, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
 
 ## Next Steps
 
-* Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation
-* Learn how to [use the D1 client API](/d1/build-databases/query-databases/) from within a Worker
-* Understand how [database migrations work](/d1/reference/migrations/) with D1
+- Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
+- Learn how to [use the D1 client API](/d1/build-databases/query-databases/) from within a Worker.
+- Understand how [database migrations work](/d1/reference/migrations/) with D1.

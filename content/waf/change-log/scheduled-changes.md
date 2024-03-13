@@ -23,13 +23,22 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-02-26</td>
-      <td>2024-03-04</td>
+      <td>2024-03-12</td>
+      <td>2024-03-18</td>
       <td>Block</td>
-      <td>100135D_BETA</td>
-      <td>...9c1c14e6</td>
-      <td>XSS - JS On Events Beta</td>
-      <td>This will replace ...aa290ad9 in NEW WAF</td>
+      <td>100629</td>
+      <td>...2bed8cdd</td>
+      <td>JetBrains TeamCity - Auth Bypass, Remote Code Execution - CVE:CVE-2024-27198, CVE:CVE-2024-27199</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2024-03-12</td>
+      <td>2024-03-18</td>
+      <td>Block</td>
+      <td>100630</td>
+      <td>...1ef425a5</td>
+      <td>Apache OFBiz - Auth Bypass, Remote Code Execution - CVE:CVE-2023-49070, CVE:CVE-2023-51467</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

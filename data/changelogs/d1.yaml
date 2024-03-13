@@ -2,11 +2,29 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-03-12"
+    title: Change in `wrangler d1 execute` default
+    description: |-
+      As of `wrangler@3.33.0`, `wrangler d1 execute` and `wrangler d1 migrations apply` now default to using a local database, to match the default behavior of `wrangler dev`.
+
+      It is also now possible to specify one of `--local` or `--remote` to explicitly tell wrangler which environment you wish to run your commands against.
+
+  - publish_date: "2024-03-05"
+    title: Billing for D1 usage
+    description: |-
+      As of 2024-03-05, D1 usage will start to be counted and may incur charges for an account's future billing cycle.
+
+      Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](/d1/platform/pricing). 
+
+      Developers on the Workers Free plan can use up to the included limits. Usage beyond the limits below requires signing up for the $5/month Workers Paid plan.
+
+      Account billable metrics are available in the [Cloudflare Dashboard](https://dash.cloudflare.com) and [GraphQL API](/d1/observability/metrics-analytics/#metrics).
+
   - publish_date: "2024-02-16"
     title: API changes to `.run()`
     description: |-
       A previous change (made on 2024-02-13) to the `run()` [query statement method](/d1/build-databases/query-databases/#await-stmtrun) has been reverted.
-      
+
       `run()` now returns a `D1Result`, including the result rows, matching its original behaviour prior to the change on 2024-02-13.
 
       Future change to `run()` to return a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object), as originally intended and documented, will be gated behind a [compatibility date](/workers/configuration/compatibility-dates/) as to avoid breaking existing Workers relying on the way `run()` currently works.
@@ -15,11 +33,11 @@ entries:
     title: API changes to `.raw()`, `.all()` and `.run()`
     description: |-
       D1's `raw()`, `all()` and `run()` [query statement methods](/d1/build-databases/query-databases/#query-statement-methods) have been updated to reflect their intended behaviour and improve compatibility with ORM libraries.
-      
+
       `raw()` now correctly returns results as an array of arrays, allowing the correct handling of duplicate column names (such as when joining tables), as compared to `all()`, which is unchanged and returns an array of objects. To include an array of column names in the results when using `raw()`, use `raw({columnNames: true})`.
-      
+
       `run()` no longer incorrectly returns a `D1Result` and instead returns a [`D1ExecResult`](/d1/build-databases/query-databases/#return-object) as originally intended and documented.
-      
+
       This may be a breaking change for some applications that expected `raw()` to return an array of objects.
 
       Visit the [query databases documentation](/d1/build-databases/query-databases/) to review D1's query methods, return types and TypeScript support in detail.
@@ -27,7 +45,7 @@ entries:
   - publish_date: "2024-01-18"
     title: Support for LIMIT on UPDATE and DELETE statements
     description: |-
-      D1 now supports adding a `LIMIT` clause to `UPDATE` and `DELETE` statements, which allows you to limit the impact of a potentially dangerous operation. 
+      D1 now supports adding a `LIMIT` clause to `UPDATE` and `DELETE` statements, which allows you to limit the impact of a potentially dangerous operation.
 
   - publish_date: "2023-12-18"
     title: Legacy alpha automated backups disabled

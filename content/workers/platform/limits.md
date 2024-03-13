@@ -166,7 +166,7 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## Subrequests
 
-A subrequest is any request that a Worker makes to another Internet resource using the [Fetch API](/workers/runtime-apis/fetch/).
+A subrequest is any request that a Worker makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
 ### Worker-to-Worker subrequests
 
@@ -180,7 +180,7 @@ If you make a subrequest from your Worker to a target Worker that runs on a [Cus
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of usage model.
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker. 
 
 ### How long can a subrequest take?
 

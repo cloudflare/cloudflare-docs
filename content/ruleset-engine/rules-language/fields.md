@@ -618,6 +618,8 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 * Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
+* Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [WAF content scanning](/waf/about/content-scanning/) enabled.
+
 * The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
 {{</Aside>}}
@@ -924,6 +926,75 @@ The Cloudflare Rules language supports these dynamic fields:
         </p>
         <p>Example:<br/>
         <code>"TLSv1.2"</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_obj">
+        <td><code>cf.waf.content_scan.has_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+        <td>
+          <p>When true, the request contains at least one {{<markdown>}}{{<glossary-tooltip term_id="content object">}}content object{{</glossary-tooltip>}}{{</markdown>}}.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_malicious_obj">
+        <td><code>cf.waf.content_scan.has_malicious_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+        <td>
+          <p>When true, the request contains at least one malicious content object.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_malicious_obj">
+        <td><code>cf.waf.content_scan.num_malicious_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+        <td>
+          <p>The number of malicious content objects detected in the request (zero or greater).
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_failed">
+      <td><code>cf.waf.content_scan.has_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
+      <td>
+        <p>When true, the file scanner was unable to scan all the content objects detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_obj">
+      <td><code>cf.waf.content_scan.num_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+        <p>The number of content objects detected in the request (zero or greater).
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_sizes">
+      <td><code>cf.waf.content_scan.obj_sizes</code><br />{{<type>}}Array&lt;Integer&gt;{{</type>}}</td>
+      <td>
+        <p>An array of file sizes in bytes, in the order the content objects were detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_types">
+      <td><code>cf.waf.content_scan.obj_types</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+      <td>
+        <p>An array of file types in the order the content objects were detected in the request.
+        </p>
+        <p>If Cloudflare cannot determine the file type of a content object, the corresponding value in the <code>obj_types</code>array will be <code>application/octet-stream</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_results">
+      <td><code>cf.waf.content_scan.obj_results</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+      <td>
+        <p>An array of scan results in the order the content objects were detected in the request.
+        </p>
+        <p>The possible values are: <code>clean</code>, <code>suspicious</code>, <code>infected</code>, and <code>not scanned</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.
         </p>
       </td>
     </tr>

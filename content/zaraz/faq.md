@@ -199,6 +199,16 @@ In your Google Analytics 4 action, select **Add field** > **Add custom field...*
 {{</faq-answer>}}
 {{</faq-item>}}
 
+{{<faq-item>}}
+{{<faq-question level=4 text="How can I enable Google Consent Mode signals?" >}}
+
+{{<faq-answer>}}
+
+Zaraz has built-in support for Google Consent Mode v2. Learn more on how to use it in [Google Consent Mode page](/zaraz/advanced/google-consent-mode/).
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
 ### Facebook Pixel
 
 {{<faq-item>}}

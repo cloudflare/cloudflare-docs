@@ -9,7 +9,7 @@ meta:
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 
-This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
+This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge), via the [`next-on-pages`](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages/docs) adapter.
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
@@ -200,6 +200,8 @@ highlight: [1, 7]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
+export const runtime = 'edge';
+
 // ...
 
 export async function GET(request) {
@@ -222,6 +224,8 @@ filename: app/api/hello/route.ts
 highlight: [1, 7]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge';
 
 // ...
 
@@ -289,5 +293,93 @@ The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to r
 ### Deploy your application and iterate
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
+
+## Debugging
+
+
+### Edge runtime
+
+All server-side routes in your Next.js project must be configured as "Edge" runtime routes, when running on Cloudflare Pages. You must add `export const runtime = 'edge';` to each individual server-side route.
+
+
+{{<Aside type="note">}}
+
+If you are using the Pages router, for page routes, you need to use `'experimental-edge'` instead of `'edge'`.
+
+{{</Aside>}}
+
+### App router
+
+#### Not found
+
+Next.js generates a `not-found` route for your application under the hood during the build process. In some circumstances, Next.js can detect that the route requires server-side logic (particularly if computation is being performed in the root layout component) and Next.js might create a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+To prevent this incompatibility, Cloudflare recommends to always provide a custom `not-found` route which explicitly opts in the edge runtime:
+
+```ts
+---
+filename: (src/)app/not-found.(jsx|tsx)
+---
+
+export const runtime = 'edge';
+
+export default async function NotFound() {
+    // ...
+    return (
+        // ...
+    );
+}
+```
+
+{{<Aside type="note">}}
+
+Projects created with C3 have a default custom `not-found` page already created for them.
+
+{{</Aside>}}
+
+#### `generateStaticParams`
+
+When doing static site generation (SSG) in the [`/app` directory](https://nextjs.org/docs/getting-started/project-structure) and using the [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) function, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+In such cases you need to instruct Next.js not to do so by specifying a `false` [`dynamicParams`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams):
+
+```diff
+---
+filename: app/my-example-page/[slug]/page.jsx
+---
++ export const dynamicParams = false;
+
+// ...
+```
+
+### Pages router
+
+#### `getStaticPaths`
+
+When doing static site generation (SSG) in the [`/pages`](https://nextjs.org/docs/getting-started/project-structure) directory and using the [`getStaticPaths`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths) function, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+In such cases, you need to instruct Next.js not to do so by specifying a [false `fallback`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false):
+
+```diff
+---
+filename: pages/my-example-page/[slug].jsx
+---
+// ...
+
+export async function getStaticPaths() {
+    // ...
+
+    return {
+        paths,
++       fallback: false,
+	};
+}
+```
+
+{{<Aside type="warning">}}
+
+The `paths` array cannot be empty. An empty `paths` array causes Next.js to ignore the provided `fallback` value. At build time, make sure that at least one entry is present in the array.
+
+{{</Aside>}}
 
 {{<render file="/_framework-guides/_learn-more.md" withParameters="Next.js">}}
