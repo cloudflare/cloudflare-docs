@@ -70,7 +70,9 @@ async function list(
     });
 
     for (const file of files) {
+      console.log(file)
       const match = codeOwnersUtils.matchFile(file, codeowners);
+      console.log(match)
       for (const owner of match.owners) {
         if (!owner.includes("/")) {
           assignees.add(owner.replace(/^@/, ""));
