@@ -39,7 +39,7 @@ The [Get started guide](/pages/get-started/) will instruct you how to add your G
 
 ## Adding a custom domain
 
-To use a custom domain for your Pages project, [add a custom domain](/pages/configuration/custom-domains/) that is the same custom domain as your currently deployed Vercel application. When Pages finishes the initial deploy of your site, you will need to delete the Workers application to start sending requests to Cloudflare Pages.
+To use a custom domain for your Pages project, [add a custom domain](/pages/configuration/custom-domains/) that is the same custom domain as your currently deployed Vercel application. When Pages finishes the initial deploy of your site, you will need to delete the Vercel application to start sending requests to Cloudflare Pages.
 
 {{<Aside type="note">}}
 
