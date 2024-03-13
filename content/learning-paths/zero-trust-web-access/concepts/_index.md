@@ -15,4 +15,4 @@ By the end of this module, you will be able to:
 
 - Understand the purpose and benefits of a reverse proxy server.
 - Describe the main principles of Zero Trust security.
-- Understand how Zero Trust Web Access and browser isolation fit into a Zero Trust security model.
+- Understand how Zero Trust Web Access fits into a Zero Trust security model.

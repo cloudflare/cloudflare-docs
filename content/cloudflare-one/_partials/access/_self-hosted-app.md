@@ -13,7 +13,9 @@ _build:
 
 4. Enter any name for the application.
 
-5. Choose a **Session Duration**. The session duration determines the minimum frequency for which a user will be prompted to authenticate with the configured IdP. If you want users to re-authenticate every time they reach your application, select _No duration, expires immediately_.
+5. In **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
+
+    Cloudflare checks every HTTP request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/identity/users/session-management/).
 
 6. In **Application domain**, enter the domains that will represent the application.
 
