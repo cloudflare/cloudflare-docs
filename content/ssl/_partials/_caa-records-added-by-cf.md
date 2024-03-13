@@ -12,6 +12,8 @@ Cloudflare adds CAA records automatically in two situations:
 
 These records make sure Cloudflare can still issue Universal certificates on your behalf.
 
+Note that these records are only added if you don't have your own CAA records already at the DNS dashboard over at Cloudflare. If you have any CAA record or add any CAA records, Cloudflare will delete and cease to create any other CAA records wile yours exist.
+
 If Cloudflare has automatically added CAA records on your behalf, these records will not appear in the Cloudflare dashboard. However, if you run a command line query using `dig`, you can see any existing CAA records, including those added by Cloudflare (replacing `example.com` with your own domain on Cloudflare):
 
 ```bash
