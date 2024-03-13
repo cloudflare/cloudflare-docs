@@ -31,7 +31,7 @@ import * as codeOwnersUtils from "codeowners-utils";
     if (!content) throw new Error('Missing "issue.body" content!');
     if (!issue.number) throw new Error('Missing "issue.number" value!');
 
-    const regex = /https?:\/\/developers\.cloudflare\.com([^\s|)|\.]*)/gm;
+    const regex = /https?:\/\/developers\.cloudflare\.com([^\s|)]*)/gm;
     let links = []
     let m;
 
