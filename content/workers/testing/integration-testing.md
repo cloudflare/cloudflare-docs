@@ -86,7 +86,7 @@ Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use 
 
 {{<Aside type="note">}}
 
-This method can be useful when you are testing multiple Workers. You can define multiple Workers by different names in `vitest.config.js` and reference them via `env`.
+This method is less recommended than `SELF` for integration tests because of its developer experience. However, it can be useful when you are testing multiple Workers. You can define multiple Workers by different names in `vitest.config.js` and reference them via `env`.
 
 {{</Aside>}}
 
@@ -136,7 +136,7 @@ try {
 
 {{<Aside type="note">}}
 
-If you have been using the test environments from Minflare 2 for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from Miniflare migration guide](/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/) for more information.
+If you have been using the test environments from Miniflare 2 for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from Miniflare 2 migration guide](/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/) for more information.
 
 {{</Aside>}}
 
@@ -144,4 +144,4 @@ If you have been using the test environments from Minflare 2 for integration tes
 
 ## Related Resources
 
-- [Recipes](/workers/testing/vitest-integration/recipes) - Examples integration tests for Workers using the Workers Vitest integration.
+- [Recipes](/workers/testing/vitest-integration/recipes) - Example integration tests for Workers using the Workers Vitest integration.

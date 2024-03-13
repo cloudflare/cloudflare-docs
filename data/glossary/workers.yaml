@@ -1,0 +1,6 @@
+---
+productName: Workers
+entries:
+- term: auxiliary Worker 
+  general_definition: |-
+    a Worker created locally via the Workers Vitest integration that runs in a separate isolate to the test runner, with a different global scope.

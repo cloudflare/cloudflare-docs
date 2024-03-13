@@ -61,7 +61,7 @@ await unstable_dev("src/index.ts", {
 });
 ```
 
-With the Workers Vitest integration, you can now set this in `vitest.config.js` for all of your tests.
+With the Workers Vitest integration, you can now set this reference to `wrangler.toml` in `vitest.config.js` for all of your tests.
 
 ```js
 ---
