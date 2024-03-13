@@ -216,7 +216,7 @@ ___
 
 ### Common cause
 
-A request is made for a resource that uses [Cloudflare hotlink protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/#understanding-cloudflare-hotlink-protection).
+A request is made for a resource that uses [Cloudflare hotlink protection](/waf/tools/scrape-shield/hotlink-protection/).
 
 ### Resolution
 
