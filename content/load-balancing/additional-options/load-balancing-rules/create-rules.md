@@ -18,33 +18,20 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 ## Workflow
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account and application.
-
-2.  Navigate to **Traffic** > **Load Balancing**.
-
-3.  Edit an existing load balancer or [create a new load balancer](/load-balancing/load-balancers/create-load-balancer/).
-
-4.  From the Load Balancer workflow, click **Custom Rules**.
-
-5.  Click **Create Custom Rule**.
-
-6.  In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](/load-balancing/additional-options/load-balancing-rules/reference/).
-
-7.  In the **Operator** drop-down list, choose an operator. For more details, see [Operators](/load-balancing/additional-options/load-balancing-rules/reference/#operators-and-grouping-symbols).
-
-8.  Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
-
-9.  \[Optional] To create a compound expression using logical operators, click **And** or **Or**.
-
-10. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, see [Actions](/load-balancing/additional-options/load-balancing-rules/actions/).
-
-11. (Optional) Click **Add another override**.
-
-12. After you create your rule, click **Save and Deploy** or **Save as Draft**.
-
-13. Click **Next** and review your changes.
-
-14. Click **Save**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account and application.
+2. Go to **Traffic** > **Load Balancing**.
+3. Edit an existing load balancer or [create a new load balancer](/load-balancing/load-balancers/create-load-balancer/).
+4. From the Load Balancer workflow, select **Custom Rules**.
+5. Select **Create Custom Rule**.
+6. In the **Field** drop-down list, choose an HTTP property. For more details, refer to [Supported fields](/load-balancing/additional-options/load-balancing-rules/reference/).
+7. In the **Operator** drop-down list, choose an operator. For more details, refer to [Operators](/load-balancing/additional-options/load-balancing-rules/reference/#operators-and-grouping-symbols).
+8. Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
+9. (Optional) To create a compound expression using logical operators, select **And** or **Or**.
+10. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, refer to [Actions](/load-balancing/additional-options/load-balancing-rules/actions/).
+11. (Optional) Select **Add another override**.
+12. After you create your rule, select **Save and Deploy** or **Save as Draft**.
+13. Select **Next** and review your changes.
+14. Select **Save** to confirm.
 
 {{<Aside type="warning" header="Warning">}}
 
