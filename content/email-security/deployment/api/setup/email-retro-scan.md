@@ -16,15 +16,17 @@ To scan for threats in your Office 365 inbox:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Area 1** > **Retro Scan**.
-3. Select **Generate Retro Scan report**.
+3. Select **Generate report**.
 4. Cloudflare needs authorization to access your O365 messages. Select **Authenticate with Microsoft**, and give Cloudflare the required permissions.
 5. Back to Cloudflare dashboard, select **Grant mail access**. Then, select your account and give Cloudflare the required permissions.
-6. Finally, select **Grant directory sync access**. Then, select your account and give Cloudflare the required permissions.
-7. Select **Continue**.
-8. In **Configure report**, choose one or more domains to scan.
-9. Choose your current email security system, from **Current email security system**.
-10. Select **Continue**.
-11. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
+6. Select **Grant directory sync access**.
+7. Select your account and give Cloudflare the required permissions.
+8. Select **Continue**.
+9. In **Configure your report**, choose one or more domains to scan.
+10. Under **Scan date range**, select the date range to perform the scan from the dropdown menu.
+10. Choose your current email security system, from **Current email security system**.
+11. Select **Continue**.
+12. Select **Done**. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
 
 ## Analyze results
 
