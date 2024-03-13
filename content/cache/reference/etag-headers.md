@@ -6,23 +6,23 @@ title: Using ETag Headers with Cloudflare
 
 # Using ETag Headers with Cloudflare
 
-ETag headers identify whether the version of a resource cached in the browser is the same as the resource at the web server. A visitor’s browser stores ETags. When a visitor revisits a site, the browser compares each ETag to the one it stored. Matching values cause a `304 Not-Modified HTTP` response that indicates the cached resource version is current. Cloudflare supports both strong and weak ETags configured at your origin web server.
+ETag headers identify whether the version of a resource cached in the browser is the same as the resource at the web server. A visitor's browser stores ETags. When a visitor revisits a site, the browser compares each ETag to the one it stored. Matching values cause a `304 Not-Modified HTTP` response that indicates the cached resource version is current. Cloudflare supports both strong and weak ETags configured at your origin web server.
 
 ## Weak ETags
 
-Weak ETag headers indicate a cached resource is semantically equivalent to the version on the web server but not necessarily byte-for-byte identical. Cloudflare supports weak ETag headers on all plans.
+Weak ETag headers indicate a cached resource is semantically equivalent to the version on the web server but not necessarily byte-for-byte identical.
 
 {{<Aside type="note">}}
-When using weak ETag headers, disable [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to ensure Cloudflare does not remove the ETag headers set by your origin web server.
+When using weak ETag headers, disable [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to ensure Cloudflare does not remove the ETag headers set by your origin web server.
 {{</Aside>}}
 
 ## Strong ETags
 
-Strong ETag headers ensure the resource in browser cache and on the web server are byte-for-byte identical. Domains on [Enterprise](https://www.cloudflare.com/pricing/) plans enable strong ETag headers via a **Respect Strong ETags** [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) and lower plans customers can enable strong ETag headers using [Cache Rules](/cache/how-to/cache-rules/).
+Strong ETag headers ensure the resource in browser cache and on the web server are byte-for-byte identical. Use [Cache Rules](/cache/how-to/cache-rules/) to enable strong ETag headers.
 
 ### Behavior with Respect Strong ETags enabled
 
-When you enable **Respect Strong ETags** via Page Rules or Cache Rules, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-for-byte identical.
+When you enable **Respect Strong ETags** in a cache rule, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-for-byte identical.
 
 However, in some situations Cloudflare will convert strong ETags to weak ETags. For example, given the following conditions:
 
@@ -44,7 +44,7 @@ The Cloudflare network will take the following actions, depending on the visitor
 
 {{</table-wrap>}}
 
-Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, Automatic HTTPS Rewrites, Mirage, Server-side Excludes (SSE), and Railgun (deprecated).
+Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, Automatic HTTPS Rewrites, Mirage, and Server-side Excludes (SSE).
 
 ### Behavior with Respect Strong ETags disabled
 
@@ -52,7 +52,7 @@ When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag 
 
 - The origin server sends a response compressed using GZIP or Brotli, or an uncompressed response.
 - If the origin server sends a compressed response, the visitor accepts the same compression (GZIP, Brotli), according to the `accept-encoding` header.
-- [Rocket Loader](/speed/optimization/content/rocket-loader/), [Minification](/speed/optimization/content/auto-minify/), [Email Obfuscation](/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/), and [Railgun](/railgun/) (deprecated) features are disabled.
+- [Rocket Loader](/speed/optimization/content/rocket-loader/), [Minification](/speed/optimization/content/auto-minify/), and [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) features are disabled.
 
 In all other situations, Cloudflare will either convert strong ETag headers to weak ETag headers or remove the strong ETag (for example, when using Minification). For example, given the following conditions:
 

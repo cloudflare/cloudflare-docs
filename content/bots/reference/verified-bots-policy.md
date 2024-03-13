@@ -5,7 +5,7 @@ weight: 0
 ---
 # Verified Bots Policy
 
-In order to be listed by Cloudflare as a Verified Bot, your bot must conform to the below requirements. To provide the best possible protection to our customers, this policy may change in the future as we adapt to new bot behaviors.
+In order to be listed by Cloudflare as a {{<glossary-tooltip term_id="verified bot" link="/bots/concepts/bot/#verified-bots">}}verified bot{{</glossary-tooltip>}}, your {{<glossary-tooltip term_id="bot">}}bot{{</glossary-tooltip>}} must conform to the below requirements. To provide the best possible protection to our customers, this policy may change in the future as we adapt to new bot behaviors.
 
 ## Bot Policy
 
@@ -103,7 +103,7 @@ If any of the requirements to validate are breached, a service will be removed f
 
 ## Online application
 
-To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard for the fastest possible results. Bot operators who perfer not to create a free Cloudflare account can do so using our [old form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link), but the waiting time is up to several weeks for verified bot requests to be evaluated. 
+To submit a verified bot that Cloudflare is not [currently tracking](https://radar.cloudflare.com/verified-bots), fill out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard for the fastest possible results. Bot operators who prefer not to create a free Cloudflare account can do so using our [old form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link), but the waiting time is up to several weeks for verified bot requests to be evaluated.
 
 ## Transient false negatives
 

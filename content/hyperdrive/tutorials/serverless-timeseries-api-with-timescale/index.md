@@ -4,33 +4,31 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
-layout: single
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale
 
-
 ## Overview
 
-In this tutorial you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
+In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
-We will create and deploy a Worker function that exposes API routes for ingesting data, and use [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) to proxy our database connection from the edge and maintain a connection pool to prevent us having to make a new database connection on every request.
+You will create and deploy a Worker function that exposes API routes for ingesting data, and use [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) to proxy your database connection from the edge and maintain a connection pool to prevent us having to make a new database connection on every request.
 
 You will learn how to:
 
 - Build and deploy a Cloudflare Worker.
-- Use Worker secrets with the Wrangler CLI 
-- Deploy a Timescale database service
-- Connect your Worker to your Timescale database service with Hyperdrive
-- Query your new API
+- Use Worker secrets with the Wrangler CLI.
+- Deploy a Timescale database service.
+- Connect your Worker to your Timescale database service with Hyperdrive.
+- Query your new API.
 
-You can learn more about Timescale by visting their [documentation](https://docs.timescale.com/getting-started/latest/services/).
+You can learn more about Timescale by reading their [documentation](https://docs.timescale.com/getting-started/latest/services/).
 
 ---
 
-## Create a Worker project
+## 1. Create a Worker project
 
-Start by using `npm create cloudflare@latest` to create a Worker project from the command line:
+Run the following command to create a Worker project from the command line:
 
 ```sh
 ---
@@ -40,38 +38,38 @@ $ npm create cloudflare@latest
 ```
 
 For setup, select the following options:
-* `Where do you want to create your application?`: Input `timescale-api`
-* `What type of application do you want to create?`: Select `"Hello World" Worker`.
-* `Do you want to use TypeScript?`: Select `Yes`.
-* `Do you want to deploy your application?`: Select `Yes`.
+
+- `Where do you want to create your application?`: Input `timescale-api`.
+- `What type of application do you want to create?`: Select `"Hello World" Worker`.
+- `Do you want to use TypeScript?`: Select `Yes`.
+- `Do you want to deploy your application?`: Select `Yes`.
 
 Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 
-Now move into your new project directory using the following command:
+Change into the directory you just created for your Worker project:
 
 ```sh
 $ cd timescale-api
 ```
 
-## Prepare your Timescale Service
+## 2. Prepare your Timescale Service
 
 {{<Aside type="note">}}
-If you haven't signed up for Timescale then go to the [signup](https://timescale.com/signup) page and you can start a free 30 day trial with no credit card!
+If you have not signed up for Timescale, go to the [signup page](https://timescale.com/signup) where you can start a free 30 day trial with no credit card.
 {{</Aside>}}
 
-If you're creating a new service go to the [Timescale Console](https://console.cloud.timescale.com/) and follow these steps:
+If you are creating a new service, go to the [Timescale Console](https://console.cloud.timescale.com/) and follow these steps:
 
-1. Select  **Create Service** by clicking the black plus in the upper right.
-2. Choose **Time Series** as the service type 
+1. Select **Create Service** by selecting the black plus in the upper right.
+2. Choose **Time Series** as the service type.
 3. Choose your desired region and instance size. 1 CPU will be enough for this tutorial.
 4. Set a service name to replace the randomly generated one.
-5. Select  **Create Service**.
-6. On the right hand side expand the **Connection Info** dialog and copy the **Service URL**
-7. Copy the password which is displayed, you will not be able to retreive this again
-8. Click 'I stored my password, go to service overview'
+5. Select **Create Service**.
+6. On the right hand side, expand the **Connection Info** dialog and copy the **Service URL**.
+7. Copy the password which is displayed. You will not be able to retrieve this again.
+8. Select **I stored my password, go to service overview**.
 
-
-If you are using a service you created previously you can retreive your service connection information in the [Timescale Console](https://console.cloud.timescale.com/):
+If you are using a service you created previously, you can retrieve your service connection information in the [Timescale Console](https://console.cloud.timescale.com/):
 
 1. Select the service (database) you want Hyperdrive to connect to.
 2. Expand **Connection info**.
@@ -85,7 +83,7 @@ You should ensure that you do not break any existing clients if when you reset t
 
 Insert your password into the **Service URL** as follows (leaving the portion after the @ untouched):
 
-```bash
+```sh
 postgres://tsdbadmin:YOURPASSWORD@...
 ```
 
@@ -93,19 +91,19 @@ This will be referred to as **SERVICEURL** in the following sections.
 
 ## 3. Create your Hypertable
 
-Timescale allows you to turn regular PostgreSQL tables into [hypertables](https://docs.timescale.com/use-timescale/latest/hypertables/), which specialises them for dealing with time-series, events, or analytics data. Once you've made this change Timescale will seamlessly manage the hypertable's partitioning, as well as allow you to apply other features like compression or continuous aggregates.
+Timescale allows you to convert regular PostgreSQL tables into [hypertables](https://docs.timescale.com/use-timescale/latest/hypertables/), tables used to deal with time-series, events, or analytics data. Once you have made this change, Timescale will seamlessly manage the hypertable's partitioning, as well as allow you to apply other features like compression or continuous aggregates.
 
-Connect to your Timescale database using the Service URL you copied in the last step (it has the password embedded). 
+Connect to your Timescale database using the Service URL you copied in the last step (it has the password embedded).
 
-If you're using the default PostgreSQL CLI tool **psql** ([installation instructions here](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/)) to connect you'd run it like so (substituting your own **Service URL** from the previous step). You could also connect using a graphical tool like PgAdmin.
+If you are using the default PostgreSQL CLI tool [**psql**](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/) to connect, you would run psql like below (substituting your **Service URL** from the previous step). You could also connect using a graphical tool like [PgAdmin](https://www.pgadmin.org/).
 
-```bash
-$ psql SERVICEURL
+```sh
+$ psql <SERVICEURL>
 ```
 
-Once you are connected create your table by pasting the following SQL:
+Once you are connected, create your table by pasting the following SQL:
 
-```
+```sql
 CREATE TABLE readings(
   ts timestamptz DEFAULT now() NOT NULL,
   sensor UUID NOT NULL,
@@ -116,17 +114,17 @@ CREATE TABLE readings(
 SELECT create_hypertable('readings', 'ts');
 ```
 
-That's it, Timescale will take care of the rest for you as you ingest and query data.
+Timescale will manage the rest for you as you ingest and query data.
 
 ## 4. Create a database configuration
 
 To create a new Hyperdrive instance you will need:
 
-* Your **SERVICEURL** from Step 2.
-* A NAME for your Hyperdrive service. We will use **hyperdrive**
+- Your **SERVICEURL** from [step 2](/hyperdrive/tutorials/serverless-timeseries-api-with-timescale/#2-prepare-your-timescale-service).
+- A name for your Hyperdrive service. For this tutorial, you will use **hyperdrive**.
 
 {{<Aside type="note">}}
-Hyperdrive is currently in public beta and is currently free to use for all [Workers paid plans](https://developers.cloudflare.com/workers/platform/pricing/).
+Hyperdrive is currently in public beta and free to use under [Workers Paid plans](https://developers.cloudflare.com/workers/platform/pricing/).
 {{</Aside>}}
 
 Hyperdrive uses the `create` command with the `--connection-string` argument to pass this information. Run it as follows:
@@ -137,19 +135,19 @@ $ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
-This command outputs your Hyperdrive ID.  You can now bind your Hyperdrive configuration to your Worker in your `wrangler.toml` configuration by replacing the contents with the following:
+This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your `wrangler.toml` configuration by replacing the content with the following:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
-name = "timescale-api"                                                                                      
-main = "src/index.ts"                                                                                       
-compatibility_date = "2023-10-30"     
+name = "timescale-api"
+main = "src/index.ts"
+compatibility_date = "2023-10-30"
 
 node_compat = true
 
@@ -160,17 +158,16 @@ id = "your-id-here"
 
 Install the Postgres driver into your Worker project:
 
-
 ```sh
 $ npm install pg
 
 ```
 
-Now copy the below Worker code, and replacing the current code in `./src/index.ts`.  This code does several things.
+Now copy the below Worker code, and replace the current code in `./src/index.ts`. The code below:
 
-1. uses Hyperdrive to connect to Timescale using the the connection string generated from `env.HYPERDRIVE.connectionString` directly to the driver.
-2. creates a `POST` route which accepts an array of JSON readings to insert into Timescale in one transaction
-3. creates a `GET` route which will take limit parameter and then return the most recent readings. This could be adapted to filter by ID or by timestamp.
+1. Uses Hyperdrive to connect to Timescale using the connection string generated from `env.HYPERDRIVE.connectionString` directly to the driver.
+2. Creates a `POST` route which accepts an array of JSON readings to insert into Timescale in one transaction.
+3. Creates a `GET` route which takes a `limit` parameter and returns the most recent readings. This could be adapted to filter by ID or by timestamp.
 
 ```ts
 ---
@@ -179,7 +176,7 @@ filename: src/index.ts
 import { Client } from 'pg';
 
 export interface Env {
-    HYPERDRIVE: any;
+    HYPERDRIVE: Hyperdrive;
 }
 
 export default {
@@ -197,12 +194,12 @@ export default {
             // Parse the request's JSON payload
             const productData = await request.json();
 
-            // Write the raw query. We are using jsonb_to_recordset to expand the JSON
+            // Write the raw query. You are using jsonb_to_recordset to expand the JSON
             // to PG INSERT format to insert all items at once, and using coalesce to
             // insert with the current timestamp if no ts field exists
             const insertQuery = `
       INSERT INTO readings (ts, sensor, metadata, value)
-      SELECT coalesce(ts, now()), sensor, metadata, value FROM jsonb_to_recordset($1::jsonb) 
+      SELECT coalesce(ts, now()), sensor, metadata, value FROM jsonb_to_recordset($1::jsonb)
       AS t(ts timestamptz, sensor UUID, metadata jsonb, value numeric)
   `;
 
@@ -210,14 +207,14 @@ export default {
                 JSON.stringify(productData)
             ]);
 
-            // Collectthe raw row count inserted to return
+            // Collect the raw row count inserted to return
             const resp = new Response(JSON.stringify(insertResult.rowCount), {
                 headers: { 'Content-Type': 'application/json' }
             });
 
             ctx.waitUntil(client.end());
             return resp;
-            
+
 	    // Create a route for querying within a time-frame
         } else if (request.method === 'GET' && url.pathname === '/readings') {
             const limit = url.searchParams.get('limit');
@@ -243,30 +240,32 @@ export default {
 ## 5. Deploy your Worker
 
 Run the following command to redeploy your Worker:
-```bash
-$ npx wrangler deploy  
+
+```sh
+$ npx wrangler deploy
 ```
-Your application is now live and accessible at  `timescale-api.<YOUR_SUBDOMAIN>.workers.dev`. The exact URI will be shown in the output of the wrangler command you just ran.
 
-After deploying, you can interact with your Timescale IoT readings database using your Cloudflare Worker. Connection from the edge will be faster because you are using CloudFlare Hyperdrive to connect from the edge.
+Your application is now live and accessible at `timescale-api.<YOUR_SUBDOMAIN>.workers.dev`. The exact URI will be shown in the output of the wrangler command you just ran.
 
-You can now use your Cloudflare Worker to insert new rows into the  `readings`  table. To test this functionality, send a  `POST`  request to your Worker’s URL with the  `/readings`  path, along with a JSON payload containing the new product data:
+After deploying, you can interact with your Timescale IoT readings database using your Cloudflare Worker. Connection from the edge will be faster because you are using Cloudflare Hyperdrive to connect from the edge.
+
+You can now use your Cloudflare Worker to insert new rows into the `readings` table. To test this functionality, send a `POST` request to your Worker’s URL with the `/readings` path, along with a JSON payload containing the new product data:
 
 ```json
 [
-  { "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value":0.3},
-  { "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value":10.8},
-  { "sensor": "5cb674a0-460d-4c80-8113-28927f658f5f", "value":18.8},
-  { "sensor": "03307bae-d5b8-42ad-8f17-1c810e0fbe63", "value":20.0},
-  { "sensor": "64494acc-4aa5-413c-bd09-2e5b3ece8ad7", "value":13.1},
-  { "sensor": "0a361f03-d7ec-4e61-822f-2857b52b74b3", "value":1.1},
-  { "sensor": "50f91cdc-fd19-40d2-b2b0-c90db3394981", "value":10.3}
+  { "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value": 0.3 },
+  { "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value": 10.8 },
+  { "sensor": "5cb674a0-460d-4c80-8113-28927f658f5f", "value": 18.8 },
+  { "sensor": "03307bae-d5b8-42ad-8f17-1c810e0fbe63", "value": 20.0 },
+  { "sensor": "64494acc-4aa5-413c-bd09-2e5b3ece8ad7", "value": 13.1 },
+  { "sensor": "0a361f03-d7ec-4e61-822f-2857b52b74b3", "value": 1.1 },
+  { "sensor": "50f91cdc-fd19-40d2-b2b0-c90db3394981", "value": 10.3 }
 ]
 ```
 
-In this case we have omitted the `ts` (the timestamp) and `metadata` (the JSON blob) so they will be set to `now()` and `NULL` respectively.
+This tutorial omits the `ts` (the timestamp) and `metadata` (the JSON blob) so they will be set to `now()` and `NULL` respectively.
 
-Once you've tun the `POST` request you can also issue a `GET` request to your Worker’s URL with the  `/readings`  path. Set the `limit` parameter to control the amount of records you get back.
+Once you have sent the `POST` request you can also issue a `GET` request to your Worker’s URL with the `/readings` path. Set the `limit` parameter to control the amount of returned records.
 
 If you have **curl** installed you can test with the following commands (replace **<YOUR_SUBDOMAIN>** with your subdomain from the deploy command above):
 
@@ -274,7 +273,7 @@ If you have **curl** installed you can test with the following commands (replace
 ---
 header: Ingest some data
 ---
-curl -X POST -d @- 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings' <<EOF
+$ curl -X POST -d @- 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings' <<EOF
 [
   { "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value":0.3},
   { "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value":10.8},
@@ -291,13 +290,13 @@ EOF
 ---
 header: Query some data
 ---
-curl 'https://timescale-api.<YOUR_SUBDOMAIN>jsewell.workers.dev/readings?limit=10'
+$ curl "https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings?limit=10"
 ```
 
-Congratulations, you've got a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive and Typescript!
+In this tutorial, you have learned how to create a working example to ingest and query readings from the edge with Timescale, Workers, Hyperdrive, and TypeScript.
 
 ## Next steps
 
-* Learn more about [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/).
-* Learn more about [Timescale](https://timescale.com).
-* Refer to the [troubleshooting guide](/hyperdrive/learning/troubleshooting/) to debug common issues.
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Learn more about [Timescale](https://timescale.com).
+- Refer to the [troubleshooting guide](/hyperdrive/reference/troubleshooting/) to debug common issues.

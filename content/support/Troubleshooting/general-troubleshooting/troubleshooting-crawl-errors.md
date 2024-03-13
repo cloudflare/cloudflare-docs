@@ -10,7 +10,7 @@ title: Troubleshooting crawl errors
 
 ## Overview
 
-Cloudflare allows search engine crawlers and bots. If you observe crawl issues or Cloudflare challenges presented to the search engine crawler or bot, [contact Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) with the information you gather when troubleshooting the crawl errors via the methods outlined in this guide.
+Cloudflare allows search engine crawlers and bots. If you observe crawl issues or Cloudflare challenges presented to the search engine crawler or bot, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the information you gather when troubleshooting the crawl errors via the methods outlined in this guide.
 
 ___
 
@@ -98,11 +98,11 @@ Contact your hosting provider to investigate DNS errors and provide the date Goo
 
 **Full**
 
-[Contact Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) and provide the date and time that Google observed the errors.
+[Contact Cloudflare support](/support/contacting-cloudflare-support/) and provide the date and time that Google observed the errors.
 
 ### Requesting troubleshooting assistance
 
-If the above troubleshooting steps do not resolve your crawl errors, follow the steps below to export crawler errors as a .csv file from your Google Webmaster Tools Dashboard. Include this .csv file when [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+If the above troubleshooting steps do not resolve your crawl errors, follow the steps below to export crawler errors as a .csv file from your Google Webmaster Tools Dashboard. Include this .csv file when [contacting Cloudflare Support](/support/contacting-cloudflare-support/).
 
 1.  Log in to your Google Webmaster Tools account and navigate to the **Health** section of the affected domain.
 2.  Click **Crawl Errors** in the left hand navigation.

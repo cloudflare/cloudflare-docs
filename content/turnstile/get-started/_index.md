@@ -2,18 +2,17 @@
 title: Get started
 pcx_content_type: get-started
 weight: 2
-layout: single
 ---
 
 # Get started
 
 This guide will get you started on setting up the Turnstile widget. 
 
-If you are currently using a CAPTCHA service, you can copy and paste our script wherever you have deployed the existing script today. 
+If you are currently using a {{<glossary-tooltip term_id="CAPTCHA">}}CAPTCHA{{</glossary-tooltip>}} service, you can copy and paste our script wherever you have deployed the existing script today. 
  
 ## Get a sitekey and secret key
 
-To start using the Turnstile widget, you will need to obtain a sitekey and a secret key. The sitekey and secret key are always associated with one widget and cannot be reused for other widgets.
+To start using the Turnstile widget, you will need to obtain a {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}} and a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}}. The sitekey and secret key are always associated with one widget and cannot be reused for other widgets.
 
 The sitekey is public and used to invoke the Turnstile widget on your site.
 

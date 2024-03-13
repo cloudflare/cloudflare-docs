@@ -2,14 +2,16 @@
 pcx_content_type: how-to
 title: Device profiles
 weight: 2
-layout: single
 ---
 
 # Device profiles
 
-A device profile defines WARP client settings for a specific set of devices in your organization. You can create multiple profiles and apply different settings based on the user's identity, the device's location, and other criteria.
+{{<render file="warp/_device-profiles-intro.md">}}
 
 ## Create a new profile
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Profile settings** card, select **Create profile**. This will make a copy of the **Default** profile.
@@ -24,6 +26,40 @@ At this time, **Split Tunnels** and **Local Domain Fallback** can only be modifi
 6. Select **Create profile**.
 
 Your profile will appear in the **Profile settings** list. You can rearrange the profiles in the list according to your desired [order of precedence](#order-of-precedence).
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+Send a `POST` request to the [Devices endpoint](/api/operations/devices-create-device-settings-policy):
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "allow_mode_switch": false,
+  "allow_updates": false,
+  "allowed_to_leave": false,
+  "auto_connect": 900,
+  "captive_portal": 180,
+  "description": "Cloudflare'\''s basic device settings profile, recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/",
+  "disable_auto_fallback": true,
+  "enabled": true,
+  "exclude_office_ips": false,
+  "match": "identity.email == \"me@mycompany.com\"",
+  "name": "Cloudflare basic device profile",
+  "precedence": 101,
+  "service_mode_v2": {
+    "mode": "warp"},
+  "support_url": "https://it.company.com/help",
+  "switch_locked": true
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Edit profile settings
 
@@ -59,10 +95,26 @@ $ warp-cli settings
 | User group emails        | Email address of an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) <br /> `contractors@company.com`   | Gateway with WARP  |
 | User group IDs           | ID of an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) <br /> `12jf495bhjd7893ml09o`                 | Gateway with WARP  |
 | User group names         | Name of an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) <br /> `developers`                         | Gateway with WARP  |
-| Operating system         | `macOS`                                                                                                                                          | Any mode           |
+| Operating system         | Operating system of the device <br /> `macOS`                                                                                                                                          | Any mode           |
 | Operating system version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode           |
 | Managed network          | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device                              | Any mode           |
 | SAML Attributes |  Attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp)| Gateway with WARP |
+
+## Comparison operators
+
+| Operator                 | Meaning                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| is                       | equals the defined value                                                         |
+| in                       | matches at least one of the defined values                                       |
+
+## Logical operators
+
+To evaluate multiple conditions in an expression, select a logical operator:
+
+| Operator | Meaning                                       |
+| -------- | --------------------------------------------- |
+| And      | match all of the conditions in the expression |
+| Or       | match any of the conditions in the expression |
 
 ## Order of precedence
 

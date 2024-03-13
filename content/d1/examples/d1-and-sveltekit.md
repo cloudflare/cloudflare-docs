@@ -17,8 +17,8 @@ To set up a new SvelteKit site on Cloudflare Pages that can query D1:
 
 1. Refer to [the Svelte guide](/pages/framework-guides/deploy-a-svelte-site/) and Svelte's [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare).
 2. Install the Cloudflare adapter within your SvelteKit project: `npm i -D @sveltejs/adapter-cloudflare`.
-3. Bind a D1 database [to your Pages Function](/pages/platform/functions/bindings/#d1-databases).
-4. Pass the `--d1=BINDING_NAME` flag when developing locally. `BINDING_NAME` should match what call in your code: for example, `--d1=DB`.
+3. Bind a D1 database [to your Pages Function](/pages/functions/bindings/#d1-databases).
+4. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your wrangler.toml: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 
 The following example shows you how to create a server endpoint configured to query D1.
 

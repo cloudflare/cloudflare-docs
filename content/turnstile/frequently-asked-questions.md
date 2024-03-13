@@ -1,8 +1,7 @@
 ---
 title: FAQ
 pcx_content_type: faq
-weight: 12
-layout: list
+weight: 11
 structured_data: true
 ---
 
@@ -13,16 +12,9 @@ structured_data: true
 
 {{<faq-answer>}}
 
-The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page. 
+The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page.
 
-We recommend using the nonce-based approach documented with [CSP3](https://w3c.github.io/webappsec-csp/#framework-directive-source-list). Make sure to include your nonce in the `api.js` script tag and we will handle the rest. Cloudflare Turnstile works with **strict-dynamic**.
-
-Alternatively, add the following values to the directives:
-
-* **script-src**: `https://challenges.cloudflare.com`
-* **frame-src**: `https://challenges.cloudflare.com`
-
-We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evaluator.withgoogle.com/).
+For specifics regarding Turnstile, refer to the [Content Security Policy](/turnstile/reference/content-security-policy/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -49,7 +41,7 @@ Visitor Solve Rate is the percentage of tokens that were solved but have not nec
 
 {{<faq-answer>}}
 
-API Solve Rate is the share of tokens that were siteverified compared to issued. 
+API Solve Rate is the share of tokens that were siteverified compared to issued.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -130,11 +122,11 @@ The siteverify API must not be called by the front end as this may reveal the se
 
 {{<faq-answer>}}
 
-Dummy sitekeys can be used from any domain, including on `localhost`. 
+Dummy sitekeys can be used from any domain, including on `localhost`.
 
 Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
 
-Refer to [Testing](/turnstile/reference/testing/) for more information. 
+Refer to [Testing](/turnstile/reference/testing/) for more information.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -157,7 +149,7 @@ Currently, a Turnstile token can have up to 2048 characters.
 
 {{<faq-answer>}}
 
-Turnstile is hosted under `challenges.cloudflare.com`. 
+Turnstile is hosted under `challenges.cloudflare.com`.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -167,7 +159,7 @@ Turnstile is hosted under `challenges.cloudflare.com`.
 
 {{<faq-answer>}}
 
-We currently do not offer an easy and official way to embed Turnstile in a React Native application. 
+We currently do not offer an easy and official way to embed Turnstile in a React Native application.
 
 An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/reference/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
 
@@ -225,7 +217,7 @@ If you encounter an endless challenge loop, try disabling your browser extension
 {{<faq-question level=2 text="What languages does Turnstile support?" >}}
 {{<faq-answer>}}
 
-Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information. 
+Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -248,3 +240,12 @@ No, Turnstile only works on `http://` and `https://` URI schemes. Other protocol
 {{</faq-answer>}}
 {{</faq-item>}}
 
+{{<faq-item>}}
+{{<faq-question level=2 text="Why do I see a challenge on my proxied hostnames?" >}}
+{{<faq-answer>}}
+
+{{<render file="_proxied-hostnames.md">}}
+{{<render file="_challenge-behavior.md">}}
+
+{{</faq-answer>}}
+{{</faq-item>}}

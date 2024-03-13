@@ -3,12 +3,12 @@ pcx_content_type: reference
 title: Test your configuration
 weight: 5
 meta:
-  title: Test your exposed credential checks configuration
+  title: Test your exposed credentials checks configuration
 ---
 
-# Test your exposed credential checks configuration
+# Test your exposed credentials checks configuration
 
-After enabling and configuring exposed credential checks, you may want to test if the checks are working properly.
+After enabling and configuring exposed credentials checks, you may want to test if the checks are working properly.
 
 Cloudflare provides a special set of case-sensitive credentials for this purpose:
 

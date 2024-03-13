@@ -2,7 +2,6 @@
 title: Business email compromise (BEC)
 pcx_content_type: concept
 weight: 1
-layout: single
 ---
 
 # Business email compromise (BEC)

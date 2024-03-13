@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Rewrite URL
 weight: 1
-layout: single
 meta:
   title: Rewrite URL rules
 ---
@@ -17,7 +16,7 @@ You can manipulate the URL of a request through different operations, namely rew
 
 Use a URL rewrite to return the content of a URL while displaying a different URL in the browser. You can rewrite the URI path, the query string, or both.
 
-You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/support/page-rules/using-resolve-override-in-page-rules/).
+You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/).
 
 ## Static and dynamic rewrites
 

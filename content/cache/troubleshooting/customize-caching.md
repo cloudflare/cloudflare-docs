@@ -8,7 +8,7 @@ title: Customize Caching
 
 Caching is a fundamental feature of the Cloudflare Content Delivery Network (CDN). As such, our global network automatically caches a lot of content around the world. When visitors request a cached resource, it is served from the data center closest to them and therefore, the content loads faster.
 
-You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/how-to/cache-rules/) or [Page rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
+You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/how-to/cache-rules/) or [Page Rules](/rules/page-rules/).
 
 ___
 

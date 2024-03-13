@@ -8,7 +8,7 @@ title: Configure Workers for Platforms
 
 # Configure Workers for Platforms
 
-This guide will instruct you on setting up Workers for Platforms. You will configure a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace), a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [user Worker](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#user-workers) to test a request end to end. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
+This guide will instruct you on setting up Workers for Platforms. You will configure a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace), a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) to test a request end to end. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
 
 ## Prerequisite: Enable Workers for Platforms
 
@@ -34,24 +34,24 @@ Refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/) for mo
 
 ## 2. Create dispatch namespace 
 
-Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace). A dispatch namespace is made up of a collection of user Workers. User Workers are Workers that your end users (end developers) create.
+Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). A dispatch namespace is made up of a collection of user Workers. User Workers are Workers that your end users (end developers) create.
 
 To create a dispatch namespace, run:
 
 ```sh
-$ wrangler dispatch-namespace create <NAMESPACE_NAME>
+$ npx wrangler dispatch-namespace create <NAMESPACE_NAME>
 ```
 
 ## 3. Create a dynamic dispatch Worker
 
-Create a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dynamic-dispatch-worker). The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them.
+Create a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker). The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them.
 
 To create a dynamic dispatch Worker, you must create a Worker and bind it to the dispatch namespace you created in the previous step.
 
 To create a Worker, run `wrangler init` followed by your Worker project name:
 
 ```sh
-$ wrangler init <YOUR_WORKER>
+$ npx wrangler init <YOUR_WORKER>
 ```
 
 To create a dynamic dispatch Worker, create a [binding](/workers/configuration/bindings/). Open the [`wrangler.toml`](/workers/wrangler/configuration/) file in your project directory and add the following code block. Your `binding` is set by you (in the following code block, `dispatcher`). Add the `namespace` value by inputting the name of the dispatch namespace you created in step 2:
@@ -86,7 +86,7 @@ Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-fo
 
 ## 4. Upload user Workers to a namespace
 
-[User Workers](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#user-workers) are written by end developers. End developers can deploy user Workers to script automated actions, create integrations or modify response payload to return custom content.
+[User Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) are written by end developers. End developers can deploy user Workers to script automated actions, create integrations or modify response payload to return custom content.
 
 You will now upload `customer-worker-1` into your dispatch namespace that you created in step 2. This user Worker has a simple `fetch()` handler that sends a `Hello world` response.
 
@@ -142,7 +142,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 {{<Aside type="note">}}
 
-For more information on the `metadata.json` refer to [Metadata configuration](/cloudflare-for-platforms/workers-for-platforms/platform/metadata/).
+For more information on the `metadata.json` refer to [Metadata configuration](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/).
 
 {{</Aside>}}
 

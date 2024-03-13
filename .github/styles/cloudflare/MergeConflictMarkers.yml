@@ -1,0 +1,13 @@
+---
+# Error: cloudflare.MergeConflictMarkers
+#
+# Checks for existence of merge conflict markers that were accidentally committed as changes.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: existence
+message: "Merge conflict marker '%s' found. [Address the merge conflict](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts) before merging."
+level: error
+scope: raw
+raw:
+  - '\n<<<<<<< .+\n|\n=======\n|\n>>>>>>> .+\n'

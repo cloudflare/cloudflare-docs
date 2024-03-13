@@ -10,7 +10,7 @@ title: Status codes
 Status Codes analytics by data center is exclusive to the [enterprise level of service](https://www.cloudflare.com/plans/enterprise/contact/).
 {{</Aside>}}
 
-Status Codes metrics in the Cloudflare dashboard **Analytics** app provide customers with a deeper insight into the distribution of errors that are occurring on their website per data center. A data center facility is where Cloudflare runs its servers that make up our edge network ([current locations](https://www.cloudflarestatus.com/)).
+Status Codes metrics in the Cloudflare dashboard **Analytics** app provide customers with a deeper insight into the distribution of errors that are occurring on their website per data center. A data center facility is where Cloudflare runs its servers that make up our edge network ([current locations](https://www.cloudflare.com/network/)).
 
 HTTP status codes that appear in a response passing through our edge are displayed in analytics. These codes can be split into three groups: ‘edge network errors’, ‘origin errors’ and '52x errors'.
 
@@ -28,7 +28,7 @@ ___
 ## Edge Network errors
 
 -   `400` - Bad Request intercepted at the Cloudflare Edge (for example, missing or bad HTTP header)
--   `403` - Security functionality (for example, Web Application Firewall, Browser Integrity Check, [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/), and most 1xxx error codes)
+-   `403` - Security functionality (for example, Web Application Firewall, Browser Integrity Check, [Cloudflare challenges](/waf/reference/cloudflare-challenges/), and most 1xxx error codes)
 -   `409` - DNS errors typically in the form of 1000 or 1001 error code
 -   `413` - File size upload exceeded the maximum size allowed (configured in the dashboard under **Network** > **Maximum Upload Size**.)
 -   `444` - Used by Nginx to indicate that the server has returned no information to the client, and closed the connection. This error code is internal to Nginx and is **not** returned to the client.

@@ -1,9 +1,9 @@
 ---
 title: Tooltips
 pcx_content_type: reference
-weight: 12
-layout: single
+weight: 5
 ---
+
 # Tooltips
 
 ## Visitor Solve Rate
@@ -20,4 +20,4 @@ The change in Solve Rate is expected to be relatively stable over time. It is an
 
 ## Top Actions
 
-Top Actions allow the customer to add a label for their actions.
+Top Actions allow you to add a label for your actions.

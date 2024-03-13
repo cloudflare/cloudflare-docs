@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: Migrating to the new WAF Managed Rules
+title: WAF Managed Rules migration
 weight: 1
 ---
 
-# Migrating to the new WAF Managed Rules
+# WAF Managed Rules migration
 
 On 2022-05-04, Cloudflare started the WAF migration from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Currently, all zones can migrate to WAF Managed Rules, including partner accounts.
 
@@ -48,16 +48,17 @@ For API users, the APIs for managing the previous version of WAF managed rules w
 
 The update process will create an equivalent configuration for the following settings of WAF managed rules:
 
-- Global settings of OWASP ModSecurity Core Rule Set.
 - Firewall rules configured with _Bypass_ > _WAF Managed Rules_.
 - Page Rules configured with _Disable Security_.
 - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On_.
 
 ### Configurations that will be lost in the update process
 
-The update process will not migrate specific settings at the rule or group level of the OWASP ModSecurity Core Rule Set, available in WAF managed rules.
+The update process will not migrate most settings of the OWASP ModSecurity Core Rule Set available in the previous version of WAF managed rules, including the sensitivity and any group/rule overrides. The OWASP versions in the two WAF implementations (old and new) are quite different, and there is no direct equivalence between rules in the two versions.
 
-The OWASP version supporting WAF managed rules and WAF Managed Rules is quite different, and there is no direct equivalence between rules in the two versions. You will need to configure specific OWASP rules again in the Cloudflare OWASP Core Ruleset, available in WAF Managed Rules. For more information on configuring this Managed Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
+The only setting that will be migrated is the configured action, which has a direct mapping to the OWASP action in the new WAF Managed Rules implementation (the _Simulate_ action is migrated as _Log_).
+
+Since most settings will not be migrated, you will need to configure the Cloudflare OWASP Core Ruleset in WAF Managed Rules again according to your needs, namely the score threshold, the paranoia level, and any tag/rule overrides. For more information on configuring this managed ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
 
 ### Configurations that will prevent you from updating
 
@@ -129,7 +130,7 @@ In phase 1 the migration became available to a subset of eligible zones, which h
     - WAF disabled, or
     - WAF enabled and only the Cloudflare Managed Ruleset is enabled (the OWASP ModSecurity Core Rule Set must be disabled).
 
-- The zone has no [firewall rules](/firewall/cf-dashboard/) or [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) bypassing, enabling, or disabling WAF managed rules:
+- The zone has no [firewall rules](/firewall/cf-dashboard/) or [Page Rules](/rules/page-rules/) bypassing, enabling, or disabling WAF managed rules:
 
     - Firewall rules configured with _Bypass_ > _WAF Managed Rules_.
     - Page Rules configured with _Disable Security_.
@@ -159,7 +160,7 @@ You can start the WAF update in the Cloudflare dashboard or via API.
 
 3. In the update banner, select **Review configuration**. This banner is only displayed in eligible zones.
 
-4. Review the proposed WAF configuration rules. You can make adjustments to the proposed configuration, like [editing the WAF Managed Rules configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or creating [WAF exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of rulesets or specific rules.
+4. Review the proposed WAF configuration rules. You can make adjustments to the proposed configuration, like [editing the WAF Managed Rules configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or creating [exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of rulesets or specific rules.
 
 5. When you are done reviewing, select **Deploy** to deploy the new WAF Managed Rules configuration.
 
@@ -264,6 +265,7 @@ The returned configuration in the example above, which would match the existing 
     curl --request PUT \
     "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
     --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "default",
       "rules": [
@@ -298,6 +300,7 @@ The returned configuration in the example above, which would match the existing 
     curl --request PUT \
     "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
     --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "default",
       "rules": [
@@ -520,4 +523,4 @@ ___
 
 The concept of paranoia level did not exist in the OWASP version (2.x) used in WAF managed rules. Based on the OWASP guide recommendations, the WAF migration process will set the paranoia level of the Cloudflare OWASP Core Ruleset to _PL2_.
 
-You cannot disable the new version of WAF Managed Rules using [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/), since the _Web Application Firewall: Off_ setting in Page Rules only applies to the previous version of WAF managed rules. To disable the new WAF Managed Rules you must [configure WAF exceptions](/waf/managed-rules/waf-exceptions/) (also known as skip rules).
+You cannot disable the new version of WAF Managed Rules using [Page Rules](/rules/page-rules/), since the _Web Application Firewall: Off_ setting in Page Rules only applies to the previous version of WAF managed rules. To disable the new WAF Managed Rules you must configure [exceptions](/waf/managed-rules/waf-exceptions/) (also known as skip rules).

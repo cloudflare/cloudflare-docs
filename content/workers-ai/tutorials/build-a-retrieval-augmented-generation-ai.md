@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
-layout: single
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
@@ -44,13 +43,13 @@ For this guide, set up a basic Worker:
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
+- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
+- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 
 In your project directory, C3 has generated the following:
 
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/learning/migrate-to-module-workers/) syntax.
+2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
@@ -144,7 +143,7 @@ Embeddings allow you to add additional capabilities to the language models you c
 To begin using Vectorize, create a new embeddings index using `wrangler`. This index will store vectors with 768 dimensions, and will use cosine similarity to determine which vectors are most similar to each other:
 
 ```sh
-$ wrangler vectorize create vector-index --dimensions=768 --metric=cosine
+$ npx wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 ```
 
 Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
@@ -164,7 +163,7 @@ To implement the searching feature, you must set up a D1 database from Cloudflar
 Create a new D1 database using `wrangler`:
 
 ```sh
-$ wrangler d1 create database
+$ npx wrangler d1 create database
 ```
 
 Then, add the configuration details for your new D1 database to `wrangler.toml`:
@@ -181,13 +180,13 @@ database_id = "abc-def-geh"
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute database --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
+$ npx wrangler d1 execute database --remote --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
 ```
 
 Now, we can add a new note to our database using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute database --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
+$ npx wrangler d1 execute database --remote --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
 ## 5. Creating notes and adding them to Vectorize
@@ -240,22 +239,22 @@ app.post('/notes', async (c) => {
   const { text } = await c.req.json()
   if (!text) {
 			return c.text("Missing text", 400);
-  } 
+  }
 
   const { results } = await c.env.DB.prepare("INSERT INTO notes (text) VALUES (?) RETURNING *")
     .bind(text)
     .run()
 
   const record = results.length ? results[0] : null
-  
-  if (!record) {			
+
+  if (!record) {
 			return c.text("Failed to create note", 500);
 	}
 
   const { data } = await ai.run('@cf/baai/bge-base-en-v1.5', { text: [text] })
   const values = data[0]
-  
-  if (!values) {			
+
+  if (!values) {
 			return c.text("Failed to generate vector embedding", 500);
 	}
 
@@ -316,7 +315,7 @@ app.get('/', async (c) => {
   const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 1 });
   const vecIds = vectorQuery.matches
     .filter(vec => vec.score > SIMILARITY_CUTOFF)
-    .map(vec => vec.vectorId)
+    .map(vec => vec.id)
 
   let notes = []
   if (vecIds.length) {
@@ -373,9 +372,9 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
-* Review Cloudflare's [AI documentation](/workers-ai).
-* Review [Tutorials](/workers/tutorials/) to build projects on Workers.
-* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Learning](/workers/learning/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
-* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
+- Review Cloudflare's [AI documentation](/workers-ai).
+- Review [Tutorials](/workers/tutorials/) to build projects on Workers.
+- Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
+- Understand how Workers works in [Reference](/workers/reference/).
+- Learn about Workers features and functionality in [Platform](/workers/platform/).
+- Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

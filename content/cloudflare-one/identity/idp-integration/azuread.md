@@ -96,15 +96,16 @@ More narrow permissions may be used, however this is the set of permissions that
 
 4. Enter the **Application (client) ID**, **Client secret**, and **Directory (tenant) ID** obtained from the Azure dashboard.
 
-5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+5. (Optional) Configure the following settings:
 
-6. (Optional) If you are using Azure AD groups, enable **Support Groups**.
+    - **Proof Key for Code Exchange**: Perform [PKCE](https://www.oauth.com/oauth2-servers/pkce/) on all login attempts.
+    - **Support Groups**: Allow Cloudflare to read a user's Azure AD group membership.
+    - **Azure AD Policy Sync**: Refer to our [Azure AD Conditional Access tutorial](/cloudflare-one/tutorials/azuread-conditional-access/).
+    - **Enable SCIM**: Refer to [Synchronize users and groups](#synchronize-users-and-groups).
+    - **Email claim**: Enter the Azure AD claim that you wish to use for user identification (for example, `preferred_username`).
+    - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
-7. (Optional) In **Email claim**, enter the Azure AD claim that you wish to use for user identification (for example, `preferred_username`).
-
-8. (Optional) Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
-
-9. Select **Save**.
+6. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 

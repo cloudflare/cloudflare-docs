@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Pagination
 weight: 15
-layout: single
 ---
 
 # Pagination

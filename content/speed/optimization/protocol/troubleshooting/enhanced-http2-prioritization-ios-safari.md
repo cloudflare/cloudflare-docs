@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Enhanced HTTP/2 Prioritization negatively affects iOS/Safari devices
-layout: list
+layout: wide
 ---
 
 # Enhanced HTTP/2 Prioritization negatively affects iOS/Safari devices
@@ -16,7 +16,7 @@ If visitors using using Safari on macOS or any browser on iOS are experiencing i
 
 {{<Aside type="note">}}
 
-Sometimes, [HTTP/2](/support/network/understanding-cloudflare-http2-and-http3-support/#http2) will cause **Enhanced HTTP/2 Prioritization** to be re-enabled automatically.
+Sometimes, [HTTP/2](/speed/optimization/protocol/http2/) will cause **Enhanced HTTP/2 Prioritization** to be re-enabled automatically.
 
 If you notice this happening, also disable **HTTP/2**.
 

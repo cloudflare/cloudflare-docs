@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Scan HTTP traffic
 weight: 1
-layout: single
 ---
 
 # Scan HTTP traffic with DLP
@@ -60,7 +59,7 @@ Different sites will send requests in different ways. For example, some sites wi
 
 You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
 
-{{<heading-pill style="beta" heading="h3">}}Report false positives{{</heading-pill>}}
+### Report false positives
 
 1. Select the log you want to report.
 2. Select **Report DLP false positive** under **DLP details**.

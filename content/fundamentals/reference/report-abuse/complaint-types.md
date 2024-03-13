@@ -8,7 +8,7 @@ meta:
 
 # Complaint types
 
-Use Cloudflare's [online abuse form](https://abuse.cloudflare.com/) to report differnet types of abuse.
+Use Cloudflare's [online abuse form](https://abuse.cloudflare.com/) to report different types of abuse.
 
 ---
 

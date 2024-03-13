@@ -1,0 +1,11 @@
+links:
+  info: "More Information"
+  terms: "Terms & License"
+
+limits:
+  default_max_tokens_stream: "Default max (sequence) tokens (stream)"
+  default_max_tokens: "Default max (sequence) tokens"
+  context_length_limit: "Context tokens limit"
+  sequence_length_limit: "Sequence tokens limit"
+  max_input_tokens: "Max input tokens"
+  output_dimensions: "Output dimensions"

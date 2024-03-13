@@ -1,8 +1,8 @@
 ---
 title: Phases
 pcx_content_type: reference
-weight: 3
-layout: list
+weight: 2
+layout: wide
 ---
 
 # WAF phases

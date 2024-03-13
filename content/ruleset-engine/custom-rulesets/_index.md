@@ -2,7 +2,6 @@
 title: Work with custom rulesets
 pcx_content_type: navigation
 weight: 7
-layout: single
 ---
 
 # Work with custom rulesets

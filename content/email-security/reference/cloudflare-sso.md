@@ -1,7 +1,7 @@
 ---
 title: Cloudflare SSO
 pcx_content_type: reference
-weight: 4
+weight: 5
 meta:
     description: You can use your Cloudflare account as the single sign-on (SSO) authentication scheme to log in to the Area 1 dashboard.
 ---

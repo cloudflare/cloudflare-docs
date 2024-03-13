@@ -1,6 +1,5 @@
 ---
 title: Local development and testing
-weight: 6
 pcx_content_type: concept
 meta:
   description: Test your Worker in local development.
@@ -29,7 +28,13 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data.
+
+### Clear Wrangler's local storage
+
+Wrangler will store all locally created resources and storage in a `.wrangler` folder inside your Worker directory. This folder should be added to your `.gitignore` file.
+
+If you need to clear local storage, delete the `.wrangler/state` folder. It will be recreated the next time you run `wrangler dev`.
 
 ### Develop locally using remote resources and bindings
 
@@ -39,11 +44,13 @@ Developing against remote resources will count towards billable usage. `wrangler
 
 {{</Aside>}}
 
-`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote flag`:
+`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote` flag:
 
 ```sh
 $ npx wrangler dev --remote
 ```
+
+Remote resources to use during `wrangler dev --remote` are specified with preview ID/names such as `preview_id` or `preview_bucket name`. Preview resources can be resources separate from production resources to prevent changing production data in development. `wrangler dev --remote` only supports preview ID/names for storage resources such as KV, R2, and D1. To change production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of the production resource.
 
 ### Customize `wrangler dev`
 
@@ -67,7 +74,7 @@ For more information on breakpoint debugging via Chrome's DevTools, refer to [Ch
 
 ### Setup VS Code to use breakpoints
 
-To setup VS Code for breakpoint debugging Workers:
+To setup VS Code for breakpoint debugging in your Worker project:
 
 1. Create a `.vscode` folder in your project's root folder if one does not exist.
 2. Within that folder, create a `launch.json` file with the following content:
@@ -104,6 +111,12 @@ Note that breakpoint debugging in `wrangler dev` using `--remote` could extend W
 
 {{</Aside>}}
 
+{{<Aside type="note">}}
+
+The `.vscode/launch.json` file only applies to a single workspace. If you prefer, you can add the above launch configuration to your User Settings (per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) to have it available for all your workspaces.
+
+{{</Aside>}}
+
 ## Test Workers
 
 ### Integration testing
@@ -114,10 +127,10 @@ For more information and examples, refer to the [`unstable_dev` guide](/workers/
 
 ### Advanced local testing via Miniflare
 
-[Miniflare](https://github.com/cloudflare/miniflare/blob/v3.20231016.0/packages/miniflare/README.md) is a simulator for developing and testing Workers. It supports simulating and mocking resources like: KV, Durable Objects, R2, D1, and Queues.
+[Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#readme) is a simulator for developing and testing Workers. It supports simulating and mocking resources like: KV, Durable Objects, R2, D1, and Queues.
 
 Miniflare is fully local, and is built on top of the Workers runtime, [`workerd`](https://github.com/cloudflare/workerd) to ensure that local behavior accurately reflects production. All of this makes it a great tool for writing tests or advanced use cases.
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/log-from-workers/) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
+* [Log from Workers](/workers/observability/logging/real-time-logs) - Access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).

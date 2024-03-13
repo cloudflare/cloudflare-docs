@@ -45,7 +45,7 @@ const secretValue = env.SECRET_NAME;
 
 Then use the secret value to authenticate with the external service. For example, if the external service requires an API key for authentication, include it in your request headers.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/bindings/mtls) to present a client certificate.
 
 ## Tips
 

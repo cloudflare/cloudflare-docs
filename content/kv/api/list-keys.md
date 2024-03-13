@@ -20,7 +20,7 @@ export default {
 };
 ```
 
-You can also [list keys on the command line with Wrangler](/kv/platform/kv-commands/#list) or [via the API](/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
+You can also [list keys on the command line with Wrangler](/kv/reference/kv-commands/#list) or [via the API](/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
 
 Changes may take up to 60 seconds to be reflected on the application calling the method on the KV namespace.
 

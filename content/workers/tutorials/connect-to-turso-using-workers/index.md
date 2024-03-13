@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to and query your Turso database using Workers
-layout: single
 ---
 
 # Connect to and query your Turso database using Workers
@@ -217,14 +216,14 @@ export interface Env {
 }
 
 export default {
-    async fetch(request: Request, env: Env): Promise<Response> {
+    async fetch(request, env): Promise<Response> {
         if (env.router === undefined) {
             env.router = buildRouter(env);
         }
 
         return env.router.handle(request);
     },
-};
+} satisfies ExportedHandler<Env>;
 
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();
@@ -381,5 +380,5 @@ To clean up the resources you created as part of this tutorial:
 
 * Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
 * Understand how to [debug your Cloudflare Worker](/workers/observability/).
-* Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
+* Join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
 * Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

@@ -8,7 +8,7 @@ meta:
 # Scan server for PCI compliance
 
 {{<Aside type="note">}}
-Cloudflare is PCI certified as a Data Processor. Refer to [PCI compliance and Cloudflare SSL/TLS](https://developers.cloudflare.com/support/ssl-tls/edge-certificates-ssl-tls-configuration/pci-compliance-and-cloudflare-ssltls/) and 
+Cloudflare is PCI certified as a Data Processor. Refer to [PCI compliance and Cloudflare SSL/TLS](https://developers.cloudflare.com/ssl/reference/compliance-and-vulnerabilities/) and 
 [PCI DSS at Cloudflare (PDF)](https://cf-assets.www.cloudflare.com/slt3lc6tev37/2ZT8AvN9cm7k4CMK0GyZqq/d972fa21275bcf9142e0eb2e8b44e43a/BDES-1265_Privacy_Compliance_Whitepapers_PCI_V2.pdf) for more information.
 {{</Aside>}}
 

@@ -2,7 +2,6 @@
 pcx_content_type: troubleshooting
 title: Troubleshoot integrations
 weight: 3
-layout: single
 ---
 
 # Troubleshoot CASB integrations

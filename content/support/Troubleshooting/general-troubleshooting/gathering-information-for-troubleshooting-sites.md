@@ -10,7 +10,7 @@ title: Gathering information for troubleshooting sites
 
 ## Overview
 
-It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
+It is important to capture as much information as possible to diagnose an issue and to [provide adequate details to Cloudflare support](/support/contacting-cloudflare-support/). This article explains how to gather troubleshooting information commonly requested by Cloudflare Support.
 
 {{<Aside type="note">}}
 Cloudflare support cannot make configuration changes on behalf of
@@ -206,7 +206,7 @@ When troubleshooting HTTP errors in responses from Cloudflare, test whether your
 $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If you have multiple origin web servers, test each one to ensure there
 are no response differences. If you observe the issue when connecting
 directly to your origin web server, contact your hosting provider for
@@ -239,7 +239,7 @@ curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
 
 [Explanation of this timing output](https://blog.cloudflare.com/a-question-of-timing/) is found on the Cloudflare blog.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 As demonstrated in the preceding example, cleaner results are achieved
 by denoting a new line with **\\n** before each variable. Otherwise, all
 metrics are displayed together on a single line.
@@ -250,10 +250,10 @@ metrics are displayed together on a single line.
 cURL helps review the HTTP response headers that influence caching. In particular, review several HTTP headers when troubleshooting Cloudflare caching:
 
 -   CF-Cache-Status
--   Cache-control/Pragma
+-   Cache-Control/Pragma
 -   Expires
 -   Last-Modified
--   S-Maxage
+-   s-maxage
 
 {{<Aside type="note">}}
 Find specifics on [Cloudflare\'s caching
@@ -271,7 +271,7 @@ The following cURL command shows the SSL certificate served by Cloudflare during
 $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 2*\>&1 \| egrep -v \"\^{.*\$\|\^}.*\$\|\^* http.\*\$\" \*cleans and
 parses the TLS handshake and certificate information.
 {{</Aside>}}
@@ -301,16 +301,16 @@ ___
 
 ## Perform a traceroute
 
-Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the _traceroute_ command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](https://support.cloudflare.com/hc/articles/200172476), ensure to provide output from a traceroute.
+Traceroute is a network diagnostic tool that measures the route latency of packets across a network. Most operating systems support the _traceroute_ command. If you experience connectivity issues with your Cloudflare-proxied website and [ask Cloudflare Support for assistance](/support/contacting-cloudflare-support/), ensure to provide output from a traceroute.
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 Timeouts are possible for ping results because Cloudflare limits ping
 requests.
 {{</Aside>}}
 
 Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and hostname in the examples below:
 
-### Run traceroot on Windows
+### Run traceroute on Windows
 
 1\. Open the **Start** menu.
 
@@ -334,7 +334,7 @@ $ tracert -6 www.example.com
 
 6\. You can copy the results to save in a file or paste in another program.
 
-### Run traceroot on Linux
+### Run traceroute on Linux
 
 1\. Open a terminal window.
 
@@ -354,7 +354,7 @@ $ traceroute -6 www.example.com
 
 3\. You can copy the results to save in a file or paste in another program.
 
-### Run traceroot on Mac OS
+### Run traceroute on Mac OS
 
 1.  Open the **Network Utility** application.
 2.  Click the **Traceroute** tab.
@@ -437,13 +437,13 @@ Cloudflare suggests [Wireshark](https://www.wireshark.org/download.html) for run
 4.  Click the blue shark fin icon in the top left-hand corner to start your packet capture. 
 5.  Reproduce the issue while running capture.
 6.  Click the red square icon in the top left-hand corner to stop your packet capture. 
-7.  Save as a pcap file and attach it to your support ticket.
+7.  Save as a `.pcap` file and attach it to your support ticket.
 
 ___
 
 ## Related resources
 
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)
+-   [Contacting Cloudflare Support](/support/contacting-cloudflare-support/)
 -   [Troubleshooting Cloudflare HTTP 5XX errors](https://support.cloudflare.com/hc/articles/115003011431)
 -   [Diagnosing network issues with MTR and traceroute](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)
 -   [cURL command line tool](https://curl.haxx.se/)

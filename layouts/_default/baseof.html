@@ -11,8 +11,10 @@
 
     {{- if hugo.IsProduction -}}
       <link rel="preload" href="/style.css" as="style" />
+      <link rel="preload" href="/codeBlock.css" as="style" />
     {{- else -}}
       <link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" />
     {{- end -}}
 
     <link rel="preload" href="{{$littlefootCSS}}" as="style">

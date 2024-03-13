@@ -42,7 +42,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes.                                                                                 |
 | Business & Economy     | Sites that are related to business, economy, finance, education, science and technology.                                                                                          |
 | Child Abuse            | Sites hosting child abuse content.                                                                                                                                                |
-| CIPA                   | Sites related to aiding schools and organizations in abiding by CIPA requirements. |
+| CIPA                   | Sites related to aiding schools and organizations in abiding by CIPA requirements.                                                                                                |
 | Education              | Sites hosting educational content that are not included in other categories like Science, Technology or Educational institutions.                                                 |
 | Entertainment          | Sites that are hosting entertaining content that are not included in other categories like Comic books, Audio streaming, Video streaming etc.                                     |
 | Gambling               | Sites that are providing online gambling or are related to gambling.                                                                                                              |
@@ -72,13 +72,13 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 {{<table-wrap>}}
 
-| Category      | Definition                                                                      |
-| ------------- | ------------------------------------------------------------------------------- |
-| Login Screens | Sites hosting login screens that might be included in other categories as well. |
-| Miscellaneous | Sites that do not belong to other content categories.                           |
-| No Content    | Sites that have no content.                                                     |
-| Redirect      | Domains that redirect to other sites.                                           |
-| Unreachable   | Domains that resolve to unreachable IP addresses.                               |
+| Category      | Definition                                                                   |
+| ------------- | ---------------------------------------------------------------------------- |
+| Login Screens | Sites hosting login screens that might also be included in other categories. |
+| Miscellaneous | Sites that do not belong to other content categories.                        |
+| No Content    | Sites that have no content.                                                  |
+| Redirect      | Domains that redirect to other sites.                                        |
+| Unreachable   | Domains that resolve to unreachable IP addresses.                            |
 
 {{</table-wrap>}}
 
@@ -194,14 +194,15 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 24          | Society & Lifestyle    | 173            | Body Art                                   |
 | 24          | Society & Lifestyle    | 174            | Lingerie & Bikini                          |
 | 25          | Sports                 | 152            | Sports                                     |
-| 26          | Technology             | 155            | Technology                                 |
-| 26          | Technology             | 95             | File Sharing                               |
 | 26          | Technology             | 69             | APIs                                       |
 | 26          | Technology             | 81             | Content Servers                            |
+| 26          | Technology             | 95             | File Sharing                               |
 | 26          | Technology             | 109            | Information Technology                     |
 | 26          | Technology             | 123            | News, Portal & Search                      |
 | 26          | Technology             | 145            | Search Engines                             |
+| 26          | Technology             | 155            | Technology                                 |
 | 26          | Technology             | 159            | Translator                                 |
+| 26          | Technology             | 184            | Artificial Intelligence                    |
 | 27          | Travel                 | 160            | Travel                                     |
 | 28          | Vehicles               | 163            | Vehicles                                   |
 | 29          | Violence               | 165            | Violence                                   |
@@ -211,7 +212,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 32          | Security Risks         | 128            | Parked & For Sale Domains                  |
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
-| 34          | CIPA         | 182            | CIPA Filter                         |
+| 34          | CIPA                   | 182            | CIPA Filter                                |
 
 {{</table-wrap>}}
 

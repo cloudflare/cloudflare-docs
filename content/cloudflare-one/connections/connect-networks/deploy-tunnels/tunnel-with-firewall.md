@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Tunnel with firewall
-weight: 3
+weight: 1
 ---
 
 # Tunnel with firewall
@@ -196,7 +196,7 @@ On Windows, you can use PowerShell commands if `dig` is not available.
 
 To test DNS:
 
-```bash
+```powershell
 PS C:\Windows\system32> Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
 
 Name                                     Type   TTL   Section    NameTarget                     Priority Weight Port
@@ -207,7 +207,7 @@ _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region1.v2.a
 
 To test ports:
 
-```bash
+```powershell
 PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 443
 
 ComputerName     : region1.v2.argotunnel.com
@@ -216,11 +216,9 @@ RemotePort       : 443
 InterfaceAlias   : Ethernet
 SourceAddress    : 10.0.2.15
 TcpTestSucceeded : True
-
 ```
 
-```bash
-
+```powershell
 PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 7844
 
 ComputerName     : region1.v2.argotunnel.com

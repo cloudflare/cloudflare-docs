@@ -2,7 +2,6 @@
 title: Enable Datadog
 pcx_content_type: how-to
 weight: 59
-layout: single
 meta:
   title: Enable Logpush to Datadog
 ---
@@ -17,7 +16,20 @@ Enable Logpush to Datadog via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-{{<render file="_enable-logpush-job.md">}}
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+
+2. Select the Enterprise account or domain you want to use with Logpush.
+
+3. Go to **Analytics & Logs** > **Logs**.
+
+4. Select **Add Logpush job**.
+
+5. In **Select data set**, choose the dataset to push to a storage service, and select **Next**.
+
+6. In **Select data fields**:
+    - Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**. 
+    - In **Advanced Settings**, you need to select the timestamp format `RFC3339`(default). You can change the [sampling rate](/logs/get-started/api-configuration/#sampling-rate) and enable redaction for `CVE-2021-44228`.
+    - Under **Filters** you can select the events to include and/or remove from your logs. For more information, refer to [Filters](/logs/reference/filters/). Not all datasets have this option available.
 
 7. In **Select a destination**, choose **Datadog**.
 

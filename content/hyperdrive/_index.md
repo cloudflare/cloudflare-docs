@@ -33,13 +33,13 @@ Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) th
 
 {{</feature>}}
 
-{{<feature header="PostgreSQL support" href="/hyperdrive/learning/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
+{{<feature header="PostgreSQL support" href="/hyperdrive/configuration/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
 
 Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
 
 {{</feature>}}
 
-{{<feature header="Query Caching" href="/hyperdrive/learning/query-caching/" cta="Learn about Query Caching">}}
+{{<feature header="Query Caching" href="/hyperdrive/configuration/query-caching/" cta="Learn about Query Caching">}}
 
 Use Hyperdrive to cache the most popular queries executed against your database.
 
@@ -71,7 +71,7 @@ Deploy dynamic front-end applications in record time.
  
 {{<resource header="Limits" href="/hyperdrive/platform/limits/" icon="documentation-clipboard">}}Learn about Hyperdrive limits.{{</resource>}}
 
-{{<resource header="Storage options" href="/workers/learning/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

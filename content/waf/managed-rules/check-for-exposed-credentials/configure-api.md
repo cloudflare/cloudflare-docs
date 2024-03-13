@@ -3,12 +3,12 @@ pcx_content_type: how-to
 title: Configure via API
 weight: 4
 meta:
-  title: Configure exposed credential checks via API
+  title: Configure exposed credentials checks via API
 ---
 
-# Configure exposed credential checks via API
+# Configure exposed credentials checks via API
 
-Configure exposed credential checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
+Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
 *   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
 *   Create custom rules that check for exposed credentials.
@@ -37,17 +37,18 @@ These properties have additional requirements:
 
 {{</Aside>}}
 
-You can use the `exposed_credential_check` object in rules with one of the following actions: `rewrite`, `log`, `block`, `challenge`, or `js_challenge`. Cloudflare recommends that you only use exposed credential checks with the following actions: `rewrite` and `log`.
+You can use the `exposed_credential_check` object in rules with one of the following actions: `rewrite`, `log`, `block`, `challenge`, or `js_challenge`. Cloudflare recommends that you only use exposed credentials checks with the following actions: `rewrite` and `log`.
 
 To create and deploy a custom ruleset, follow the workflow described in [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
 
 ### Example A
 
-This example creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will log the request with exposed credentials in the Cloudflare logs.
+This `POST` request example creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will log the request with exposed credentials in the Cloudflare logs.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "Custom Ruleset A",
   "kind": "custom",
@@ -55,7 +56,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
   "rules": [
     {
       "action": "log",
-      "description": "Exposed credential check on login.php page",
+      "description": "Exposed credentials check on login.php page",
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
       "exposed_credential_check": {
         "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
@@ -85,7 +86,7 @@ highlight: 15-18
         "id": "<CUSTOM_RULE_ID>",
         "version": "1",
         "action": "log",
-        "description": "Exposed credential check on login.php page",
+        "description": "Exposed credentials check on login.php page",
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
         "exposed_credential_check": {
           "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
@@ -105,17 +106,18 @@ highlight: 15-18
 }
 ```
 
-This example uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
+The example uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
 
 After creating a custom ruleset, deploy it to a phase so that it executes. Refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/) for more information.
 
 ### Example B
 
-This example creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
+This `POST` request example creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "Custom Ruleset B",
   "kind": "custom",
@@ -131,7 +133,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
           }
         }
       },
-      "description": "Exposed credential check on login endpoint with JSON body",
+      "description": "Exposed credentials check on login endpoint with JSON body",
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
       "exposed_credential_check": {
         "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
@@ -173,7 +175,7 @@ highlight: 12-20,23-26
             }
           }
         },
-        "description": "Exposed credential check on login endpoint with JSON body",
+        "description": "Exposed credentials check on login endpoint with JSON body",
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
         "exposed_credential_check": {
           "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",

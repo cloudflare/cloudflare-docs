@@ -38,13 +38,13 @@ You can view a list of all discovered SaaS applications and mark them as approve
 2. In the **Unique application users** chart, select **Review all**. The table displays the following fields:
 
 {{<table-wrap>}}
-| Field | Description |
-| ------------| ----------- |
-| Application | SaaS application's name and logo. |
-| Application type |[Application type](/cloudflare-one/policies/gateway/application-app-types/#app-types) assigned by Cloudflare Zero Trust. |
-| Status | Application's [approval status](#approval-status). |
-| Secured | Whether the application is currently secured behind Cloudflare Access. |
-| Users | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
+| Field            | Description                                                                                                                  |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Application      | SaaS application's name and logo.                                                                                            |
+| Application type | [Application type](/cloudflare-one/policies/gateway/application-app-types/#app-types) assigned by Cloudflare Zero Trust.     |
+| Status           | Application's [approval status](#approval-status).                                                                           |
+| Secured          | Whether the application is currently secured behind Cloudflare Access.                                                       |
+| Users            | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
 {{</table-wrap>}}
 
 3. Select a specific application to view details.
@@ -72,14 +72,14 @@ You can view a list of all discovered origins and mark them as approved or unapp
 2. In the **Unique origin users** chart, select **Review all**. The discovered origins that appear on this page are defined by unique combinations of IP address, port, and protocol.
 
 {{<table-wrap>}}
-| Field | Description |
-| ------------| ----------- |
-| IP address | Origin's internal IP address in your private network. |
-| Port | Port used to connect to the origin. |
-| Protocol | Protocol used to connect to the origin. |
-| Hostname | Hostname used to access the origin. |
-| Status | Origin's [approval status](#approval-status) |
-| Users | Number of users who connected to the origin over the period of time specified on the Shadow IT Discovery overview page. |
+| Field      | Description                                                                                                             |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| IP address | Origin's internal IP address in your private network.                                                                   |
+| Port       | Port used to connect to the origin.                                                                                     |
+| Protocol   | Protocol used to connect to the origin.                                                                                 |
+| Hostname   | Hostname used to access the origin.                                                                                     |
+| Status     | Origin's [approval status](#approval-status)                                                                            |
+| Users      | Number of users who connected to the origin over the period of time specified on the Shadow IT Discovery overview page. |
 
 {{</table-wrap>}}
 

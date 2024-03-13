@@ -2,7 +2,6 @@
 title: Modify response header
 pcx_content_type: concept
 weight: 3
-layout: single
 meta:
   title: HTTP response header modification rules
 ---
@@ -39,3 +38,7 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 * Any response header modifications will also apply to Cloudflare error pages and [custom error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).
 
 * Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
+
+* To add a `set-cookie` header to the response, make sure you use the _Add_ operation instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
+
+* Currently you can only use the _Add_ operation with a literal string value.

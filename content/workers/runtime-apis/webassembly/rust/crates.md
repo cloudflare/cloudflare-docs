@@ -24,7 +24,7 @@ Many crates which have been made Wasm-friendly, will use the `time` crate instea
 ## `tracing`
 
 Tracing can be enabled by using the `tracing-web` crate and the `time` feature for `tracing-subscriber`. 
-Due to [timing limitations](/workers/learning/security-model/#step-1-disallow-timers-and-multi-threading) on Workers, spans will have identical start and end times unless they encompass I/O.
+Due to [timing limitations](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading) on Workers, spans will have identical start and end times unless they encompass I/O.
 
 [Refer to the `tracing` example](https://github.com/cloudflare/workers-rs/tree/main/examples/tracing) for more information.
 

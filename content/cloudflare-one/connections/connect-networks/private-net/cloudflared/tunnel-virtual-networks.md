@@ -6,9 +6,7 @@ weight: 5
 
 # Virtual networks
 
-[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Virtual networks allow you to manage different private networks which have overlapping IP ranges.
-
-For example, an organization may want to expose two distinct virtual private cloud (VPC) networks which they consider to be “production” and “staging”. However, if the two private networks happened to receive the same RFC 1918 IP assignment, there may be two different resources with the same IP address. By creating two separate virtual networks, you can deterministically route traffic to duplicative private addresses like `10.128.0.1/32` staging and `10.128.0.1/32` production. End users would then select which network to connect to by accessing their WARP client settings.
+{{<render file="tunnel/_virtual-networks-intro.md" productFolder="cloudflare-one">}}
 
 ## Use cases
 
@@ -125,7 +123,7 @@ If no `--vnet` option is specified, the tunnel will be assigned to the default v
 We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
 
 6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
-   
+
     ```txt
     tunnel: <Tunnel-UUID>
     credentials-file: /root/.cloudflared/credentials-file.json
@@ -177,7 +175,7 @@ To delete a virtual network:
 2. (Optional) Delete the tunnel associated with the virtual network.
 
     ```sh
-    $ cloudflared tunnel delete staging-tunnel 
+    $ cloudflared tunnel delete staging-tunnel
     ```
 
 3. Delete the virtual network.
