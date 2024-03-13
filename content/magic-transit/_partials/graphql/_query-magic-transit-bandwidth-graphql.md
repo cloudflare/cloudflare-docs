@@ -6,7 +6,7 @@ _build:
 inputParameters: productName
 ---
 
-# Querying Magic $1 tunnel bandwidth analytics with GraphQL
+# Querying $1 tunnel bandwidth analytics with GraphQL
 
 In this example, you are going to use the GraphQL Analytics API to query $1 ingress tunnel traffic over a specified time period.
 
