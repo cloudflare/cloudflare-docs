@@ -70,7 +70,7 @@ For example, to add bindings that will be used in tests, you can add `miniflare`
 ```js
 ---
 filename: vitest.config.js
-highlight: [7-9]
+highlight: [6-8]
 ---
 export default defineWorkersConfig({
   test: {
@@ -162,10 +162,12 @@ import { describe, it, expect } from "vitest";
 import worker from "../src";
 
 describe("Hello World worker", () => {
-  it("displays Hello World!", async () => {
+  it("responds with Hello World!", async () => {
     const request = new Request("http://example.com");
+    // Create an empty context to pass to `worker.fetch()`
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
+    // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
     await waitOnExecutionContext(ctx);
     expect(await response.text()).toBe("Hello World!");
   });
@@ -187,10 +189,12 @@ import worker from "../src";
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
 describe("Hello World worker", () => {
-  it("displays Hello World!", async () => {
+  it("responds with Hello World!", async () => {
     const request = new IncomingRequest("http://example.com");
+    // Create an empty context to pass to `worker.fetch()`
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
+    // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
     await waitOnExecutionContext(ctx);
     expect(await response.text()).toBe("Hello World!");
   });
@@ -248,10 +252,12 @@ To test this, add the following to your test file:
 ---
 filename: index.spec.js
 ---
-it("displays not found and proper status for /404", async () => {
+it("responds with not found and proper status for /404", async () => {
   const request = new Request("http://example.com/404");
+  // Create an empty context to pass to `worker.fetch()`
   const ctx = createExecutionContext();
   const response = await worker.fetch(request, env, ctx);
+  // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
   await waitOnExecutionContext(ctx);
   expect(await response.status).toBe(404);
   expect(await response.text()).toBe("Not found");
@@ -263,10 +269,12 @@ it("displays not found and proper status for /404", async () => {
 ---
 filename: index.spec.ts
 ---
-it("displays not found and proper status for /404", async () => {
+it("responds with not found and proper status for /404", async () => {
   const request = new IncomingRequest("http://example.com/404");
+  // Create an empty context to pass to `worker.fetch()`
   const ctx = createExecutionContext();
   const response = await worker.fetch(request, env, ctx);
+  // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
   await waitOnExecutionContext(ctx);
   expect(await response.status).toBe(404);
   expect(await response.text()).toBe("Not found");
