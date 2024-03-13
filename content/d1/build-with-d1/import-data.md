@@ -74,7 +74,7 @@ $ wrangler d1 execute example-db --remote --command "SELECT * FROM users LIMIT 1
 
 Note that we apply a `LIMIT 100` clause here as a precaution: if you were importing a larger database with hundreds or thousands of rows, you may not want to output every row to the terminal.
 
-From here, you can now query our new table from our Worker [using the D1 client API](/d1/build-with-d1/query-databases/).
+From here, you can now query our new table from our Worker [using the D1 client API](/d1/build-with-d1/d1-client-api/).
 
 ## Convert SQLite database files
 
@@ -116,6 +116,6 @@ If you receive an error when trying to import an existing schema and/or dataset 
 
 ## Next Steps
 
-- Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
-- Learn how to [use the D1 client API](/d1/build-with-d1/query-databases/) from within a Worker.
-- Understand how [database migrations work](/d1/reference/migrations/) with D1.
+* Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
+* Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
+* Understand how [database migrations work](/d1/reference/migrations/) with D1.

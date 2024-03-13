@@ -10,7 +10,7 @@ D1 supports a number of database-level commands that allow you to list tables, i
 
 ## Commands
 
-You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/query-databases/).
+You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/d1-client-api/).
 
 ### `PRAGMA table_list`
 

@@ -204,7 +204,7 @@ key|value|type|id|fullkey|path
 2|94944|integer|3|$[2]|$
 ```
 
-You can use `json_each` with D1's [client API](/d1/build-with-d1/query-databases/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/build-with-d1/query-databases/#parameter-binding):
+You can use `json_each` with D1's [client API](/d1/build-with-d1/d1-client-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/build-with-d1/d1-client-api/#parameter-binding):
 
 ```ts
 const stmt = context.env.DB

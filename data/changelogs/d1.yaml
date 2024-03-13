@@ -23,24 +23,24 @@ entries:
   - publish_date: "2024-02-16"
     title: API changes to `run()`
     description: |-
-      A previous change (made on 2024-02-13) to the `run()` [query statement method](/d1/build-with-d1/query-databases/#await-stmtrun) has been reverted.
+      A previous change (made on 2024-02-13) to the `run()` [query statement method](/d1/build-with-d1/d1-client-api/#await-stmtrun) has been reverted.
       
       `run()` now returns a `D1Result`, including the result rows, matching its original behaviour prior to the change on 2024-02-13.
 
-      Future change to `run()` to return a [`D1ExecResult`](/d1/build-with-d1/query-databases/#return-object), as originally intended and documented, will be gated behind a [compatibility date](/workers/configuration/compatibility-dates/) as to avoid breaking existing Workers relying on the way `run()` currently works.
+      Future change to `run()` to return a [`D1ExecResult`](/d1/build-with-d1/d1-client-api/#return-object), as originally intended and documented, will be gated behind a [compatibility date](/workers/configuration/compatibility-dates/) as to avoid breaking existing Workers relying on the way `run()` currently works.
 
   - publish_date: "2024-02-13"
     title: API changes to `raw()`, `all()` and `run()`
     description: |-
-      D1's `raw()`, `all()` and `run()` [query statement methods](/d1/build-with-d1/query-databases/#query-statement-methods) have been updated to reflect their intended behaviour and improve compatibility with ORM libraries.
+      D1's `raw()`, `all()` and `run()` [query statement methods](/d1/build-with-d1/d1-client-api/#query-statement-methods) have been updated to reflect their intended behaviour and improve compatibility with ORM libraries.
       
       `raw()` now correctly returns results as an array of arrays, allowing the correct handling of duplicate column names (such as when joining tables), as compared to `all()`, which is unchanged and returns an array of objects. To include an array of column names in the results when using `raw()`, use `raw({columnNames: true})`.
       
-      `run()` no longer incorrectly returns a `D1Result` and instead returns a [`D1ExecResult`](/d1/build-with-d1/query-databases/#return-object) as originally intended and documented.
+      `run()` no longer incorrectly returns a `D1Result` and instead returns a [`D1ExecResult`](/d1/build-with-d1/d1-client-api/#return-object) as originally intended and documented.
       
       This may be a breaking change for some applications that expected `raw()` to return an array of objects.
 
-      Visit the [query databases documentation](/d1/build-with-d1/query-databases/) to review D1's query methods, return types and TypeScript support in detail.
+      Refer to [D1 client API](/d1/build-with-d1/d1-client-api/) to review D1's query methods, return types and TypeScript support in detail.
 
   - publish_date: "2024-01-18"
     title: Support for LIMIT on UPDATE and DELETE statements
@@ -82,7 +82,7 @@ entries:
     description: |-
       D1 now returns a count of `rows_written` and `rows_read` for every query executed, allowing you to assess the cost of query for both [pricing](/d1/platform/pricing/) and [index optimization](/d1/build-with-d1/use-indexes/) purposes.
 
-      The `meta` object returned in [D1's Client API](/d1/build-with-d1/query-databases/) contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for example, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
+      The `meta` object returned in [D1's Client API](/d1/build-with-d1/d1-client-api/) contains a total count of the rows read (`rows_read`) and rows written (`rows_written`) by that query. For example, a query that performs a full table scan (for example, `SELECT * FROM users`) from a table with 5000 rows would return a `rows_read` value of `5000`:
       ```json
       "meta": {
         "duration": 0.20472300052642825,

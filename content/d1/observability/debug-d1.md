@@ -10,7 +10,7 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 ## Handle errors
 
-The D1 [client API](/d1/build-with-d1/query-databases/) returns detailed [error messages](/d1/build-with-d1/query-databases/#errors) within an `Error` object. 
+The D1 [client API](/d1/build-with-d1/d1-client-api/) returns detailed [error messages](/d1/build-with-d1/d1-client-api/#errors) within an `Error` object. 
 
 To ensure you are capturing the full error message, log or return `e.message` as follows:
 
