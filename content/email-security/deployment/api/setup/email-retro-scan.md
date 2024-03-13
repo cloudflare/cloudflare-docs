@@ -23,10 +23,10 @@ To scan for threats in your Office 365 inbox:
 7. Select your account and give Cloudflare the required permissions.
 8. Select **Continue**.
 9. In **Configure your report**, choose one or more domains to scan.
-10. Under **Scan date range**, select the date range to perform the scan from the dropdown menu.
-10. Choose your current email security system, from **Current email security system**.
-11. Select **Continue**.
-12. Select **Done**. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
+10. Under **Scan date range**, select the date range to perform the scan from the drop-down menu.
+11. Choose your current email security system, from **Current email security system**.
+12. Select **Continue**.
+13. Select **Done**. Cloudflare will begin the task of analyzing all your emails for the chosen domains. This might take some time depending on the size of the inbox and number of domains chosen. You do not need to wait for the scan to complete. Cloudflare will send you an email alert when the scan is complete. If you decide to wait, select **View report** when the scan finishes.
 
 ## Analyze results
 
