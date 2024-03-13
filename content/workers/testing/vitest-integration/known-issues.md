@@ -6,7 +6,7 @@ weight: 7
 
 # Known issues
 
-The Workers Vitest pool is currently in open-beta. These are issues we're aware of and fixing:
+The Workers Vitest pool is currently in open-beta. These are issues Cloudflare is aware of and fixing:
 
 - Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `SELF`, or inside Durable Object event handlers. You must use static `import` statements in the global scope.
 - `console.log()`s inside `export default { ... }` handlers are not shown when writing integration tests with `SELF` if the handler does no asynchronous work. You can work around this by including `ctx.waitUntil(scheduler.wait(100))` in your tests during debugging to keep the request context alive for long enough.
