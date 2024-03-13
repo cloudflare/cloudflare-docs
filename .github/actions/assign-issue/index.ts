@@ -49,8 +49,13 @@ import * as codeOwnersUtils from "codeowners-utils";
         });
     }
 
+    console.log("Links are:")
+    console.log(links);
+
     for (const item of links) {
-      const updatedLink = "/content".concat(item)
+      const updatedLink = "/content".concat(item);
+      console.log("Updated link is:")
+      console.log(updatedLink);
       const match = codeOwnersUtils.matchFile(updatedLink, codeowners);
       for (const owner of match.owners) {
         if (!owner.includes("/")) {
@@ -58,9 +63,11 @@ import * as codeOwnersUtils from "codeowners-utils";
         }
       }
     }
+    console.log("Assignees are:")
+    console.log(assignees);
 
     if (assignees.size === 0) {
-      assignees.add("kodster28")
+      assignees.add("kodster28");
     }
 
     const client = github.getOctokit(token);
