@@ -214,6 +214,7 @@
 /constellation/ /workers-ai/ 301
 
 # D1
+/d1/changelog/ /d1/platform/changelog/ 301
 /d1/client-api/ /d1/build-databases/query-databases/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
@@ -901,6 +902,11 @@
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 /support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
+/support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/troubleshooting-missing-pages-from-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/will-cloudflare-apps-make-my-site-slower/ /support/more-dashboard-apps/cloudflare-apps/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
 /support/network/i-activated-through-a-hosting-partner.-can-i-still-use-the-free-cloudflare-ipv6-compatibility/ /network/ipv6-compatibility/ 301

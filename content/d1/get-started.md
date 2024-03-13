@@ -85,8 +85,7 @@ For reference, a good database name is:
 - Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
 - Only used for describing the database, and is not directly referenced in code.
-{{</Aside>}}
-
+  {{</Aside>}}
 
 ```sh
 $ npx wrangler d1 create prod-d1-tutorial
@@ -159,7 +158,8 @@ Then validate your data is in your database by running:
 $ npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
 ```
 
-You should see the following output: 
+You should see the following output:
+
 ```sh
 🌀 Mapping SQL input into an array of statements
 🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
@@ -244,13 +244,13 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
 ```sh
-$ npx wrangler d1 execute prod-d1-tutorial --file=./schema.sql
+$ npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
 ```
 
 Then validate the data is in production by running:
 
 ```sh
-$ npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
