@@ -31,13 +31,30 @@ import * as codeOwnersUtils from "codeowners-utils";
     if (!content) throw new Error('Missing "issue.body" content!');
     if (!issue.number) throw new Error('Missing "issue.number" value!');
 
-    const [, answer] = /^https?:\/\/developers\.cloudflare\.com(.*?)/.exec(content) || [];
-    if (!answer) throw new Error('Error parsing response');
+    const regex = /https?:\/\/developers\.cloudflare\.com([^\s|)|\.]*)/gm;
+    let links = []
+    let m;
+
+    while ((m = regex.exec(content)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        
+        // The result can be accessed through the `m`-variable.
+        m.forEach((match, groupIndex) => {
+          if (groupIndex === 1) {
+            links.push(match);
+          }
+        });
+    }
 
     
 
     for (const item of answer) {
-      if (item.groups != undefined)
+      if (item.groups !== undefined) {
+
+      }
       const match = codeOwnersUtils.matchFile(file, codeowners);
       for (const owner of match.owners) {
         if (!owner.includes("/")) {
