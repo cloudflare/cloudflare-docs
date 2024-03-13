@@ -57,7 +57,7 @@ export default defineWorkersConfig({
 
 {{<Aside type="note">}}
 
-For a full list of available configuration options, refer to [Configuration](/workers/testing/vitest/configuration/).
+For a full list of available configuration options, refer to [Configuration](/workers/testing/vitest-integration/configuration/).
 
 {{</Aside>}}
 

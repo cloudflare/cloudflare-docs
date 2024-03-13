@@ -25,7 +25,7 @@ The Workers Vitest integration does not support testing Workers using the servic
 
 ## Install the Workers Vitest integration
 
-First, you will need to uninstall the old environment and install the new pool. Vitest environments can only customize the global scope, whereas pools can run tests using a completely different runtime. In this case, the pool runs your tests inside [`workerd`]("https://github.com/cloudflare/workerd") instead of Node.js.
+First, you will need to uninstall the old environment and install the new pool. Vitest environments can only customize the global scope, whereas pools can run tests using a completely different runtime. In this case, the pool runs your tests inside [`workerd`](https://github.com/cloudflare/workerd) instead of Node.js.
 
 ```sh
 $ npm uninstall vitest-environment-miniflare
@@ -169,7 +169,7 @@ filename: index.spec.js
 
 ## Use Durable Object helpers
 
-The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. The `runInDurableObject()` function accepts a `DurableObjectStub` with a callback accepting the Durable Object instance and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest/test-apis/) for more details.
+The `getMiniflareDurableObjectStorage()`, `getMiniflareDurableObjectState()`, `getMiniflareDurableObjectInstance()`, and `runWithMiniflareDurableObjectGates()` functions have all been replaced with a single `runInDurableObject()` function from the `cloudflare:test` module. The `runInDurableObject()` function accepts a `DurableObjectStub` with a callback accepting the Durable Object instance and corresponding `DurableObjectState` as arguments. Consolidating these functions into a single function simplifies the API surface, and ensures instances are accessed with the correct request context and [gating behavior](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/). Refer to the [Test APIs page](/workers/testing/vitest-integration/test-apis/) for more details.
 
 ```diff
 ---

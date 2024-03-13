@@ -15,13 +15,13 @@ When you run your tests with the Workers Vitest integration, Vitest will:
 1. Read and evaluate your configuration file using Node.js.
 2. Run any [`globalSetup`](https://vitest.dev/config/#globalsetup) files using Node.js.
 3. Collect and sequence test files.
-4. For each Vitest project, depending on its configured isolation and concurrency, start one or more [`workerd`]("https://github.com/cloudflare/workerd") processes, each running one or more Workers.
+4. For each Vitest project, depending on its configured isolation and concurrency, start one or more [`workerd`](https://github.com/cloudflare/workerd) processes, each running one or more Workers.
 5. Run [`setupFiles`](https://vitest.dev/config/#setupfiles) and test files in `workerd` using the appropriate Workers.
 6. Watch for changes and re-run test files using the same Workers if the configuration has not changed.
 
 ## Isolation and concurrency models
 
-The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest/configuration/#workerspooloptions-definition) configuration options both control isolation and concurrency. The Workers Vitest integration tries to minimise the number of `workerd` processes it starts, reusing Workers and their module caches between test runs where possible. The current implementation of isolated storage requires each `workerd` process to run one test file at a time, and does not support `.concurrent` tests. A copy of all auxiliary `workers` exists in each `workerd` process.
+The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest-integration/configuration/#workerspooloptions-definition) configuration options both control isolation and concurrency. The Workers Vitest integration tries to minimise the number of `workerd` processes it starts, reusing Workers and their module caches between test runs where possible. The current implementation of isolated storage requires each `workerd` process to run one test file at a time, and does not support `.concurrent` tests. A copy of all auxiliary `workers` exists in each `workerd` process.
 
 By default, the `isolatedStorage` option is enabled. We recommend you enable the `singleWorker: true` option if you have lots of small test files.
 

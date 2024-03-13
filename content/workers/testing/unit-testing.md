@@ -40,7 +40,7 @@ This test only assets that the `add` function is returning the correct value, bu
 
 ## Vitest integration
 
-The recommended way to unit test your Workers is by using the Workers Vitest integration. For more information on features, as well as installation and setup instructions, refer to the [Vitest integration Get Started guide](/workers/testing/vitest/get-started/)
+The recommended way to unit test your Workers is by using the Workers Vitest integration. For more information on features, as well as installation and setup instructions, refer to the [Vitest integration Get Started guide](/workers/testing/vitest-integration/get-started/)
 
 {{<render file="_testing-pages-functions.md" productFolder="workers">}}
 

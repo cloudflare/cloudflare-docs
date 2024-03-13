@@ -41,7 +41,7 @@ In the above example, instead of importing the `add` function as a [unit test](/
 
 ## Vitest integration
 
-The recommended way to write integration tests for your Workers is by using [the Workers Vitest integration](/workers/testing/vitest/get-started/). Vitest can be configured to run integrations against a single Worker or multiple Workers.
+The recommended way to write integration tests for your Workers is by using [the Workers Vitest integration](/workers/testing/vitest-integration/get-started/). Vitest can be configured to run integrations against a single Worker or multiple Workers.
 
 ### Testing via `SELF`
 

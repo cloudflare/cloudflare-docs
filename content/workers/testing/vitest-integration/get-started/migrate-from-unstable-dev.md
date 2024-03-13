@@ -10,7 +10,7 @@ meta:
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.
 
-This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest/get-started/write-your-first-test/).
+This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/).
 
 ## Reference a Worker for integration testing
 
@@ -29,7 +29,7 @@ it("dispatches fetch event", () => {
 })
 ```
 
-With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/service-bindings/) to the default export defined by the `main` option in your `wrangler.toml`. This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
+With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/bindings/service-bindings/) to the default export defined by the `main` option in your `wrangler.toml`. This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
 
 ```js
 ---
@@ -88,7 +88,7 @@ Unlike the `unstable_dev` API, the Workers Vitest integration does not support t
 
 ## Define types
 
-You can remove `UnstableDevWorker` imports from your code. Instead, follow the [Write your first test guide](/workers/testing/vitest/get-started/write-your-first-test/#define-types) to define types for all of your tests.
+You can remove `UnstableDevWorker` imports from your code. Instead, follow the [Write your first test guide](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) to define types for all of your tests.
 
 ```diff
 ---
@@ -106,4 +106,4 @@ filename: index.spec.ts
 
 ## Related resources
 
-- [Write your first test](/workers/testing/vitest/get-started/write-your-first-test/#define-types) - Write unit tests against Workers.
+- [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) - Write unit tests against Workers.
