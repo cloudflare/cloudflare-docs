@@ -7,6 +7,8 @@ weight: 1
 
 # Cloudflare 1.1.1.1
 
+TEST
+
 {{<description>}}
 Speed up your online experience with Cloudflare's public DNS resolver.
 {{</description>}}
