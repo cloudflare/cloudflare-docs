@@ -10,7 +10,6 @@ title: Explore Workers AI Models Using a Jupyter Notebook
 
 A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
-
 You can [download the Workers AI notebook](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai.ipynb) or view the embedded notebook below.
 
 {{<youtube id="uv1Cz_BDFmo">}}
@@ -25,7 +24,6 @@ You can [download the Workers AI notebook](/workers-ai/static/documentation/note
 
 This notebook will explore the Workers AI REST API using Python and the [requests](https://requests.readthedocs.io/en/latest/) library.
 
-
 ```python
 import sys
 !{sys.executable} -m pip install requests python-dotenv
@@ -38,8 +36,6 @@ import sys
     Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.12/site-packages (from requests) (2.1.0)
     Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.12/site-packages (from requests) (2023.11.17)
 
-
-
 ```python
 import os
 
@@ -48,7 +44,6 @@ from getpass import getpass
 
 import requests
 ```
-
 
 ```python
 %load_ext dotenv
@@ -66,14 +61,12 @@ CLOUDFLARE_API_TOKEN="YOUR-TOKEN"
 CLOUDFLARE_ACCOUNT_ID="YOUR-ACCOUNT-ID"
 ```
 
-
 ```python
 if "CLOUDFLARE_API_TOKEN" in os.environ:
     api_token = os.environ["CLOUDFLARE_API_TOKEN"]
 else:
     api_token = getpass("Enter you Cloudflare API Token")
 ```
-
 
 ```python
 if "CLOUDFLARE_ACCOUNT_ID" in os.environ:
@@ -86,8 +79,7 @@ else:
 
 ### Text Generation
 
-Explore all [Text Generation Models](/workers-ai/models/text-generation/)
-
+Explore all [Text Generation Models](/workers-ai/models/#text-generation)
 
 ```python
 model = "@cf/meta/llama-2-7b-chat-int8"
@@ -105,39 +97,36 @@ inference = response.json()
 display(Markdown(inference["result"]["response"]))
 ```
 
-
 Great question! 😊
 
 ### Mac Users:
 
 To execute cells using keyboard shortcuts on a Mac, you can use the following combinations:
 
-| Shortcut | Description |
-| --- | --- |
-| `Ctrl + Enter` | Execute the current cell. |
-| `Shift + Enter` | Execute the current cell and move to the next cell. |
-| `Cmd + Enter` | Execute the current cell and move to the next cell. (Only works in Jupyter Notebook 1.0 and later.) |
+| Shortcut        | Description                                                                                         |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| `Ctrl + Enter`  | Execute the current cell.                                                                           |
+| `Shift + Enter` | Execute the current cell and move to the next cell.                                                 |
+| `Cmd + Enter`   | Execute the current cell and move to the next cell. (Only works in Jupyter Notebook 1.0 and later.) |
 
 ### Windows Users:
 
 On Windows, you can use the following keyboard shortcuts to execute cells:
 
-| Shortcut | Description |
-| --- | --- |
-| `Ctrl + Enter` | Execute the current cell. |
-| `Shift + Enter` | Execute the current cell and move to the next cell. |
+| Shortcut               | Description                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| `Ctrl + Enter`         | Execute the current cell.                                                    |
+| `Shift + Enter`        | Execute the current cell and move to the next cell.                          |
 | `Shift + Ctrl + Enter` | Execute the current cell and move to the next cell without leaving the cell. |
 
 Tips:
 
-* You can also use the `F5` key to execute the current cell on both Mac and Windows.
-*
-
+- You can also use the `F5` key to execute the current cell on both Mac and Windows.
+-
 
 ### Text to Image
 
-Explore all [Text to Image models](/workers-ai/models/text-to-image/)
-
+Explore all [Text to Image models](/workers-ai/models/#text-to-image)
 
 ```python
 model = "@cf/stabilityai/stable-diffusion-xl-base-1.0"
@@ -151,16 +140,11 @@ response = requests.post(
 display(Image(response.content))
 ```
 
-
-
 ![png](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai/assets/output_11_0.png)
-
-
 
 ### Translations
 
-Explore all [Translation models](/workers-ai/models/translation/)
-
+Explore all [Translation models](/workers-ai/models/#translation)
 
 ```python
 model = "@cf/meta/m2m100-1.2b"
@@ -181,11 +165,9 @@ print(inference["result"]["translated_text"])
 
     La inteligencia artificial es bastante impresionante en estos días. ¿Qué piensas?
 
-
 ### Text Classification
 
-Explore all [Text Classification models](/workers-ai/models/text-classification/)
-
+Explore all [Text Classification models](/workers-ai/models/#text-classification)
 
 ```python
 model = "@cf/huggingface/distilbert-sst-2-int8"
@@ -200,18 +182,12 @@ inference = response.json()
 inference["result"]
 ```
 
-
-
-
     [{'label': 'NEGATIVE', 'score': 0.00012679687642958015},
      {'label': 'POSITIVE', 'score': 0.999873161315918}]
 
-
-
 ### Automatic Speech Recognition
 
-Explore all [Speech Recognition models](/workers-ai/models/speech-recognition/)
-
+Explore all [Speech Recognition models](/workers-ai/models/#automatic-speech-recognition)
 
 ```python
 model = "@cf/openai/whisper"
@@ -231,7 +207,6 @@ inference
 ```
 
 <audio controls="controls"><source src="/workers-ai/static/documentation/notebooks/cloudflare-workers-ai/assets/craig-rambling.mp3" /></audio>
-
 
     {'result': {'text': "Hello there, I'm making a recording for a Jupiter notebook. That's a Python notebook, Jupiter, J-U-P-Y-T-E-R. Not to be confused with the planet. Anyways, let me hear you. I'm gonna talk a little bit. I'm gonna make a little bit of noise. Say some hard words. I'm gonna say Kubernetes. I'm not actually even talking about Kubernetes. I just want to see if they can do Kubernetes. Anyway, this is a test of transcription and let's see how we're dead!",
       'word_count': 86,
@@ -341,12 +316,9 @@ inference
      'errors': [],
      'messages': []}
 
-
-
 ### Image Classification
 
-Explore all [Image Classification models](/workers-ai/models/image-classification/)
-
+Explore all [Image Classification models](/workers-ai/models/#image-classification)
 
 ```python
 model = "@cf/microsoft/resnet-50"
@@ -365,14 +337,7 @@ inference = response.json()
 inference["result"]
 ```
 
-
-
 ![jpeg](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai/assets/output_19_0.jpg)
-
-
-
-
-
 
     [{'label': 'BURRITO', 'score': 0.9999678134918213},
      {'label': 'GUACAMOLE', 'score': 8.532096217095386e-06},

@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   compile:
-    name: Assign PCX
+    name: Update assignees
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

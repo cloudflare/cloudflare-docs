@@ -16,7 +16,7 @@ While reads are periodically revalidated in the background, requests which are n
 
 When you write to KV, your data is written to central data stores. Your data is not sent automatically to every location’s cache, but regional tiers are notified within seconds to do a purge of that key.
 
-![Your data is written to central data stores when you write to KV.](/images/kv/kv-write.svg)
+[![Your data is written to central data stores when you write to KV.](/images/kv/kv-write.svg)](/images/kv/kv-write.svg)
 
 Initial reads from a location do not have a cached value. Data must be read from the nearest regional tier, followed by a central tier, degrading finally to the central store for a truly cold global read. While the first access is slow globally, subsequent requests are faster, especially if requests are concentrated in a single region.
 
@@ -48,7 +48,9 @@ KV does not perform like an in-memory datastore, such as [Redis](https://redis.i
 
 ## Consistency
 
-KV achieves high performance by being eventually-consistent. Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out. 
+KV achieves high performance by being eventually-consistent. At the Cloudflare global network location at which changes are made, these changes are usually immediately visible. However, this is not guaranteed and therefore it is not advised to rely on this behaviour. In other global network locations changes may take up to 60 seconds or more to be visible as their cached versions of the data time-out. 
+
+
 
 Visibility of changes takes longer in locations which have recently read a previous version of a given key (including reads that indicated the key did not exist, which are also cached locally). 
 

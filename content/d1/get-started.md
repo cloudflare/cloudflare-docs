@@ -52,7 +52,6 @@ When setting up your `d1-tutorial` Worker, answer the questions as below:
 - Your directory has been titled `d1-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
-- Select `yes` to using Git.
 - Select `no` to deploying.
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
@@ -86,8 +85,7 @@ For reference, a good database name is:
 - Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
 - Only used for describing the database, and is not directly referenced in code.
-{{</Aside>}}
-
+  {{</Aside>}}
 
 ```sh
 $ npx wrangler d1 create prod-d1-tutorial
@@ -121,9 +119,9 @@ database_id = "<unique-ID-for-your-database>"
 
 Specifically:
 
-- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
-- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-databases/query-databases/) is exposed on this binding.
+- The value (string) you set for `binding` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+- The `binding` value must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+- Your binding is available in your Worker at `env.DB` and the D1 [client API](/d1/build-databases/query-databases/) is exposed on this binding.
 
 {{<Aside type="note">}}
 
@@ -160,7 +158,8 @@ Then validate your data is in your database by running:
 $ npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
 ```
 
-You should see the following output: 
+You should see the following output:
+
 ```sh
 🌀 Mapping SQL input into an array of statements
 🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
@@ -245,13 +244,13 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
 ```sh
-$ npx wrangler d1 execute prod-d1-tutorial --file=./schema.sql
+$ npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
 ```
 
 Then validate the data is in production by running:
 
 ```sh
-$ npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:

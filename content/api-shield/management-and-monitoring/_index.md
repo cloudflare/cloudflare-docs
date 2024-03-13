@@ -63,7 +63,7 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
 {{</Aside>}}
 
-When adding a path manually, you can specify variable fields by enclosing them in braces, `/api/user/{var1}/details`.
+When adding an endpoint manually, you can specify variable fields in the path or host by enclosing them in braces, `/api/user/{var1}/details` or `{var1}.example.com`.
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 

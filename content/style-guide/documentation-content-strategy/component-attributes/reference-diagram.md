@@ -22,4 +22,4 @@ A single diagram that shows a complete Cloudflare architecture aligned with a sp
 
 ![A fully deployed SASE solution with Cloudflare protects every aspect of your business. Ensuring all access to applications is secured and all threats from the Internet mitigated.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-21.svg "A fully deployed SASE solution with Cloudflare")
 
-![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg "Different methods of connecting Cloudflare to your network infrastructure")
+![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP Connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg "Different methods of connecting Cloudflare to your network infrastructure")

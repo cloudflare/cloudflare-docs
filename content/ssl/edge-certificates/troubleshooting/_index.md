@@ -11,3 +11,4 @@ meta:
 Learn more about troubleshooting issues with your edge certificates:
 
 {{<directory-listing>}}
+* [Troubleshooting domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/troubleshooting/)
