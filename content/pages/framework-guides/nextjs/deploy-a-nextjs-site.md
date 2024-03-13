@@ -297,11 +297,11 @@ After you have previewed your application locally, you can deploy it to Cloudfla
 
 ## Troubleshooting
 
-The following section presents a common mistakes and issues that developer might encounter when developing a Next.js application using `next-on-pages`.
+Review common mistakes and issues that you might encounter when developing a Next.js application using `next-on-pages`.
 
 ### Edge runtime
 
-All server-side routes in your Next.js project must be configured as "Edge" runtime routes when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
+All server-side routes in your Next.js project must be configured as Edge runtime routes when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
 
 
 {{<Aside type="note">}}
@@ -354,13 +354,13 @@ filename: app/my-example-page/[slug]/page.jsx
 // ...
 ```
 
-#### Top Level `getRequestContext`
+#### Top-level `getRequestContext`
 
-The `getRequestContext` function can't be called at the top level of a route file or in any manner that triggers the function call as part of the file's initialization.
+The `getRequestContext` function cannot be called at the top level of a route file or in any manner that triggers the function call as part of the file's initialization.
 
-In other words `getRequestContext` must be called inside the request handling process logic and not in a global/unconditional manner that gets triggered as soon as the file is imported.
+`getRequestContext` must be called inside the request handling process logic and not in a global/unconditional manner that gets triggered as soon as the file is imported.
 
-For example the following represents an erroneous usage of `getRequestContext`:
+For example, the following is an incorrect usage of `getRequestContext`:
 
 ```js
 ---
@@ -378,7 +378,7 @@ export async function GET(request) {
 }
 ```
 
-which can be fixed for example in the following way:
+The above example can be fixed in the following way:
 
 ```js
 ---
