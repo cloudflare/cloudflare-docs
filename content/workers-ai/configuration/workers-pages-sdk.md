@@ -28,13 +28,13 @@ $ yarn add --dev @cloudflare/ai
 {{</tab>}}
 {{</tabs>}}
 
-{{<render file="_npm-update.md">}}
-
 Import the library in your code:
 
 ```javascript
 import { Ai } from "@cloudflare/ai";
 ```
+
+{{<render file="_npm-update.md">}}
 
 ## Constructor
 
@@ -68,9 +68,11 @@ export default {
 };
 ```
 
-* **env.AI** is the project [binding](/workers-ai/configuration/bindings/) defined in your `wrangler.toml` configuration.
+**env.AI** is the [AI binding](/workers-ai/configuration/bindings/) defined in your `wrangler.toml` configuration.
 
-## async ai.run()
+## Methods
+
+### async ai.run()
 
 `async ai.run()` is a method of the class instance created by `new Ai()`.
 
@@ -87,7 +89,25 @@ const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
 });
 ```
 
-Optionally, you can pass a `streaming` parameter to the `run` method. This will return a stream of results as they are available.
+**Parameters**
+
+{{<definitions>}}
+
+- `model` {{<type-link href="/workers-ai/models/">}}string{{</type-link>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The model to run.
+
+- `options` {{<type>}}object{{</type>}} {{<prop-meta>}}depends on the model{{</prop-meta>}}
+  - Depends on the model type.
+
+  **Supported options**
+
+  - `stream` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+    - Returns a stream of results as they are available.
+
+{{</definitions>}}
+
+
+Optionally, you can pass a `stream` property to the `options` object. This will return a stream of results as they are available.
 
 ```javascript
 import { Ai } from '@cloudflare/ai'
@@ -95,10 +115,10 @@ import { Ai } from '@cloudflare/ai'
 // sessionOptions are optional
 const ai = new Ai(env.AI, { sessionOptions: { ctx }});
 
-const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8',
+const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
     prompt: "What is the origin of the phrase 'Hello, World'",
     stream: true
-);
+});
 
 return new Response(answer, {
     headers: { "content-type": "text/event-stream" }

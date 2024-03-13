@@ -2,7 +2,7 @@
 pcx_content_type: configuration
 title: Bindings
 meta:
-    description:
+    description: Enable Worker to Workers AI communication.
 ---
 
 # Bindings

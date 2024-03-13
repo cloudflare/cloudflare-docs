@@ -6,4 +6,4 @@ weight: 3
 
 # Get started
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true" >}}
