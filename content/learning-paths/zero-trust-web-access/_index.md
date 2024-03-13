@@ -1,5 +1,5 @@
 ---
-title: Zero Trust Web Access (ZTWA)
+title: Zero Trust Web Access
 type: developers-site
 layout: home
 new_learning_path: true
