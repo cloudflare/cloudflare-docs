@@ -27,7 +27,7 @@ Smart Tiered Cache does not work when an origin is behind an [Anycast network](h
 
 You need to be careful when updating your origin IPs/DNS records while smart tiered cache is enabled. Depending on the changes made, it may cause the existing assigned upper tiers to change, resulting in an increased `MISS` rate as cache is refilled in the new upper tiers. If the origin is switched to a network behind an Anycast, it will significantly reduce the effectiveness of Smart Tiered Cache.
 
-If you need to use Anycast network and want to use Smart Tiered cache, reach out to your solutions engineer.
+If you need to use Anycast network and want to use Smart Tiered cache, reach out to your account team.
 
 ### Generic Global Tiered Cache
 
