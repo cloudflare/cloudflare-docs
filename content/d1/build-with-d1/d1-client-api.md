@@ -1,16 +1,16 @@
 ---
-title: Query databases
+title: D1 client API
 pcx_content_type: concept
-weight: 2
+weight: 3
 ---
 
-# Query databases
+# D1 client API
 
-This guide documents D1's client API and how to query D1 from [Cloudflare Workers](/workers/), how D1 maps types from JavaScript/TypeScript and SQL, and common errors returned by D1.
+D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
 
 ## Prepared and static statements
 
-As part of our Client API, both static and prepared statements are supported. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks.
+D1 client API supports prepared and static statements. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks.
 
 Below is an example of a prepared statement:
 
@@ -102,7 +102,7 @@ The `db.exec()` method returns a `D1ExecResult` object:
 
 ## Query statement methods
 
-The D1 API supports the following query statement methods for querying against a D1 database.
+D1 client API supports the following query statement methods for querying against a D1 database:
 
 * [`await stmt.all()`](/d1/build-with-d1/query-databases/#await-stmtall)
 * [`await stmt.raw()`](/d1/build-with-d1/query-databases/#await-stmtraw)
@@ -253,7 +253,7 @@ console.log(out);
 
 ## TypeScript support
 
-D1's query API is fully-typed via the `@cloudflare/workers-types` package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional _type parameter_ so that a function understands the type of the data it is handling.
+D1 client API is fully-typed via the `@cloudflare/workers-types` package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional _type parameter_ so that a function understands the type of the data it is handling.
 
 When using the [query statement methods](#query-statement-methods) `stmt.all()`, `stmt.raw()` and `stmt.first()`, you can provide a type representing each database row. D1's API will [return the result object](#return-object) with the correct type.
 
