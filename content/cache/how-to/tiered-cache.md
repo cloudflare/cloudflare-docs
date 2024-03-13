@@ -23,7 +23,7 @@ Smart Tiered Cache dynamically selects the single closest upper tier for each of
 
 #### Smart Tiered Cache and Anycast network
 
-Smart Tiered Cache does not work when an origin is behind an [Anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) because that will prevent us from knowing where the origin is located. As a result, we are unable to select the optimal upper tier.
+Smart Tiered Cache does not work when an origin is behind an [Anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) because that will prevent us from knowing where the origin is located. As a result, we are unable to select the optimal upper tier and latency may be negatively impacted.
 
 You need to be careful when updating your origin IPs/DNS records while smart tiered cache is enabled. Depending on the changes made, it may cause the existing assigned upper tiers to change, resulting in an increased `MISS` rate as cache is refilled in the new upper tiers. If the origin is switched to a network behind an Anycast, it will significantly reduce the effectiveness of Smart Tiered Cache.
 
