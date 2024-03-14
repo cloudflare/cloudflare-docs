@@ -245,7 +245,7 @@
 /d1/build-databases/query-databases/ /d1/build-with-d1/d1-client-api/ 301
 /d1/build-databases/use-indexes/ /d1/build-with-d1/use-indexes/ 301
 /d1/build-databases/import-data/ /d1/build-with-d1/import-data/ 301
-/d1/build-databases/client-api/ /d1/build-with-d1/client-api/ 301
+/d1/build-databases/client-api/ /d1/build-with-d1/d1-client-api/ 301
 /d1/build-databases/use-d1-from-pages/ /d1/build-with-d1/use-d1-from-pages/ 301
 
 # data loss prevention (dlp)
