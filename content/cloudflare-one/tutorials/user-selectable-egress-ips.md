@@ -25,12 +25,16 @@ Changing egress IPs can be useful in quality assurance (QA) and other similar sc
 Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
-- [Set up a tunnel using `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your local device.
+- [Installed `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) on your private networks.
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 {{</tutorial-prereqs>}}
 
-{{<tutorial-step title="Create a virtual network">}}
+{{<tutorial-step title="Connect your private networks">}}
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Create virtual networks">}}
 
 First, create a virtual network for the dedicated egress IP you want your users to egress from. For example, you can create a virtual network for a specific office location.
 
