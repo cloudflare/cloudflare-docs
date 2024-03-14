@@ -10,7 +10,7 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 ## Handle errors
 
-The D1 [client API](/d1/build-databases/query-databases/) returns detailed [error messages](/d1/build-databases/query-databases/#errors) within an `Error` object. 
+The D1 [client API](/d1/build-databases/query-databases/) returns detailed [error messages](/d1/build-databases/query-databases/#errors) within an `Error` object.
 
 To ensure you are capturing the full error message, log or return `e.message` as follows:
 
@@ -56,4 +56,4 @@ You should include as much of the following in any bug report:
 
 * Learn [how to debug Workers](/workers/observability/).
 * Understand how to [access logs](/workers/observability/logging/) generated from your Worker and D1.
-* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/observability/local-development-and-testing/).
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/testing/local-development/).
