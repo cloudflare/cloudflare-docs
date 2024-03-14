@@ -1,4 +1,4 @@
-{{ $localToken := resources.Get "secrets/github_token.txt" }}
+{{ $localToken := resources.Get "secrets/github_tokens.txt" }}
 {{ $opts := dict }}
 {{ with $localToken }}
 {{ $opts = dict
