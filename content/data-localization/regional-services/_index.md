@@ -33,7 +33,7 @@ The following diagram is a high-level example of the flow of a request coming fr
 ```mermaid
 sequenceDiagram
     participant User in US as End user in US
-    participant CloudflarePoPNYC as Closest data center in US
+    participant CloudflarePoPNYC as Closest data center <br> in US
     participant CloudflarePoPDUB as Data center in EU
     participant EUOriginServer as Origin Server
  

@@ -1278,6 +1278,7 @@
 /workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/ 301
 /workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
+/workers/observability/local-development-and-testing/ /workers/testing/local-development/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301

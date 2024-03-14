@@ -56,4 +56,4 @@ You should include as much of the following in any bug report:
 
 * Learn [how to debug Workers](/workers/observability/).
 * Understand how to [access logs](/workers/observability/logging/) generated from your Worker and D1.
-* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/observability/local-development-and-testing/).
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/testing/local-development/).
