@@ -19,28 +19,33 @@ Choose whether you want to use 1.1.1.1 or 1.1.1.1 For Families, and replace `1.1
 
 ### `resolv.conf`
 
-Usually, `etc/resolv.conf` is where you can configure the resolver IPs that your system is using.
+Usually, `/etc/resolv.conf` is where you can configure the resolver IPs that your system is using.
 
-In that case, you can use the following one-line command to specify 1.1.1.1 as your DNS resolver:
+In that case, you can use the following one-line command to specify `1.1.1.1` as your DNS resolver and `1.0.0.1` as backup:
 
-```
-echo nameserver 1.1.1.1 | sudo tee /etc/resolv.conf
+```sh
+$ echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
 ```
 
 {{<Aside type="warning">}}
-Note that other systems, such as dynamic host configuration protocol (DHCP), may automatically write to `etc/resolv.conf` and change that configuration. In those cases, consider changing your network settings or DHCP to use 1.1.1.1
+Note that other systems, such as dynamic host configuration protocol (DHCP), may automatically write to `/etc/resolv.conf` and change that configuration. In those cases, consider changing your network settings or DHCP to use `1.1.1.1`.
 {{</Aside>}}
 
-Alternatively, you can use `nano` to manually edit the file.
+Alternatively, you can use an editor (`nano` or `vim`, for example) to manually edit the file.
 
 ### `systemd-resolved`
 
-If you use `systemd-resolved` utility and the resolver IPs configuration is in `/etc/systemd/resolved.conf`, do the following:
+If you use `systemd-resolved` utility and the resolver IPs configuration is in `/etc/systemd/resolved.conf`, consider the steps below:
 
-1. Run `sudo nano /etc/systemd/resolved.conf`
-2. Add or edit the following lines:
+1. Run the following command, replacing `<EDITOR>` with your preferred editor.
 
+```sh
+$ sudo <EDITOR> /etc/systemd/resolved.conf
 ```
+
+2. In the editor, add or edit the following lines:
+
+```txt
 [Resolve]
 DNS=1.1.1.1
 ```
