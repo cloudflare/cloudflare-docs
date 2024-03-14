@@ -19,7 +19,7 @@ This allows you to more precisely query over data and reduce the result set your
 
 ## Types
 
-JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/build-with-d1/query-databases/#type-conversion) as D1 in general, including:
+JSON data is stored as a `TEXT` column in D1. JSON types follow the same [type conversion rules](/d1/build-with-d1/d1-client-api/#type-conversion) as D1 in general, including:
 
 * A JSON null is treated as a D1 `NULL`.
 * A JSON number is treated as an `INTEGER` or `REAL`.

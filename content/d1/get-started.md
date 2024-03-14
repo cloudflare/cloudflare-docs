@@ -121,11 +121,11 @@ Specifically:
 
 - The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/query-databases/) is exposed on this binding.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
 
 {{<Aside type="note">}}
 
-When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/build-with-d1/query-databases/).
+When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/build-with-d1/d1-client-api/).
 
 {{</Aside>}}
 
@@ -218,7 +218,7 @@ export default {
 In the code above, you:
 
 1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`.
-2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/build-with-d1/query-databases/) with a placeholder (the `?` in the query).
+2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/build-with-d1/d1-client-api/) with a placeholder (the `?` in the query).
 3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
 4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
 5. Return your query results, if any, in JSON format with `Response.json(results)`.
@@ -271,5 +271,5 @@ By finishing this tutorial, you have created a D1 database, a Worker to access t
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1).
-- Learn how to use the [D1 client API](/d1/build-with-d1/query-databases/) within your Worker.
+- Learn how to use the [D1 client API](/d1/build-with-d1/d1-client-api/) within your Worker.
 - Explore [community projects built on D1](/d1/reference/community-projects/).
