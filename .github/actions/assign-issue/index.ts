@@ -12,7 +12,6 @@ import * as codeOwnersUtils from "codeowners-utils";
     const token = core.getInput('GITHUB_TOKEN', { required: true });
 
     const payload = github.context.payload;
-    console.log('event payload:', JSON.stringify(payload, null, 2));
 
     const { action, repository, issue } = payload;
     if (!issue) throw new Error('Missing "issue" object!');
@@ -78,6 +77,31 @@ import * as codeOwnersUtils from "codeowners-utils";
       repo: repository.name,
       assignees: [...assignees],
     });
+
+    console.log('Assignees added (if present)')
+
+    // Add labels for future reporting
+
+    const labelPrefix = 'product:';
+    const newLabels = new Set<string>();
+
+    for (const link of links) {
+      const parts = link.split('/');
+      newLabels.add(labelPrefix.concat(parts[0]));
+    }
+
+    console.log(newLabels)
+  
+    if (newLabels.size > 0) {
+      await client.rest.issues.addLabels({
+        owner: repository.owner.login,
+        issue_number: issue.number,
+        repo: repository.name,
+        labels: [...newLabels],
+      });
+    }
+
+    console.log('Labels added')
 
     console.log('DONE~!');
   } catch (error) {
