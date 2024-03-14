@@ -59,6 +59,12 @@ Your domain is now connected. The status takes a few minutes to change from **In
 
 To view the added DNS record, select *...* next to the connected domain and select **Manage DNS**.
 
+{{<Aside type="note">}}
+
+If the zone is on the Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
+
+{{</Aside>}}
+
 ### Restrictions
 
 There are a few restrictions when using custom domains to access R2 buckets.
