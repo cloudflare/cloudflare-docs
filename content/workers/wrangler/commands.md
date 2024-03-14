@@ -522,6 +522,12 @@ wrangler hyperdrive create <ID> [OPTIONS]
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
+- `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Disables the caching of SQL responses.
+- `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
+- `--swr` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
 {{</definitions>}}
 
@@ -537,6 +543,8 @@ wrangler hyperdrive update <ID> [OPTIONS]
 
 - `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to update.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new name of the Hyperdrive config.
 - `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new database hostname or IP address Hyperdrive should connect to.
 - `--origin-port` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -547,6 +555,12 @@ wrangler hyperdrive update <ID> [OPTIONS]
   - The new username used to authenticate to the database.
 - `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new password used to authenticate to the database.
+- `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Disables the caching of SQL responses.
+- `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
+- `--swr` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
 {{</definitions>}}
 
