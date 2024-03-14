@@ -53,7 +53,7 @@ import * as codeOwnersUtils from "codeowners-utils";
     console.log(links);
 
     for (const item of links) {
-      const updatedLink = "/content".concat(item);
+      const updatedLink = "content".concat(item);
       console.log("Updated link is:")
       console.log(updatedLink);
       const match = codeOwnersUtils.matchFile(updatedLink, codeowners);
