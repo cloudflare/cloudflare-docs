@@ -33,6 +33,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
+- [`versions`](#versions) - Retrieve details for recent versions.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
@@ -2006,6 +2007,18 @@ Retrieve your user information and test your authentication configuration.
 wrangler whoami
 ```
 
+---
+## `versions`
+{{<Aside type="note">}}
+Deployments are currently in closed beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+{{</Aside>}}
+
+### `list`
+Retrieve details for the 10 most recent versions. Details include Version ID, Created on, Author, Source. 
+
+### `view`
+
+### `deploy`
 ---
 
 ## `deployments`
