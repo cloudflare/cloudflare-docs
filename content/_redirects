@@ -232,7 +232,7 @@
 /d1/platform/environments/ /d1/configuration/environments/ 301
 /d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/platform/migrations/ /d1/reference/migrations/ 301
-/d1/reference/client-api/ /d1/build-with-d1//query-databases/ 301
+/d1/reference/client-api/ /d1/build-with-d1/d1-client-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/how-to/ /d1/build-with-d1/ 301
