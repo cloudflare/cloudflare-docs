@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Breakout traffic
+meta:
+    description: Breakout Traffic allows you to define which applications should bypass Cloudflare’s security filtering.
 ---
 
 # Breakout Traffic
