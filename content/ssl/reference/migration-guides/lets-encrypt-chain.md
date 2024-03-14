@@ -23,7 +23,12 @@ This means that, if visitors to your website or application are using older devi
 
 [Custom certificates](/ssl/edge-certificates/custom-certificates/) uploaded to Cloudflare are [bundled](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) with the certificate chain that Cloudflare finds to be the most compatible and efficient.
 
-After May 15, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain. Certificates uploaded before May 15 will continue to use the cross-signed chain until their renewal.
+After May 15, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain.
+
+Custom certificates uploaded before May 15 will continue to use the cross-signed chain until their expiry.
+
+As Cloudflare does not manage the [renewal of custom certificates](/ssl/edge-certificates/custom-certificates/renewing/), you will need to [update the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-an-existing-custom-certificate) before it expires.
+The new certificate that will be uploaded to extend the expiry will then be bundled with the new ISRG Root X1 chain.
 
 ## Background
 
