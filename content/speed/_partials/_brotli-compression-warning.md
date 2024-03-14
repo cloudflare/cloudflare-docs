@@ -15,6 +15,7 @@ Even when using the same compression algorithm end to end (between your origin s
 - [Mirage](/speed/optimization/images/mirage/)
 - [HTML Minification](/speed/optimization/content/auto-minify/) (you can minify JavaScript and CSS without any impact)
 - [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
+- [Polish](/images/polish/)
 
 To disable these features for specific URI paths, create a [Configuration Rule](/rules/configuration-rules/).
 

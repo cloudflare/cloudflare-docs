@@ -41,13 +41,19 @@ Subrequests are requests triggered by calling `fetch` from within a Worker. A su
 - **Cached**: The number of cached responses returned.
 - **Uncached**: The number of uncached responses returned.
 
-### Execution duration
+### Wall time per execution
 
-The Duration per request chart shows historical [duration](/workers/platform/limits/#duration) per Worker invocation. The data is broken down into relevant quantiles, similar to the CPU time chart. Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). Understanding duration on your Worker is especially useful when you are intending to do a significant amount of computation on the Worker itself.
+{{<glossary-tooltip term_id="wall-clock time">}}Wall time{{</glossary-tooltip>}} represents the elapsed time in milliseconds between the start of a Worker invocation, and when the Workers runtime determines that no more JavaScript needs to run. Specifically, wall time per execution chart measures the wall time that the JavaScript context remained open — including time spent waiting on I/O, and time spent executing in your Worker's [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) handler. Wall time is not the same as the time it takes your Worker to send the final byte of a response back to the client - wall time can be higher, if tasks within `waitUntil()` are still running after the response has been sent, or it can be lower. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JavaScript context before all the bytes have passed through and been sent.
+
+The Wall Time per execution chart shows historical wall time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
 
 ### CPU Time per execution
 
 The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-time) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
+
+### Execution duration (GB-seconds)
+
+The Duration per request chart shows historical [duration](/workers/platform/limits/#duration) per Worker invocation. The data is broken down into relevant quantiles, similar to the CPU time chart. Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). Understanding duration on your Worker is especially useful when you are intending to do a significant amount of computation on the Worker itself.
 
 ### Invocation statuses
 

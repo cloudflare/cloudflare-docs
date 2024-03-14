@@ -33,6 +33,7 @@ $ npm install hono
 ## 2. Initialize your Hono application
 
 In `src/worker.js`, initialize a new Hono application, and define the following endpoints:
+
 - `GET /api/posts/:slug/comments`.
 - `POST /api/posts/:slug/comments`.
 
@@ -84,7 +85,7 @@ With your binding configured in your `wrangler.toml` file, you can interact with
 Interact with D1 by issuing direct SQL commands using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute d1-example --command "SELECT name FROM sqlite_schema WHERE type ='table'"
+$ wrangler d1 execute d1-example --remote --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 
 Executing on d1-example:
 
@@ -118,7 +119,7 @@ CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:
 
 ```sh
-$ wrangler d1 execute d1-example --file schemas/schema.sql
+$ wrangler d1 execute d1-example --remote --file schemas/schema.sql
 ```
 
 ## 5. Execute SQL
@@ -212,7 +213,7 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 This application is an API back-end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
-Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Hono allows you to enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
+Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or _CORS_) headers in your back-end API. Hono allows you to enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
 
 ```typescript
 ---
