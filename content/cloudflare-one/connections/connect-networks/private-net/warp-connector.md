@@ -8,7 +8,24 @@ meta:
 
 {{<heading-pill style="beta">}}Set up WARP Connector{{</heading-pill>}}
 
-Cloudflare WARP Connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability |
+| ---------| -------------|
+| Windows  | ❌           |
+| macOS    | ❌           |
+| Linux    | ✅           |
+| iOS      | ❌           |
+| Android  | ❌           |
+| ChromeOS | ❌           |
+
+{{</details>}}
+
+Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
@@ -23,10 +40,8 @@ This guide will cover how to connect two independent subnets, for example `10.0.
 
 ## Prerequisites
 
-- A Linux host{{<fnref num="2">}} on each subnet.
-- A [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings) configured with one of the following WARP modes:
-  - **Gateway with WARP**
-  - **Secure Web Gateway without DNS Filtering**
+- A Linux host{{<fnref num="2">}} on each subnet
+- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 ## 1. Create a service token
 
