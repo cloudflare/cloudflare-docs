@@ -39,11 +39,13 @@ To save a new load balancer rule, make sure to save both the rule **and** the ov
 
 {{</Aside>}}
 
-## Example configuration
+## Example use case
+
+### URL-based routing
+
+If you want to host `example.com/blog` separately from your main website, for example, you can use a rule like the following.
 
 {{<example>}}
-
-This example routes certain content requests from our webserver to a different origin pool.
 
 <strong>When incoming requests match</strong>:
 
@@ -60,14 +62,7 @@ This example routes certain content requests from our webserver to a different o
       <td>URI Path</td>
       <td>contains</td>
       <td>
-        <code>/content</code>
-      </td>
-    </tr>
-    <tr>
-      <td>URI Query String</td>
-      <td>contains</td>
-      <td>
-        <code>webserver</code>
+        <code>/blog</code>
       </td>
     </tr>
   </tbody>
@@ -92,5 +87,3 @@ This example routes certain content requests from our webserver to a different o
     </tbody>
   </table>
 {{</example>}}
-
-### URL-based routing
