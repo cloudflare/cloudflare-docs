@@ -87,7 +87,9 @@ import * as codeOwnersUtils from "codeowners-utils";
 
     for (const link of links) {
       const parts = link.split('/');
-      newLabels.add(labelPrefix.concat(parts[1]));
+      if (parts[1] !== undefined) {
+        newLabels.add(labelPrefix.concat(parts[1]));
+      }
     }
 
     console.log(newLabels)
