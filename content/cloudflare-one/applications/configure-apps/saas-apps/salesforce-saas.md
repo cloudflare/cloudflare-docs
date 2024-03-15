@@ -1,11 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Salesforce
-meta:
-    title: Salesforce - Access for SaaS
+weight: 8
 ---
 
-# Configure Salesforce with Access for SaaS
+# Connect to Salesforce through Access
 
 This guide covers how to:
 

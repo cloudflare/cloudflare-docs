@@ -1,18 +1,12 @@
 ---
-updated: 2022-08-30
-category: 🔐 Access
-difficulty: Intermediate
-pcx_content_type: tutorial
-title: Integrate Cloudflare Area 1 with Access for SaaS
+pcx_content_type: how-to
+title: Area 1
+weight: 3
 ---
 
-# Integrate Cloudflare Area 1 with Access for SaaS
+# Connect to Cloudflare Area 1 through Access
 
 [Cloudflare Area 1](https://www.cloudflare.com/products/zero-trust/email-security/) is an email security platform that protects your organization's inbox from phishing, spam, and other malicious messages. You can set up Cloudflare Access as a single sign-on provider for your Cloudflare Area 1 portal.
-
-**Time to complete:**
-
-15 minutes
 
 ## Prerequisites
 
