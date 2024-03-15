@@ -1,6 +1,6 @@
 ---
 title: Publish to a Queue via HTTP
-summary: Publish to a Queue directly via HTTP & Workers
+summary: Publish to a Queue directly via HTTP and Workers
 pcx_content_type: configuration
 weight: 30
 layout: example
@@ -10,11 +10,11 @@ meta:
 
 The following example shows you how to publsh messages to a queue from any HTTP client, using a shared secret to securely authenticate the client.
 
-This allows you to write to a Queue from any service or programming language that can speak HTTP, including Go, Rust, Python or even a Bash script.
+This allows you to write to a Queue from any service or programming language that support HTTP, including Go, Rust, Python or even a Bash script.
 
 ### Prerequisites
 
-- A [queue created](/queues/get-started/#3-create-a-queue) via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
+- A [queue created](/queues/get-started/#3-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
 - A [configured **producer** binding](/queues/reference/configuration/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
 
 Configure your `wrangler.toml` file as follows:
@@ -32,7 +32,7 @@ name = "my-worker"
 
 ```
 
-### Creating a shared secret
+### 1. Create a shared secret
 
 Before you deploy the Worker, you need to create a [secret](/workers/configuration/secrets/) that you can use as a shared secret. A shared secret is a secret that both the client uses to authenticate and the server (your Worker) matches against for authentication.
 
@@ -60,12 +60,12 @@ $ wrangler secret put QUEUE_AUTH_SECRET
 
 This secret will also need to be used by the client application writing to the queue: ensure you store it securely.
 
-### Creating the Worker
+### 1. Create the Worker
 
 The following Worker script:
 
-1. Authenticates the client using a shared secret
-2. Validates the payload is JSON
+1. Authenticates the client using a shared secret.
+2. Validates that the payload uses JSON.
 3. Publishes the payload to the queue.
 
 ```ts
@@ -92,14 +92,14 @@ export default {
 			return Response.json({ err: "invalid auth token provided" }, { status: 403 });
 		}
 
-		// Optional: Validate the payload is JSON
+		// Optional: Validate the payload uses JSON
 		// In a production application, we may more robustly validate the payload
 		// against a schema using a library like 'zod'
 		let messages;
 		try {
 			messages = await req.json();
 		} catch (e) {
-			// Return a HTTP 400 (Bad Request) if the payload isn't JSON
+			// Return a HTTP 400 (Bad Request) if the payload does not use JSON
 			return Response.json({ err: "payload not valid JSON" }, { status: 500 });
 		}
 
@@ -109,18 +109,18 @@ export default {
 		} catch (e) {
 			console.log(`failed to send to the queue: ${e}`);
 			// Return a HTTP 500 (Internal Error) if our publish operation fails
-			return Response.json({ error: e }, { status: 500 });
+			return Response.json({ error: e.message }, { status: 500 });
 		}
 
-		// Return a HTTP 200 if the send succeeded!
+		// Return a HTTP 200 if the send succeeded
 		return Response.json({ success: true });
 	},
 };
 ```
 
-### Sending a test message
+### 2. Send a test message
 
-To make sure you can successfully authenticate and write a message to your queue, you can use `curl` on the command line:
+To make sure you successfully authenticate and write a message to your queue,  use `curl` on the command line:
 
 ```sh
 # Make sure to replace the placeholder with your shared secret 
