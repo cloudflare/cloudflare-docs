@@ -8,11 +8,11 @@ meta:
 
 # Write your first test
 
-This guide will guide you through install and setup of the `@cloudflare/vitest-pool-workers` package, and will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For example of tests `@cloudflare/vitest-pool-workers`, refer to the [Recipes](/workers/testing/vitest-integration/recipes/) page.
+This guide will show you how to install and set up the `@cloudflare/vitest-pool-workers` package, and will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For examples of tests using `@cloudflare/vitest-pool-workers`, refer to the [Recipes](/workers/testing/vitest-integration/recipes/) page.
 
 ## Prerequisites
 
-- Open the root directory of your Worker or [create a new Worker](/workers/get-started/guide/#1-create-a-new-worker-project)
+- Open the root directory of your Worker or [create a new Worker](/workers/get-started/guide/#1-create-a-new-worker-project).
 
 - In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
 
