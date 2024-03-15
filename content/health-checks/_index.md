@@ -44,3 +44,7 @@ Cloudflare Load Balancing distributes traffic across your servers, which reduces
 ## Availability
 
 {{<feature-table id="traffic.health_checks">}}
+
+## Limitations
+
+Standalone health checks are not supported with Aegis customer-specific IPs that Cloudflare will use to connect back to your origins.
