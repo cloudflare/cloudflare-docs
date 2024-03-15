@@ -34,6 +34,10 @@ export const onRequestPost = [
         // your secret key(s) safely.
         secret: "0x4AAAAAAASh4E5cwHGsTTePnwcPbnFru6Y",
         }),
+        // This is how you can use your secret key in environment variables
+        // (async (context) => {
+        //   return turnstilePlugin({secret: context.env.SECRET_KEY})(context)
+        // }),
         (async (context) => {
           // Request has been validated as coming from a human
           const formData = await context.request.formData()
