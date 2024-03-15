@@ -20,7 +20,7 @@ For a domain purchased through [Cloudflare Registrar](/registrar/), we take care
 
 When you connect your domain to Cloudflare, a set of default configurations is generated for our [application services](/products/?product-group=Application+performance%2CApplication+security%2CCloudflare+essentials), based on the domain [plan](https://www.cloudflare.com/plans/). These services determine how Cloudflare treats traffic for your domain.
 
-Your configurations will only affect live traffic (that is, when your domain's status is [**active**](/fundamentals/setup/manage-domains/connect-your-domain/#activating-your-domain) and its traffic is [**proxied**](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-dns-provider)). Notably, your configurations can be altered prior to activating or enabling the proxy status on the DNS records for the hostnames you want to proxy.
+Your configurations will only affect live traffic (that is, when your domain's status is [**active**](/fundamentals/setup/manage-domains/connect-your-domain/#activating-your-domain) and its traffic is [**proxied**](/dns/manage-dns-records/reference/proxied-dns-records/#proxy-eligibility)). Notably, your configurations can be altered prior to activating or enabling the proxy status on the DNS records for the hostnames you want to proxy.
 
 Use the Cloudflare dashboard or [API](/api/) to modify, test, or [version](/version-management/) your configuration.
 
