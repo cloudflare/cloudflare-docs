@@ -34,6 +34,64 @@ A `ReadableStream` is returned by the `readable` property inside [`TransformStre
 let reader = readable.getReader({ mode: 'byob' });
 ```
 
+
+- {{<code>}}tee(){{</code>}}
+
+The `ReadableStream` API has a method `tee()` that will split the flow of data from the
+`ReadableStream` into two separate `ReadableStream` instances.
+
+In the [standard definition](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee) of the `ReadableStream` API, the `tee()` method creates two
+separate `ReadableStream` instances (called "branches") that share a single `Reader` that
+consumes the data from the original `ReadableStream` (let's call it the "trunk"). When one
+of the two branches uses the shared `Reader` to pull data from the trunk, that data is
+used to fulfill the read request from the pulling branch, and a copy of the data is pushed
+into a queue in the other branch. That copied data accumulates in memory until something
+starts reading from it.
+
+This spec defined behavior presents a problem for us in that it is possible for one branch
+to consume data at a far greater pace than the other, causing the slower branch to accumulate
+data in memory without any backpressure controls.
+
+In our implementation, we have modified the `tee()` method implementation to avoid this
+issue.
+
+Each branch maintains it's own data buffer. But instead of those buffers containing a
+copy of the data, they contain a collection of refcounted references to the data. The
+backpressure signaling to the trunk is based on the branch wait the most unconsumed data
+in its buffer.
+
+```
+   +----------------+
+   | pull algorithm |
+   +----------------+
+           |
+           ⊽          ..........................................................
+   +---------------+  .   +---------------------+      +-------------------+
+   | enqueue(data) | ---> | push data to branch | ---> | has pending read? |
+   +---------------+  .   +---------------------+      +-------------------+
+               |      .                                no |    yes |
+               |      .       +-------------------+       |  +--------------+
+               |      .       | add data to queue | <-----+  | fulfill read |
+               |      .       +-------------------+          +--------------+
+               |      ............................................................
+               |      .   +---------------------+      +-------------------+
+               +--------> | push data to branch | ---> | has pending read? |
+                      .   +---------------------+      +-------------------+
+                      .                                no |    yes |
+                      .       +-------------------+       |  +--------------+
+                      .       | add data to queue | <-----+  | fulfill read |
+                      .       +-------------------+          +--------------+
+                      ............................................................
+
+```
+
+Unfortunately, with this model, we cannot completely avoid the possibility of one branch
+reading much slower than the other but we do prevent the memory pileup that would otherwise
+occur *so long as the underlying source of the `ReadableStream` is paying proper attention to
+the backpressure signaling mechanisms*.
+
+
+
 {{</definitions>}}
 
 ### `PipeToOptions`
