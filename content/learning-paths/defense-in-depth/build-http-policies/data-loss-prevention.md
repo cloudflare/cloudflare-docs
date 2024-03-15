@@ -88,9 +88,43 @@ Cloudflare implements regular expressions with Rust. Make sure you account for t
 To validate your regex, use [Rustexp](https://rustexp.lpil.uk/).
 {{</Aside>}}
 
-For example, you can use a custom expression to detect [a good example]:
+For example, you can use a custom expression to when your users share product SKUs in the format `CF1234-56789`:
 
-[screenshot and matching api call]
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. [Build a custom profile](#build-a-custom-profile) with the following custom entry:
+
+  | Detection entry name | Value                   |
+  | -------------------- | ----------------------- |
+  | Product SKUs         | `CF[0-9]{1,4}-[0-9]{5}` |
+
+2. Create an HTTP policy with the following expressions:
+
+  | Selector    | Operator      | Value                           | Logic | Action |
+  | ----------- | ------------- | ------------------------------- | ----- | ------ |
+  | DLP Profile | in            | _Product SKUs_                  | And   | Block  |
+  | User Email  | matches regex | `[a-z0-9]{0,15}@cloudflare.com` |       |        |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "description": "Private application IPs",
+  "items": [{"value": "10.226.0.177/32"},{"value": "10.226.1.177/32"}],
+  "name": "Corporate IP list",
+  "type": "IP"
+  }'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 #### DLP datasets
 
