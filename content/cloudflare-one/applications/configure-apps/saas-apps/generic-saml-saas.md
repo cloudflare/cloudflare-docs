@@ -67,4 +67,6 @@ Finally, you will need to configure your SaaS application to require users to lo
 
 2. Select **Done**.
 
-Your application will appear on the **Applications** page.
+## 4. Test the integration
+
+In a browser, go to the SaaS application. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
