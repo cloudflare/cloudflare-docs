@@ -25,23 +25,27 @@ Obtain the following URLs from your SaaS application account:
 
 4. Select your **Application** from the drop-down menu. If your application is not listed, enter a custom name in the **Application** field and select the textbox that appears below.
 
-5. Enter the **Entity ID** and **Assertion Consumer Service URL** obtained from your SaaS application account.
+5. Select **SAML**.
 
-6. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
+6. Select **Add application**.
 
-7. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
+7. Enter the **Entity ID** and **Assertion Consumer Service URL** obtained from your SaaS application account.
+
+8. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
+
+9. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
 {{<Aside type="note" header="IdP groups">}}
 If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 {{</Aside>}}
 
-9. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-10. {{<render file="access/_access-block-page.md">}}
+11. {{<render file="access/_access-block-page.md">}}
 
-11. {{<render file="access/_access-choose-idps.md">}}
+12. {{<render file="access/_access-choose-idps.md">}}
 
-12. Select **Next**.
+13. Select **Next**.
 
 ## 2. Add an Access policy
 
