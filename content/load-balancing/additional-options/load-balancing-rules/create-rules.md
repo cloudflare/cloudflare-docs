@@ -43,47 +43,20 @@ To save a new load balancer rule, make sure to save both the rule **and** the ov
 
 ### URL-based routing
 
-If you want to host `example.com/blog` separately from your main website, for example, you can use a rule like the following.
+If you want to host `example.com/blog` separately from your main website, for example, use the following custom rule.
 
 {{<example>}}
 
 <strong>When incoming requests match</strong>:
 
-<table style="width:100%">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Operator</th>
-      <th>Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>URI Path</td>
-      <td>contains</td>
-      <td>
-        <code>/blog</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Field    | Operator | Value   |
+|----------|----------|---------|
+| URI Path | contains | `/blog` |
 
 <strong>Then</strong>:
 
-  <table style="width:100%">
-    <thead>
-      <tr>
-        <th>Action</th>
-        <th>Options</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Overrides</td>
-        <td>Origin pools</td>
-        <td><code>Server1</code></td>
-      </tr>
-    </tbody>
-  </table>
+| Action    | Options      | Value           |
+|-----------|--------------|-----------------|
+| Overrides | Origin pools | `<BLOG_SERVER>` |
+
 {{</example>}}
