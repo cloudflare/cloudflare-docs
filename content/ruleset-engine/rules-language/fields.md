@@ -931,7 +931,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-tls_client_hello_length">
       <td><code>cf.tls_client_hello_length</code><br />{{<type>}}Number{{</type>}}</td>
       <td>
-      <p>The length of the client hello message sent in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>. Specifically, the length of the bytestring of the client hello, after the hexidecimal bytes have been decoded.
+      <p>The length of the client hello message sent in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>. Specifically, the length of the bytestring of the client hello.
       </p>
       <p>Example:<br/>
       <code>508</code>
