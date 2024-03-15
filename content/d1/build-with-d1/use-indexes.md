@@ -1,7 +1,7 @@
 ---
 title: Use indexes
 pcx_content_type: concept
-weight: 3
+weight: 2
 ---
 
 # Use indexes

@@ -75,4 +75,3 @@ Instead of running the `wrangler d1 execute` command in your terminal every time
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 
-
