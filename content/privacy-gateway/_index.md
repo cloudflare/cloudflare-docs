@@ -35,6 +35,6 @@ Learn how to set up Privacy Gateway for your application.
 Learn about the different parties and data shared in Privacy Gateway.
 {{</feature>}}
 
-{{<feature header="Metrics" href="/privacy-gateway/reference/Metrics/" cta="Learn more">}}
+{{<feature header="Metrics" href="/privacy-gateway/reference/metrics/" cta="Learn more">}}
 Learn about the different parties and data shared in Privacy Gateway.
 {{</feature>}}
