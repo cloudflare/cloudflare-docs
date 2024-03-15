@@ -12,14 +12,14 @@ weight: 5
 | -- | -- |
 | <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
 
-| System   | Availability | Minimum WARP version |
-| ---------| -------------| ---------------------|
-| Windows  | ✅           | 2022.4.115.0        |
-| macOS    | ✅           | 2022.4.114.0        |
-| Linux    | ✅           |       |
-| iOS      | ✅           | 1.0  |
-| Android  | ✅           | 1.0  |
-| ChromeOS | ✅           | 1.0  |
+| System   | Availability |
+| ---------| -------------|
+| Windows  | ✅           |
+| macOS    | ✅           |
+| Linux    | ✅           |
+| iOS      | ✅           |
+| Android  | ✅           |
+| ChromeOS | ✅           |
 
 {{</details>}}
 
