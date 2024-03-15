@@ -16,7 +16,7 @@ https://cloudflare-dns.com/dns-query
 
 ## HTTP method
 
-Cloudflare's DNS-over-HTTPS (DOH) endpoint supports `POST` and `GET` for UDP wireformat, and `GET` for JSON format.
+Cloudflare's DNS-over-HTTPS (DOH) endpoint supports `POST` and `GET` for DNS wireformat, and `GET` for JSON format.
 
 When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (`application/dns-message`) is sent in the `Content-Type` request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
 
@@ -26,7 +26,7 @@ When making requests using `GET`, the DNS query is encoded into the URL.
 
 If you use JSON format, set `application/dns-json`, and if you use DNS wireformat, use `application/dns-message`.
 
-Refer to [UDP wireformat](/1.1.1.1/encryption/dns-over-https/make-api-requests/dns-wireformat/) and [JSON](/1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json/) for cURL examples.
+Refer to [DNS wireformat](/1.1.1.1/encryption/dns-over-https/make-api-requests/dns-wireformat/) and [JSON](/1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json/) for cURL examples.
 
 ## Send multiple questions in a query
 
