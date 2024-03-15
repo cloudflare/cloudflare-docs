@@ -215,6 +215,7 @@
 
 # D1
 /d1/client-api/ /d1/build-with-d1/d1-client-api/ 301
+/d1/d1-api/ /d1/d1-http-api/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
 /d1/learning/using-indexes/ /d1/build-with-d1/use-indexes/ 301
