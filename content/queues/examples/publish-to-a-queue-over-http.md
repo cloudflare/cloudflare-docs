@@ -88,9 +88,13 @@ export default {
 		let authToken = req.headers.get("Authorization") || "";
 		let encoder = new TextEncoder();
 		// Securely compare our secret with the auth token provided by the client
-		if (!crypto.subtle.timingSafeEqual(encoder.encode(env.QUEUE_AUTH_SECRET), encoder.encode(authToken))) {
-			return Response.json({ err: "invalid auth token provided" }, { status: 403 });
-		}
+    try {
+		  if (!crypto.subtle.timingSafeEqual(encoder.encode(env.QUEUE_AUTH_SECRET), encoder.encode(authToken))) {
+			  return Response.json({ err: "invalid auth token provided" }, { status: 403 });
+		  }
+    } catch (e) {
+			  return Response.json({ err: "invalid auth token provided" }, { status: 403 });
+    }
 
 		// Optional: Validate the payload uses JSON
 		// In a production application, we may more robustly validate the payload
@@ -120,10 +124,10 @@ export default {
 
 ### 2. Send a test message
 
-To make sure you successfully authenticate and write a message to your queue,  use `curl` on the command line:
+To make sure you successfully authenticate and write a message to your queue, use `curl` on the command line:
 
 ```sh
-# Make sure to replace the placeholder with your shared secret 
+# Make sure to replace the placeholder with your shared secret
 $ curl -H "Authorization: pasteyourkeyhere" "https://YOUR_WORKER.YOUR_ACCOUNT.workers.dev" --data '{"messages": [{"msg":"hello world"}]}'
 # Outputs:
 {"success":true}
@@ -131,7 +135,7 @@ $ curl -H "Authorization: pasteyourkeyhere" "https://YOUR_WORKER.YOUR_ACCOUNT.wo
 
 This will issue a HTTP POST request, and if successful, return a HTTP 200 with a `success: true` response body.
 
-* If you receive a HTTP 403, this is because the `Authorization` header is invalid, or you did not configure a secret.
-* If you receive a HTTP 500, this is either because you did not correctly create a shared secret to your Worker, or you attempted to send an invalid message to your queue.
+- If you receive a HTTP 403, this is because the `Authorization` header is invalid, or you did not configure a secret.
+- If you receive a HTTP 500, this is either because you did not correctly create a shared secret to your Worker, or you attempted to send an invalid message to your queue.
 
 You can use [`wrangler tail`](/workers/observability/logging/real-time-logs/) to debug the output of `console.log`.
