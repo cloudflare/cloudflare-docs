@@ -10,7 +10,7 @@ meta:
 
 ## Verify that signed exchanges are working
 
-Make a request with the the signed exchange request header:
+Make a request with the signed exchange request header:
 
 1. Open a terminal and run the following command, replacing `https://example.com` with your domain:
 

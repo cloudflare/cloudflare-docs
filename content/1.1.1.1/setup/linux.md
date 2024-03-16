@@ -69,7 +69,7 @@ DNS=1.1.1.1
 3. On the **IPv4** tab, select the **Method** drop-down menu > _Automatic (Only addresses)_.
 4. Select the text box next to **DNS servers**.
 5. {{<render file="_all-ipv4.md">}}
-6. On the the **IPv6** tab, select the **Method** drop-down menu > _Automatic (Only addresses)_.
+6. On the **IPv6** tab, select the **Method** drop-down menu > _Automatic (Only addresses)_.
 7. Select the text box next to **DNS servers**.
 8. {{<render file="_all-ipv6.md">}}
 9. Select **Apply**.

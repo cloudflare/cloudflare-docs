@@ -180,7 +180,7 @@ const total = await stmt.first('total');
 console.log(total); // 50
 ```
 
-Get all the the columns from the first row:
+Get all the columns from the first row:
 ```js
 const stmt = db.prepare('SELECT COUNT(*) AS total FROM users');
 const values = await stmt.first();
