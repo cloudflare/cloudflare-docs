@@ -29,7 +29,6 @@ name = "my-worker"
   queue = "my-queue"
   binding = "YOUR_QUEUE"
 
-
 ```
 
 ### 1. Create a shared secret
@@ -42,7 +41,7 @@ Do not commit secrets to source control. You should use [`wrangler secret`](/wor
 
 {{</Aside>}}
 
-To generate a cryptographically secure secret, you can use the `openssl` command-line tool and `wrangler secret` to
+To generate a cryptographically secure secret, you can use the `openssl` command-line tool and `wrangler secret` to create a hex-encoded string that can be used as the shared secret:
 
 ```sh
 $ openssl rand -hex 32
@@ -52,7 +51,7 @@ $ openssl rand -hex 32
 Copy this string and paste it into the prompt for `wrangler secret`:
 
 ```sh
-$ wrangler secret put QUEUE_AUTH_SECRET
+$ npx wrangler secret put QUEUE_AUTH_SECRET
 
 # Outputs:
 ✨ Success! Uploaded secret QUEUE_AUTH_SECRET
@@ -88,38 +87,44 @@ export default {
 		let authToken = req.headers.get("Authorization") || "";
 		let encoder = new TextEncoder();
 		// Securely compare our secret with the auth token provided by the client
-    try {
-		  if (!crypto.subtle.timingSafeEqual(encoder.encode(env.QUEUE_AUTH_SECRET), encoder.encode(authToken))) {
-			  return Response.json({ err: "invalid auth token provided" }, { status: 403 });
-		  }
-    } catch (e) {
-			  return Response.json({ err: "invalid auth token provided" }, { status: 403 });
-    }
+		try {
+			if (!crypto.subtle.timingSafeEqual(encoder.encode(env.QUEUE_AUTH_SECRET), encoder.encode(authToken))) {
+				return Response.json({ err: "invalid auth token provided" }, { status: 403 });
+			}
+		} catch (e) {
+			return Response.json({ err: "invalid auth token provided" }, { status: 403 });
+		}
 
-		// Optional: Validate the payload uses JSON
+		// Optional: Validate the payload is JSON
 		// In a production application, we may more robustly validate the payload
 		// against a schema using a library like 'zod'
 		let messages;
 		try {
 			messages = await req.json();
 		} catch (e) {
-			// Return a HTTP 400 (Bad Request) if the payload does not use JSON
+			// Return a HTTP 400 (Bad Request) if the payload isn't JSON
 			return Response.json({ err: "payload not valid JSON" }, { status: 500 });
 		}
 
 		// Publish to the Queue
 		try {
 			await env.YOUR_QUEUE.send(messages);
-		} catch (e) {
+		} catch (e: any) {
 			console.log(`failed to send to the queue: ${e}`);
 			// Return a HTTP 500 (Internal Error) if our publish operation fails
 			return Response.json({ error: e.message }, { status: 500 });
 		}
 
-		// Return a HTTP 200 if the send succeeded
+		// Return a HTTP 200 if the send succeeded!
 		return Response.json({ success: true });
 	},
 };
+```
+
+To deploy this Worker:
+
+```sh
+$ npx wrangler deploy
 ```
 
 ### 2. Send a test message
