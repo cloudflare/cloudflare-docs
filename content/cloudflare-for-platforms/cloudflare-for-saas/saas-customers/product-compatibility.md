@@ -52,3 +52,11 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Zaraz](/zaraz/) | Yes | No |
 
 {{</table-wrap>}}
+
+---
+
+## Managed Challenges in an O2O setup
+
+In an O2O setup, issuing a [Managed Challenge](/waf/reference/cloudflare-challenges/#managed-challenge-recommended) in the SaaS provider zone configuration is not supported.
+
+To issue a Managed Challenge to the visitor when using O2O you must do it in the customer zone configuration.
