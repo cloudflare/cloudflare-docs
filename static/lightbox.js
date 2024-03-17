@@ -9,74 +9,47 @@ function setGallery(el) {
     element.classList.remove("gallery");
   });
   if (el.closest("ul, p")) {
-    var link_elements = el
-      .closest("ul, p")
-      .querySelectorAll("a[class*='lightbox-']");
-    link_elements.forEach((link_element) => {
-      link_element.classList.remove("current");
-    });
-    link_elements.forEach((link_element) => {
-      if (el.getAttribute("href") == link_element.getAttribute("href")) {
-        link_element.classList.add("current");
-      }
-    });
-    if (link_elements.length > 1) {
-      document.getElementById("lightbox").classList.add("gallery");
-      link_elements.forEach((link_element) => {
-        link_element.classList.add("gallery");
-      });
-    }
-    var currentkey;
-    var gallery_elements = document.querySelectorAll("a.gallery");
-    Object.keys(gallery_elements).forEach(function (k) {
-      if (gallery_elements[k].classList.contains("current")) currentkey = k;
-    });
-    if (currentkey == gallery_elements.length - 1) var nextkey = 0;
-    else var nextkey = parseInt(currentkey) + 1;
-    if (currentkey == 0) var prevkey = parseInt(gallery_elements.length - 1);
-    else var prevkey = parseInt(currentkey) - 1;
-    document.getElementById("next").addEventListener("click", function () {
-      gallery_elements[nextkey].click();
-    });
-    document.getElementById("prev").addEventListener("click", function () {
-      gallery_elements[prevkey].click();
+    var img_elements = el.closest("ul, p").querySelectorAll("img.lightbox");
+    img_elements.forEach((img_element) => {
+      var parentLink = document.createElement("a");
+      parentLink.classList.add("lightbox-image");
+      parentLink.setAttribute("href", img_element.getAttribute("src"));
+      img_element.parentNode.replaceChild(parentLink, img_element);
+      parentLink.appendChild(img_element);
     });
   }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  //create lightbox div in the footer
+  // create lightbox div in the footer
   var newdiv = document.createElement("div");
   newdiv.setAttribute("id", "lightbox");
   document.body.appendChild(newdiv);
 
-  //add classes to links to be able to initiate lightboxes
-  var elements = document.querySelectorAll("a");
+  // add classes to images to be able to initiate lightboxes
+  var elements = document.querySelectorAll("img.lightbox");
   elements.forEach((element) => {
-    var url = element.getAttribute("href");
+    var url = element.getAttribute("src");
     if (url) {
-      if (is_imagelink(url) && !element.classList.contains("no-lightbox")) {
-        element.classList.add("lightbox-image");
-        var href = element.getAttribute("href");
-        var filename = href.split("/").pop();
-        var split = filename.split(".");
-        var name = split[0];
-        element.setAttribute("title", name);
-      }
+      var parentLink = document.createElement("a");
+      parentLink.classList.add("lightbox-image");
+      parentLink.setAttribute("href", url);
+      element.parentNode.replaceChild(parentLink, element);
+      parentLink.appendChild(element);
     }
   });
 
-  //remove the clicked lightbox
+  // remove the clicked lightbox
   document
     .getElementById("lightbox")
     .addEventListener("click", function (event) {
       if (event.target.id != "next" && event.target.id != "prev") {
         this.innerHTML = "";
-        document.getElementById("lightbox").style.display = "none";
+        this.style.display = "none";
       }
     });
 
-  //add the image lightbox on click
+  // add the image lightbox on click
   var elements = document.querySelectorAll("a.lightbox-image");
   elements.forEach((element) => {
     element.addEventListener("click", function (event) {
@@ -85,13 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
         '<a id="close"></a><a id="next">&rsaquo;</a><a id="prev">&lsaquo;</a><div class="img" style="background: url(\'' +
         this.getAttribute("href") +
         '\') center center / contain no-repeat;" title="' +
-        this.getAttribute("title") +
+        this.querySelector("img").getAttribute("alt") +
         '" ><img src="' +
         this.getAttribute("href") +
         '" alt="' +
-        this.getAttribute("title") +
+        this.querySelector("img").getAttribute("alt") +
         '" /></div><span>' +
-        this.getAttribute("title") +
+        this.querySelector("img").getAttribute("alt") +
         "</span>";
       document.getElementById("lightbox").style.display = "block";
 
