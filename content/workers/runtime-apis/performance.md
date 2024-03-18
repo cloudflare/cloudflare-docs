@@ -46,7 +46,7 @@ In local development, however, timers will increment regardless of whether I/O h
 In general, anything where you make a network request counts as I/O — and time advances, allowing you measure wall time execution. This includes:
 
 - Subrequests made from your Worker (calling [`fetch()`](/workers/runtime-apis/fetch/))
-- Reading, listing, writing or deleting keys from a [Workers KV](https://developers.cloudflare.com/kv/api/) namespace
+- Reading, listing, writing or deleting keys from a [Workers KV](/kv/api/) namespace
 - Reading or writing an object from an [R2](/r2/api/workers/workers-api-usage/) bucket
 - Anything that initiates a network request
 
