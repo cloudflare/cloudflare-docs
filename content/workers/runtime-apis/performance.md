@@ -41,7 +41,7 @@ By wrapping a subrequest in calls to `performance.now()` or `Date.now()` APIs, y
 
 In local development, however, timers will increment regardless of whether I/O happens or not. This means that if you need to measure timing of a piece of code that is CPU intensive, that does not involve I/O, you can run your Worker locally, via [Wrangler](/workers/wrangler/), which uses the open-source Workers runtime, [workerd](https://github.com/cloudflare/workerd) — the same runtime that your Worker runs in when deployed to Cloudflare.
 
-#### What counts as I/O?
+### What counts as I/O?
 
 In general, anything where you make a network request counts as I/O — and time advances, allowing you measure wall time execution. This includes:
 
@@ -50,7 +50,7 @@ In general, anything where you make a network request counts as I/O — and tim
 - Reading or writing an object from an [R2](/r2/api/workers/workers-api-usage/) bucket
 - Anything that initiates a network request
 
-#### What does not count as I/O?
+### What does not count as I/O?
 
 Calling other Workers does not count as I/O. For examples:
 
@@ -62,7 +62,7 @@ If you attempt to measure the execution time of a call to a Service binding, or 
 - If the Worker you are calling does not perform I/O, time will not increment
 - If the Worker you are calling performs I/O, and then does some CPU intesnive work before returning a response, the timing you measure will not include the time spent doing the CPU intensive work.
 
-##### Example
+#### Example
 
 ```toml
 ---
@@ -114,7 +114,7 @@ export default {
 };
 ```
 
-#### When does time "start" in a Worker?
+### When does time "start" in a Worker?
 
 Consider the following Worker:
 
