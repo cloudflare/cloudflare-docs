@@ -80,7 +80,7 @@ If your internal DNS server has an `A` record for the MySQL database, users can 
 
 `mysql IN  A  10.128.0.175`
 
-then allowed WARP users can connect to the MySQL database at `mysql.internalrecord.com` using the MySQL client of their choice.
+Allowed WARP users can connect to the MySQL database at `mysql.internalrecord.com` using the MySQL client of their choice.
 
 {{</tutorial-step>}}
 
