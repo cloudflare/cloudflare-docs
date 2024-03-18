@@ -31,7 +31,7 @@ Alternatively, create a new [API token](/fundamentals/api/get-started/create-tok
 
 ### Via the Cloudflare dashboard
 
-To create a Logpush job in the the Cloudflare dashboard:
+To create a Logpush job in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
 2. Select **Analytics & Logs** > **Logs**.
