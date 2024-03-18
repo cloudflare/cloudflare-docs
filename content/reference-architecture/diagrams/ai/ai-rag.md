@@ -18,7 +18,7 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 
 ## Knowledge Seeding
 
-[![Figure 1: Knowledge seeding](/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-seeding.svg "Figure 1: Knowledge seeding")](/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-seeding.svg)
+![Figure 1: Knowledge seeding](/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-seeding.svg "Figure 1: Knowledge seeding")
 
 1. **Client upload**: Send POST request with documents to API endpoint.
 2. **Input processing**: Process incoming request using [Workers](/workers/) and send messages to [Queues](/queues/) to add processing backlog.
@@ -30,7 +30,7 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 
 ## Knowledge Queries
 
-[![Figure 2: Knowledge queries](/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-query.svg "Figure 2: Knowledge queries")](/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-query.svg)
+![Figure 2: Knowledge queries](/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-query.svg "Figure 2: Knowledge queries")
 
 1. **Client query**: Send GET request with query to API endpoint.
 2. **Embedding generation**: Generate embedding vectors by calling [Workers AI](/workers-ai/) [text embedding models](/workers-ai/models/#text-embeddings) for the incoming query.

@@ -24,7 +24,7 @@ Example uses of such compositions of AI models can be employed to generation vis
 
 ## Asset generation
 
-[![Figure 1:Content-based asset generation](/images/reference-architecture/ai-asset-generation-diagrams/ai-asset-generation.svg "Figure 1: Content-based asset generation")](/images/reference-architecture/ai-asset-generation-diagrams/ai-asset-generation.svg)
+![Figure 1:Content-based asset generation](/images/reference-architecture/ai-asset-generation-diagrams/ai-asset-generation.svg "Figure 1: Content-based asset generation")
 
 1. **Client upload**: Send POST request with content to API endpoint.
 2. **Prompt generation**: Generate prompt for later-stage text-to-image model by calling [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/#text-generation) with content as input.

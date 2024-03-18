@@ -16,7 +16,7 @@ The process begins with capturing the audio from the video source, which is then
 
 ## Automatic captioning on upload
 
-[![Figure 1: Automatic captioning on upload](/images/reference-architecture/ai-auto-caption-architecture-diagrams/ai-auto-caption-architecture-diagram.svg "Figure 1:  Automatic captioning on upload")](/images/reference-architecture/ai-auto-caption-architecture-diagrams/ai-auto-caption-architecture-diagram.svg)
+![Figure 1: Automatic captioning on upload](/images/reference-architecture/ai-auto-caption-architecture-diagrams/ai-auto-caption-architecture-diagram.svg "Figure 1:  Automatic captioning on upload")
 
 1. **Client upload**: Send POST request with both video and audio to API endpoint.
 2. **Audio transcription**: Generate timestamped transcriptions by calling [Workers AI](/workers-ai/) [automatic speech recognition (ARS) model](/workers-ai/models/#automatic-speech-recognition) with audio as input. Use [Workers](/workers/) to convert the output to a supported subtitled format.
