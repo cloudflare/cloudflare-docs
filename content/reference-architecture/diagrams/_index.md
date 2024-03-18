@@ -7,7 +7,7 @@ weight: 2
 # Cloudflare Reference Architecture Diagrams
 
 {{<description>}}
-Diagrams, design patterns and detailed best practices to help you generate solutions with Cloudflare products.
+Diagrams, design patterns, and detailed best practices to help you generate solutions with Cloudflare products.
 {{</description>}}
 
 {{<render file="_description-of-ref-architecture-diagrams.md" productFolder="reference-architecture">}}
