@@ -1,8 +1,8 @@
 ---
 pcx_content_type: configuration
-title: Service bindings
+title: RPC
 meta:
-  title: Service bindings - Runtime APIs
+  title: Service bindings - RPC
   description: Facilitate Worker-to-Worker communication via RPC
 ---
 

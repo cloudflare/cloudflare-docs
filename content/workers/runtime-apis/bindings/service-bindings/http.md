@@ -6,7 +6,7 @@ meta:
   description: Facilitate Worker-to-Worker communication by forwarding Request objects
 ---
 
-### Service bindings using HTTP (`fetch()`)
+# Service bindings — HTTP
 
 Worker A that declares a Service binding to Worker B can forward a [`Request`](/workers/runtime-apis/request/) object to Worker B, by calling the `fetch()` method that is exposed on the binding object.
 
@@ -56,5 +56,3 @@ export default {
 	},
 };
 ```
-
-This pattern 
