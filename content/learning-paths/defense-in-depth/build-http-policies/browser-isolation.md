@@ -43,7 +43,36 @@ You can control potential risk and shape user behavior without applying heavy-ha
 {{<tab label="api" no-code="true">}}
 
 ```bash
-
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "isolate",
+    "description": "Block copy, paste, and upload/download for shadow IT",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Block shadow IT interaction",
+    "precedence": 0,
+    "traffic": "http.request.host in <SHADOW_IT_LIST_UUID>",
+    "rule_settings": {
+      "block_page_enabled": false,
+      "block_reason": "",
+      "override_ips": null,
+      "override_host": "",
+      "l4override": null,
+      "biso_admin_controls": {
+        "dp": false,
+        "dcp": true,
+        "dd": true,
+        "du": true,
+        "dk": false,
+        "dcr": false
+      },
+    }'
 ```
 
 {{</tab>}}
@@ -86,7 +115,87 @@ In this context, if some traffic is unknown to your organization, Cloudflare wil
 {{<tab label="api" no-code="true">}}
 
 ```bash
+---
+header: Allow known applications and websites
+---
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "isolate",
+    "description": "Allow known applications and websites",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Allow known apps and sites",
+    "precedence": 0,
+    "traffic": "http.request.domains in <TRUSTED_DOMAINS_LIST_UUID>",
+    "rule_settings": {
+      "block_page_enabled": false,
+      "block_reason": "",
+      "override_ips": null,
+      "override_host": "",
+      "l4override": null
+    }'
+```
 
+```bash
+---
+header: Block security risks
+---
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "isolate",
+    "description": "Block all security risks",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Block security risks",
+    "precedence": 0,
+    "traffic": "http.request.uri.security_category in {68 178 80 83 176 175 117 131 134 151 153}",
+    "rule_settings": {
+      "block_page_enabled": false,
+      "block_reason": "",
+      "override_ips": null,
+      "override_host": "",
+      "l4override": null
+    }'
+```
+
+```bash
+---
+header: Isolate all other traffic
+---
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "isolate",
+    "description": "Isolate all other traffic",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Isolate traffic",
+    "precedence": 0,
+    "traffic": "http.request.host matches \".*\"",
+    "rule_settings": {
+      "block_page_enabled": false,
+      "block_reason": "",
+      "override_ips": null,
+      "override_host": "",
+      "l4override": null
+    }'
 ```
 
 {{</tab>}}
