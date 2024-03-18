@@ -14,7 +14,7 @@ Automatic Speech Recognition (ASR) models have revolutionized the accessibility 
 
 The process begins with capturing the audio from the video source, which is then fed into the ASR model. This model analyzes the audio waveform and converts it into a textual representation, capturing the spoken content in the form of subtitles. Furthermore, ASR models can also be utilized for language translation, enabling the creation of multilingual subtitles. Once the subtitles are generated, they can be displayed alongside the video, providing a synchronized text representation of the spoken content.
 
-## Automic captioning on upload
+## Automatic captioning on upload
 
 [![Figure 1: Automatic captioning on upload](/images/reference-architecture/ai-auto-caption-architecture-diagrams/ai-auto-caption-architecture-diagram.svg "Figure 1:  Automatic captioning on upload")](/images/reference-architecture/ai-auto-caption-architecture-diagrams/ai-auto-caption-architecture-diagram.svg)
 
