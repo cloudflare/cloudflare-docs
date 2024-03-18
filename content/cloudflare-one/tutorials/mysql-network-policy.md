@@ -5,7 +5,7 @@ pcx_content_type: tutorial
 title: Access and secure a MySQL database using Cloudflare Tunnel and network policies
 ---
 
-# Access and secure a MySQL database using cloudflare tunnal and network policies
+# Access and secure a MySQL database using Cloudflare Tunnel and network policies
 
 Using Cloudflare Tunnel's private networks, users can connect to arbitrary non-browser based TCP/UDP applications, such as, databases. Furthermore, it is possible to set up Network Policies that implement zero trust controls to define who and what can access those applications using the WARP client.
 
