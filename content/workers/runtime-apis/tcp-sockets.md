@@ -11,6 +11,10 @@ The Workers runtime provides the `connect()` API for creating outbound [TCP conn
 
 Many application-layer protocols are built on top of the Transmission Control Protocol (TCP). These application-layer protocols, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB, require an underlying TCP socket API in order to work.
 
+{{<Aside type="note">}}
+Connecting to a PostgreSQL database? You should use [Hyperdrive](/hyperdrive/), which provides the `connect()` API with built-in connection pooling and query caching.
+{{</Aside>}}
+
 ## `connect()`
 
 The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
