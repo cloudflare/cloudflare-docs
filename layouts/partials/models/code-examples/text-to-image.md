@@ -19,7 +19,7 @@ export default {
       prompt: "cyberpunk cat",
     };
 
-    const response = await ai.run<"{{ .Page.Params.model.name }}">(
+    const response = await ai.run(
       "{{ .Page.Params.model.name }}",
       inputs
     );

@@ -1,5 +1,5 @@
 ---
-title: Choosing a data or storage product
+title: Choose a data or storage product
 pcx_content_type: concept
 weight: 3
 meta:
@@ -7,7 +7,7 @@ meta:
   description: Storage and database options available on Cloudflare's developer platform.
 ---
 
-# Choosing a data or storage product for your use-case
+# Choose a data or storage product for your use-case
 
 Cloudflare Workers support a range of storage and database options for persisting different types of data across different use-cases, from key-value stores (like [Workers KV](/kv/)) through to SQL databases (such as [D1](/d1/)). This guide describes the use-cases suited to each storage option, as well as their performance and consistency properties.
 
@@ -135,9 +135,10 @@ D1 is ideal for:
 
 To get started with D1:
 
-- Read [the documentation](/d1)
-- Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-- Review the [D1 client API](/d1/build-databases/query-databases/).
+* Read [the documentation](/d1)
+* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
+* Review the [D1 client API](/d1/build-with-d1/d1-client-api/).
+
 
 ## Queues
 

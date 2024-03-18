@@ -48,6 +48,6 @@ The API response will look like the following:
 
 ### Exploring other models
 
-This example uses the `@cf/meta/llama-2-7b-chat-int8`, but you can use any of the models in our [catalog](/workers-ai/models/) and just replace `{model}` the the desired model name
+This example uses the `@cf/meta/llama-2-7b-chat-int8`, but you can use any of the models in our [catalog](/workers-ai/models/) and just replace `{model}` with the desired model name:
 
 `api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}`

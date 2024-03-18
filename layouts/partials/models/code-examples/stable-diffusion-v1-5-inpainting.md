@@ -33,7 +33,7 @@ export default {
     };
 
     const response =
-      await ai.run<"@cf/runwayml/stable-diffusion-v1-5-inpainting">(
+      await ai.run(
         "@cf/runwayml/stable-diffusion-v1-5-inpainting",
         inputs
       );

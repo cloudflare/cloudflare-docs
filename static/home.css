@@ -1125,6 +1125,24 @@ a {
     color: #fff;
 }
 
+@media (min-width:570px) {
+    .subTitle {
+        width: 70%;
+    }
+}
+
+@media (min-width:870px) {
+    .subTitle {
+        width: 50%;
+    }
+}
+
+@media (min-width:1180px) {
+    .subTitle {
+        width: 30%;
+    }
+}
+
 .StartHere {
     font-size: 1.8em;
     font-weight: 400;
