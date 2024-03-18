@@ -51,12 +51,12 @@ Make sure you have:
 
 {{<tutorial-step title="Create an egress policy">}}
 
-Next, assign dedicated egress IPs to each virtual network using Gateway egress policies.
+Next, assign your dedicated egress IPs to each virtual network using Gateway egress policies.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies**.
 2. Select **Add a policy**.
 3. Name your policy. We recommend including the country or region traffic will egress from.
-4. Add the following expression.
+4. Add the virtual network with the _Virtual Network_ selector. For example:
 
     | Selector        | Operator | Value       |
     | --------------- | -------- | ----------- |
@@ -64,6 +64,7 @@ Next, assign dedicated egress IPs to each virtual network using Gateway egress p
 
 5. In **Select an egress IP**, choose **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 6. Select **Create policy**.
+7. Repeat Steps 1-7 to create a separate egress policy for each virtual network you created.
 
 {{</tutorial-step>}}
 
