@@ -21,4 +21,4 @@ User sets up `wrangler.toml` for project to point to the right zone.
 User deploys Worker to Cloudflare global network.
 User tests using local development.
 
-
+Did this work?
