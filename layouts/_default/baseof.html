@@ -12,9 +12,11 @@
     {{- if hugo.IsProduction -}}
       <link rel="preload" href="/style.css" as="style" />
       <link rel="preload" href="/codeBlock.css" as="style" />
+      <link rel="preload" href="/lightbox.css" as="style" />
     {{- else -}}
       <link rel="stylesheet preconnect" href="/style.css" />
       <link rel="stylesheet preconnect" href="/codeBlock.css" />
+      <link rel="stylesheet preconnect" href="/lightbox.css" />
     {{- end -}}
 
     <link rel="preload" href="{{$littlefootCSS}}" as="style">
@@ -26,6 +28,8 @@
 
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
     {{- partial "script" (dict "src" "main.ts" "defer" true) -}}
+    {{- partial "script" (dict "src" "lightbox.js" "defer" true) -}}
+  <!--End Lightbox scripts -->
     {{- block "scripts" . -}}{{- end -}}
 
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
