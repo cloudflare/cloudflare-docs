@@ -1,6 +1,5 @@
 ---
-title: >
-  AI: Retrieval Augmented Generation (RAG)
+title: Retrieval Augmented Generation (RAG)
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:

@@ -1,6 +1,5 @@
 ---
-title: >
-  AI: Content-based asset creation
+title: Content-based asset creation
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:

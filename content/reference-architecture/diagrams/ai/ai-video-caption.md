@@ -1,6 +1,5 @@
 ---
-title: >
-  AI: Automatic captioning for video uploads
+title: Automatic captioning for video uploads
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
