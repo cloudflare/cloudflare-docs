@@ -24,7 +24,7 @@ Make sure you have:
 
 {{<tutorial-step title="Create a Cloudflare Tunnel">}}
 
-First, install `cloudflared` on a server in your private network. This server should have connectivity to the MySQL database.
+Install `cloudflared` on a server in your private network. This server should have connectivity to the MySQL database.
 
 {{<render file="tunnel/_create-tunnel.md" productFolder="cloudflare-one">}}
 
