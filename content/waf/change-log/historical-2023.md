@@ -690,7 +690,7 @@ layout: wide
       <td>Cloudflare Specials</td>
       <td>...b604fb62</td>
       <td>100551B</td>
-      <td>Microsoft Exchange SSRF and RCE vulnerability 2 - CVE:CVE-2022-41040, CVE:CVE-2022-41082 </td>
+      <td>Microsoft Exchange SSRF and RCE vulnerability 2 - CVE:CVE-2022-41040, CVE:CVE-2022-41082</td>
       <td>2023-01-09</td>
       <td>N/A</td>
       <td>Block</td>
