@@ -116,7 +116,7 @@ export class MyWorker extends WorkerEntrypoint {
 
 You can use any type of [binding](/workers/runtime-apis/bindings/#what-is-a-binding) this way.
 
-#### Lifecycle methods (`ctx`)
+### Lifecycle methods (`ctx`)
 
 The [`ctx`](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) object is exposed as a class property of the `WorkerEntrypoint` class.
 
@@ -209,6 +209,7 @@ Notice how the function keeps its state. The function is a closure that has capt
 
 How does this work? The Workers runtime does not serialize the function itself. The function always runs as part of the Worker that defines `CounterService`, regardless of who called it.
 
+<!-- TODO: May need to explain "stub" concept earlier -->
 Under the hood, the caller is not really calling the function itself, but calling a what is called a "stub". A "stub" is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that allows the client to call the remote service as if it were local, running in the same Worker. Behind the scenes, it calls back to the Worker that implements `CounterService` and asks it to execute the function closure that had been returned earlier.
 
 Note that:
@@ -343,8 +344,7 @@ As shown above, you can also access properties of classes. Properties are sort o
 
 Returning a class instance may be compared against returning an object containing several functions. Both ways can be used to create similar interfaces from the caller's point of view. However, if you return an object containing, say, five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Additionally, when returning an object, non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
 
-
-### ReadableStream, WriteableStream, Request, Response
+#### ReadableStream, WriteableStream, Request, Response
 
 You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control.
 
@@ -452,7 +452,64 @@ someRpcMethod() {
 
 Such properties on a function are accessed asynchronously, like class properties of an RpcTarget. But, unlike the `RpcTarget` example above, the function's instance properties that are accessible to the caller. In practice, properties are rarely added to functions.
 
+## Lifetimes, Memory and Resource Management
 
+When you call another Worker over RPC using a Service binding, you are using memory in the Worker you are calling. Consider the following example:
+
+```js
+const user = await env.USER_SERVICE.findUser(id);
+```
+
+As long as the caller Worker is running, garbage collection in the callee Worker cannot run. The garbage collector for the callee Worker cannot know when the caller Worker is done with the user it has provided. This is different from what would happen if the user service ran in the same Worker that it was called in — the garbage collector would know when `user` could be safely and automatically disposed of.
+
+This is not a limitation of the Worker runtime, but a limitation inherent to any distributed system. In a distributed system, the garbage collector has no visibility into the remote object graph nor any idea when the remote end is encountering memory pressure.
+
+This why the examples above implement the `using` declaration — a new JavaScript language feature called [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management).
+
+### Explicit Resource Management
+
+[Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management) is a Stage 3 TC39 proposal that lets you explicitly declare when a given resource can be disposed of.
+
+If a variable is declared with `using`, when the variable is no longer in scope, the variable can be safely disposed of. The following code:
+
+```js
+{
+  using counter = await env.COUNTER_SERVICE.newCounter();
+  await counter.increment(2);
+  await counter.increment(4);
+}
+```
+...is equivalent to:
+
+```js
+{
+  let counter = await env.COUNTER_SERVICE.newCounter();
+  try {
+    await counter.increment(2);
+    await counter.increment(4);
+  } finally {
+    counter[Symbol.dispose]();
+  }
+}
+```
+
+In the case of an RPC stub, the disposer notifies the callee Worker that the caller Worker is done with the stub, allowing it to then be garbage collected.
+
+### Disposers and `RpcTarget` classes
+
+A class that extends `RpcTarget` can also implement a disposer:
+
+```js
+class Foo extends RpcTarget {
+  [Symbol.dispose]() {
+    // ...
+  }
+}
+```
+
+Disposers always run asynchronously. The RpcTarget's disposer runs some time after the last stub is disposed. This is especially true because the dispose message needs to cross the network, but is true even in the case that the stub happens to point to a local object. Exceptions thrown by the disposer will be reported as uncaught exceptions.
+
+### Dup
 
 ## Reserved methods
 
