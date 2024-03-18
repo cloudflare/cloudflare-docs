@@ -10,7 +10,7 @@ meta:
 
 ## About Service bindings
 
-[Service bindings](/workers/runtime-apis/bindings/service-bindings/) facilitate Worker-to-Worker communication. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) allow one worker to call into another, without going through a publicly-accessible URL. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
 
 Service bindings provide the separation of concerns that microservice or service-oriented architectures provide, without configuration pain, performance overhead or need to learn RPC protocols.
 
@@ -46,14 +46,12 @@ services = [
 
 Worker A that declares a Service binding to Worker B can call Worker B in two different ways:
 
-- *RPC* By calling any public method on the class that Worker B exports (`await env.BINDING_NAME.myMethod(arg1)`)
-- *HTTP* By calling the `fetch()` method on the binding (`env.BINDING_NAME.fetch(request)`)
+1. [RPC](/workers/runtime-apis/bindings/service-bindings/rpc) lets you communicate between Workers using function calls that you define. For example, `await env.BINDING_NAME.myMethod(arg1)`. This is recommended for most use cases, and allows you to create your own internal APIs that your Worker makes available to other Workers.
+2. [HTTP](/workers/runtime-apis/bindings/service-bindings/http) lets you communicate between Workers using the `fetch()` API, sending `Request` objects and receiving `Response` objects back. For example, `env.BINDING_NAME.fetch(request)`.
 
-### RPC (`WorkerEntrypoint`)
+## Example — build your first Service binding using RPC
 
-If you write your Worker as a JavaScript class that extends the built-in `WorkerEntrypoint` class, public methods on the class you export are exposed via Service Bindings and can be called.
-
-For example, the following Worker implements the public method `add(a, b)`:
+First, create the Worker that you want to communicate with. Let's call this "Worker B". Worker B exposes the public method, `add(a, b)`:
 
 ```toml
 ---
@@ -74,7 +72,7 @@ export class WorkerB extends WorkerEntrypoint {
 }
 ```
 
-Which the following Worker declares a binding to:
+Next, create the Worker that will call Worker B. Let's call this "Worker A". Worker A declares a binding to Worker B. This is what gives it permission to call public methods on Worker B.
 
 ```toml
 ---
@@ -86,8 +84,6 @@ services = [
   { binding = "WORKER_B", service = "worker_b" }
 ]
 ```
-
-And then calls as an async method:
 
 ```js
 ---
@@ -101,99 +97,9 @@ export default {
 }
 ```
 
-This is a remote procedure call (RPC) protocol, without having to think about the protocol. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. But with Service bindings, there is no need to learn, implement or interact with a specific RPC protocol. It's just JavaScript.
+To run both Worker A and Worker B in local development, you must run two instances of [Wrangler](/workers/wrangler) in your terminal. For each Worker, open a new terminal and run [`npx wrangler@latest dev](/workers/wrangler/commands#dev).
 
-#### Remote objects
-
-Objects that Worker A receives back from Worker B can expose methods. These methods can be called from within Worker A. Consider the following example:
-
-```js
----
-filename: workerB.js
----
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export class WorkerB extends WorkerEntrypoint {
-  async foo() {
-    return {
-      bar: () => Math.random(),
-  }
-}
-```
-
-And then calls as an async method:
-
-```js
----
-filename: workerA.js
----
-export default {
-  async fetch(request, env) {
-    const foo = await env.WORKER_B.foo();
-    const bar = await foo.bar();
-    return new Response(bar);
-  }
-}
-```
-
-#### Durable Objects
-
-You can also expose methods on [Durable Objects](/durable-objects/) that can be called remotely on any of your Workers that declare a binding to the Durable Object namespace. Refer to <TODO> docs for more.
-
-#### Error handling & stacktraces
-
-<TODO>
-
-### HTTP (`fetch()`)
-
-Worker A that declares a Service binding to Worker B can forward a [`Request`](/workers/runtime-apis/request/) object to Worker B, by calling the `fetch()` method that is exposed on the binding object.
-
-For example, consider the following Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/):
-
-```toml
----
-filename: wrangler.toml
----
-name = "worker_b"
-main = "./src/workerB.js"
-```
-
-```js
----
-filename: workerB.js
----
-export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  }
-}
-```
-
-The following Worker declares a binding to the Worker above:
-
-```toml
----
-filename: wrangler.toml
----
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
-```
-
-And then forwards a request to:
-
-```js
----
-filename: workerA.js
----
-export default {
-	async fetch(request, env) {
-		return await env.BINDING_NAME.fetch(request);
-	},
-};
-```
+Each Worker is deployed separately
 
 ## Lifecycle
 
@@ -202,6 +108,19 @@ The Service bindings API is asynchronous — you must `await` any method you ca
 ## Local development
 
 Local development is supported for Service bindings. For each Worker, open a new terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
+
+## Deployment
+
+Workers using Service bindings are deployed separately.
+
+When getting started and deploying for the first time, this means that the target Worker (Worker B in the examples above) must be deployed first, before Worker A. Otherwise, when you attempt to deploy Worker A, deployment will fail, because Worker A declares a binding to Worker B, which does not yet exist.
+
+When making changes to existing Workers, in most cases you should:
+
+- Deploy changes to Worker B first, in a way that is compatible with the existing Worker A. For example, add a new method to Worker B.
+- Next, deploy changes to Worker A. For example, call the new method on Worker B, from Worker A.
+- Finally, remove any unused code. For example, delete the previously used method on Worker B.
+
 ## Smart Placement
 
 [Smart Placement](/workers/configuration/smart-placement) automatically places your Worker in an optimal location that minimizes latency.
