@@ -6,9 +6,7 @@ weight: 2
 
 # Get started
 
-There are two ways to build your Workers AI projects on Cloudflare: with a Cloudflare Worker or the Workers AI API.
-
-Choose a guide to get started on your first project:
+There are two ways to build your Workers AI projects on Cloudflare:
 
 {{<directory-listing showDescriptions="true" >}}
 

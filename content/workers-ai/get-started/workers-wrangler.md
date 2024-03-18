@@ -1,14 +1,14 @@
 ---
-title: Workers - Wrangler
+title: Get started - Workers
 pcx_content_type: get-started
-weight: 2
+weight: 1
 meta:
   description: Build your first Workers AI project from the command line with Wrangler, the Cloudflare Developer Platform CLI.
 ---
 
-# Get started - Workers AI local dev
+# Get started
 
-In this guide, you will get started with Workers AI, experiment with a large language model (LLM), and deploy your first AI powered app on the Workers platform.
+In this guide, you will use [Workers](/workers/) get started with Workers AI, experiment with a large language model (LLM), and deploy your first AI powered app on the Workers platform.
 
 ## Before you begin
 
