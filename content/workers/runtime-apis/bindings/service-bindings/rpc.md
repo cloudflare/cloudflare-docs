@@ -12,6 +12,8 @@ meta:
 
 You can use Service bindings to create your own internal APIs that your Worker makes available to other Workers. This is done by extending the built-in `WorkerEntrypoint` class, and adding your own public methods. These public methods can then be directly called by other Workers on your Cloudflare account that declare a [binding](/workers/runtime-apis/bindings) to this Worker.
 
+The RPC system is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
+
 ## Example
 
 For example, the following Worker implements the public method `add(a, b)`:
@@ -62,7 +64,7 @@ export default {
 }
 ```
 
-This provides you with an RPC (Remote Procedure Call) interface, but without the need to learn, implement, or think about special protocols. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with simple JavaScript classes.
+This provides you with a [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) interface, but without the need to learn, implement, or think about special protocols. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with simple JavaScript classes.
 
 ## Worker Entrypoints (`WorkerEntrypoint`)
 
@@ -137,8 +139,84 @@ export class MyWorker extends WorkerEntrypoint {
 [Cloudflare Queues](/queues/) and [Tail Workers](/workers/observability/logging/tail-workers/) are purpose-built options for performing work out-of-band, without blocking returning a response back to the client Worker. In many cases, you can use them instead of `ctx.waitUntil()`.
 {{</Aside>}}
 
+## Compatible Types
 
-#### Remote objects
+### Basic types
+
+Any type that is [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes most basic "value" types in JavaScript, including objects, arrays, strings and numbers.
+
+You can also send functions, class instances, ReadableStream, WriteableStream, Request and Response objects.
+
+### Functions
+
+#### Return functions from RPC methods
+
+RPC methods can return functions. In the example below, `newCounter()` returns a function:
+
+```js
+---
+filename: counterService.js
+---
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class CounterService extends WorkerEntrypoint {
+  async newCounter() {
+    let value = 0;
+    return (increment = 0) => {
+      value += increment;
+      return value;
+    }
+  }
+}
+```
+
+This function can then be called by the client Worker:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "client_worker"
+main = "./src/clientWorker.js"
+services = [
+  { binding = "COUNTER_SERVICE", service = "counter-service" }
+]
+```
+
+```js
+---
+filename: clientWorker.js
+---
+export default {
+  async fetch(request, env) {
+    using f = await env.COUNTER_SERVICE.newCounter();
+    await f(2);   // returns 2
+    await f(1);   // returns 3
+    await f(-5);  // returns -2
+
+    // ...
+  }
+}
+```
+
+Notice how the function keeps its state. The function is a closure that has captured the local variable value.
+
+How does this work? The Workers runtime does not serialize the function itself. The function always runs as part of the Worker that defines `CounterService`, regardless of who called it.
+
+Under the hood, the caller is not really calling the function itself, but calling a what is called a "stub". A "stub" is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that allows the client to call the remote service as if it were local, running in the same Worker. Behind the scenes, it calls back to the Worker that implements `CounterService` and asks it to execute the function closure that had been returned earlier.
+
+Note that:
+
+- Communication over Service bindings is always asyncrhonous. Even if the method declared on `CounterService` is not async, the client must call it as an async method.
+- Only [compatible types](#compatible-types) can be passed as parameters or returned from the function.
+
+#### Send functions as parameters of RPC methods
+
+You can also send a function in the parameters of an RPC. This enables the "server" to call back to the "client", reversing the direction of the relationship.
+
+Because of this, the words "client" and "server" can be ambiguous when talking about RPC. The "server" is a Durable Object or WorkerEntrypoint, and the "client" is the Worker that invoked the server via a binding. But, RPCs can flow both ways between the two. When talking about an individual RPC, you should instead use the words "caller" and "callee".
+
+## Remote objects
 
 Objects that Worker A receives back from Worker B can expose methods. These methods can be called from within Worker A. Consider the following example:
 
@@ -171,6 +249,15 @@ export default {
 }
 ```
 
+### TypeScript
+
+
+### Sending Class Instances
+
+There is one exception to the above — objects which are instances of user-defined classes, with custom prototypes are not compatible, unless they extend the `RpcTarget` class. Attempting to send a class instance will throw an exception.
+
+
+
 #### Durable Objects
 
 You can also expose methods on [Durable Objects](/durable-objects/) that can be called remotely on any of your Workers that declare a binding to the Durable Object namespace. Refer to <TODO> docs for more.
@@ -178,5 +265,6 @@ You can also expose methods on [Durable Objects](/durable-objects/) that can be 
 
 
 #### Error handling & stacktraces
+
 
 <TODO>
