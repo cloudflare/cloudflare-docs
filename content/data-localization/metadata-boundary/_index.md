@@ -6,9 +6,9 @@ weight: 3
 
 # Customer Metadata Boundary
 
-As part of the Data Localization Suite, the Customer Metadata Boundary (CMB) ensures that any traffic metadata which identifies a customer’s end user (that is, contains the customer's [Account ID](/fundamentals/setup/find-account-and-zone-ids/)) will stay in the `EU` (European Union) or in the `US` (United States), depending on the region the customer selects. For example, if a customer selects the `EU` Customer Metadata Boundary, metadata will **only** be sent to our core data center located in the European Union.
+As part of the Data Localization Suite, the Customer Metadata Boundary (CMB) ensures that any traffic metadata that can identify a customer’s end user (that is, contains the customer's [Account ID](/fundamentals/setup/find-account-and-zone-ids/)) will stay in the `EU` (European Union) or in the `US` (United States), depending on the region the customer selects. For example, if a customer selects the `EU` Customer Metadata Boundary, metadata will **only** be sent to our core data center located in the European Union.
 
-## Flow of customer traffic metadata
+## Customer traffic metadata flow
 
 The following diagram is a high-level example of the flow of how metadata about a customer's traffic is generated on a Cloudflare data center. Logs are exclusively sent to the EU core data center for Cloudflare customers and their authorized users to access and view.
 
