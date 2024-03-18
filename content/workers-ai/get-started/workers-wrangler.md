@@ -2,6 +2,8 @@
 title: Workers - Wrangler
 pcx_content_type: get-started
 weight: 2
+meta:
+  description: Build your first Workers AI project from the command line with Wrangler, the Cloudflare Developer Platform CLI.
 ---
 
 # Get started - Workers AI local dev
