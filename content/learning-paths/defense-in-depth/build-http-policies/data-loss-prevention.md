@@ -43,36 +43,22 @@ To help this better match the needs of your organization, you can also build a c
 {{<tab label="api" no-code="true">}}
 
 ```bash
-curl <https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules> \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---data '{
-  "name": "Do not inspect corporate devices",
-  "conditions": [
-    {
-      "type": "device_posture",
-      "expression": {
-        "any": {
-          "in": {
-            "lhs": {
-              "splat": "device_posture.checks.passed"
-            },
-            "rhs": [
-              "{serial_number_list_uuid}"
-            ]
-          }
-        }
-      }
-    }
-  ],
-  "action": "off",
-  "precedence": 14002,
-  "enabled": true,
-  "filters": [
-    "http"
-  ]
-}'
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "block",
+    "description": "Detect secrets and AWS keys",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Secrets and AWS keys",
+    "precedence": 0,
+    "traffic": "any(dlp.profiles[*] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[*] in <AWS_DLP_PROFILE_UUID>)""
+    }'
 ```
 
 {{</tab>}}
@@ -101,26 +87,33 @@ For example, you can use a custom expression to when your users share product SK
 
 2. Create an HTTP policy with the following expressions:
 
-  | Selector    | Operator      | Value                           | Logic | Action |
-  | ----------- | ------------- | ------------------------------- | ----- | ------ |
-  | DLP Profile | in            | _Product SKUs_                  | And   | Block  |
-  | User Email  | matches regex | `[a-z0-9]{0,15}@cloudflare.com` |       |        |
+  | Selector    | Operator      | Value                        | Logic | Action |
+  | ----------- | ------------- | ---------------------------- | ----- | ------ |
+  | DLP Profile | in            | _Product SKUs_               | And   | Block  |
+  | User Email  | matches regex | `[a-z0-9]{0,15}@example.com` |       |        |
 
 {{</tab>}}
 
 {{<tab label="api" no-code="true">}}
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---data '{
-  "description": "Private application IPs",
-  "items": [{"value": "10.226.0.177/32"},{"value": "10.226.1.177/32"}],
-  "name": "Corporate IP list",
-  "type": "IP"
-  }'
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "block",
+    "description": "Detect product SKUs shared by users in organization",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Detect product SKU leaks",
+    "precedence": 0,
+    "traffic": "any(dlp.profiles[*] in <SKU_DLP_PROFILE_UUID>)",
+    "identity": "identity.email matches \"[a-z0-9]{0,15}@example.com\""
+    }'
 ```
 
 {{</tab>}}
@@ -138,9 +131,7 @@ If your data is a distinct [dataset](/cloudflare-one/policies/data-loss-preventi
 
 We recommend using Exact Data Match for highly sensitive datasets and Custom Wordlists for lists of keywords.
 
-As your datasets change and grow, we recommend building a pipeline to update the data source using our API endpoint. For example:
-
-[example API call or workflow action]
+As your datasets change and grow, we recommend building a pipeline to update the data source in the Zero Trust dashboard. For more information, contact your account team.
 
 #### Microsoft Information Protection (MIP) labels
 
@@ -154,8 +145,28 @@ The best way to start applying data loss prevention to your traffic, minimize th
 
 ### Example
 
-Many organizations want to detect and log financial information egressing from user devices to critical SaaS applications. To limit the risk of false positives and to filter out logging noise, Cloudflare recommends building your first series of policies to specify both target data and target destination:
+Many organizations want to detect and log financial information egressing from user devices to critical SaaS applications. To limit the risk of false positives and to filter out logging noise, Cloudflare recommends building your first series of policies to specify both target data and target destination. For example:
 
-[api and example docs]
+```bash
+---
+header: Block financial information shared with AI
+---
+curl --request POST \
+    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header 'Content-Type: application/json' \
+    --header 'X-Auth-Email: <EMAIL>' \
+    --header 'X-Auth-Key: <API_KEY>' \
+    --data '{
+    "action": "block",
+    "description": "Prevent financial information from being shared with AI tools",
+    "enabled": true,
+    "filters": [
+      "http"
+    ],
+    "name": "Block AI financial info",
+    "precedence": 0,
+    "traffic": "any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})"
+    }'
+```
 
 Once you have analyzed the flow and magnitude of data from the known sources, you can begin focusing on more specialized or explicit datasets for more generalized sources. This might look like inspecting for multiple matching data loss deterministic attributes to all external sources. You may want to except sources that are known internal locations where sensitive data is intentionally transferred. After developing a level of confidence from reviewing the logs and evaluating a rate of false positives for both types of policies, you can feel more confident in experimenting more broadly with data loss prevention policies.
