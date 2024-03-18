@@ -25,54 +25,27 @@ Changing egress IPs can be useful in quality assurance (QA) and other similar sc
 Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
-- [Installed and authenticated `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/) on each of your private networks.
+- [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have two tunnels, with each tunnel having `10.0.0.0/8` and `192.168.88.0/24` routed through them respectively.
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 {{</tutorial-prereqs>}}
 
-{{<tutorial-step title="Create tunnels to your private network">}}
+{{<tutorial-step title="Create a virtual network for each egress route">}}
 
-1. In a terminal, use `cloudflared` to create a tunnel on your private network.
-
-    ```sh
-    $ cloudflared tunnel create <TUNNEL_1_NAME>
-    ```
-
-2. Route `10.0.0.0/8` through your first tunnel.
+1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. For example, this virtual network will correspond to an egress location in North America.
 
     ```sh
-    $ cloudflared tunnel route ip add 10.0.0.0/8 <TUNNEL_1_NAME>
+    $ cloudflared tunnel vnet add vnet-AMER
     ```
 
-3. Create a second tunnel.
+2. Configure your virtual network to use the entire internal IP range of your private network and assign the corresponding tunnel.
 
     ```sh
-    $ cloudflared tunnel create <TUNNEL_2_NAME>
+    $ cloudflared tunnel route ip add --vnet vnet-AMER 10.0.0.0/8 tunnel-AMER
+    $ cloudflared tunnel route ip add --vnet vnet-AMER 192.168.88.0/24 tunnel-AMER
     ```
 
-4. Route `192.168.88.0/24` through your second tunnel.
-
-    ```sh
-    $ cloudflared tunnel route ip add 192.168.88.0/24 <TUNNEL_2_NAME>
-    ```
-
-{{<tutorial-step title="Create a virtual network for each route">}}
-
-1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
-
-    ```sh
-    $ cloudflared tunnel vnet add <VNET_NAME>
-    ```
-
-2. Configure your virtual network to use the entire private IP range and assign the corresponding tunnel.
-
-    ```sh
-    $ cloudflared tunnel route ip add --vnet <VNET_NAME> 10.0.0.0/8 <TUNNEL_NAME>
-    ```
-
-    ```sh
-    $ cloudflared tunnel route ip add --vnet <VNET_NAME> 192.168.88.0/24 <TUNNEL_NAME>
-    ```
+3. Repeat Steps 1-2 for each dedicated egress IP you want users to switch between.
 
 {{</tutorial-step>}}
 
@@ -85,9 +58,9 @@ Next, assign dedicated egress IPs to each virtual network using Gateway egress p
 3. Name your policy. We recommend including the country or region traffic will egress from.
 4. Add the following expression.
 
-    | Selector        | Operator | Value         |
-    | --------------- | -------- | ------------- |
-    | Virtual Network | is       | _<VNET_NAME>_ |
+    | Selector        | Operator | Value       |
+    | --------------- | -------- | ----------- |
+    | Virtual Network | is       | _vnet-AMER_ |
 
 5. In **Select an egress IP**, choose **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 6. Select **Create policy**.
