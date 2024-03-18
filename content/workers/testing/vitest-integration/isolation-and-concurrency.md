@@ -21,7 +21,7 @@ When you run your tests with the Workers Vitest integration, Vitest will:
 
 ## Isolation and concurrency models
 
-The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest-integration/configuration/#workerspooloptions-definition) configuration options both control isolation and concurrency. The Workers Vitest integration tries to minimise the number of `workerd` processes it starts, reusing Workers and their module caches between test runs where possible. The current implementation of isolated storage requires each `workerd` process to run one test file at a time, and does not support `.concurrent` tests. A copy of all auxiliary `workers` exists in each `workerd` process.
+The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest-integration/configuration/#workerspooloptions) configuration options both control isolation and concurrency. The Workers Vitest integration tries to minimise the number of `workerd` processes it starts, reusing Workers and their module caches between test runs where possible. The current implementation of isolated storage requires each `workerd` process to run one test file at a time, and does not support `.concurrent` tests. A copy of all auxiliary `workers` exists in each `workerd` process.
 
 By default, the `isolatedStorage` option is enabled. We recommend you enable the `singleWorker: true` option if you have lots of small test files.
 
