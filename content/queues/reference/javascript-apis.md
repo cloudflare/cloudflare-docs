@@ -87,7 +87,7 @@ type MessageSendRequest<Body = unknown> = {
 
 {{<definitions>}}
 
-- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}} 
+- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}}
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
@@ -105,13 +105,20 @@ type MessageSendRequest<Body = unknown> = {
 A union type containing valid message content types.
 
 ```ts
+// Default: json
 type QueuesContentType = "text" | "bytes" | "json" | "v8";
 ```
 
+- Use `"json"` to send a JavaScript object that can be JSON-serialized. This content type can be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com). The `json` content type is the default.
 - Use `"text"` to send a `String`. This content type can be previewed with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature.
-- Use `"json"` to send a JavaScript object that can be JSON-serialized. This content type can be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com).
 - Use `"bytes"` to send an `ArrayBuffer`. This content type cannot be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com) and will display as Base64-encoded.
-- Use `"v8"` to send a JavaScript object that cannot be JSON-serialized but is supported by [structured clone](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) (for example `Date` and `Map`). This content type cannot be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com) and will display as Base64-encoded. `"v8"` is the default content type.
+- Use `"v8"` to send a JavaScript object that cannot be JSON-serialized but is supported by [structured clone](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) (for example `Date` and `Map`). This content type cannot be previewed from the [Cloudflare dashboard](https://dash.cloudflare.com) and will display as Base64-encoded.
+
+{{<Aside type="note">}}
+
+The default content type for Queues changed to `json` (from `v8`) to improve compatibility with pull-based consumers for any Workers with a [compatibility date](/workers/configuration/compatibility-dates/#queues_json_messages) after `2024-03-18`.
+
+{{</Aside>}}
 
 If you specify an invalid content type, or if your specified content type does not match the message content's type, the send operation will fail with an error.
 
@@ -131,7 +138,7 @@ If the `queue()` function throws, or the promise returned by it or any of the pr
 
 {{<Aside type="note">}}
 
-`waitUntil()` is the only supported method to run tasks (such as logging or metrics calls) that resolve after a queue handler has completed. Promises that have not resolved by the time the queue handler returns may not complete and will not block completion of execution. 
+`waitUntil()` is the only supported method to run tasks (such as logging or metrics calls) that resolve after a queue handler has completed. Promises that have not resolved by the time the queue handler returns may not complete and will not block completion of execution.
 
 {{</Aside>}}
 
@@ -192,7 +199,7 @@ interface MessageBatch<Body = unknown> {
 
 - {{<code>}}ackAll(){{</code>}} {{<type>}}void{{</type>}}
 
-  - Marks every message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not. 
+  - Marks every message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not.
 
 - {{<code>}}retryAll(){{</code>}} {{<type>}}void{{</type>}}
 
@@ -224,14 +231,14 @@ interface Message<Body = unknown> {
 
   - A timestamp when the message was sent.
 
-- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}} 
+- {{<code>}}body{{</code>}} {{<type>}}unknown{{</type>}}
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
 - {{<code>}}ack(){{</code>}} {{<type>}}void{{</type>}}
 
-  - Marks a message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not. 
+  - Marks a message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not.
 
 - {{<code>}}retry(){{</code>}} {{<type>}}void{{</type>}}
 

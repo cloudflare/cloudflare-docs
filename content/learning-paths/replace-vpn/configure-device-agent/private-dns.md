@@ -29,7 +29,7 @@ To add a domain to the Local Domain Fallback list:
 6. Enter an optional description and select **Save domain**.
 
 7. Ensure that the WARP client can proxy DNS traffic to your private DNS server:
-    1. Go to **Networks** > **Routes** and verify that the DNS server is connected via Cloudflare Tunnel (either `cloudflared` or WARP connector).
+    1. Go to **Networks** > **Routes** and verify that the DNS server is connected via Cloudflare Tunnel (either `cloudflared` or WARP Connector).
     2. In your [Split Tunnel configuration](/learning-paths/replace-vpn/configure-device-agent/split-tunnel-settings/), verify that the DNS server IP routes through the WARP tunnel.
 
 ## Resolver policies

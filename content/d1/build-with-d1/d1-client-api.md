@@ -1,16 +1,16 @@
 ---
-title: Query databases
+title: D1 client API
 pcx_content_type: concept
-weight: 2
+weight: 3
 ---
 
-# Query databases
+# D1 client API
 
-This guide documents D1's client API and how to query D1 from [Cloudflare Workers](/workers/), how D1 maps types from JavaScript/TypeScript and SQL, and common errors returned by D1.
+D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
 
 ## Prepared and static statements
 
-As part of our Client API, both static and prepared statements are supported. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks.
+D1 client API supports prepared and static statements. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks.
 
 Below is an example of a prepared statement:
 
@@ -102,14 +102,14 @@ The `db.exec()` method returns a `D1ExecResult` object:
 
 ## Query statement methods
 
-The D1 API supports the following query statement methods for querying against a D1 database.
+D1 client API supports the following query statement methods for querying against a D1 database:
 
-* [`await stmt.all()`](/d1/build-databases/query-databases/#await-stmtall)
-* [`await stmt.raw()`](/d1/build-databases/query-databases/#await-stmtraw)
-* [`await stmt.first( [column] )`](/d1/build-databases/query-databases/#await-stmtfirstcolumn)
-* [`await stmt.run()`](/d1/build-databases/query-databases/#await-stmtrun)
-* [`await db.dump()`](/d1/build-databases/query-databases/#await-dbdump)
-* [`await db.exec()`](/d1/build-databases/query-databases/#await-dbexec)
+* [`await stmt.all()`](/d1/build-with-d1/d1-client-api/#await-stmtall)
+* [`await stmt.raw()`](/d1/build-with-d1/d1-client-api/#await-stmtraw)
+* [`await stmt.first( [column] )`](/d1/build-with-d1/d1-client-api/#await-stmtfirstcolumn)
+* [`await stmt.run()`](/d1/build-with-d1/d1-client-api/#await-stmtrun)
+* [`await db.dump()`](/d1/build-with-d1/d1-client-api/#await-dbdump)
+* [`await db.exec()`](/d1/build-with-d1/d1-client-api/#await-dbexec)
 
 ### await stmt.all()
 
@@ -180,7 +180,7 @@ const total = await stmt.first('total');
 console.log(total); // 50
 ```
 
-Get all the the columns from the first row:
+Get all the columns from the first row:
 ```js
 const stmt = db.prepare('SELECT COUNT(*) AS total FROM users');
 const values = await stmt.first();
@@ -237,7 +237,7 @@ return new Response(dump, {
 
 Executes one or more queries directly without prepared statements or parameters binding. This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe. Only use this method for maintenance and one-shot tasks (for example, migration jobs). The input can be one or multiple queries separated by `\n`.
 
-If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/build-databases/query-databases/#errors) to learn more.
+If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to [Errors](/d1/build-with-d1/d1-client-api/#errors) to learn more.
 
 ```js
 const migration = await fetch('/migration.sql');
@@ -253,7 +253,7 @@ console.log(out);
 
 ## TypeScript support
 
-D1's query API is fully-typed via the `@cloudflare/workers-types` package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional _type parameter_ so that a function understands the type of the data it is handling.
+D1 client API is fully-typed via the `@cloudflare/workers-types` package, and also supports [generic types](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types) as part of its TypeScript API. A generic type allows you to provide an optional _type parameter_ so that a function understands the type of the data it is handling.
 
 When using the [query statement methods](#query-statement-methods) `stmt.all()`, `stmt.raw()` and `stmt.first()`, you can provide a type representing each database row. D1's API will [return the result object](#return-object) with the correct type.
 

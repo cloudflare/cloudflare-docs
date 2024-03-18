@@ -196,11 +196,11 @@ Local and remote bindings can be accessed using the [`getRequestContext` functio
 ```js
 ---
 filename: app/api/hello/route.js
-highlight: [1, 7]
+highlight: [1, 9]
 ---
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 // ...
 
@@ -221,11 +221,12 @@ export async function GET(request) {
 ```ts
 ---
 filename: app/api/hello/route.ts
-highlight: [1, 7]
+highlight: [2, 10]
 ---
+import type { NextRequest } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 // ...
 
@@ -294,12 +295,13 @@ The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to r
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
-## Debugging
+## Troubleshooting
 
+Review common mistakes and issues that you might encounter when developing a Next.js application using `next-on-pages`.
 
 ### Edge runtime
 
-All server-side routes in your Next.js project must be configured as "Edge" runtime routes, when running on Cloudflare Pages. You must add `export const runtime = 'edge';` to each individual server-side route.
+All server-side routes in your Next.js project must be configured as Edge runtime routes when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
 
 
 {{<Aside type="note">}}
@@ -321,13 +323,13 @@ To prevent this incompatibility, Cloudflare recommends to always provide a custo
 filename: (src/)app/not-found.(jsx|tsx)
 ---
 
-export const runtime = 'edge';
+export const runtime = 'edge'
 
 export default async function NotFound() {
     // ...
     return (
         // ...
-    );
+    )
 }
 ```
 
@@ -347,9 +349,50 @@ In such cases you need to instruct Next.js not to do so by specifying a `false` 
 ---
 filename: app/my-example-page/[slug]/page.jsx
 ---
-+ export const dynamicParams = false;
++ export const dynamicParams = false
 
 // ...
+```
+
+#### Top-level `getRequestContext`
+
+The `getRequestContext` function cannot be called at the top level of a route file or in any manner that triggers the function call as part of the file's initialization.
+
+`getRequestContext` must be called inside the request handling process logic and not in a global/unconditional manner that gets triggered as soon as the file is imported.
+
+For example, the following is an incorrect usage of `getRequestContext`:
+
+```js
+---
+filename: app/api/myvar/route.js
+highlight: [5]
+---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+const myVariable = getRequestContext().env.MY_VARIABLE
+
+export async function GET(request) {
+  return new Response(myVariable)
+}
+```
+
+The above example can be fixed in the following way:
+
+```js
+---
+filename: app/api/myvar/route.js
+highlight: [6]
+---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+export async function GET(request) {
+  const myVariable = getRequestContext().env.MY_VARIABLE
+  return new Response(myVariable)
+}
 ```
 
 ### Pages router
@@ -372,7 +415,7 @@ export async function getStaticPaths() {
     return {
         paths,
 +       fallback: false,
-	};
+	}
 }
 ```
 
