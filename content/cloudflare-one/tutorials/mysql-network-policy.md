@@ -54,7 +54,7 @@ The application and (optionally) DNS server are now connected to Cloudflare.
 | Destination Port | in | `3306` | And | |
 | User Email | matches regex | `.*example.com` | |
 
-In addition to the Allow rule above, it is recommended to add a [catch-all block policy to the bottom of your network policy list to enforce a default-deny model](learning-paths/replace-vpn/build-policies/).
+In addition to the Allow rule above, Cloudflare recommends adding a [catch-all block policy](learning-paths/replace-vpn/build-policies/) to the bottom of your network policy list to enforce a default-deny model.
 
 Allowed WARP users can now connect to the MySQL server at `10.128.0.175` using the MySQL client of their choice.
 
