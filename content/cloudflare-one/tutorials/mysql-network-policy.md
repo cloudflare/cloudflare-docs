@@ -76,7 +76,7 @@ To allow users to access the MySQL database using an internal hostname instead o
 7. (Optional) Enter a custom port.
 8. Select **Create policy**.
 
-If your internal DNS server has an A record for the MySQL database, then users will be able to connect to the server using this record. For example, assuming a BIND server that includes the entry:
+If your internal DNS server has an `A` record for the MySQL database, users can connect to the server using this record. For example, assuming a BIND server that includes the entry:
 
 `mysql IN  A  10.128.0.175`
 
