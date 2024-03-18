@@ -207,6 +207,11 @@
   <meta name="docsearch:product" content="{{ $DATA.algolia.product }}" />
   {{- end -}}
 
+  <!--Add Lightbox scripts -->
+  {{- partial "script" (dict "src" "lightbox.js" "defer" true) -}}
+  <link rel="stylesheet preconnect" href="/lightbox.css" />
+  <!--End Lightbox scripts -->
+
   {{- if eq $.Context.RelPermalink "/search/" -}}
   <link rel="stylesheet preconnect" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.1.0/themes/satellite-min.css" integrity="sha256-p/rGN4RGy6EDumyxF9t7LKxWGg6/MZfGhJM/asKkqvA=" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.js" integrity="sha256-pxkGFjfnFWYGOtV9uhCWK/spKiGS0Z7gVDKYm39LyfM=" crossorigin="anonymous"></script>
