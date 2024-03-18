@@ -36,5 +36,5 @@ Learn about the different parties and data shared in Privacy Gateway.
 {{</feature>}}
 
 {{<feature header="Metrics" href="/privacy-gateway/reference/metrics/" cta="Learn more">}}
-Learn about the different parties and data shared in Privacy Gateway.
+Learn about how to query Privacy Gateway metrics.
 {{</feature>}}
