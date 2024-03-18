@@ -19,7 +19,7 @@ entries:
 
 - term: non-browser traffic
   general_definition: |-
-    non-browser traffic refers to data exchanges and communication occurring between devices or systems that do not involve web browsers, such a mobile app or web apps. 
+    non-browser traffic refers to data exchanges and communication occurring between devices or systems that do not involve web browsers, such as a mobile app or web apps. 
 
 - term: JSON-friendly
   general_definition: |-
