@@ -66,7 +66,7 @@ export default {
 
 This provides you with a [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) interface, but without the need to learn, implement, or think about special protocols. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with simple JavaScript classes.
 
-## Worker Entrypoints (`WorkerEntrypoint`)
+## `WorkerEntrypoint`
 
 When you write Workers that expose RPC methods, you must extend the `WorkerEntrypoint` class, as in the example below:
 
@@ -80,11 +80,10 @@ export class MyWorker extends WorkerEntrypoint {
 
 A new instance of the class `WorkerB` is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless. The class instance is destroyed when the invocation of the Worker ends. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
 
-### Bindings and lifecycle methods
+### Bindings (`env`)
 
-The [`env`](/workers/runtime-apis/bindings/#what-is-a-binding) and [`ctx`](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) objects are made available as properties of the `WorkerEntrypoint` class.
-
-#### `env`
+The [`env`](/workers/runtime-apis/bindings/#what-is-a-binding) object is exposed as a class property of the `Work
+erEntrypoint` class.
 
 For example, a Worker that declares a binding to the [environment variable](/workers/configuration/environment-variables/) `GREETING`:
 
@@ -112,7 +111,9 @@ export class MyWorker extends WorkerEntrypoint {
 
 You can use any type of [binding](/workers/runtime-apis/bindings/#what-is-a-binding) this way.
 
-#### `ctx`
+#### Lifecycle methods (`ctx`)
+
+The [`ctx`](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) object is exposed as a class property of the `WorkerEntrypoint` class.
 
 You can extend the lifetime of the invocation context by calling the `waitUntil()` method of the context object, [`ctx`](/workers/runtime-apis/handlers/fetch/#contextwaituntil). `waitUntil()` accepts a Promise-based task that is executed before the invocation context is terminated.
 
