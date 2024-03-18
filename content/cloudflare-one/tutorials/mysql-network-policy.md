@@ -2,7 +2,7 @@
 updated: 2024-03-11
 category: 🔐 Zero Trust
 pcx_content_type: tutorial
-title: Access and secure a MySQL database using cloudflare tunnel and network policies
+title: Access and secure a MySQL database using Cloudflare Tunnel and network policies
 ---
 
 # Access and secure a MySQL database using cloudflare tunnal and network policies
