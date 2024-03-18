@@ -83,7 +83,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
     The command should output your organization's default egress IP.
 
 3. In the WARP client, select the gear icon > **Virtual Networks**. Choose a virtual network you created.
-4. Check the egress IP address again by running the command from Step 1. The command should output the IP address specified in your egress policy.
+4. Check the egress IP address by running `curl ifconfig.me -4` again. The command should output the IP address specified in your egress policy.
 
 While your users are connected to a virtual network, their traffic will route via the dedicated egress IP specified. You can repeat these steps to test that each virtual network is egressing from the correct IP.
 
