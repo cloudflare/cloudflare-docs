@@ -147,7 +147,17 @@ curl --request POST \
     ],
     "name": "Egress AMER vnet",
     "precedence": 0,
-    "traffic": "net.vnet_id == <VNET_AMER_UUID>"
+    "traffic": "net.vnet_id == <VNET_AMER_UUID>",
+    "identity": "",
+    "device_posture": "",
+    "version": 1,
+    "rule_settings": {
+      "egress": {
+        "ipv6": <DEDICATED_IPV6_ADDRESS>,
+        "ipv4": <DEDICATED_IPV4_ADDRESS>,
+        "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>
+        }
+    }
 }'
 ```
 
