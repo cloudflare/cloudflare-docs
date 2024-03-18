@@ -6,6 +6,7 @@ meta:
   description: Facilitate Worker-to-Worker communication via RPC
 ---
 
+<!-- TODO: Naming?? -->
 # Service Bindings — RPC
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
@@ -350,6 +351,108 @@ You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readab
 Only byte-oriented streams are supported. TODO — explain clearly.
 
 In all cases, ownership of the stream is transferred to the recipient. The sender can no longer read/write the stream after sending it. If the sender wishes to keep its own copy, it can use the [`tee()` method of `ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee) or the [`clone()` method of `Request` or `Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response/clone). Keep in mind that doing this may force the system to buffer bytes and lose the benefits of flow control.
+
+## Promise pipelining
+<!-- TODO: Better heading title? -->
+
+When you call an RPC method and get back an object, it's common to immediately call a method on the object:
+
+```js
+using counter = await env.COUNTER_SERVICE.getCounter();
+await counter.increment();
+```
+
+But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/runtime-apis/bindings/service-bindings/#smart-placement) or [Durable Objects](/durable-objects). On the surface, you might guess that the code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`.
+
+In practice, both calls are completed in a single round trip over the network. After sending the first call, the client immediately sends a second message instructing the server that when `getCounter()` is done, it should call `increment()` on the result.
+
+This works because RPC methods return a custom ["Thenable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#thenables) — a Promise-like object that conform to the semantics and interface of a JavaScript Promise. You can treat this in your own code just like you would a normal JavaScript Promise — the optimization is handled automatically behind the scenes.
+
+This works when calling properties of objects returned by RPC methods as well. For example:
+
+```js
+---
+filename: myService.js
+---
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class MyService extends WorkerEntrypoint {
+  async foo() {
+    return {
+      bar: {
+        baz: () => "qux"
+      }
+    }
+  }
+}
+```
+
+```js
+---
+filename: client.js
+---
+export default {
+  async fetch(request, env) {
+    using foo = await env.MY_SERVICE.foo();
+    let baz = await foo.bar.baz();
+    return new Response(baz);
+  }
+}
+```
+
+## Visibility of Methods and Properties
+
+### Private properties
+
+[Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes that extend either `WorkerEntrypoint` or `RpcTarget` are not exposed to the caller, and cannot be called.
+
+#### Class instance properties
+
+When you send an instance of a class that extends `WorkerEntrypoint` or `RpcTarget`, the recipient can only access methods and properties declared on the class, not properties of the instance. For example:
+
+```js
+class Foo extends RpcTarget {
+  constructor() {
+    super();
+
+    // i CANNOT be accessed over RPC
+    this.i = 0;
+
+    // funcProp CANNOT be called over RPC
+    this.funcProp = () => {}
+  }
+
+  // value CAN be accessed over RPC
+  get value() {
+    return this.i;
+  }
+
+  // method CAN be called over RPC
+  method() {}
+}
+```
+
+This behavior is intentional —  it is intended to protect you from accidentally exposing private class internals. Generally, instance properties should be declared private, [by prefixing them with `#`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties). However, private properties are a relatively new feature of JavaScript, and are not consistently used.
+
+The RPC interface between two of your Workers may be a security boundary, we need to be extra-careful, so instance properties are always private when communicating between Workers using RPC, whether or not they have the `#` prefix. You can always declare an explicit getter at the class level if you wish to expose the property, as shown above.
+
+These visibility rules apply only to objects that extend `RpcTarget`, `WorkerEntrypoint`, or `DurableObject`, and do not apply to plain objects. Plain objects are passed "by value", sending all of their "own" properties.
+
+#### "Own" properties of functions
+
+When you pass a function over RPC, the caller can access the "own" properties of the function object itself.
+
+```js
+someRpcMethod() {
+  let func = () => {};
+  func.prop = 123;  // `prop` is visible over RPC
+  return func;
+}
+```
+
+Such properties on a function are accessed asynchronously, like class properties of an RpcTarget. But, unlike the `RpcTarget` example above, the function's instance properties that are accessible to the caller. In practice, properties are rarely added to functions.
+
+
 
 ## Reserved methods
 
