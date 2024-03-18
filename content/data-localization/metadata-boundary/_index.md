@@ -34,7 +34,7 @@ sequenceDiagram
 
 ## Log management
 
-Additionally, customers have the option to configure Logpush to push their Customer Logs to various storage services, SIEMs, and log management providers.
+Additionally, customers have the option to configure [Logpush](/logs/about/) to push their Customer Logs to various storage services, SIEMs, and log management providers.
 
 ## Product specific-behavior
 
