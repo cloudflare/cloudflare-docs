@@ -224,6 +224,7 @@ You can also send a function in the parameters of an RPC. This enables the "serv
 Because of this, the words "client" and "server" can be ambiguous when talking about RPC. The "server" is a Durable Object or WorkerEntrypoint, and the "client" is the Worker that invoked the server via a binding. But, RPCs can flow both ways between the two. When talking about an individual RPC, you should instead use the words "caller" and "callee".
 
 #### Return objects with methods
+<!-- TODO: Should we more loudly point people to use classes here? -->
 
 You can return objects from RPC methods that have methods that can be called by the client Worker. This allows you to provide the caller with a remote object that it can perform work with, and provide interfaces that are simple to work with, like [Durable Objects](/durable-objects), even if your state lives elsewhere, outside of Cloudflare.
 
@@ -344,7 +345,7 @@ As shown above, you can also access properties of classes. Properties are sort o
 
 Returning a class instance may be compared against returning an object containing several functions. Both ways can be used to create similar interfaces from the caller's point of view. However, if you return an object containing, say, five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Additionally, when returning an object, non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
 
-#### ReadableStream, WriteableStream, Request, Response
+### ReadableStream, WriteableStream, Request, Response
 
 You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control.
 
@@ -406,7 +407,7 @@ export default {
 
 [Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes that extend either `WorkerEntrypoint` or `RpcTarget` are not exposed to the caller, and cannot be called.
 
-#### Class instance properties
+### Class instance properties
 
 When you send an instance of a class that extends `WorkerEntrypoint` or `RpcTarget`, the recipient can only access methods and properties declared on the class, not properties of the instance. For example:
 
@@ -438,7 +439,7 @@ The RPC interface between two of your Workers may be a security boundary, we nee
 
 These visibility rules apply only to objects that extend `RpcTarget`, `WorkerEntrypoint`, or `DurableObject`, and do not apply to plain objects. Plain objects are passed "by value", sending all of their "own" properties.
 
-#### "Own" properties of functions
+### "Own" properties of functions
 
 When you pass a function over RPC, the caller can access the "own" properties of the function object itself.
 
