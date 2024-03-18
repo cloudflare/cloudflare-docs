@@ -35,4 +35,6 @@ Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you a
 
 For Universal SSL certificates, Cloudflare chooses the [certificate authority](/ssl/reference/certificate-authorities/) used for your certificate.
 
+Cloudflare can change the [certificate authority](/ssl/reference/certificate-authorities/) without prior notification, and we will not send any notification for this change. 
+
 If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
