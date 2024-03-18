@@ -25,7 +25,10 @@ Changing egress IPs can be useful in quality assurance (QA) and other similar sc
 Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
-- [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have two tunnels, with each tunnel having `10.0.0.0/8` and `192.168.88.0/24` routed through them respectively.
+- [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
+  - Created two tunnels.
+  - Routed `10.0.0.0/8` through one tunnel.
+  - Routed `192.168.88.0/24` through the other tunnel.
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 {{</tutorial-prereqs>}}
@@ -64,7 +67,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 5. In **Select an egress IP**, choose **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 6. Select **Create policy**.
-7. Repeat Steps 1-7 to create a separate egress policy for each virtual network you created.
+7. Repeat Steps 1-6 to create a separate egress policy for each virtual network you created.
 
 {{</tutorial-step>}}
 
