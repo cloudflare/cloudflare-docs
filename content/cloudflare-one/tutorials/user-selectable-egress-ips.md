@@ -35,9 +35,6 @@ Make sure you have:
 
 {{<tutorial-step title="Create a virtual network for each egress route">}}
 
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
-
 1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. For example, this virtual network will correspond to an egress location in North America.
 
     ```sh
