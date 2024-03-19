@@ -135,7 +135,6 @@ In Workers, time "starts" when the top-level (global) scope of the Worker is ent
 
 This means that the first time this Worker is called, it will returns "70 milliseconds" — the timing includes time spent evaluating top-level scope. But on subsequent requests, the top-level scope has already been evaluated, and the Worker returns "20 milliseconds".
 
-The first time that the Worker is called, the tim
 
 ### `performance.now()`
 
