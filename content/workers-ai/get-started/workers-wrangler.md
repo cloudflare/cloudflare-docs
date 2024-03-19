@@ -72,9 +72,9 @@ binding = "AI" # i.e. available in your Worker on env.AI
 <!-- TODO update this once we know if we'll have it -->
 You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#workers-ai).
 
-## 3. Install the Workers AI client library
+## 3. Install the Workers AI SDK
 
-The Workers AI client library makes Workers AI APIs available for use in your code. To import the Workers AI client library, run the following command in your application directory:
+The Workers AI SDK makes Workers AI APIs available for use in your code. To import the Workers AI SDK, run the following command in your application directory:
 
 {{<tabs labels="npm | yarn">}}
 {{<tab label="npm" default="true">}}
