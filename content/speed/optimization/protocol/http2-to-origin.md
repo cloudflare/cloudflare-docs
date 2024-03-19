@@ -36,7 +36,7 @@ If you are unsure if your server supports HTTP/2, we suggest checking your origi
 
 If you do not want Cloudflare to connect to your origin via HTTP/2 you can either disable ALPN HTTP/2 support on your origin server, or set [origin_max_http_version to “1” via the API](/api/operations/zone-cache-settings-change-origin-max-http-version-setting) by March 19, 2024.
 
-Once the HTTP/2 to origin is enabled, you can navigate to **Speed > Optimization > Protocol Optimization** in the Cloudflare dashboard and set the toggle to Off to disable it. 
+Once the HTTP/2 to origin is enabled, you can navigate to **Speed > Optimization > Protocol Optimization** in the Cloudflare dashboard and set the toggle to **Off** to disable it. 
 {{</Aside>}}
 
 {{<Aside type="note" header="Note">}}
