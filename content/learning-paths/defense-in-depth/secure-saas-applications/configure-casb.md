@@ -5,11 +5,17 @@ weight: 1
 layout: learning-unit
 ---
 
+{{<Aside type="note">}}
+Only available on Enterprise plans.
+{{</Aside>}}
+
 {{<glossary-definition term_id="Cloudflare CASB">}}
 
-## Configure CASB
+## Manage CASB integrations
 
-{{<render file="casb/_configure-casb.md" productFolder="cloudflare-one">}}
+{{<render file="casb/_manage-integrations.md" productFolder="cloudflare-one">}}
+
+For more information, refer to [Scan SaaS applications](/cloudflare-one/applications/scan-apps/).
 
 ## Security features
 
