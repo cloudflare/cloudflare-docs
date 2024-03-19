@@ -22,7 +22,7 @@ Follow these steps to enable HTTP/2 to Origin:
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2.  Choose the domain that will use HTTP/2 to Origin.
 3.  Select **Speed > Optimization**.
-4.  Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to On.
+4.  Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **On**.
 
 If the toggle is disabled, or the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 
