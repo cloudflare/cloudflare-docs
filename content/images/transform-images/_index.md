@@ -41,6 +41,7 @@ Transformations can:
 * Support ICC color profiles in JPEG and PNG images.
 * Preserve JPEG metadata (metadata of other formats is discarded).
 * Convert the first frame of GIF animations to a still image.
+* Image Resizing is not compatible with [Bringing Your Own IPs (BYOIP)](/byoip/).
 
 {{<render file="_svg.md">}}
 
