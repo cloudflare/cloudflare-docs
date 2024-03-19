@@ -9,7 +9,7 @@ meta:
 
 ## Rollbacks
 
-Rollbacks are a way to deploy an older version to the Cloudflare global network. Rollbacks are useful if you notice issues with a version that has been deployed and want to get the Worker back into a stable version. 
+You can immediately roll back to a previously deployed version (link to versions page) of your Worker using Wrangler (link) or the dashboard. <something about how fast rolling back is>
 
 Perform a rollback via [Wrangler](/workers/configuration/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/configuration/deployments/#via-the-cloudflare-dashboard-1).
 
@@ -28,7 +28,7 @@ To perform a rollback via the Cloudflare dashboard:
 
 ## Limitations
 
-Rollbacks are only valid to the latest 10 versions. 
+You can only rollback to the 10 most recently published versions (link to versions docs) 
 
 Rollbacks will not be allowed if external resources have been deleted or modified between the target deployment and the active deployment. Specifically, rollbacks will not be allowed if:
 

@@ -23,7 +23,7 @@ Deployments track the version(s) of your Worker that are actively serving traffi
 By default, changes to Workers through `npx wrangler deploy`, via the Cloudflare dashboard or the [Workers Script Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module) automatically create a new version that is deployed to 100% of traffic.
 
 ## Using Versions and Deployments
-Together, versions and deployments are used to track changes to your Worker and configure how those changes are deployed to your traffic. With versions and deployments, it is possible to upload changes to your Worker independent of changing the version that's actively serving traffic. This is useful if:
+Together, you can use versions and deployments to track changes to your Worker and configure how those changes are deployed to your traffic. With versions and deployments, you can upload changes to your Worker independent of changing the version that's actively serving traffic. This is useful if:
 
 - You're running critical applications on Workers and want to [gradually deploy](/gradual-deployments) new versions of your Worker. 
 - You have a CI pipeline configured for Workers, but want to cut manual releases.
