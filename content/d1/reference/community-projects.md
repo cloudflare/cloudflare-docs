@@ -72,6 +72,13 @@ Instead of running the `wrangler d1 execute` command in your terminal every time
 * [GitHub](https://github.com/renoki-co/l1)
 * [Packagist](https://packagist.org/packages/renoki-co/l1)
 
+### Staff Directory - a D1-based demo
+
+Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/honox), and [Cloudflare Pages](/pages/). It uses D1 to store employee data, and is an example of a full-stack application built on top of D1.
+
+* [GitHub](https://github.com/lauragift21/staff-directory)
+* [D1 functionality](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts)
+
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 
