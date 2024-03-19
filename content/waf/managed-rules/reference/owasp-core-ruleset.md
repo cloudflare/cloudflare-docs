@@ -10,17 +10,73 @@ The Cloudflare OWASP Core Ruleset is Cloudflare's implementation of the [OWASP M
 
 The Cloudflare OWASP Core Ruleset is designed to work as a single entity to calculate a threat score and execute an action based on that score. When a rule in the ruleset matches a request, the threat score increases according to the rule score. If the final threat score is greater than the configured score threshold, Cloudflare executes the action configured in the last rule of the ruleset.
 
-Configuring a *Low* threshold means having a high threshold value (60 or higher). This means that, when using a *Low* threshold, more rules have to match the current request for the managed ruleset to perform the configured action (the request threat score is the sum of the individual scores of rules that match).
+## Concepts
 
-Each rule in the managed ruleset is associated with a certain paranoia level (PL). Paranoia levels vary from PL1 to PL4. Higher paranoia levels provide increased protection, but can cause more legitimate traffic to get blocked due to false positives. If you use the highest paranoia level (PL4) you will probably need to disable some of its rules for applications that need to receive complex input patterns.
+### Request threat score
+
+Each OWASP rule that matches the current request can have an associated score. The request threat score is the sum of the individual scores of all OWASP rules that matched the request.
+
+### Score threshold
+
+The score threshold (or threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for which the WAF will apply the configured OWASP ruleset action.
+
+Each threshold (_Low_, _Medium_, or _High_) has an associated value (_60_, _40_, or _25_, respectively). Configuring a _Low_ threshold means having a high threshold value (_60_). In this case, more rules have to match the current request for the WAF to perform the configured ruleset action.
+
+```txt
+Request threat score > Score threshold ===> Apply OWASP ruleset action
+```
+
+### Paranoia level
+
+Each rule in the managed ruleset is associated with a certain paranoia level (PL). Paranoia levels vary from PL1 to PL4. Rules associated with higher paranoia levels are considered more agressive and provide increased protection. However, they might cause more legitimate traffic to get blocked due to false positives.
+
+If you use the highest paranoia level (PL4) you will probably need to disable some of its rules for applications that need to receive complex input patterns.
+
+## Example
+
+The following example calculates the request threat score for an incoming request, based on example OWASP rules associated with different paranoia levels:
+
+{{<example>}}
+
+**OWASP managed ruleset configuration**
+
+* OWASP Anomaly Score Threshold: _Medium - 40 and higher_
+* OWASP Paranoia Level: _PL2_
+* OWASP Action: _Block_ (default)
+
+Evaluated rules:
+
+Rule     | Paranoia level | Rule matched?   | Rule score | Running threat score
+---------|----------------|-----------------|-----------:|--------------------:
+–        | –              | –               | –          | 0
+Rule #1  | PL1            | Yes             | +5         | 5
+Rule #2  | PL1            | Yes             | +5         | 10
+Rule #3  | PL1            | Yes             | +3         | 13
+Rule #4  | PL1            | Yes             | +5         | 18
+Rule #5  | PL1            | Yes             | +5         | 23
+Rule #6  | PL1            | Yes             | +5         | 28
+Rule #7  | PL2            | Yes             | +5         | 33
+Rule #8  | PL2            | No              | –          | 33
+Rule #9  | PL2            | Yes             | +5         | 38
+Rule #10 | PL2            | Yes             | +5         | 43
+Rule #11 | PL3            | (not evaluated) | –          | 43
+Rule #12 | PL4            | (not evaluated) | –          | 43
+
+Final request threat score: `43`
+
+Since `43` >= `40`, that is, the threat score is greater than the configured score threshold, the WAF will apply the configured action (_Block_).
+
+If you had configured a score threshold of _Low - 60 and higher_, the WAF would not apply the configured action, since the threat score would be lower than the score threshold (`43` < `60`).
+
+{{</example>}}
 
 ## Configure in the dashboard
 
 You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
 
 * **Set the paranoia level.** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
-* **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
-* **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
+* **Define the score threshold.** The available thresholds are: *Low - 60 and higher*, *Medium - 40 and higher* (default), or *High - 25 and higher*.
+* **Set the action to perform.** The action is executed when the calculated request threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
 * **Disable specific rules or rules with specific tags.**
 * **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
 * **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
