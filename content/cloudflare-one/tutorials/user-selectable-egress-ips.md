@@ -26,7 +26,7 @@ Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
 - [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
-  - Created two tunnels.
+  - Created two tunnels [through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) or [migrated legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/).
   - Routed `10.0.0.0/8` through one tunnel.
   - Routed `192.168.88.0/24` through the other tunnel.
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
@@ -35,24 +35,37 @@ Make sure you have:
 
 {{<tutorial-step title="Create a virtual network for each egress route">}}
 
-1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. For example, this virtual network will correspond to an egress location in North America.
+First, create [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to your dedicated egress IPs.
 
-    ```sh
-    $ cloudflared tunnel vnet add vnet-AMER
-    ```
-
-2. Configure your virtual network to use the entire internal IP range of your private network and assign the corresponding tunnel.
-
-    ```sh
-    $ cloudflared tunnel route ip add --vnet vnet-AMER 10.0.0.0/8 tunnel-AMER
-    $ cloudflared tunnel route ip add --vnet vnet-AMER 192.168.88.0/24 tunnel-AMER
-    ```
-
-3. Repeat Steps 1-2 for each dedicated egress IP you want users to switch between.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+2. In **Network locations**, go to **Virtual networks** and select **Manage**.
+3. Select **Create virtual network**.
+4. Name your virtual network. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from North America, you can name the virtual network `vnet-AMER`.
+5. Select **Save**.
+6. Repeat Steps 3-5 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe.
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Create an egress policy">}}
+{{<tutorial-step title="Assign each virtual network to each tunnel">}}
+
+After creating your virtual networks, assign each virtual network to your tunnels routing your private network.
+
+1. Go to **Networks** > **Tunnels**.
+2. Select your tunnel routing `10.0.0.0/8`, then select **Configure**.
+3. Go to **Private Network**. Select your first `10.0.0.0/8` route.
+4. In **Additional settings**, choose your first virtual network. For example, `vnet-AMER`.
+5. Select **Save private network**.
+6. To additional virtual networks to the tunnel, select **Add a private network**.
+7. In **CIDR**, enter `10.0.0.0/8`. In **Additional settings**, choose your second virtual network. For example, `vnet-EMEA`.
+8. Select **Save private network**.
+9. Repeat Steps 6-8 for each virtual network you created.
+10. Return to **Networks** > **Tunnels**. Repeat Steps 2-9 for each tunnel route.
+
+Each tunnel connected to your private network should have each of your virtual networks assigned to it. For example, if you have tunnels routing `10.0.0.0/8` and `192.168.88.0/24`, both tunnels should have `vnet-AMER` and `vnet-EMEA` assigned.
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Create virtual network egress policies">}}
 
 Next, assign your dedicated egress IPs to each virtual network using Gateway egress policies.
 
