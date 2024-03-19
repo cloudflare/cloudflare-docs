@@ -319,7 +319,9 @@ ___
 
 ## Order of rule execution
 
-**Use case 1**: If a request matches the following two rules:
+Rate limiting rules are evaluated from the most recently created rule to the oldest rule.
+
+**Example**: If a request matches the following two rules:
 
 - Rule 1: matching with `test.example.com`
 - Rule 2: matching with `*.example.com*`
@@ -330,18 +332,6 @@ or
 - Rule 2: matching with `test.example.com`
 
 Then rule 2 will always trigger first because it was created last.
-
-**Use case 2:** By removing the asterisk (`*`) at the end of the domain, rule execution will depend on which rule was created last.
-
-- Rule 1: matching with `test.example.com`
-- Rule 2: matching with `*.example.com`
-
-Rule 2 above triggers first if a request matches both rules.
-
-- Rule 1: matching with `*.example.com`
-- Rule 2: matching with `test.example.com`
-
-Rule 2 above triggers first if a request matches both rules.
 
 ---
 
