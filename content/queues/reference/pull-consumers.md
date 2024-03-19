@@ -113,9 +113,9 @@ Each batch of messages resembles the below:
 ]
 ```
 
-# Examples
+## Examples
 
-## TypeScript (Node.js)
+### TypeScript (Node.js)
 
 The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
@@ -126,7 +126,7 @@ In a production application, you could replace writing to stdout with inserting 
 
 ```
 
-## Go
+### Go
 
 The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
