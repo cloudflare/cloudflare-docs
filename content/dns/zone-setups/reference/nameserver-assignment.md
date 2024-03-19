@@ -9,7 +9,7 @@ When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) or [se
 
 Each domain's assigned nameservers may be different than other domains, even if those domains are within the same account.
 
-These nameserver assignments cannot be changed. However, depending on your subscription, you may have different options to [control the nameservers assignment method](/dns/nameservers/nameserver-options/#assignment-method) or to use your own [custom nameservers](/dns/nameservers/custom-nameservers/).
+These nameserver assignments cannot be changed unless you set up [custom or vanity nameservers](/dns/additional-options/custom-nameservers/).
 
 {{<Aside type="warning">}}
 
