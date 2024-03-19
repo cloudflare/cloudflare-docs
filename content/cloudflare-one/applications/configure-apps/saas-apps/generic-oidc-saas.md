@@ -10,9 +10,9 @@ This page provides generic instructions for setting up a SaaS application in Clo
 
 ## 1. Get SaaS application URL
 
-In your SaaS application account, obtain the **Redirect URL** (also known as the callback URL). Cloudflare Access will redirect users to this endpoint after they successfully authenticate.
+In your SaaS application account, obtain the **Redirect URL** (also known as the callback URL). This is the SaaS endpoint where users are redirected to after they authenticate with Cloudflare Access.
 
-Some SaaS applications provide the Redirect URL after you [configure a new SSO provider](#3-configure-sso-in-your-saas-application).
+Some SaaS applications provide the Redirect URL after you [configure the SSO provider](#3-configure-sso-in-your-saas-application).
 
 ## 1. Add your application to Access
 
