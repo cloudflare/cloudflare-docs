@@ -6,7 +6,7 @@ weight: 10
 
 # Metrics and analytics
 
-D1 exposes database analytics that allow you to inspect query volume, response size, and query latency across all and/or each database in your account.
+D1 exposes database analytics that allow you to inspect query volume, query latency, and storage size across all and/or each database in your account.
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
 
@@ -22,15 +22,16 @@ D1 currently exports the below metrics:
 | Rows written (count) | `rowsWritten` | The number of rows written across your queries. |
 | Query Response (bytes)  | `queryBatchResponseBytes`  | The total response size of the serialized query response, including any/all column names, rows and metadata. Reported in bytes. |
 | Query Latency (ms)      | `queryBatchTimeMs`         | The total query response time, including response serialization, on the server-side. Reported in milliseconds. |
+| Storage (Bytes)      | `databaseSizeBytes`         | Maximum size of a database. Reported in bytes. |
 
 Metrics can be queried (and are retained) for the past 31 days.
 
 ## Row counts
 
-D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/build-databases/query-databases/#return-object).
+D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/build-with-d1/d1-client-api/#return-object).
 
 Row counts are a precise count of how many rows were read (scanned) or written by that query.
-Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/build-databases/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   
+Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/build-with-d1/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   
 
 Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on how rows are counted.
 
@@ -47,9 +48,9 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 ## Query via the GraphQL API
 
-You can programmatically query analytics for your D1 databases via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same dataset as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+You can programmatically query analytics for your D1 databases via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
-D1's GraphQL dataset is `d1AnalyticsAdaptiveGroups` and requires an `accountTag` filter with your Cloudflare account ID.
+D1's GraphQL datasets include `d1AnalyticsAdaptiveGroups`, `d1StorageAdaptiveGroups`, and `d1QueriesAdaptiveGroups` and require an `accountTag` filter with your Cloudflare account ID.
 
 ### Examples
 

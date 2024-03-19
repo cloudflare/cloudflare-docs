@@ -50,3 +50,7 @@ For information on how to use single-file purge to purge assets cached by a Work
 If you have a [Transform Rule](/rules/transform/) in place that is modifying part of a URL path, you must use the non-transform (end user) URL when performing single file purge so that purge can take effect.
 
 {{</Aside>}}
+
+## Resulting cache status
+
+Purging by single-file deletes the resource, resulting in the `CF-Cache-Status` header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.

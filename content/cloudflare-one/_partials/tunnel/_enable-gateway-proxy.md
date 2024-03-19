@@ -16,10 +16,13 @@ _build:
     2. To verify the Group IDs that are allowed to use ICMP:
 
     ```sh
-    $ sysctl net.ipv4.ping_group_range
-    net.ipv4p.ping_group_range= 0 100000
+    $ sudo sysctl net.ipv4.ping_group_range
+    net.ipv4.ping_group_range= 0 10000
     ```
-    3.  Either add the user to a group within that range, or update the range to encompass a group the user is already in by modifying `/proc/sys/net/ipv4/ping_group_range`.
+    3.  Either add the user to a group within that range, or update the range to encompass a group the user is already in. To update `ping_group_range`:
+    ```sh
+    $ echo 0 10001 | sudo tee /proc/sys/net/ipv4/ping_group_range
+    ```
 
 2. If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
 

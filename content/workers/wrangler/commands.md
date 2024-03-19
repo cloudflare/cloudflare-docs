@@ -109,7 +109,6 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 
 You can then run them using your package manager of choice:
 
-
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
 
@@ -217,33 +216,57 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new D1 database.
-- `--experimental-backend` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Use the new experimental storage backend for this database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
   - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
+
+### `info`
+
+Get information about a D1 database, including the current database size and state.
+
+```txt
+wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to get information about.
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `list`
 
 List all D1 databases in your account.
 
 ```txt
-wrangler d1 list
+wrangler d1 list [OPTIONS]
 ```
+
+{{<definitions>}}
+
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `delete`
 
 Delete a D1 database.
 
 ```txt
-wrangler d1 delete <DATABASE_NAME>
+wrangler d1 delete <DATABASE_NAME> [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to delete.
+- `-y, --skip-confirmation` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Skip deletion confirmation prompt.
 
 {{</definitions>}}
 
@@ -255,6 +278,12 @@ Execute a query on a D1 database.
 wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
+{{<Aside type="note">}}
+
+You must provide either `--command` or `--file` for this command to run successfully.
+
+{{</Aside>}}
+
 {{<definitions>}}
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -263,8 +292,22 @@ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
   - The SQL query you wish to execute.
 - `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to the SQL file you wish to execute.
-- Note that you must provide either `--command` or `--file` for this command to run successfully.
-  {{</definitions>}}
+- `-y, --yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Answer `yes` to any prompts.
+- `--local` {{<type>}}boolean{{</type>}}{{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a local database for use with [wrangler dev](#dev).
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ### `time-travel restore`
 
@@ -282,7 +325,10 @@ wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
   - A D1 bookmark representing the state of a database at a specific point in time.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `time-travel info`
 
@@ -298,7 +344,10 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to execute a query on.
 - `--timestamp` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
-    {{</definitions>}}
+- `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Return output as JSON rather than a table.
+
+{{</definitions>}}
 
 ### `backup create`
 
@@ -312,7 +361,8 @@ wrangler d1 backup create <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to backup.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup list`
 
@@ -326,7 +376,8 @@ wrangler d1 backup list <DATABASE_NAME>
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to list the backups of.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup restore`
 
@@ -342,7 +393,8 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database to restore the backup into.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to restore.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `backup download`
 
@@ -364,7 +416,10 @@ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
   - The name of the D1 database you wish to download the backup of.
 - `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the backup you wish to download.
-    {{</definitions>}}
+- `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
+
+{{</definitions>}}
 
 ### `migrations create`
 
@@ -386,7 +441,8 @@ wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
   - The name of the D1 database you wish to create a migration for.
 - `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A descriptive name for the migration you wish to create.
-    {{</definitions>}}
+
+{{</definitions>}}
 
 ### `migrations list`
 
@@ -402,7 +458,12 @@ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database you wish to list unapplied migrations for.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
-    {{</definitions>}}
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+
+{{</definitions>}}
 
 ### `migrations apply`
 
@@ -424,9 +485,18 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}{{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
-    {{</definitions>}}
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute any unapplied migrations on your remote D1 database.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Number of queries to send in a single batch.
+
+{{</definitions>}}
 
 ---
 
@@ -561,6 +631,7 @@ wrangler vectorize get <INDEX_NAME>
   - The name of the index to fetch details for.
 
 {{</definitions>}}
+
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
@@ -694,7 +765,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 {{</definitions>}}
 
-`wrangler dev` is a way to [locally test](/workers/observability/local-development-and-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -1385,7 +1456,7 @@ wrangler r2 bucket sippy get <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to get the status of Sippy.
-  
+
 {{</definitions>}}
 
 ---
@@ -1449,7 +1520,7 @@ wrangler r2 object put <OBJECT_PATH> [OPTIONS]
   - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory for locally persisted data.
- {{</definitions>}}
+    {{</definitions>}}
 
 ### `delete`
 
@@ -1525,9 +1596,11 @@ wrangler secret delete <KEY> [OPTIONS]
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1580,15 +1653,17 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-  
+
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1743,7 +1818,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-  
+
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
@@ -2333,6 +2408,7 @@ wrangler types [<PATH>] [OPTIONS]
 {{<definitions>}}
 
 - `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
+
   - The path to where the declaration file for your Worker will be written.
   - The path to the declaration file must have a `d.ts` extension.
 
@@ -2341,6 +2417,5 @@ wrangler types [<PATH>] [OPTIONS]
   - Not valid if the Worker uses the Service Worker syntax.
 
 {{</definitions>}}
-
 
 <!--TODO Add examples of DTS generated output -->

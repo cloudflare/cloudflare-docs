@@ -37,8 +37,8 @@ C-- Egress via <br> Direct Server <br> Return --> D
 D -- Ingress --> B
 
 style A stroke: red,fill: red,color: white
-style B stroke: orange,fill: orange
-style C stroke: #ADD8E6,fill: #ADD8E6
+style B stroke: orange,fill: orange,color: black
+style C stroke: #ADD8E6,fill: #ADD8E6,color: black
 style D stroke: blue,fill: blue,color: white
 linkStyle 0 stroke-width:3px,stroke:red
 linkStyle 1 stroke-width:2px,stroke:orange

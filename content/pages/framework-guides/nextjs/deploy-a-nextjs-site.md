@@ -9,7 +9,7 @@ meta:
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 
-This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge).
+This guide will instruct you how to deploy a full-stack Next.js project which uses the [Edge Runtime](https://nextjs.org/docs/app/api-reference/edge), via the [`next-on-pages`](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages/docs) adapter.
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
@@ -37,7 +37,7 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 ## Configure and deploy a project without C3
 
-If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages#cloudflarenext-on-pages) for instructions and additional information to help you develop and deploy your project.
+If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use `@cloudflare/next-on-pages` and refer to its [README](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages) for instructions and additional information to help you develop and deploy your project.
 
 {{<render file="/_framework-guides/_git-integration.md">}}
 
@@ -87,7 +87,7 @@ Projects created with C3 have bindings for local development set up by default.
 
 {{</Aside>}}
 
-To set up bindings for use in local development, you will use the `setupDevBindings` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). This function allows you to specify bindings that work locally, and are accessed the same way remote bindings are.
+To set up bindings for use in local development, you will use the `setupDevPlatform` function provided by [`@cloudflare/next-on-pages/next-dev`](https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev). `setupDevPlatform` sets up a platform emulation based on your project's [`wrangler.toml`](/workers/wrangler/configuration/) file that your Next.js application can make use of locally.
 
 For example, to work with a KV binding locally, open the Next.js configuration file and add:
 
@@ -97,26 +97,18 @@ For example, to work with a KV binding locally, open the Next.js configuration f
 ```js
 ---
 filename: next.config.mjs
-highlight: [1, 6-18]
+highlight: [1-7]
 ---
-import { setupDevBindings } from '@cloudflare/next-on-pages/next-dev'
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev'
+
+// note: the if statement is present because you
+//       only need to use the function during development
+if (process.env.NODE_ENV === 'development') {
+  await setupDevPlatform()
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {}
-
-// we only need to use the function during development so Cloudflare can check `NODE_ENV`
-// (note: this check is recommended but completely optional)
-if (process.env.NODE_ENV === 'development') {
-  // call the function with the bindings you want to have access to
-  await setupDevBindings({
-    bindings: {
-      MY_KV: {
-        type: "kv",
-        id: "MY_KV",
-      },
-    },
-  })
-}
 
 export default nextConfig
 ```
@@ -127,26 +119,17 @@ export default nextConfig
 ```js
 ---
 filename: next.config.js / next.config.cjs
-highlight: [4-18]
+highlight: [1-6]
 ---
+// note: the if statement is present because you
+//       only need to use the function during development
+if (process.env.NODE_ENV === "development") {
+  const { setupDevPlatform } = require("@cloudflare/next-on-pages/next-dev")
+  setupDevPlatform()
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {}
-
-// we only need to use the function during development so we can check NODE_ENV
-// (note: this check is recommended but completely optional)
-if (process.env.NODE_ENV === "development") {
-  const { setupDevBindings } = require("@cloudflare/next-on-pages/next-dev")
-
-  // call the function with the bindings you want to have access to
-  setupDevBindings({
-    bindings: {
-      MY_KV: {
-        type: "kv",
-        id: "MY_KV",
-      },
-    },
-  })
-}
 
 module.exports = nextConfig
 ```
@@ -154,13 +137,58 @@ module.exports = nextConfig
 {{</tab>}}
 {{</tabs>}}
 
+Make sure to have a `wrangler.toml` file at the root of your project with a declaration for a KV binding named `MY_KV`:
+
+```toml
+---
+filename: wrangler.toml
+highlight: [5-7]
+---
+name = "my-next-app"
+
+compatibility_flags = ["nodejs_compat"]
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "<YOUR_KV_NAMESPACE_ID>"
+```
+
 ### Set up bindings for a deployed application
 
 To access bindings in a deployed application, you will need to [configure](/pages/functions/bindings/) any necessary bindings and connect them to your project via your project's settings page in the Cloudflare dashboard.
 
+### Add bindings to Typescript projects
+
+If your project is using TypeScript, you will want to set up proper type support so you can access your bindings in a type-safe and convenient manner.
+
+To get proper type support, you need to create a new `env.d.ts` file in your project and extend the `CloudflareEnv` (used by `getRequestContext`) interface with your [bindings](/pages/functions/bindings/).
+
+{{<Aside type="note">}}
+
+Projects created with C3 have a default `env.d.ts` file.
+
+{{</Aside>}}
+
+The following is an example of how to add a `KVNamespace` binding:
+
+```ts
+---
+filename: env.d.ts
+highlight: [7]
+---
+interface CloudflareEnv {
+  // The KV Namespace binding type used here comes
+  // from `@cloudflare/workers-types`. To use it in such
+  // a way make sure that you have installed the package
+  // as a dev dependency and you have added it to your
+  //`tsconfig.json` file under `compilerOptions.types`.
+  MY_KV: KVNamespace
+}
+```
+
 ### Access bindings in the application
 
-Local and remote bindings can be accessed directly from `process.env`. The following code example shows how to access them in a `hello` API route of an App Router application.
+Local and remote bindings can be accessed using the [`getRequestContext` function](https://github.com/cloudflare/next-on-pages/blob/3846730c4a0d12/packages/next-on-pages/README.md#cloudflare-platform-integration) exposed by `@cloudflare/next-on-pages`. The following code example shows how to access them in a `hello` API route of an App Router application.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -168,14 +196,20 @@ Local and remote bindings can be accessed directly from `process.env`. The follo
 ```js
 ---
 filename: app/api/hello/route.js
-highlight: [3]
+highlight: [1, 9]
 ---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+// ...
+
 export async function GET(request) {
-  // this is the KV binding you defined in the config file
-  const myKv = process.env.MY_KV;
+  // this is the KV binding you defined in the wrangler.toml file
+  const myKv = getRequestContext().env.MY_KV
 
   // get a value from the namespace
-  const kvValue = await myKv.get(`kvTest`) || false;
+  const kvValue = await myKv.get(`kvTest`) || false
 
   return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
 }
@@ -187,14 +221,21 @@ export async function GET(request) {
 ```ts
 ---
 filename: app/api/hello/route.ts
-highlight: [3]
+highlight: [2, 10]
 ---
+import type { NextRequest } from 'next/server'
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+// ...
+
 export async function GET(request: NextRequest) {
-  // this is the KV binding you defined in the config file
-  const myKv = process.env.MY_KV;
+  // this is the KV binding you defined in the wrangler.toml file
+  const myKv = getRequestContext().env.MY_KV
 
   // get a value from the namespace
-  const kvValue = await myKv.get(`kvTest`) || false;
+  const kvValue = await myKv.get(`kvTest`) || false
 
   return new Response(`The value of kvTest in MY_KV is: ${kvValue}`)
 }
@@ -202,40 +243,6 @@ export async function GET(request: NextRequest) {
 
 {{</tab>}}
 {{</tabs>}}
-
-### Add bindings to TypeScript projects
-
-{{<Aside type="note">}}
-
-Projects created with C3 have a default `env.d.ts` file.
-
-{{</Aside>}}
-
-To get proper type support, you need to create a new `env.d.ts` file in your project and declare a [binding](/pages/functions/bindings/).
-
-The following is an example of adding a `KVNamespace` binding:
-
-```ts
----
-filename: env.d.ts
-highlight: [4-10]
----
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      // The KV Namespace binding type used here comes
-      // from `@cloudflare/workers-types`. To
-      // use it like so, make sure that you have installed
-      // the package as a dev dependency and you have added
-      // it to your `tsconfig.json` file under
-      // `compilerOptions.types`.
-      MY_KV: KVNamespace;
-    }
-  }
-}
-
-export {};
-```
 
 ## `Image` component
 
@@ -262,7 +269,7 @@ To ensure that your application is being built in a manner that is fully compati
 If you have created your project with C3, do this by running:
 
 ```sh
-$ npm run pages:build && npm run pages:dev
+$ npm run preview
 ```
 
 If you have created your project without C3, run:
@@ -274,11 +281,148 @@ $ npx @cloudflare/next-on-pages@1
 And preview your project by running:
 
 ```sh
-$ npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat
+$ npx wrangler pages dev .vercel/output/static
 ```
+
+{{<Aside type="note">}}
+
+The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to run the application using the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) compatibility flag. The `nodejs_compat` flag can be specified in either your project's `wrangler.toml` file or provided to the command as an inline argument: `--compatibility-flag=nodejs_compat`.
+
+{{</Aside>}}
+
 
 ### Deploy your application and iterate
 
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
+
+## Troubleshooting
+
+Review common mistakes and issues that you might encounter when developing a Next.js application using `next-on-pages`.
+
+### Edge runtime
+
+All server-side routes in your Next.js project must be configured as Edge runtime routes when running on Cloudflare Pages. You must add `export const runtime = 'edge'` to each individual server-side route.
+
+
+{{<Aside type="note">}}
+
+If you are using the Pages router, for page routes, you need to use `'experimental-edge'` instead of `'edge'`.
+
+{{</Aside>}}
+
+### App router
+
+#### Not found
+
+Next.js generates a `not-found` route for your application under the hood during the build process. In some circumstances, Next.js can detect that the route requires server-side logic (particularly if computation is being performed in the root layout component) and Next.js might create a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+To prevent this incompatibility, Cloudflare recommends to always provide a custom `not-found` route which explicitly opts in the edge runtime:
+
+```ts
+---
+filename: (src/)app/not-found.(jsx|tsx)
+---
+
+export const runtime = 'edge'
+
+export default async function NotFound() {
+    // ...
+    return (
+        // ...
+    )
+}
+```
+
+{{<Aside type="note">}}
+
+Projects created with C3 have a default custom `not-found` page already created for them.
+
+{{</Aside>}}
+
+#### `generateStaticParams`
+
+When doing static site generation (SSG) in the [`/app` directory](https://nextjs.org/docs/getting-started/project-structure) and using the [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) function, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+In such cases you need to instruct Next.js not to do so by specifying a `false` [`dynamicParams`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams):
+
+```diff
+---
+filename: app/my-example-page/[slug]/page.jsx
+---
++ export const dynamicParams = false
+
+// ...
+```
+
+#### Top-level `getRequestContext`
+
+The `getRequestContext` function cannot be called at the top level of a route file or in any manner that triggers the function call as part of the file's initialization.
+
+`getRequestContext` must be called inside the request handling process logic and not in a global/unconditional manner that gets triggered as soon as the file is imported.
+
+For example, the following is an incorrect usage of `getRequestContext`:
+
+```js
+---
+filename: app/api/myvar/route.js
+highlight: [5]
+---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+const myVariable = getRequestContext().env.MY_VARIABLE
+
+export async function GET(request) {
+  return new Response(myVariable)
+}
+```
+
+The above example can be fixed in the following way:
+
+```js
+---
+filename: app/api/myvar/route.js
+highlight: [6]
+---
+import { getRequestContext } from '@cloudflare/next-on-pages'
+
+export const runtime = 'edge'
+
+export async function GET(request) {
+  const myVariable = getRequestContext().env.MY_VARIABLE
+  return new Response(myVariable)
+}
+```
+
+### Pages router
+
+#### `getStaticPaths`
+
+When doing static site generation (SSG) in the [`/pages`](https://nextjs.org/docs/getting-started/project-structure) directory and using the [`getStaticPaths`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths) function, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+
+In such cases, you need to instruct Next.js not to do so by specifying a [false `fallback`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false):
+
+```diff
+---
+filename: pages/my-example-page/[slug].jsx
+---
+// ...
+
+export async function getStaticPaths() {
+    // ...
+
+    return {
+        paths,
++       fallback: false,
+	}
+}
+```
+
+{{<Aside type="warning">}}
+
+The `paths` array cannot be empty. An empty `paths` array causes Next.js to ignore the provided `fallback` value. At build time, make sure that at least one entry is present in the array.
+
+{{</Aside>}}
 
 {{<render file="/_framework-guides/_learn-more.md" withParameters="Next.js">}}

@@ -3,7 +3,7 @@ download:
 	tar -xf minify.tar.gz
 
 hugo:
-	curl -L https://github.com/gohugoio/hugo/releases/download/v0.110.0/hugo_extended_0.110.0_Linux-64bit.tar.gz > hugo.tar.gz
+	curl -L https://github.com/gohugoio/hugo/releases/download/v0.123.5/hugo_extended_0.123.5_Linux-64bit.tar.gz > hugo.tar.gz
 	tar -xf hugo.tar.gz
 
 build: download hugo
