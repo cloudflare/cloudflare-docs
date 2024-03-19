@@ -109,7 +109,6 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 
 You can then run them using your package manager of choice:
 
-
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
 
@@ -279,7 +278,7 @@ Execute a query on a D1 database.
 wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 ```
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
 
 You must provide either `--command` or `--file` for this command to run successfully.
 
@@ -295,8 +294,10 @@ You must provide either `--command` or `--file` for this command to run successf
   - Path to the SQL file you wish to execute.
 - `-y, --yes` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Answer `yes` to any prompts.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--local` {{<type>}}boolean{{</type>}}{{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Execute commands/files against a local database for use with [wrangler dev](#dev).
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--json` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -484,8 +485,10 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}{{<prop-meta>}}optional{{</prop-meta>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute any unapplied migrations on your remote D1 database.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -628,6 +631,7 @@ wrangler vectorize get <INDEX_NAME>
   - The name of the index to fetch details for.
 
 {{</definitions>}}
+
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
@@ -761,7 +765,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 {{</definitions>}}
 
-`wrangler dev` is a way to [locally test](/workers/observability/local-development-and-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -1452,7 +1456,7 @@ wrangler r2 bucket sippy get <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the R2 bucket to get the status of Sippy.
-  
+
 {{</definitions>}}
 
 ---
@@ -1516,7 +1520,7 @@ wrangler r2 object put <OBJECT_PATH> [OPTIONS]
   - Interact with locally persisted data.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory for locally persisted data.
- {{</definitions>}}
+    {{</definitions>}}
 
 ### `delete`
 
@@ -1592,9 +1596,11 @@ wrangler secret delete <KEY> [OPTIONS]
 {{<definitions>}}
 
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - The variable name for this secret to be accessed in the Worker.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1647,15 +1653,17 @@ wrangler secret:bulk [<FILENAME>] [OPTIONS]
 {{<definitions>}}
 
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-  
+
 {{</definitions>}}
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
@@ -1810,7 +1818,7 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - Answer `"yes"` to confirmation prompt.
 
 {{</definitions>}}
-  
+
 ### `deployment list`
 
 List deployments in your Cloudflare Pages project.
@@ -2400,6 +2408,7 @@ wrangler types [<PATH>] [OPTIONS]
 {{<definitions>}}
 
 - `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `worker-configuration.d.ts`){{</prop-meta>}}
+
   - The path to where the declaration file for your Worker will be written.
   - The path to the declaration file must have a `d.ts` extension.
 
@@ -2408,6 +2417,5 @@ wrangler types [<PATH>] [OPTIONS]
   - Not valid if the Worker uses the Service Worker syntax.
 
 {{</definitions>}}
-
 
 <!--TODO Add examples of DTS generated output -->

@@ -24,13 +24,13 @@ meta:
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2024-03-12</td>
+      <td>2024-03-25</td>
+      <td>...d2f294d7</td>
+      <td>HTTP requests trying to impersonate browsers.</td>
+      <td>ddos_dynamic</td>
+      <td>ddos_dynamic</td>
+      <td>Update the rule to match to block attacks more consistently.</td>
     </tr>
   </tbody>
 </table>

@@ -2,6 +2,11 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-03-11'
+  description: |-
+    - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
+    - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
+    - Updated v8 to version 12.3.
 - publish_date: '2024-02-23'
   description: |-
     - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
@@ -103,7 +108,7 @@ entries:
     - The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
 - publish_date: '2023-03-24'
   description: |-
-    - Fixed a bug in Wrangler tail and and live logs on the dashboard that
+    - Fixed a bug in Wrangler tail and live logs on the dashboard that
     prevented the Administrator Read-Only and Workers Tail Read roles from successfully
     tailing Workers.
 - publish_date: '2023-03-09'
