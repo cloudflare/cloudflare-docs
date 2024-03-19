@@ -103,7 +103,7 @@ Email bindings allow you to send emails from your Worker. This is useful for whe
 
 - Learn more about [Workers AI bindings](/workers-ai/).
 - Create your first [AI binding](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai).
-- Configure Workers AI bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#ai).
+- Configure Workers AI bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#workers-ai).
 
 ### Browser bindings
 

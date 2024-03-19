@@ -36,11 +36,11 @@ import { add } from "./index.mjs";
 assert(add(1, 2) === 3);
 ```
 
-This test only assets that the `add` function is returning the correct value, but does not test the Worker itself like an [integration test](/workers/testing/integration-testing) would.
+This test only verifies that the `add` function is returning the correct value, but does not test the Worker itself like an [integration test](/workers/testing/integration-testing) would.
 
 ## Vitest integration
 
-The recommended way to unit test your Workers is by using the Workers Vitest integration. For more information on features, as well as installation and setup instructions, refer to the [Vitest integration Get Started guide](/workers/testing/vitest-integration/get-started/)
+The recommended way to unit test your Workers is by using the Workers Vitest integration. For more information on features, as well as installation and setup instructions, refer to the [Vitest integration Get Started guide](/workers/testing/vitest-integration/get-started/).
 
 {{<render file="_testing-pages-functions.md" productFolder="workers">}}
 
