@@ -26,7 +26,7 @@ export default {
       image: [...new Uint8Array(await exampleInputImage.arrayBuffer())],
     };
 
-    const response = await ai.run<"@cf/runwayml/stable-diffusion-v1-5-img2img">(
+    const response = await ai.run(
       "@cf/runwayml/stable-diffusion-v1-5-img2img",
       inputs
     );

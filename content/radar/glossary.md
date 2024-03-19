@@ -26,6 +26,8 @@ Data packets hop from one AS to another until they reach their final destination
 
 Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more in the [Cloudflare Learning Center](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/).
 
+On Cloudflare Radar, we provide time series charts for both the volume of BGP messages announced by ASes and the total size of their announced IP address space. BGP message volume shows the level of overall routing activity for a given AS, while announced IP address space indicates the size of the networks a given AS operates over time. We represent the IP address space size with the number of minimum routable network prefix sizes, which are the number of /24 prefixes for IPv4 and /48s for IPv6. Correspondingly, a /24 prefix represents 256 IP addresses while a /48 represents 2^80 IP addresses.
+
 ## BGP Route Leaks
 
 [BGP route leaks](https://www.rfc-editor.org/rfc/rfc7908.html) are defined as the propagation of routing announcements beyond their intended scope.

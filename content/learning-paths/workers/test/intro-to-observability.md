@@ -13,7 +13,7 @@ To explore observability, debugging and testing options for Workers, refer to [O
 
 ### Local development
 
-Refer to [Local development and testing](/workers/observability/local-development-and-testing/) to learn how to test your Worker locally with `wrangler dev`.
+Refer to [Local development and testing](/workers/testing/local-development/) to learn how to test your Worker locally with `wrangler dev`.
 
 ### Logs
 

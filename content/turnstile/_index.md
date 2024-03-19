@@ -29,6 +29,12 @@ Turnstile [widget types](/turnstile/reference/widget-types/) include:
 * A non-intrusive interactive challenge (such as clicking a button), if the visitor is a suspected bot.
 * An invisible challenge to the browser.
 
+<div class="medium-img">
+
+![Turnstile challenge](/images/turnstile/turnstile-gif.gif)
+
+</div>
+
 ---
 
 ## Accessibility
@@ -39,7 +45,7 @@ Turnstile is WCAG 2.1 AA compliant.
 
 ## Features
  
-{{<feature header="Turnstile Analytics" href="/turnstile/turnstile-analytics/">}}
+{{<feature header="Turnstile analytics" href="/turnstile/turnstile-analytics/">}}
 Assess the number of challenges issued, evaluate the challenge solve rate, and view the metrics of issued challenges.
 {{</feature>}}
  

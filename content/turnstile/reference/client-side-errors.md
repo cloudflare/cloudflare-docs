@@ -1,7 +1,7 @@
 ---
 title: Client-side error codes
 pcx_content_type: reference
-weight: 7
+weight: 6
 ---
 
 # Turnstile client-side error codes
@@ -20,7 +20,7 @@ If the error callback returns with a `no` or a falsy result, Turnstile will log 
 
 An error callback will retrieve an error code as its first parameter.
 
-## Retrying
+## Retry
 
 By default, Turnstile will automatically retry upon encountering a problem. When subsequent failures due to retries are observed, the error callback can be invoked multiple times.
 
