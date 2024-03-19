@@ -20,8 +20,8 @@ This guide covers how to configure Salesforce as a SAML application in Cloudflar
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-    - **Entity ID**: `https://<your-salesforce-domain>.my.salesforce.com`
-    - **Assertion Consumer Service URL**: `https://<your-salesforce-domain>.my.salesforce.com`
+    - **Entity ID**: `https://<your-domain>.my.salesforce.com`
+    - **Assertion Consumer Service URL**: `https://<your-domain>.my.salesforce.com`
     - **Name ID format**: _Email_
 7. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
 8. Select **Save configuration**.
@@ -44,7 +44,7 @@ This guide covers how to configure Salesforce as a SAML application in Cloudflar
     - **API name:** (this will pre-populate)
     - **Issuer:** `https://<your-team-name>.cloudflareaccess.com`, where `<your-team-name>` is your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
     - **Identity Provider Certificate**: Upload the `.crt` certificate file from [2. Create a certificate file](#2-create-a-certificate-file).
-    - **EntityID**: `https://<your-salesforce-domain>.my.salesforce.com`
+    - **EntityID**: `https://<your-domain>.my.salesforce.com`
     - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
 {{<details header="Configure Federation IDs" open="true">}}
 1. In the **Quick Find** box, enter `users` and select **Users**.
