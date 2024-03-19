@@ -20,55 +20,57 @@ Users new to Hyperdrive and/or Cloudflare Workers should visit the [Hyperdrive t
 
 To specify a database to connect to when developing locally, you can:
 
-* **Recommended** Create a `HYPERDRIVE_LOCAL_CONNECTION_STRING` environmental variable with the connection string of your database. This allows you to avoid committing potentially sensitive credentials to source control in your `wrangler.toml`, if your test/development database is not ephemeral.
+* **Recommended** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your `wrangler.toml` or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your `wrangler.toml`, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
 * Set `localConnectionString` in `wrangler.toml`.
 
-If both the `HYPERDRIVE_LOCAL_CONNECTION_STRING` environmental variable and `localConnectionString` in `wrangler.toml` are set, `wrangler dev` will use the environmental variable instead. Use `unset HYPERDRIVE_LOCAL_CONNECTION_STRING` to unset any existing environmental variables.
+If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable and `localConnectionString` in `wrangler.toml` are set, `wrangler dev` will use the environmental variable instead. Use `unset WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables. 
 
 For example, to use the environmental variable, export the environmental variable before running `wrangler dev`:
 
 ```sh
-$ export HYPERDRIVE_LOCAL_CONNECTION_STRING="postgres://user:password@localhost:5432/databasename"
-$ wrangler dev
+# Our configured Hyperdrive binding is "TEST_DB" 
+$ export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
+# Start a local development session referencing this local instance
+$ npx wrangler dev
 ```
 
 To configure a `localConnectionString` in `wrangler.toml`, ensure your Hyperdrive bindings have a `localConnectionString` property set:
 
 ```toml
 [[hyperdrive]]
-binding = "HYPERDRIVE"
+binding = "TEST_DB"
 id = "c020574a-5623-407b-be0c-cd192bab9545"
 localConnectionString = "postgres://user:password@localhost:5432/databasename"
 
 ## Example
 
-The following shows how to check your wrangler version, set a `HYPERDRIVE_LOCAL_CONNECTION_STRING` environmental variable, and run a `wrangler dev` session:
+The following shows how to check your wrangler version, set a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` environmental variable, and run a `wrangler dev` session:
 
 ```sh
 # Confirm we are using wrangler v3.0+
-$ wrangler --version
+$ npx wrangler --version
 ⛅️ wrangler 3.27.0
 
-# Set our environmental variable
-export HYPERDRIVE_LOCAL_CONNECTION_STRING="postgres://user:password@localhost:5432/databasename"
+# Set our environmental variable: our configured Hyperdrive binding is "TEST_DB".
+export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 
 # Start a local dev session:
-$ wrangler dev
+$ npx wrangler dev
 
 # Outputs:
 ------------------
-Found a non-empty HYPERDRIVE_LOCAL_CONNECTION_STRING variable. Hyperdrive will connect to this database
+Found a non-empty WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB variable. Hyperdrive will connect to this database
 during local development.
 
 wrangler dev now uses local mode by default, powered by 🔥 Miniflare and 👷 workerd.
 To run an edge preview session for your Worker, use wrangler dev --remote
 Your worker has access to the following bindings:
 - Hyperdrive configs:
-  - HYPERDRIVE: c020574a-5623-407b-be0c-cd192bab9545
+  - TEST_DB: c020574a-5623-407b-be0c-cd192bab9545
 ⎔ Starting local server...
 
 [mf:inf] Ready on http://127.0.0.1:8787/
-[b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit                                                                                 │
+[b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit
 ```
 
 Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) Hyperdrive configuration, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
