@@ -2,6 +2,12 @@
 link: "/hyperdrive/platform/changelog/"
 productName: Hyperdrive
 entries:
+  - publish_date: "2024-03-19"
+    title: Improved local development configuration
+    description: |-
+      Hyperdrive now supports a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable for configuring local development to use a test/non-production database, in addition to the `localConnectionString` configuration in `wrangler.toml`. 
+
+      Refer to the [local development documentation](/hyperdrive/configuration/local-development/) for instructions on how to configure Hyperdrive for local development.
   - publish_date: "2023-09-28"
     title: Hyperdrive now available
     description: |-
