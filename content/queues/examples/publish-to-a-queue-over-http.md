@@ -1,6 +1,6 @@
 ---
 title: Publish to a Queue via HTTP
-summary: Publish to a Queue directly via HTTP and Workers
+summary: Publish to a Queue directly via HTTP and Workers.
 pcx_content_type: configuration
 weight: 30
 layout: example
@@ -59,7 +59,7 @@ $ npx wrangler secret put QUEUE_AUTH_SECRET
 
 This secret will also need to be used by the client application writing to the queue: ensure you store it securely.
 
-### 1. Create the Worker
+### 2. Create the Worker
 
 The following Worker script:
 
@@ -127,7 +127,7 @@ To deploy this Worker:
 $ npx wrangler deploy
 ```
 
-### 2. Send a test message
+### 3. Send a test message
 
 To make sure you successfully authenticate and write a message to your queue, use `curl` on the command line:
 
