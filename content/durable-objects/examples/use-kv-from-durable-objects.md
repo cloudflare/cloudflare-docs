@@ -40,7 +40,7 @@ filename: src/index.ts
 ---
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
-  YOUR_DO_CLASS: DurableObject;
+  YOUR_DO_CLASS: DurableObjectNamespace;
 }
 
 export default {
