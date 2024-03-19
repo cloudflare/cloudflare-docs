@@ -53,66 +53,11 @@ Make sure you have:
 
 3. Repeat Steps 1-2 for each dedicated egress IP you want users to switch between.
 
-{{</tab>}}
-
-{{<tab label="api" no-code="true">}}
-
-1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. For example, this virtual network will correspond to an egress location in North America.
-
-    ```bash
-    curl --request POST \
-      --url https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/virtual_networks \
-      --header 'Content-Type: application/json' \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>' \
-      --data '{
-      "comment": "Virtual network to egress from North America",
-      "is_default": false,
-      "name": "vnet-AMER"
-    }'
-    ```
-
-2. Configure your virtual network to use the entire internal IP range of your private network and assign the corresponding tunnel.
-
-    ```bash
-    curl --request POST \
-      --url <https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes> \
-      --header 'Content-Type: application/json' \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>' \
-      --data '{
-      "comment": "Route 10.0.0.0/8 through vnet-AMER",
-      "ip_network": "10.0.0.0/8",
-      "virtual_network_id": <VNET_AMER_UUID>
-    }'
-    ```
-
-    ```bash
-    curl --request POST \
-      --url <https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes> \
-      --header 'Content-Type: application/json' \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>' \
-      --data '{
-      "comment": "Route 192.168.88.0/24 through vnet-AMER",
-      "ip_network": "192.168.88.0/24",
-      "virtual_network_id": <VNET_AMER_UUID>
-    }'
-    ```
-
-3. Repeat Steps 1-2 for each dedicated egress IP you want users to switch between.
-
-{{</tab>}}
-{{</tabs>}}
-
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Create an egress policy">}}
 
 Next, assign your dedicated egress IPs to each virtual network using Gateway egress policies.
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies**.
 2. Select **Add a policy**.
@@ -126,45 +71,6 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 5. In **Select an egress IP**, choose **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 6. Select **Create policy**.
 7. Repeat Steps 1-6 to create a separate egress policy for each virtual network you created.
-
-{{</tab>}}
-
-{{<tab label="api" no-code="true">}}
-
-Add a Gateway egress policy that matches the corresponding virtual network.
-
-```bash
-curl --request POST \
-    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-    --header 'Content-Type: application/json' \
-    --header 'X-Auth-Email: ' \
-    --data '{
-    "action": "egress",
-    "description": "Egress via North America by connecting to vnet-AMER",
-    "enabled": true,
-    "filters": [
-    "egress"
-    ],
-    "name": "Egress AMER vnet",
-    "precedence": 0,
-    "traffic": "net.vnet_id == <VNET_AMER_UUID>",
-    "identity": "",
-    "device_posture": "",
-    "version": 1,
-    "rule_settings": {
-      "egress": {
-        "ipv6": <DEDICATED_IPV6_ADDRESS>,
-        "ipv4": <DEDICATED_IPV4_ADDRESS>,
-        "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>
-        }
-    }
-}'
-```
-
-Repeat this step for each virtual network you created.
-
-{{</tab>}}
-{{</tabs>}}
 
 {{</tutorial-step>}}
 
