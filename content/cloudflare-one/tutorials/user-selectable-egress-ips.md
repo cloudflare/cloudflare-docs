@@ -165,7 +165,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 {{<tab label="api" no-code="true">}}
 
-Add a Gateway egress policy that matches the corresponding virtual network. For example:
+1. Add a Gateway egress policy that matches the corresponding virtual network. For example:
 
 ```bash
 curl --request POST \
@@ -192,10 +192,12 @@ curl --request POST \
 }'
 ```
 
-Create an egress policy for each virtual network you created. Each policy should correspond to a different primary dedicated egress IP.
+2. Repeat Step 1 to create an egress policy for each virtual network you created.
 
 {{</tab>}}
 {{</tabs>}}
+
+Each policy you create should correspond to a different primary dedicated egress IP.
 
 {{</tutorial-step>}}
 
