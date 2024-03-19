@@ -18,7 +18,6 @@ HTTP is a well established protocol that has several versions, and each version 
 At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Business customers. It will also be gradually enabled for Enterprise customers from March 19, 2024. For more details, refer to the warning below. 
 
 Follow these steps to enable HTTP/2 to Origin:
-It will also be gradually enabled for Enterprise customers from March 19, 2024, see below. 
 Please follow these steps to enable it:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
