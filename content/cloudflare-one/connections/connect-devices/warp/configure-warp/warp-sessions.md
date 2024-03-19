@@ -38,6 +38,14 @@ This timeout value does not apply to [WARP session checks in Gateway policies](#
 
 Users can now authenticate once with WARP and have access to your Access applications for the configured period of time. The session timer resets when the user re-authenticates with the IdP used to enroll in WARP.
 
+## Force user interaction with IdP
+
+If the user has an active browser session with the IdP, WARP will use the existing browser cookies to re-authenticate and the user will not be prompted to re-enter their credentials. You can override this behavior to require explicit user interaction in the IdP.
+
+### Supported IdPs
+
+- [Azure AD](/cloudflare-one/identity/idp-integration/azuread/#force-user-interaction-during-warp-reauthentication)
+
 ## Limitations
 
 - **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. You can revoke a device registration by going to **My Team** > **Devices**.
