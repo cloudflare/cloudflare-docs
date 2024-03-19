@@ -22,7 +22,7 @@ export default {
       "This is a story about a hugging emoji",
     ];
 
-    const embeddings = await ai.run<"{{ .Params.model.name }}">(
+    const embeddings = await ai.run(
       "{{ .Page.Params.model.name }}",
       {
         text: stories,

@@ -37,7 +37,7 @@ If you use these third-party tools, you should do the following to test website 
 5. Run a second speed test to get your baseline performance with Cloudflare.
 
 
-[^1]: The results of your first speed test with Cloudflare will likely contain uncached results, which will provide inaccurate results.<br/><br/>One of the key ways Cloudflare speeds up your site is through [caching](/fundamentals/concepts/how-cloudflare-works/#performance), which will appear in the results of the second test.
+[^1]: The results of your first speed test with Cloudflare will likely contain uncached results, which will provide inaccurate results.<br/><br/>One of the key ways Cloudflare speeds up your site is through [caching](/learning-paths/get-started/concepts/how-cloudflare-works/#performance), which will appear in the results of the second test.
 
 ### Improve speed
 
