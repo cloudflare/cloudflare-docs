@@ -102,3 +102,26 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 ```
 
 {{</details>}}
+
+## Limitations
+
+Major browsers have introduced restrictions on third-party cookies, the very kind of cookie
+used by waiting rooms in iframes. Waiting Room uses [Cookies Having Independent Partitioned State (CHIPS)](https://developer.mozilla.org/en-US/docs/Web/Privacy/Privacy_sandbox/Partitioned_cookies)
+to work around these restrictions, but there are some drawbacks:
+
+ - A user viewing the waiting room both within an iframe and outside the iframe will be
+   treated as two separate users, with each instance potentially exiting the queue at
+   different times and counting separately in analytics.
+ - For a waiting room to be embedded in an iframe, both the embedded page and the embedding
+   page must be accessed over HTTPS.
+ - CHIPS is not supported on Safari or Safari-derived browsers (e.g. Orion and most iOS browsers)
+   unless they have third-party cookie blocking disabled in their settings. These users will be
+   stuck at the end of the queue, unable to progress until the queue is empty, and may count
+   multiple times in analytics.
+
+In general, if there is an issue setting and retrieving the waiting room cookie, you should
+expect users to be stuck at the end of the queue, and counting as multiple users in analytics.
+
+These limitations may not apply if the embedded page and embedding page share a common domain
+name. For example, a page at `example.com` embedding a waiting room at `shop.example.com` may
+be considered first party by browsers, and not subject to third-party cookie restrictions.
