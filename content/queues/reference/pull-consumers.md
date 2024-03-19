@@ -41,9 +41,10 @@ Both read _and_ write are required as a pull-based consumer needs to write to th
 API tokens are presented as Bearer tokens in the `Authorization` header of a HTTP request in the format `Authorization: Bearer $YOUR_TOKEN_HERE`. The following example shows how to pass an API token using the `curl` HTTP client:
 
 ```sh
-$ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" --data '{"ack":["<lease_id_here>"], "retry":[]}' \
-     -H "Authorization: Bearer ${QUEUES_TOKEN}" \
-     -H "Content-Type:application/json"
+$ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
+  --data '{ "visibilityTimeout": 10000, "batchSize": 2 }' \
+  -H "Authorization: Bearer ${QUEUES_TOKEN}" \
+  -H "Content-Type: application/json"
 ```
 
 ### Create API tokens
