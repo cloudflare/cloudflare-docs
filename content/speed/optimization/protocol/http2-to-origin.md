@@ -15,7 +15,9 @@ HTTP is a well established protocol that has several versions, and each version 
 
 ## Enable HTTP/2 to Origin
 
-At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Business customers. Enterprise customers will need to enable this behavior, if they want to use HTTP/2. Please follow these steps to enable it:
+At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Business customers. 
+It will also be gradually enabled for Enterprise customers from March 19, 2024, see below. 
+Please follow these steps to enable it:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2.  Choose the domain that will use HTTP/2 to Origin.
@@ -24,8 +26,19 @@ At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Busines
 
 If the toggle is disabled, or the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 
-{{<Aside type="note" header="Note">}}
+{{<Aside type="warning">}}
+Starting March 19, 2024, we plan to gradually enable HTTP/2 to origin by default for all Enterprise customers. 
 
-At the moment, connection multiplexing is not supported by our implementation but will soon be available.
+We will connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). 
+If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using any number of tools (example [here](https://github.com/summerwind/h2spec)). For servers that do not announce HTTP/2 support, nothing will change from how Cloudflare connects to your origin server today. 
 
+If you do not want Cloudflare to connect to your origin via HTTP/2 you can either disable ALPN HTTP/2 support on your origin server, or set [origin_max_http_version to “1” via the API](https://developers.cloudflare.com/api/operations/zone-cache-settings-change-origin-max-http-version-setting) by March 19, 2024.
+
+Once the HTTP/2 to origin is enabled, you can navigate to **Speed > Optimization > Protocol Optimization** in the Cloudflare dashboard and set the toggle to Off to disable it. 
 {{</Aside>}}
+
+{{<Aside type="note" header="Note">}}
+At the moment, connection multiplexing is not supported by our implementation but will soon be available.
+{{</Aside>}}
+
+
