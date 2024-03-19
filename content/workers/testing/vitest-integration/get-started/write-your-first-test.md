@@ -222,7 +222,7 @@ export default {
     }
 
     return new Response("Hello World!");
-  },
+  }
 };
 ```
 {{</tab>}}
@@ -235,7 +235,7 @@ export default {
 	async fetch(request, env, ctx) {
     const { pathname } = new URL(request.url);
 
-    if(pathname === "/404") {
+    if (pathname === "/404") {
       return new Response("Not found", { status: 404 });
     }
 
