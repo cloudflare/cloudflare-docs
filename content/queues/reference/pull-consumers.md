@@ -32,6 +32,34 @@ To configure a pull-based consumer, you will need to create [an API token](/fund
 3. Pull messages 
 4. Acknowledge messages
 
+## Authentication
+
+HTTP Pull consumers require an [API token](/fundamentals/api/get-started/create-token/) with the `com.cloudflare.api.account.queues_read` and `com.cloudflare.api.account.queues_write` permissions.
+
+Both read _and_ write are required as a pull-based consumer needs to write to the queue state in order to acknowledge the messages it receives: consuming messages mutates the queue.
+
+API tokens are presented as Bearer tokens in the `Authorization` header of a HTTP request in the format `Authorization: Bearer $YOUR_TOKEN_HERE`. The following example shows how to pass an API token using the `curl` HTTP client:
+
+```sh
+$ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" --data '{"ack":["<lease_id_here>"], "retry":[]}' \
+     -H "Authorization: Bearer ${QUEUES_TOKEN}" \
+     -H "Content-Type:application/json" | jq
+```
+
+### Create API tokens
+
+To create an API token:
+
+1. Visit the API tokens page of the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/)
+2. Select **Create Token**
+3. Scroll to the bottom of the page and select **Create Custom Token**
+4. Give the token a name - e.g. `queue-pull-token`
+5. Under the **Permissions** section, choose **Account** and then **Queues**. Ensure you have selected **Edit** (read+write).
+6. (Optional) Select **All accounts** (default) or a specific account to scope the token to.
+7. Select **Continue to summary** and then **Create token**
+
+You will need to note the token down: it will only be displayed once.
+
 ## Content types
 
 {{<Aside type="warning">}}
@@ -109,4 +137,6 @@ The following example is a Go application that pulls from a queue on startup, ac
 ## Next steps
 
 * Review the [REST API documentation]() and schema for Queues
-* 
+* Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
+* Metrics
+* Configuration
