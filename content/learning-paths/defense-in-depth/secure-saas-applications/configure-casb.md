@@ -1,5 +1,5 @@
 ---
-title: Configure Cloudflare CASB
+title: Scan SaaS applications with Cloudflare CASB
 pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
@@ -7,7 +7,11 @@ layout: learning-unit
 
 {{<glossary-definition term_id="Cloudflare CASB">}}
 
-## Cloudflare CASB
+## Configure CASB
+
+{{<render file="casb/_configure-casb.md" productFolder="cloudflare-one">}}
+
+## Security features
 
 ### Inline CASB in Gateway
 
