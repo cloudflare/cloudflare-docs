@@ -15,7 +15,7 @@ A pull-based consumer allows you to pull from a queue over HTTP from any environ
 Deciding whether to configure a push-based consumer or a pull-based consumer will intend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
 
 * As a general rule-of-thumb, starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
-* Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, one batch at a time.
+* Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
 
 Note that you can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
 
@@ -27,12 +27,64 @@ To configure a pull-based consumer, you will need to create [an API token](/fund
 
 {{</Aside>}}
 
-1. Configure a consumer
-2. Authenticate to the API
-3. Pull messages 
-4. Acknowledge messages
+There are four steps required to configure a pull-based consumer and receive messages from a queue:
 
-## Authentication
+1. Enabling HTTP pull for the queue
+2. Creating a valid authentication token for the HTTP client
+3. Pulling message batches from the queue
+4. Acknowledging and/or retrying messages within a batch
+
+## 1. Enabling HTTP pull
+
+TODO: To enable HTTP pull 
+
+### wrangler.toml
+
+A HTTP consumer can be configured in `wrangler.toml` 
+
+```toml
+[[queues.consumer]]
+# Required
+queue = "QUEUE_NAME"
+type = "http_pull"
+# Optional
+visibility_timeout_ms = 5000
+max_retries = 5
+dead_letter_queue = "SOME_OTHER_QUEUE"
+```
+
+{{<Aside type="note">}}
+
+TODO - warn on conflicting configuration
+
+{{</Aside>}}
+
+### Dashboard
+
+TODO
+
+### wrangler CLI
+
+```sh
+$ npx wrangler queues consumer:http add $QUEUE_NAME
+```
+
+TODO - update 
+
+
+```sh
+$ wrangler queues consumer:worker remove $QUEUE_NAME $SCRIPT_NAME
+```
+
+{{<Aside type="note">}}
+
+If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from `wrangler.toml`, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
+
+Ensure you remove the consumer configuration first.
+
+{{</Aside>}}
+
+## 2. Consumer authentication
 
 HTTP Pull consumers require an [API token](/fundamentals/api/get-started/create-token/) with the `com.cloudflare.api.account.queues_read` and `com.cloudflare.api.account.queues_write` permissions.
 
@@ -75,16 +127,27 @@ Pull-based consumers cannot decode the `v8` content type as it is specific to th
 
 TODO - note on content types
 
-## Pulling messages
+## 3. Pulling messages
 
 TODO - 
 
 * Pulling
-* Concept of visibility timeouts
+* Concept of visibility timeouts and leases
 * Concurrent HTTP consumers and lease IDs
 * Batching
 
-## Acknowledging messages
+
+Each message returned in a batch has a `leaseID`, which is unique to that message, and holds or "leases" those messages to the consumer for the specified `visibilityTimeout`.
+
+The `leaseID` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery.
+
+There are two configurable settings when pulling from a queue:
+
+1. `batchSize` (defaults to 5; max 100) - how many messages are returned to the consumer in each pull.
+2. `visibilityTimeout` (defaults to 30 second; max 12 hours) - defines how long the consumer has to explicitly acknowledge messages delivered in the batch based on their `leaseID`. Once this timeout expires, messages are assumed unacknowledged and queued for re-delivery again.
+
+
+## 4. Acknowledging messages
 
 Messages pulled by a consumer need to be either acknowledged or marked for retry. 
 
@@ -97,14 +160,14 @@ Each batch of messages resembles the below:
 ```json
 "messages": [
   {
-    "body": "/w9vIgRwYXRoIgQvYmFyIgl0aW1lc3RhbXBOACD5bk6WeEIiC2V5ZWJhbGxDb2xvIgNGUkF7Aw==",
+    "body": "hello",
     "id": "36ea2f1830198434b38beecd0f0cd710",
     "timestampMs": 1689615003982,
     "attempts": 2,
     "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..RfWt2aMeYjBYybmg8rD14w.ywDMzXnWwvvQsVSUZHFS7Zgq-J7lEGyVUYnji3-9mW8.vVrSSHNvmaWR9Pf0RWjfrJ8BcMod33lVotDL20paKsw"
   },
   {
-    "body": "/w9vIgRwYXRoIgwvZmF2aWNvbi5pY28iCXRpbWVzdGFtcE4AoCJvTpZ4QiILZXllYmFsbENvbG8iA0ZSQXsD",
+    "body": "world",
     "id": "23ad9999022e4c0b5e691b117272872d",
     "timestampMs": 1689615004270,
     "attempts": 2,
