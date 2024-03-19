@@ -1,21 +1,20 @@
 ---
 pcx_content_type: how-to
 title: Generic OIDC application
-weight: 2
+weight: 1
 ---
 
 # Generic OIDC application
 
-This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the OIDC authentication protocol.
+This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the OpenID Connect (OIDC) authentication protocol.
 
-## 1. Get SaaS application URLs
+## 1. Get SaaS application URL
 
-Obtain the following URLs from your SaaS application account:
+In your SaaS application account, obtain the **Redirect URL** (also known as the callback URL). Cloudflare Access will redirect users to this endpoint after they successfully authenticate.
 
-- **Entity ID**: A unique URL issued for your SaaS application, for example `https://<your-domain>.my.salesforce.com`.
-- **Assertion Consumer Service URL**: The service provider's endpoint for receiving and parsing SAML assertions.
+Some SaaS applications provide the Redirect URL after you [configure a new SSO provider](#3-configure-sso-in-your-saas-application).
 
-## 2. Add your application to Access
+## 1. Add your application to Access
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
@@ -29,44 +28,49 @@ Obtain the following URLs from your SaaS application account:
 
 6. Select **Add application**.
 
-7. Enter the **Entity ID** and **Assertion Consumer Service URL** obtained from your SaaS application account.
+7. In **Scopes**, select the attributes that you want Access to send in the ID token.
 
-8. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
+    | Scope | Description |
+    | ----- | ----------- |
+    | `openid` | Include a unique identifier for the user (required). |
+    | `email` | Include the user's email address. |
+    | `profile` | Include all custom OIDC claims from the IdP. |
+    | `groups` | Include the user's IdP group membership. |
 
-9. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
+8. In **Redirect URLs**, enter the callback URL obtained from the SaaS application.
 
-{{<Aside type="note" header="IdP groups">}}
-If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
-{{</Aside>}}
+9. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+10. Copy the following values to input into your SaaS application. Different SaaS applications may require different sets of input values.
+    | Field | Description |
+    | ----- | ----------- |
+    | Client secret | Credential used to authorize Access as an SSO provider |
+    | Client ID | Unique identifier for this Access application |
+    | Configuration endpoint| If supported by your SaaS application, you can configure OIDC using this endpoint instead of manually entering each of the URLs below. |
+    | Issuer | Base URL for this OIDC integration |
+    | Token endpoint | Returns the user's ID token |
+    | Authorization endpoint |  URL where users authenticate with Access |
+    | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/)|
+    | User info endpoint | Returns all user claims in JSON format. |
 
-11. {{<render file="access/_access-block-page.md">}}
+11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-12. {{<render file="access/_access-choose-idps.md">}}
+12. {{<render file="access/_access-block-page.md">}}
 
-13. Select **Next**.
+13. {{<render file="access/_access-choose-idps.md">}}
+
+14. Select **Save configuration**.
 
 ## 2. Add an Access policy
 
-1. To control who can access your application, [create an Access policy](/cloudflare-one/policies/access/).
-
-2. Select **Next**.
-
-## 3. Configure SSO in your SaaS application
-
-Finally, you will need to configure your SaaS application to require users to log in through Cloudflare Access.
-
-1. Configure the following fields with your SAML SSO-compliant application:
-
-   - **SSO endpoint**
-   - **Access Entity ID or Issuer**
-   - **Public key**
-
-   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO Endpoint>/saml-metadata`. The SSO Endpoint can be copied out of the dashboard.
+1. To control who can access the SaaS application, [create an Access policy](/cloudflare-one/policies/access/).
 
 2. Select **Done**.
 
+## 3. Configure SSO in your SaaS application
+
+Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for specific instructions on how to configure a third-party OIDC SSO provider.
+
 ## 4. Test the integration
 
-In a browser, go to the SaaS application. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
+{{<render file="access/saas-apps/_test-integration.md" withParameters="the SaaS application's login URL">}}

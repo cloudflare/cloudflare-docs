@@ -33,40 +33,37 @@ Obtain the following URLs from your SaaS application account:
 
 8. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
 
-9. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
+9. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
+
+10. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
 {{<Aside type="note" header="IdP groups">}}
 If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 {{</Aside>}}
 
-10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-11. {{<render file="access/_access-block-page.md">}}
+12. {{<render file="access/_access-block-page.md">}}
 
-12. {{<render file="access/_access-choose-idps.md">}}
+13. {{<render file="access/_access-choose-idps.md">}}
 
-13. Select **Next**.
+14. Select **Save configuration**.
 
 ## 2. Add an Access policy
 
-1. To control who can access your application, [create an Access policy](/cloudflare-one/policies/access/).
-
-2. Select **Next**.
-
-## 3. Configure SSO in your SaaS application
-
-Finally, you will need to configure your SaaS application to require users to log in through Cloudflare Access.
-
-1. Configure the following fields with your SAML SSO-compliant application:
-
-   - **SSO endpoint**
-   - **Access Entity ID or Issuer**
-   - **Public key**
-
-   You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO Endpoint>/saml-metadata`. The SSO Endpoint can be copied out of the dashboard.
+1. To control who can access the SaaS application, [create an Access policy](/cloudflare-one/policies/access/).
 
 2. Select **Done**.
 
+## 3. Configure SSO in your SaaS application
+
+Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for specific instructions on how to configure a third-party SAML SSO provider. You will need the following values from the Zero Trust dashboard:
+
+- **SSO endpoint**
+- **Access Entity ID or Issuer**
+- **Public key**
+
+You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO endpoint>/saml-metadata`.
 ## 4. Test the integration
 
 {{<render file="access/saas-apps/_test-integration.md" withParameters="the SaaS application's login URL">}}
