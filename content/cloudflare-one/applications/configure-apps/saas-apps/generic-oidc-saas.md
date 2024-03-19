@@ -46,7 +46,7 @@ Some SaaS applications provide the Redirect URL after you [configure a new SSO p
     | ----- | ----------- |
     | Client secret | Credential used to authorize Access as an SSO provider |
     | Client ID | Unique identifier for this Access application |
-    | Configuration endpoint| If supported by your SaaS application, you can configure OIDC using this endpoint instead of manually entering each of the URLs below. |
+    | Configuration endpoint| If supported by your SaaS application, you can configure OIDC using this endpoint instead of manually entering the URLs listed below. |
     | Issuer | Base URL for this OIDC integration |
     | Token endpoint | Returns the user's ID token |
     | Authorization endpoint |  URL where users authenticate with Access |
@@ -69,7 +69,7 @@ Some SaaS applications provide the Redirect URL after you [configure a new SSO p
 
 ## 3. Configure SSO in your SaaS application
 
-Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for specific instructions on how to configure a third-party OIDC SSO provider.
+Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party OIDC SSO provider.
 
 ## 4. Test the integration
 

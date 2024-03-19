@@ -57,7 +57,7 @@ If you are using Okta, AzureAD, Google Workspace, or GitHub as your IdP, Access 
 
 ## 3. Configure SSO in your SaaS application
 
-Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for specific instructions on how to configure a third-party SAML SSO provider. You will need the following values from the Zero Trust dashboard:
+Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party SAML SSO provider. You will need the following values from the Zero Trust dashboard:
 
 - **SSO endpoint**
 - **Access Entity ID or Issuer**
