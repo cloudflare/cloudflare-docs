@@ -12,7 +12,7 @@ A pull-based consumer allows you to pull from a queue over HTTP from any environ
 
 ## Push or pull?
 
-Deciding whether to configure a push-based consumer or a pull-based consumer will intend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
+Deciding whether to configure a push-based consumer or a pull-based consumer will depend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
 
 * As a general rule-of-thumb, starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
 * Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
@@ -113,20 +113,6 @@ To create an API token:
 
 You will need to note the token down: it will only be displayed once.
 
-## Content types
-
-{{<Aside type="warning">}}
-
-When attaching a pull-based consumer to a queue, you should ensure that messages are sent with only a `text`, `bytes` or `json` [content type](/queues/reference/javascript-apis/#queuescontenttype).
-
-The default content type is `json`.
-
-Pull-based consumers cannot decode the `v8` content type as it is specific to the Workers runtime.
-
-{{</Aside>}}
-
-TODO - note on content types
-
 ## 3. Pulling messages
 
 TODO - 
@@ -197,6 +183,20 @@ The following example is a Go application that pulls from a queue on startup, ac
 
 
 ```
+
+## Content types
+
+{{<Aside type="warning">}}
+
+When attaching a pull-based consumer to a queue, you should ensure that messages are sent with only a `text`, `bytes` or `json` [content type](/queues/reference/javascript-apis/#queuescontenttype).
+
+The default content type is `json`.
+
+Pull-based consumers cannot decode the `v8` content type as it is specific to the Workers runtime.
+
+{{</Aside>}}
+
+TODO - note on content types
 
 ## Next steps
 
