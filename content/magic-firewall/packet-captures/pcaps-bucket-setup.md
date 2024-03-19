@@ -1,12 +1,12 @@
 ---
-weight: 2
 title: PCAPs bucket setup
 pcx_content_type: how-to
+weight: 2
 ---
 
 # Set up a bucket for full packet captures
 
-Before you can begin a full {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} capture, you must first configure a bucket that Cloudflare can use to upload your files.
+Before you can begin a full {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} capture, you must first configure a bucket that Cloudflare can use to upload your files. Setting up a bucket is not required for sample packet captures.
 
 You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target.
 
@@ -19,12 +19,11 @@ Learn how to set up a bucket for use with full packet captures.
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
-3. In **Packet captures**, select **Start a capture**.
-4. From the **Packet captures** page, select the **Buckets** tab.
-5. Select **Add a bucket**.
-6. Under **Bucket configuration**, select a bucket service and select **Next**.
-7. Enter the information related to your bucket for your service provider.
-8. When you are done, select **Next**.
+3. From the **Packet captures** page, select the **Buckets** tab.
+4. Select **Add a bucket**.
+5. Under **Bucket configuration**, select a bucket service and select **Next**.
+6. Enter the information related to your bucket for your service provider.
+7. When you are done, select **Next**.
 
 The **Prove ownership** step of the **Bucket configuration** displays.
 

@@ -12,7 +12,7 @@ meta:
 
 {{<table-wrap>}}
 
-| Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) and [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model))      |
+| Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model),  [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model)) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
@@ -62,7 +62,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 {{<table-wrap>}}
 
-| Feature                     | Free                                       | [Bundled Usage Model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound Usage Model](/workers/platform/pricing/#example-pricing-unbound-usage-model)|
+| Feature                     | Free                                       | [Bundled usage model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model|
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
@@ -166,13 +166,21 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## Subrequests
 
-A subrequest is any request that a Worker makes to another Internet resource using the [Fetch API](/workers/runtime-apis/fetch/).
+A subrequest is any request that a Worker makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
+
+### Worker-to-Worker subrequests
+
+To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/configuration/bindings/about-service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
+
+If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without service bindings, the request will fail.
+
+If you make a subrequest from your Worker to a target Worker that runs on a [Custom Domain](/workers/configuration/routing/custom-domains/#worker-to-worker-communication) rather than a route, the request will be allowed.
 
 ### How many subrequests can I make?
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of usage model.
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker. 
 
 ### How long can a subrequest take?
 
@@ -193,13 +201,36 @@ While handling a request, each Worker is allowed to have up to six connections o
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
 - Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
-Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+Once a Worker has six connections open, it can still attempt to open additional connections.
 
-If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+* These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
+* Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+
+If you have cases in your application that use `fetch()` but that do not require consuming the response body, you can avoid the unread response body from consuming a concurrent connection by using `response.body.cancel()`.
+
+For example, if you want to check whether the HTTP response code is successful (2xx) before consuming the body, you should explicitly cancel the pending response body:
+
+```ts
+let resp = await fetch(url)
+
+// Only read the response body for successful responses
+if (resp.statusCode <= 299) {
+  // Call resp.json(), resp.text() or otherwise process the body
+} else {
+  // Explicitly cancel it
+  resp.body.cancel()
+}
+```
+
+This will free up an open connection.
+
+If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker.
+
+If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
 
 {{<Aside type="note">}}
 
-Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/service-bindings/)) will share the simultaneous open connection limit.
+Simultaneous Open Connections are measured from the top-level request, meaning any connections open from Workers sharing resources (for example, Workers triggered via [Service bindings](/workers/runtime-apis/bindings/service-bindings/)) will share the simultaneous open connection limit.
 
 {{</Aside>}}
 
@@ -275,9 +306,9 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/tail-workers/).
+You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logging/tail-workers/).
 
-Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
+Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logging/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
 
 ## Related resources
 

@@ -60,7 +60,7 @@ In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/
 
 The **Duration** chart underneath **Median CPU time** in the **Functions metrics** dashboard shows historical [duration](/workers/platform/limits/#duration) per Function execution. The data is broken down into relevant quantiles, similar to the CPU time chart. 
 
-Understanding duration on your Function is useful when you are intending to do a significant amount of computation on the Function itself. This is because you may have to use the Unbound usage model which allows up to 30 seconds of CPU time. The Unbound model is charged on duration, refer to [Pricing](/workers/platform/pricing/#workers) for more information. 
+Understanding duration on your Function is useful when you are intending to do a significant amount of computation on the Function itself. This is because you may have to use the Standard or Unbound usage model which allows up to 30 seconds of CPU time.
 
 Workers on the [Bundled Usage Model](/workers/platform/pricing/#workers) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like fetch requests and waiting on responses.
 

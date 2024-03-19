@@ -10,7 +10,7 @@ D1 supports a number of database-level commands that allow you to list tables, i
 
 ## Commands
 
-You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/how-to/query-databases/).
+You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/d1-client-api/).
 
 ### `PRAGMA table_list`
 
@@ -68,7 +68,7 @@ Shows the schema (columns, types, null, default values) for the given `TABLE_NAM
 
 ### `PRAGMA table_xinfo(TABLE_NAME)`
 
-Similar to `PRAGMA table_info(TABLE_NAME)` but also includes [generated columns](/d1/how-to/generated-columns/).
+Similar to `PRAGMA table_info(TABLE_NAME)` but also includes [generated columns](/d1/reference/generated-columns/).
 
 ### `PRAGMA index_list(TABLE_NAME)`
 
@@ -99,7 +99,7 @@ Show the indexed column(s) for the given `INDEX_NAME`.
 You can also query the `sqlite_master` table to show all tables, indexes, and the original SQL used to generate them:
 
 ```sql
-SELECT name, sql FROM sqlite_master"
+SELECT name, sql FROM sqlite_master
 ```
 ```json
       {
@@ -122,6 +122,6 @@ SELECT name, sql FROM sqlite_master"
 
 ## Related resources
 
-* Learn [how to create indexes](/d1/how-to/using-indexes/#list-indexes) in D1.
-* Use D1's [JSON functions](/d1/how-to/querying-json/) to query JSON data.
+* Learn [how to create indexes](/d1/build-with-d1/use-indexes/#list-indexes) in D1.
+* Use D1's [JSON functions](/d1/reference/query-json/) to query JSON data.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.

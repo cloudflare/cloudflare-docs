@@ -22,6 +22,28 @@ The WARP client does not run on Windows Server. Refer to the [downloads page](/c
 
 The WARP client does not support multiple users on a single Windows device. WARP uses hard-coded global paths to store settings and keys and does not save information on a per-user basis. Therefore, after one user logs into WARP, their settings will apply to all traffic from the device.
 
+## nslookup on Windows in DoH mode
+
+On Windows devices in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
+
+```txt
+C:\Users\JohnDoe>nslookup google.com
+Server:  UnKnown
+Address:  ::ffff:127.0.2.2
+
+*** UnKnown can't find google.com: No response from server
+```
+
+To work around the issue, specify the IPv4 address of the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) in your query:
+  ```bash
+  C:\Users\JohnDoe>nslookup google.com 127.0.2.2
+  ```
+
+Alternatively, use Powershell:
+  ```powershell
+  PS C:\Users\JohnDoe> Resolve-DnsName -Name google.com
+  ```
+
 ## 4G/5G embedded modules
 
 Because of how the WARP client instantiates the local DNS Proxy, it is incompatible with 4G/5G cellular adaptors which have IPv6 enabled.  To run WARP on these devices, you will need to disable IPv6 on the system.

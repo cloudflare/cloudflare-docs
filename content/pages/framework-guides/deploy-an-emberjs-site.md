@@ -32,7 +32,7 @@ $ npm start
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -50,4 +50,4 @@ Every time you commit new code to your Ember site, Cloudflare Pages will automat
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-{{<render file="_learn-more.md" withParameters="Ember">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Ember">}}

@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 1
 ---
 
-{{<heading-pill style="beta">}}Security Analytics{{</heading-pill>}}
+# Security Analytics
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
@@ -90,7 +90,7 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack analysis**, **Bot analysis**, and **Uploaded content** analysis sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
+The **Attack analysis**, **Bot analysis**, and **Uploaded content analysis** sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
 
 You can examine different traffic segments according to the current metric (attack, bot, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
@@ -100,7 +100,7 @@ Additionally, you can use the slider tool below the chart to filter incoming req
 
 The main chart displays the following data for the selected time frame, according to the selected tab:
 
-* **HTTP requests**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
+* **Traffic analysis**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
 
     * **Mitigated by WAF**: Requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. It does not include requests that had the following actions applied: _Log_, _Skip_, and _Allow_.
     * **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
@@ -110,7 +110,13 @@ The main chart displays the following data for the selected time frame, accordin
 * **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, or _Likely human_.
 * **Rate limit analysis**: displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
 
-### Sampled logs
+### Logs
+
+Security Analytics shows request logs for the selected time frame and applied filters, along with detailed information and security analyses of those requests.
+
+By default, Security Analytics uses sampled logs for the logs table. If you are subscribed to [Log Explorer](/logs/log-explorer/) {{<inline-pill style="beta">}}, you may also have access to [raw logs](#raw-logs).
+
+#### Sampled logs
 
 This section contains detailed log information for individual ([sampled](#final-remarks)) requests in the selected time frame.
 
@@ -125,6 +131,30 @@ The displayed information includes:
 * Security scores for the request (attack, bot, uploaded content scanning)
 * Request properties
 
+{{<heading-pill style="beta" heading="h4">}}Raw logs{{</heading-pill>}}
+
+{{<Aside type="note">}}
+This feature is currently in its early access phase. Contact your account team to request access.
+{{</Aside>}}
+
+When performing a forensic analysis, you sometimes select a very short time frame and apply several filters to identify a specific set of requests. In this situation, to get a better understanding of the incoming requests at a given point in time, you would require the full list of requests and not just a sample.
+
+By default, Security Analytics shows sampled logs based on the filters you apply. Under certain conditions, you can switch to **Raw logs**. This view shows all the request logs for the selected time frame and filters instead of sampled logs. At this time, this view is only available when the number of sampled logs shown in the Security Analytics page is low.
+
+##### View raw logs
+
+To switch from sampled logs to raw logs, select **Switch to raw logs** under **Sampled logs**. This option is only available when the number of (sampled) logs for the selected time frame is low.
+
+To switch from raw logs back to sampled logs, select **Switch back to sampled logs**.
+
+##### Query raw logs using Log Explorer
+
+You can switch to [Log Explorer](/logs/log-explorer/) {{<inline-pill style="beta">}} to dive deeper on your analysis while applying the same filters you used in Security Analytics. Raw logs in Security Analytics are based on the same data source used in Log Explorer.
+
+{{<Aside type="note" header="Note">}}
+Currently, changing the time frame or the applied filters while showing raw logs may cause the Cloudflare dashboard to switch automatically to sampled logs. This happens if the total number of request logs for the selected time frame is high.
+{{</Aside>}}
+
 ## Final remarks
 
-The Security Analytics dashboard uses [sampled data](/analytics/graphql-api/sampling/). Most information in the dashboard is obtained from `httpRequestsAdaptiveGroups` and `httpRequestsAdaptive` GraphQL nodes. For more information on working directly with GraphQL datasets, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).
+The Security Analytics dashboard uses [sampled data](/analytics/graphql-api/sampling/), except when showing raw logs. Most information in the dashboard is obtained from `httpRequestsAdaptiveGroups` and `httpRequestsAdaptive` GraphQL nodes. For more information on working directly with GraphQL datasets, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).

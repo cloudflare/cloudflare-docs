@@ -1,5 +1,5 @@
 ---
-weight: 1
+weight: 2
 title: Get started
 pcx_content_type: get-started
 ---
@@ -52,7 +52,6 @@ When setting up your `d1-tutorial` Worker, answer the questions as below:
 - Your directory has been titled `d1-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
-- Select `yes` to using Git.
 - Select `no` to deploying.
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
@@ -86,8 +85,7 @@ For reference, a good database name is:
 - Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
 - Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
 - Only used for describing the database, and is not directly referenced in code.
-{{</Aside>}}
-
+  {{</Aside>}}
 
 ```sh
 $ npx wrangler d1 create prod-d1-tutorial
@@ -123,11 +121,11 @@ Specifically:
 
 - The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/how-to/query-databases/) is exposed on this binding.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
 
 {{<Aside type="note">}}
 
-When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/how-to/query-databases/).
+When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/build-with-d1/d1-client-api/).
 
 {{</Aside>}}
 
@@ -151,16 +149,17 @@ INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds
 You will initialize your database to run and test locally first. Bootstrap your new D1 database by running:
 
 ```sh
-$ npx wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
+$ npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
 ```
 
 Then validate your data is in your database by running:
 
 ```sh
-$ npx wrangler d1 execute <DATABASE_NAME> --local --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
 ```
 
-You should see the following output: 
+You should see the following output:
+
 ```sh
 🌀 Mapping SQL input into an array of statements
 🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
@@ -174,6 +173,7 @@ You should see the following output:
 │ 11         │ Bs Beverages        │ Victoria Ashworth │
 ├────────────┼─────────────────────┼───────────────────┤
 │ 13         │ Bs Beverages        │ Random Name       │
+└────────────┴─────────────────────┴───────────────────┘
 ```
 
 ### Write queries within your Worker
@@ -182,7 +182,7 @@ After you have set up your database, you will run an SQL query from within your 
 
 First, go to your `d1-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 
-Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `DB`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file:
 
 ```typescript
 ---
@@ -218,7 +218,7 @@ export default {
 In the code above, you:
 
 1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`.
-2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/how-to/query-databases/) with a placeholder (the `?` in the query).
+2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/build-with-d1/d1-client-api/) with a placeholder (the `?` in the query).
 3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
 4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
 5. Return your query results, if any, in JSON format with `Response.json(results)`.
@@ -244,13 +244,13 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
 ```sh
-$ npx wrangler d1 execute prod-d1-tutorial --file=./schema.sql
+$ npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
 ```
 
 Then validate the data is in production by running:
 
 ```sh
-$ npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
+$ npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
@@ -268,8 +268,8 @@ By finishing this tutorial, you have created a D1 database, a Worker to access t
 
 ## Next steps
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1).
-- Learn how to use the [D1 client API](/d1/how-to/query-databases/) within your Worker.
+- Learn how to use the [D1 client API](/d1/build-with-d1/d1-client-api/) within your Worker.
 - Explore [community projects built on D1](/d1/reference/community-projects/).

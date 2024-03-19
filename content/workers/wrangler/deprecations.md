@@ -261,4 +261,4 @@ Routes are specified in the `wrangler.toml` configuration file.
 | Feature    | v1  | v2  | Notes                                                                                                                                                                 |
 | ---------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.     |
-| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/miniflare). |
+| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare/). |

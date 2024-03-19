@@ -63,7 +63,7 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 ## Develop locally with Pages
 
-You can develop against a _local_ (only) D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
+You can [develop against a _local_ (only) D1 database when using Cloudflare Pages](/pages/functions/bindings/#interact-with-your-d1-databases-locally) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
 
 Your `wrangler.toml` should resemble the following:
 
@@ -212,4 +212,4 @@ Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for mo
 
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
 * Learn [how to debug D1](/d1/observability/debug-d1/).
-* Understand how to [access logs](/workers/observability/log-from-workers/) generated from your Worker and D1.
+* Understand how to [access logs](/workers/observability/logging/) generated from your Worker and D1.

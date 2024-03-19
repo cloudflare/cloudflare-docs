@@ -19,8 +19,8 @@ For example, a read query that populates the front page of a news site would be 
 ```sql
 -- Cacheable
 SELECT * FROM articles
-WHERE published_date = CURRENT_DATE()
-ORDER BY CURRENT_DATE() DESC
+WHERE DATE(published_time) = CURRENT_DATE()
+ORDER BY published_time DESC
 LIMIT 50
 ```
 

@@ -8,7 +8,6 @@ weight: 7
 
 There are instances where Turnstile may encounter problems, invoking `error-callback`. Refer to the list of [common error codes](/turnstile/reference/client-side-errors/#error-codes) below for troubleshooting steps to address them. 
 
-
 ## Error handling
 
 The `error-callback` option for explicitly rendering widgets and the `data-error-callback` attribute on implicit rendering provides a JavaScript callback to handle potential errors that occur.
@@ -26,9 +25,18 @@ An error callback will retrieve an error code as its first parameter.
 By default, Turnstile will automatically retry upon encountering a problem. When subsequent failures due to retries are observed, the error callback can be invoked multiple times.
 
 You can adjust the retry behavior by setting the `retry` value to `never` instead of the default `auto`. This will result in Turnstile not automatically retrying.
-An implementation may call `turnstile.reset()` in their corresponding `error-callback` to manually trigger a retry.
+
+An implementation may call `turnstile.reset()` in the corresponding `error-callback` to manually trigger a retry.
 
 The interval in between retries of Turnstile can be configured by the `retry-interval` option. 
+
+## Interactivity
+
+If the user fails to engage with an interactive challenge within a reasonable timeframe, the timeout callback function is triggered.
+
+For instance, in a scenario where the Turnstile widget is implemented within a lengthy form that may require several minutes to complete, the interactive challenge within the widget becomes outdated if it remains unaddressed for an extended period.
+
+In such instances, the `timeout-callback` of the widget is activated, enabling the widget to reset itself as needed.
 
 ## Error codes
 
@@ -53,7 +61,8 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `110430` | This error occurs when an unsupported or incorrectly formatted action is submitted. The "Invalid CDATA" error in Turnstile refers to an issue encountered when processing Custom Data (CDATA). This error occurs when the CDATA provided does not adhere to the expected format or contains invalid characters. | No | Ensure that the CDATA conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. | 
 | `110500` | The visitor is using an unsupported browser. | No | Encourage the visitor to upgrade their browser or verify otherwise. |
 | `110510` | The visitor provided an inconsistent user-agent throughout the process of solving Turnstile. | No | The visitor may have browser extensions or settings enabled to spoof their user agent and should disable them to proceed. |
-| `110600` | The visitor took too long to solve the challenge | Yes | Retry the challenge. The visitor additionally may have a system clock set to a wrong date. | 
+| `11060*` | The visitor took too long to solve the challenge and the challenge timed out. | Yes | Retry the challenge. The visitor also may have a system clock set to a wrong date. |
+| `11062*` | Visible Mode only: The visitor took too long to solve the interactive challenge and the challenge became outdated. | Yes | Reset the widget and re-initialize it to give the visitor the chance to solve the widget again. |
 | `120***` | Error Code Family: Internal Errors for Cloudflare Employees. | No | Only encountered by Cloudflare Support Engineers while debugging. | 
 | `200010` | Invalid Caching: Some portion of Turnstile was accidentally cached. | No | Encourage the visitor to clear their cache. | 
 | `200100` | Time Problem: The visitor's clock is incorrect. | No | Encourage the visitor to set their clock to the correct time. | 

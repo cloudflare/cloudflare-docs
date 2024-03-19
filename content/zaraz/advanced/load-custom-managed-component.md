@@ -10,9 +10,6 @@ Zaraz supports loading custom third-party tools using [Managed Components](https
 
 If you are new to Managed Components, we recommend you get started with [creating your own Managed Component](https://managedcomponents.dev/getting-started/quickstart) or check out [our demo Managed Component](https://github.com/managed-components/demo).
 
-{{<Aside type="note">}}
-Custom Managed Components are only available for accounts on a [Workers Paid plan](/workers/platform/pricing/).
-{{</Aside>}}
 
 ## Prepare a Managed Component
 
@@ -75,5 +72,4 @@ As of now, Custom Managed Components do not support the use of the following met
 - `manager.registerEmbed`
 - `manager.registerWidget`
 - `manager.proxy`
-- `manager.route`
 - `manager.serve`
