@@ -136,10 +136,10 @@ If using the drag and drop method, a red warning symbol will appear next to an a
 
 {{<Aside type="warning">}}
 
-Projects configured with [Direct Upload](/pages/get-started/direct-upload/) currently cannot have their production branch changed through the Cloudflare dashboard. However, this can be changed using the [Update project](/api/operations/pages-project-update-project) API endpoint:
+Pages projects configured with Direct Upload currently cannot have their production branch changed through the Cloudflare dashboard. However, this can be changed using the [Update project](/api/operations/pages-project-update-project) API endpoint:
 
 ```sh
-$ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUNT_IDENTIFIER_HERE>/pages/projects/<PROJECT_NAME> \
+$ curl --request PATCH --url https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name} \
  --header 'Content-Type: application/json' \
  --header 'Authorization: Bearer <API_TOKEN>' \
  --data '{ "production_branch": "<PROD_BRANCH_NAME>" }'
