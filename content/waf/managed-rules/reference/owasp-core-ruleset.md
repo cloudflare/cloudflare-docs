@@ -46,8 +46,8 @@ The following example calculates the request threat score for an incoming reques
 
 Evaluated rules:
 
-Rule     | Paranoia level | Rule matched?   | Rule score | Running threat score
----------|----------------|-----------------|-----------:|--------------------:
+Rule     | Paranoia level | Rule matched?   | Rule score | Cumulative threat score
+---------|----------------|-----------------|-----------:|-----------------------:
 –        | –              | –               | –          | 0
 Rule #1  | PL1            | Yes             | +5         | 5
 Rule #2  | PL1            | Yes             | +5         | 10
