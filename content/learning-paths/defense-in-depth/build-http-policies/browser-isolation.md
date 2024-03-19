@@ -203,6 +203,27 @@ curl --request POST \
 
 ### Vendor-chain using link-based isolation
 
-Many vendors that may exist within your security framework that support URL manipulation can become an on-ramp for Browser Isolation to add additional security controls. For example, vendors like Zscaler and Proofpoint allow you to prepend links to URLs in a static or dynamic format -- some Cloudflare users have seen success by prepending the clientless isolation link generated for your Cloudflare account to derive additional security benefits for potentially risky clicks. This means that if you have traffic not sent through Cloudflare today (such as through another proxy), you can potentially prepend specific filtered requests with a link to automatically send the traffic to a Cloudflare isolated browser session without an endpoint agent installed.
+Many vendors that may exist within your security framework can support URL manipulation. URL manipulation can become an on-ramp for Browser Isolation to add additional security controls. For example, vendors like Zscaler and Proofpoint allow you to prepend links to URLs in a static or dynamic format -- some Cloudflare users have seen success by prepending the clientless isolation link generated for your Cloudflare account to derive additional security benefits for potentially risky clicks. This means that if you have traffic not sent through Cloudflare today (such as through another proxy), you can potentially prepend specific filtered requests with a link to automatically send the traffic to a Cloudflare isolated browser session without an endpoint agent installed.
 
-[very quick arch diagram]
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: Browser Isolation architecture
+    accDescr: Flowchart describing the order of operations for user traffic for in-line Browser Isolation.
+
+    %% User traffic
+    user[User]--"&lt;AUTH_DOMAIN>.cloudflareaccess.com/browser"-->cf[Cloudflare]
+    cf-->auth{Auth?}
+    auth--"Yes"-->gateway[Gateway Service]
+    
+    %% SSO authorization
+    auth--"No"-->sso[[SSO]]
+    user-.->sso
+
+    %% Gateway + RBI
+    gateway-->rbi[Browser Isolation Service]
+    rbi-.->gateway
+
+    %% Origin
+    gateway-.->web((Website))
+```
