@@ -2,12 +2,8 @@
 pcx_content_type: navigation
 title: Advanced nameservers
 weight: 4
-
-external_link: #
+external_link: /dns/foundation-dns/advanced-nameservers/
 _build:
   publishResources: false
-  render:
+  render: never
 ---
-
-This is just to render the option on the side navigation.
-This page will actually not render but instead redirect to `Foundation DNS > Advanced nameservers`
