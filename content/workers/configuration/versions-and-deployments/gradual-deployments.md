@@ -91,6 +91,20 @@ done
 ```
 You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in step #6. 
 
+## Version keys
+
+You may want certain requests to always be handled by the same version of your Worker. You can do this by setting the `Cf-Worker-Version-Key` header on a request. For example:
+
+```sh
+curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cf-Worker-Version-Key: foo'
+```
+
+For a given deployment, all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific Worker version that the version key `foo` corresponds to is determined by the percentages you configured for each Worker version in your deployment.
+
+You can also:
+- use [Ruleset Engine](/ruleset-engine/) to define an [HTTP request header modification rule](/rules/transform/request-header-modification/) that sets the `Cf-Worker-Version-Key` header on the incoming request without having to modify the external client making the request.
+- set the `Cf-Worker-Version-Key` header when making a request from one Worker to another Worker using a [service binding](/workers/runtime-apis/bindings/service-bindings/).
+
 ## Observability
 
 When using gradual deployments, you want to attribute Workers invocations to a specific version in order to get visibility into the impact of deploying new versions.
