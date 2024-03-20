@@ -4,7 +4,7 @@ title: Generic OIDC application
 weight: 1
 ---
 
-# Generic OIDC application
+{{<heading-pill style="beta" heading="h1">}} Generic OIDC application {{</heading-pill>}}
 
 This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the OpenID Connect (OIDC) authentication protocol.
 
