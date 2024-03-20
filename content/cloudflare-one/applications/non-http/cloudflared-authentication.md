@@ -11,7 +11,7 @@ With Cloudflare Zero Trust, users can connect to non-HTTP applications via a pub
 Users log in to the application by running a `cloudflared access` command in their terminal. `cloudflared` will launch a browser window and prompt the user to authenticate with your identity provider.
 
 {{<Aside type="note">}}
-Automated services should only authenticate with `cloudflared` if they cannot use a [service token](/cloudflare-one/identity/service-tokens/). Cloudflared authentication relies on webSockets to establish a connection. WebSockets have a known limitation that persistient connections may close unexpectedly. We recommend either a Service Authentication policy or using Warp to Tunnel routing in these instances.
+Automated services should only authenticate with `cloudflared` if they cannot use a [service token](/cloudflare-one/identity/service-tokens/). Cloudflared authentication relies on WebSockets to establish a connection. WebSockets have a known limitation where persistent connections may close unexpectedly. We recommend either a [Service Auth policy](/cloudflare-one/policies/access/#service-auth) or using [Warp to Tunnel routing](/cloudflare-one/applications/non-http/) in these instances.
 {{</Aside>}}
 
 ## Setup
