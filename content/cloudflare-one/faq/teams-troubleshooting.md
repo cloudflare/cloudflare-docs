@@ -186,7 +186,7 @@ When running remote browser isolation in a virtualized environment, the user's d
 
 To enable software rasterization: 
 
-1. Go to `chrome://flags/#override-software-rendering-list`
+1. Go to `chrome://flags/#override-software-rendering-list`.
 2. Set **Override software rendering list** to _Enabled_
 3. Select **Relaunch** to apply the change. 
 
