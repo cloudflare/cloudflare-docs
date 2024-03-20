@@ -2017,7 +2017,7 @@ For more information about versions and how they work, refer to [Versions](/work
 
 
 ### `upload`
-Uploads a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately,
+Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
 
 ```txt
 wrangler versions upload [OPTIONS] --experimental-gradual-rollouts
@@ -2115,7 +2115,7 @@ Message:     Bug fixes
 ## `deployments`
 
 {{<Aside type="note">}}
-Deployments are currently in  beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+Deployments are currently in beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 For more information about deployments and how they work, refer to [Deployments](/workers/configuration/versions-and-deployments/#deployments).

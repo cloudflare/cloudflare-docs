@@ -7,7 +7,7 @@ meta:
 
 {{<heading-pill style="beta">}}Rollbacks{{</heading-pill>}}
 
-You can rollback to a previously deployed [version](/workers/configuration/versions-and-deployments/#versions) of your Worker using [wrangler](/workers/wrangler/commands/#rollback) or the dashboard. Rollback will immediatley create a new [deployment](/workers/configuration/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains. 
+You can rollback to a previously deployed [version](/workers/configuration/versions-and-deployments/#versions) of your Worker using [wrangler](/workers/wrangler/commands/#rollback) or the dashboard. Rollback will immediately create a new [deployment](/workers/configuration/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains. 
 
 Perform a rollback via [Wrangler](/workers/configuration/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/configuration/deployments/#via-the-cloudflare-dashboard-1).
 
@@ -36,6 +36,6 @@ Errors could occur if using code for a prior version if the structure of data ha
 
 2. You cannot perform a rollback if external resources have been deleted or modified between the version selected to rollback to and the version in the active deployment. Specifically, rollbacks will not be allowed if:
 
-- A [Durable Object migration](/durable-objects/reference/durable-objects-migrations/) has occurred between the version in the actoive dfeployment and the the version selected to rollback to.
+- A [Durable Object migration](/durable-objects/reference/durable-objects-migrations/) has occurred between the version in the active deployment and the version selected to rollback to.
 - If the target deployment has a binding to an R2 bucket, KV namespace, or queue that no longer exists.
 - If the target deployment has a binding to a D1 database (this limitation will be removed in the future).

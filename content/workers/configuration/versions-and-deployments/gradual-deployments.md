@@ -2,7 +2,7 @@
 pcx_content_type: configuration
 title: Gradual Deployments
 meta:
-  description: Safley deploy code changes to your Workers with gradual deployments. 
+  description: Safely deploy code changes to your Workers with gradual deployments. 
 ---
 
 {{<heading-pill style="beta">}}Gradual Deployments{{</heading-pill>}}
@@ -116,8 +116,8 @@ ScriptVersion is an object with the following structure:
 ```sh
 scriptVersion: {
     id: "<UUID>",
-    message: <MESSAGE>,
-    tag: <TAG>
+    message: "<MESSAGE>",
+    tag: "<TAG>"
 }
 ```
 
@@ -129,6 +129,6 @@ The [Version Metadata runtime binding](/workers/runtime-apis/bindings/script-ver
 
 **Gradual rollouts is not supported for sripts using [Smart Placement](/workers/configuration/smart-placement/), the [mTLS binding](/workers/runtime-apis/bindings/mtls/) or [Durable Objects](/durable-objects/)**
 
-These Workers features are currently not supported with Gradual Rollouts. This will be fixed in the near future. 
+These Workers features are currently not supported with Gradual Rollouts. They will be supported in the near future. 
 
 **You can only create a new deployment with the last 10 versions of your Worker**

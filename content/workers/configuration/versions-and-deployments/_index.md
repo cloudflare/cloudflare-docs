@@ -32,7 +32,7 @@ State changes for associated Workers storage resources such as [KV](/kv/), [R2](
 
 Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker. 
 
-By default, Workers supports an all-at-once deployment model where traffic is immediatley shifted from one version to the newly deployed version automatically. Alternatively, [gradual deployments]((/gradual-deployments)) can be used to safely roll out a new version by incrementally shifting traffic it.
+By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, [gradual deployments]((/gradual-deployments)) can be used to safely roll out a new version by incrementally shifting traffic it.
 
 Metadata associated with a deployment is also tracked, including the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, a deployment message can be configured when a deployment is created. 
 
@@ -58,9 +58,9 @@ For more details on the wrangler commands, refer to the [`versions` documentatio
 
 {{<Aside type="note">}}
 
-**New versions are not triggered by changes from [resources connected to your Worker](/workers/runtime-apis/bindings/)**
+**New versions are not created when you make changes to [resources connected to your Worker](/workers/runtime-apis/bindings/)**
 
-For example, if two Workers (Worker A and Worker B) are connected via a [service binding](/workers/configuration/bindings/about-service-bindings/), changing the code of Worker B will not create a new version of Worker A. It will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version for Worker B.
+For example, if two Workers (Worker A and Worker B) are connected via a [service binding](/workers/configuration/bindings/about-service-bindings/), changing the code of Worker B will not create a new version of Worker A. It will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version of Worker B.
 
 {{</Aside>}}
 
@@ -68,7 +68,7 @@ For example, if two Workers (Worker A and Worker B) are connected via a [service
 
 ### Via Wrangler
 
-Wrangler allows you to view the 10 most recent versions and deployments.Refer to the [`versions`](/workers/wrangler/commands#versions) and [`deployments`](/workers/wrangler/commands/#deployments) documentation to view the commands. 
+Wrangler allows you to view the 10 most recent versions and deployments. Refer to the [`versions`](/workers/wrangler/commands#versions) and [`deployments`](/workers/wrangler/commands/#deployments) documentation to view the commands. 
 
 ### Via the Cloudflare dashboard
 
@@ -79,4 +79,4 @@ Wrangler allows you to view the 10 most recent versions and deployments.Refer to
 
 **Making changes to Routes, Custom Domains, Cron Triggers, Logpush or Tail Workers**
 
-As of now, wrangler users must deploy upates to [Routes](/workers/configuration/routing/routes/), [Custom Domains](/workers/configuration/routing/custom-domains/), [Cron Triggers](/workers/configuration/cron-triggers/), [Logpush](/observability/logging/logpush/) or [Tail Workers](observability/logging/tail-workers/) using `npx wrangler deploy`. Updates to this configuration using `npx wrangler versions upload --experimental-gradual-rollouts` will not take effect. This will be fixed in the near future. 
+As of now, wrangler users must deploy updates to [Routes](/workers/configuration/routing/routes/), [Custom Domains](/workers/configuration/routing/custom-domains/), [Cron Triggers](/workers/configuration/cron-triggers/), [Logpush](/observability/logging/logpush/) or [Tail Workers](observability/logging/tail-workers/) using `npx wrangler deploy`. Updates to this configuration using `npx wrangler versions upload --experimental-gradual-rollouts` will not take effect. This will be fixed in the near future. 
