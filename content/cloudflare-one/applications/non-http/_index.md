@@ -17,8 +17,8 @@ For a comprehensive overview of how to connect a private network, refer to our i
 To connect to an application over a specific protocol, refer to these tutorials:
 
 - [Connect over SSH with WARP to Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/#connect-to-ssh-server-with-warp-to-tunnel)
-- [Connect over SMB with WARP to Tunnel](/cloudflare-one/connections/connect-networks/use-cases/smb/)
-- [Connect over RDP with WARP to Tunnel](/cloudflare-one/connections/connect-networks/use-cases/rdp/)
+- [Connect over SMB with WARP to Tunnel](/cloudflare-one/connections/connect-networks/use-cases/smb/#connect-to-smb-server-with-warp-to-tunnel)
+- [Connect over RDP with WARP to Tunnel](/cloudflare-one/connections/connect-networks/use-cases/rdp/#connect-to-rdp-server-with-warp-to-tunnel)
 
 ## Enable browser rendering
 
