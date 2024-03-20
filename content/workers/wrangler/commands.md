@@ -2013,6 +2013,14 @@ wrangler whoami
 Versions are currently in closed beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
+{{<Aside type="note">}}
+
+The `--experimental-versions` flag is required to use the commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+
+The minimum required wrangler version to use these commands is 3.36.0.
+
+{{</Aside>}}
+
 For more information about versions and how they work, refer to [Versions](/workers/configuration/versions-and-deployments/#versions).
 
 
@@ -2020,7 +2028,7 @@ For more information about versions and how they work, refer to [Versions](/work
 Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
 
 ```txt
-wrangler versions upload [OPTIONS] --experimental-gradual-rollouts
+wrangler versions upload [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
@@ -2036,7 +2044,7 @@ wrangler versions upload [OPTIONS] --experimental-gradual-rollouts
 Deploy a previously created version of your Worker all-at-once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version.
 
 ```txt
-wrangler versions deploy [OPTIONS] --experimental-gradual-rollouts
+wrangler versions deploy [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
@@ -2051,7 +2059,7 @@ Follow the interactive prompt.
 Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source` and optional `Tag` or `Message`.
 
 ```txt
-wrangler versions list [OPTIONS] --experimental-gradual-rollouts
+wrangler versions list [OPTIONS] --experimental-versions
 ```
 {{<definitions>}}
 
@@ -2090,7 +2098,7 @@ Retrieve details for the specified version. Details include `Version ID`, `Creat
 
 
 ```txt
-wrangler versions view <VERSION_ID> [OPTIONS] --experimental-gradual-rollouts
+wrangler versions view <VERSION_ID> [OPTIONS] --experimental-versions
 ```
 {{<definitions>}}
 
@@ -2118,6 +2126,14 @@ Message:     Bug fixes
 Deployments are currently in beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
+{{<Aside type="note">}}
+
+The `--experimental-versions` flag is required to use the new version of the command below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+
+The minimum required wrangler version to use these commands is 3.36.0. 
+
+{{</Aside>}}
+
 For more information about deployments and how they work, refer to [Deployments](/workers/configuration/versions-and-deployments/#deployments).
 
 ### `list`
@@ -2125,7 +2141,7 @@ For more information about deployments and how they work, refer to [Deployments]
 Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source` and an optional `Message`. 
 
 ```txt
-wrangler deployments list [OPTIONS] --experimental-gradual-rollouts
+wrangler deployments list [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}

@@ -29,7 +29,7 @@ The following is a simple example that takes you through how to publish a new ve
 
 {{<Aside type="note">}}
 
-Minimum required wrangler version: 3.34.2. 
+Minimum required wrangler version: 3.36.0. 
 
 {{</Aside>}}
 
@@ -44,17 +44,17 @@ $ npm create cloudflare@latest
 Edit the Worker code (recommend simply changing the response content) and upload it. 
 
 ```sh
-$ npx wrangler versions upload --experimental-gradual-rollouts
+$ npx wrangler versions upload --experimental-versions
 ```
 This will create a new version of the Worker that is not automatically deployed. 
 
 **3. Create a new deployment that splits traffic between two versions of the Worker.** 
 
 ```sh
-$ npx wrangler versions deploy --experimental-gradual-rollouts
+$ npx wrangler versions deploy --experimental-versions
 ```
 
-Follow the interactive prompts to create a deployment with the versions uploaded in step #1 and #2. Select your desired percentages for each version. 
+Follow the interactive prompts to create a deployment with the versions uploaded in step #1 and #2. Select your desired percentages for each version.
 
 **4. curl your Worker to test the split deployment.**
 
@@ -69,7 +69,7 @@ You should see 10 responses. Responses will reflect the content returned by the 
 **5. Set the new version uploaded in step 2 to a 100% deployment.**
 
 ```sh
-$ npx wrangler versions deploy --experimental-gradual-rollouts
+$ npx wrangler versions deploy --experimental-versions
 ```
 
 Follow the interactive prompts, selecting version uploaded in step 2. 
