@@ -30,7 +30,7 @@ To perform a rollback via the Cloudflare dashboard:
 Errors could occur if using code for a prior version if the structure of data has changed between the version in the active deployment and the version selected to rollback to.
 
 {{</Aside>}}
-## Limitations
+## Limits
 
 1. You can only rollback to the 10 most recently published versions. 
 

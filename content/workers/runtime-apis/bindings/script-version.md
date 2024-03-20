@@ -1,17 +1,17 @@
 ---
 pcx_content_type: configuration
-title: Version Metadata
+title: Version metadata
 meta:
-  description: Exposes script version metadata (versionID and versionTag). These fields can be added to events emitted from the Worker to send to downstream observability systems.
+  description: Exposes Worker version metadata (`versionID` and `versionTag`). These fields can be added to events emitted from the Worker to send to downstream observability systems.
 ---
 
-{{<heading-pill style="beta">}}Version Metadata binding{{</heading-pill>}}
+{{<heading-pill style="beta">}}Version metadata binding{{</heading-pill>}}
 
-The Version Metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime. 
+The version metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime. 
 
-Worker version ID and version tag are available through this binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any 3rd party analytics/metrics service in order to aggregate by Worker version.
+Worker version ID and version tag are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version.
 
-Update your Worker project’s wrangler.toml file to include the version metadata binding:
+Update your Worker project's `wrangler.toml` file to include the version metadata binding:
 ```
 ---
 header: wrangler.toml
@@ -21,15 +21,15 @@ name = "version"
 type = "version_metadata"
 ```
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
-Currently, the `version_metadata` binding is in beta and uses the `unsafe.bindings` flag. We will be adding first class support for this new binding in the near future. 
+Currently, the `version_metadata` binding is in beta and uses the `unsafe.bindings` flag. Cloudflare will be adding first-class support for this new binding in the near future. 
 
 {{</Aside>}}
 
 ### Interface
 
-An example of how to access the version id and version tag from within a Worker:
+An example of how to access the version ID and version tag from within a Worker:
 
 ```js
 export default {

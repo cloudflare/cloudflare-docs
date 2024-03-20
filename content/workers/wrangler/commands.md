@@ -2041,7 +2041,7 @@ wrangler versions upload [OPTIONS] --experimental-versions
     {{</definitions>}}
 
 ### `deploy`
-Deploy a previously created version of your Worker all-at-once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version.
+Follow an interactive prompt and deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version.
 
 ```txt
 wrangler versions deploy [OPTIONS] --experimental-versions
@@ -2051,8 +2051,6 @@ wrangler versions deploy [OPTIONS] --experimental-versions
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
     {{</definitions>}}
-
-Follow the interactive prompt. 
 
 
 ### `list`
@@ -2188,7 +2186,7 @@ Version(s):  (100%) 2ae44686-4e5e-46e5-ace0-af1b74d4bb44
 Rollback is currently in open beta. Report rollback bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
-Rollback to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
+[Rollback](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
 
 There are limitations on what deployments you can rollback to. Refer to [rollbacks documentation](/workers/configuration/versions-and-deployments/rollbacks/) for more information.
 
