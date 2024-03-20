@@ -17,9 +17,7 @@ To perform DLP scans in a SaaS app, first configure a DLP profile with the data 
 
 ## Supported integrations
 
-- [Google Drive](/cloudflare-one/applications/scan-apps/casb-integrations/google-workspace/google-drive/)
-- [Microsoft OneDrive](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/onedrive/)
-- [Microsoft SharePoint](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/sharepoint/)
+{{<render file="casb/_casb-dlp-integrations.md">}}
 
 ## Configure a DLP profile
 
