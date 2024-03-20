@@ -26,7 +26,7 @@ Follow these steps to enable HTTP/2 to Origin:
 
 If the toggle is disabled, or the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 
-{{<Aside type="warning" header="Important">>}}
+{{<Aside type="warning" header="Important">}}
 Starting March 19, 2024, we plan to gradually enable HTTP/2 to origin by default for all Enterprise customers. 
 
 We will connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)). For servers that do not announce HTTP/2 support, nothing will change from how Cloudflare connects to your origin server today. 
