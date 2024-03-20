@@ -46,12 +46,12 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | ----- | ----------- |
     | Client secret | Credential used to authorize Access as an SSO provider |
     | Client ID | Unique identifier for this Access application |
-    | Configuration endpoint| If supported by your SaaS application, you can configure OIDC using this endpoint instead of manually entering the URLs listed below. |
-    | Issuer | Base URL for this OIDC integration |
-    | Token endpoint | Returns the user's ID token |
-    | Authorization endpoint |  URL where users authenticate with Access |
-    | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/)|
-    | User info endpoint | Returns all user claims in JSON format. |
+    | Configuration endpoint| If supported by your SaaS application, you can configure OIDC using this endpoint instead of manually entering the URLs listed below. </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/.well-known/openid-configuration`|
+    | Issuer | Base URL for this OIDC integration </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>` |
+    | Token endpoint | Returns the user's ID token </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/token`|
+    | Authorization endpoint |  URL where users authenticate with Access </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/authorization` |
+    | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks`|
+    | User info endpoint | Returns all user claims in JSON format </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo` |
 
 11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
