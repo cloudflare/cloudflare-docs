@@ -59,10 +59,12 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 
 1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
     - **Tunnel name**: `tunnel01`
-    - **Interface address**: The `/30`CIDR block enforced by AWS. For example, `169.254.244.2`.
+    - **Interface address**: The `/30`CIDR block enforced by AWS (First usable IP is for the AWS side), For example, `169.254.244.2`.
     - **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
     - **Cloudflare endpoint**: Enter the first of your two Anycast IPs.
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
+    - **Health check type**: Choose **Request**
+    - **Health check direction**: Choose **Bidirectional**
     - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
