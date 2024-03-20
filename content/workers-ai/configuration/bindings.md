@@ -29,8 +29,4 @@ binding = "AI" # i.e. available in your Worker on env.AI
 
 [Pages Functions](/pages/functions/) allow you to build full-stack applications with Cloudflare Pages by executing code on the Cloudflare network. Functions are Workers under the hood.
 
-To configure a Workers AI binding in your Pages Function through the Cloudflare dashboard, refer to [Workers AI bindings](/pages/functions/bindings/#workers-ai).
-
-{{<Aside type="warning">}}
-While Cloudflare Pages currently supports Workers AI bindings, they do not work in local development mode. Cloudflare will provide local development support in the coming weeks, but recommend you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime.
-{{</Aside>}}
+To configure a Workers AI binding in your Pages Function, you must use the Cloudflare dashboard. Refer to [Workers AI bindings](/pages/functions/bindings/#workers-ai) for instructions.
