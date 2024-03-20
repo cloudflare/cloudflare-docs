@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: DNS Firewall
-weight: 9
+weight: 10
 ---
 
 # DNS Firewall
