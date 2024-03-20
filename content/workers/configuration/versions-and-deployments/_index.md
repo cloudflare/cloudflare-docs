@@ -7,8 +7,20 @@ meta:
 
 {{<heading-pill style="beta">}}Versions & Deployments{{</heading-pill>}}
 
+Versions and deployments are used to track changes to your Worker and configure how those changes are deployed to your traffic.
+
+{{<Aside type="note">}}
+
+Versions and deployments are in **beta and under active development**. Please read [limitations](/workers/configuration/versions-and-deployments/#limitations) before using these features.
+
+Provide your feeback through this [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
+
+{{</Aside>}}
+
 ## Versions
-Versions track the state of code as well as the state of configuration defined in a script’s wrangler.toml file. They track historical changes to [bundled code](/workers/wrangler/bundling/) and changes to configuration like [bindings](/workers/configuration/bindings/), [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
+Versions track the state of code as well as the state of configuration defined in a script’s [wrangler.toml](/workers/wrangler/configuration/) file. They track historical changes to [bundled code](/workers/wrangler/bundling/) and changes to configuration like [bindings](/workers/configuration/bindings/), [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
+
+Metadata associated with a version is also tracked, including the version ID, user that created the version, deploy source, timestamp. Optionally, a version message and version tag can be configured on version upload. 
 
 {{<Aside type="note">}}
 
@@ -18,42 +30,37 @@ State changes for associated Workers storage resources such as [KV](/kv/), [R2](
 
 ## Deployments
 
-Deployments track the version(s) of your Worker that are actively serving traffic. 
+Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker. 
 
-By default, changes to Workers through `npx wrangler deploy`, via the Cloudflare dashboard or the [Workers Script Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module) automatically create a new version that is deployed to 100% of traffic.
+By default, Workers supports an all-at-once deployment model where traffic is immediatley shifted from one version to the newly deployed version automatically. Alternatively, [gradual deployments]((/gradual-deployments)) can be used to safely roll out a new version by incrementally shifting traffic it.
+
+Metadata associated with a deployment is also tracked, including the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, a deployment message can be configured when a deployment is created. 
 
 ## Using Versions and Deployments
-Together, you can use versions and deployments to track changes to your Worker and configure how those changes are deployed to your traffic. With versions and deployments, you can upload changes to your Worker independent of changing the version that's actively serving traffic. This is useful if:
 
-- You're running critical applications on Workers and want to [gradually deploy](/gradual-deployments) new versions of your Worker. 
+With versions and deployments, you can upload changes to your Worker independent of changing the version that's actively serving traffic. This is useful if:
+
+- You're running critical applications on Workers and want to reduce risk when deploying new versions of your Worker.
+- You want to monitor for performance differences when deploying new versions of your Worker.
 - You have a CI pipeline configured for Workers, but want to cut manual releases.
 
-### Create a new version
-
-New versions are created one of two ways: 
+### New versions are created one of two ways
 
 **Uploading a new version and deploying it immediately**
 
-By default, changes uploaded with `npx wrangler deploy`, via the Cloudflare dashboard or the [Workers Script Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module) create a new version that is automatically deployed to 100% of traffic. 
+Changes uploaded with `npx wrangler deploy`, via the Cloudflare dashboard or the [Workers Script Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module) create a new version that is automatically deployed to 100% of traffic. 
 
 **Uploading a new version to be [gradually deployed](/gradual-deployments) or deployed at a later time** 
 
 In order to create a new version that is not deployed immediately, use the new wrangler command `npx wrangler versions upload --experimental-gradual-rollouts` or create a new version via the Cloudflare dashboarding using the "Save changes" buttons.
 
-For more details on the wrangler commands, refer to the [`versions` documentation](/workers/wrangler/commands#deployments). 
-
-
-{{<Aside type="note">}}
-
-Updates to [Routes](/workers/configuration/routing/routes/), [Custom Domains](/workers/configuration/routing/custom-domains/), [Cron Triggers](/workers/configuration/cron-triggers/), [Logpush](/observability/logging/logpush/) or [Tail Workers](observability/logging/tail-workers/) are **not associated with a version and will take effect immediately.**  
-
-{{</Aside>}}
+For more details on the wrangler commands, refer to the [`versions` documentation](/workers/wrangler/commands/#versions). 
 
 {{<Aside type="note">}}
 
-**New versions are not triggered by changes to bound resources.**
+**New versions are not triggered by changes from [resources connected to your Worker](/workers/runtime-apis/bindings/)**
 
-For example, if two Workers (Worker A and Worker B) are bound via a [service binding](/workers/configuration/bindings/about-service-bindings/), changing the code of Worker B will not trigger a new version of Worker A. It will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version for Worker B.
+For example, if two Workers (Worker A and Worker B) are connected via a [service binding](/workers/configuration/bindings/about-service-bindings/), changing the code of Worker B will not create a new version of Worker A. It will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version for Worker B.
 
 {{</Aside>}}
 
@@ -61,47 +68,15 @@ For example, if two Workers (Worker A and Worker B) are bound via a [service bin
 
 ### Via Wrangler
 
-Wrangler allows you to view the 20 most recent versions and deployments.
-
-Refer to the [`versions` and `deployments` command documentation](/workers/wrangler/commands#deployments) to view commands. 
+Wrangler allows you to view the 10 most recent versions and deployments.Refer to the [`versions`](/workers/wrangler/commands#versions) and [`deployments`](/workers/wrangler/commands/#deployments) documentation to view the commands. 
 
 ### Via the Cloudflare dashboard
 
-**To view your deployments:**
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your account.
+2. Select your Worker > **Deployments**.  
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Deployments**. 
+## Limitations
 
-Your active deployment includes the version(s) that are currently serving traffic. To view previous deployments, select 'View all deployments'. 
+**Making changes to Routes, Custom Domains, Cron Triggers, Logpush or Tail Workers**
 
-Deployments metadata includes information about the versions in the deployment, when the deployment was created, the author, source and deployment message.  
-
-**To view your versions:**
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Deployments**. 
-
-Version history tracks the state of code and config for a Worker. Versions metadata includes information about when the deployment was created, the author, source, version message and version tag.  
-
-
-{{<Aside type="note">}}
-
-Deployments are in active development. To give feedback, request a [live chat](https://www.cloudflare.com/lp/developer-week-deployments).
-
-{{</Aside>}}
-
-## Related resources
-
-**needs updating**
-
-* [`npx wrangler deploy` documentation](/workers/wrangler/commands#deploy) - Deploy your Worker with the Wrangler CLI.
-* [`npx wrangler deployments` documentation](/workers/wrangler/commands#deployments) - List your deployments and view details about a specific deployment.
-
-
-
-You can view your latest 10 versions [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`npx wrangler versions list` command](#via-wrangler).
-
-
-
+As of now, wrangler users must deploy upates to [Routes](/workers/configuration/routing/routes/), [Custom Domains](/workers/configuration/routing/custom-domains/), [Cron Triggers](/workers/configuration/cron-triggers/), [Logpush](/observability/logging/logpush/) or [Tail Workers](observability/logging/tail-workers/) using `npx wrangler deploy`. Updates to this configuration using `npx wrangler versions upload --experimental-gradual-rollouts` will not take effect. This will be fixed in the near future. 
