@@ -7,7 +7,7 @@ layout: learning-unit
 
 {{<glossary-definition term_id="Cloudflare Browser Isolation">}}
 
-Browser Isolation provides unique and transparent protection for your users using methods that surpass the capabilities of a traditional secure web gateway. This section focuses primarily on Browser Isolation for external services, assuming that most traffic from a device or a network is being forwarded to Cloudflare. For other applications of Browser Isolation, refer to [Zero Trust Web Access](/learning-paths/zero-trust-web-access/).
+Browser Isolation provides unique and transparent protection for your users using methods that surpass the capabilities of a traditional secure web gateway. This section focuses primarily on Browser Isolation for external services, assuming that most traffic from a device or a network is being forwarded to Cloudflare. For other applications of Browser Isolation, refer to the Zero Trust Web Applications (ZTWA) learning path.
 
 As a note, Cloudflare's Browser Isolation technology was built to be used for 100% of your user's daily browsing. These recommendations do not suggest that you should limit or be cautious with your use of Browser Isolation, but instead help identify practical outcomes that balance technology with actualized security benefits.
 
