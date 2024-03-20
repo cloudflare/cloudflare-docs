@@ -70,7 +70,7 @@ $ npx wrangler queues consumer:http add $QUEUE_NAME
 Note that if you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer:http add` on a queue with an existing consumer configuration:
 
 ```sh
-$ wrangler queues consumer:worker remove $QUEUE_NAME $SCRIPT_NAME
+$ wrangler queues consumer worker remove $QUEUE_NAME $SCRIPT_NAME
 ```
 
 {{<Aside type="note">}}
@@ -144,36 +144,38 @@ This will return an array of messages (up to the specified `batch_size`) in the 
       {
         "body": "hello",
         "id": "1ad27d24c83de78953da635dc2ea208f",
-        "timestampMs": 1689615013586,
+        "timestamp_ms": 1689615013586,
         "attempts": 2,
-        "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..NXmbr8h6tnKLsxJ_AuexHQ.cDt8oBb_XTSoKUkVKRD_Jshz3PFXGIyu7H1psTO5UwI.smxSvQ8Ue3-ymfkV6cHp5Va7cyUFPIHuxFJA07i17sc"
+        "lease_id": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..NXmbr8h6tnKLsxJ_AuexHQ.cDt8oBb_XTSoKUkVKRD_Jshz3PFXGIyu7H1psTO5UwI.smxSvQ8Ue3-ymfkV6cHp5Va7cyUFPIHuxFJA07i17sc"
       },
       {
         "body": "world",
         "id": "95494c37bb89ba8987af80b5966b71a7",
-        "timestampMs": 1689615013586,
+        "timestamp_ms": 1689615013586,
         "attempts": 2,
-        "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..QXPgHfzETsxYQ1Vd-H0hNA.mFALS3lyouNtgJmGSkTzEo_imlur95EkSiH7fIRIn2U.PlwBk14CY_EWtzYB-_5CR1k30bGuPFPUx1Nk5WIipFU"
+        "lease_id": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..QXPgHfzETsxYQ1Vd-H0hNA.mFALS3lyouNtgJmGSkTzEo_imlur95EkSiH7fIRIn2U.PlwBk14CY_EWtzYB-_5CR1k30bGuPFPUx1Nk5WIipFU"
       }
     ]
   }
 }
 ```
 
+Pull consumers take a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
+
 Each message object has five fields:
 
 1. `body` - this may be base64 encoded based on the [content-type the message was published as](#content-types).
 2. `id` - a unique, read-only ephemeral identifier for the message.
-3. `timestampMs` - when the message was published to the queue in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). This allows you to determine how old a message is by subtracting it from the current timestamp.
+3. `timestamp_ms` - when the message was published to the queue in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). This allows you to determine how old a message is by subtracting it from the current timestamp.
 4. `attempts` - how many times the message has been attempted to be delivered in full. When this reaches the value of `max_retries`, the message will not be re-delivered and will be deleted from the queue permanently.
-5. `leaseID` - the encoded lease ID of the message. The `leaseID` is used to explicitly acknowledge or retry the message.
+5. `lease_id` - the encoded lease ID of the message. The `lease_id` is used to explicitly acknowledge or retry the message.
 
-The `leaseID` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery once the `visibility_timeout` is reached. A `leaseID` is no longer valid once this timeout has been reached.
+The `lease_id` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery once the `visibility_timeout` is reached. A `lease_id` is no longer valid once this timeout has been reached.
 
 You can configure both `batch_size` and `visibility_timeout` when pulling from a queue:
 
 * `batch_size` (defaults to 5; max 100) - how many messages are returned to the consumer in each pull.
-* `visibility_timeout` (defaults to 30 second; max 12 hours) - defines how long the consumer has to explicitly acknowledge messages delivered in the batch based on their `leaseID`. Once this timeout expires, messages are assumed unacknowledged and queued for re-delivery again.
+* `visibility_timeout` (defaults to 30 second; max 12 hours) - defines how long the consumer has to explicitly acknowledge messages delivered in the batch based on their `lease_id`. Once this timeout expires, messages are assumed unacknowledged and queued for re-delivery again.
 
 ### Concurrent consumers
 
@@ -188,7 +190,7 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
 
 ```ts
-// POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the leaseIDs
+// POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
 let resp = await fetch(
   `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack`,
   {
@@ -198,24 +200,24 @@ let resp = await fetch(
       authorization: `Bearer ${QUEUES_API_TOKEN}`,
     },
     // If you have no messages to retry, you can return an empty array - retry: []
-    body: JSON.stringify({ acks: ["leaseID1", "leaseID2", "etc"], retries: [{"leaseID4"}]}),
+    body: JSON.stringify({ acks: ["lease_id1", "lease_id2", "etc"], retries: [{"lease_id4"}]}),
   }
 );
 ```
 
-You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ leaseID: string, secondsToDelayFor: number }` object in the `retries` array:
+You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, secondsToDelayFor: number }` object in the `retries` array:
 
 ```json
-{ acks: ["leaseID1", "leaseID2", "leaseID3"], retries: [{"someleaseID", 300}, {"someotherleaseID", 600}]}
+{ acks: ["lease_id1", "lease_id2", "lease_id3"], retries: [{"somelease_id", 300}, {"someotherlease_id", 600}]}
 ```
 
 Additionally:
 
-* You should provide every `leaseID` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
+* You should provide every `lease_id` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
 * You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
 * You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/reference/limits/).
 
-TODO - note warning message when a 'stale' `leaseID` is used.
+Note that Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
 ## Examples
 
@@ -250,7 +252,11 @@ Pull-based consumers cannot decode the `v8` content type as it is specific to th
 
 {{</Aside>}}
 
-TODO - note on content types
+When publishing to a queue that has an external consumer, you should be aware that certain content types may be encoded in a way that allows them to be safely serialized within a JSON object.
+
+For both the `json` and `bytes` content types, this means that they will be base64-encoded ([RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648)). The `text` type will be sent as a plain UTF-8 encoded string.
+
+Your consumer will need to decode the `json` and `bytes` types before operating on the data.
 
 ## Next steps
 
