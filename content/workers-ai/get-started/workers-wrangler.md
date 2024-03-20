@@ -3,7 +3,7 @@ title: Workers
 pcx_content_type: get-started
 weight: 1
 meta:
-  description: Build your first Workers AI project with Cloudflare Workers.
+  description: Deploy your first Workers AI project using Cloudflare Workers.
 ---
 
 # Get started with Workers
@@ -22,7 +22,7 @@ This guide uses the command line. To instead create your Workers AI application 
 2. Select **Workers & Pages** > **Create application**.
 3. Under **Create using a template**, select **LLM App**. After you select your template, an AI binding will be created for you in the dashboard.
 4. Review the pregenerated code and select **Deploy**.
-5. Preview your Worker at its provided `workers.dev` subdomain.
+5. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
 
 ## 1. Create a Worker project
 
@@ -66,8 +66,10 @@ filename: wrangler.toml
 ---
 
 [ai]
-binding = "AI" # i.e. available in your Worker on env.AI
+binding = "AI"
 ```
+
+Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
 <!-- TODO update this once we know if we'll have it -->
 You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#workers-ai).
@@ -127,7 +129,7 @@ export default {
 };
 ```
 
-After configuring your Worker, you can test your project locally before you deploy globally.
+Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 2 model. You can now test your project locally before you deploy globally.
 
 ## 5. Develop locally with Wrangler
 
@@ -149,7 +151,6 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 }
 ```
 
-
 ## 6. Deploy your AI Worker
 
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
@@ -167,9 +168,9 @@ $ npx wrangler deploy
 # Outputs: https://hello-ai.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
-Your Worker will be deployed to your [`workers.dev`](/workers/configuration/routing/workers-dev/) custom subdomain. You can now visit the URL to run your AI Worker.
+Your Worker will be deployed to your custom [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain. You can now visit the URL to run your AI Worker.
 
-By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from your model.
+By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from the Llama 2 model.
 
 ## Related resources
 

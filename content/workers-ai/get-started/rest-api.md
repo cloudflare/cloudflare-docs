@@ -21,14 +21,14 @@ To create an API token:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select the user icon on the top right of your dashboard > **My Profile**.
 3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**. 
-4. Go to the **Workers AI** template > select **Use template**. You can choose also go to **Create Custom Token** > **Get started** to customize a token.
-5. Select **Continue to summary** > in Workers AI API token summary, select **Create Token**.
+4. Go to the **Workers AI** template > select **Use template**. You can also go to **Create Custom Token** > **Get started** to customize a token.
+5. Select **Continue to summary** > in the Workers AI API token summary, select **Create Token**.
 
 ## 2. Run a model via API
 
-After creating your API token, authenticate and make requests to the API using your API token in the request.
+After creating your API token, authenticate and make requests to API using your API token in the request.
 
-In this guide, you will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cloudflare/meta-llama/llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/) model:
+You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cloudflare/meta-llama/llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/) model:
 
 ```sh
 $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
@@ -51,7 +51,7 @@ The API response will look like the following:
 }
 ```
 
-This example execution uses the `@cf/meta/llama-2-7b-chat-int8` model, but you can use any of the models in the [Workers AI models catalog](/workers-ai/models/). You need to replace `{model}` with your desired model name.
+This example execution uses the `@cf/meta/llama-2-7b-chat-int8` model, but you can use any of the models in the [Workers AI models catalog](/workers-ai/models/). If using another model, you will need to replace `{model}` with your desired model name.
 
 By completing this guide, you have created a Cloudflare account (if you did not have one already) and an API token that grants Workers AI read permissions to your account. You executed the [`@cloudflare/meta-llama/llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/) model using a cURL command from the terminal and received an answer to your prompt in a JSON response.
 
