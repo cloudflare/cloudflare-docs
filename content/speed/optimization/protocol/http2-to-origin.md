@@ -29,8 +29,7 @@ If the toggle is disabled, or the origin does not support HTTP/2, Cloudflare wil
 {{<Aside type="warning" header="Important">>}}
 Starting March 19, 2024, we plan to gradually enable HTTP/2 to origin by default for all Enterprise customers. 
 
-We will connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). 
-If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)). For servers that do not announce HTTP/2 support, nothing will change from how Cloudflare connects to your origin server today. 
+We will connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)). For servers that do not announce HTTP/2 support, nothing will change from how Cloudflare connects to your origin server today. 
 
 If you do not want Cloudflare to connect to your origin via HTTP/2 you can either disable ALPN HTTP/2 support on your origin server, or set `origin_max_http_version` to `1` via the [API](/api/operations/zone-cache-settings-change-origin-max-http-version-setting) by March 19, 2024.
 
