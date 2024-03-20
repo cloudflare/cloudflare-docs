@@ -1295,6 +1295,7 @@
 /workers-ai/platform/workers-pages-sdk/ /workers-ai/configuration/workers-pages-sdk/ 301
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/platform/rest-api/ /workers-ai/rest-api/ 301
+/workers-ai/configuration/workers-pages-sdk/ /workers-ai/configuration/workers-ai-sdk/ 301
 
 
 # workers KV
