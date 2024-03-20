@@ -26,7 +26,7 @@ To create an API token:
 
 ## 2. Run a model via API
 
-After creating your API token, authenticate and make requests to API using your API token in the request.
+After creating your API token, authenticate and make requests to the API using your API token in the request.
 
 You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cloudflare/meta-llama/llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/) model:
 
