@@ -46,7 +46,8 @@ ___
 
 ## Limits
 
-Maximum image size is 100 megapixels (meaning 10.000×10.000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
+- Maximum image size is 100 megapixels (meaning 10.000×10.000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
+- Image Resizing is not compatible with [Bringing Your Own IPs (BYOIP)](/byoip/).
 
 ___
 
