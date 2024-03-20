@@ -14,7 +14,7 @@ In your SaaS application account, obtain the **Redirect URL** (also known as the
 
 Some SaaS applications provide the Redirect URL after you [configure the SSO provider](#3-configure-sso-in-your-saas-application).
 
-## 1. Add your application to Access
+## 2. Add your application to Access
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
@@ -61,16 +61,16 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
 
 14. Select **Save configuration**.
 
-## 2. Add an Access policy
+## 3. Add an Access policy
 
 1. To control who can access the SaaS application, [create an Access policy](/cloudflare-one/policies/access/).
 
 2. Select **Done**.
 
-## 3. Configure SSO in your SaaS application
+## 4. Configure SSO in your SaaS application
 
 Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party OIDC SSO provider.
 
-## 4. Test the integration
+## 5. Test the integration
 
 {{<render file="access/saas-apps/_test-integration.md" withParameters="the SaaS application's login URL">}}
