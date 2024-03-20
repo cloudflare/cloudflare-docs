@@ -83,12 +83,11 @@ export class MyWorker extends WorkerEntrypoint {
 }
 ```
 
-A new instance of the class `WorkerB` is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless. The class instance is destroyed when the invocation of the Worker ends. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
+A new instance of the class `WorkerB` is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless — the class instance only lasts for the duration of the invocation. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
 
 ### Bindings (`env`)
 
-The [`env`](/workers/runtime-apis/bindings/#what-is-a-binding) object is exposed as a class property of the `Work
-erEntrypoint` class.
+The [`env`](/workers/runtime-apis/bindings/#what-is-a-binding) object is exposed as a class property of the `WorkerEntrypoint` class.
 
 For example, a Worker that declares a binding to the [environment variable](/workers/configuration/environment-variables/) `GREETING`:
 
@@ -130,12 +129,12 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 export class MyWorker extends WorkerEntrypoint {
   async signup(email, name) {
     // sendEvent() will continue running, even after this method returns a value to the caller
-    this.ctx.waitUntil(sendEvent("signup", email))
+    this.ctx.waitUntil(this.#sendEvent("signup", email))
     // Perform any other work
     return "Success";
   }
 
-  private async sendEvent(eventName, email) {
+  async #sendEvent(eventName, email) {
     // Send event by making a subrequest with fetch()
   }
 }
@@ -214,7 +213,7 @@ Under the hood, the caller is not really calling the function itself, but callin
 
 Note that:
 
-- Communication over Service bindings is always asyncrhonous. Even if the method declared on `CounterService` is not async, the client must call it as an async method.
+- Communication over Service bindings is always asynchronous. Even if the method declared on `CounterService` is not async, the client must call it as an async method.
 - Only [compatible types](#compatible-types) can be passed as parameters or returned from the function.
 
 #### Send functions as parameters of RPC methods
@@ -240,7 +239,6 @@ export class Company extends WorkerEntrypoint {
   async getCompanyByName(id) {
     // TODO: Maybe show example here that doesn't use D1 — to illustrate point about
     // how to use this to provide an SDK-like interface for remote state that is outside of DO/D1/etc..
-    this.id = id;
     const stmt = this.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?!").bind(id);
     const values = await stmt.first();
     return {
@@ -316,7 +314,7 @@ filename: wrangler.toml
 name = "client-worker"
 main = "./src/clientWorker.js"
 services = [
-  { binding = "COUNTER_SERVICE", service = "counter" }
+  { binding = "COUNTER_SERVICE", service = "counter", entrypoint = "CounterService" }
 ]
 ```
 
@@ -405,11 +403,11 @@ export default {
 
 ### Private properties
 
-[Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes that extend either `WorkerEntrypoint` or `RpcTarget` are not exposed to the caller, and cannot be called.
+[Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes are never exposed over RPC.
 
 ### Class instance properties
 
-When you send an instance of a class that extends `WorkerEntrypoint` or `RpcTarget`, the recipient can only access methods and properties declared on the class, not properties of the instance. For example:
+When you send an instance of an application-defined class, the recipient can only access methods and properties declared on the class, not properties of the instance. For example:
 
 ```js
 class Foo extends RpcTarget {
@@ -435,7 +433,7 @@ class Foo extends RpcTarget {
 
 This behavior is intentional —  it is intended to protect you from accidentally exposing private class internals. Generally, instance properties should be declared private, [by prefixing them with `#`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties). However, private properties are a relatively new feature of JavaScript, and are not consistently used.
 
-The RPC interface between two of your Workers may be a security boundary, we need to be extra-careful, so instance properties are always private when communicating between Workers using RPC, whether or not they have the `#` prefix. You can always declare an explicit getter at the class level if you wish to expose the property, as shown above.
+Since the RPC interface between two of your Workers may be a security boundary, we need to be extra-careful, so instance properties are always private when communicating between Workers using RPC, whether or not they have the `#` prefix. You can always declare an explicit getter at the class level if you wish to expose the property, as shown above.
 
 These visibility rules apply only to objects that extend `RpcTarget`, `WorkerEntrypoint`, or `DurableObject`, and do not apply to plain objects. Plain objects are passed "by value", sending all of their "own" properties.
 
@@ -484,7 +482,7 @@ If a variable is declared with `using`, when the variable is no longer in scope,
 
 ```js
 {
-  let counter = await env.COUNTER_SERVICE.newCounter();
+  const counter = await env.COUNTER_SERVICE.newCounter();
   try {
     await counter.increment(2);
     await counter.increment(4);
