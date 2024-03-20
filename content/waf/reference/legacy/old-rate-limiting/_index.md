@@ -321,17 +321,14 @@ ___
 
 Rate limiting rules are evaluated from the most recently created rule to the oldest rule.
 
-**Example**: If a request matches the following two rules:
+For example, if a request matches the following two rules:
 
-- Rule 1: matching with `test.example.com`
-- Rule 2: matching with `*.example.com*`
+- Rule #1: Matching with `test.example.com` (created on 2024-03-01)
+- Rule #2: Matching with `*.example.com*` (created on 2024-03-12)
 
-or
+Then rule #2 will trigger first because it was created last.
 
-- Rule 1: matching with `*.example.com*`
-- Rule 2: matching with `test.example.com`
-
-Then rule 2 will always trigger first because it was created last.
+Additionally, when there is a match and the WAF applies a _Log_ action, it continues evaluating other rate limiting rules, since _Log_ is a non-terminating action. If the WAF applies any other action, no other rules will be evaluated.
 
 ---
 
