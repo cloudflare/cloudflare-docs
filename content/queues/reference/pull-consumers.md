@@ -172,7 +172,7 @@ The `leaseID` allows your pull consumer to explicitly acknowledge some, none or 
 
 You can configure both `batch_size` and `visibility_timeout` when pulling from a queue:
 
-* `batch_size` *defaults to 5; max 100) - how many messages are returned to the consumer in each pull.
+* `batch_size` (defaults to 5; max 100) - how many messages are returned to the consumer in each pull.
 * `visibility_timeout` (defaults to 30 second; max 12 hours) - defines how long the consumer has to explicitly acknowledge messages delivered in the batch based on their `leaseID`. Once this timeout expires, messages are assumed unacknowledged and queued for re-delivery again.
 
 ### Concurrent consumers
@@ -188,13 +188,26 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
 
 ```ts
-
-
+// POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the leaseIDs
+let resp = await fetch(
+  `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack`,
+  {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${QUEUES_API_TOKEN}`,
+    },
+    // If you have no messages to retry, you can return an empty array - retry: []
+    body: JSON.stringify({ ack: ["leaseID1", "leaseID2", "etc"], retry: ["leaseID4"] }),
+  }
+);
 ```
 
 Specifically:
 
-* You should provide every `leaseID` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery and 
+* You should provide every `leaseID` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
+* You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
+* You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/reference/limits/).
 
 ## Examples
 
