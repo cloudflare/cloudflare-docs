@@ -18,15 +18,15 @@ Regardless of the type you choose, for these nameservers to be authoritative for
 
 ### Standard nameservers
 
-When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) DNS setup, Cloudflare automatically assigns two standard nameservers for your zone.
+When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) DNS setup, Cloudflare automatically assigns two standard nameservers for your zone.
 
 Standard nameservers are hosted on `ns.cloudflare.com` (Cloudflare-branded) and follow the pattern `<proper_name>.ns.cloudflare.com`.
 
 ### Advanced nameservers
 
-If you are on a Enterprise plan, you have Foundation DNS, which includes advanced nameservers.
+If you are on a Enterprise plan, you have [Foundation DNS](/dns/foundation-dns/), which includes advanced nameservers.
 
-Advanced nameservers are hosted on `foundationdns.com`, `foundationdns.net` and `foundationdns.org` and each zone that uses advanced nameservers is assigned a set of three nameservers names: `<color>.foundationdns.com`, `<color>.foundationdns.net`, and `<color>.foundationdns.org`.
+[Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) are hosted on `foundationdns.com`, `foundationdns.net` and `foundationdns.org` and each zone that uses advanced nameservers is assigned a set of three nameservers names: `<color>.foundationdns.com`, `<color>.foundationdns.net`, and `<color>.foundationdns.org`.
 
 ### Custom nameservers
 
