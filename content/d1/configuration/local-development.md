@@ -65,7 +65,9 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
 
+{{<Aside type="warning" header="Local development for remote databases">}} 
 It is currently not possible to develop against a _remote_ D1 database when using [Cloudflare Pages](/pages/). 
+{{</Aside>}}
 
 Your `wrangler.toml` should resemble the following:
 
