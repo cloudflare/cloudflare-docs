@@ -6,9 +6,9 @@ weight: 2
 
 # Advanced nameservers
 
-Advanced nameservers included with Foundation DNS offer improved resiliency and more consistent nameserver assignment.
+Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) offer improved resiliency and more consistent nameserver assignment.
 
-Consider the sections below for more details and refer to [Set up advanced nameservers](/dns/foundation-dns/setup/) to learn how to enable this feature.
+Consider the sections below for details about advanced nameservers, and refer to [Set up advanced nameservers](/dns/foundation-dns/setup/) to learn how to enable this feature.
 
 ## Anycast network groups
 
@@ -34,7 +34,7 @@ When, instead of advertising all IPs in all data centers, this group logic is ap
 
 ## Dedicated release process
 
-Zones using advanced nameservers are also less exposed to incidents or software regression.
+Zones using advanced nameservers are less exposed to incidents or software regression.
 
 The dedicated release process means that only stable changes, that have been in production for a while, will reach advanced nameservers.
 

@@ -26,4 +26,4 @@ The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/explo
 
 ## Time limits
 
-You can configure a maximum time frame over which analytics can be queried of up to 32 days, and can look into analytics data that are up to 93 days old.
+You can configure a maximum time frame over which analytics can be queried of up to 32 days. Also, available analytics data can be up to 93 days old.
