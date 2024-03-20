@@ -166,9 +166,9 @@ Each message object has five fields:
 2. `id` - a unique, read-only ephemeral identifier for the message.
 3. `timestampMs` - when the message was published to the queue in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). This allows you to determine how old a message is by subtracting it from the current timestamp.
 4. `attempts` - how many times the message has been attempted to be delivered in full. When this reaches the value of `max_retries`, the message will not be re-delivered and will be deleted from the queue permanently.
-5. `leaseID` - the encoded lease ID of the message. The `leaseID` is used to explicitly acknowledge or retry the message, and is only stable for the current pull. 
+5. `leaseID` - the encoded lease ID of the message. The `leaseID` is used to explicitly acknowledge or retry the message.
 
-The `leaseID` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery once the `visibility_timeout` is reached.
+The `leaseID` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery once the `visibility_timeout` is reached. A `leaseID` is no longer valid once this timeout has been reached.
 
 You can configure both `batch_size` and `visibility_timeout` when pulling from a queue:
 
@@ -198,9 +198,15 @@ let resp = await fetch(
       authorization: `Bearer ${QUEUES_API_TOKEN}`,
     },
     // If you have no messages to retry, you can return an empty array - retry: []
-    body: JSON.stringify({ ack: ["leaseID1", "leaseID2", "etc"], retry: ["leaseID4"] }),
+    body: JSON.stringify({ acks: ["leaseID1", "leaseID2", "etc"], retries: [{"leaseID4"}]}),
   }
 );
+```
+
+You may optionally specify the number of seconds to delay a message for when marking it for retry:
+
+```json
+{ acks: ["leaseID1", "leaseID2", "leaseID3"], retries: [{"someleaseID", 300}, {"someotherleaseID", 600}]}
 ```
 
 Specifically:
@@ -208,6 +214,8 @@ Specifically:
 * You should provide every `leaseID` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
 * You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
 * You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/reference/limits/).
+
+TODO - note warning message when a 'stale' `leaseID` is used.
 
 ## Examples
 
