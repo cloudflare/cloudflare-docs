@@ -55,7 +55,7 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 
 10. Read the permissions, and select **Accept** to continue. You will be directed back to the Area 1 dashboard.
 
-11. In **Protection Scope**, choose if Area 1 should scan only the inbox or all folders. Scanning all folders is useful for situations where the email is automatically routed to other folders that users still have access:
+11. In **Protection Scope**, choose if Area 1 should scan only the inbox or all folders. Scanning all folders is useful for situations where the email is automatically routed to other folders that users still have access to:
     1. **Protect Inbox only**: Area 1 will only scan the user's inbox.
     2. **Protect all folders**: Area 1 will scan all non-hidden email folders.
 
