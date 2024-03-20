@@ -1942,6 +1942,8 @@ wrangler queues create <name> [OPTIONS]
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the queue to create.
+- `--delivery-delay` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long a published message should be delayed for, in seconds. Must be a positive integer.
 
 {{</definitions>}}
 
@@ -1986,7 +1988,8 @@ wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
   - The name of the queue to add the consumer to.
 - `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Workers script to add as a consumer of the named queue.
-
+- `--retry-delay` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long a retried message should be delayed for, in seconds. Must be a positive integer
 {{</definitions>}}
 
 ### `consumer remove`
