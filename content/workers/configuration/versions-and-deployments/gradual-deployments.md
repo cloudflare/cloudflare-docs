@@ -95,7 +95,7 @@ You should see 10 responses. Responses will reflect the content returned by the 
 
 You may want requests associated with a particular identifier to be handled by a consistent version of your Worker, such that when there are two versions of your Worker deployed, the version used does not change back and forth on a per-request basis for a given user, session, or any unique ID.
 
-You can do this by setting the `Cf-Worker-Version-Key` header on a request. For example:
+You can do this by setting the `Cf-Worker-Version-Key` header on the incoming request to your Worker. For example:
 
 ```sh
 curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cf-Worker-Version-Key: foo'
