@@ -14,8 +14,8 @@ A pull-based consumer allows you to pull from a queue over HTTP from any environ
 
 Deciding whether to configure a push-based consumer or a pull-based consumer will depend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
 
-* As a general rule-of-thumb, starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
-* Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
+- As a general rule-of-thumb, starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
+- Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
 
 Note that you can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
 
@@ -36,11 +36,11 @@ There are four steps required to configure a pull-based consumer and receive mes
 
 ## 1. Enabling HTTP pull
 
-TODO: To enable HTTP pull 
+You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the Cloudflare dashboard.
 
 ### wrangler.toml
 
-A HTTP consumer can be configured in `wrangler.toml` 
+A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration.
 
 ```toml
 [[queues.consumer]]
@@ -53,11 +53,7 @@ max_retries = 5
 dead_letter_queue = "SOME_OTHER_QUEUE"
 ```
 
-{{<Aside type="note">}}
-
-TODO - warn on conflicting configuration
-
-{{</Aside>}}
+Omitting the `type` property will default the queue to push-based.
 
 ### Dashboard
 
@@ -65,12 +61,13 @@ TODO
 
 ### wrangler CLI
 
+You can enable a pull-based consumer on any existing queue by using the `wrangler queues consumer:http` sub-commands and providing a queue name.
+
 ```sh
 $ npx wrangler queues consumer:http add $QUEUE_NAME
 ```
 
-TODO - update 
-
+Note that if you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer:http add` on a queue with an existing consumer configuration:
 
 ```sh
 $ wrangler queues consumer:worker remove $QUEUE_NAME $SCRIPT_NAME
@@ -99,6 +96,8 @@ $ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${
   -H "Content-Type: application/json"
 ```
 
+You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same (rate limit](queues/platform/limits/) against the Cloudflare API.
+
 ### Create API tokens
 
 To create an API token:
@@ -115,52 +114,87 @@ You will need to note the token down: it will only be displayed once.
 
 ## 3. Pulling messages
 
-TODO - 
+To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-create-queue-consumer) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
-* Pulling
-* Concept of visibility timeouts and leases
-* Concurrent HTTP consumers and lease IDs
-* Batching
+```ts
+// POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
+let resp = await fetch(
+  `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull`,
+  {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${QUEUES_API_TOKEN}`,
+    },
+    // Optional - you can provide an empty object '{}' and the defaults will apply.
+    body: JSON.stringify({ visibility_timeout: 6000, batch_size: 50 }),
+  }
+);
+```
 
+This will return an array of messages (up to the specified `batch_size`) in the below format:
 
-Each message returned in a batch has a `leaseID`, which is unique to that message, and holds or "leases" those messages to the consumer for the specified `visibilityTimeout`.
+```json
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "messages": [
+      {
+        "body": "hello",
+        "id": "1ad27d24c83de78953da635dc2ea208f",
+        "timestampMs": 1689615013586,
+        "attempts": 2,
+        "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..NXmbr8h6tnKLsxJ_AuexHQ.cDt8oBb_XTSoKUkVKRD_Jshz3PFXGIyu7H1psTO5UwI.smxSvQ8Ue3-ymfkV6cHp5Va7cyUFPIHuxFJA07i17sc"
+      },
+      {
+        "body": "world",
+        "id": "95494c37bb89ba8987af80b5966b71a7",
+        "timestampMs": 1689615013586,
+        "attempts": 2,
+        "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..QXPgHfzETsxYQ1Vd-H0hNA.mFALS3lyouNtgJmGSkTzEo_imlur95EkSiH7fIRIn2U.PlwBk14CY_EWtzYB-_5CR1k30bGuPFPUx1Nk5WIipFU"
+      }
+    ]
+  }
+}
+```
 
-The `leaseID` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery.
+Each message object has five fields:
 
-There are two configurable settings when pulling from a queue:
+1. `body` - this may be base64 encoded based on the [content-type the message was published as](#content-types).
+2. `id` - a unique, read-only ephemeral identifier for the message.
+3. `timestampMs` - when the message was published to the queue in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). This allows you to determine how old a message is by subtracting it from the current timestamp.
+4. `attempts` - how many times the message has been attempted to be delivered in full. When this reaches the value of `max_retries`, the message will not be re-delivered and will be deleted from the queue permanently.
+5. `leaseID` - the encoded lease ID of the message. The `leaseID` is used to explicitly acknowledge or retry the message, and is only stable for the current pull. 
 
-1. `batchSize` (defaults to 5; max 100) - how many messages are returned to the consumer in each pull.
-2. `visibilityTimeout` (defaults to 30 second; max 12 hours) - defines how long the consumer has to explicitly acknowledge messages delivered in the batch based on their `leaseID`. Once this timeout expires, messages are assumed unacknowledged and queued for re-delivery again.
+The `leaseID` allows your pull consumer to explicitly acknowledge some, none or all messages in the batch or mark them for retry. If messages are not acknowledged or marked for retry by the consumer, then they will be marked for re-delivery once the `visibility_timeout` is reached.
 
+You can configure both `batch_size` and `visibility_timeout` when pulling from a queue:
+
+* `batch_size` *defaults to 5; max 100) - how many messages are returned to the consumer in each pull.
+* `visibility_timeout` (defaults to 30 second; max 12 hours) - defines how long the consumer has to explicitly acknowledge messages delivered in the batch based on their `leaseID`. Once this timeout expires, messages are assumed unacknowledged and queued for re-delivery again.
+
+### Concurrent consumers
+
+You may have multiple HTTP clients pulling from the same queue concurrently: each client will receieve a unique batch of messages and retain the "lease" on those messages up until the `visibility_timeout` expires, or until those messages are marked for retry.
+
+Messages marked for retry will be put back into the queue and can be delivered to any consumer. Messages are _not_ tied to a specific consumer, as consumers do not have an identity and to avoid a slow or stuck consumer from holding up processing of messages in a queue.
+
+Multiple consumers can be useful in cases where you have multiple upstream resources (e.g. GPU infrastructure), where you want to autoscale based on the [backlog](/queues/reference/metrics/) of a queue, and/or cost.
 
 ## 4. Acknowledging messages
 
-Messages pulled by a consumer need to be either acknowledged or marked for retry. 
+Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
 
-* Lease IDs
-* Acknowledge messages
-* Retry messages
+```ts
 
-Each batch of messages resembles the below:
 
-```json
-"messages": [
-  {
-    "body": "hello",
-    "id": "36ea2f1830198434b38beecd0f0cd710",
-    "timestampMs": 1689615003982,
-    "attempts": 2,
-    "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..RfWt2aMeYjBYybmg8rD14w.ywDMzXnWwvvQsVSUZHFS7Zgq-J7lEGyVUYnji3-9mW8.vVrSSHNvmaWR9Pf0RWjfrJ8BcMod33lVotDL20paKsw"
-  },
-  {
-    "body": "world",
-    "id": "23ad9999022e4c0b5e691b117272872d",
-    "timestampMs": 1689615004270,
-    "attempts": 2,
-    "leaseID": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0..B9DHkRYwWhtY37_m55XH4A.u-uD9m0GEVo--g4Mnfe-x_FQGpR_gkZezKylhdR70bk.90UAi0mPv3zaKG7KIoGbywsUjo9AIFWFHt2XhVSEoAE"
-  }
-]
 ```
+
+Specifically:
+
+* You should provide every `leaseID` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery and 
 
 ## Examples
 
@@ -171,7 +205,6 @@ The following example is a Node.js-based TypeScript application that pulls from 
 In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
 
 ```ts
-
 
 ```
 
@@ -200,7 +233,6 @@ TODO - note on content types
 
 ## Next steps
 
-* Review the [REST API documentation]() and schema for Queues
-* Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
-* Metrics
-* Configuration
+- Review the [REST API documentation](https://developers.cloudflare.com/api/operations/queue-create-queue-consumer) and schema for Queues
+- Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
+- Understand [what limit apply](/queues/platform/limits/) when consuming and writing to a queue.
