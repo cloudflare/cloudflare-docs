@@ -229,7 +229,6 @@ Run the following commands on the machine where you installed WARP Connector. Yo
     </div>
     </details>
 
-
 {{<Aside type="note" header="IP forwarding on VPC">}}
 If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
@@ -245,7 +244,7 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
     <summary>Save configuration to persist after reboot</summary>
     <div>
 
-    1. Create a bash script containing the `iptable` commands:
+    1. Create a bash script that writes the `iptable` rules to a file:
 
       ```bash
       $ echo '#!/bin/bash
@@ -265,7 +264,14 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
       ' | sudo tee /usr/local/bin/apply_iptables_rules.sh
       ```
 
-    2. Create a systemd service to load the script at startup:
+    2. Run the script:
+
+    ```sh
+    $ sudo chmod +x /usr/local/bin/apply_iptables_rules.sh
+    $ sudo apply_iptables_rules.sh
+    ```
+
+    3. Create a systemd service to restore the rules at startup:
 
     ```bash
     $ echo '[Unit]
