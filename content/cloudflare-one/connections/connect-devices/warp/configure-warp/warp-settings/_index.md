@@ -48,6 +48,8 @@ To turn off the WARP client on a user device:
 
 The WARP client will now show **Disabled by Admin Override** and the time when the override code expires. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until Admin override times out.
 
+If you are not planning on using the override code right away, it should be noted that it will be valid until it has been used.
+
 ### Install CA to system certificate store
 
 {{<details header="Feature availability">}}
