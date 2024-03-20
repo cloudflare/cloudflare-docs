@@ -6,7 +6,7 @@ weight: 2
 
 # Add non-HTTP applications
 
-You can secure non-HTTP applications by [connecting your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare. Users reach the application by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices will be able to connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access the service unless you build policies to allow or block specific users.
+You can secure non-HTTP applications by [connecting your private network](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare. Users reach the application by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices will be able to connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access the application unless you build policies to allow or block specific users.
 
 ## Setup
 
