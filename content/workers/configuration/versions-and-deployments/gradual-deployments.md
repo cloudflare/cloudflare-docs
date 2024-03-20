@@ -148,6 +148,53 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 {{</example>}}
 
+## Gradual deployments for Durable Objects
+
+Due to [global uniqueness](durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
+
+When you create a new gradual deployment for a Worker that defines a Durable Object, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/deployments/). This version will not change until you create a new deployment.
+
+### Example
+
+Imagine that you have previously created 3 Durable Objects, [deriving their IDs from the names](/durable-objects/configuration/access-durable-object-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
+
+Your worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
+
+| Durable Object | Version |
+| -------------- | ------- |
+| foo            | A       |
+| bar            | A       |
+| baz            | A       |
+
+Now you create a gradual deployment, setting version "A" to 20% and version "B" to 80%.
+
+| Durable Object | Version |
+| -------------- | ------- |
+| foo            | B       |
+| bar            | A       |
+| baz            | A       |
+
+Now you want to progress the deployment of version "B", so you set version "A" to 50% and version "B" to 50%.
+
+| Durable Object | Version |
+| -------------- | ------- |
+| foo            | B       |
+| bar            | B       |
+| baz            | A       |
+
+Finally, you progress the deployment so that version "B" is set to 100%.
+
+| Durable Object | Version |
+| -------------- | ------- |
+| foo            | B       |
+| bar            | B       |
+| baz            | B       |
+
+This is only an example, so the versions assigned to your Durable Objects may be different. However, the following is guaranteed:
+- For a given deployment, requests to each Durable Object will always use the same Worker version.
+- When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In our example, Durable Object "foo" would never revert from version "B" to version "A".
+- The Durable Object will only be [reset](/durable-objects/reference/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in our example.
+
 ## Observability
 
 When using gradual deployments, you may want to attribute Workers invocations to a specific version in order to get visibility into the impact of deploying new versions.
