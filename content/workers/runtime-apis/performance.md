@@ -47,6 +47,6 @@ In local development, however, timers will increment regardless of whether I/O h
 
 The [`performance.timeOrigin()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) API is a read-only property that returns a baseline timestamp to base other measurements off of.
 
-In the Workers runtime, calling `timeOrigin()` returns 0.
+In the Workers runtime, calling `timeOrigin()` returns the timestamp of when the [handler](/workers/runtime-apis/handlers/) of your Worker is entered.
 
 
