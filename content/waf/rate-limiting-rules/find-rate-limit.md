@@ -39,7 +39,7 @@ For more information on how Cloudflare calculates the request rate of incoming t
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
 2. Go to **Security** > **Analytics**.
 
-3. In the **HTTP requests** tab, select a specific time period:
+3. In the **Traffic analysis** tab, select a specific time period:
 
     * To look at the regular rate distribution, specify a period with non-peak traffic.
     * To analyze the rate of offending visitors/bots, select a period corresponding to an attack.

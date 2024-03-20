@@ -60,9 +60,9 @@ If none of the above scenarios apply, contact Cloudflare support with the follow
 
 For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
 
-## I see error 504 when browsing to a website.
+## I see error 504 or timeouts when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+Gateway may present an **HTTP response code: 504** error page - or your browser may display generic timeout errors - when a website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
 
 | Selector          | Operator | Value         | Logic | Action |
 | ----------------- | -------- | ------------- | ----- | ------ |
@@ -108,14 +108,22 @@ To allow these applications to function normally, administrators can configure b
 
 If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
+## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
+
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+
+Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
+
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
 
-## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
+## WARP on Linux shows `DNS connectivity check failed`.
 
-This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. To solve the issue:
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests.
+
+To solve the issue:
 
 1. Add the following line to `/etc/systemd/resolved.conf`:
 
@@ -123,7 +131,9 @@ This error means that the `systemd-resolved` service on Linux is not allowing WA
 ResolveUnicastSingleLabel=yes
 ```
 
-2. Restart the service:
+2. Make sure that no other DNS servers are configured in `/etc/systemd/resolved.conf`. For example, if the file contains `DNS=X.Y.Z.Q`, comment out the line.
+
+3. Restart the service:
 
 ```sh
 $ sudo systemctl restart systemd-resolved.service

@@ -43,8 +43,8 @@ For this guide, set up a basic Worker:
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
+- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
+- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 
 In your project directory, C3 has generated the following:
 
@@ -143,7 +143,7 @@ Embeddings allow you to add additional capabilities to the language models you c
 To begin using Vectorize, create a new embeddings index using `wrangler`. This index will store vectors with 768 dimensions, and will use cosine similarity to determine which vectors are most similar to each other:
 
 ```sh
-$ wrangler vectorize create vector-index --dimensions=768 --metric=cosine
+$ npx wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 ```
 
 Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
@@ -163,7 +163,7 @@ To implement the searching feature, you must set up a D1 database from Cloudflar
 Create a new D1 database using `wrangler`:
 
 ```sh
-$ wrangler d1 create database
+$ npx wrangler d1 create database
 ```
 
 Then, add the configuration details for your new D1 database to `wrangler.toml`:
@@ -180,13 +180,13 @@ database_id = "abc-def-geh"
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute database --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
+$ npx wrangler d1 execute database --remote --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
 ```
 
 Now, we can add a new note to our database using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute database --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
+$ npx wrangler d1 execute database --remote --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
 ## 5. Creating notes and adding them to Vectorize
@@ -372,9 +372,9 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
-* Review Cloudflare's [AI documentation](/workers-ai).
-* Review [Tutorials](/workers/tutorials/) to build projects on Workers.
-* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Reference](/workers/reference/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
-* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
+- Review Cloudflare's [AI documentation](/workers-ai).
+- Review [Tutorials](/workers/tutorials/) to build projects on Workers.
+- Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
+- Understand how Workers works in [Reference](/workers/reference/).
+- Learn about Workers features and functionality in [Platform](/workers/platform/).
+- Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

@@ -2,6 +2,15 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-03-11'
+  description: |-
+    - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
+    - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
+    - Updated v8 to version 12.3.
+- publish_date: '2024-02-23'
+  description: |-
+    - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
+    - [Durable Object alarm handlers](/durable-objects/api/alarms/#alarm) now impose a maximum wall time of 15 minutes.
 - publish_date: '2023-12-04'
   description: |-
     - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
@@ -99,7 +108,7 @@ entries:
     - The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
 - publish_date: '2023-03-24'
   description: |-
-    - Fixed a bug in Wrangler tail and and live logs on the dashboard that
+    - Fixed a bug in Wrangler tail and live logs on the dashboard that
     prevented the Administrator Read-Only and Workers Tail Read roles from successfully
     tailing Workers.
 - publish_date: '2023-03-09'
@@ -107,7 +116,7 @@ entries:
     - No externally-visible changes.
 - publish_date: '2023-03-06'
   description: |-
-    - [Workers Logpush](/workers/observability/logpush/#limits) now supports
+    - [Workers Logpush](/workers/observability/logging/logpush/#limits) now supports
     300 characters per log line. This is an increase from the previous limit of 150
     characters per line.
 - publish_date: '2023-02-06'

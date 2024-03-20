@@ -28,7 +28,7 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 
 - A non-interactive challenge page (similar to the current [JS Challenge](#js-challenge)).
 - A custom interactive challenge (such as click a button).
-- Private Access Tokens (using recent Apple operating systems).
+- [Private Access Tokens](#private-access-tokens) (using recent Apple operating systems).
 
 {{<render file="_challenge-issues.md" productFolder="rules" withParameters="Rules features">}}
 
@@ -82,9 +82,13 @@ This behavior commonly occurs because an extension modifies your browser's defau
 
 {{</Aside>}}
 
-### Mobile browsers
+### Mobile device emulation
 
-Challenges are not supported for desktop mode on mobile browsers or mobile mode on desktop browsers.
+Challenges are not supported when device emulation is enabled on a browser, for example, using the browser's developer tools.
+
+### Native mobile applications
+
+Challenges are not supported within native mobile applications, including those utilizing web views or embedded browsers. This applies to all mobile development frameworks and platforms, such as React Native, Swift for iOS, and Kotlin for Android, among others.
 
 ---
 
@@ -94,10 +98,14 @@ If a visitor encounters a challenge, Cloudflare employees cannot remove that cha
 
 When observing a Cloudflare Challenge page, a visitor could:
 
-- Successfully pass the challenge to visit the website. Cookies and JavaScript support are required in browser settings to pass the challenge.
+- Successfully pass the challenge to visit the website.
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).
+
+{{<Aside type="note">}}
+Visitors must enable JavaScript and cookies on their browser to be able to pass any type of challenge.
+{{</Aside>}}
 
 ---
 
@@ -127,6 +135,16 @@ fetch('/my-api-endpoint')
 ```
 
 For additional help, refer to [our FAQ for Challenges](/waf/troubleshooting/faq/#challenges).
+
+---
+
+## Private Access Tokens
+
+When a user is presented with a challenge page, Cloudflare decides what challenges need to be solved to prove they are human. While some challenges are computationally complex or require interactivity, most of the challenges served are invisible to the user.
+ 
+Cloudflare uses results from the Private Access Token (PAT) to decide what challenges users will see next. If a user presents a token, they will have an easier time solving the challenge. 
+ 
+The challenge page is an interstitial page and users will see it regardless of having a valid PAT or not. A PAT does not automatically solve a challenge. It prevents certain challenges from being issued.
 
 ---
 

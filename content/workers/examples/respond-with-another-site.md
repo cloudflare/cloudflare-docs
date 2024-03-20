@@ -20,7 +20,7 @@ layout: example
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     async function MethodNotAllowed(request) {
       return new Response(`Method ${request.method} not allowed.`, {
@@ -34,9 +34,7 @@ const handler: ExportedHandler = {
     if (request.method !== "GET") return MethodNotAllowed(request);
     return fetch(`https://example.com`);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

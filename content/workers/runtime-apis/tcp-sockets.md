@@ -11,6 +11,10 @@ The Workers runtime provides the `connect()` API for creating outbound [TCP conn
 
 Many application-layer protocols are built on top of the Transmission Control Protocol (TCP). These application-layer protocols, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB, require an underlying TCP socket API in order to work.
 
+{{<Aside type="note">}}
+Connecting to a PostgreSQL database? You should use [Hyperdrive](/hyperdrive/), which provides the `connect()` API with built-in connection pooling and query caching.
+{{</Aside>}}
+
 ## `connect()`
 
 The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
@@ -75,6 +79,18 @@ export default {
 
 {{</definitions>}}
 
+### `SocketInfo`
+
+{{<definitions>}}
+
+- `remoteAddress` {{<type>}}string | null{{</type>}}
+  - The address of the remote peer the socket is connected to. May not always be set.
+ 
+- `localAddress` {{<type>}}string | null{{</type>}}
+  - The address of the local network endpoint for this socket. May not always be set.
+
+{{</definitions>}}
+
 ### `Socket`
 
 {{<definitions>}}
@@ -85,6 +101,9 @@ export default {
 - {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
   - The `WritableStream` returned only accepts chunks of `Uint8Array` or its views.
+
+- `opened` {{<type>}}`Promise<SocketInfo>`{{</type>}}
+  - This promise is resolved when the socket connection is established and is rejected if the socket encounters an error.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.

@@ -3150,8 +3150,16 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-  max-width: 692px;
+  max-width: 100%;
   margin-bottom: 1em;
+}
+
+.DocsMarkdown .small-img.centered,
+.DocsMarkdown .medium-img.centered,
+.DocsMarkdown .large-img.centered,
+.DocsMarkdown .full-img.centered {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .DocsMarkdown--link {
@@ -3300,6 +3308,11 @@ a > code {
 
 .DocsMarkdown figure {
   margin-top: 2em;
+}
+
+figcaption {
+  font-style: italic;
+  font-size: .9em;
 }
 
 .DocsMarkdown li figure,
@@ -3881,6 +3894,16 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsMarkdown details summary + div.NoPadding {
   padding: 0 0.6em;
+}
+
+.DocsMarkdown details summary + div.code-container {
+  padding: 0;
+  border-radius: 0;
+}
+
+.DocsMarkdown details summary + div.code-container .CodeBlock {
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .DocsMarkdown details[open] {

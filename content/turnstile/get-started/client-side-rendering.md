@@ -32,7 +32,7 @@ Refer to the [demo](https://demo.turnstile.workers.dev/) and its [source code](h
 
 ### Protect forms
 
-Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
+Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, you can embed `<div class="cf-turnstile"></div>` into your site to protect your forms.
 
 <div>
 
@@ -170,7 +170,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 
 To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
 
-## Refreshing a widget
+## Refresh a widget
 
 A few seconds before a token expires, the `expired-callback` is invoked.
 
@@ -223,7 +223,7 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information. |
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
-| `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge expires. |
+| `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge presents an interactive challenge but was not solved within a given time. A callback will reset the widget to allow a visitor to solve the challenge again. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
 | `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
@@ -231,3 +231,11 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
 | `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
+
+## React Native application support
+
+An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/reference/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
+
+{{<Aside type="warning">}}
+Turnstile does not currently support native mobile applications, including those utilizing web views or embedded browsers. This applies to all mobile development frameworks and platforms, such as React Native, Swift for iOS, and Kotlin for Android, among others.
+{{</Aside>}}

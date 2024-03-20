@@ -36,7 +36,7 @@ export default {
 };
 ```
 
-The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
+The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#options) and [`RequestInitCfProperties`](#the-cf-property-requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
 
 ---
 
@@ -66,7 +66,7 @@ An object containing properties that you want to apply to the request.
 
 {{<definitions>}}
 
-*   `cf` {{<type-link href="#the-cf-property">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `cf` {{<type-link href="#the-cf-property-requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
@@ -257,7 +257,7 @@ All plans have access to:
 
 *   `tlsClientHelloLength` {{<type>}}string{{</type>}}
 
-    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello, after the hexidecimal bytes have been decoded.
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello.
 
 *   `tlsClientRandom` {{<type>}}string{{</type>}}
 

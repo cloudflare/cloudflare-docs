@@ -7,7 +7,7 @@ meta:
 
 # Supported DNSKEY signature algorithms
 
-[DNSSEC is a protocol](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) that adds a layer of security to the domain name system (DNS). DNSSEC does this by providing authentication through public signing keys using two DNS records: DNSKEY and DS. They can be used to verify DNSSEC signatures in [RRSIG records](https://blog.cloudflare.com/dnssec-an-introduction/).
+[DNSSEC is a protocol](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) that adds a layer of security to the domain name system (DNS). DNSSEC does this by providing authentication through public signing keys using two DNS records: DNSKEY and DS. They can be used to verify DNSSEC signatures in [RRSIG records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/).
 
 1.1.1.1 supports the following signature algorithms:
 

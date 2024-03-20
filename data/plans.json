@@ -1675,7 +1675,7 @@
           "pro": 0,
           "biz": 0,
           "ent": 0,
-          "ent_plus": 3
+          "ent_plus": 5
         },
         "l_logpush_jobs": {
           "title": "Number of Logpush jobs",

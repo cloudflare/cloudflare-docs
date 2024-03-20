@@ -2,6 +2,10 @@
 link: "/stream/changelog/"
 productName: Stream
 entries:
+- publish_date: '2024-02-16'
+  title: Tonemapping impovements for HDR content
+  description: |-
+    In certain cases, videos uploaded with an HDR colorspace (such as footage from certain mobile devices) appeared washed out or desaturated when played back. This issue is resolved for new uploads.
 - publish_date: '2023-11-07'
   title: HLS improvements for on-demand TS output
   description: |-
