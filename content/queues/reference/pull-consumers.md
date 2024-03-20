@@ -203,13 +203,13 @@ let resp = await fetch(
 );
 ```
 
-You may optionally specify the number of seconds to delay a message for when marking it for retry:
+You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ leaseID: string, secondsToDelayFor: number }` object in the `retries` array:
 
 ```json
 { acks: ["leaseID1", "leaseID2", "leaseID3"], retries: [{"someleaseID", 300}, {"someotherleaseID", 600}]}
 ```
 
-Specifically:
+Additionally:
 
 * You should provide every `leaseID` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
 * You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
