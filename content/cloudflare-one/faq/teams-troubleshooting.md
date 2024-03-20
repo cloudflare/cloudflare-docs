@@ -182,7 +182,7 @@ Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology
 
 WebGL is a JavaScript API for rendering high-performance interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins.  Support for WebGL is present in all modern browsers.  However, the user's device must also have access to the underlying [hardware](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API#browser_compatibility) that supports these features.
 
-When running remote browser isolation in a virtualized environment user's devices may not have access to the required system resources. 
+When running remote browser isolation in a virtualized environment, the user's device may not have access to the required system resources.
 
 To enable software rasterization: 
 
