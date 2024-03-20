@@ -14,13 +14,13 @@ The Cloudflare OWASP Core Ruleset is designed to work as a single entity to calc
 
 ### Request threat score
 
-Each OWASP rule that matches the current request can have an associated score. The request threat score is the sum of the individual scores of all OWASP rules that matched the request.
+Each OWASP rule that matches the current request has an associated score. The request threat score is the sum of the individual scores of all OWASP rules that matched the request.
 
 ### Score threshold
 
 The score threshold (or threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for which the WAF will apply the configured OWASP ruleset action.
 
-Each threshold (_Low_, _Medium_, or _High_) has an associated value (_60_, _40_, or _25_, respectively). Configuring a _Low_ threshold means having a high threshold value (_60_). In this case, more rules have to match the current request for the WAF to perform the configured ruleset action.
+Each threshold (_Low_, _Medium_, or _High_) has an associated value (_60_, _40_, or _25_, respectively). Configuring a _Low_ threshold means that more rules will have to match the current request for the WAF to apply the configured ruleset action.
 
 ```txt
 Request threat score > Score threshold ===> Apply OWASP ruleset action
@@ -66,7 +66,7 @@ Final request threat score: `43`
 
 Since `43` >= `40`, that is, the threat score is greater than the configured score threshold, the WAF will apply the configured action (_Block_).
 
-If you had configured a score threshold of _Low - 60 and higher_, the WAF would not apply the configured action, since the threat score would be lower than the score threshold (`43` < `60`).
+If you had configured a score threshold of _Low - 60 and higher_, the WAF would not apply the configured action, since the request threat score would be lower than the score threshold (`43` < `60`).
 
 {{</example>}}
 
