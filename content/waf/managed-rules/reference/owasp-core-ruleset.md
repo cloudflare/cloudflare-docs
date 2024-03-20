@@ -18,7 +18,7 @@ Each OWASP rule that matches the current request has an associated score. The re
 
 ### Score threshold
 
-The score threshold (or anomaly threshold) defines the minimum request threat score — obtained from matching OWASP rules — for the WAF to apply the configured OWASP ruleset action.
+The score threshold (or anomaly threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for the WAF to apply the configured OWASP ruleset action.
 
 Each threshold (_Low_, _Medium_, or _High_) has an associated value (_60_, _40_, or _25_, respectively). Configuring a _Low_ threshold means that more rules will have to match the current request for the WAF to apply the configured ruleset action.
 
@@ -28,7 +28,7 @@ Request threat score > Score threshold ===> Apply OWASP ruleset action
 
 ### Paranoia level
 
-Each rule in the managed ruleset is associated with a certain paranoia level (PL). Paranoia levels vary from PL1 to PL4. Rules associated with higher paranoia levels are considered more agressive and provide increased protection. However, they might cause more legitimate traffic to get blocked due to false positives.
+The paranoia level (PL) classifies OWASP rules according to their agressiveness. Paranoia levels vary from PL1 to PL4, where PL4 is the most strict level. Each rule in the OWASP managed ruleset is associated with a paranoia level. Rules associated with higher paranoia levels are considered more agressive and provide increased protection. However, they might cause more legitimate traffic to get blocked due to false positives.
 
 If you use the highest paranoia level (PL4) you will probably need to disable some of its rules for applications that need to receive complex input patterns.
 
@@ -89,13 +89,13 @@ To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a r
 
 To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 
-* [Set the paranoia level](#setting-the-paranoia-level).
-* [Configure the score threshold](#configuring-the-score-threshold-and-the-action).
-* [Specify the action to perform](#configuring-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
+* [Set the paranoia level](#set-the-paranoia-level).
+* [Configure the score threshold](#configure-the-score-threshold-and-the-action).
+* [Specify the action to perform](#configure-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
 
 You can also disable specific rules in the managed ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
-### Setting the paranoia level
+### Set the paranoia level
 
 To enable all the rules up to a specific paranoia level, create tag overrides that disable all the rules associated with higher paranoia levels. For example, to enable all the rules associated with Paranoia Level 2 (PL2), disable the rules associated with tags `paranoia-level-3` and `paranoia-level-4`. All rules associated with paranoia levels up to the desired paranoia level will be enabled (in this example, all the rules associated with PL1 and PL2).
 
@@ -234,7 +234,7 @@ curl --request PATCH \
 
 For more information on creating overrides, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
-### Configuring the score threshold and the action
+### Configure the score threshold and the action
 
 To define the score threshold value, or to specify the action to perform when the threat score is greater than the threshold, create a rule override for the last rule in the managed ruleset that:
 
