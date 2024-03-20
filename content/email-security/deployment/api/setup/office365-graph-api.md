@@ -61,12 +61,6 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 
 12. Now that both types of authorizations have been complete, select **Publish Domain**.
 
-    <div class="medium-img">
-
-    ![Now that both authorizations are complete, select Publish domain](/images/email-security/deployment/api-setup/ms-graph/step11.png)
-
-    </div>
-
 Your authorized domain will show up in **Email Configuration** > **Domains & Routing** > **Domains**, with messages about the progress of directory syncing between Office 365 and Area 1.
 
 ![Now that both authorizations are complete, select Publish domain](/images/email-security/deployment/api-setup/ms-graph/domain-sync-state.png)
