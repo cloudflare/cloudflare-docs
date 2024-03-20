@@ -6,7 +6,7 @@ weight: 2
 
 # Cloudflare's default HTTP privacy
 
-Cloudflare runs one of the largest global anycast networks in the world, with all current data center locations accessible on the [network map](/network/).
+Cloudflare runs one of the largest global anycast networks in the world, with all current data center locations accessible on the [network map](https://www.cloudflare.com/network/).
 
 Within the Cloudflare data centers, and between the Cloudflare network and a customer's origin, traffic is encrypted during transit. Customers have the flexibility to select which [encryption mode](/ssl/origin-configuration/ssl-modes/) and which [Cipher Suites](/ssl/reference/cipher-suites/) they want to use.
 
