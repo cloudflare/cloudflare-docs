@@ -18,7 +18,7 @@ Each OWASP rule that matches the current request has an associated score. The re
 
 ### Score threshold
 
-The score threshold (or threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for which the WAF will apply the configured OWASP ruleset action.
+The score threshold (or anomaly threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for which the WAF will apply the configured OWASP ruleset action.
 
 Each threshold (_Low_, _Medium_, or _High_) has an associated value (_60_, _40_, or _25_, respectively). Configuring a _Low_ threshold means that more rules will have to match the current request for the WAF to apply the configured ruleset action.
 
