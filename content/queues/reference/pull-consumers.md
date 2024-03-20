@@ -260,6 +260,6 @@ Your consumer will need to decode the `json` and `bytes` types before operating 
 
 ## Next steps
 
-- Review the [REST API documentation](https://developers.cloudflare.com/api/operations/queue-create-queue-consumer) and schema for Queues
+- Review the [REST API documentation](/api/operations/queue-create-queue-consumer) and schema for Queues
 - Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
 - Understand [what limit apply](/queues/platform/limits/) when consuming and writing to a queue.

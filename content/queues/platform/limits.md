@@ -27,7 +27,7 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 | Maximum concurrent consumer invocations            | 20 <sup>beta</sup>                      | 
 | Maximum consumer invocation duration               | 15 minutes <sup>6</sup>                 | 
 | Maximum `visibilityTimeout` (pull-based queues)    | 12 hours                                |
-| Requests to the Queues API (incl. pulls/acks)      | [1500 requests / 5 mins](/fundamentals/api/reference/limits/) |
+| Requests to the Queues API (incl. pulls/acks)      | [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
 
 {{</table-wrap>}}
 
