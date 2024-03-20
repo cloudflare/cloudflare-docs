@@ -64,6 +64,7 @@ Next, configure your SaaS application to require users to log in through Cloudfl
 - **Public key**
 
 You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO endpoint>/saml-metadata`.
+
 ## 4. Test the integration
 
-{{<render file="access/saas-apps/_test-integration.md" withParameters="the SaaS application's login URL">}}
+Open an incognito browser window and go to the SaaS application's login URL. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
