@@ -246,7 +246,7 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
 
     1. Create a bash script that writes the `iptable` rules to a file:
 
-      ```bash
+      ```sh
       $ echo '#!/bin/bash
       # Define your rules
       RULES=(
@@ -268,12 +268,12 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
 
     ```sh
     $ sudo chmod +x /usr/local/bin/apply_iptables_rules.sh
-    $ sudo apply_iptables_rules.sh
+    $ sudo /usr/local/bin/apply_iptables_rules.sh
     ```
 
     3. Create a systemd service to restore the rules at startup:
 
-    ```bash
+    ```sh
     $ echo '[Unit]
     Description=Load iptables rules at startup
 
@@ -285,6 +285,7 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
     WantedBy=multi-user.target
     ' | sudo tee /etc/systemd/system/iptables-persistent.service
     ```
+
     </div>
     </details>
 
