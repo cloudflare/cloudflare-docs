@@ -26,7 +26,7 @@ Make sure you have:
 
 - [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
 - [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
-  - Created two tunnels [through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) or [migrated legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/).
+  - Created two tunnels [through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
   - Routed `10.0.0.0/8` through one tunnel.
   - Routed `192.168.88.0/24` through the other tunnel.
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
@@ -75,17 +75,17 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
 {{<tutorial-step title="Assign each virtual network to each tunnel">}}
 
-After creating your virtual networks, assign each virtual network to your tunnels routing your private network.
+After creating your virtual networks, route your private network CIDRs over each virtual network. This ensures that users can reach all services on your network regardless of which egress IP they use.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
 1. Go to **Networks** > **Tunnels**.
 2. Select your tunnel routing `10.0.0.0/8`, then select **Configure**.
-3. Go to **Private Network**. Select your first `10.0.0.0/8` route.
+3. Go to **Private Network**. Select the `10.0.0.0/8` route.
 4. In **Additional settings**, choose your first virtual network. For example, `vnet-AMER`.
 5. Select **Save private network**.
-6. To additional virtual networks to the tunnel, select **Add a private network**.
+6. To route `10.0.0.0/8` over another virtual network, select **Add a private network**.
 7. In **CIDR**, enter `10.0.0.0/8`. In **Additional settings**, choose your second virtual network. For example, `vnet-EMEA`.
 8. Select **Save private network**.
 9. Repeat Steps 6-8 for each virtual network you created.
@@ -95,7 +95,7 @@ After creating your virtual networks, assign each virtual network to your tunnel
 
 {{<tab label="api" no-code="true">}}
 
-1. Assign your first virtual network to your private network tunnel. For example, assign `vnet-AMER` to your tunnel that routes `10.0.0.0/8`:
+1. Assign your first virtual network to your private network route. For example, assign `vnet-AMER` to your tunnel that routes `10.0.0.0/8`:
 
     ```bash
     curl --request PATCH \
