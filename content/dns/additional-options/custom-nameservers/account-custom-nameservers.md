@@ -49,7 +49,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these n
 
 2. Make sure `A/AAAA` records with the assigned IPv4 and IPv6 exist at the authoritative DNS of the domain that provides the ACNS names.
 
-    * If your domains use [Cloudflare Registrar](/registrar/), the respective `A` and `AAAA` records are automatically created.
+    * If the domain uses Cloudflare DNS, the respective `A` and `AAAA` records are automatically created.
 
     * If the domain or domains that are used for the account custom nameservers do not exist within the same account, you must manually create the `A/AAAA` records on the configured nameserver names (e.g. `ns1.example.com`) at the authoritative DNS provider.
 
@@ -130,7 +130,7 @@ To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-  * If you are using [Cloudflare Registrar](/registrar/), use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to change the `enabled` parameter to `false`.
+  * If you are using [Cloudflare Registrar](/registrar/), use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to change the `enabled` parameter to `false`, and then [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
   * If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to set the `enabled` parameter to `false`.
 
 {{</tab>}}

@@ -42,7 +42,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automat
 
 The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
 
-- If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
+- If you are using Cloudflare Registrar for your domain, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the custom nameservers and IP addresses as glue records to the domain.
 - If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records]([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
 
 ### Secondary zones
