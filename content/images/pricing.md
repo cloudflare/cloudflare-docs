@@ -21,7 +21,7 @@ If you are not storing your images within the Images product, you will only pay 
 
 Images Stored is a pre-paid pricing dimension. You purchase storage in increments of $5 per 100,000 original images. 
 
-Each original image can have upto 20 predefined variants _at no additional cost_. A predefined variant supports following properties:
+Each original image can have up to 20 predefined variants _at no additional cost_. A predefined variant supports following properties:
 
 * Width
 * Height
@@ -29,15 +29,15 @@ Each original image can have upto 20 predefined variants _at no additional cost_
 * Metadata
 * Blurring
 
-Predefined Variants can be configured from the Dashboard by visiting Images > Variants. 
+Predefined variants can be configured from the Cloudflare dashboard by visiting **Images** > **Variants**. 
 
-Predefined variants do not count against your storage limit. For example, if you upload demo.jpg and have 10 predefined variants, it will count as 1 original image; not 11.
+Predefined variants do not count against your storage limit. For example, if you upload demo.jpg and have 10 predefined variants, it will count as one original image, not 11.
 
 ## Images Delivered
 
-Images Delivered is a post-paid pricing dimension and *only* applies to images stored within the Images product. You will not be billed for Images Delivered if you are optimizing images that are stored elsewhere (S3, R2 etc.)
+Images Delivered is a post-paid pricing dimension and *only* applies to images stored within the Images product. You will not be billed for Images Delivered if you are optimizing images that are stored elsewhere (in S3 or R2, for example).
 
-It costs $1 per 100,000 images delivered. Every image requested by the browser counts as one delivered image. For example, if you have a product page displaying 10 images stored on the Images product, and the page is visited 10,000 times over the course of the month, it will result in 100,000 delivered images or $1.00 in billable usage.
+Images Delivered costs $1 per 100,000 images delivered. Every image requested by the browser counts as one delivered image. For example, if you have a product page displaying 10 images stored on the Images product, and the page is visited 10,000 times over the course of the month, it will result in 100,000 delivered images or $1.00 in billable usage.
 
 ## Images Transformed
 
@@ -47,7 +47,7 @@ A unique transformation is defined as a request to transform an original image w
 
 The `format` flag being exempted from counting as a unique transformation means that if demo.jpg is resized to 100x100 and is delivered to some of your users as webp and others as avif or png, it will still count as one billable transformation for that month instead of three.
 
-Images Transformed count is not impacted by the cache hit rate. This makes estimating pricing more predictable. For example, let's say you have 1,000 product images that are resized 5 different ways. This will result in 5,000 unique transformations per month and cost $2.50.
+Images Transformed count is not impacted by the cache hit rate. This makes estimating pricing more predictable. For example, 1,000 product images that are resized 5 different ways will result in 5,000 unique transformations per month and cost $2.50.
 
 {{<Aside type="note" header="Note">}}
 
