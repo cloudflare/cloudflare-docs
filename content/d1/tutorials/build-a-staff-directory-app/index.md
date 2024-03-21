@@ -371,7 +371,7 @@ export const POST = createRoute(async (c) => {
 
 ### Store Images in R2
 
-During the process of creating a new employee, The image uploaded can be stored in an R2 bucket prior to being added to the database. 
+During the process of creating a new employee, the image uploaded can be stored in an R2 bucket prior to being added to the database. 
 
 This involves creating an R2 bucket, uploading the image to this bucket, and then obtaining a public URL for the image from the bucket. This URL is then saved in your database, linking to the image stored in the R2 bucket.
 
