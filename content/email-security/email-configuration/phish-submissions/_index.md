@@ -64,7 +64,7 @@ If you find emails in your Area 1 account that are actually false positives, you
 2. Select the **Search** bar.
 3. Search for one or more messages that you want to report as a false positive, and select **Report as false positive**.
 4. In the next screen, choose a disposition from the list to clarify the nature of the false positive. The options are _Bulk_, _Malicious_, _None_, _Spam_, _Spoof_ and _Suspicious_.
-5. Select **Report false positive**.
+5. Select **Report False Positive**.
 
 ## False negatives
 
