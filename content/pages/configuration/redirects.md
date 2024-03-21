@@ -7,6 +7,13 @@ title: Redirects
 
 To use redirects on Cloudflare Pages, declare your redirects in a plain text file called `_redirects` without a file extension, in the output folder of your project. The [build output folder](/pages/configuration/build-configuration/) is project-specific, so the `_redirects` file should not always be in the root directory of the repository. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
 
+{{<Aside type="warning">}}
+
+Redirects defined in the `_redirects` file are not applied to responses from [Functions](/pages/functions/), even if the Function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_redirects` file to the code in the appropriate `/functions` route, or exclude the route from Functions.
+
+{{</Aside>}}
+
+
 ## Structure
 
 ### Per line
