@@ -24,9 +24,11 @@ Standard nameservers are hosted on `ns.cloudflare.com` (Cloudflare-branded) and 
 
 ### Advanced nameservers
 
-If you are on a Enterprise plan, you have [Foundation DNS](/dns/foundation-dns/), which includes advanced nameservers.
+If you are on an Enterprise plan, you have [Foundation DNS](/dns/foundation-dns/), which includes advanced nameservers.
 
-[Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) are hosted on `foundationdns.com`, `foundationdns.net` and `foundationdns.org` and each zone that uses advanced nameservers is assigned a set of three nameservers names: `<color>.foundationdns.com`, `<color>.foundationdns.net`, and `<color>.foundationdns.org`.
+[Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) are hosted on `foundationdns.com`, `foundationdns.net`, and `foundationdns.org`.
+
+Each zone that uses advanced nameservers is assigned a set of three nameservers names: `<color>.foundationdns.com`, `<color>.foundationdns.net`, and `<color>.foundationdns.org`.
 
 ### Custom nameservers
 

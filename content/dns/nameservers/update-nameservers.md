@@ -39,20 +39,3 @@ If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zo
 Delegation means that `shop.example.com` has specific `NS` records set up for it within the DNS records management of the parent zone (`example.com`).
 
 If that is the case, when setting up your zone in Cloudflare or opting for a different set of [nameservers](/dns/nameservers/), you have to update the `NS` records in the parent domain, and not at the registrar.
-
-
-<!--- suggested outline from Content Strategy previous work
-
-1. Where to change your nameservers >> DONE
-  registrar vs reseller
-  registrar of this domain or parent domain
-2. What to change based on your DNS setup
-  full setup
-  secondary
-  multi-provider
-  hidden primary
-  other setups?
-3. How to change your nameservers >> DONE
-  the existing per-provider instructions on Full setup docs
-
---->
