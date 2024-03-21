@@ -15,17 +15,7 @@ Secrets are a type of binding that allow you to attach encrypted text values to 
 
 ### Secrets in development
 
-When developing your Worker locally, create a `.dev.vars` file in the root of your project to define secrets that will be available to your Worker when running `wrangler dev`.
-
-The `.dev.vars` file should be formatted like a `dotenv` file.
-
-```bash
----
-header: .dev.vars
----
-SECRET_KEY=value
-API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-```
+{{<render file="_secrets-in-dev.md">}}
 
 ### Secrets on deployed Workers
 

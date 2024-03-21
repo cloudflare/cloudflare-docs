@@ -89,7 +89,7 @@ To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/comma
 
 The request duration chart shows how long it took your Worker to respond to requests, including execution duration and network latency. The request duration chart is currently only available when your Worker has [Smart Placement](/workers/configuration/smart-placement) enabled. 
 
-In contrast to [execution duration](/workers/observability/metrics-and-analytics/#execution-duration), which measures only the time a Worker is active, request duration measures from the time a request comes into a data center until a request is delivered.
+In contrast to [execution duration](/workers/observability/metrics-and-analytics/#execution-duration-gb-seconds), which measures only the time a Worker is active, request duration measures from the time a request comes into a data center until a request is delivered.
 
 The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default, 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis.
 

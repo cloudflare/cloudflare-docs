@@ -765,7 +765,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 {{</definitions>}}
 
-`wrangler dev` is a way to [locally test](/workers/observability/local-development-and-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -834,6 +834,8 @@ None of the options for this command are required. Also, many can be set in your
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+- `--dispatch-namespace` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) to upload this Worker to.
 
 {{</definitions>}}
 

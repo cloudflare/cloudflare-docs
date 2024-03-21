@@ -6,13 +6,19 @@ weight: 3
 
 # Server-side validation
 
+Turnstile needs to be verified using siteverify because it is a front-end widget that creates a token which is cryptographically secured. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of a token using Cloudflare's siteverify API.
+
 You must call the siteverify endpoint to validate the Turnstile widget response from your website’s backend. The widget response must only be considered valid once it has been verified by the siteverify endpoint. The presence of a response alone is not enough to verify it as it does not protect from replay or forgery attacks. In some cases, Turnstile may purposely create invalid responses that are rejected by the siteverify API.
 
-Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint.
+Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint. The siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed. 
 
-The siteverify endpoint needs to be passed a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}} that is associated with the {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}}. The secret key will be provisioned alongside the sitekey when you create a widget.
+{{<Aside type="note">}}
+A Turnstile token can have up to 2048 characters. 
 
-Furthermore, the response needs to be passed to the siteverify endpoint.
+It is also valid for 300 seconds before it is rejected by siteverify.
+{{</Aside>}}
+
+The siteverify endpoint needs to be passed a {{<glossary-tooltip term_id="secret key">}}secret key{{</glossary-tooltip>}} that is associated with the {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}}. The secret key will be provisioned alongside the sitekey when you create a widget. Furthermore, the response needs to be passed to the siteverify endpoint.
 
 A response may only be validated once. If the same response is presented twice, the second and each subsequent request will generate an error stating that the response has already been consumed. If an application requires to retry failed requests, it must utilize the idempotency functionality. You can do so by providing a UUID as the `idempotency_key` parameter of your `POST` request when initially validating the response and the same UUID with any subsequent request for that response.
 

@@ -63,7 +63,7 @@ $ yarn create cloudflare
 In your terminal, you will be asked a series of questions related to your project. 
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `yes` to using TypeScript.
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
