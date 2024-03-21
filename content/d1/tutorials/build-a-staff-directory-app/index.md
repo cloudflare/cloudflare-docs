@@ -121,7 +121,7 @@ To interact with your D1 database, you can directly issue SQL commands using the
 $ wrangler d1 execute staff-directory --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 ```
 
-This method is useful for quickly running queries or operations directly from the command line. 
+The command above allows you to run queries or operations directly from the command line. 
 
 For operations such as initial data seeding or batch processing, you can pass a SQL file with your commands. To do this, create a `schema.sql` file in the root directory of your project and insert your SQL queries into this file:
 
