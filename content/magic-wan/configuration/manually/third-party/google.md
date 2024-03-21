@@ -53,10 +53,10 @@ Static routing is necessary to route traffic between your VPN and Cloudflare Mag
 5. In **Route type** select **Static Routing**.
 6. In **IP Version** select **IPv4**.
 7. Configure the network you want to expose to your VPN in the **Destination IPv4 Range**.
-8. Choose a priority.
-9. **Optional** you can link that route to a specific instance tag so only impacted instance will use that route
-10. **Next hop** should be your previously VPN tunnel
-11. **Create**
+8. Choose a priority for your static route.
+9. (Optional) You can link that route to a specific instance tag, so only impacted instances will use that route.
+10. In **Next hop** select the VPN tunnel you created previously.
+11. Select **Create**.
 
 ## Magic WAN
 
