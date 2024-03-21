@@ -522,6 +522,8 @@ wrangler hyperdrive create <ID> [OPTIONS]
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
+- `--private-host` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Whether the provided host is part of your Cloudflare Zero Trust private network.
 
 {{</definitions>}}
 
@@ -547,6 +549,8 @@ wrangler hyperdrive update <ID> [OPTIONS]
   - The new username used to authenticate to the database.
 - `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new password used to authenticate to the database.
+- `--private-host` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Whether the provided host is part of your Cloudflare Zero Trust private network.
 
 {{</definitions>}}
 
