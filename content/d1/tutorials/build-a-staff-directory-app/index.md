@@ -62,7 +62,7 @@ To create a database for your project, use the Cloudflare CLI tool, [Wrangler](/
 $ npx wrangler d1 create staff-directory
 ```
 
-After creating your database, you'll need to set up a binding in the Wrangler configuration file to integrate your database with your application. 
+After creating your database, you will need to set up a [binding](/workers/configuration/bindings/) in the Wrangler configuration file to integrate your database with your application. 
 
 This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
 
