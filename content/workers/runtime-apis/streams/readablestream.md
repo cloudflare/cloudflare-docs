@@ -7,53 +7,81 @@ title: ReadableStream
 
 ## Background
 
-A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers ecosystem, `ReadableStream` cannot be created directly using the `ReadableStream` constructor.
+A `ReadbleStream` can be acquired from:
 
-## Properties
+* The `request.body` or `response.body` property when using the `fetch()` API or in a fetch event handler,
+* Constructing a `new ReadableStream(...)` directly, or
+* From the `readable` property of a `TransformStream`
 
-{{<definitions>}}
-
-- `locked` {{<type>}}boolean{{</type>}}
-  - A Boolean value that indicates if the readable stream is locked to a reader.
-
-{{</definitions>}}
-
-## Methods
-
-{{<definitions>}}
-
-- {{<code>}}pipeTo(destination{{<param-type>}}WritableStream{{</param-type>}}, options{{<param-type>}}PipeToOptions{{</param-type>}}){{</code>}} : {{<type>}}Promise\<void>{{</type>}}
-
-  - Pipes the readable stream to a given writable stream `destination` and returns a promise that is fulfilled when the `write` operation succeeds or rejects it if the operation fails.
-
-- {{<code>}}getReader(options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type-link href="/runtime-apis/streams/readablestreamdefaultreader">}}ReadableStreamDefaultReader{{</type-link>}}
-
-  - Gets an instance of `ReadableStreamDefaultReader` and locks the `ReadableStream` to that reader instance. This method accepts an object argument indicating options. The only supported option is `mode`, which can be set to `byob` to create a [`ReadableStreamBYOBReader`](/workers/runtime-apis/streams/readablestreambyobreader/), as shown here:
+Developers should refer to [MDN’s `ReadableStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) for general details on using the `ReadableStream` API.
 
 ```js
-let reader = readable.getReader({ mode: 'byob' });
+// Getting a ReadableStream from a fetch...
+const resp = await fetch('http://example.org');
+
+// resp.body is a ReadableStream
+const readable = resp.body;
+const reader = readable.getReader();
+await reader.read();
+
+// ...
+
+// Creating a ReadableStream from scratch...
+const readable = new ReadableStream({
+  pull(controller) {
+    controller.enqueue('Hello, ');
+    controller.enqueue('world!');
+    controller.close();
+  }
+});
+
+// ...
+
+// Getting a ReadableStream from a TransformStream...
+const { readable, writable } = new TransformStream();
+const reader = readable.getReader();
+
+// ...
 ```
 
-{{</definitions>}}
+## Workers-specific extensions and details
 
-### `PipeToOptions`
+### `readAtLeast` in BYOB-Readers
 
-{{<definitions>}}
+There are generally two types of streams: byte-oriented and value-oriented. A byte-oriented stream is a stream that is read in chunks of bytes, while a value-oriented stream is read in chunks of values. The `readAtLeast` method is a worker-specific extension to the `ReadableStreamBYOBReader` interface that allows you to read a minimum number of bytes from a byte-oriented stream.
 
-- `preventClose` {{<type>}}bool{{</type>}}
+**Using this extension is no longer necessary as the standard streams API now includes a `min` option that accomplishes the same task.**
 
-  - When `true`, closure of the source `ReadableStream` will not cause the destination `WritableStream` to be closed.
+```js
+const rs = new ReadableStream({
+  type: 'bytes',
+  pull(controller) {
+    controller.enqueue(new Uint8Array([1, 2, 3, 4, 5]));
+    controller.close();
+  }
+});
 
-- `preventAbort` {{<type>}}bool{{</type>}}
+const byobReader = rs.getReader({ mode: 'byob' });
 
-  - When `true`, errors in the source `ReadableStream` will no longer abort the destination `WritableStream`. `pipeTo` will return a rejected promise with the error from the source or any error that occurred while aborting the destination.
+// Read at least 3 bytes and at most 5 bytes.
+// The read promise will not be resolved until at least 3 bytes have been read
+const result = await byobReader.readAtLeast(3, new Uint8Array(5));
 
-{{</definitions>}}
+// **** NOTE: USING readAtLeast IS NO LONGER NECESSARY ****
+// **** Instead, use the new standard API ****
+const result = await byobReader.read(new Uint8Array(5), { min: 3 });
+```
+
+### Data buffering in `tee()` streams
+
+Per the specification of [`ReadableStream`](https://streams.spec.whatwg.org/#rs-model), when a `ReadableStream` is teed, the data flows at the rate of the *fastest* reader. This means that if one teed branch is reading data slower than the other, the data will be buffered in the slower branch. This can lead to memory exhaustion if the slower branch is reading data at a much slower rate than the faster branch.
+
+In the Workers runtime, the `tee()` method has been modified to limit buffering in such scenarios. The fastest branch will still be able to read buffered data at its own pace, but rather than each tee branch maintaining a separate buffer, the data will be held in a shared buffer that will be freed only when all branches have read the data. Importantly, this shared buffer will signal backpressure to the original stream at the pace of the slowest reader. This protects against slow readers causing memory exhaustion.
+
 
 ---
 
 ## Related resources
 
-- [Streams](/workers/runtime-apis/streams/)
-- [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
+- [`ReadableStream` in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
 - [MDN’s `ReadableStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)

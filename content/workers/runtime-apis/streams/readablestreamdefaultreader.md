@@ -13,7 +13,6 @@ meta:
 
 A reader is used when you want to read from a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), rather than piping its output to a [`WritableStream`](/workers/runtime-apis/streams/writablestream/).
 
-A `ReadableStreamDefaultReader` is not instantiated via its constructor. Rather, it is retrieved from a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/):
 
 ```js
 const { readable, writable } = new TransformStream();
@@ -50,7 +49,7 @@ Any data not yet read is lost.
 
 - `releaseLock()` : {{<type>}}void{{</type>}}
 
-  - Releases the lock on the readable stream. A lock cannot be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
+  - Releases the lock on the readable stream.
 
 {{</definitions>}}
 
