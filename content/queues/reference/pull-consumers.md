@@ -61,13 +61,13 @@ TODO
 
 ### wrangler CLI
 
-You can enable a pull-based consumer on any existing queue by using the `wrangler queues consumer:http` sub-commands and providing a queue name.
+You can enable a pull-based consumer on any existing queue by using the `wrangler queues consumer http` sub-commands and providing a queue name.
 
 ```sh
-$ npx wrangler queues consumer:http add $QUEUE_NAME
+$ npx wrangler queues consumer http add $QUEUE_NAME
 ```
 
-Note that if you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer:http add` on a queue with an existing consumer configuration:
+Note that if you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer http add` on a queue with an existing consumer configuration:
 
 ```sh
 $ wrangler queues consumer worker remove $QUEUE_NAME $SCRIPT_NAME
@@ -199,16 +199,16 @@ let resp = await fetch(
       "content-type": "application/json",
       authorization: `Bearer ${QUEUES_API_TOKEN}`,
     },
-    // If you have no messages to retry, you can return an empty array - retry: []
-    body: JSON.stringify({ acks: ["lease_id1", "lease_id2", "etc"], retries: [{"lease_id4"}]}),
+    // If you have no messages to retry, you can specify an empty array - retries: []
+    body: JSON.stringify({ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4" }]}),
   }
 );
 ```
 
-You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, secondsToDelayFor: number }` object in the `retries` array:
+You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, delay_seconds: number }` object in the `retries` array:
 
 ```json
-{ acks: ["lease_id1", "lease_id2", "lease_id3"], retries: [{"somelease_id", 300}, {"someotherlease_id", 600}]}
+{ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4", delay_seconds: 600}] }
 ```
 
 Additionally:
