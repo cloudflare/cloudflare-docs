@@ -116,6 +116,7 @@ To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://
 
 To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).
 
-## Real-time log streaming in Pages project is not compatible with Smart Replacement in the same Pages project
+## Real-time log streaming in Pages project is not compatible with Smart Placement in the same Pages project
 
-Currently, there is conflict when you enable Real-time log streaming while Smart Replacement is active in the same Pages project. Please try to avoid using these two features the same time. We will update here once this known issue is fixed. This limitation is not applied on Workers projects only for Pages projects.
+Currently, there is conflict when you enable Real-time log streaming while [Smart Placement](/pages/functions/smart-placement/) is active in the same Pages project. 
+Please avoid using these two features the same time. This limitation only applies to Pages projects, not Workers projects.
