@@ -281,8 +281,8 @@ The existing code within the file includes a placeholder that uses the Counter c
 
 ```ts
 ---
-highlight: [2-4, 18-20]
-filename: index.ts
+highlight: [2-4, 19-21]
+filename: index.tsx
 ---
 import { createRoute } from 'honox/factory'
 import type { FC } from 'hono/jsx'
@@ -330,10 +330,10 @@ The code snippet demonstrates how to import the `findAllEmployees`, `findAllLoca
 
 Similarly, when setting up a route to add data to the database, for instance, allowing admins to create a new employee through the `/admin` page, you would follow the same approach but this time use the `export POST` route.
 
-```tsx
+```ts
 ---
 highlight: 26
-filename: admin/create.ts
+filename: admin/create.tsx
 ---
 
 import { createRoute } from 'honox/factory'
@@ -412,9 +412,9 @@ declare module 'hono' {
 
 To store the uploaded image in the R2 bucket, you can use the `put` method provided by R2. This method allows you to upload the image file to your bucket.
 
-```tsx
+```ts
 ---
-filename: admin/create.ts
+filename: admin/create.tsx
 ---
 
 if (imageFile instanceof File) { 
@@ -457,6 +457,6 @@ Now, run `wrangler deploy` to deploy your project to Cloudflare. After deploymen
 
 ## Conclusion
 
-In this tutorial, you built a staff directory application where users can view all employees within an organization. To see the full source code for this application, you can visit - github.com/lauragift21/staff-directory. 
+In this tutorial, you built a staff directory application where users can view all employees within an organization. To see the full source code for this application, you can visit the [repository](https://github.com/lauragift21/staff-directory). 
 
 ![staff directory demo](https://github.com/lauragift21/staff-directory/raw/main/demo.gif)
