@@ -3,12 +3,14 @@ updated: 2024-03-21
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Build a Staff Directory
+title: Build a Staff Directory Application
 ---
 
 # Build a Staff Directory with D1, Cloudflare Pages and HonoX
 
-In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app. To do this, you will first need to set up a D1 database to manage data seamlessly, then you will develop and deploy your application using the [HonoX](https://github.com/honojs/honox) framework and [Cloudflare Pages](/pages).
+In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app. 
+
+To do this, you will first need to set up a D1 database to manage data seamlessly, then you will develop and deploy your application using the [HonoX Framework](https://github.com/honojs/honox) and [Cloudflare Pages](/pages).
 
 ## Prerequisites
 
@@ -60,7 +62,9 @@ To create a database for your project, use the Cloudflare CLI tool, [Wrangler](/
 $ npx wrangler d1 create staff-directory
 ```
 
-After creating your database, you'll need to set up a binding in the Wrangler configuration file to integrate your database with your application. This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
+After creating your database, you'll need to set up a binding in the Wrangler configuration file to integrate your database with your application. 
+
+This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
 
 ```toml
 ---
@@ -117,7 +121,9 @@ To interact with your D1 database, you can directly issue SQL commands using the
 $ wrangler d1 execute staff-directory --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 ```
 
-This method is useful for quickly running queries or operations directly from the command line. For operations such as initial data seeding or batch processing, you can pass a SQL file with your commands. To do this, create a `schema.sql` file in the root directory of your project and insert your SQL queries into this file:
+This method is useful for quickly running queries or operations directly from the command line. 
+
+For operations such as initial data seeding or batch processing, you can pass a SQL file with your commands. To do this, create a `schema.sql` file in the root directory of your project and insert your SQL queries into this file:
 
 ```sql
 ---
@@ -247,7 +253,7 @@ This application utilizes [Tailwind CSS](https://tailwindcss.com/) for styling, 
 
 To display a list of employees, you'll need to invoke the `findAllEmployees` function from your `db.ts` file and call that within the `routes/index.tsx` file.  The `createRoute()` function present in the file serves as a helper function for defining routes that handle different  HTTP methods like GET, POST, PUT, or DELETE.
 
-```tsx
+```ts
 ---
 filename: index.tsx
 ---
@@ -273,10 +279,10 @@ export default createRoute((c) => {
 
 The existing code within the file includes a placeholder that uses the Counter component. You should replace this section with the following code block:
 
-```tsx
+```ts
 ---
-highlight: [2-4, 21-23]
-filename: index.tsx
+highlight: [2-4, 18-20]
+filename: index.ts
 ---
 import { createRoute } from 'honox/factory'
 import type { FC } from 'hono/jsx'
@@ -327,7 +333,7 @@ Similarly, when setting up a route to add data to the database, for instance, al
 ```tsx
 ---
 highlight: 26
-filename: admin/create.tsx
+filename: admin/create.ts
 ---
 
 import { createRoute } from 'honox/factory'
@@ -365,7 +371,9 @@ export const POST = createRoute(async (c) => {
 
 ### Store Images in R2
 
-During the process of creating a new employee, The image uploaded can be stored in an R2 bucket prior to being added to the database. This involves creating an R2 bucket, uploading the image to this bucket, and then obtaining a public URL for the image from the bucket. This URL is then saved in your database, linking to the image stored in the R2 bucket.
+During the process of creating a new employee, The image uploaded can be stored in an R2 bucket prior to being added to the database. 
+
+This involves creating an R2 bucket, uploading the image to this bucket, and then obtaining a public URL for the image from the bucket. This URL is then saved in your database, linking to the image stored in the R2 bucket.
 
 First, we need to create a bucket using `wrangler r2 bucket create`:
 
@@ -406,7 +414,7 @@ To store the uploaded image in the R2 bucket, you can use the `put` method provi
 
 ```tsx
 ---
-filename: admin/create.tsx
+filename: admin/create.ts
 ---
 
 if (imageFile instanceof File) { 
