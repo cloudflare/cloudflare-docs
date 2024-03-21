@@ -13,7 +13,6 @@ Redirects defined in the `_redirects` file are not applied to responses from [Fu
 
 {{</Aside>}}
 
-
 ## Structure
 
 ### Per line
