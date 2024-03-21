@@ -11,50 +11,49 @@ This tutorial provides information and examples of how to configure IPsec VPN be
 
 You need to have a GCP VPN gateway created in your GCP account. This is needed to route traffic between your GCP virtual private cloud (VPC) and Cloudflare Magic WAN. Refer to the [GCP documentation](https://cloud.google.com/network-connectivity/docs/vpn/how-to/creating-static-vpns) to learn more about creating a Cloud VPN gateway.
 
-A Classic VPN Gateway is required to support static routing. Route tables will also need to be manually configured to allow the routing between the VPN and Cloudflare Magic WAN to work. [GCP routing options](https://cloud.google.com/network-connectivity/docs/vpn/concepts/choosing-networks-routing#ts-tun-routing) to learn more about GCP VPC routing.
+A Classic VPN Gateway is required to support static routing. Route tables will also need to be manually configured to allow the routing between the VPN and Cloudflare Magic WAN to work. Refer to [GCP routing options](https://cloud.google.com/network-connectivity/docs/vpn/concepts/choosing-networks-routing#ts-tun-routing) to learn more about GCP VPC routing.
 
 ## Google Cloud Platform
 
 ### Create a GCP Cloud VPN Gateway
 
-1. Go to **Network Connectivity** > **VPN**, then choose the **Cloud VPN Gateways** tab and select **Create VPN Gateway**.
-2. Give your gateway a name
-3. Choose the network you want to connect with this Cloud VPN Gateway (VPC)
-4. Select a region where this Cloud VPN Gateway should be located
-5. Choose **IPv4** as IP traffic type that will flow through this Gateway
+1. Go to **Network Connectivity** > **VPN**.
+2. Select the **Cloud VPN Gateways** tab > **Create VPN Gateway**.
+3. Give your gateway a descriptive name.
+4. Choose the network you want to connect to with this Cloud VPN Gateway (VPC).
+5. Select a region where this Cloud VPN Gateway should be located.
+6. Choose **IPv4** as the IP traffic type that will flow through this Gateway.
 
-{{<Aside type="note">}}Cloudflare Magic WAN doesn't yet support private routing via IPv6 
-{{</Aside>}}
+{{<Aside type="note">}}Cloudflare Magic WAN does not yet support private routing via IPv6.{{</Aside>}}
 
 ### Configure the VPN connection
 
-1. Go to **Network Connectivity** > **VPN**, then choose the **Cloud VPN Tunnels** tab and select **Create VPN Tunnel**.
-2. Select the VPN Gateway you created > **Continue**.
-3. Choose a name for the tunnel
-4. For the **Remote Peer IP Address** use one of the public Anycast Magic WAN IPs (Ask your account management contacts if you're unsure about them)
-5. Choose IKEv2 for the **IKE version**
-6. You can generate or put an IKE pre-shared key, if generated keep it somewhere safe since it will be needed in further steps
-7. Choose **route-based** as routing option
-8. Define in the **remote network IP range** the network you're going to expose to GCP via Cloudflare Magic WAN
+1. Go to **Network Connectivity** > **VPN**.
+2. Select the **Cloud VPN Tunnels** tab > **Create VPN Tunnel**.
+3. Select the VPN Gateway you have created > **Continue**.
+4. Give your tunnel a descriptive name.
+5. For **Remote Peer IP Address**, use one of the public Anycast Magic WAN IPs given to you by your account team.
+6. In **IKE version**, select **IKEv2**.
+7. You can generate an IKE pre-shared key, or add one you already own. If you generate one during this set up, keep it somewhere safe since you will need it in other steps to finish setting up Magic WAN and GCP.
+8. Choose **Route-based** as routing option.
+9. In **Remote network IP range** define the network you are going to expose to GCP via Cloudflare Magic WAN.
 
-{{<Aside type="note">}} You can add new IP ranges once the VPN object is created. They will need to be created as VPC routes using this VPN connection (see the **Static Routes** section)
-{{</Aside>}}
+{{<Aside type="note">}}You can add new IP ranges once the VPN object is created. They will need to be created as VPC routes using this VPN connection (refer to the **Static Routes** section).{{</Aside>}}
 
-9. Repeat the same process using your second Cloudflare Anycast IP 
+10. Repeat the same process using your second Cloudflare Anycast IP.
 
 ### Static Routes
 
-Static routing is necessary to route traffic between your VPN and Cloudflare Magic WAN, follow these steps to create them for your VPC. [VPN route documentation](https://cloud.google.com/vpc/docs/routes) to learn about VPN routing 
+Static routing is necessary to route traffic between your VPN and Cloudflare Magic WAN. Follow these steps to create them for your VPC. Refer to [VPN route documentation](https://cloud.google.com/vpc/docs/routes) to learn more about VPN routing.
 
-1. Go to **VPN Network** > **Routes**
-2. Select the **Route Management** tab
-3. Create a route
-4. Choose the VPC network you want to use for that route
-5. Choose **route type** as Static Routing
-6. Choose **IP Version** as IPv4
-7. Configuration the network you want to expose to your VPN in the **Destination IPv4 Range**
-8. Choose a priority
-9. 
+1. Go to **VPN Network** > **Routes**.
+2. Select **Route Management**.
+3. Create a route.
+4. Choose the VPC network you want to use for that route.
+5. In **Route type** select **Static Routing**.
+6. In **IP Version** select **IPv4**.
+7. Configure the network you want to expose to your VPN in the **Destination IPv4 Range**.
+8. Choose a priority.
 
 ## Magic WAN
 
