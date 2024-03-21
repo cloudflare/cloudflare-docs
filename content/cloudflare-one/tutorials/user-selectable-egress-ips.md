@@ -64,6 +64,8 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
     }'
     ```
 
+    For more information, refer to [Create a virtual network](/api/operations/tunnel-virtual-network-create-a-virtual-network).
+
 2. Repeat Step 1 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe, the Middle East, and Africa.
 
 {{</tab>}}
@@ -106,6 +108,8 @@ After creating your virtual networks, route your private network CIDRs over each
       "virtual_network_id": <VNET_AMER_UUID>
     }'
     ```
+
+    For more information, refer to [Update a tunnel route](/api/operations/tunnel-route-update-a-tunnel-route).
 
 2. Repeat this process for each virtual network you created. For example:
 
@@ -163,29 +167,31 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 1. Add a Gateway egress policy that matches the corresponding virtual network. For example:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header 'Content-Type: application/json' \
-    --data '{
-    "action": "egress",
-    "description": "Egress via North America by connecting to vnet-AMER",
-    "enabled": true,
-    "filters": [
-    "egress"
-    ],
-    "name": "Egress AMER vnet",
-    "precedence": 0,
-    "traffic": "net.vnet_id == <VNET_AMER_UUID>",
-    "rule_settings": {
-      "egress": {
-        "ipv6": <DEDICATED_IPV6_ADDRESS>,
-        "ipv4": <DEDICATED_IPV4_ADDRESS>,
-        "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>
-        }
-    }
-}'
-```
+    ```bash
+    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+      --header "Authorization: Bearer <API_TOKEN>" \
+      --header 'Content-Type: application/json' \
+      --data '{
+      "action": "egress",
+      "description": "Egress via North America by connecting to vnet-AMER",
+      "enabled": true,
+      "filters": [
+      "egress"
+      ],
+      "name": "Egress AMER vnet",
+      "precedence": 0,
+      "traffic": "net.vnet_id == <VNET_AMER_UUID>",
+      "rule_settings": {
+        "egress": {
+          "ipv6": <DEDICATED_IPV6_ADDRESS>,
+          "ipv4": <DEDICATED_IPV4_ADDRESS>,
+          "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>
+          }
+      }
+    }'
+    ```
+
+    For more information, refer to [Create a Zero Trust Gateway rule](/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule).
 
 2. Repeat Step 1 to create an egress policy for each virtual network you created.
 
