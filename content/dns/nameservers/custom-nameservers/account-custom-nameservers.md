@@ -19,29 +19,59 @@ For this configuration to be possible, a few conditions apply:
 
 {{<render file="_acns-tcns-byoip.md" withParameters="Account;;account" >}}
 
-## Add account custom nameservers
+## Enable account custom nameservers
 
-1. Use the [Add Account Custom Nameserver endpoint](/api/operations/account-level-custom-nameservers-add-account-custom-nameserver) to create account custom nameservers. Follow the [conditions](#configuration-conditions) for `ns_name` and `ns_set`.
+### 1. Set up ACNS names and sets
 
-    {{<render file="_ns-set-omission-callout.md">}}
+1. Use the [Add account custom nameserver endpoint](/api/operations/account-level-custom-nameservers-add-account-custom-nameserver) to create account custom nameservers. Follow the [conditions](#configuration-conditions) for `ns_name` and `ns_set`.
 
-2. This step depends on whether you are using [Cloudflare Registrar](/registrar/) for the domain that provides the ACNS names:
+{{<render file="_ns-set-omission-callout.md">}}
 
-    * If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add glue records to your ACNS and update your nameservers.
+Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name.
 
-    * If you are not using Cloudflare Registrar, add the account custom nameservers and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
+2. Make sure `A/AAAA` records with the assigned IPv4 and IPv6 exist at the authoritative DNS of the domain that provides the ACNS names.
 
-3. To enable the ACNS on existing zones, use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and automatically create the associated `A` or `AAAA` records.
+    * If the domain uses Cloudflare DNS, the respective `A` and `AAAA` records are automatically created.
 
-    {{<render file="_ns-set-omission-callout.md">}}
-    
-    * If you are not using [Cloudflare Registrar](/registrar/), also update the nameservers at your registrar to use the account custom nameserver names.
+    * If the domain or domains that are used for the account custom nameservers do not exist within the same account, you must manually create the `A/AAAA` records on the configured nameserver names (e.g. `ns1.example.com`) at the authoritative DNS provider.
 
-To make these ACNS the default nameservers for all new zones added to your account from now on, use the [Update Account endpoint](/api/operations/accounts-update-account) and set the value of `default_nameservers` to `custom.account`.
+    {{<example>}}
 
-## Remove account custom nameservers
+  | Type | Name | Content |
+  | --- | --- | --- |
+  | `A` | `ns1.example.com` | `<IPv4>` |
 
-To remove ACNS and their associated DNS records from a zone:
+  {{</example>}}
 
-  * If you are using [Cloudflare Registrar](/registrar/), use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) and set the `enabled` parameter to `false`.
+3. Update the registrar of the domain that provides the ACNS names. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
+
+    * If you are using Cloudflare Registrar for the domain that provides the ACNS names, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the account custom nameservers and IP addresses as glue records to the domain.
+
+    * If you are not using Cloudflare Registrar for the domain that provides the ACNS names, add the account custom nameservers and IP addresses to your domain's registrar as [glue records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3). If you do not add these records, DNS lookups for your domain will fail.
+
+### 2. Use ACNS on existing zones
+
+1. Choose an ACNS set as custom nameservers for a zone. Use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) for each zone.
+
+2. Make sure the nameservers are updated:
+
+    * If your domain uses [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to update your nameservers.
+    * If your domain uses a different registrar, update the nameservers at your registrar to use the account custom nameservers.
+    * If your zone is delegated to a parent zone, update the corresponding `NS` record at the parent zone.
+
+## Disable account custom nameservers
+
+### 1. Remove ACNS assignment from zones
+
+To remove ACNS from a zone, first update your nameservers to stop using ACNS:
+
+  * If you are using [Cloudflare Registrar](/registrar/), use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to change the `enabled` parameter to `false`, and then [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
   * If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to set the `enabled` parameter to `false`.
+
+### 2. Delete ACNS names or sets
+
+{{<Aside type="warning">}}
+Following the [configuration conditions](#configuration-conditions), each set must have between two and five different nameserver names. When you delete all names or leave a set with only one nameserver name, the set will no longer be listed as an option for the zones in your account.
+{{</Aside>}}
+
+Use the [Delete account custom nameserver endpoint](/api/operations/account-level-custom-nameservers-delete-account-custom-nameserver) to delete a specific ACNS.
