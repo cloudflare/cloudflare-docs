@@ -9,7 +9,7 @@ To use redirects on Cloudflare Pages, declare your redirects in a plain text fil
 
 {{<Aside type="warning">}}
 
-Redirects defined in the `_redirects` file are not applied to responses from [Functions](/pages/functions/), even if the Function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_redirects` file to the code in the appropriate `/functions` route, or exclude the route from Functions.
+Redirects defined in the `_redirects` file are not applied to requests served by [Functions](/pages/functions/), even if the Function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_redirects` file to the code in the appropriate `/functions` route, or exclude the route from Functions.
 
 {{</Aside>}}
 
