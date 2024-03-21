@@ -54,6 +54,9 @@ Static routing is necessary to route traffic between your VPN and Cloudflare Mag
 6. In **IP Version** select **IPv4**.
 7. Configure the network you want to expose to your VPN in the **Destination IPv4 Range**.
 8. Choose a priority.
+9. **Optional** you can link that route to a specific instance tag so only impacted instance will use that route
+10. **Next hop** should be your previously VPN tunnel
+11. **Create**
 
 ## Magic WAN
 
@@ -67,9 +70,16 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
     - **Customer endpoint**: The IP address from GCP VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
     - **Cloudflare endpoint**: Enter the first of your two Anycast IPs.
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the GCP VPN tunnel.
+    - **Health check type**: Choose Reply
+    - **Health check destination**: Choose **custom** and set the IP corresponding to the interface address for the tunnel
+    - **Health check direction**: Choose **Bidirectional**
     - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
+
+{{<Aside type="note">}}Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR of the Magic WAN tunnel (`169.254.244.2` in the example above). 
+
+Refer to the **Static Routes** section for more detail on how to create a VPC route leading to your newly created tunnel.{{</Aside>}}
 
 ### Static routes
 
