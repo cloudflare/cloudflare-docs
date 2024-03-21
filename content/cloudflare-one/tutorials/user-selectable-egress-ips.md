@@ -204,7 +204,9 @@ Each policy you create should correspond to a different primary dedicated egress
 
 {{<tutorial-step title="Test virtual network egress">}}
 
-1. On your user's machine, log in to your Zero Trust organization in the WARP client.
+{{<details header="Windows, macOS, and Linux" open="true">}}
+
+1. On your user's device, log in to your Zero Trust organization in the WARP client.
 2. In a terminal, run the following command to check the default egress IP address.
 
     ```sh
@@ -215,6 +217,17 @@ Each policy you create should correspond to a different primary dedicated egress
 
 3. In the WARP client, select the gear icon > **Virtual Networks**. Choose a virtual network you created.
 4. Check the egress IP address by running `curl ifconfig.me -4` again. The command should output the IP address specified in your egress policy.
+
+{{</details>}}
+
+{{<details header="iOS and Android">}}
+
+1. On your user's device, log in to your Zero Trust organization in the Cloudflare One Agent app.
+2. In a browser, go to [ifconfig.me](https://ifconfig.me/). Your organization's default egress IP should appear in **IP Address**.
+3. In Cloudflare One Agent, go to **Advanced** > **Connection options** > **Virtual networks**. Choose a virtual network you created.
+4. Check the egress IP address by reloading the browser page from Step 1. The IP address specified in your egress policy should appear in **IP Address**.
+
+{{</details>}}
 
 While your users are connected to a virtual network, their traffic will route via the dedicated egress IP specified. You can repeat these steps to test that each virtual network is egressing from the correct IP.
 
