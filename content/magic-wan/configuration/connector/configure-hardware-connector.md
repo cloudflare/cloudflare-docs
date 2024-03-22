@@ -10,7 +10,7 @@ weight: 3
 
 You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
-You also need to purchase Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
+You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
 
 ---
 
@@ -34,7 +34,7 @@ If you do not need a high availability configuration for you premises, refer to 
 
 ### Device installation
 
-There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local set up and have static IP addresses assigned to it.
+There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.
 
 #### Firewall settings required
 
@@ -58,7 +58,7 @@ To use your Connector on a network configuration with a static IP:
 
 1. Wait 60 seconds after activating your Connector.
 2. Unplug the physical connection to the Internet-connected device which provides DHCP.
-3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#1-create-a-site) step (for example, static IP WAN plugged into physical port with no DHCP connection).
+3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#1-create-a-site) step (for example, static IP WAN plugged into a physical port with no DHCP connection).
 4. Power cycle the Connector.
 
 ---
