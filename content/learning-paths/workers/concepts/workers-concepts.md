@@ -16,11 +16,11 @@ Workers projects are made of two basic components:
 
 If you are building your Worker entirely on the Cloudflare dashboard, you will use the dashboard editor to update your code and the Cloudflare dashboard configuration settings to configure your project.
 
-When an event (such as an HTTP request or a [Cron Trigger](/workers/configuration/cron-triggers/)) invokes a Worker, the Worker code will execute.
+When an event (such as an HTTP request or a [Cron Trigger](/workers/configuration/cron-triggers/)) invokes a Worker, the Worker code will execute. Workers projects can have complex functionality, run on multiple [routes](/workers/configuration/routing/), and route function logic according to its intended destination. Cloudflare Workers can do a lot. A single Worker project can have logic as complex or as simple as the developer desires. A simple use case might be [Returning a small HTML page](https://developers.cloudflare.com/workers/examples/return-html/) while a more complex project would span multiple domains, multiple routes for each domain, and different logic for each route and domain. The architectural complexity of a Worker project is decided by the developer.
 
 ## Execution
 
-Workers functions run on [Cloudflare's global network](https://www.cloudflare.com/network/) - a growing global network of thousands of machines distributed across hundreds of locations. Only one Workers instance runs on each of the many  Cloudflare global network servers. An instance refers to a single execution environment where Cloudflare Workers runs. Every Worker running within an instance is executed within its own isolate. Workers are stateless, meaning that they do not maintain data or state between invocations.
+Workers run on [Cloudflare's global network](https://www.cloudflare.com/network/) - a growing global network of thousands of machines distributed across hundreds of locations. Only one Workers instance runs on each of the many Cloudflare global network servers. An instance refers to a single execution environment where Cloudflare Workers runs. Every Worker running within an instance is executed within its own isolate. Workers are stateless, meaning that they do not maintain data or state between invocations.
 
 ## Isolates
 
