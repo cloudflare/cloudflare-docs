@@ -42,7 +42,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ZCNS name and automat
 The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
 
 - If you are using Cloudflare Registrar for your domain, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the custom nameservers and IP addresses as glue records to the domain.
-- If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3)). If you do not add these records, DNS lookups for your domain will fail.
+- If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3). If you do not add these records, DNS lookups for your domain will fail.
 
 ### Secondary zones
 
@@ -50,7 +50,7 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 
 1. Get the ZCNS IPs. You can see them on the dashboard (**DNS** > **Records**) or you can use the [Zone details endpoint](/api/operations/zones-0-get) to get the `vanity_name_servers_ips`.
 2. At your primary DNS provider, add [`NS` records](/dns/manage-dns-records/reference/dns-record-types/#ns) and, on the subdomains that you used as ZCNS names, add `A/AAAA` records.
-3. At your registrar, add the zone custom nameservers as your authoritative nameservers and as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3)).
+3. At your registrar, add the zone custom nameservers as your authoritative nameservers and as [glue (A and AAAA) records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3).
 
 ## Remove zone custom nameservers
 

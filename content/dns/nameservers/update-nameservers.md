@@ -20,13 +20,13 @@ If you have acquired your domain from a [registrar](https://www.cloudflare.com/l
 
 {{<render file="_ns-update-providers.md">}}
 
-If you do not know who your registrar is, you can use a Whois search such as [ICANN Lookup](https://lookup.icann.org/). If the registrar indicated on your Whois search is not a service that you have interacted directly with, you may [have acquired your domain from a reseller](#you-have-acquired-your-domain-from-a-reseller).
+If you do not know who your registrar is, you can use a Whois search, such as [ICANN Lookup](https://lookup.icann.org/). If the registrar indicated on your Whois search result is not a service that you have interacted directly with, you may [have acquired your domain from a reseller](#you-have-acquired-your-domain-from-a-reseller).
 
 ### You have acquired your domain from a reseller
 
 Some services, such as website builders ([Squarespace](https://support.squarespace.com/hc/en-us/articles/115003671428-Who-s-my-domain-provider), for example), are not registrars but act as a [reseller](https://www.icann.org/resources/pages/reseller-2013-05-03-en), allowing you to buy domains directly from them.
 
-In that case, you may have to update your nameservers directly in the reseller platform.
+In that case, you may have to update your nameservers in the reseller platform, not at the registrar.
 
 {{<Aside type="note">}}
 Refer to [Squarespace documentation](https://support.squarespace.com/hc/en-us/articles/4404183898125-Nameservers-and-DNSSEC-for-Squarespace-managed-domains#toc-open-the-domain-s-advanced-settings) on how to update nameservers in their platform.
