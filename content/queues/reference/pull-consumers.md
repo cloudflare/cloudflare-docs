@@ -55,10 +55,6 @@ dead_letter_queue = "SOME_OTHER_QUEUE"
 
 Omitting the `type` property will default the queue to push-based.
 
-### Enable HTTP pull via the Cloudflare dashboard
-
-TODO
-
 ### wrangler CLI
 
 You can enable a pull-based consumer on any existing queue by using the `wrangler queues consumer http` sub-commands and providing a queue name.
@@ -219,6 +215,8 @@ Additionally:
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
+<!-- 
+
 ## Examples
 
 ### TypeScript (Node.js)
@@ -239,6 +237,8 @@ The following example is a Go application that pulls from a queue on startup, ac
 
 
 ```
+
+-->
 
 ## Content types
 
