@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Pull consumers
-weight: 15
+weight: 6
 meta:
   title: Cloudflare Queues - Pull consumers
 ---

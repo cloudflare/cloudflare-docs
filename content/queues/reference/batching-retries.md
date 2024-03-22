@@ -1,7 +1,7 @@
 ---
 title: Batching and Retries
 pcx_content_type: concept
-weight: 3
+weight: 4
 ---
 
 # Batching and Retries
@@ -93,7 +93,9 @@ Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivale
 
 ## Retries
 
-When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed (refer to [Dead Letter Queues](#dead-letter-queues)). You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
+When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed. You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
+
+Messages that reach the configured maximum retries will be deleted from the queue, or if a [dead-letter queue](/queues/reference/dead-letter-queues/) (DLQ) is configured, written to the DLQ instead.
 
 {{<Aside type="note">}}
 
@@ -109,19 +111,7 @@ Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause
 
 {{</Aside>}}
 
-## Dead Letter Queues
+## Delay messages
 
-A Dead Letter Queue (DLQ) is a common concept in a messaging system, and represents where messages are sent when a delivery failure occurs with a consumer after `max_retries` is reached. A Dead Letter Queue is just like any other queue, and can be produced to and consumed from independently. 
+When publishing messages to a queue 
 
-With Cloudflare Queues, a Dead Letter Queue is configured as part of your consumer. For example, the following consumer configuration would send messages to our DLQ named `"my-other-queue"` after retrying delivery (by default, 3 times):
-
-```toml
----
-filename: wrangler.toml
----
-[[queues.consumers]]
-  queue = "my-queue"
-  dead_letter_queue = "my-other-queue"
-```
-
-To process messages placed on your DLQ, you need to set up a consumer associated with that queue. Messages delivered to a DLQ without an active consumer will persist for four (4) days before being deleted from the queue.
