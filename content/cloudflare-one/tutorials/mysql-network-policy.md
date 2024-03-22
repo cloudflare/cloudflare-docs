@@ -58,6 +58,8 @@ In addition to the Allow rule above, Cloudflare recommends adding a [catch-all b
 
 Allowed WARP users can now connect to the MySQL server at `10.128.0.175` using the MySQL client of their choice.
 
+{{</tutorial-step>}}
+
 {{<tutorial-step title="Create a Gateway resolver policy (optional)">}}
 
 To allow users to access the MySQL database using an internal hostname instead of the private IP address, configure a Gateway resolver policy.
