@@ -1,7 +1,7 @@
 ---
 title: Test a policy
 pcx_content_type: learning-unit
-weight: 8
+weight: 6
 layout: learning-unit
 ---
 
