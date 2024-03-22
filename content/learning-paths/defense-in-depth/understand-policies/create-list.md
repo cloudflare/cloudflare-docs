@@ -9,6 +9,6 @@ layout: learning-unit
 
 {{<Aside type="note" header="Create lists in advance">}}
 
-Before moving on to create security policies, we recommend you create lists for your trusted domains, hosts, and IP addresses, as well as privileged users and user groups.
+Before moving on to create security policies, we recommend you create lists for your known domains, hosts, and IP addresses.
 
 {{</Aside>}}

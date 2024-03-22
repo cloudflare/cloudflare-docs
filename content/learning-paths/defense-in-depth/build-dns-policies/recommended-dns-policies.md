@@ -9,12 +9,12 @@ We recommend you add the following DNS policies to build a defense-in-depth stra
 
 {{<details header="All-DNS-Domain-Allowlist" open="true">}}
 
-Allowlist any trusted domains and hostnames. With this policy, you ensure that your users can access your organization's domains even if the domains fall under a blocked category, such as **Newly Seen Domains** or **Login Screens**.
+Allowlist any known domains and hostnames. With this policy, you ensure that your users can access your organization's domains even if the domains fall under a blocked category, such as **Newly Seen Domains** or **Login Screens**.
 
-| Selector | Operator | Value             | Logic | Action |
-| -------- | -------- | ----------------- | ----- | ------ |
-| Domain   | in list  | _Trusted Domains_ | Or    | Allow  |
-| Host     | in list  | _Trusted Domains_ |       |        |
+| Selector | Operator | Value           | Logic | Action |
+| -------- | -------- | --------------- | ----- | ------ |
+| Domain   | in list  | _Known Domains_ | Or    | Allow  |
+| Host     | in list  | _Known Domains_ |       |        |
 
 {{</details>}}
 
@@ -58,11 +58,11 @@ Block frequently misused top-level domains (TLDs) to reduce security risks, espe
 
 {{<details header="All-DNS-DomainPhishing-Blocklist" open="true">}}
 
-Block misused domains to protect your users against sophisticated phishing attacks, such as domains that specifically target your organization. For example, the following policy blocks specific keywords associated with an organization or its authentication services (such as `okta`, `2fa`, `cloudflare` and `sso`) while still allowing access to trusted domains.
+Block misused domains to protect your users against sophisticated phishing attacks, such as domains that specifically target your organization. For example, the following policy blocks specific keywords associated with an organization or its authentication services (such as `okta`, `2fa`, `cloudflare` and `sso`) while still allowing access to known domains.
 
 | Selector | Operator      | Value                                       | Logic | Action |
 | -------- | ------------- | ------------------------------------------- | ----- | ------ |
-| Domain   | not in list   | _Trusted Domains_                           | And   | Block  |
+| Domain   | not in list   | _Known Domains_                             | And   | Block  |
 | Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |       |        |
 
 {{</details>}}

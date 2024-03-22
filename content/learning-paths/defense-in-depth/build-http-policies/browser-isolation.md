@@ -95,9 +95,9 @@ In this context, if some traffic is unknown to your organization, Cloudflare wil
 
 - Allow known applications and websites:
 
-    | Selector | Operator | Value             | Action |
-    | -------- | -------- | ----------------- | ------ |
-    | Domain   | in list  | _Trusted Domains_ | Allow  |
+    | Selector | Operator | Value           | Action |
+    | -------- | -------- | --------------- | ------ |
+    | Domain   | in list  | _Known Domains_ | Allow  |
 
 - Block security risks:
 

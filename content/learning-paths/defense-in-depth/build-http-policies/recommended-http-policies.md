@@ -35,7 +35,7 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 | Selector | Operator | Value                    | Logic | Action         |
 | -------- | -------- | ------------------------ | ----- | -------------- |
 | Domain   | in list  | _DomainInspectionBypass_ | Or    | Do Not Inspect |
-| Domain   | in list  | _Trusted Domains_        |       |                |
+| Domain   | in list  | _Known Domains_          |       |                |
 
 {{</details>}}
 
