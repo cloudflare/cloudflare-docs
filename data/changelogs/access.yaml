@@ -1,0 +1,44 @@
+---
+link: "/access/changelog/"
+productName: Access
+entries:
+- publish_date: '2024-02-22'
+  title: Access for SaaS OIDC Support
+  description: |-
+    Access for SaaS applications can be setup with OIDC instead of SAML
+- publish_date: '2024-02-22'
+  title: WARP as an Identity Authentication Source
+  description: |-
+    Allow users to log in with their WARP/Gateway session identity. Users need to reauthenticate based on default session durations. WARP authentication identity must be turned on in your device enrollment permissions
+- publish_date: '2023-12-20'
+  title: Unique entity ids in Access for SaaS
+  description: |-
+    New Access for SaaS apps have the application audience tag appended to the entity_id. Existing apps are unchanged.
+- publish_date: '2023-12-15'
+  title: Default relay state support in Access for SaaS
+  description: |-
+    Allows Access admins to set a default relay state on Access for SaaS apps
+- publish_date: '2023-09-15'
+  title: App launcher supports tags and filters
+  description: |-
+    Access admins can now tag applications and allow users to filter by those tags in the app launcher
+- publish_date: '2023-09-15'
+  title: App launcher customization
+  description: |-
+    Allow Access admins to configure the App Launcher page within the Zero Trust Dashboard
+- publish_date: '2023-09-15'
+  title: View active Access user identities in the dashboard and API
+  description: |-
+    Access admins can now view the full contents of a user's identity and device information at the time of their last session authentication in the Cloudflare dashboard
+- publish_date: '2023-09-08'
+  title: Custom OIDC claims for named IDPs
+  description: |-
+    Access admins can add custom claims to the existing named IDP providers. Previously this was locked to the generic OIDC provider.
+- publish_date: '2023-08-02'
+  title: Azure AD Conditional Access Sync
+  description: |-
+    Support AzureAD conditional access policies directly in Access policies.
+- publish_date: '2023-06-23'
+  title: Access custom pages - deny page
+  description: |-
+    Allow Access admins to customize the deny pages presented by Access to end users
