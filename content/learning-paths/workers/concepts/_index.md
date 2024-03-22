@@ -11,6 +11,9 @@ Learn the concepts behind what makes Cloudflare Workers reliable, scalable and f
 
 ## Objectives
 
-- Understand serverless computing.
-- Review how Workers works.
-- Learn about how Workers interacts with the Cloudflare cache.
+By the end of this module, you will learn:
+
+- What Cloudflare is.
+- The difference between serverless computing and cloud computing paradigms.
+- How Workers works.
+- What the Cloudflare Developer Platform can offer you.
