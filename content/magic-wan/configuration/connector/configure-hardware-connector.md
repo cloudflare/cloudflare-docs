@@ -22,7 +22,7 @@ In this type of high availability (HA) configuration, you will choose a reliable
 
 If you need a high availability configuration for your premises, refer to refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 
-If you do not need a high availability configuration for you premises, refer to [Configure Cloudflare dashboard settings](#1-configure-cloudflare-dashboard-settings).
+If you do not need a high availability configuration for you premises, refer to [Configure Cloudflare dashboard settings](#configure-magic-wan-connector).
 
 ---
 
@@ -95,7 +95,7 @@ To set up a high availability configuration:
 12. Select **Save**.
 13. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the traffic's health. Cloudflare recommends that you choose a port connected to a reliable interface, like one that connects directly to a router instead of going through a switch first.
 14. Select **Save and exit** to finish your configuration.
-15. Follow the instructions in [Set up your Magic WAN Connector](#2-set-up-your-magic-wan-connector) and [Activate connector](#3-activate-connector) to finish setting up your Connectors.
+15. Follow the instructions in [Set up your Magic WAN Connector](#set-up-your-magic-wan-connector) and [Activate connector](#activate-connector) to finish setting up your Connectors.
 
 ---
 
