@@ -15,7 +15,7 @@ With Cloudflare Access, you can require that users obtain approval before they c
 3. Choose the **Allow** policy you want to configure and select **Edit**.
 4. Under **Additional settings**, turn on [**Purpose justification**](/cloudflare-one/policies/access/require-purpose-justification/).
 5. Turn on **Temporary authentication**.
-6. Enter the **Email addresses of the approvers**. (Note: your approvers must be pass your [Application Launcher Access policy](/cloudflare-one/applications/app-launcher/) in order to verify their identity)
+6. Enter the **Email addresses of the approvers**. (Note: your approvers must be authenticated by Access in order to verify their identity. If they do not have an active session it will default to your [Application Launcher Access policy](/cloudflare-one/applications/app-launcher/) to verify their identity.)
 7. Save the policy.
 
 Temporary authentication is now enabled for users who match this policy. You can optionally add a second **Allow** policy for users who should have persistent access. Be sure the policy order is set to allow persistent users through.
