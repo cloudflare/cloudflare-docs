@@ -40,7 +40,7 @@ The following batch-level settings can be configured to adjust how Queues delive
   
 {{</table-wrap>}}
 
-## Explicit acknowledgement
+## Explicit acknowledgement and retries
 
 You can acknowledge individual messages with a batch by explicitly acknowledging each message as it is processed. Messages that are explicitly acknowledged will not be re-delivered, even if your queue consumer fails on a subsequent message and/or fails to return successfully when processing a batch.
 
@@ -70,7 +70,7 @@ You can also call `retry()` to explicitly force a message to be redelivered in a
 
 ```ts
 ---
-header: index.js 
+header: index.ts
 ---
 export default {
   async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
@@ -91,7 +91,7 @@ Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivale
 * If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.
 * If you call either `ack()` or `retry()` on a single message, and then either/any of `ackAll()` or `retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does not apply to that message (or messages, if multiple calls were made).
 
-## Retries
+## Delivery falure
 
 When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed. You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
 
@@ -103,7 +103,7 @@ Each retry counts as an additional read operation per [Queues pricing](/queues/p
 
 {{</Aside>}}
 
-When a single message within a batch fails to be delivered, the entire batch is retried, unless you have [explicitly acknowledged](#explicit-acknowledgement) a message (or messages) within that batch. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus redelivered to your consumer in full.
+When a single message within a batch fails to be delivered, the entire batch is retried, unless you have [explicitly acknowledged](#explicit-acknowledgement-and-retries) a message (or messages) within that batch. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus redelivered to your consumer in full.
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
@@ -113,5 +113,63 @@ Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause
 
 ## Delay messages
 
-When publishing messages to a queue 
+When publishing messages to a queue, or when [marking a messsage or batch for retry](#explicit-acknowledgement-and-retries), you can choose to delay messages from being processed for a period of time.
 
+Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue. For example, if an upstream API you are calling to returns a `HTTP 429: Too Many Requests`, you can delay messages to slow down how quickly you are consuming them before they are re-processed.
+
+### Delay on send
+
+To delay a message or batch of messages when sending to a queue, you can provide a `delaySeconds` parameter:
+
+```ts
+// Delay a singular message by 600 seconds (10 minutes)
+await env.YOUR_QUEUE.send(message, { delaySeconds: 600 })
+
+// Delay a batch of messages by 300 seconds (5 minutes)
+await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 300 })
+```
+
+### Delay on retry
+
+When [consuming messages from a queue](/queues/reference/how-queues-works/#consumers), you can choose to [explicitly mark messages to be retried](#explicit-acknowledgement-and-retries). Messages can be retried and delayed individually, or as an entire batch.
+
+To delay an individual message within a batch:
+
+```ts
+---
+header: index.ts
+---
+export default {
+  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+    for (const msg of batch.messages) {
+      // Mark for retry and delay a singular message
+      // by 3600 seconds (1 hour)
+      msg.retry({delaySeconds: 3600})
+
+    }
+  },
+};
+```
+
+To delay a batch of messages:
+
+```ts
+---
+header: index.ts
+---
+export default {
+  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+    // Mark for retry and delay a batch of messages
+    // by 600 seconds (10 minutes)
+    batch.retryAll({delaySeconds: 600})
+  },
+};
+```
+
+To delay messages consumed by a [pull-based consumer](/queues/reference/pull-consumers/), refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers).
+
+## Related
+
+* Review the [JavaScript API](/queues/reference/javascript-apis/) documentation for Queues
+* Learn more about [How Queues Works](/queues/reference/how-queues-works/)
+* Understand the [metrics available](/queues/reference/metrics/) for your queues, including backlog and delayed message counts.
