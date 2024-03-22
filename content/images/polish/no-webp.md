@@ -11,17 +11,17 @@ Polish also optimizes JPEG images, and the WebP format is not always better than
 To enhance the use of WebP in Polish, enable the [Lossy option](/images/polish/compression/#lossy). When you create new JPEG images, save them with a slightly higher quality than usually necessary.
 We recommend JPEG quality settings between 85 and 95, but not higher. This gives Polish enough headroom for lossy conversion to WebP and optimized JPEG.
 
-## In the **lossless** mode, it's not feasible to convert JPEG to WebP
+## In the **lossless** mode, it is not feasible to convert JPEG to WebP
 
 WebP is actually a name for two quite different image formats: WebP-lossless (similar to PNG) and WebP-VP8 (similar to JPEG).
 
-When the [Lossless option](/images/polish/compression/#lossless) is enabled, Polish will not perform any optimizations that change image pixels. This allows Polish to convert only between lossless image formats, such as PNG, GIF, and WebP-lossless. JPEG images won't be converted though, because the WebP-VP8 format does not support the conversion from JPEG without quality loss, and the WebP-lossless format doesn't compress images as heavily as JPEG.
+When the [Lossless option](/images/polish/compression/#lossless) is enabled, Polish will not perform any optimizations that change image pixels. This allows Polish to convert only between lossless image formats, such as PNG, GIF, and WebP-lossless. JPEG images will not be converted though, because the WebP-VP8 format does not support the conversion from JPEG without quality loss, and the WebP-lossless format does not compress images as heavily as JPEG.
 
-In the lossless mode, Polish can still apply lossless optimizations to JPEG images. This is a unique feature of the JPEG format that doesn't have an equivalent in WebP.
+In the lossless mode, Polish can still apply lossless optimizations to JPEG images. This is a unique feature of the JPEG format that does not have an equivalent in WebP.
 
-## Low-quality JPEG images don't convert well to WebP
+## Low-quality JPEG images do not convert well to WebP
 
-When JPEG files are already heavily compressed (e.g. saved with a low quality setting like q=50, or re-saved many times), the conversion to WebP may not be beneficial, and may actually increase the file size. This is because lossy formats add distortions to images (e.g. JPEG makes images blocky and adds noise around sharp edges), and the WebP format can't tell the difference between details of the image it needs to preserve and unwanted distortions caused by a previous compression. This forces WebP to wastefully "spend" bytes on keeping the added noise and blockyness, which increases the file size, and makes compression less beneficial overall.
+When JPEG files are already heavily compressed (for example, saved with a low quality setting like `q=50`, or re-saved many times), the conversion to WebP may not be beneficial, and may actually increase the file size. This is because lossy formats add distortions to images (for example, JPEG makes images blocky and adds noise around sharp edges), and the WebP format can not tell the difference between details of the image it needs to preserve and unwanted distortions caused by a previous compression. This forces WebP to wastefully use bytes on keeping the added noise and blockyness, which increases the file size, and makes compression less beneficial overall.
 
 Polish never makes files larger. When we see that the conversion to WebP increases the file size, we skip it, and keep the smaller original file format.
 
@@ -42,11 +42,11 @@ Sometimes animations with little motion are more efficient as GIF than animated 
 
 The WebP format does not support progressive rendering. With [HTTP/2 prioritization](/speed/optimization/protocol/enhanced-http2-prioritization/) enabled, progressive JPEG images may appear to load quicker, even if their file sizes are larger.
 
-## Beware of compression that isn't better, only more of the same
+## Beware of compression that is not better, only more of the same
 
-With a lossy format like JPEG or WebP, it's always possible to take an existing image, save it with a slightly lower quality, and get an image that looks _almost_ the same, but has a smaller file size.
-It's the [heap paradox](https://en.wikipedia.org/wiki/Sorites_paradox): you can remove a grain of sand from a heap, and still have a heap of sand. There is no point when you can't make the heap smaller, except when there's no sand left. It's always possible to make an image with a slightly lower quality, all the way until all the accumulated losses degrade the image beyond recognition.
+With a lossy format like JPEG or WebP, it is always possible to take an existing image, save it with a slightly lower quality, and get an image that looks _almost_ the same, but has a smaller file size.
+It is the [heap paradox](https://en.wikipedia.org/wiki/Sorites_paradox): you can remove a grain of sand from a heap, and still have a heap of sand. There is no point when you can not make the heap smaller, except when there is no sand left. It is always possible to make an image with a slightly lower quality, all the way until all the accumulated losses degrade the image beyond recognition.
 
 Avoid applying multiple lossy optimization tools to images, before or after Polish. Multiple lossy operations degrade quality disproportionally more than what they save in file sizes.
 
-For this reason Polish won't create the smallest possible file sizes. Instead, Polish aims to maximize the quality to file size ratio, to create the smallest possible files _while preserving good quality_. The quality level we stop at is carefully chosen to minimize visual distortion, while still having a high compression ratio.
+For this reason Polish will not create the smallest possible file sizes. Instead, Polish aims to maximize the quality to file size ratio, to create the smallest possible files while preserving good quality. The quality level we stop at is carefully chosen to minimize visual distortion, while still having a high compression ratio.

@@ -28,7 +28,7 @@ The Lossless option prevents conversion of JPEG to WebP, because this is always 
 
 ### Lossy
 
-The Lossy option applies significantly better compression to images than then the Lossless option, at a cost of small quality loss. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file sizes by 48 percent.
+The Lossy option applies significantly better compression to images than the Lossless option, at a cost of small quality loss. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file sizes by 48 percent.
 
 This option also removes metadata from images. The Lossy option mainly affects JPEG images, but PNG images may also be compressed in a lossy way, or converted to JPEG when this improves compression.
 
