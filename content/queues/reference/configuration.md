@@ -22,7 +22,7 @@ Below are options for Queues, refer to the Wrangler documentation for a full ref
 
 ## Producer
 
-A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues. A producer can accept messages over HTTP, asyncronously write messages when handling requests, and/or write to a queue from within a [Durable Object](/durable-objects/). Any Worker can write to a queue.
+A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues. A producer can accept messages over HTTP, asynchronously write messages when handling requests, and/or write to a queue from within a [Durable Object](/durable-objects/). Any Worker can write to a queue.
 
 To produce to a queue, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a queue.
 
@@ -48,7 +48,7 @@ To produce to a queue, set up a binding in your `wrangler.toml` file. These opti
 
 ## Workers
 
-To consume messages from one or more queues, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a Queue.
+To consume messages from one or more queues, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a queue.
 
 ```toml
 [[queues.consumers]]

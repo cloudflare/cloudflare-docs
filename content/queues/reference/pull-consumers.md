@@ -10,37 +10,37 @@ meta:
 
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
-## Push or pull?
+## How to choose between push or pull consumer
 
 Deciding whether to configure a push-based consumer or a pull-based consumer will depend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
 
-- As a general rule-of-thumb, starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
+- Starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
 - Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
 
-Note that you can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
+You can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
 
 # Configuration
 
 {{<Aside type="note" header="Retrieve an API bearer token">}}
 
-To configure a pull-based consumer, you will need to create [an API token](/fundamentals/api/get-started/create-token/) with both the `queues#read` and `queues#write` permissions. A consumer must be able to write to a queue to acknowledge messages.
+To configure a pull-based consumer, create [an API token](/fundamentals/api/get-started/create-token/) with both the `queues#read` and `queues#write` permissions. A consumer must be able to write to a queue to acknowledge messages.
 
 {{</Aside>}}
 
-There are four steps required to configure a pull-based consumer and receive messages from a queue:
+To configure a pull-based consumer and receive messages from a queue, you need to:
 
-1. Enabling HTTP pull for the queue
-2. Creating a valid authentication token for the HTTP client
-3. Pulling message batches from the queue
-4. Acknowledging and/or retrying messages within a batch
+1. Enable HTTP pull for the queue.
+2. Create a valid authentication token for the HTTP client.
+3. Pull message batches from the queue.
+4. Acknowledge and/or retry messages within a batch.
 
-## 1. Enabling HTTP pull
+## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the Cloudflare dashboard.
+You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 ### wrangler.toml
 
-A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration.
+A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
 
 ```toml
 [[queues.consumer]]
@@ -55,7 +55,7 @@ dead_letter_queue = "SOME_OTHER_QUEUE"
 
 Omitting the `type` property will default the queue to push-based.
 
-### Dashboard
+### Enable HTTP pull via the Cloudflare dashboard
 
 TODO
 
@@ -67,7 +67,7 @@ You can enable a pull-based consumer on any existing queue by using the `wrangle
 $ npx wrangler queues consumer http add $QUEUE_NAME
 ```
 
-Note that if you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer http add` on a queue with an existing consumer configuration:
+If you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer http add` on a queue with an existing consumer configuration:
 
 ```sh
 $ wrangler queues consumer worker remove $QUEUE_NAME $SCRIPT_NAME
@@ -85,7 +85,7 @@ Ensure you remove the consumer configuration first.
 
 HTTP Pull consumers require an [API token](/fundamentals/api/get-started/create-token/) with the `com.cloudflare.api.account.queues_read` and `com.cloudflare.api.account.queues_write` permissions.
 
-Both read _and_ write are required as a pull-based consumer needs to write to the queue state in order to acknowledge the messages it receives: consuming messages mutates the queue.
+Both read _and_ write are required as a pull-based consumer needs to write to the queue state to acknowledge the messages it receives. Consuming messages mutates the queue.
 
 API tokens are presented as Bearer tokens in the `Authorization` header of a HTTP request in the format `Authorization: Bearer $YOUR_TOKEN_HERE`. The following example shows how to pass an API token using the `curl` HTTP client:
 
@@ -102,17 +102,17 @@ You may authenticate and run multiple concurrent pull-based consumers against a 
 
 To create an API token:
 
-1. Visit the API tokens page of the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/)
-2. Select **Create Token**
-3. Scroll to the bottom of the page and select **Create Custom Token**
-4. Give the token a name - e.g. `queue-pull-token`
+1. Go to the API tokens page of the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/).
+2. Select **Create Token**.
+3. Scroll to the bottom of the page and select **Create Custom Token**.
+4. Give the token a name. For example, `queue-pull-token`.
 5. Under the **Permissions** section, choose **Account** and then **Queues**. Ensure you have selected **Edit** (read+write).
 6. (Optional) Select **All accounts** (default) or a specific account to scope the token to.
-7. Select **Continue to summary** and then **Create token**
+7. Select **Continue to summary** and then **Create token**.
 
 You will need to note the token down: it will only be displayed once.
 
-## 3. Pulling messages
+## 3. Pull messages
 
 To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-create-queue-consumer) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
@@ -160,7 +160,7 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 }
 ```
 
-Pull consumers take a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
+Pull consumers follow a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
 
 Each message object has five fields:
 
@@ -179,13 +179,13 @@ You can configure both `batch_size` and `visibility_timeout` when pulling from a
 
 ### Concurrent consumers
 
-You may have multiple HTTP clients pulling from the same queue concurrently: each client will receieve a unique batch of messages and retain the "lease" on those messages up until the `visibility_timeout` expires, or until those messages are marked for retry.
+You may have multiple HTTP clients pulling from the same queue concurrently: each client will receive a unique batch of messages and retain the "lease" on those messages up until the `visibility_timeout` expires, or until those messages are marked for retry.
 
 Messages marked for retry will be put back into the queue and can be delivered to any consumer. Messages are _not_ tied to a specific consumer, as consumers do not have an identity and to avoid a slow or stuck consumer from holding up processing of messages in a queue.
 
-Multiple consumers can be useful in cases where you have multiple upstream resources (e.g. GPU infrastructure), where you want to autoscale based on the [backlog](/queues/reference/metrics/) of a queue, and/or cost.
+Multiple consumers can be useful in cases where you have multiple upstream resources (for example, GPU infrastructure), where you want to autoscale based on the [backlog](/queues/reference/metrics/) of a queue, and/or cost.
 
-## 4. Acknowledging messages
+## 4. Acknowledge messages
 
 Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
 
@@ -217,7 +217,7 @@ Additionally:
 * You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
 * You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/reference/limits/).
 
-Note that Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
+Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
 ## Examples
 
@@ -260,6 +260,6 @@ Your consumer will need to decode the `json` and `bytes` types before operating 
 
 ## Next steps
 
-- Review the [REST API documentation](/api/operations/queue-create-queue-consumer) and schema for Queues
+- Review the [REST API documentation](/api/operations/queue-create-queue-consumer) and schema for Queues.
 - Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
 - Understand [what limit apply](/queues/platform/limits/) when consuming and writing to a queue.
