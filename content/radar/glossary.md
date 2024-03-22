@@ -10,7 +10,7 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level Attacks
 
-Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
+Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. For the "Application layer attack volume" and "Mitigated traffic sources" graphs, the selected location or ASN is the source of the mitigated requests. For the "Application layer attack distribution" graph, the Origin Location graph shows where attacks targeting the selected location are coming from and the Target Location graph shows the target locations of attacks coming from the selected location. "Application layer attack distribution" insights are not available at an ASN level.
 
 ## Autonomous Systems
 
@@ -139,7 +139,7 @@ A complete TCP connection consists of a 3-way handshake initiated by a client wi
 
 Timeouts can be triggered, for example, by shutting down applications or devices before they can close connections. Timeouts also can be caused by third-party applications or devices seeking to prevent or break the connection. The RST packet is reserved for use by an endpoint to signal a fatal error or failure of some kind, but it can also inappropriately be transmitted by middleboxes to force endpoints to close their connections (see RFC 3360).
 
-Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in “[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)”).
+Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in "[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)").
 
 On Cloudflare Radar's Security & Attacks page, you can view connection tampering statistics derived from a sample of connections to Cloudflare's servers. The plot lines are defined as follows:
 * **Mid-handshake (Post-SYN)**: Connections matching signatures for tampering after the receipt of only a single SYN packet, and before the handshake completes. Tampering at this stage is likely triggered by the destination IP address, as SYN packets typically do not contain application-layer data.
