@@ -12,7 +12,7 @@ In the context of Cloudflare DNS, nameservers refer to authoritative nameservers
 
 ## Authoritative nameservers offering
 
-Within Cloudflare, and depending on your plan, you can choose between using Cloudflare-branded nameservers or setting up your own custom nameservers.
+Within Cloudflare, and depending on your plan, you can choose between using Cloudflare-branded nameservers or setting up your own custom nameservers. The names for Cloudflare-branded nameservers are automatically assigned and cannot be changed.
 
 Regardless of the type you choose, for these nameservers to be authoritative for your domain, you need to [update your domain nameservers](/dns/nameservers/update-nameservers/). Updating your nameservers is required to activate your domain on Cloudflare and use most of our [application services](/fundamentals/concepts/how-cloudflare-works/#application-services).
 
@@ -21,6 +21,8 @@ Regardless of the type you choose, for these nameservers to be authoritative for
 When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) DNS setup, Cloudflare automatically assigns two standard nameservers for your zone.
 
 Standard nameservers are hosted on `ns.cloudflare.com` and follow the pattern `<proper_name>.ns.cloudflare.com`.
+
+To know the reason behind these nameserver names, refer to [our blog](https://blog.cloudflare.com/whats-the-story-behind-the-names-of-cloudflares-name-servers/).
 
 ### Advanced nameservers
 
