@@ -38,4 +38,3 @@ Errors could occur if using code for a prior version if the structure of data ha
 
 - A [Durable Object migration](/durable-objects/reference/durable-objects-migrations/) has occurred between the version in the active deployment and the version selected to rollback to.
 - If the target deployment has a binding to an R2 bucket, KV namespace, or queue that no longer exists.
-- If the target deployment has a binding to a D1 database (this limitation will be removed in the future).
