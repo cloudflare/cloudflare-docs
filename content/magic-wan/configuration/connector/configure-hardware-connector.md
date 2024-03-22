@@ -14,11 +14,23 @@ You also need to purchase Magic WAN Connector before you can start configuring y
 
 ---
 
-## 1. Configure Cloudflare dashboard settings
+## High availability configurations vs. single configurations
+
+You can install up to two Magic WAN Connectors for redundancy at each of your sites. If one of your Connectors fails, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
+
+In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
+
+If you need a high availability configuration for your premises, refer to refer to [High availability configurations](#high-availability-configurations) for more information.
+
+If you do not need a high availability configuration for you premises, refer to [Configure Cloudflare dashboard settings](#1-configure-cloudflare-dashboard-settings).
+
+---
+
+## Configure Cloudflare dashboard settings
 
 {{<render file="connector/_create-site.md" withParameters="refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.;;refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector.;;You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows in this list." >}}
 
-## 2. Set up your Magic WAN Connector
+## Set up your Magic WAN Connector
 
 ### Device installation
 
@@ -34,7 +46,7 @@ If there is a firewall deployed upstream of the Magic WAN Connector, configure t
 - **UDP/4500 (destination IP - Cloudflare Anycast IPs)**: Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}Anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
 - **TCP/7844, UDP/7844 Outbound connections**: This is for debugging facilities in the connector.
 
-## 3. Activate connector
+## Activate connector
 
 {{<render file="connector/_activate-connector.md" withParameters="The Magic WAN Connector is shipped to you deactivated" >}}
 
@@ -48,6 +60,42 @@ To use your Connector on a network configuration with a static IP:
 2. Unplug the physical connection to the Internet-connected device which provides DHCP.
 3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#1-create-a-site) step (for example, static IP WAN plugged into physical port with no DHCP connection).
 4. Power cycle the Connector.
+
+---
+
+## High availability configurations
+
+When you set up a site in high availability, the WANs and LANs in your Connectors have the same configuration but are replicated on two nodes. In case of failure of a Connector, the other connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+
+Because Connectors in high availability configurations share a single site, you need to set up:
+
+- **Static address**: The prefix for the primary node in your site.
+- **Secondary static address**: The prefix for the secondary node in your site.
+- **Virtual static address**: The prefix that the LAN south of the Connector will forward traffic to, which is the LANs gateway IP.
+
+Make sure all prefixes are part of the same subnet.
+
+### ​​Create a high availability configuration
+
+You cannot enable high availability for an existing site. If you decide to enable high availability for an existing site in the Cloudflare dashboard, you need to delete it and start again.
+
+To set up a high availability configuration:
+
+1. Follow the steps in [Create a site](#1-create-a-site) up until step 4.
+2. After naming your site, select **Enable high availability**.
+3. Under **Connector**, select **Add Connector**.
+4. From the list, choose your first Connector > **Add Connector**.
+5. Back on the previous screen, select **Add secondary Connector**.
+6. From the list, choose your second Connector > **Add Connector**.
+7. Select **Next** to [Create a WAN](#2-create-a-wan).
+8. To create a LAN, follow the steps mentioned above in [Create a LAN](#3-create-a-lan) up until step 4.
+9. In **Static address**, enter the prefix for the primary node in your site. For example `192.168.10.1/24`.
+10. In **Secondary static address**, enter the prefix for the secondary node in your site. For example, `192.168.10.2/24`.
+11. In **Virtual static address**, enter the prefix that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
+12. Select **Save**.
+13. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the traffic's health. Cloudflare recommends that you choose a port connected to a reliable interface, like one that connects directly to a router instead of going through a switch first.
+14. Select **Save and exit** to finish your configuration.
+15. Follow the instructions in [Set up your Magic WAN Connector](#2-set-up-your-magic-wan-connector) and [Activate connector](#3-activate-connector) to finish setting up your Connectors.
 
 ---
 
