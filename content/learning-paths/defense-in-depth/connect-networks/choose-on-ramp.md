@@ -9,23 +9,17 @@ Similar to the network onboarding practices in the [Replace your VPN](/learning-
 
 ## Available on-ramps
 
-The primary ways to source multi-device traffic to the Cloudflare network are {{<glossary-tooltip term_id="Cloudflare Tunnel" link="/cloudflare-one/connections/connect-networks/">}}Cloudflare Tunnel{{</glossary-tooltip>}} via either [`cloudflared`](#cloudflared) or the [WARP Connector](#warp-connector). Alternatively, Enterprise users can on-ramp traffic by adding [Magic WAN](#magic-wan) to their plan and configuring Magic WAN Connector or a dedicated third-party device.
-
-### `cloudflared`
-
-{{<glossary-definition term_id="cloudflared">}}
-
-It only makes outbound connections, can be run on almost any infrastructure, and has a number of available options for server-side redundancy and steering. We recommend `cloudflared` for most users.
-
-For more information on setting up Cloudflare Tunnel via `cloudflared`, refer to [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/).
+The primary ways to source multi-device or network traffic to the Cloudflare network are via the [WARP Connector](#warp-connector) or [DNS filtering locations](#dns-filtering-locations). Alternatively, Enterprise users can on-ramp traffic by adding [Magic WAN](#magic-wan) to their plan and configuring Magic WAN Connector or a dedicated third-party device.
 
 {{<heading-pill style="beta" heading="h3">}}WARP Connector{{</heading-pill>}}
 
-[WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/), an extension of the WARP client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
+[WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/), a software agent similar to our device client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
 
-WARP Connector supports bidirectional traffic proxies. This means it can proxy traffic initiated from a user running WARP into a private network (like `cloudflared`), or allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations.
+WARP Connector supports both ingressing and egressing traffic to and from your private network. This means it can proxy traffic initiated from a user running WARP into a private network (like {{<glossary-tooltip term_id="cloudflared" link="/cloudflare-one/connections/connect-networks/get-started/">}}`cloudflared`{{</glossary-tooltip>}}), or allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations. You can use WARP Connector to establish a secure egress path for servers or users on a network which may not each be able to run the WARP client and still apply Gateway network and HTTP inspection policies. This connection is most analogous to site-to-site VPN or proxy server connectivity.
 
 For more information on setting up Cloudflare Tunnel via WARP Connector, refer to [Set up WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/).
+
+### DNS filtering locations
 
 ### Magic WAN
 
@@ -33,10 +27,6 @@ For more information on setting up Cloudflare Tunnel via WARP Connector, refer t
 Only available on Enterprise plans.
 {{</Aside>}}
 
-[Magic WAN](/magic-wan/) can connect networks to Cloudflare via several methods:
+[Magic WAN](/magic-wan/) is Cloudflare's offering most analogous to a traditional SD-WAN. Magic WAN is typically deployed via an IPSec or GRE tunnel terminating on customer devices (such as firewalls or routers), or via our Magic WAN Connector hardware device. You can also be deploy Magic WAN using [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at private peering locations or some public cloud instances (where compatible).
 
-- [Magic WAN Connector](/magic-wan/configuration/connector/), which automatically establishes IPsec tunnels to Cloudflare
-- Manual setup via {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels
-- [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at private peering locations or some public cloud instances (where compatible)
-
-Magic WAN on-ramps and off-ramps the traffic via your IPSEC tunnels after transiting the Cloudflare network. You can upgrade Magic WAN traffic with Gateway to egress publicly. WARP traffic can traverse Magic WAN's IPSEC tunnels to reach a private network.
+Magic WAN on-ramps and off-ramps traffic via your connections after transiting the Cloudflare global network. Gateway can also apply network and HTTP policies to this traffic for secure egress.

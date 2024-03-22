@@ -8,7 +8,7 @@ Most admins test by manually downloading the WARP client and enrolling in your o
 
 ## Install WARP
 
-1. First, uninstall any existing third-party VPN software. Sometimes products placed in a disconnected or disabled state will still interfere with the WARP client.
+1. First, uninstall any existing third-party VPN software if possible. Sometimes products placed in a disconnected or disabled state will still interfere with the WARP client.
 2. If you are running third-party firewall or TLS decryption software, verify that it does not inspect or block traffic to these IP addresses:
     - Client orchestration IPs:
         {{<render file="warp/_client-orchestration-ips.md" productFolder="cloudflare-one">}}
