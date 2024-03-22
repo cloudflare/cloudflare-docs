@@ -10,7 +10,7 @@ D1 exposes database analytics that allow you to inspect query volume, query late
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
 
-## View via the dashboard
+## View metrics in the dashboard
 
 Per-database analytics for D1 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
 
@@ -143,7 +143,7 @@ query {
 D1 exposes metrics that let you understand and debug query performance. These metrics can be accessed via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights`command.
 
 - Query strings are captured to make it easier to analyze metrics across query executions. Bound [parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
-- Experimental wrangler command options and output can change, run `wrangler d1 insights --help` to view current command
+- Experimental wrangler command options and output can change. Run `wrangler d1 insights --help` to view the current command.
 
 ### Examples
 
