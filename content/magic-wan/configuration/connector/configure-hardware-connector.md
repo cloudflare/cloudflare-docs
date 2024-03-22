@@ -14,13 +14,13 @@ You also need to purchase Magic WAN Connector before you can start configuring y
 
 ---
 
-## High availability configurations vs. single configurations
+## High availability configurations
 
 You can install up to two Magic WAN Connectors for redundancy at each of your sites. If one of your Connectors fails, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
 
 In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
 
-If you need a high availability configuration for your premises, refer to refer to [High availability configurations](#high-availability-configurations) for more information.
+If you need a high availability configuration for your premises, refer to refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 
 If you do not need a high availability configuration for you premises, refer to [Configure Cloudflare dashboard settings](#1-configure-cloudflare-dashboard-settings).
 
@@ -63,7 +63,7 @@ To use your Connector on a network configuration with a static IP:
 
 ---
 
-## High availability configurations
+## About high availability configurations
 
 When you set up a site in high availability, the WANs and LANs in your Connectors have the same configuration but are replicated on two nodes. In case of failure of a Connector, the other connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
