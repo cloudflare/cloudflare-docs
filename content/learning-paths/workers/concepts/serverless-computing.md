@@ -19,7 +19,7 @@ Workers is a serverless computing platform. [Serverless computing](https://www.c
 
 ![IaaS, PaaS and Saas models](/images/learning-paths/workers/saas-paas-iaas-diagram.svg)
 
-Cloudflare Workers is part of the [Functions-as-a-Service (FaaS)](https://www.cloudflare.com/learning/serverless/glossary/function-as-a-service-faas/) model, which is a serverless way to execute modular pieces of code on the [edge](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/).
+Cloudflare Workers is under the [Functions-as-a-Service (FaaS)](https://www.cloudflare.com/learning/serverless/glossary/function-as-a-service-faas/) model, which is a serverless way to execute modular pieces of code on the [edge](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/).
 
 ### Serverless computing
 
