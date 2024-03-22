@@ -696,8 +696,6 @@ There are a few prerequisites you should be aware of before continuing:
 ```bash
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ike-gateway CF_Magic_WAN_IKE_01
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 auto-key ipsec-crypto-profile CF_IPsec_Crypto_CBC
-set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-monitor destination-ip 10.252.2.26
-set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-monitor tunnel-monitor-profile default
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 tunnel-interface tunnel.1
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 anti-replay no
 set network tunnel ipsec CF_Magic_WAN_IPsec_01 disabled no
@@ -708,8 +706,6 @@ set network tunnel ipsec CF_Magic_WAN_IPsec_01 disabled no
 ```bash
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ike-gateway CF_Magic_WAN_IKE_02
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 auto-key ipsec-crypto-profile CF_IPsec_Crypto_CBC
-set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-monitor destination-ip 10.252.2.28
-set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-monitor tunnel-monitor-profile default
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 tunnel-interface tunnel.2
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 anti-replay no
 set network tunnel ipsec CF_Magic_WAN_IPsec_02 disabled no
