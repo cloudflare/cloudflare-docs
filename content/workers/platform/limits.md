@@ -92,17 +92,14 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 {{<table-wrap>}}
 
-| Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) | [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)  |
-| ----------------------------- | ------------- | ------- | ------- | ------- |
-| [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  | 512 MB  |
-| [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   | 1,000   |
-| [Storage/request](#cache-api-limits) | 5 GB   | 5 GB    | 5 GB    | 5 GB    |
+| Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) |
+| ----------------------------- | ------------- | ------- | ------- |
+| [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  |
+| [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   |
 
 {{</table-wrap>}}
 
 - 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`.
-
-- 5 GB total `put()` per request.
 
 {{<Aside type="note">}}
 
