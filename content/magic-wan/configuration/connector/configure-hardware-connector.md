@@ -22,7 +22,7 @@ In this type of high availability (HA) configuration, you will choose a reliable
 
 If you need a high availability configuration for your premises, refer to refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 
-If you do not need a high availability configuration for you premises, refer to [Configure Cloudflare dashboard settings](#configure-magic-wan-connector).
+If you do not need a high availability configuration for you premises, refer to [Configure Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
 
 ---
 
