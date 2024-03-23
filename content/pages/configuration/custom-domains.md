@@ -87,6 +87,9 @@ To disable access to your project's provided `*.pages.dev` subdomain:
 
 2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
 
+## Disable zone caching for custom domains using Pages
+For custom domains that are served by Pages, it is recommended to disable any external caching since Pages has its [own independent cache]('/pages/configuration/custom-domains/) which is unique per deploy. When using a custom domain configured through Cloudflare's proxied `CNAME` records, you may find issues with your custom domain using stale data compared to your `*.pages.dev` subdomain. To fix this, you can create a [new cache rule]('/cache/how-to/cache-rules/create-dashboard/#create-a-cache-rule-in-the-dashboard') to "Bypass cache" for all hostnames that use Pages.
+
 ## Known issues
 
 ### CAA records
