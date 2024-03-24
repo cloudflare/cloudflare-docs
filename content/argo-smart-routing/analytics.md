@@ -27,3 +27,9 @@ The dashboard displays two different views for performance data:
 * **Origin Response Time**: A histogram shows response time from your origin to the Cloudflare network. The blue bars show TTFB without Argo, while the orange bars show TTFB where Argo found a Smart Route.
 
 * **Geography**: A map shows the improvement in response time at each Cloudflare data center.
+
+{{<Aside type="note">}}
+
+ A negative value in the Percent Improvement indicates that requests from that location would not have benefited from Argo Smart Routing, so instead would have been routed directly.
+
+{{</Aside>}}
