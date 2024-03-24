@@ -296,8 +296,15 @@ The [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) command needs to r
 After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via [Direct Uploads](/pages/get-started/direct-upload/) or [Git integration](/pages/configuration/git-integration/)) and iterate over the process to make new changes.
 
 ## Troubleshooting
-
 Review common mistakes and issues that you might encounter when developing a Next.js application using `next-on-pages`.
+
+{{<Aside type="note" header="Tip">}}
+
+Using the official [next-on-pages ESLint plugin](https://www.npmjs.com/package/eslint-plugin-next-on-pages) (especially with the `recommended` rules)
+helps you avoid issues like the ones presented in this section, giving you helpful and actionable feedback directly in your IDE.
+
+{{</Aside>}}
+
 
 ### Edge runtime
 
@@ -341,9 +348,11 @@ Projects created with C3 have a default custom `not-found` page already created 
 
 #### `generateStaticParams`
 
-When doing static site generation (SSG) in the [`/app` directory](https://nextjs.org/docs/getting-started/project-structure) and using the [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) function, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+When doing static site generation (SSG) in the [`/app` directory](https://nextjs.org/docs/getting-started/project-structure) and using the [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) function, Next.js by default tries to handle requests for non statically generated routes on-demand via Node.js serverless functions which, as such, are incompatible with `@cloudflare/next-on-pages`.
 
-In such cases you need to instruct Next.js not to do so by specifying a `false` [`dynamicParams`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams):
+To avoid such problem make sure to have your route opted in the edge runtime as mentioned [above](#edge-runtime) (which however nullifies SSG since currently Next.js does not support SSG with the edge runtime).
+
+Or alternatively you can opt out of the dynamic routes handling by specifying a `false` [`dynamicParams`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams):
 
 ```diff
 ---
@@ -399,9 +408,12 @@ export async function GET(request) {
 
 #### `getStaticPaths`
 
-When doing static site generation (SSG) in the [`/pages`](https://nextjs.org/docs/getting-started/project-structure) directory and using the [`getStaticPaths`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths) function, Next.js by default tries to handle requests for non statically generated routes on-demand. It does so by creating a Node.js serverless function (which, as such, is incompatible with `@cloudflare/next-on-pages`).
+When doing static site generation (SSG) in the [`/pages` directory](https://nextjs.org/docs/getting-started/project-structure) and using the [`getStaticPaths`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths) function, Next.js by default tries to handle requests for non statically generated routes on-demand via Node.js serverless functions which, as such, are incompatible with `@cloudflare/next-on-pages`.
 
-In such cases, you need to instruct Next.js not to do so by specifying a [false `fallback`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false):
+To avoid such problem make sure to have your route opted in the edge runtime as mentioned [above](#edge-runtime) (which however nullifies SSG since currently Next.js does not support SSG with the edge runtime).
+
+Or alternatively you can opt out of the dynamic routes handling by specifying a [false `fallback`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false):
+
 
 ```diff
 ---
@@ -421,7 +433,7 @@ export async function getStaticPaths() {
 
 {{<Aside type="warning">}}
 
-The `paths` array cannot be empty. An empty `paths` array causes Next.js to ignore the provided `fallback` value. At build time, make sure that at least one entry is present in the array.
+When opting for the latter please keep in mind that the `paths` array cannot be empty since an empty `paths` array causes Next.js to ignore the provided `fallback` value. At build time, make sure that at least one entry is present in the array.
 
 {{</Aside>}}
 
