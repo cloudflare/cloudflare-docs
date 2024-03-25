@@ -18,7 +18,7 @@ By the end of this tutorial, users that pass network policies will be able to ac
 Make sure you have:
 
 - A MySQL database listening for remote connections and configured with users that can connect remotely
-- [Resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) enabled on your account (optional)
+- (Optional)[Resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) enabled on your account 
 
 {{</tutorial-prereqs>}}
 
@@ -35,11 +35,11 @@ Install `cloudflared` on a server in your private network. This server should ha
 1. In the **Private Networks** tab, add the following IP addresses:
 
   - Private IP/CIDR of your MySQL server (for example, `10.128.0.175/32`)
-  - Private IP/CIDR of your internal DNS server (optional)
+  - (Optional) Private IP/CIDR of your internal DNS server
 
 2. Select **Save tunnel**.
 
-The application and (optionally) DNS server are now connected to Cloudflare.
+The application and (optional) DNS server are now connected to Cloudflare.
 
 {{</tutorial-step>}}
 
@@ -60,13 +60,13 @@ Allowed WARP users can now connect to the MySQL server at `10.128.0.175` using t
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Create a Gateway resolver policy (optional)">}}
+{{<tutorial-step title="(Optional) Create a Gateway resolver policy">}}
 
 To allow users to access the MySQL database using an internal hostname instead of the private IP address, configure a Gateway resolver policy.
 
 1. Go to **Gateway** > **Resolver policies**.
 2. Select **Add a policy**.
-3. Create an expression to match against the private [domain](/cloudflare-one/policies/gateway/resolver-policies/#domain) or [hostname](/cloudflare-one/policies/gateway/resolver-policies/#host) of the application:
+3. Create an expression to match against the private [domain](/cloudflare-one/policies/gateway/resolver-policies/#domain) or [hostname](/cloudflare-one/policies/gateway/resolver-policies/#host) of the application, like in the following example:
 
     | Selector | Operator | Value                  |
     | -------- | -------- | ---------------------- |
