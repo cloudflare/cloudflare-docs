@@ -94,7 +94,7 @@ type MessageSendRequest<Body = unknown> = {
 
 - {{<code>}}options{{<param-type>}}QueueSendOptions{{</param-type>}}{{</code>}}
 
-  - Options associated with thecurrnet 
+  - Options to apply to the current message, including content type and message delay settings.
 
 
 {{</definitions>}}
