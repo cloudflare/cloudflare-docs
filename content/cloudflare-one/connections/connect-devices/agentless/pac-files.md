@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="note">}}
 
-This feature is only available to Enterprise customers.
+Only available on Enterprise plans.
 
 {{</Aside>}}
 
@@ -101,6 +101,12 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
+{{<Aside type="note">}}
+
+HTTP policies will still apply to your traffic even though there is no selector available to apply filtering to specific endpoints.
+
+{{</Aside>}}
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) for testing purposes. For example:
 
    | Selector | Operator | Value         | Action |
@@ -113,11 +119,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
    ```
 
-{{<Aside type="note">}}
-
-If curl returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
-
-{{</Aside>}}
+If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
 
 ## 3. Create a PAC file
 
