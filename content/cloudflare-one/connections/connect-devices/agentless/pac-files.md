@@ -42,6 +42,12 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
    - **IPv4**: `192.0.2.0/8`
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
+   {{<Aside type="note">}}
+
+   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/109` for IPv6 networks.
+
+   {{</Aside>}}
+
 5. Select **Save endpoint** and confirm the endpoint creation.
 
 Your Cloudflare proxy server domain is of the form:
@@ -54,7 +60,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 {{<tab label="api" no-code="true">}}
 
-1. Run the following API call:
+1. [Create a proxy endpoint](/api/operations/zero-trust-gateway-proxy-endpoints-create-proxy-endpoint) with the following call:
 
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
@@ -68,9 +74,19 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    - **IPv4**: `192.0.2.0/8`
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
-   After running the call, you should see an output similar to
+   {{<Aside type="note">}}
+
+   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/109` for IPv6 networks.
+
+   {{</Aside>}}
+
+2. After running the call, you should see an output similar to
 
    ```bash
+   ---
+   header: Example output
+   highlight: 10
+   ---
    {
    "result": {
        "id": "d969d7bf-ec28-4291-9af0-86825f472c21",
@@ -88,9 +104,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    }
    ```
 
-   For more information, refer to [Create a proxy endpoint](/api/operations/zero-trust-gateway-proxy-endpoints-create-proxy-endpoint).
-
-2. Note the `subdomain` value returned by the API. Your Cloudflare proxy server domain is of the form:
+   Note the `subdomain` value returned by the API. Your Cloudflare proxy server domain is of the form:
 
    ```txt
    <SUBDOMAIN>.proxy.cloudflare-gateway.com
@@ -179,10 +193,6 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 ### HTTP policy proxy endpoint specificity
 
 The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) to match specific proxy endpoints. Despite this, Gateway will still apply HTTP policies to traffic sent to Cloudflare proxy servers.
-
-### Source network CIDR range
-
-Gateway limits the CIDR range of source networks for proxy endpoints. The maximum prefix length for IPv4 networks is `/8`, and the maximum for IPv6 networks is `/109`.
 
 ### Traffic limitations
 
