@@ -1995,7 +1995,7 @@ wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
 - `--message-retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Maximum number of retries for each message. Must be a positive integer.
 - `--max-concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - How long a retried message should be delayed for, in seconds. Must be a positive integer.
+  - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
 - `--retry-delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long a retried message should be delayed for, in seconds. Must be a positive integer.
 {{</definitions>}}
