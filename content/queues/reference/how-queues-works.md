@@ -103,7 +103,14 @@ The [`QueuesContentType`](/queues/reference/javascript-apis/#queuescontenttype) 
 
 ## Consumers
 
-### Create a consumer
+Queues supports two types of consumer:
+
+1. A [consumer Worker](/queues/reference/configuration/), which is push-based: the Worker is invoked when the queue has messages to deliver.
+2. A [HTTP pull consumer](/queues/reference/pull-consumers/), which is pull-based: the consumer calls the queue endpoint over HTTP to receive and then acknowledge messages.
+
+A queue can only have one type of consumer configured.
+
+### Create a consumer Worker
 
 A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
 
@@ -167,6 +174,10 @@ export default {
 ### Remove a consumer
 
 To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in `wrangler.toml` file.
+
+### Pull consumers
+
+A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker. This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumers](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer.
 
 ## Messages
 
