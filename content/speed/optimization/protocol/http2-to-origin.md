@@ -24,7 +24,7 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 3.  Select **Speed > Optimization**.
 4.  Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
 
-## Notes
+## Protocol compatibility
 
 Please note that if the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 We connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). 
