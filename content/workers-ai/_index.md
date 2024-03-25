@@ -34,9 +34,9 @@ Workers AI comes with a curated set of popular open-source models that enable yo
 
 {{</feature>}}
 
-{{<feature header="Workers & Pages SDK" href="/workers-ai/configuration/workers-pages-sdk/" cta="Use the Workers & Pages SDK">}}
+{{<feature header="Workers AI SDK" href="/workers-ai/configuration/workers-ai-sdk/" cta="Use the Workers AI SDK">}}
 
-The Workers & Pages SDK provides an interface between a [Worker](/workers/) or [Pages Function](/pages/functions/) and Workers AI.
+The Workers AI SDK provides an interface between a [Worker](/workers/) or [Pages Function](/pages/functions/) and Workers AI.
 
 {{</feature>}}
 

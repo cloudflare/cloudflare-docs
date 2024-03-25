@@ -181,9 +181,7 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 
     *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
 
-    {{<Aside type="note">}}
-Note that, compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header.
-    {{</Aside>}}
+    *  Compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header.
 
     {{<Aside type="warning">}}
 If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request.
@@ -257,7 +255,7 @@ All plans have access to:
 
 *   `tlsClientHelloLength` {{<type>}}string{{</type>}}
 
-    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello, after the hexidecimal bytes have been decoded.
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello.
 
 *   `tlsClientRandom` {{<type>}}string{{</type>}}
 

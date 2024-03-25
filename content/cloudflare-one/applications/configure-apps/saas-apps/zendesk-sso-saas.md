@@ -1,9 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Zendesk
+weight: 9
 ---
 
-# Configure Zendesk SSO with Access for SaaS
+# Connect to Zendesk through Access
 
 This guide covers how to configure Zendesk SSO with Access for SaaS.
 

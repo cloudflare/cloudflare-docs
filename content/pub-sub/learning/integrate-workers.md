@@ -282,7 +282,7 @@ Messages sent to your on-publish Worker may be batched: each batch is an array o
 
 ### On-Publish Best Practices
 
-- Only inspect the topics you need to to reduce the compute your Worker needs to do.
+- Only inspect the topics you need to reduce the compute your Worker needs to do.
 - Use `ctx.waitUntil` if you need to write to storage or communicate with remote services and avoid increasing message delivery latency while waiting on those operations to complete.
 - Catch exceptions using [try-catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) - if your on-publish hook is able to “fail open”, you should use the `catch` block to return messages to the Broker in the event of an exception so that messages aren’t dropped.
 

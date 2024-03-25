@@ -12,7 +12,7 @@ Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-a
 
 Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. To enable Worker-to-resource communication, you must set up a [binding](/workers/configuration/bindings/) in your Worker project's `wrangler.toml` file.
 
-Use the options below to configure your Queue.
+Use the options below to configure your queue.
 
 {{<Aside type="note">}}
 
@@ -22,7 +22,9 @@ Below are options for Queues, refer to the Wrangler documentation for a full ref
 
 ## Producer
 
-To enable Producer Worker to Queue communication, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a Queue.
+A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues. A producer can accept messages over HTTP, asynchronously write messages when handling requests, and/or write to a queue from within a [Durable Object](/durable-objects/). Any Worker can write to a queue.
+
+To produce to a queue, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a queue.
 
 ```toml
 [[queues.producers]]
@@ -44,7 +46,9 @@ To enable Producer Worker to Queue communication, set up a binding in your `wran
 
 ## Consumer
 
-To enable Consumer Worker to Queue communication, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a Queue.
+## Workers
+
+To consume messages from one or more queues, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a queue.
 
 ```toml
 [[queues.consumers]]
@@ -90,3 +94,7 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
   - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
 
 {{</definitions>}}
+
+## Pull-based
+
+A queue can have a HTTP-based consumer that pulls from the queue. This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumers](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer.
