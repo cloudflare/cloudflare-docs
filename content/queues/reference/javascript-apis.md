@@ -116,7 +116,7 @@ type QueuesContentType = "text" | "bytes" | "json" | "v8";
 
 {{<Aside type="note">}}
 
-The default content type for Queues changed to `json` (from `v8`) to improve compatibility with pull-based consumers for any Workers with a [compatibility date](/workers/configuration/compatibility-dates/#queues_json_messages) after `2024-03-18`.
+The default content type for Queues changed to `json` (from `v8`) to improve compatibility with pull-based consumers for any Workers with a [compatibility date](/workers/configuration/compatibility-dates/#queues-send-messages-in-json-format) after `2024-03-18`.
 
 {{</Aside>}}
 
