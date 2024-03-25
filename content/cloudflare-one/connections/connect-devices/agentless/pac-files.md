@@ -16,7 +16,7 @@ You can apply Gateway HTTP and DNS policies at the browser level by configuring 
 
 {{<glossary-definition term_id="PAC file" prepend="A PAC file is ">}}
 
-When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway.
+When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. Note that Gateway [cannot filter every type of HTTP traffic](#limitations) proxied using PAC files.
 
 ## Prerequisites
 
@@ -101,12 +101,6 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
-{{<Aside type="note">}}
-
-HTTP policies will still apply to your traffic even though there is no selector available to apply filtering to specific endpoints.
-
-{{</Aside>}}
-
 1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) for testing purposes. For example:
 
    | Selector | Operator | Value         | Action |
@@ -178,5 +172,11 @@ The following example demonstrates the setup procedure for Firefox.
 You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
 ## Limitations
+
+### HTTP policy proxy endpoint specificity
+
+The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) to match specific proxy endpoints. However, Gateway will still apply HTTP policies to traffic sent to Cloudflare proxy servers.
+
+### Traffic limitations
 
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
