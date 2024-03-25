@@ -9,7 +9,7 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
+Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your hostnames. If the hostname you are testing is not [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
 
 You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
 
@@ -28,7 +28,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to Account Home > **Trace**.
 
-2. Enter a URL to trace. The URL must include a hostname that is [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+2. Enter a URL to trace. The URL must include a hostname that belongs to your account.
 
 3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request body**.
 

@@ -38,13 +38,13 @@ This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/
 For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `no` to using TypeScript.
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
+- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
+- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 
 In your project directory, C3 has generated the following:
 
@@ -180,13 +180,13 @@ database_id = "abc-def-geh"
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 
 ```sh
-$ npx wrangler d1 execute database --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
+$ npx wrangler d1 execute database --remote --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
 ```
 
 Now, we can add a new note to our database using `wrangler d1 execute`:
 
 ```sh
-$ npx wrangler d1 execute database --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
+$ npx wrangler d1 execute database --remote --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
 ## 5. Creating notes and adding them to Vectorize
@@ -372,9 +372,9 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
-* Review Cloudflare's [AI documentation](/workers-ai).
-* Review [Tutorials](/workers/tutorials/) to build projects on Workers.
-* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Reference](/workers/reference/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
-* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
+- Review Cloudflare's [AI documentation](/workers-ai).
+- Review [Tutorials](/workers/tutorials/) to build projects on Workers.
+- Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
+- Understand how Workers works in [Reference](/workers/reference/).
+- Learn about Workers features and functionality in [Platform](/workers/platform/).
+- Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

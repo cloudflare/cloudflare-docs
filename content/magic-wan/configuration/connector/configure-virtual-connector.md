@@ -15,7 +15,7 @@ Before you can install Virtual Connector, you need an Enterprise account with Ma
 - Intel x86 CPU architecture
 - ESXi hypervisor 7.0U1 or higher
 - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
-- 4 GB of RAM per virtual connector
+- 8 GB of RAM per virtual connector
 - 8 GB of disk per virtual connector
 - One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
 - One or more vSwitch port group or VLAN that will be the internal LAN

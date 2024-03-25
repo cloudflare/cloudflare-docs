@@ -1,7 +1,7 @@
 ---
 title: Content Security Policy
 pcx_content_type: reference
-weight: 8
+weight: 7
 ---
 
 # Content Security Policy
@@ -16,6 +16,10 @@ Alternatively, add the following values to your CSP header:
 - **frame-src**: `https://challenges.cloudflare.com`
 
 We recommend validating your CSP with [Google's CSP Evaluator](https://csp-evaluator.withgoogle.com/).
+
+{{<Aside type="note">}}
+You cannot set your own CSP and/or Referer-Policy via meta tags or [Transform rules](/rules/transform/) in challenge pages.
+{{</Aside>}}
 
 ## Pre-Clearance support
 

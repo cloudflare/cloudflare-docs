@@ -200,7 +200,7 @@
 # CNI - Cloudflare Network Interconnect
 /network-interconnect/about/interconnect-types/ /network-interconnect/about/ 301
 /network-interconnect/about/route-leak-detection/ /network-interconnect/about/ 301
-/network-interconnect/about/argo-for-packets/ /network-interconnect/about/ 301
+/network-interconnect/about/argo-for-packets/ /argo-smart-routing/argo-for-packets/ 301
 /network-interconnect/about/bfd/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/ /network-interconnect/classic-cni/set-up/ 301
 /network-interconnect/set-up-cni/scope-config/ /network-interconnect/classic-cni/set-up/scope-config/ 301
@@ -214,12 +214,12 @@
 /constellation/ /workers-ai/ 301
 
 # D1
-/d1/client-api/ /d1/build-databases/query-databases/ 301
+/d1/client-api/ /d1/build-with-d1/d1-client-api/ 301
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
-/d1/learning/using-indexes/ /d1/build-databases/use-indexes/ 301
+/d1/learning/using-indexes/ /d1/build-with-d1/use-indexes/ 301
 /d1/learning/querying-json/ /d1/reference/query-json/ 301
-/d1/learning/importing-data/ /d1/build-databases/import-data/ 301
+/d1/learning/importing-data/ /d1/build-with-d1/import-data/ 301
 /d1/learning/generated-columns/ /d1/reference/generated-columns/ 301
 /d1/learning/local-development/ /d1/configuration/local-development/ 301
 /d1/learning/remote-development/ /d1/configuration/remote-development/ 301
@@ -227,20 +227,25 @@
 /d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/platform/community-projects/ /d1/reference/community-projects/ 301
-/d1/platform/client-api/ /d1/build-databases/query-databases/ 301
+/d1/platform/client-api/ /d1/build-with-d1/d1-client-api/ 301
 /d1/platform/data-security/ /d1/reference/data-security/ 301
 /d1/platform/environments/ /d1/configuration/environments/ 301
 /d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/platform/migrations/ /d1/reference/migrations/ 301
-/d1/reference/client-api/ /d1/build-databases/query-databases/ 301
+/d1/reference/client-api/ /d1/build-with-d1/d1-client-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
-/d1/how-to/ /d1/build-databases/ 301
-/d1/how-to/query-databases/ /d1/build-databases/query-databases/ 301
-/d1/how-to/using-indexes/ /d1/build-databases/use-indexes/ 301
+/d1/how-to/ /d1/build-with-d1/ 301
+/d1/how-to/query-databases/ /d1/build-with-d1/d1-client-api/ 301
+/d1/how-to/using-indexes/ /d1/build-with-d1/use-indexes/ 301
 /d1/how-to/querying-json/ /d1/reference/query-json/ 301
-/d1/how-to/importing-data/ /d1/build-databases/import-data/ 301
+/d1/how-to/importing-data/ /d1/build-with-d1/import-data/ 301
 /d1/how-to/generated-columns/ /d1/reference/generated-columns/ 301
+/d1/build-databases/ /d1/build-with-d1/ 301
+/d1/build-databases/query-databases/ /d1/build-with-d1/d1-client-api/ 301
+/d1/build-databases/use-indexes/ /d1/build-with-d1/use-indexes/ 301
+/d1/build-databases/import-data/ /d1/build-with-d1/import-data/ 301
+/d1/build-databases/client-api/ /d1/build-with-d1/d1-client-api/ 301
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
@@ -248,6 +253,8 @@
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/policies/data-loss-prevention/datasets/ 301
 
 # ddos-protection
+/ddos-protection/change-log/http/2022-09-19-emergency-emergency/ /ddos-protection/change-log/http/2022-09-19-emergency/
+/ddos-protection/change-log/http/2022-12-07-emergency-emergency/ /ddos-protection/change-log/http/2022-12-07-emergency/
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
@@ -899,6 +906,11 @@
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 /support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
+/support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/troubleshooting-missing-pages-from-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/will-cloudflare-apps-make-my-site-slower/ /support/more-dashboard-apps/cloudflare-apps/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
 /support/network/i-activated-through-a-hosting-partner.-can-i-still-use-the-free-cloudflare-ipv6-compatibility/ /network/ipv6-compatibility/ 301
@@ -1020,6 +1032,7 @@
 /turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/migrating-from-recaptcha/ 301
 /turnstile/reference/pre-clearance-support/ /turnstile/get-started/pre-clearance-support/ 301
 /turnstile/reference/turnstile-analytics/ /turnstile/turnstile-analytics/ 301
+/turnstile/reference/tooltips/ /turnstile/turnstile-analytics/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
@@ -1266,6 +1279,7 @@
 /workers/runtime-apis/mtls/ /workers/runtime-apis/bindings/mtls/ 301
 /workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
+/workers/observability/local-development-and-testing/ /workers/testing/local-development/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1282,6 +1296,8 @@
 /workers-ai/platform/workers-pages-sdk/ /workers-ai/configuration/workers-pages-sdk/ 301
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/platform/rest-api/ /workers-ai/rest-api/ 301
+/workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
+/workers-ai/configuration/workers-pages-sdk/ /workers-ai/configuration/workers-ai-sdk/ 301
 
 
 # workers KV
@@ -1425,11 +1441,13 @@
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
+/cloudflare-docs/content/cloudflare-one/tutorials/area-1/ /cloudflare-one/applications/configure-apps/saas-apps/area-1/ 301
 /cloudflare-one/tutorials/zendesk-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/zendesk-sso-saas/ 301
 /cloudflare-one/tutorials/docusign-access/ /cloudflare-one/applications/configure-apps/saas-apps/docusign-access/ 301
 /cloudflare-one/tutorials/hubspot-saas/ /cloudflare-one/applications/configure-apps/saas-apps/hubspot-saas/ 301
 /cloudflare-one/tutorials/aws-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/aws-sso-saas/ 301
-/cloudflare-one/tutorials/salesforce-saas/ /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas/ 301
+/cloudflare-one/tutorials/salesforce-saas/ /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas-saml/ 301
+/cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas/ /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas-saml/ 301
 /cloudflare-one/tutorials/google-workspace-saas/ /cloudflare-one/applications/configure-apps/saas-apps/google-workspace-saas/ 301
 
 ## tutorials
@@ -1529,6 +1547,7 @@
 /waf/change-log/2020-* /waf/change-log/historical-2020/ 301
 /waf/change-log/2021-* /waf/change-log/historical-2021/ 301
 /waf/change-log/2022-* /waf/change-log/historical-2022/ 301
+/waf/change-log/2023-* /waf/change-log/historical-2023/ 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
