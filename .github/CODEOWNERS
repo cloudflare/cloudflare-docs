@@ -124,8 +124,8 @@
 /content/web3/ @kodster28 @cloudflare/pcx-technical-writing
 
 # Radar
-/content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
-/data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
+/content/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
+/data/changelogs/radar.yaml @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
 
 # Reference architecture
 /content/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing

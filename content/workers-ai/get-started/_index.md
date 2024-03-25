@@ -6,4 +6,6 @@ weight: 2
 
 # Get started
 
-{{<directory-listing>}}
+There are two ways to build your Workers AI projects on Cloudflare. To get started, choose your preferred method:
+
+{{<directory-listing showDescriptions="true" >}}
