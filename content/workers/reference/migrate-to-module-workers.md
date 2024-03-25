@@ -102,7 +102,7 @@ async function getTodos() {
 
 ### Bindings in ES modules format
 
-In ES modules format, bindings are only available inside the `env` parameter that is provided at the entrypoint to your Worker.
+In ES modules format, bindings are only available inside the `env` parameter that is provided at the entry point to your Worker.
 
 To access the `TODO` KV namespace binding in your Worker code, the `env` parameter must be passed from the `fetch` handler in your Worker to the `getTodos` function.
 

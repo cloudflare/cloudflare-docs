@@ -95,7 +95,7 @@
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/pages/framework-guides/ @igorminar @dario-piotrowicz @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @deadlypants1973 @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 /content/ddos-protection/ @pedrosousa @cloudflare/pcx-technical-writing
@@ -124,8 +124,8 @@
 /content/web3/ @kodster28 @cloudflare/pcx-technical-writing
 
 # Radar
-/content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
-/data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
+/content/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
+/data/changelogs/radar.yaml @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
 
 # Reference architecture
 /content/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing

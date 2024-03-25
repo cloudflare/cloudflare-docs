@@ -175,3 +175,20 @@ To disable third-party storage partitioning:
 1. Go to `chrome://flags/#third-party-storage-partitioning`.
 2. Set **Experimental third-party storage partitioning** to _Disabled_.
 3. Select **Relaunch** to apply the change.
+
+## I see `WebGL context creation error occurred`.
+
+Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology. This allows us to deliver a secure, performant remote computing experience without the bandwidth limitations of traditional solutions. While we expect most websites to work perfectly, some browser features and web technologies such as WebGL (Web Graphics Library) are unsupported. 
+
+WebGL is a JavaScript API for rendering high-performance interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins.  Support for WebGL is present in all modern browsers.  However, the user's device must also have access to the underlying [hardware](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API#browser_compatibility) that supports these features.
+
+When running remote browser isolation in a virtualized environment, the user's device may not have access to the required system resources. To resolve the error, you can configure your browser to render vector graphics entirely through software, without using the hardware acceleration provided by a GPU.
+
+To enable software rasterization: 
+
+1. Go to `chrome://flags/#override-software-rendering-list`.
+2. Set **Override software rendering list** to _Enabled_.
+3. Select **Relaunch** to apply the change. 
+
+
+

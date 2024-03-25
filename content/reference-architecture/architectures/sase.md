@@ -319,9 +319,9 @@ Note the following traffic flows:
   - An employee's laptop running the device agent creates its own secure connection to Cloudflare that is routed over the IPsec tunnel
 - The application owner of the reporting system maintains a connection to Cloudflare using `cloudflared` and doesn't require any networking help to expose their application to employees
 
-![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
+![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP Connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
 
-<sub>*Note: All of the endpoints connected via the WARP connector or device agent are automatically assigned IP addresses from the 100.96.0.0/12 address range, while endpoints connected to Magic WAN retain their assigned RFC1918 private IP addresses. `cloudflared` can be deployed in any of the locations by an application owner to provide hostname-based connectivity to the application.*</sub>
+<sub>*Note: All of the endpoints connected via the WARP Connector or device agent are automatically assigned IP addresses from the 100.96.0.0/12 address range, while endpoints connected to Magic WAN retain their assigned RFC1918 private IP addresses. `cloudflared` can be deployed in any of the locations by an application owner to provide hostname-based connectivity to the application.*</sub>
 
 Once the networks, applications, and user devices are connected to Cloudflare — regardless of the connection methods and devices used — all traffic can be inspected, authenticated, and filtered by the Cloudflare SASE services, then securely routed to their intended destinations. Additionally, consistent policies can be applied across all traffic, no matter how it arrives at Cloudflare.
 

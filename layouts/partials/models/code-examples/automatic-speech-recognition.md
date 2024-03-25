@@ -23,7 +23,7 @@ export default {
       audio: [...new Uint8Array(blob)],
     };
 
-    const response = await ai.run<"{{ .Page.Params.model.name }}">(
+    const response = await ai.run(
       "{{ .Page.Params.model.name}}",
       input
     );

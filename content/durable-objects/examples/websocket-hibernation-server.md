@@ -219,4 +219,4 @@ new_classes = ["WebSocketHibernationServer"]
 ```
 ### Related resources
 
-- [Durable Objects: Edge Chat Demo with Hibernation](https://github.com/cloudflare/workers-chat-demo/tree/hibernation).
+- [Durable Objects: Edge Chat Demo with Hibernation](https://github.com/cloudflare/workers-chat-demo/).
