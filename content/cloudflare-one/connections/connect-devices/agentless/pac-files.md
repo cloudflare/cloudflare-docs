@@ -175,7 +175,7 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 
 ### HTTP policy proxy endpoint specificity
 
-The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) to match specific proxy endpoints. However, Gateway will still apply HTTP policies to traffic sent to Cloudflare proxy servers.
+The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) to match specific proxy endpoints. Despite this, Gateway will still apply HTTP policies to traffic sent to Cloudflare proxy servers.
 
 ### Traffic limitations
 
