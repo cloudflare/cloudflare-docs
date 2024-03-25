@@ -211,7 +211,7 @@ Additionally:
 
 * You should provide every `lease_id` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
 * You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
-* You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/reference/limits/).
+* You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/platform/limits/).
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
