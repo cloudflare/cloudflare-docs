@@ -177,10 +177,15 @@ To remove a queue from your project, run `wrangler queues consumer remove <queue
 
 ### Pull consumers
 
-A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker. This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumers](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer.
+A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker.
+
+This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumer guide](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer for a queue.
 
 ## Messages
 
-A message is the object you are producing to and consuming from a queue. Any serializable object can be published to a queue: for most developers, this means either simple strings or JSON objects.
+A message is the object you are producing to and consuming from a queue.
 
-Messages themselves can be batched when delivered to the consumer, and messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried.
+Any JSON serializable object can be published to a queue: for most developers, this means either simple strings or JSON objects. You can explicitly [set the content type](#content-types) when sending a message.
+
+Messages themselves can be [batched when delivered to a consumer](/queues/reference/batching-retries/). By default, messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried. You can also choose to [explictly acknowledge](/queues/reference/batching-retries/) messages as they are successfully processed, and/or mark individual messages to be retried.
+
