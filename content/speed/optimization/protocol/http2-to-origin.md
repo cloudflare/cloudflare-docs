@@ -26,7 +26,7 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
 ## Protocol compatibility
 
-Please note that if the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
+Note that if the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
 We connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). 
 
 If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)). 
