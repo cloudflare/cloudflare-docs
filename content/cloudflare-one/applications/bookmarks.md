@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Add bookmarks
-weight: 8
+weight: 9
 ---
 
 # Add bookmarks
