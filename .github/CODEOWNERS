@@ -17,89 +17,138 @@
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @elithrar @rita3ko @pdwittig @cloudflare/pcx-technical-writing @craigsdennis @markdembo
-/content/workers-ai/tutorials @logangrasby @cloudflare/pcx-technical-writing
-/content/workers-ai/static @logangrasby @cloudflare/pcx-technical-writing
-/content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/content/workers-ai/ @elithrar @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @cloudflare/pcx-technical-writing
+/content/workers-ai/tutorials @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers-ai/static @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/vectorize/ @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
-/data/changelogs/vectorize.yaml @elithrar @pdwittig @cloudflare/pcx-technical-writing
+/data/changelogs/vectorize.yaml @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
-/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
-/content/data-localization/ @soheiokamoto @cloudflare/pcx-technical-writing
-/content/logs/ @bharatnc @jherre @soheiokamoto @victor-perov @cloudflare/pcx-technical-writing
+/content/analytics/ @46bit @bharatnc @jherre @jimhawkridge @soheiokamoto @victor-perov @angelampcosta @cloudflare/pcx-technical-writing
+/content/data-localization/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
+/content/logs/ @bharatnc @jherre @soheiokamoto @victor-perov @angelampcosta @cloudflare/pcx-technical-writing
 
 # API & Zones
-/content/tenant/ @garrettgalow @cloudflare/pcx-technical-writing
-/content/version-management/ @garrettgalow @cloudflare/pcx-technical-writing
+/content/pulumi/ @kodster28 @cloudflare/pcx-technical-writing
+/content/tenant/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
+/content/terraform/ @garrettgalow @ranbel @cloudflare/pcx-technical-writing
+/content/version-management/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
-/content/browser-rendering/ @tanushreesharma-cf @mchenco @cloudflare/pcx-technical-writing @celso @meddulla
+/content/browser-rendering/ @tanushreesharma-cf @mchenco @deadlypants1973 @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
-/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @cloudflare/pcx-technical-writing
+/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/browser-isolation/ @maxvp @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
+/content/email-security/ @marciocloudflare @cloudflare/pcx-technical-writing
+
+# Consumer products
+/content/1.1.1.1/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/warp-client/ @ranbel @cloudflare/pcx-technical-writing
+
+# Core platform
+/content/byoip/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/china-network/ @pedrosousa @cloudflare/pcx-technical-writing
+/content/cloudflare-for-platforms/ @jason-cf @cloudflare/pcx-technical-writing
+/content/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/fundamentals/ @jason-cf @cloudflare/pcx-technical-writing
+/content/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/learning-paths/ @kodster28 @cloudflare/pcx-technical-writing
+/content/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
+/content/network-interconnect/ @dcpena @cloudflare/pcx-technical-writing
+/content/notifications/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/registrar/ @jason-cf @cloudflare/pcx-technical-writing
+/content/rules/ @pedrosousa @cloudflare/pcx-technical-writing
+/content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
 # Developer platform
-/content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @cloudflare/pcx-technical-writing
-/content/durable-objects/ @elithrar @vy-ton @joshthoward @cloudflare/pcx-technical-writing
-/content/vectorize/ @elithrar @pdwittig @cloudflare/pcx-technical-writing
-/content/hyperdrive/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/data/changelogs/hyperdrive.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/data/changelogs/d1.yaml @elithrar @rozenmd @cloudflare/pcx-technical-writing
-/content/images/ @cloudflare/pcx-technical-writing
-/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/content/kv/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/content/pub-sub/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/content/queues/ @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/data/changelogs/queues.yaml @elithrar @rts-rob @cloudflare/pcx-technical-writing
-/content/r2/ @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/data/changelogs/r2.yaml @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/content/stream/ @tsmith512 @cloudflare/pcx-technical-writing
-/data/changelogs/stream.yaml @tsmith512 @cloudflare/pcx-technical-writing
-/content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing
-/data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @cloudflare/pcx-technical-writing @irvinebroque @admah
+/content/calls/ @dcpena @cloudflare/pcx-technical-writing
+/content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/durable-objects/ @elithrar @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/email-routing/ @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/hyperdrive/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/hyperdrive.yaml @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/d1.yaml @elithrar @rozenmd @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/images/ @dcpena @cloudflare/pcx-technical-writing
+/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/kv/ @elithrar @rts-rob  @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/pub-sub/ @elithrar @rts-rob @Maddy-Cloudflare @dcpena @cloudflare/pcx-technical-writing
+/content/queues/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/queues.yaml @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/r2/ @dcpena @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/data/changelogs/r2.yaml @dcpena @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing
+/data/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
+/content/workers/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing @irvinebroque @admah
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
-/content/workers/runtime-apis/ @irvinebroque @jasnell @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @tanushreesharma-cf @cloudflare/pcx-technical-writing
-/content/workers/configuration/bindings/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/configuration/compatibility-dates/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/reference/migrate-to-module-workers/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/reference/security-model/ @irvinebroque @cloudflare/pcx-technical-writing
-/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @cloudflare/pcx-technical-writing
-/content/pages/framework-guides/ @igorminar @dario-piotrowicz @cloudflare/pcx-technical-writing
-
-# Firewall Rules & WAF
-/content/firewall/ @cloudflare/firewall @cloudflare/pcx-technical-writing
-/content/waf/ @cloudflare/firewall @cloudflare/pcx-technical-writing
-/content/waf/change-log/ @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
-/data/changelogs/waf.yaml @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/ @irvinebroque @jasnell @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushreesharma-cf @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/configuration/bindings/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/configuration/compatibility-dates/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/reference/migrate-to-module-workers/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/reference/security-model/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @deadlypants1973 @cloudflare/pcx-technical-writing
 
 # DDoS Protection
-/content/ddos-protection/change-log/ @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
-/data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
-/data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @cloudflare/pcx-technical-writing
+/content/ddos-protection/ @pedrosousa @cloudflare/pcx-technical-writing
+/content/ddos-protection/change-log/ @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
+
+# Docs team areas
+/content/docs-guide/ @kodster28 @crwaters16 @cloudflare/pcx-technical-writing
+/content/style-guide/ @kodster28 @crwaters16 @cloudflare/pcx-technical-writing
 
 # Magic products
-/content/magic-transit/ @cloudflare/pcx-technical-writing
-/content/magic-firewall/ @arges @cloudflare/pcx-technical-writing
-/content/magic-wan/ @cloudflare/pcx-technical-writing
+/content/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-firewall/ @arges @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
+
+# Performance products
+/content/argo-smart-routing/ @dcpena @cloudflare/pcx-technical-writing
+/content/automatic-platform-optimization/ @kodster28 @cloudflare/pcx-technical-writing
+/content/cache/ @angelampcosta @cloudflare/pcx-technical-writing
+/content/health-checks/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/load-balancing/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/spectrum/ @angelampcosta @cloudflare/pcx-technical-writing
+/content/speed/ @angelampcosta @cloudflare/pcx-technical-writing
+/content/web3/ @kodster28 @cloudflare/pcx-technical-writing
 
 # Radar
-/content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
-/data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
+/content/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
+/data/changelogs/radar.yaml @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
 
 # Reference architecture
-/content/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
-/assets/images/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
+/content/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing
+/assets/images/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing
+
+# Security products
+/content/api-shield/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/bots/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/dmarc-management/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
+/content/page-shield/ @pedrosousa @cloudflare/pcx-technical-writing
+/content/security-center/ @jason-cf @cloudflare/pcx-technical-writing
+/content/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
+/content/waf/change-log/ @pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/data/changelogs/waf.yaml @pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
-/content/turnstile/ @migueldemoura @punkeel @worenga @cloudflare/pcx-technical-writing
+/content/turnstile/ @migueldemoura @punkeel @worenga @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Waiting Room
-/content/waiting-room/ @aolache @cloudflare/pcx-technical-writing
-/data/changelogs/waiting-room.yaml @aolache @cloudflare/pcx-technical-writing
+/content/waiting-room/ @aolache @angelampcosta @cloudflare/pcx-technical-writing
+/data/changelogs/waiting-room.yaml @aolache @angelampcosta @cloudflare/pcx-technical-writing

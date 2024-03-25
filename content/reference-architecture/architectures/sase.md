@@ -290,10 +290,12 @@ In situations where deploying the WAN Connector is not feasible or desirable, or
 
 There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/).
 
-Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Currently, Cloudflare supports two types of [network interconnect](/network-interconnect/about/interconnect-types/):
+Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Cloudflare [supports a variety of options](/network-interconnect/about) to connect your network to Cloudflare:
 
-1. **Private network interconnect (PNI)**. With PNI, data centers must be co-located with a [Cloudflare Interconnection facility](https://www.peeringdb.com/net/4224), where the link size of the connection is 10GbE or higher.
-2. **Virtual private network interconnect (vPNI)**. With vPNI, organizations' data centers do not have to be colocated with a Cloudflare data center. vPNI also works for organizations that are already using services from Cloudflare's [Interconnection partners](https://www.cloudflare.com/network-interconnect-partnerships/). The connection size of vPNIs depends on the offering by these partners.
+- Express CNI for Magic WAN and Magic Transit
+- Classic CNI for Magic Transit
+- Cloud CNI for Magic WAN and Magic Transit
+- Peering via either an internet exchange, or a private network interconnect (PNI).
 
 The following table summarizes the different methods of connecting networks to Cloudflare:
 
@@ -317,9 +319,9 @@ Note the following traffic flows:
   - An employee's laptop running the device agent creates its own secure connection to Cloudflare that is routed over the IPsec tunnel
 - The application owner of the reporting system maintains a connection to Cloudflare using `cloudflared` and doesn't require any networking help to expose their application to employees
 
-![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
+![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP Connector and cloudflared.](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
 
-<sub>*Note: All of the endpoints connected via the WARP connector or device agent are automatically assigned IP addresses from the 100.96.0.0/12 address range, while endpoints connected to Magic WAN retain their assigned RFC1918 private IP addresses. `cloudflared` can be deployed in any of the locations by an application owner to provide hostname-based connectivity to the application.*</sub>
+<sub>*Note: All of the endpoints connected via the WARP Connector or device agent are automatically assigned IP addresses from the 100.96.0.0/12 address range, while endpoints connected to Magic WAN retain their assigned RFC1918 private IP addresses. `cloudflared` can be deployed in any of the locations by an application owner to provide hostname-based connectivity to the application.*</sub>
 
 Once the networks, applications, and user devices are connected to Cloudflare — regardless of the connection methods and devices used — all traffic can be inspected, authenticated, and filtered by the Cloudflare SASE services, then securely routed to their intended destinations. Additionally, consistent policies can be applied across all traffic, no matter how it arrives at Cloudflare.
 
