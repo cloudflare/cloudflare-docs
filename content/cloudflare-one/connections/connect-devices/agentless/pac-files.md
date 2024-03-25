@@ -64,8 +64,8 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
    Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
 
-   - **IPv4**: `90.90.241.229/32` (up to '/25')
-   - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to '/109')
+   - **IPv4**: `90.90.241.229/32` (up to `/26`)
+   - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to `/109`)
 
    After running the command, you should see an output similar to
 
