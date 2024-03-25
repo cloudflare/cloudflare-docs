@@ -93,7 +93,7 @@ available to Python workers!
 from js import Response
 from hello import hello
 
-async def fetch(request):
+async def on_fetch(request):
     name = (await request.json()).name
     return Response.new(hello(name))
 ```
