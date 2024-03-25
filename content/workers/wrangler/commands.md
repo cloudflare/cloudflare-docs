@@ -1942,7 +1942,7 @@ wrangler queues create <name> [OPTIONS]
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the queue to create.
-- `--delivery-delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--delivery-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long a published message should be delayed for, in seconds. Must be a positive integer.
 
 {{</definitions>}}
@@ -1996,7 +1996,7 @@ wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
   - Maximum number of retries for each message. Must be a positive integer.
 - `--max-concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
-- `--retry-delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--retry-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long a retried message should be delayed for, in seconds. Must be a positive integer.
 {{</definitions>}}
 
