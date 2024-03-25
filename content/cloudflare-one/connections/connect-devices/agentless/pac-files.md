@@ -37,9 +37,11 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy Endpoints**.
 2. Select **Create endpoint**.
 3. Give your endpoint any name.
-4. Enter the public source IP address of your device(s) in CIDR notation. For example,
-   - **IPv4**: `90.90.241.229/32` (up to `/26`)
-   - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128`
+4. Enter the public source IP address of your device(s) in CIDR notation. For example:
+
+   - **IPv4**: `192.0.2.0/8`
+   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
+
 5. Select **Save endpoint** and confirm the endpoint creation.
 
 Your Cloudflare proxy server domain is of the form:
@@ -62,10 +64,10 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
    ```
 
-   Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example,
+   Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example:
 
-   - **IPv4**: `90.90.241.229/32` (up to `/26`)
-   - **IPv6**: `2601:645:4500:9c0:a945:f47c:23e9:a35b/128` (up to `/109`)
+   - **IPv4**: `192.0.2.0/8`
+   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
    After running the command, you should see an output similar to
 
