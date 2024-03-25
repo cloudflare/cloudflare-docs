@@ -3,12 +3,12 @@ title: Known issues
 pcx_content_type: concept
 weight: 7
 meta:
-  description: Explore the known issues associated with Workers Vitest integration.
+  description: Explore the known issues associated with the Workers Vitest integration.
 ---
 
 # Known issues
 
-The Workers Vitest pool is currently in open beta. The following is issues Cloudflare is aware of and fixing:
+The Workers Vitest pool is currently in open beta. The following are issues Cloudflare is aware of and fixing:
 
 - Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `SELF`, or inside Durable Object event handlers. You must use static `import` statements in the global scope.
 
