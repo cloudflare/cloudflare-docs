@@ -54,13 +54,12 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 {{<tab label="api" no-code="true">}}
 
-1. Run the following command:
+1. Run the following API call:
 
    ```bash
-   curl --request POST \
-   --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
-   --header 'X-Auth-Email: <EMAIL>' \
-   --header 'X-Auth-Key: <API_KEY>' \
+   curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
+   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Content-Type: application/json" \
    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
    ```
 
@@ -69,7 +68,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    - **IPv4**: `192.0.2.0/8`
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
-   After running the command, you should see an output similar to
+   After running the call, you should see an output similar to
 
    ```bash
    {
@@ -88,6 +87,8 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    "messages": []
    }
    ```
+
+   For more information, refer to [Create a proxy endpoint](/api/operations/zero-trust-gateway-proxy-endpoints-create-proxy-endpoint).
 
 2. Note the `subdomain` value returned by the API. Your Cloudflare proxy server domain is of the form:
 
@@ -178,6 +179,10 @@ You can test any [supported HTTP policy](#limitations), such as the example poli
 ### HTTP policy proxy endpoint specificity
 
 The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) to match specific proxy endpoints. Despite this, Gateway will still apply HTTP policies to traffic sent to Cloudflare proxy servers.
+
+### Source network CIDR range
+
+Gateway limits the CIDR range of source networks for proxy endpoints. The maximum prefix length for IPv4 networks is `/8`, and the maximum for IPv6 networks is `/109`.
 
 ### Traffic limitations
 
