@@ -123,8 +123,8 @@ worker. First, let's create a `wrangler.toml` file for our worker.
 ```toml
 name = "hello-python-worker"
 main = "entry.py"
-compatibility_flags = ["experimental"]
-compatibility_date = "2024-01-29"
+compatibility_flags = ["python_workers"]
+compatibility_date = "2024-03-20"
 
 [vars]
 API_HOST = "example.com"
@@ -136,7 +136,7 @@ environment variable.
 ```python
 from js import Response
 
-async def fetch(request, env):
+async def on_fetch(request, env):
     return Response.new(env.API_HOST)
 ```
 
