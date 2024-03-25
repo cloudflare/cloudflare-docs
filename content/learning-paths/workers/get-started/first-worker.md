@@ -1,7 +1,7 @@
 ---
-title: Get started
+title: Deploy your first Worker
 pcx_content_type: learning-unit
-weight: 1
+weight: 2
 layout: learning-unit
 ---
 

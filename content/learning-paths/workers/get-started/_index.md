@@ -11,5 +11,7 @@ Create your first Worker.
 
 ## Objectives
 
-- Understand the difference between C3 (create-cloudflare-cli) and Wrangler.
-- Build your first Worker.
+By the end of this module, you will learn:
+
+- The difference between C3 (`create-cloudflare` CLI) and Wrangler.
+- How to create and deploy your first Worker.
