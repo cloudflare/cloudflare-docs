@@ -137,6 +137,7 @@ Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-
 | `response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The user's IP address. |
 | `idempotency_key` | Optional | The UUID to be associated with the response. |
+| `affinity` | Optional | An optional storage location hint. |
 
 {{<Aside type="note">}}
 
@@ -208,3 +209,16 @@ A validation error is indicated by having the `success` property set to `false`.
 | `bad-request` | The request was rejected because it was malformed. |
 | `timeout-or-duplicate` | The response parameter has already been validated before. |
 | `internal-error` | An internal error happened while validating the response. The request can be retried. |
+
+
+## Affinity Hints (Optional)
+
+The Turnstile siteverify API keeps track of tokens that have been previously redeemed to avoid redemption of a token twice. By default this happens automatically in a Cloudflare datacenter nearby the server that is using the siteverify API.
+Moreoever, Turnstile is oftentimes smart enough to predict which different tokens issued on different regions transparently are validated by which server. However, when a token is cannot be checked in a Cloudflare datacenter nearby the request may go to a different Cloudflare datacenter in a different region, which can cause added latency to the calls to the siteverify api. Since Cloudflare does not know which server will check tokens from which region ahead of time the prediction can sometimes not work as expected. To this end the server can provide an affinity hint to the siteverify api stating which scope the token should be checked within.
+
+Values to the affinity parameter can be either
+
+* a string up to 12 characters (A-Za-z0-9.-_), with an abitrary labeling for the server that calls siteverify (e.g. `pandora`, `123m5`, `europe`, `lax-a`), or
+* a [location hint](durable-objects/reference/data-location) for a Durable Object (e.g., `weur` for Western Europe)
+
+Note that when an affinity hint is specified the token will only be checked within that particular affinity scope, e.g., if the a token was redeemed in `weur` before it may still be redeemable in `apac`.
