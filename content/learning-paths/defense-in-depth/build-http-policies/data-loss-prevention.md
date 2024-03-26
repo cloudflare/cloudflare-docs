@@ -1,7 +1,7 @@
 ---
 title: Use Data Loss Prevention (DLP) inspection
 pcx_content_type: learning-unit
-weight: 1
+weight: 2
 layout: learning-unit
 ---
 
