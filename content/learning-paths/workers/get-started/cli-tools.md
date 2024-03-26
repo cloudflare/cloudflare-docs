@@ -16,15 +16,9 @@ The Cloudflare Developer Platform ecosystem has two CLIs:
 
 You will use C3 only for new project creation.
 
-To install C3 and create a new Workers or Pages application, run:
-
-{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
-
-{{<render file="/_c3-output.md" productFolder="/workers/" >}}
-
 ## Wrangler
 
-Wrangler is a command-line tool for building with Cloudflare developer products.
+[Wrangler](/workers/wrangler/) is a command-line tool for building with Cloudflare developer products.
 
 With Wrangler, you can [develop](/workers/wrangler/commands/#dev) your Worker locally and remotely, [roll back](/workers/wrangler/commands/#rollback) to a previous deployment of your Worker, [delete](/workers/wrangler/commands/#delete-3) a Worker and its bound Developer Platform resources, and more. Refer to [Wrangler Commands](/workers/wrangler/commands/) to view the full reference of Wrangler commands.
 

@@ -21,63 +21,27 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ## Get started in the dashboard
 
-By following the Get started guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
+{{<render file="_get-started-dash.md" productFolder="/workers/">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Create application**.
-3. Select **Create Worker** > **Deploy**.
-
-{{<render file="_prereqs.md">}}
+{{<render file="_prereqs.md" productFolder="/workers/">}}
 
 ## 1. Create a new Worker project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
-
+{{<render file="_c3-description.md" productFolder="/workers/" >}}
+<br/><br/>
 Open a terminal window and run C3 to create your Worker project:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{<render file="_c3-run-command.md" productFolder="/workers/" >}}
 
-```sh
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-output.md" productFolder="/workers/" >}}
 
-{{</tab>}}
-{{<tab label="yarn">}}
+{{<render file="_c3-basic-worker.md" productFolder="/workers/" >}}
 
-```sh
-$ yarn create cloudflare
-```
+{{<render file="_js-ts-note.md" productFolder="/workers/" >}}
 
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-deployment-options.md" productFolder="/workers/" >}}
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
-
-For this guide, set up a basic Worker:
-
-1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Worker` as the type of application you want to create.
-3. Answer `yes` or `no` to using TypeScript.
-
-{{<Aside type="note">}}
-
-The rest of this guide assumes that the user is creating a JS project. If you are creating a TypeScript project, the files will be `.ts`, a `.tsconfig` file will be created, and proper dependencies will be added.
-
-{{</Aside>}}
-
-You will be asked if you would like to deploy the project to Cloudflare.
-
-- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
-
-In your project directory, C3 has generated the following:
-
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
-3. `package.json`: A minimal Node dependencies configuration file.
-4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
-5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
+{{<render file="_c3-output-files.md" productFolder="/workers/" >}}
 
 ## 2. Develop with Wrangler CLI
 
