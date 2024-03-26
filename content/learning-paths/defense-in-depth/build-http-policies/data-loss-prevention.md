@@ -1,7 +1,7 @@
 ---
 title: Build Data Loss Prevention (DLP) policies
 pcx_content_type: learning-unit
-weight: 2
+weight: 3
 layout: learning-unit
 ---
 

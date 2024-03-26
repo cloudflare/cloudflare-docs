@@ -1,7 +1,7 @@
 ---
 title: Recommended HTTP policies
 pcx_content_type: learning-unit
-weight: 4
+weight: 5
 layout: learning-unit
 ---
 
