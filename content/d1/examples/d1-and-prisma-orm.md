@@ -150,7 +150,7 @@ Next, run the following command in your terminal to generate the SQL statement t
 npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > prisma/schema.sql
 ```
 
-This stores a SQL statement to create a new `User` table in a new file called `schema.sql` in the `prisma` directory. Here's what it looks like:
+This stores a SQL statement to create a new `User` table in a new file called `schema.sql` in the `prisma` directory. Your `schema.sql` should look like this:
 
 ```sql
 ---
