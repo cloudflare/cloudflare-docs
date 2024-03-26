@@ -25,7 +25,7 @@
     <description>Updates to Cloudflare's {{$product}} product.</description>
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
-    <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
+    <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</lastBuildDate>
     {{- range $changelogDataEntries -}}
     {{- $entry := . -}}
     {{- $link := "" -}}
@@ -53,7 +53,7 @@
     <title>{{- $title -}}</title>
     <link>{{- $link -}}</link>
     <description>{{- $description -}}</description>
-    <pubDate>{{- .publish_date | time.Format "Monday, Jan 2, 2006" -}}</pubDate>
+    <pubDate>{{- .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST -}}</pubDate>
     </item>
     {{- end -}}
   </channel>
