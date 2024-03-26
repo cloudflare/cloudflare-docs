@@ -45,4 +45,4 @@ ___
 
 ## Report an incorrect IP location
 
-If you find an incorrect IP location, use the [Maxmind tool](https://www.maxmind.com/en/geoip2-precision-demo) to make sure that Maxmind shows the correct **Country Code**. If the data is incorrect, [Contact Cloudflare Support](/support/contacting-cloudflare-support/).
+If you find an incorrect IP location, use the [MaxMind tool](https://www.maxmind.com/en/geoip2-precision-demo) to make sure that Maxmind shows the correct **Country Code**. If the data is incorrect, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
