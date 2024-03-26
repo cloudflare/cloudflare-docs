@@ -79,6 +79,10 @@ Refer to [HTTP Events API](/zaraz/http-events-api/) for more information on this
 
 ## Other
 
+### Bot Score Threshold
+
+Choose whether to prevent Zaraz from loading on suspected bot-initiated requests. This is based on the request's [bot score](https://developers.cloudflare.com/bots/concepts/bot-score/) which is an estimate, and therefore cannot be guaranteed to be always accurate.
+
 ### Context Enricher
 
 Refer to the [Context Enricher](/zaraz/advanced/context-enricher/) for more information on this setting.
