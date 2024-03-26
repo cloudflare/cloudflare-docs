@@ -10,14 +10,14 @@ weight: 3
 
 Cloudflare Workers provides first-class support for Python, including:
 
-- [Built-in packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html)
-- Importing pure Python wheels from PyPI with micropip, by adding them to `requirements.txt`
+- [Built-in packages](/workers/languages/python/packages)
+- Importing pure Python wheels from [PyPI](https://pypi.org/) with [micropip](https://github.com/pyodide/micropip), by adding them to `requirements.txt`
 - [FastAPI](https://fastapi.tiangolo.com/) compatibility, to build APIs in idiomatic Python
 - [Langchain](https://pypi.org/project/langchain/) compatibility, to build LLM-powered apps easily
 - Bindings, Environment Variables, and Secrets
-- Workers API that you know and love, with a Pythonic feel
+- Support for [bindings](/workers/configuration/bindings/) to [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1) and more
 
-Python Workers are currently in open beta, and we'd love your feedback. Join the [#python-workers channel](https://discord.com/channels/595317990191398933/<TODO>) in the Cloudflare Discord community and let us know what you'd like to see next.
+Python Workers are currently in open beta, and we'd love your feedback. Join the [#python-workers channel](https://discord.com/channels/595317990191398933/1212830987495669781) in the Cloudflare Discord community and let us know what you'd like to see next.
 
 ## Get started
 
