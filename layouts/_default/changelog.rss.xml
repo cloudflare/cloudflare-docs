@@ -53,7 +53,7 @@
     <title>{{- $title -}}</title>
     <link>{{- $link -}}</link>
     <description>{{- $description -}}</description>
-    <pubDate>{{- .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST -}}</pubDate>
+    <pubDate>{{- .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</pubDate>
     </item>
     {{- end -}}
   </channel>
