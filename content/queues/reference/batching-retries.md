@@ -119,7 +119,7 @@ Delaying messages allows you to defer tasks until later, and/or respond to backp
 
 ### Delay on send
 
-To delay a message or batch of messages when sending to a queue, you can provide a `delaySeconds` parameter:
+To delay a message or batch of messages when sending to a queue, you can provide a `delaySeconds` parameter when sending a message.
 
 ```ts
 // Delay a singular message by 600 seconds (10 minutes)
@@ -127,6 +127,17 @@ await env.YOUR_QUEUE.send(message, { delaySeconds: 600 })
 
 // Delay a batch of messages by 300 seconds (5 minutes)
 await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 300 })
+
+// Don't delay this message.
+// If there is a global delay configured on the queue, ignore it.
+await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 0 })
+```
+
+You can also configure a default, global delay on a per-queue basis by passing `--delivery-delay-secs` when creating a queue via the `wrangler` CLI:
+
+```sh
+# Delay all messages by 5 minutes as a default
+$ npx wrangler queues create $QUEUE_NAME --delivery-delay-secs=300
 ```
 
 ### Delay on retry
@@ -161,12 +172,24 @@ export default {
   async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
     // Mark for retry and delay a batch of messages
     // by 600 seconds (10 minutes)
-    batch.retryAll({delaySeconds: 600})
+    batch.retryAll({ delaySeconds: 600 })
   },
 };
 ```
 
-To delay messages consumed by a [pull-based consumer](/queues/reference/pull-consumers/), refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers).
+You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers:
+
+```sh
+# Push-based consumers
+# Delay any messages that are retried by 60 seconds (1 minute) by default.
+$ npx wrangler@latest queues consumer worker add $QUEUE_NAME $WORKER_SCRIPT_NAME --retry-delay-secs=60
+
+# Pull-based consumers
+# Delay any messages that are retried by 60 seconds (1 minute) by default.
+$ npx wrangler@latest queues consumer http add $QUEUE_NAME --retry-delay-secs=60
+```
+
+Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
 
 ## Related
 
