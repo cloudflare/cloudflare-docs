@@ -30,20 +30,19 @@ This example shows you how to set up and deploy a Cloudflare Worker that is acce
 Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
 
 ```
-npm create cloudflare@latest prisma-d1-example -- --type hello-world
+$ npm create cloudflare@latest prisma-d1-example -- --type hello-world
 ```
 
 In your terminal, you will be asked a series of questions related your project:
 1. Answer `yes` to using TypeScript.
 2. Answer `yes` to deploying your Worker.
 
-At the end of the wizard, you should have a deployed Cloudflare Worker at the domain `https://prisma-d1-example.USERNAME.workers.dev` which simply renders "Hello World" in the browser.
+Once you deploy your Worker, you should be able to preview your Worker at `https://prisma-d1-example.USERNAME.workers.dev`, which returns "Hello World" in the browser.
 
 ### 2. Initialize Prisma ORM
 
-With your Worker in place, let's go ahead and set up Prisma ORM.
 
-First, navigate into the project directory and install the Prisma CLI:
+To set up Prisma ORM, go into your project directory, and install the Prisma CLI:
 
 ```sh
 $ cd prisma-d1-example
