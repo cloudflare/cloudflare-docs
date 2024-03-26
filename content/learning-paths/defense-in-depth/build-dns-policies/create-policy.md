@@ -21,4 +21,4 @@ To create a new DNS policy:
 
 6. Select **Create policy**.
 
-The policy will apply to all devices that you connect to Gateway.
+For more information, refer to [Egress policies](/cloudflare-one/policies/gateway/egress-policies/).

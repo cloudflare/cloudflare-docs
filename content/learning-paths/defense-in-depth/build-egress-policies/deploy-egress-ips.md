@@ -23,9 +23,45 @@ You should also reserve multiple egress IPs if you have locations that need expl
 
 One of the most common use cases for egress policies is to ensure a consistent egress IP for users accessing SaaS applications that may not support SAML (or vendor services that can only use IP-level controls). If given the option -- or if your business controls the application -- Cloudflare strongly recommends using [Cloudflare Access](/cloudflare-one/policies/access/) to move from IP-level authentication to identity-aware authentication that uses continuous evaluation.
 
-We recommend building baseline policies that can cover a majority of your use cases without making policy management overly complex. If all of your users need to access a series of applications that all require a specific egress IP, you should build a policy explicit to those users (or to all of your users) to ensure that all of their traffic egresses using those egress IPs.
+We recommend building baseline egress policies that can cover a majority of your use cases without making policy management overly complex. If all of your users need to access a series of applications that all require a specific egress IP, you should build a policy explicit to those users (or to all of your users) to ensure that all of their traffic egresses using those egress IPs.
 
-[screenshot and api example]
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+| Selector   | Operator | Value                   | Egress method                       |
+| ---------- | -------- | ----------------------- | ----------------------------------- |
+| User Email | in       | _Financial Information_ | Use dedicated Cloudflare egress IPs |
+
+| Primary IPv4 address | IPv6 address    |
+| -------------------- | --------------- |
+| `203.0.113.0`        | `2001:db8::/32` |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+```bash
+---
+header: Block financial information shared with AI
+---
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header 'Content-Type: application/json' \
+    --data '{
+    "action": "egress",
+    "description": "Prevent financial information from being shared with AI tools",
+    "enabled": true,
+    "filters": [
+      "egress"
+    ],
+    "name": "Block AI financial info",
+    "precedence": 0,
+    "traffic": "any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})"
+    }'
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## User-selectable egress locations
 
