@@ -39,7 +39,6 @@ Once you deploy your Worker, you should be able to preview your Worker at `https
 
 ### 2. Initialize Prisma ORM
 
-With your Worker in place, let's go ahead and set up Prisma ORM.
 
 First, navigate into the project directory and install the Prisma CLI:
 
