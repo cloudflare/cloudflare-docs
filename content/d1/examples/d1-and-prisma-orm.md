@@ -102,6 +102,7 @@ point-in-time restore.
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "prisma-demo-db"
+database_id = "__YOUR_D1_DATABASE_ID__"
 ```
 
 You now have a D1 database in your Cloudflare account with a binding to your Cloudflare Worker.
