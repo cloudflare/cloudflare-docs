@@ -18,7 +18,7 @@ To learn more about Prisma ORM, refer to the [Prisma documentation](https://www.
 
 ## Query D1 from a Cloudflare Worker using Prisma ORM
 
-In this section, you'll find step-by-step instructions to set up and deploy a Cloudflare Worker that's accessing a D1 database from scratch.
+This example shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
 
 ### Prerequisites
 
