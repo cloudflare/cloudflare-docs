@@ -58,7 +58,7 @@ $ npm install @prisma/adapter-d1
 
 Finally, bootstrap the files required by Prisma ORM using the following command:
 
-```
+```sh
 $ npx prisma init --datasource-provider sqlite
 ```
 
