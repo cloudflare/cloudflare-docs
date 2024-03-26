@@ -29,7 +29,7 @@ This example shows you how to set up and deploy a Cloudflare Worker that is acce
 
 Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
 
-```
+```sh
 $ npm create cloudflare@latest prisma-d1-example -- --type hello-world
 ```
 
@@ -137,8 +137,8 @@ However, D1 comes with its own [migration system](/d1/reference/migrations) and 
 
 First, create a new migration using the `wrangler` CLI:
 
-```
-npx wrangler d1 migrations create prisma-demo-db create_user_table
+```sh
+$ npx wrangler d1 migrations create prisma-demo-db create_user_table
 ```
 
 When prompted if the command can create a new folder called `migrations`, hit **Enter** to confirm.
