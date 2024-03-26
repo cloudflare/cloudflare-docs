@@ -14,11 +14,11 @@ Native code coverage via [V8](https://v8.dev/blog/javascript-code-coverage) is n
 
 ### Fake timers
 
-Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not apply to KV, R2 and Cache simulators. For example, you cannot expire a KV key by advancing fake time.
+Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not apply to KV, R2 and cache simulators. For example, you cannot expire a KV key by advancing fake time.
 
 ### Automatically re-running tests with `SELF`
 
-If you are writing integration tests with `SELF`, you must import your Worker's `main` entrypoint in your test file for tests to re-run when files change. For example, if `main` was set to `./src/index.ts`, include `import "./src/index"` at the top of each test file. Vite's module analysis that powers hot-module-reloading is performed statically and currently does not detect the dynamic import of `main` in our test runner.
+If you are writing integration tests with `SELF`, you must import your Worker's `main` entry point in your test file for tests to re-run when files change. For example, if `main` was set to `./src/index.ts`, include `import "./src/index"` at the top of each test file. Vite's module analysis that powers hot-module-reloading is performed statically and currently does not detect the dynamic import of `main` in our test runner.
 
 ### `console.log()`s with `SELF`
 
