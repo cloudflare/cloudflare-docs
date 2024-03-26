@@ -27,7 +27,7 @@ This example shows you how to set up and deploy a Cloudflare Worker that is acce
 
 ### 1. Create a Cloudflare Worker
 
-As a first step, go ahead and use `npm create` to bootstrap a plain version of a Cloudflare Worker (using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template). Run the following command in your terminal:
+Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
 
 ```
 npm create cloudflare@latest prisma-d1-example -- --type hello-world
