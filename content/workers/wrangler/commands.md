@@ -1942,6 +1942,8 @@ wrangler queues create <name> [OPTIONS]
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the queue to create.
+- `--delivery-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long a published message should be delayed for, in seconds. Must be a positive integer.
 
 {{</definitions>}}
 
@@ -1986,7 +1988,16 @@ wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
   - The name of the queue to add the consumer to.
 - `script-name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the Workers script to add as a consumer of the named queue.
-
+- `--batch-size` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Maximum number of messages per batch. Must be a positive integer.
+- `--batch-timeout` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Maximum number of seconds to wait to fill a batch with messages. Must be a positive integer.
+- `--message-retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Maximum number of retries for each message. Must be a positive integer.
+- `--max-concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
+- `--retry-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long a retried message should be delayed for, in seconds. Must be a positive integer.
 {{</definitions>}}
 
 ### `consumer remove`
