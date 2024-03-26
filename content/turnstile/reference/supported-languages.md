@@ -6,7 +6,7 @@ weight: 9
 
 # Supported languages
 
-Turnstile supports `auto` (default), which uses the vistiors browser language if supported. Also supports and explicitly setting the languages of the widget listed in the table below:
+Turnstile supports `auto` (default), which uses the visitor's browser language if supported. Also supports explicitly setting the widget's language to one listed in the table below:
 
 | Language Code (4 letters) | Language Code (2 letters) | Language |
 | --- | --- | --- |
