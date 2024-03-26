@@ -1,7 +1,7 @@
 ---
 title: Advanced ZTWA workflows
 pcx_content_type: overview
-weight: 6
+weight: 7
 layout: learning-module
 ---
 

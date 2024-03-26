@@ -5,11 +5,19 @@ weight: 2
 layout: learning-unit
 ---
 
-A common goal for many security organizations is to implement continuous authentication and authorization. The challenge is to accomplish this without introducing significant user interruption or requiring behavioral changes for your end users. Instead of [managing a direct SSO integration](/learning-paths/zero-trust-web-access/migrate-applications/integrated-sso/) in your application, you can use the JSON Web Token (JWT) issued by Cloudflare Access to authenticate requests. Cloudflare becomes the primary responsible party for validating the token returned from your SSO provider, and your users only have a single authentication event required to access their applications.
+A common goal for many security organizations is to implement continuous authentication and authorization. With Cloudflare Access, you can achieve this goal without introducing significant user interruption or requiring behavioral changes for your end users.
+
+As discussed on the [previous page](/learning-paths/zero-trust-web-access/migrate-applications/integrated-sso/), some internal applications currently rely on a direct SSO integration to authenticate requests. However, if you were to put this type of application behind Cloudflare to enable remote access, your user would now need to authenticate twice. First, they must authenticate to your identity provider via Cloudflare Access. Once they have authenticated to Access, your user will reach the front door of your internal application, where they must complete a second authentication event via the direct SSO integration.
+
+Instead of [managing a direct SSO integration](/learning-paths/zero-trust-web-access/migrate-applications/integrated-sso/) in your application, you can use the JSON Web Token (JWT) issued by Cloudflare Access to authenticate requests. Cloudflare becomes the primary responsible party for validating the token returned from your SSO provider. By allowing your applications to consume the Cloudflare JWT, users will only have a single authentication event required to access the application, and you can better manage authorization to your internal services with lower overhead.
 
 ## Consume the Cloudflare JWT
 
 When Cloudflare sends a request to your application, the request will include a JWT signed with a key pair unique to your account. You can build a workflow in your application to [validate the Cloudflare Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/). This will give you stronger-than-HTML security for users who have authenticated to Cloudflare and will make your user login experience seamless.
+
+The authorization flow is illustrated in the following diagram:
+
+![ZTWA authorization flow with JWT validation](/images/cloudflare-one/applications/access-jwt-flow.png)
 
 ## Send authorization headers with Workers
 

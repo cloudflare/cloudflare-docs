@@ -1,7 +1,7 @@
 ---
 title: Customize the end user experience
 pcx_content_type: overview
-weight: 7
+weight: 5
 layout: learning-module
 ---
 

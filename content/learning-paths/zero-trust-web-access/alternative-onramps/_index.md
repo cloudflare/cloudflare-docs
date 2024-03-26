@@ -1,5 +1,5 @@
 ---
-title: Alternative ZTWA on-ramps (Optional)
+title: Alternative ZTWA on-ramps
 pcx_content_type: overview
 weight: 8
 layout: learning-module

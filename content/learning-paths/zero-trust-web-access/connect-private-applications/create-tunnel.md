@@ -21,7 +21,7 @@ To add a public hostname route to the tunnel:
 
 {{<render file="tunnel/_add-public-hostname.md" productFolder="cloudflare-one">}}
 
-All users on the Internet can now connect to this application via its public hostname. Module 4 will discuss how to restrict access to authorized users.
+All users on the Internet can now connect to this application via its public hostname. In [Module 4: Secure your applications](/learning-paths/zero-trust-web-access/access-application/), we will discuss how to restrict access to authorized users.
 
 {{<Aside type="note">}}
 If the tunnel is disconnected:

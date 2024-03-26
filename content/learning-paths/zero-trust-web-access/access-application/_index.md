@@ -7,7 +7,7 @@ layout: learning-module
 
 # Secure your applications
 
-Secure your applications behind Cloudflare Access.
+Now that you have [connected your private applications](/learning-paths/zero-trust-web-access/connect-private-applications/) to Cloudflare, secure those applications behind Cloudflare Access.
 
 ## Objectives
 

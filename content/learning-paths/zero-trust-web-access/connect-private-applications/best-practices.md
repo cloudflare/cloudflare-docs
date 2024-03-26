@@ -13,7 +13,11 @@ For an additional point of availability, add a [`cloudflared` replica](/cloudfla
 
 ## Standardize public hostnames
 
-Most customers opt to standardize public hostname routes in a repeatable format. You can either use the internal hostname of the application, or you can generate a hostname that contains the private IP address and port of the origin service.
+To make your applications easier to manage, standardize the public hostnames that you publish your applications on. Here are a few examples of how customers manage their public hostnames:
+
+- Delegate a subdomain of your primary public website to use for internal applications (for example, `tools.dev.customer.com`).
+- If your internal DNS infrastructure is available for public use, register your internal primary DNS record on Cloudflare and use this domain for your public hostname routes. This allows you to present applications on identical private and public hostnames.
+- Specify some sort of internal logic that generates hostnames based on the type of tool you are connecting. For example, if you have a set of applications in a US-East datacenter allocated explicitly for production resources, you could create subdomains of `tools.us-east.prod.ztproject.com`.
 
 ## Disable TLS verification
 

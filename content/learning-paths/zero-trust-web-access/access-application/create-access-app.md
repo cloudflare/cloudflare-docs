@@ -19,3 +19,5 @@ Each application can have multiple policies with different constraints depending
 ## (Optional) Configure advanced settings
 
 {{<render file="access/_self-hosted-settings.md" productFolder="cloudflare-one">}}
+
+When users go to the application, they will be prompted to login with your identity provider.
