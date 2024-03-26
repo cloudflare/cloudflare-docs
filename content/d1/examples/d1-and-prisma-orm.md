@@ -23,7 +23,7 @@ This example shows you how to set up and deploy a Cloudflare Worker that is acce
 ### Prerequisites
 
 - Node.js and npm installed on your machine
-- A Cloudflare account
+- A [Cloudflare account](https://dash.cloudflare.com).
 
 ### 1. Create a Cloudflare Worker
 
