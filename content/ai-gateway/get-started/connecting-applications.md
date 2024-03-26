@@ -32,6 +32,12 @@ Once you have configured a Gateway in the AI Gateway dashboard, click on “API 
 {{<render file="_azureopenai.md">}}
 
 ---
+
+## Anthropic
+
+{{<render file="_anthropic.md">}}
+
+---
 ## HuggingFace
 
 {{<render file="_huggingface.md">}}
