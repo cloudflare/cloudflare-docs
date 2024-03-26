@@ -47,7 +47,7 @@ When the _Bypass Cache on Cookie_ page rule matches the criteria we set, Cloud
 
 -   use the _\*_ wildcard operator on the Drupal installation path to match the entire domain
 -   set the Cache Level to Cache Everything
--   text, set _Bypass Cache on Cookie_ rule for the Drupal variables. This rule will override the C_ache Everything_ rule when a user is logged into Drupal
+-   text, set _Bypass Cache on Cookie_ rule for the Drupal variables. This rule will override the _Cache Everything_ rule when a user is logged into Drupal
 -   set the _Edge Cache TTL_ setting to determine how long a Cloudflare cache server should store cached files.
 
 If you use additional cookies in your Drupal site, you must ensure these are in the Regex statement: _SESS.\*|phpsessid=.\*_
