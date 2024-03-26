@@ -112,7 +112,7 @@ Optional configuration that applies when sending a message to a queue.
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of seconds to [delay a message](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  - Must be a positive integer. 
+  - Must be an integer between 0 and 43200 (12 hours). Setting this value to zero will explicitly prevent the message from being delayed, even if there is a global (default) delay at the queue level.
 
 ### `QueueSendBatchOptions`
 
