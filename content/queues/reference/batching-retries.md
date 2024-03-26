@@ -91,7 +91,7 @@ Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivale
 * If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.
 * If you call either `ack()` or `retry()` on a single message, and then either/any of `ackAll()` or `retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does not apply to that message (or messages, if multiple calls were made).
 
-## Delivery falure
+## Delivery failure
 
 When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed. You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
 
