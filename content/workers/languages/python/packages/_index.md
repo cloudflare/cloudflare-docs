@@ -5,7 +5,7 @@ meta:
   title: Python packages supported in Cloudflare Workers
 ---
 
-## Packages
+# Packages
 
 To import a Python package, add the package name to the `requirements.txt` file within the same directory as your `wrangler.toml` configuration file.
 
@@ -16,10 +16,9 @@ For example, if your Worker depends on [FastAPI](https://fastapi.tiangolo.com/),
 filename: requirements.txt
 ---
 fastapi
-ssl
 ```
 
-### Package versioning
+## Package versioning
 
 In the example above, you likely noticed that there is no explicit version of the Python package declared in `requirements.txt`.
 
@@ -27,9 +26,12 @@ In Workers, Python package versions are set via [Compatibility Dates](/workers/c
 
 <!-- TODO — need section here that maps Pyodide releases to compatibility dates and flags, so that someone can understand, for a given compatibility date, which Pyodide version will be used, and which version of Python this includes, and which packages at which versions will be provided. -->
 
-### Supported Packages
+## Supported Packages
 
-As of March 24, 2024, the following Python packages are supported in Workers:
+
+Any pure Python package (no C extensions or code in other languages) with a wheel on [PyPI](https://pypi.org/) can be used in Workers.
+
+Additionally, as of March 24, 2024, the following Python packages are provided directly by the Workers runtime:
 
 - aiohttp: 3.9.3
 - aiohttp-tests: 3.9.3
