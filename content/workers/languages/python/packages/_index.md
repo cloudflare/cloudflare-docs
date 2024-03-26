@@ -80,3 +80,5 @@ Additionally, as of March 24, 2024, the following Python packages are provided d
 - sqlite3: 1.0.0
 - ssl: 1.0.0
 - starlette: 0.36.3
+
+Looking for a package not listed here? Tell us what you'd like us to support by [opening a discussion on Github](https://github.com/cloudflare/workerd/discussions/new?category=python-packages).
