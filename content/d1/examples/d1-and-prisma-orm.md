@@ -66,7 +66,7 @@ This command did two things:
 - It created a new directory called `prisma` that contains your [Prisma schema](https://www.prisma.io/docs/orm/prisma-schema/overview) file.
 - It created a `.env` file which is typically used to configure environment variables that will be read by the Prisma CLI.
 
-In this tutorial, you won't need the `.env` file since the connection between Prisma ORM and D1 will happen through a [binding](https://developers.cloudflare.com/workers/configuration/bindings/). You'll find instructions for setting up this binding in the next step.
+In this tutorial, you won't need the `.env` file since the connection between Prisma ORM and D1 will happen through a [binding](/workers/configuration/bindings/). You'll find instructions for setting up this binding in the next step.
 
 Since you'll be using the [driver adapter](https://www.prisma.io/docs/orm/overview/databases/database-drivers#driver-adapters) feature which is currently in Preview, you need to explicitly enable it via  the `previewFeatures` field on the `generator` block.
 
@@ -169,8 +169,8 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 You now need to use the `wrangler d1 execute`  command to send this SQL statement to D1. Note that this command accepts two options:
 
-- `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that'll be located in the `.wrangler/state` directory of your project. This approach is useful, when you want to develop and test your Worker on your local machine. Learn more [here](https://developers.cloudflare.com/d1/configuration/local-development/).
-- `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Learn more [here](https://developers.cloudflare.com/d1/configuration/remote-development/).
+- `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that'll be located in the `.wrangler/state` directory of your project. This approach is useful, when you want to develop and test your Worker on your local machine. Learn more [here](/d1/configuration/local-development/).
+- `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Learn more [here](/d1/configuration/remote-development/).
 
 In this tutorial, you'll do both: test the Worker locally _and_ deploy it afterwards. So, you need to run both commands. Open your terminal and paste the following commands:
 
