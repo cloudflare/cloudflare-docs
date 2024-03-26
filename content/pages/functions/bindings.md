@@ -169,7 +169,7 @@ By default, [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) automatica
 
 Alternatively, if your Pages Function is bound to `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
 
-Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` file. Refer to [Functions configuration](/pages/functions/configuration/) for more information.
+Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` file. Refer to [Functions configuration](/pages/functions/wrangler-configuration/) for more information.
 
 ## D1 databases
 
