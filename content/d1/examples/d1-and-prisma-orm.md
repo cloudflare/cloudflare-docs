@@ -30,7 +30,7 @@ This example shows you how to set up and deploy a Cloudflare Worker that is acce
 Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
 
 ```
-npm create cloudflare@latest prisma-d1-example -- --type hello-world
+$ npm create cloudflare@latest prisma-d1-example -- --type hello-world
 ```
 
 This will bring up a CLI wizard. Select all the *default* options by hitting **Return** every time a question appears.
