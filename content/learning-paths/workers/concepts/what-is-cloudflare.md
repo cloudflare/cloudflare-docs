@@ -11,6 +11,12 @@ Cloudflare's product offering is composed of [SASE and SSE services](https://www
 
 Cloudflare's products offer something to developers, private and public organizations, businesses, governments, and individual consumers.
 
+{{<Aside type="note">}}
+
+For more details about what Cloudflare is and does, refer to the [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
+
+{{</Aside>}}
+
 ## Cloudflare Developer Platform
 
 The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) includes [Cloudflare Workers](/workers/), which allows you to deploy serverless code instantly across the globe. You will learn more about [the Developer Platform in this module](http://localhost:5173/learning-paths/workers/concepts/developer-platform/).
@@ -46,12 +52,6 @@ After you add your application to [Cloudflare](/fundamentals/concepts/how-cloudf
 - Route traffic ([Load balancing](/load-balancing/), [Waiting Room](/waiting-room/)).
 
 And more depending on your use case.
-
-{{<Aside type="note">}}
-
-For more details about what Cloudflare is and does, refer to the [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
-
-{{</Aside>}}
 
 ## Summary
 
