@@ -115,3 +115,8 @@ $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_N
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
 
 To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).
+
+## Real-time log streaming in Pages project is not compatible with Smart Placement in the same Pages project
+
+Currently, there is conflict when you enable Real-time log streaming while [Smart Placement](/pages/functions/smart-placement/) is active in the same Pages project. 
+Please avoid using these two features the same time. This limitation only applies to Pages projects, not Workers projects.
