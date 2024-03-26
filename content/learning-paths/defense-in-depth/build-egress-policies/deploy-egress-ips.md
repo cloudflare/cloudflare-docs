@@ -21,7 +21,7 @@ You should also reserve multiple egress IPs if you have locations that need expl
 
 ## Access allowlisted sources
 
-One of the most common use cases for egress policies is to ensure a consistent egress IP for users accessing SaaS applications that may not support SAML (or vendor services that can only use IP-level controls). If given the option -- or if your business controls the application -- Cloudflare strongly recommends using [Access](/cloudflare-one/policies/access/) to move from IP-level authentication to identity-aware authentication that uses continuous evaluation.
+One of the most common use cases for egress policies is to ensure a consistent egress IP for users accessing SaaS applications that may not support SAML (or vendor services that can only use IP-level controls). If given the option -- or if your business controls the application -- Cloudflare strongly recommends using [Cloudflare Access](/cloudflare-one/policies/access/) to move from IP-level authentication to identity-aware authentication that uses continuous evaluation.
 
 We recommend building baseline policies that can cover a majority of your use cases without making policy management overly complex. If all of your users need to access a series of applications that all require a specific egress IP, you should build a policy explicit to those users (or to all of your users) to ensure that all of their traffic egresses using those egress IPs.
 

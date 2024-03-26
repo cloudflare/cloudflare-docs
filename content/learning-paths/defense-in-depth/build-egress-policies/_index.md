@@ -21,6 +21,6 @@ Now that you have created firewall policies to secure your organization, you can
 
 By the end of this module, you will be able to:
 
-- Understand why defense-in-depth requires source IP anchoring.
+- Understand when your organization may need source IP anchoring.
 - Create egress policies to make use of dedicated egress IPs.
 - Follow best practices for deploying egress IPs.
