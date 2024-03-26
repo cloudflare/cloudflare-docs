@@ -253,7 +253,7 @@ filename: Browser output
 
 ### 7. Deploy the Worker
 
-To deploy the Worker, run the the following command:
+To deploy the Worker, run the following command:
 
 ```
 npm run deploy
