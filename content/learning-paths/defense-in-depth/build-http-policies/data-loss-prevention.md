@@ -81,16 +81,16 @@ For example, you can use a custom expression to when your users share product SK
 
 1. [Build a custom profile](#build-a-custom-profile) with the following custom entry:
 
-  | Detection entry name | Value                   |
-  | -------------------- | ----------------------- |
-  | Product SKUs         | `CF[0-9]{1,4}-[0-9]{5}` |
+    | Detection entry name | Value                   |
+    | -------------------- | ----------------------- |
+    | Product SKUs         | `CF[0-9]{1,4}-[0-9]{5}` |
 
 2. Create an HTTP policy with the following expressions:
 
-  | Selector    | Operator      | Value                        | Logic | Action |
-  | ----------- | ------------- | ---------------------------- | ----- | ------ |
-  | DLP Profile | in            | _Product SKUs_               | And   | Block  |
-  | User Email  | matches regex | `[a-z0-9]{0,15}@example.com` |       |        |
+    | Selector    | Operator      | Value                        | Logic | Action |
+    | ----------- | ------------- | ---------------------------- | ----- | ------ |
+    | DLP Profile | in            | _Product SKUs_               | And   | Block  |
+    | User Email  | matches regex | `[a-z0-9]{0,15}@example.com` |       |        |
 
 {{</tab>}}
 
@@ -145,17 +145,27 @@ The best way to start applying data loss prevention to your traffic, minimize th
 
 ### Example
 
-Many organizations want to detect and log financial information egressing from user devices to critical SaaS applications. To limit the risk of false positives and to filter out logging noise, Cloudflare recommends building your first series of policies to specify both target data and target destination. For example:
+Many organizations want to detect and log financial information egressing from user devices to critical SaaS applications. To limit the risk of false positives and to filter out logging noise, Cloudflare recommends building your first series of policies to specify both target data and target destination. For example, you can block financial information from being sent to AI chatbots, such as ChatGPT and Gemini:
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+| Selector           | Operator | Value                     | Logic | Action |
+| ------------------ | -------- | ------------------------- | ----- | ------ |
+| DLP Profile        | in       | _Financial Information_   | And   | Block  |
+| Content Categories | in       | _Artificial Intelligence_ |       |        |
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
 
 ```bash
 ---
 header: Block financial information shared with AI
 ---
-curl --request POST \
-    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header "Authorization: Bearer <API_TOKEN>" \
     --header 'Content-Type: application/json' \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <API_KEY>' \
     --data '{
     "action": "block",
     "description": "Prevent financial information from being shared with AI tools",
@@ -168,5 +178,8 @@ curl --request POST \
     "traffic": "any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})"
     }'
 ```
+
+{{</tab>}}
+{{</tabs>}}
 
 Once you have analyzed the flow and magnitude of data from the known sources, you can begin focusing on more specialized or explicit datasets for more generalized sources. This might look like inspecting for multiple matching data loss deterministic attributes to all external sources. You may want to except sources that are known internal locations where sensitive data is intentionally transferred. After developing a level of confidence from reviewing the logs and evaluating a rate of false positives for both types of policies, you can feel more confident in experimenting more broadly with data loss prevention policies.
