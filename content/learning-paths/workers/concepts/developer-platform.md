@@ -37,7 +37,7 @@ For a detailed guide to choosing the correct storage option, refer to [Choose a 
 
 ## AI
 
-[Workers AI](/workers-ai/) allow you to build and deploy AI applications that run machine learning models powered by serverless GPUs. Deploying your first large language model takes less than 3 minutes with Cloudflare, refer to the [Get started guide](/workers-ai/get-started/workers-wrangler/) to test it yourself.
+[Workers AI](/workers-ai/) allow you to build and deploy AI applications that run machine learning models powered by serverless GPUs.
 
 ## Summary
 
