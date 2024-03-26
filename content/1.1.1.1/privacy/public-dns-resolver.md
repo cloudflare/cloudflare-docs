@@ -112,7 +112,7 @@ Cloudflare may make the following aggregations:
 * Response code/time quantiles with different protocol settings by Cloudflare data centers.
 * Total Number of Requests Processed by Cloudflare data centers.
 * Aggregate List of All Domain Names Requested and aggregate number of requests and timestamp of first time requested by region.
-* Number of unique clients, queries over IPv4, queries over IPv6, queries with the RD bit set, queries asking for DNSSEC, number of bogus, valid, and invalid DNSSEC answers, queries by type, number of answers with each response code, response time quantiles (e.g. 50 percentile), response TTL, and number of cached answers per minute, per day, per protocol (HTTPS/UDP/TCP/TLS), per region, Cloudflare data center, and per Autonomous System Number.
+* Number of unique clients, queries over IPv4, queries over IPv6, queries with the RD bit set, queries asking for DNSSEC, number of bogus, valid, and invalid DNSSEC answers, queries by type, number of answers with each response code, response time quantiles (e.g. 50 percentile), response TTL, and number of cached answers per minute, per day, per protocol (HTTPS/UDP/TCP/TLS), per region, per Cloudflare data center, and per Autonomous System Number.
 * Number of queries, number of queries with EDNS, number of bytes and time in answers quantiles (e.g. 50 percentile) by day, month, Cloudflare data center, and by IPv4 vs IPv6.
 * Number of queries, response codes and response code quantiles (e.g. 50 percentile) by day, region, name and type.
 
