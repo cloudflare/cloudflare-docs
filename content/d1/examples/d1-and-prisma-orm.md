@@ -12,7 +12,7 @@ layout: example
 
 ## What is Prisma ORM?
 
-[Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety & auto-completion.
+[Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
 
 If you want to learn more about Prisma ORM, you can visit the [documentation](https://www.prisma.io/docs).
 
