@@ -12,22 +12,22 @@ layout: example
 
 ## What is Prisma ORM?
 
-[Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety & auto-completion.
+[Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
 
-If you want to learn more about Prisma ORM, you can visit the [documentation](https://www.prisma.io/docs).
+To learn more about Prisma ORM, refer to the [Prisma documentation](https://www.prisma.io/docs).
 
 ## Query D1 from a Cloudflare Worker using Prisma ORM
 
-In this section, you'll find step-by-step instructions to set up and deploy a Cloudflare Worker that's accessing a D1 database from scratch.
+This example shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
 
 ### Prerequisites
 
-- Node.js and npm installed on your machine
-- A Cloudflare account
+- [`Node.js`](https://nodejs.org/en/) and [`npm`](https://docs.npmjs.com/getting-started) installed on your machine.
+- A [Cloudflare account](https://dash.cloudflare.com).
 
 ### 1. Create a Cloudflare Worker
 
-As a first step, go ahead and use `npm create` to bootstrap a plain version of a Cloudflare Worker (using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template). Run the following command in your terminal:
+Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
 
 ```
 npm create cloudflare@latest prisma-d1-example -- --type hello-world
@@ -151,7 +151,7 @@ Next, run the following command in your terminal to generate the SQL statement t
 npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > prisma/schema.sql
 ```
 
-This stores a SQL statement to create a new `User` table in a new file called `schema.sql` in the `prisma` directory. Here's what it looks like:
+This stores a SQL statement to create a new `User` table in a new file called `schema.sql` in the `prisma` directory. Your `schema.sql` should look like this:
 
 ```sql
 ---
@@ -254,7 +254,7 @@ filename: Browser output
 
 ### 7. Deploy the Worker
 
-To deploy the Worker, run the the following command:
+To deploy the Worker, run the following command:
 
 ```
 npm run deploy
@@ -278,5 +278,5 @@ Here are some more useful resources to check out if you want to learn more about
 - **Docs**: [Get started with Prisma ORM](https://www.prisma.io/docs/getting-started)
 - **Help**: Open a new [GitHub Discussion](https://github.com/prisma/prisma/discussions/) or [ask the AI bot in the Prisma docs](https://www.prisma.io/docs)
 - **Examples**: [Ready-to-run examples using Prisma ORM](https://github.com/prisma/prisma-examples/)
-- **Community**: Check out the [Prisma community](https://www.prisma.io/community), follow [Prisma on X](https://www.x.com/prisma) and join the [Prisma Discord](https://pris.ly/discord)
-- **Blog**: [Developer Experience Redefined: Prisma & Cloudflare Lead the Way to Data DX](https://www.prisma.io/blog/cloudflare-partnership-qerefgvwirjq)
+- Check out the [Prisma community](https://www.prisma.io/community), follow [Prisma on X](https://www.x.com/prisma) and join the [Prisma Discord](https://pris.ly/discord).
+- [Developer Experience Redefined: Prisma & Cloudflare Lead the Way to Data DX](https://www.prisma.io/blog/cloudflare-partnership-qerefgvwirjq)
