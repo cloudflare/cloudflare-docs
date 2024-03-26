@@ -33,7 +33,7 @@ Open your terminal, and run the following command to create a Cloudflare Worker 
 npm create cloudflare@latest prisma-d1-example -- --type hello-world
 ```
 
-This will bring up a CLI wizard. Select all the *default* options by hitting **Enter** every time a question appears.
+This will bring up a CLI wizard. Select all the *default* options by hitting **Return** every time a question appears.
 
 At the end of the wizard, you should have a deployed Cloudflare Worker at the domain `https://prisma-d1-example.USERNAME.workers.dev` which simply renders "Hello World" in the browser.
 
@@ -130,7 +130,24 @@ Next, you'll create a database table in the database in order to be able to send
 
 ### 4. Create a table in the database
 
-[Prisma Migrate](https://www.prisma.io/docs/orm/prisma-migrate/understanding-prisma-migrate/overview) doesn't support D1 yet, so you can't follow the "default" migration workflows using `prisma migrate dev` or `prisma db push`. However, the Prisma CLI provides tools that still allow you to generate SQL statements which you can then manually send to D1 via the `wrangler` CLI.
+[Prisma Migrate](https://www.prisma.io/docs/orm/prisma-migrate/understanding-prisma-migrate/overview) doesn't support D1 yet, so you can't follow the "default" migration workflows using `prisma migrate dev` or `prisma db push`. However, D1 comes with its own [migration system](/d1/reference/migrations) and the Prisma CLI provides tools that still allow you to generate SQL statements for schema changes. In the following, you'll use both D1's migration system and the Prisma CLI to create and run a migration against your database.
+
+First, create a new migration using the `wrangler` CLI:
+
+```
+npx wrangler d1 migrations create prisma-demo-db create_user_table
+```
+
+When prompted if the command can create a new folder called `migrations`, hit **Return** to confirm.
+
+The command has now created a new directory called `migrations` and an empty file called `0001_create_user_table.sql` inside of it:
+
+```
+migrations/
+└── 0001_create_user_table.sql
+```
+
+Next, you need to add the SQL statement that will create a `User` table to that file.
 
 Open the `schema.prisma` file and add the following `User` model to it:
 
@@ -145,17 +162,17 @@ filename: prisma/schema.prisma
 +}
 ```
 
-Next, run the following command in your terminal to generate the SQL statement that creates a `User` table that's equivalent to the `User` model above:
+Now, run the following command in your terminal to generate the SQL statement that creates a `User` table that's equivalent to the `User` model above:
 
 ```
-npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > prisma/schema.sql
+npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0001_create_user_table.sql
 ```
 
-This stores a SQL statement to create a new `User` table in a new file called `schema.sql` in the `prisma` directory. Your `schema.sql` should look like this:
+This stores a SQL statement to create a new `User` table in your migration file from before, here is what it looks like:
 
 ```sql
 ---
-filename: prisma/schema.sql
+filename: migrations/0001_create_user_table.sql
 ---
 -- CreateTable
 CREATE TABLE "User" (
@@ -168,7 +185,9 @@ CREATE TABLE "User" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 ```
 
-You now need to use the `wrangler d1 execute`  command to send this SQL statement to D1. Note that this command accepts two options:
+Note that the `UNIQUE INDEX` on the `email` was created because the `User` model in your Prisma schema is using the [`@unique`](https://www.prisma.io/docs/orm/reference/prisma-schema-reference#unique) attribute on its `email` field.
+
+You now need to use the `wrangler d1 migrations apply` command to send this SQL statement to D1. Note that this command accepts two options:
 
 - `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that'll be located in the `.wrangler/state` directory of your project. This approach is useful, when you want to develop and test your Worker on your local machine. Learn more [here](/d1/configuration/local-development/).
 - `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Learn more [here](/d1/configuration/remote-development/).
@@ -177,11 +196,14 @@ In this tutorial, you'll do both: test the Worker locally _and_ deploy it afterw
 
 ```
 # For the local database
-npx wrangler d1 execute prisma-demo-db --file=prisma/schema.sql --local
+npx wrangler d1 migrations apply prisma-demo-db --local
 
 # For the remote database
-npx wrangler d1 execute prisma-demo-db --file=prisma/schema.sql --remote
+npx wrangler d1 migrations apply prisma-demo-db --remote
 ```
+
+Hit **Return** both times when you're prompted to confirm that the migration should be applied.
+
 
 Let's also create some dummy data that we can query once the Worker is running. This time, you'll run the SQL statement without storing it in a file:
 
