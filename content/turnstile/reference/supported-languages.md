@@ -8,7 +8,7 @@ weight: 9
 
 Turnstile supports `auto` (default), which uses the vistiors browser language if supported. Also supports and explicitly setting the languages of the widget listed in the table below:
 
-| Language Code (4 letter) | Langauge Code (2 letter) | Language |
+| Language Code (4 letters) | Language Code (2 letters) | Language |
 | --- | --- | --- |
 | ar-eg | ar | Arabic (Egypt) |
 | bg-bg | bg | Bulgarian (Bulgaria) |
