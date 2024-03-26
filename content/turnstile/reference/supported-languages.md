@@ -8,7 +8,6 @@ weight: 9
 
 Turnstile supports `auto` (default), which uses the visitor's browser language if it is supported. You can also explicitly set the widget's language to one listed on the table below:
 
-
 | Language code (4 letters) | Language code (2 letters) | Language |
 | --- | --- | --- |
 | `ar-eg` | `ar` | Arabic (Egypt) |
