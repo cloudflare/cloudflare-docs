@@ -104,7 +104,7 @@ To check uploaded content in a way that is not covered by the default configurat
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, select **Malicious uploads**.
-4. Select **Add new location**.
+4. Select **Add content object location**.
 5. In **Content location**, enter your custom scan expression. For example:
 
     ```txt
