@@ -36,6 +36,10 @@ sequenceDiagram
 
 Additionally, customers have the option to configure [Logpush](/logs/about/) to push their Customer Logs to various storage services, SIEMs, and log management providers.
 
+## Data unavailability
+
+{{<render file="_customer_metadata_boundary_error.md" productFolder="analytics">}}
+
 ## Product specific-behavior
 
 For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Overview section](/data-localization/).
