@@ -16,7 +16,7 @@ Unless you are using [Cloudflare Registrar](/registrar/), consider which of the 
 
 ### Your domain uses a different registrar
 
-If you have acquired your domain from a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/) other than Cloudflare Registrar - and it has not been [delegated to another zone](#your-domain-is-delegated-to-another-zone) -, you need to update your nameservers at your registrar.
+If you have acquired your domain from a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/) other than Cloudflare Registrar - and it has not been [delegated to another zone](#your-domain-is-delegated-to-another-zone) - you need to update your nameservers at your registrar.
 
 {{<render file="_ns-update-providers.md">}}
 

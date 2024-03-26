@@ -79,7 +79,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
 
-{{<Aside>}}
+{{<Aside type="note">}}
 Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details.
 {{</Aside>}}
 

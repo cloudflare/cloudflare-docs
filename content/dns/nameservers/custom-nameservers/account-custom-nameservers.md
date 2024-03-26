@@ -33,7 +33,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name.
 
     * If the domain uses Cloudflare DNS, the respective `A` and `AAAA` records are automatically created.
 
-    * If the domain or domains that are used for the account custom nameservers do not exist within the same account, you must manually create the `A/AAAA` records on the configured nameserver names (e.g. `ns1.example.com`) at the authoritative DNS provider.
+    * If the domain or domains that are used for the account custom nameservers do not exist within the same account, you must manually create the `A/AAAA` records on the configured nameserver names (for example, `ns1.example.com`) at the authoritative DNS provider.
 
     {{<example>}}
 
