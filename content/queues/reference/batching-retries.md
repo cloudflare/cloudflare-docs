@@ -1,7 +1,7 @@
 ---
 title: Batching and Retries
 pcx_content_type: concept
-weight: 3
+weight: 4
 ---
 
 # Batching and Retries
@@ -40,7 +40,7 @@ The following batch-level settings can be configured to adjust how Queues delive
   
 {{</table-wrap>}}
 
-## Explicit acknowledgement
+## Explicit acknowledgement and retries
 
 You can acknowledge individual messages with a batch by explicitly acknowledging each message as it is processed. Messages that are explicitly acknowledged will not be re-delivered, even if your queue consumer fails on a subsequent message and/or fails to return successfully when processing a batch.
 
@@ -70,7 +70,7 @@ You can also call `retry()` to explicitly force a message to be redelivered in a
 
 ```ts
 ---
-header: index.js 
+header: index.ts
 ---
 export default {
   async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
@@ -91,9 +91,11 @@ Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivale
 * If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.
 * If you call either `ack()` or `retry()` on a single message, and then either/any of `ackAll()` or `retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does not apply to that message (or messages, if multiple calls were made).
 
-## Retries
+## Delivery falure
 
-When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed (refer to [Dead Letter Queues](#dead-letter-queues)). You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
+When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed. You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
+
+Messages that reach the configured maximum retries will be deleted from the queue, or if a [dead-letter queue](/queues/reference/dead-letter-queues/) (DLQ) is configured, written to the DLQ instead.
 
 {{<Aside type="note">}}
 
@@ -101,7 +103,7 @@ Each retry counts as an additional read operation per [Queues pricing](/queues/p
 
 {{</Aside>}}
 
-When a single message within a batch fails to be delivered, the entire batch is retried, unless you have [explicitly acknowledged](#explicit-acknowledgement) a message (or messages) within that batch. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus redelivered to your consumer in full.
+When a single message within a batch fails to be delivered, the entire batch is retried, unless you have [explicitly acknowledged](#explicit-acknowledgement-and-retries) a message (or messages) within that batch. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus redelivered to your consumer in full.
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
@@ -109,19 +111,94 @@ Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause
 
 {{</Aside>}}
 
-## Dead Letter Queues
+## Delay messages
 
-A Dead Letter Queue (DLQ) is a common concept in a messaging system, and represents where messages are sent when a delivery failure occurs with a consumer after `max_retries` is reached. A Dead Letter Queue is just like any other queue, and can be produced to and consumed from independently. 
+When publishing messages to a queue, or when [marking a messsage or batch for retry](#explicit-acknowledgement-and-retries), you can choose to delay messages from being processed for a period of time.
 
-With Cloudflare Queues, a Dead Letter Queue is configured as part of your consumer. For example, the following consumer configuration would send messages to our DLQ named `"my-other-queue"` after retrying delivery (by default, 3 times):
+Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue. For example, if an upstream API you are calling to returns a `HTTP 429: Too Many Requests`, you can delay messages to slow down how quickly you are consuming them before they are re-processed.
 
-```toml
----
-filename: wrangler.toml
----
-[[queues.consumers]]
-  queue = "my-queue"
-  dead_letter_queue = "my-other-queue"
+{{<Aside type="note">}}
+
+Configuring delivery and retry delays via the `wrangler` CLI requires `wrangler` version `3.38.0` or greater. Use `npx wrangler@latest` to always use the latest version of `wrangler`.
+
+{{</Aside>}}
+
+### Delay on send
+
+To delay a message or batch of messages when sending to a queue, you can provide a `delaySeconds` parameter when sending a message.
+
+```ts
+// Delay a singular message by 600 seconds (10 minutes)
+await env.YOUR_QUEUE.send(message, { delaySeconds: 600 })
+
+// Delay a batch of messages by 300 seconds (5 minutes)
+await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 300 })
+
+// Do not delay this message.
+// If there is a global delay configured on the queue, ignore it.
+await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 0 })
 ```
 
-To process messages placed on your DLQ, you need to set up a consumer associated with that queue. Messages delivered to a DLQ without an active consumer will persist for four (4) days before being deleted from the queue.
+You can also configure a default, global delay on a per-queue basis by passing `--delivery-delay-secs` when creating a queue via the `wrangler` CLI:
+
+```sh
+# Delay all messages by 5 minutes as a default
+$ npx wrangler queues create $QUEUE_NAME --delivery-delay-secs=300
+```
+
+### Delay on retry
+
+When [consuming messages from a queue](/queues/reference/how-queues-works/#consumers), you can choose to [explicitly mark messages to be retried](#explicit-acknowledgement-and-retries). Messages can be retried and delayed individually, or as an entire batch.
+
+To delay an individual message within a batch:
+
+```ts
+---
+header: index.ts
+---
+export default {
+  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+    for (const msg of batch.messages) {
+      // Mark for retry and delay a singular message
+      // by 3600 seconds (1 hour)
+      msg.retry({delaySeconds: 3600})
+
+    }
+  },
+};
+```
+
+To delay a batch of messages:
+
+```ts
+---
+header: index.ts
+---
+export default {
+  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+    // Mark for retry and delay a batch of messages
+    // by 600 seconds (10 minutes)
+    batch.retryAll({ delaySeconds: 600 })
+  },
+};
+```
+
+You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers:
+
+```sh
+# Push-based consumers
+# Delay any messages that are retried by 60 seconds (1 minute) by default.
+$ npx wrangler@latest queues consumer worker add $QUEUE_NAME $WORKER_SCRIPT_NAME --retry-delay-secs=60
+
+# Pull-based consumers
+# Delay any messages that are retried by 60 seconds (1 minute) by default.
+$ npx wrangler@latest queues consumer http add $QUEUE_NAME --retry-delay-secs=60
+```
+
+Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
+
+## Related
+
+* Review the [JavaScript API](/queues/reference/javascript-apis/) documentation for Queues.
+* Learn more about [How Queues Works](/queues/reference/how-queues-works/).
+* Understand the [metrics available](/queues/reference/metrics/) for your queues, including backlog and delayed message counts.

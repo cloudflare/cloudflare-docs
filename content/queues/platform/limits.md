@@ -17,16 +17,17 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 | Feature                                            | Limit                                   |
 | -------------------------------------------------- | --------------------------------------- |
 | Queues                                             | 10,000 per account <sup>beta</sup>      |
-| Maximum message size                               | 128 KB <sup>1</sup>                     |
-| Maximum message retries                            | 100                                     |
-| Maximum batch size                                 | 100 messages <sup>beta</sup>            |
-| Maximum batch wait time                            | 30 seconds                              |
-| Maximum per-queue message throughput <sup>2</sup>  | 400 messages per second <sup>3</sup>    |
-| Maximum message retention period <sup>4</sup>      | 4 days (96 hours)                       | 
-| Maximum per-queue backlog size <sup>5</sup>        | 25GB                                    | 
-| Maximum concurrent consumer invocations            | 20 <sup>push-based only</sup>           | 
-| Maximum consumer invocation duration               | 15 minutes <sup>6</sup>                 | 
-| Maximum `visibilityTimeout` (pull-based queues)    | 12 hours                                |
+| Message size                                       | 128 KB <sup>1</sup>                     |
+| Message retries                                    | 100                                     |
+| Batch size                                         | 100 messages <sup>beta</sup>            |
+| Batch wait time                                    | 30 seconds                              |
+| Per-queue message throughput <sup>2</sup>          | 400 messages per second <sup>3</sup>    |
+| Message retention period <sup>4</sup>              | 4 days (96 hours)                       | 
+| Per-queue backlog size <sup>5</sup>                | 25GB                                    | 
+| Concurrent consumer invocations                    | 20 <sup>push-based only</sup>           | 
+| Consumer invocation duration                       | 15 minutes <sup>6</sup>                 | 
+| `visibilityTimeout` (pull-based queues)            | 12 hours                                |
+| `delaySeconds` (when sending or retrying)          | 12 hours                                |
 | Requests to the Queues API (incl. pulls/acks)      | [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
 
 {{</table-wrap>}}
