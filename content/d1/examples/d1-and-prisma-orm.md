@@ -278,4 +278,4 @@ Here are some more useful resources to check out if you want to learn more about
 - **Help**: Open a new [GitHub Discussion](https://github.com/prisma/prisma/discussions/) or [ask the AI bot in the Prisma docs](https://www.prisma.io/docs)
 - **Examples**: [Ready-to-run examples using Prisma ORM](https://github.com/prisma/prisma-examples/)
 - Check out the [Prisma community](https://www.prisma.io/community), follow [Prisma on X](https://www.x.com/prisma) and join the [Prisma Discord](https://pris.ly/discord).
-- **Blog**: [Developer Experience Redefined: Prisma & Cloudflare Lead the Way to Data DX](https://www.prisma.io/blog/cloudflare-partnership-qerefgvwirjq)
+- [Developer Experience Redefined: Prisma & Cloudflare Lead the Way to Data DX](https://www.prisma.io/blog/cloudflare-partnership-qerefgvwirjq)
