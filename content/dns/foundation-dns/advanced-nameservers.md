@@ -36,7 +36,7 @@ When, instead of advertising all IPs in all data centers, this group logic is ap
 
 Zones using advanced nameservers are less exposed to incidents or software regression.
 
-The dedicated release process means that only stable changes, that have been in production for a while, will reach advanced nameservers.
+The dedicated release process means that only changes that have been in production for a while will reach advanced nameservers.
 
 ## Nameservers hosting and assignment
 

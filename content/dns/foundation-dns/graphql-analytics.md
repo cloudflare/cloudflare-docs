@@ -6,9 +6,9 @@ weight: 4
 
 # GraphQL DNS analytics
 
-With advanced nameservers, new analytics accessible by [GraphQL](/analytics/graphql-api/) become available.
+With advanced nameservers, analytics accessible by [GraphQL](/analytics/graphql-api/) become available.
 
-Once you [enable advanced nameservers](/dns/foundation-dns/setup/), update your registrar or parent zone, and wait for the time-to-live (TTL) of the previous nameservers to expire, you will have the following options.
+Once you [enable advanced nameservers](/dns/foundation-dns/setup/), [update your registrar or parent zone](/dns/nameservers/update-nameservers/), and wait for the time-to-live (TTL) of the previous nameservers to expire, you will be able to use the GraphQL DNS analytics on your zone.
 
 ## View on the dashboard
 
