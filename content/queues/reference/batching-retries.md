@@ -134,7 +134,7 @@ await env.YOUR_QUEUE.send(message, { delaySeconds: 600 })
 // Delay a batch of messages by 300 seconds (5 minutes)
 await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 300 })
 
-// Don't delay this message.
+// Do not delay this message.
 // If there is a global delay configured on the queue, ignore it.
 await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 0 })
 ```
@@ -199,6 +199,6 @@ Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-co
 
 ## Related
 
-* Review the [JavaScript API](/queues/reference/javascript-apis/) documentation for Queues
-* Learn more about [How Queues Works](/queues/reference/how-queues-works/)
+* Review the [JavaScript API](/queues/reference/javascript-apis/) documentation for Queues.
+* Learn more about [How Queues Works](/queues/reference/how-queues-works/).
 * Understand the [metrics available](/queues/reference/metrics/) for your queues, including backlog and delayed message counts.

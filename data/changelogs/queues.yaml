@@ -7,7 +7,7 @@ entries:
   description: |-
     Messages published to a queue and/or marked for retry from a queue consumer can now be explicitly delayed. Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue.
 
-    Refer to the [documentation on batching and retries](/queues/reference/batching-retries/) to learn how to delay messages written to a queue.
+    Refer to [Batching and Retries](/queues/reference/batching-retries/) to learn how to delay messages written to a queue.
 - publish_date: '2024-03-25'
   title: Support for pull-based consumers
   description: |-
