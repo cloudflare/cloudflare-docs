@@ -72,9 +72,9 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * queryClass
 * queryRd
 * queryDo
-* queryCd
 * querySize
 * queryEdns
+* queryCd
 * responseType
 * responseCode
 * responseSize
