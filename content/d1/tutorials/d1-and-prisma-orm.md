@@ -1,14 +1,12 @@
 ---
-type: example
-summary: Learn how to query D1 using Prisma ORM from a Cloudflare Worker.
-tags:
-  - Prisma ORM
-  - D1
-pcx_content_type: configuration
+updated: 2024-03-27
+difficulty: Beginner
+content_type: Tutorial
+pcx_content_type: tutorial
 title: Query D1 using Prisma ORM
-weight: 3
-layout: example
 ---
+
+# Query D1 using Prisma ORM
 
 ## What is Prisma ORM?
 
@@ -37,10 +35,9 @@ In your terminal, you will be asked a series of questions related your project:
 1. Answer `yes` to using TypeScript.
 2. Answer `yes` to deploying your Worker.
 
-Once you deploy your Worker, you should be able to preview your Worker at `https://prisma-d1-example.USERNAME.workers.dev`, which returns "Hello World" in the browser.
+Once you deploy your Worker, you should be able to preview your Worker at `https://prisma-d1-example.USERNAME.workers.dev`, which displays "Hello World" in the browser.
 
 ### 2. Initialize Prisma ORM
-
 
 To set up Prisma ORM, go into your project directory, and install the Prisma CLI:
 
@@ -69,7 +66,7 @@ The command above:
 
 In this tutorial, you will not need the `.env` file since the connection between Prisma ORM and D1 will happen through a [binding](/workers/configuration/bindings/). The next steps will instruct you through setting up this binding.
 
-Since you'll use the [driver adapter](https://www.prisma.io/docs/orm/overview/databases/database-drivers#driver-adapters) feature which is currently in Preview, you need to explicitly enable it via  the `previewFeatures` field on the `generator` block.
+Since you will use the [driver adapter](https://www.prisma.io/docs/orm/overview/databases/database-drivers#driver-adapters) feature which is currently in Preview, you need to explicitly enable it via  the `previewFeatures` field on the `generator` block.
 
 Open your `schema.prisma` file and adjust the `generator` block to reflect as follows:
 
@@ -83,9 +80,9 @@ generator client {
 }
 ```
 
-### 3. Create D1 database
+### 3. Create your D1 database
 
-In this step, you will set up your D1 database. You can create a D1 database via the Cloudflare Dashboard UI, or via the `wrangler` CLI. This tutorial will use the `wrangler` CLI.
+In this step, you will set up your D1 database. You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudflare.com), or via `wrangler`. This tutorial will use the `wrangler` CLI.
 
 Open your terminal and run the following command:
 
@@ -125,7 +122,7 @@ database_name = "prisma-demo-db"
 database_id = "__YOUR_D1_DATABASE_ID__"
 ```
 
-`__YOUR_D1_DATABASE_ID__` should be replaced with the database ID of your D1 instance. If you were not able to fetch this ID from the terminal output, you can also find it in the [Cloudflare Dashboard](https://dash.cloudflare.com/), or by running `npx wrangler d1 info prisma-demo-db` in your terminal.
+`__YOUR_D1_DATABASE_ID__` should be replaced with the database ID of your D1 instance. If you were not able to fetch this ID from the terminal output, you can also find it in the [Cloudflare dashboard](https://dash.cloudflare.com/), or by running `npx wrangler d1 info prisma-demo-db` in your terminal.
 
 Next, you will create a database table in the database to send queries to D1 using Prisma ORM.
 
@@ -133,15 +130,15 @@ Next, you will create a database table in the database to send queries to D1 usi
 
 [Prisma Migrate](https://www.prisma.io/docs/orm/prisma-migrate/understanding-prisma-migrate/overview) does not support D1 yet, so you cannot follow the default migration workflows using `prisma migrate dev` or `prisma db push`.
 
-However, D1 comes with its own [migration system](/d1/reference/migrations) and the Prisma CLI provides tools that still allow you to generate SQL statements for schema changes. In the following, you'll use both D1's migration system and the Prisma CLI to create and run a migration against your database.
+However, D1 has a [migration system](/d1/reference/migrations), and the Prisma CLI provides tools that allow you to generate SQL statements for schema changes. In the following steps, you will use D1's migration system and the Prisma CLI to create and run a migration against your database.
 
-First, create a new migration using the `wrangler` CLI:
+First, create a new migration using `wrangler`:
 
 ```sh
 $ npx wrangler d1 migrations create prisma-demo-db create_user_table
 ```
 
-When prompted if the command can create a new folder called `migrations`, hit **Enter** to confirm.
+Answer `yes` to creating a new folder called `migrations`.
 
 The command has now created a new directory called `migrations` and an empty file called `0001_create_user_table.sql` inside of it:
 
@@ -158,11 +155,11 @@ Open the `schema.prisma` file and add the following `User` model to your schema:
 ---
 filename: prisma/schema.prisma
 ---
-+model User {
-+  id    Int     @id @default(autoincrement())
-+  email String  @unique
-+  name  String?
-+}
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
 ```
 
 Now, run the following command in your terminal to generate the SQL statement that creates a `User` table equivalent to the `User` model above:
@@ -188,7 +185,7 @@ CREATE TABLE "User" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 ```
 
-Note that the `UNIQUE INDEX` on the `email` was created because the `User` model in your Prisma schema is using the [`@unique`](https://www.prisma.io/docs/orm/reference/prisma-schema-reference#unique) attribute on its `email` field.
+`UNIQUE INDEX` on `email` was created because the `User` model in your Prisma schema is using the [`@unique`](https://www.prisma.io/docs/orm/reference/prisma-schema-reference#unique) attribute on its `email` field.
 
 You now need to use the `wrangler d1 migrations apply` command to send this SQL statement to D1. This command accepts two options:
 
@@ -207,7 +204,7 @@ $ npx wrangler d1 migrations apply prisma-demo-db --local
 $ npx wrangler d1 migrations apply prisma-demo-db --remote
 ```
 
-Hit **Enter** both times when you're prompted to confirm that the migration should be applied.
+Choose `Yes` both times when you are prompted to confirm that the migration should be applied.
 
 Next, create some data that you can query once the Worker is running. This time, you will run the SQL statement without storing it in a file:
 
@@ -257,7 +254,7 @@ export default {
 
 ```
 
-Before running the Worker, you need to generate Prisma Client with the following command:
+Before running the Worker, generate Prisma Client with the following command:
 
 ```sh
 $ npx prisma generate
@@ -297,12 +294,12 @@ filename: Browser output
 [{"id":1,"email":"jane@prisma.io","name":"Jane Doe (Remote)"}]
 ```
 
-Congratulations, you just deployed a Cloudflare Worker using D1 as a database and querying it via Prisma ORM 🎉
+By finishing this tutorial, you have deployed a Cloudflare Worker using D1 as a database and querying it via Prisma ORM.
 
 ## Related resources
 
 - [Prisma documentation](https://www.prisma.io/docs/getting-started).
--  To get help, open a new [GitHub Discussion](https://github.com/prisma/prisma/discussions/), or [ask the AI bot in the Prisma docs](https://www.prisma.io/docs).
+- To get help, open a new [GitHub Discussion](https://github.com/prisma/prisma/discussions/), or [ask the AI bot in the Prisma docs](https://www.prisma.io/docs).
 - [Ready-to-run examples using Prisma ORM](https://github.com/prisma/prisma-examples/).
 - Check out the [Prisma community](https://www.prisma.io/community), follow [Prisma on X](https://www.x.com/prisma) and join the [Prisma Discord](https://pris.ly/discord).
 - [Developer Experience Redefined: Prisma & Cloudflare Lead the Way to Data DX](https://www.prisma.io/blog/cloudflare-partnership-qerefgvwirjq).
