@@ -12,5 +12,5 @@ In this learning path, you will learn how to replace your existing VPN provider 
 This guide will highlight best practices to follow and other decisions to consider when planning your deployment. Additionally, each module will include links to the key resources and how-to pages needed to get your deployment up and running.
 
 {{<Aside type="note">}}
-This learning path focuses on client-based remote access to internal services. If you are looking for clientless or Zero Trust Web Access functionality, refer to our [Zero Trust Web Applications (ZTWA) learning path](/learning-paths/zero-trust-web-access/).
+This learning path focuses on client-based remote access to internal services. If you are looking for clientless or Zero Trust Web Access functionality, refer to our [Deploy Zero Trust Web Access](/learning-paths/zero-trust-web-access/) learning path.
 {{</Aside>}}
