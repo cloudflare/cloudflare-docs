@@ -7,7 +7,7 @@ meta:
 
 # 1.1.1.1 Public DNS Resolver
 
-_Last updated March 26, 2024_
+_Last updated March 27, 2024_
 
 ## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
