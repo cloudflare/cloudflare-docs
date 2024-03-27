@@ -43,7 +43,7 @@ $ npx wrangler dispatch-namespace create <NAMESPACE_NAME>
 Create a Worker called `customer-worker-1`:
 
 ```sh
-$ npm create cloudflare@latest customer-worker-1 -- --type-hello-world
+$ npm create cloudflare@latest customer-worker-1 -- --type=hello-world
 ```
 
 To upload a user Worker to the dispatch namespace, deploy your application to the dispatch namespace by running the following command:
