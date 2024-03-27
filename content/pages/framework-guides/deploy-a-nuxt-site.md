@@ -11,33 +11,106 @@ meta:
 
 In this guide, you will create a new Nuxt application and deploy it using Cloudflare Pages.
 
-## Create a new project using the `create-cloudflare` CLI (C3)
+## Create a new project with `create-cloudflare`
 
-The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) will configure your Nuxt site for Cloudflare Pages. Run the following command in your terminal to create a new Nuxt site:
+The easiest way to create a new Nuxt project and deploy to Cloudflare Pages is to use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (also known as C3). To get started, open a terminal and run:
+
+{{<tabs labels="npm | pnpm | bun">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
 $ npm create cloudflare@latest my-nuxt-app -- --framework=nuxt
 ```
 
-C3 will ask you a series of setup questions and create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli). C3 will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
+{{</tab>}}
+{{<tab label="pnpm">}}
 
-After creating your project, C3 will generate a new `my-nuxt-app` directory using the default Nuxt template, updated to be fully compatible with Cloudflare Pages.
+```sh
+$ pnpm create cloudflare@latest my-nuxt-app --framework=nuxt
+```
+
+{{</tab>}}
+{{<tab label="bun">}}
+
+```sh
+$ bun create cloudflare@latest my-nuxt-app --framework=nuxt
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+C3 will walk you through the setup process and create a new project using `nuxi`, the official Nuxt cli. It will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
+
+{{<Aside type="note" header="Deployment">}}
+
+The final step of the C3 workflow will offer to deploy your application to Cloudflare. For more information on deployment options, see the [Deployment](#deployment) section below.
+
+{{</Aside>}}
+
+## Bindings
+
+{{<render file="/_framework-guides/_bindings_definition.md">}}
+
+In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.com/docs/guide/directory-structure/server#server-directory). The `defineEventHandler()` method is used to define your API endpoints in which you can access Cloudflare's context via the provided `context` field. The `context` field allows you to access any bindings set for your application.
+
+The following code block shows an example of accessing a KV namespace in Nuxt.
+
+```typescript
+---
+filename: server/api/hello.ts
+highlight: [2]
+---
+export default defineEventHandler(async ({ context }) => {
+  const { MY_KV } = context.cloudflare.env;
+  const greeting = (await MY_KV.get("greeting")) ?? "hello";
+
+  return {
+    greeting,
+  };
+});
+```
+
+### Setup bindings in development
+
+Projects created via C3 come with `nitro-cloudflare-dev`, a `nitro` module that simplifies the process of working with bindings during development:
+
+```typescript
+---
+filename: nuxt.config.ts
+highlights: [2]
+---
+export default defineNuxtConfig({
+  modules: ["nitro-cloudflare-dev"],
+});
+```
+
+This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+
+A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from `wrangler.toml` with the following command:
+
+```sh
+$ npm run build-cf-types
+```
+
+This should be done any time you add new bindings to `wrangler.toml`.
+
+{{<Aside type="note">}}
+
+`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
+
+{{</Aside>}}
+
+### Setup bindings in deployed applications
+
+In order to access bindings in a deployed application, you will need to [configure your bindings](/pages/functions/bindings/) in the Cloudflare dashboard.
+
+## Deployment
 
 When creating your new project, C3 will give you the option of deploying an initial version of your application via [Direct Upload](/pages/how-to/use-direct-upload-with-continuous-integration/). You can redeploy your application at any time by running following command inside your project directory:
 
 ```sh
 $ npm run deploy
 ```
-
-{{<Aside type="note" header="Git integration">}}
-
-The initial deployment created via C3 is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, refer to the [Git Integration](#git-integration) section below.
-
-{{</Aside>}}
-
-## Configure and deploy a project without C3
-
-To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [Git integration guide](/pages/get-started/git-integration/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
 
 {{<render file="/_framework-guides/_git-integration.md">}}
 
@@ -75,106 +148,3 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 Review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying your changes to production.
-
-## Use bindings in your Nuxt application
-
-{{<render file="/_framework-guides/_bindings_definition.md">}}
-
-### Set up bindings for local development
-
-Projects created via C3 come with `nitro-cloudflare-dev`, a `nitro` module that simplifies the process of working with bindings during development:
-
-```typescript
----
-filename: nuxt.config.ts
-highlights: [2]
----
-export default defineNuxtConfig({
-  modules: ["nitro-cloudflare-dev"],
-});
-```
-
-This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
-
-{{<Aside type="note">}}
-
-`wrangler.toml` is currently **only** used for local development. Bindings specified in it are not available remotely.
-
-{{</Aside>}}
-
-### Set up bindings for a deployed application
-
-In order to access bindings in a deployed application, you will need to [configure your bindings](/pages/functions/bindings/) in the Cloudflare dashboard.
-
-### Add bindings to TypeScript projects
-
-To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
-
-The following is an example of adding a `KVNamespace` binding:
-
-```ts
----
-filename: env.d.ts
-highlight: [9]
----
-import { CfProperties, Request, ExecutionContext, KVNamespace } from '@cloudflare/workers-types';
-
-declare module 'h3' {
-    interface H3EventContext {
-        cf: CfProperties,
-        cloudflare: {
-          request: Request,
-          env: {
-            MY_KV: KVNamespace,
-          }
-          context: ExecutionContext,
-        };
-    }
-}
-```
-
-### Access bindings in your Nuxt application
-
-In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.com/docs/guide/directory-structure/server#server-directory). The `defineEventHandler()` method is used to define your API endpoints in which you can access Cloudflare's context via the provided `context` field. The `context` field allows you to access any bindings set for your application.
-
-The following code block shows an example of accessing a KV namespace in Nuxt.
-
-
-{{<tabs labels="js | ts">}}
-{{<tab label="js" default="true">}}
-
-```javascript
----
-filename: server/api/hello.js
-highlight: [2]
----
-export default defineEventHandler(({ context }) => {
-  const MY_KV = context.cloudflare.env.MY_KV;
-
-  return {
-    // ...
-  };
-});
-```
-
-{{</tab>}}
-{{<tab label="ts">}}
-
-```typescript
----
-filename: server/api/hello.ts
-highlight: [2]
----
-export default defineEventHandler(({ context }) => {
-  const MY_KV = context.cloudflare.env.MY_KV;
-
-  return {
-    // ...
-  };
-});
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-{{<render file="/_framework-guides/_learn-more.md" withParameters="Nuxt">}}
