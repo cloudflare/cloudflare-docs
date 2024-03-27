@@ -169,6 +169,17 @@ To update a certificate using the API, send a [`PATCH`](/api/operations/custom-s
 
 {{<Aside type="note">}}
 
+Replacing a custom certificate following these steps doesn't lead to any downtime.
+No connections will be terminated, new connections will use the new certificate.
+The old certificate will only be actually deleted when the new certificate is uploaded and active.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
 To update the **Private Key Restriction** setting of a certificate, delete and re-add the certificate.
 
 {{</Aside>}}
+
+
+
