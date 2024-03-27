@@ -11,7 +11,7 @@ Only available on Enterprise plans.
 
 {{</Aside>}}
 
-Learn why and when to use PAC files instead of (or complementary to) endpoint agents.
+Learn how and when to use PAC files instead of (or complementary to) endpoint agents.
 
 ## What are PAC files?
 

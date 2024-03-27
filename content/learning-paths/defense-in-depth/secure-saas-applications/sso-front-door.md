@@ -7,6 +7,24 @@ layout: learning-unit
 
 Cloudflare provides tools to control access to your SaaS applications' single sign-on (SSO) front-door.
 
+## Configure CASB via the API
+
+Because CASB is implemented via the API, you can use it to complement the existing security posture outlined in this implementation guide without interruption of service, user traffic proxies, or front door access restrictions.
+
+### General best practices
+
+### Integrating DLP policies
+
+If you use both Cloudflare CASB and Cloudflare Data Loss Prevention (DLP), you can use DLP to discover if files stored in your SaaS application contain sensitive data. CASB integrations supported by DLP include:
+
+{{<render file="casb/_casb-dlp-integrations.md" productFolder="cloudflare-one">}}
+
+#### Upload/download control
+
+When you use a supported integration with DLP, you can place restrictions on uploading and downloading based on a file's contents.
+
+For more information, refer to [Scan SaaS applications with DLP](/cloudflare-one/applications/scan-apps/casb-dlp/).
+
 ## Configure SSO to use allowlisting
 
 To configure allowlists based on user IP addresses or other identifiers, you can add your application to Access for SaaS, configure an Access policy, and turn on SSO in your SaaS application.
