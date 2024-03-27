@@ -9,7 +9,8 @@ Signals Intelligence fields are fields that shows observations about a particula
 
 ## Available fields
 
-| Field name | Description |
+| <div style="width:140px">Field name</div> | Description |
+| --- | --- | 
 | `browser_pct` | Percentage of global traffic from user-agents identifying as browsers in the last hour using this fingerprint. |
 | `heuristics_pct` | Percentage of global traffic identified by our heuristics engine as bad bots. |
 | `cache_hit_pct` | Percentage of global traffic from in the last hour made to cached objects using this fingerprint. |
