@@ -45,7 +45,7 @@ By reading this page, you have learned:
 - The fundamentals of how Workers execute on the Cloudflare network.
 - How the request to reponse flow executes.
 
-In the next section, you will learn more about the Cloudflare Developer Platform.
+In the next module, you build and deploy your first Worker to the Cloudflare global network.
 
 ## Related resources
 
