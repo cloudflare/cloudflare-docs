@@ -10,7 +10,7 @@ meta:
 
 **Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers.
 
-This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
+This option is extremely useful when you want site visitors to access the endpoint closest to them, which improves page-loading performance.
 
 ## Pool assignment
 
@@ -25,7 +25,7 @@ If you add a pool to a region, you cannot [delete this pool](/load-balancing/poo
 {{</Aside>}}
 
 {{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}} 
+{{<tab label="dashboard" no-code="true">}}
 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
@@ -37,10 +37,10 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 6. If adding multiple pools, re-order them into your preferred failback order.
 7. (optional) Add more regions if needed.
 
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
@@ -74,7 +74,7 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
 1. Follow the [create a load balancer procedure](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic steering** step.
@@ -94,7 +94,7 @@ When creating a load balancer [via the API](/api/operations/load-balancers-creat
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
 Any country not explicitly defined will fall back to using the corresponding `region_pool` mapping (if it exists), then to the associated default pools.
- 
+
 {{</tab>}}
 {{</tabs>}}
 
