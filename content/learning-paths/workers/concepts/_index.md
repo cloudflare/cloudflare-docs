@@ -16,4 +16,3 @@ By the end of this module, you will learn:
 - What Cloudflare is.
 - The difference between serverless computing and cloud computing paradigms.
 - How Workers works.
-- What the Cloudflare Developer Platform can offer you.

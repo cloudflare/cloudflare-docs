@@ -5,9 +5,13 @@ weight: 3
 layout: learning-unit
 ---
 
-A single Worker project can have logic as complex or as simple as the developer desires. A simple project might look like a Worker that [returns a small HTML page](/workers/examples/return-html/) on a single route while a more complex Worker project would span multiple domains, multiple routes for each domain, and different logic for each route. The developer decides the architectural complexity of their Worker project.
+Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare's global network.
 
 Cloudflare Workers significantly differs from other serverless computing providers in its execution model and architecture.
+
+## Anatomy of a Worker project
+
+A single Worker project can have logic as complex or as simple as the developer desires. A project of smaller scale might look like a Worker that [returns a small HTML page](/workers/examples/return-html/) on a single route. A more complex Worker project would span multiple domains, multiple routes for each domain, and different logic for each route. The developer decides the architectural complexity of their Worker project.
 
 ## Runtime
 
@@ -40,3 +44,13 @@ In the next section, you will learn more about the Cloudflare Developer Platform
 ## Related resources
 
 - [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - Blog post detailing the containers versus isolates difference in the context of Cloudflare.
+- [How Workers works](/workers/reference/how-workers-works/) - Learn the difference between the Workers runtime versus traditional browsers and Node.js.
+- [How the cache works](/workers/reference/how-the-cache-works/) - Learn how Workers interacts with the Cloudflare cache.
+
+## Feedback
+
+To improve this learning path or report any missing or incorrect information, [file an issue on GitHub](https://github.com/cloudflare/cloudflare-docs/issues/new/choose).
+
+## Community
+
+Connect with the [Cloudflare Developer Platform community on Discord](https://discord.cloudflare.com) to ask questions, share what you are building, and discuss the platform with other developers.
