@@ -24,7 +24,9 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and domain.
 2. Go to the **DNS** tab.
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
-4. From the **Region** dropdown, select the region you would like to use on your domain. Refer to the table below for the complete list of available regions and their definitions. Only Super Administrators can view and edit the DNS Region used for Regional Services.
+4. From the **Region** dropdown, select the region you would like to use on your domain. This value will be applied to all DNS records on the same hostname. This means that if you have two DNS records of the same hostname and change the region for one of them, both records will have the same region.
+
+Refer to the table below for the complete list of available regions and their definitions. Only Super Administrators can view and edit the DNS Region used for Regional Services.
 
 {{<table-wrap style="font-size: 87%">}}
 
