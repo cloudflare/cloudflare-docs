@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Configuration
-weight: 7
+weight: 3
 meta:
   title: Cloudflare Queues - Configuration
 ---

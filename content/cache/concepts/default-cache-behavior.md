@@ -7,7 +7,7 @@ meta:
 
 # Default Cache Behavior
 
-Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL cache rule overrides the headers.
+Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
 {{<Aside type="warning">}}Page Rules will be deprecated, and you should instead use [Cache Rules](/cache/how-to/cache-rules/).{{</Aside>}}
 
