@@ -6,16 +6,16 @@ weight: 2
 
 # Shadow IT Discovery
 
-The Shadow IT Discovery page provides visibility into the SaaS applications and private network origins your end users are visiting. This information enables you to create identity and device-driven Zero Trust policies to secure your users and data.
+The Shadow IT Discovery page provides visibility into the SaaS applications and private network origins your end users are visiting. This information allows you to create identity and device-driven Zero Trust policies to secure your users and data.
 
 Shadow IT Discovery is located in [Zero Trust](https://one.dash.cloudflare.com) under **Analytics** > **Access**.
 
-## Enable Shadow IT Discovery
+## Turn on Shadow IT Discovery
 
 To allow Zero Trust to discover shadow IT in your traffic:
 
-- Enable the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for HTTP and network traffic.
-- Enable [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to inspect HTTPS traffic.
+- Turn on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for HTTP and network traffic.
+- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to inspect HTTPS traffic.
 - Ensure any network traffic you want to inspect is not routed around Gateway by a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 ## SaaS applications

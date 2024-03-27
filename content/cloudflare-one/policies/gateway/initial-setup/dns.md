@@ -22,7 +22,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 2. In the WARP client Settings, log in to your organization’s {{<glossary-tooltip term_id="team name">}}Zero Trust instance{{</glossary-tooltip>}}.
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/gateway/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/gateway/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device.
 
 ### Connect DNS locations
 
@@ -40,7 +40,7 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 2. Verify device connectivity
 
-{{<render file="gateway/_verify-connectivity.md" withParameters="DNS">}}
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS;;queries">}}
 
 ## 3. Add recommended policies
 

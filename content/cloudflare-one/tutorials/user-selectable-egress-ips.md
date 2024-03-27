@@ -183,9 +183,9 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
       "traffic": "net.vnet_id == <VNET_AMER_UUID>",
       "rule_settings": {
         "egress": {
-          "ipv6": <DEDICATED_IPV6_ADDRESS>,
           "ipv4": <DEDICATED_IPV4_ADDRESS>,
-          "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>
+          "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>,
+          "ipv6": <DEDICATED_IPV6_ADDRESS>
           }
       }
     }'

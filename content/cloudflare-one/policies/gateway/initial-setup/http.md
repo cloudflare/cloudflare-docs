@@ -23,7 +23,7 @@ To filter HTTP requests from a device:
 
 ## 2. Verify device connectivity
 
-{{<render file="gateway/_verify-connectivity.md" withParameters="HTTP">}}
+{{<render file="gateway/_verify-connectivity.md" withParameters="HTTP;;requests">}}
 
 ## 3. Add recommended policies
 

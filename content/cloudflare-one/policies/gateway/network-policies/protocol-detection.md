@@ -6,7 +6,7 @@ weight: 2
 
 {{<heading-pill style="early-access">}}Protocol detection{{</heading-pill>}}
 
-{{<Aside header="Availability">}}Protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
+{{<Aside type="note" header="Availability">}}Protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
