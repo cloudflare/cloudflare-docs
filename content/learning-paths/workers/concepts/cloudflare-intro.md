@@ -1,11 +1,11 @@
 ---
-title: What is Cloudflare?
+title: Introduction to Cloudflare
 pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
 ---
 
-Cloudflare is a global network of [servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/). It is one of the largest [networks](https://www.cloudflare.com/network/) on the Internet.
+[Cloudflare](https://www.cloudflare.com/learning/what-is-cloudflare/) is a global network of [servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/). It is one of the largest [networks](https://www.cloudflare.com/network/) on the Internet.
 
 Cloudflare's product offering is composed of [SASE and SSE services](https://www.cloudflare.com/zero-trust/), [application](https://www.cloudflare.com/application-services/) and [infrastructure services](https://www.cloudflare.com/network-services/), and [Developer Platform](https://www.cloudflare.com/developer-platform/solutions/).
 
@@ -13,7 +13,7 @@ Cloudflare's products offer something to developers, private and public organiza
 
 {{<Aside type="note">}}
 
-For more details about what Cloudflare is and does, refer to the [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
+For more information about what Cloudflare is and a step-by-step guide on how to get started, refer to [Get started with Cloudflare](/learning-paths/get-started/).
 
 {{</Aside>}}
 
