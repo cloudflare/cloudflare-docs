@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Reverse zones and PTR records
-weight: 0
+weight: 5
 ---
 
 # Reverse zones and PTR records

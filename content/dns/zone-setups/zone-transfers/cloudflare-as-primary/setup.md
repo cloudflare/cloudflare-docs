@@ -63,12 +63,12 @@ To create a peer using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Select **DNS Zone Transfers**.
-4. For **Peer DNS servers**, select **Create**. 
+4. For **Peer DNS servers**, select **Create**.
 5. Enter the following information, paying particular attention to:
     - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
     - **Port**: Specifies the IP Port for the NOTIFY IP.
     - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
-    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
+    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
 6. Select **Create**.
 
 ### Using the API
@@ -110,24 +110,36 @@ It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-
 
 Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
-By default, Cloudflare ignores `NS` records that are added to the zone apex. By sending the following API call, you can enable the usage of apex NS records and Cloudflare nameservers will respond with them alongside the assigned Cloudflare nameservers of the zone.
+By default, Cloudflare ignores `NS` records that are added to the zone apex. Follow the steps below to enable the usage of apex NS records so that Cloudflare nameservers will respond with them alongside the assigned Cloudflare nameservers of the zone.
+
+{{<Aside type="note">}}
+If your account [zone defaults](/dns/additional-options/dns-zone-defaults/) are already defined to have **Multi-provider DNS** enabled, this step may not be necessary.
+{{</Aside>}}
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Go to **DNS** > **Settings**.
+2. Enable the **Multi-provider DNS** option.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Send the following `PATCH` request replacing the placeholders with your zone ID and authentication information:
 
 ```bash
-curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings/use_apex_ns' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'X-Auth-Key: <API_KEY>' \
--H 'Content-Type: application/json' \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "id": "use_apex_ns",
-  "value": true
+    "multi_provider": true
 }'
 ```
 
-{{<Aside type="note">}}
-
-Cloudflare is actively working to support this setting within the dashboard.
-
-{{</Aside>}}
+{{</tab>}}
+{{</tabs>}}
 
 ## Step 7 - Enable outgoing zone transfers
 
