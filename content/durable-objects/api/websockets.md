@@ -16,7 +16,7 @@ For more information beyond the API reference, refer to the [Build a WebSocket s
 
 ## WebSocket Hibernation API
 
-In addition to Workers WebSocket API, Durable Objects WebSocket Hibernation API includes the below extensions to standard WebSocket API, state mehods, and handler methods. 
+In addition to [Workers WebSocket API](/workers/runtime-apis/websockets/), Durable Objects WebSocket Hibernation API includes the below extensions to standard WebSocket API, state methods, and handler methods. 
 
 The WebSocket Hibernation API allows a Durable Object that is not currently running an event handler (such as [handling a WebSocket message](/durable-objects/api/websockets/#websocketmessage), HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation"). This reduces duration charges that would otherwise be incurred during periods of inactivity.
 
