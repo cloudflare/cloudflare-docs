@@ -1,6 +1,12 @@
 ---
 productName: Load Balancing
 entries:
+- term: endpoint
+  general_definition: |-
+    any service or hardware that intercepts and processes incoming public or private traffic.
+
+    Examples of endpoints include origins, hostnames, private or public IP addresses, virtual IP addresses (VIPs), servers, and other dedicated hardware boxes.
+
 - term: origin pool
   general_definition: |-
     within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool.
