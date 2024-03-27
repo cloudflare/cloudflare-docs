@@ -43,7 +43,7 @@ Wrangler supports the following environment variables:
 
 - `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The [local connection string](/hyperdrive/configuration/local-development/) for your database to use in local development with [Hyperdrive](/hyperdrive/) - for example, if the binding for your Hyperdrive is named `PROD_DB`, this would be `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_PROD_DB="postgres://user:password@127.0.0.1:5432/testdb"`. Each Hyperdrive is uniquely distinguished by the binding name.
+  - The [local connection string](/hyperdrive/configuration/local-development/) for your database to use in local development with [Hyperdrive](/hyperdrive/). For example, if the binding for your Hyperdrive is named `PROD_DB`, this would be `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_PROD_DB="postgres://user:password@127.0.0.1:5432/testdb"`. Each Hyperdrive is uniquely distinguished by the binding name.
 
 - `CLOUDFLARE_API_BASE_URL` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

@@ -6,7 +6,7 @@ pcx_content_type: concept
 
 # Develop locally
 
-Hyperdrive can be used when developing and testing your Workers locally, by connecting to any local database instance running on your machine directly. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
+Hyperdrive can be used when developing and testing your Workers locally by connecting to any local database instance running on your machine directly. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
 ## Start a local development session
 
@@ -14,7 +14,7 @@ Hyperdrive can be used when developing and testing your Workers locally, by conn
 
 This guide assumes you are using `wrangler` version `3.27.0` or later.
 
-Users new to Hyperdrive and/or Cloudflare Workers should visit the [Hyperdrive tutorial](/hyperdrive/get-started/) to install `wrangler` and deploy their first database.
+If you are new to Hyperdrive and/or Cloudflare Workers, refer to [Hyperdrive tutorial](/hyperdrive/get-started/) to install `wrangler` and deploy their first database.
 
 {{</Aside>}}
 
@@ -28,7 +28,7 @@ If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environ
 For example, to use the environmental variable, export the environmental variable before running `wrangler dev`:
 
 ```sh
-# Our configured Hyperdrive binding is "TEST_DB" 
+# Your configured Hyperdrive binding is "TEST_DB" 
 $ export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 # Start a local development session referencing this local instance
 $ npx wrangler dev
@@ -44,14 +44,14 @@ localConnectionString = "postgres://user:password@localhost:5432/databasename"
 
 ## Example
 
-The following shows how to check your wrangler version, set a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` environmental variable, and run a `wrangler dev` session:
+The following example shows you how to check your wrangler version, set a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` environmental variable, and run a `wrangler dev` session:
 
 ```sh
-# Confirm we are using wrangler v3.0+
+# Confirm you are using wrangler v3.0+
 $ npx wrangler --version
 ⛅️ wrangler 3.27.0
 
-# Set our environmental variable: our configured Hyperdrive binding is "TEST_DB".
+# Set your environmental variable: your configured Hyperdrive binding is "TEST_DB".
 export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 
 # Start a local dev session:
@@ -73,7 +73,7 @@ Your worker has access to the following bindings:
 [b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit
 ```
 
-Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) Hyperdrive configuration, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
+`wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) Hyperdrive configuration, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
