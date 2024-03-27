@@ -212,18 +212,16 @@ flowchart TB
     accDescr: Flowchart describing the order of operations for user traffic for in-line Browser Isolation.
 
     %% User traffic
-    user[User]--"&lt;AUTH_DOMAIN>.cloudflareaccess.com/browser"-->cf[Cloudflare]
-    cf-->auth{Auth?}
-    auth--"Yes"-->gateway[Gateway Service]
+    user(["User connects to </br>risky.example.com"])<--"Connects to"-->cloud[Third-party SWG cloud]
+
+    %% Third-party SWG
+    cloud<-->warning[Third-party interstitial block or warning page]
+    warning--"Appends Cloudflare subdomain"-->biso
     
-    %% SSO authorization
-    auth--"No"-->sso[[SSO]]
-    user-.->sso
-
-    %% Gateway + RBI
-    gateway-->rbi[Browser Isolation Service]
-    rbi-.->gateway
-
-    %% Origin
-    gateway-.->web((Website))
+    %% Browser Isolation
+    subgraph cf [Cloudflare global network]
+    biso[[Cloudflare Agentless Browser Isolation]]
+    inline(["Isolated browser"])
+    biso--"User browser goes to </br>customer.cloudflareaccess.com/browser/risky.example.com"-->inline
+    end
 ```
