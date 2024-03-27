@@ -56,7 +56,7 @@ Make sure you:
 
 {{<tutorial-step title="Create pools">}}
 
-{{<glossary-definition term_id="origin pool">}}
+{{<glossary-definition term_id="pool">}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

@@ -7,9 +7,9 @@ entries:
 
     Examples of endpoints include origins, hostnames, private or public IP addresses, virtual IP addresses (VIPs), servers, and other dedicated hardware boxes.
 
-- term: origin pool
+- term: pool
   general_definition: |-
-    within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool.
+    within Cloudflare, pools represent your endpoints and how they are organized. As such, a pool can be a group of several endpoints, or you could also have only one endpoint (an origin server, for example) per pool.
 
     If you are familiar with DNS terminology, think of a pool as a “record set,” except Cloudflare only returns addresses that are considered healthy. You can attach health monitors to individual pools for customized monitoring.
 
