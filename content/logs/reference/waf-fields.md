@@ -16,7 +16,7 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 | ------------------------------------------ | --------------- | -------------------------------------------- |
 | <span style="font-weight: 400;">`0`</span> | Unknown         | Take no other action.                        |
 | <span style="font-weight: 400;">`1`</span> | Allow           | Bypass all subsequent WAF rules.             |
-| <span style="font-weight: 400;">`2`</span> | Block           | Block with an HTTP 403 response.             |
+| <span style="font-weight: 400;">`2`</span> | Drop            | Block with an HTTP 403 response.             |
 | <span style="font-weight: 400;">`3`</span> | Challenge Allow | Issue a Managed Challenge.                   |
 | <span style="font-weight: 400;">`4`</span> | Challenge Drop  | Unused.                                      |
 | <span style="font-weight: 400;">`5`</span> | Log             | Take no action other than logging the event. |
