@@ -34,7 +34,7 @@ At least 24 hours prior to converting your zone, disable DNSSEC at your authorit
 {{<Aside type="note">}}
 
 As a best practice, you should also delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) at your authoritative DNS provider. To locate this value in the Cloudflare dashboard, go to **DNS** > **Records** and find the **Verification TXT Record**.
-  
+
 {{</Aside>}}
 
 ## Step 3 — Convert to full setup
@@ -47,7 +47,7 @@ In the Cloudflare dashboard:
 
 ## Step 4 — Activate full setup
 
-Get your assigned Cloudflare nameservers from **DNS** > **Records** and [update your nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar.
+Get your assigned Cloudflare nameservers from **DNS** > **Records** and [update your nameservers](/dns/nameservers/update-nameservers/) at your registrar.
 
 {{<Aside type="warning">}}
 
