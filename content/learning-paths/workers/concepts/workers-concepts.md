@@ -9,23 +9,31 @@ Cloudflare Workers gives developers the power to deploy serverless code instantl
 
 Cloudflare Workers significantly differs from other serverless computing providers in its execution model and architecture.
 
-## Anatomy of a Worker project
+## What you can do with Workers
 
 A single Worker project can have logic as complex or as simple as the developer desires. A project of smaller scale might look like a Worker that [returns a small HTML page](/workers/examples/return-html/) on a single route. A more complex Worker project would span multiple domains, multiple routes for each domain, and different logic for each route. The developer decides the architectural complexity of their Worker project.
 
+Your application can be made up of multiple Workers that work together and deliver a single experience to end users. Workers can also add integrate with other Cloudflare Developer Platform functionality such as storage, media and AI. You will learn more about this in the [Developer Platform module](/learning-paths/workers/devplat/).
+
 ## Runtime
 
-The Workers runtime is designed to be JavaScript-standards compliant and web-interoperable. The Workers runtime uses the V8 engine — the same engine used by Chromium and Node.js, and has an open-source version, [`workerd`](https://github.com/cloudflare/workerd).
+The [Workers runtime](https://blog.cloudflare.com/workerd-open-source-workers-runtime) is designed to be JavaScript-standards compliant and web-interoperable. The Workers runtime uses the V8 engine — the same engine used by Chromium and Node.js, and has an open-source version, [`workerd`](https://github.com/cloudflare/workerd). 
 
 ## Execution
 
-Every data center in [Cloudflare's global network of over 300 cities](https://www.cloudflare.com/network/) hosts a single instance of the Workers runtime. An instance refers to a single execution environment where Cloudflare Workers runs. Every Worker running within an instance is executed within its own isolate.
+The Cloudflare Workers runtime runs in every data center of [Cloudflare's global network of over 300 cities](https://www.cloudflare.com/network/). Every Worker run within its own isolate. Isolate architecture is what makes Workers efficient.
 
 ### Isolates
 
 Workers uses [isolates](/workers/reference/how-workers-works/#isolates): lightweight contexts that provide your code with variables it can access and a safe environment to be executed within. You could even consider an isolate a sandbox for your function to run in.
 
-Many serverless computing providers use containers. In contrast to isolates, containers are not event-driven. Containerized processes each run an instance of a language runtime. Workers pays the overhead of a JavaScript runtime once on the start of a container and is able to run essentially limitless scripts with almost no individual overhead. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine.
+A single instance of the runtime can run hundreds or thousands of isolates, seamlessly switching between them. Each isolate's memory is completely isolated, so each piece of code is protected from other untrusted or user-written code on the runtime. Isolates are also designed to start very quickly. Instead of creating a virtual machine for each function, an isolate is created within an existing environment. This model eliminates the cold starts of the virtual machine model.
+
+<figure>
+  {{<architecture-diagram>}}
+</figure>
+
+Unlike other serverless providers which use [containerized processes](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) each running an instance of a language runtime, Workers pays the overhead of a JavaScript runtime once on the start of a container. Workers processes are able to run essentially limitless scripts with almost no individual overhead. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine. Notably, on startup isolates consume an order of magnitude less memory.
 
 ## Compute per request
 
