@@ -26,7 +26,8 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.device.resolution`                 | String | Screen resolution for device.                                                                                   |
 | `system.device.viewport`                   | String | Visible web page area in user’s device.                                                                         |
 | `system.device.language`                   | String | Language used in user's device.                                                                                 |
-| `system.device.user-agent.ua`              | Object | Browser user agent.                                                                                             |
+| `system.device.location`                   | Object | All location-related keys from [IncomingRequestCfProperties](/workers/runtime-apis/request/#incomingrequestcfproperties) |
+| `system.device.user-agent.ua`              | String | Browser user agent.                                                                                             |
 | `system.device.user-agent.browser.name`    | String | Browser name.                                                                                                   |
 | `system.device.user-agent.browser.version` | String | Browser version.                                                                                                |
 | `system.device.user-agent.engine.name`     | String | Type of browser engine (for example, WebKit).                                                                   |
