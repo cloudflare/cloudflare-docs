@@ -29,7 +29,6 @@ Two community tools are available for creating backups/exports of D1 databases a
 
 * [Tutorial](/d1/examples/d1-and-prisma-orm/)
 * [Docs](https://www.prisma.io/docs/orm/prisma-client/deployment/edge/deploy-to-cloudflare#d1)
-* Example (Coming soon)
 
 
 ### D1 adapter for Kysely ORM
