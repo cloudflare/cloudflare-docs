@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title:  Zero Trust Web Access
+title:  Deploy Zero Trust Web Access
 external_link: /learning-paths/zero-trust-web-access/
 weight: 3
 _build:
