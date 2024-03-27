@@ -53,3 +53,7 @@ If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/conne
 - Verify that the [local LAN settings](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#router-configuration) for the device do not overlap with the CIDR range of your private network.
 
 When contacting Cloudflare support, ensure that you include [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
+
+## I cannot send emails while connected to WARP.
+
+By default, the WARP client blocks outgoing SMTP traffic on port `25` to prevent users from abusing our service to send spam. Modern email service providers use [port `587` or `465`](https://www.cloudflare.com/learning/email-security/smtp-port-25-587/) to send encrypted messages over a TLS/SSL connection. To unblock port `25` for your organization, contact your account team.
