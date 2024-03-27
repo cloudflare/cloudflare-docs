@@ -87,7 +87,7 @@ API tokens are presented as Bearer tokens in the `Authorization` header of a HTT
 
 ```sh
 $ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
-  --data '{ "visibilityTimeout": 10000, "batchSize": 2 }' \
+  --data '{ "visibility_timeout": 10000, "batch_size": 2 }' \
   -H "Authorization: Bearer ${QUEUES_TOKEN}" \
   -H "Content-Type: application/json"
 ```
