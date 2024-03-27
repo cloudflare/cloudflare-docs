@@ -20,13 +20,17 @@ Workers for Platforms is available for Enterprise customers only. To enable Work
 
 C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
-<!-- ADD STEPS HERE -->
-
-Open a terminal window and run C3 to create your Worker project:
+Open a terminal window and run C3 to create your Worker project called `customer-worker-1`:
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare@latest customer-worker-1 -- --type=hello-world
 ```
+
+When setting up your `customer-worker-1` Worker, answer the questions as below:
+
+- Select `no` to using TypeScript.
+- Select `no` to using Git for version control.
+- Select `no` to deploying.
 
 ## 2. Create a dispatch namespace 
 
@@ -40,18 +44,11 @@ $ npx wrangler dispatch-namespace create <NAMESPACE_NAME>
 
 ## 3. Upload a user Worker to the dispatch namespace
 
-Create a Worker called `customer-worker-1`:
-
-```sh
-$ npm create cloudflare@latest customer-worker-1 -- --type=hello-world
-```
-
 To upload a user Worker to the dispatch namespace, deploy your application to the dispatch namespace by running the following command:
 
 ```sh
-$ npx wrangler deploy customer-worker-1 --dispatch-namespace staging 
+$ npx wrangler deploy --dispatch-namespace <NAMESPACE_NAME>
 ```
-
 
 ## 4. Create a dispatch Worker
 
@@ -64,6 +61,13 @@ Create your dispatch Worker:
 ```sh
 $ npx wrangler init my-dispatcher
 ```
+
+When setting up your `my-dispatcher` Worker, answer the questions as below:
+
+- Choose `"Hello World" Worker` as the type of application.
+- Select `no` to using TypeScript.
+- Select `no` to using Git for version control.
+- Select `no` to deploying.
 
 Change to your project's directory:
 
@@ -85,7 +89,6 @@ namespace = "<NAMESPACE_NAME>"
 
 Add the followinng to the index.js file:
 
-
 ```js
 ---
 filename: index.js
@@ -100,7 +103,15 @@ export default {
 
 ## 5. Test a request
 
-You will now send a request to the route your dynamic dispatch Worker is on. You should receive the response (`Hello world`) you created in your user Worker (`customer-worker-1`) that you call from your dynamic dispatch Worker (the Worker you made in step 3).
+You will now send a request to the route your dynamic dispatch Worker is on. 
+
+Open your terminal and run the following command to test your dynamic dispatch Worker:
+
+```sh
+$ npx wrangler deploy
+```
+
+You should receive the response (`Hello world`) you created in your user Worker (`customer-worker-1`) that you call from your dynamic dispatch Worker (the Worker you made in step 3).
 
 Preview your Workers for Platforms project at `https://my-dispatcher.<YOUR_WORKER_SUBDOMAIN>.workers.dev/`.
 
