@@ -152,7 +152,7 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 Due to [global uniqueness](durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
 
-When you create a new gradual deployment for a Worker that defines a Durable Object, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/deployments/). This version will not change until you create a new deployment.
+When you create a new gradual deployment for a Durable Object Worker, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/deployments/). This version will not change until you create a new deployment.
 
 ### Example
 
@@ -166,7 +166,7 @@ Your worker is currently on a version that we will call version "A" and you want
 | bar            | A       |
 | baz            | A       |
 
-Now you create a gradual deployment, setting version "A" to 20% and version "B" to 80%.
+Now you create a gradual deployment, setting version "A" to 80% and version "B" to 20%.
 
 | Durable Object | Version |
 | -------------- | ------- |
@@ -194,6 +194,14 @@ This is only an example, so the versions assigned to your Durable Objects may be
 - For a given deployment, requests to each Durable Object will always use the same Worker version.
 - When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In our example, Durable Object "foo" would never revert from version "B" to version "A".
 - The Durable Object will only be [reset](/durable-objects/reference/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in our example.
+
+{{<Aside type="note">}}
+
+Typically, your Durable Object Worker will define both your Durable Object class and the Worker that interacts with it. In this case, you cannot deploy changes to your Durable Object and its Worker independently.
+
+[You are advised](/durable-objects/platform/known-issues/#code-updates) to ensure that API changes between your Durable Object and its Worker are forwards and backwards compatible whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
+
+{{</Aside>}}
 
 ## Observability
 
