@@ -380,7 +380,7 @@ To store an image in an R2 bucket:
 2. Upload the image to this bucket.
 3. Obtain a public URL for the image from the bucket. This URL is then saved in your database, linking to the image stored in the R2 bucket.
 
-First, we need to create a bucket using `wrangler r2 bucket create`:
+Use the `wrangler r2 bucket create` command to create a bucket:
 
 ```sh
 $ wrangler r2 bucket create employee-avatars
