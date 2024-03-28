@@ -436,7 +436,7 @@ if (imageFile instanceof File) {
 
 ## 7. Deploy your HonoX application
 
-With your application ready for deployment, you can use Wrangler to build and deploy your project to the Cloudflare Network. Ensure you are logged in to your Cloudflare account by running the `wrangler whoami` command. If you're not logged in, Wrangler will prompt you to login, by creating an API key that you can use to make authenticated requests automatically from your computer.
+With your application ready for deployment, you can use Wrangler to build and deploy your project to the Cloudflare Network. Ensure you are logged in to your Cloudflare account by running the `wrangler whoami` command. If you are not logged in, Wrangler will prompt you to login by creating an API key that you can use to make authenticated requests automatically from your computer.
 
 After successful login, confirm that your `wrangler.toml` file is configured similarly to the code block below:
 
