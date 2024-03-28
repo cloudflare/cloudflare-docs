@@ -55,7 +55,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 - 86,400,000 seconds \* 128 MB / 1 GB = 11,059,200 GB-s.
 - (11,059,200 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $133.24.
 
-**Estimated total**: $10.65 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $148.89 per month.
+**Estimated total**: $0.39 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $138.63 per month.
 
 ### Example 3
 
@@ -77,7 +77,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 - 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
 - (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
-**Estimated total**: $38.73 (requests) + $409.72 (compute duration) = $453.45 per month
+**Estimated total**: $1.79 (requests) + $409.72 (compute duration) + minimum $5/mo usage = $416.51 per month
 
 ### Example 4
 
@@ -99,7 +99,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 - 4,320,000 seconds \* 128 MB / 1 GB = 552,960 GB-s
 - (552,960 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $1.91
 
-**Estimated total**: $64.65 (requests) + $1.91 (compute duration) + Minimum $5/mo usage = $71.56 per month
+**Estimated total**: $3.09 (requests) + $1.91 (compute duration) + minimum $5/mo usage = $10.00 per month
 
 <sup>1</sup> 100 messages per minute comes from the fact that 100 clients connect to each DO, and each sends 1 message per minute.
 
