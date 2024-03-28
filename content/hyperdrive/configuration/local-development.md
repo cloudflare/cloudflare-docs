@@ -43,7 +43,7 @@ id = "c020574a-5623-407b-be0c-cd192bab9545"
 localConnectionString = "postgres://user:password@localhost:5432/databasename"
 ```
 
-## Using `wrangler dev`
+## Use `wrangler dev`
 
 The following example shows you how to check your wrangler version, set a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` environmental variable, and run a `wrangler dev` session:
 
