@@ -30,3 +30,5 @@ For this reason, it is best practice to ensure that API changes between your Wor
 The Workers editor in the [Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. In the editor, Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
 [`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the [Durable Object binding](/workers/configuration/bindings/#durable-object-bindings), then writes will affect persistent data. Wrangler will emit a warning in that case.
+
+In local development (`wrangler dev`), the [persisted state](/durable-objects/api/transactional-storage-api/) of a Durable Object is stored in the `.wrangler/state/v3/do` directory in the root of your project. If you need to clear this local state, delete this directory.
