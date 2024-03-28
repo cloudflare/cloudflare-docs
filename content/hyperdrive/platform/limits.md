@@ -6,12 +6,6 @@ weight: 2
 
 # Limits
 
-{{<Aside type="note" heading="Hyperdrive beta">}}
-
-Many of these limits will increase during Hyperdrive public beta.
-
-{{</Aside>}}
-
 The following limits apply to Hyperdrive configuration, connections, and queries made to your configured origin databases.
 
 | Feature                                        | Limit                                                                                |

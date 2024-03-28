@@ -9,7 +9,7 @@ meta:
   title: Hyperdrive
 ---
 
-{{<heading-pill style="beta" heading="h1">}}Hyperdrive{{</heading-pill>}}
+# Hyperdrive
 
 {{<description>}}
 
