@@ -45,7 +45,7 @@ The recommended way to write integration tests for your Workers is by using [the
 
 ### Testing via `SELF`
 
-If testing a single Worker, you can use the `SELF` fetcher provided by the [`@cloudflare/test` API](/workers/testing/vitest-integration/test-apis/).
+If testing a single Worker, you can use the `SELF` fetcher provided by the [`cloudflare:test` API](/workers/testing/vitest-integration/test-apis/).
 
 ```js
 ---

@@ -2,6 +2,8 @@
 title: Configuration
 pcx_content_type: reference
 weight: 4
+meta:
+  description: Vitest configuration specific to the Workers integration.
 ---
 
 # Configuration
