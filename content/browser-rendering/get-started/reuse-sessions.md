@@ -50,7 +50,7 @@ compatibility_flags = [ "nodejs_compat" ]
 browser = { binding = "MYBROWSER" }
 ```
 
-## 3. Code
+## 4. Code
 
 The script below starts by fetching the current running sessions. If there are any that don't already have a worker connection, it picks a random session ID and attempts to connect (`puppeteer.connect(..)`) to it. If that fails or there were no running sessions to start with, it launches a new browser session (`puppeteer.launch(..)`). Then, it goes to the website and fetches the dom. Once that's done, it disconnects (`browser.disconnect()`), making the connection available to other workers.
 
@@ -126,7 +126,7 @@ export default {
 
 Besides `puppeteer.sessions()`, we've added other methods to facilitate session management - check them out [here](../../platform/puppeteer/#session-management).
 
-## 6. Test
+## 5. Test
 
 Run `npx wrangler dev --remote` to test your Worker locally before deploying to Cloudflare's global network.
 
@@ -134,7 +134,7 @@ To test go to the following URL:
 
 `<LOCAL_HOST_URL>/?url=https://example.com`
 
-## 7. Deploy
+## 6. Deploy
 
 Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network and then to go to the following URL:
 
