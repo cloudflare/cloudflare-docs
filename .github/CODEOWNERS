@@ -54,6 +54,7 @@
 /content/byoip/ @patriciasantaana @cloudflare/pcx-technical-writing
 /content/china-network/ @pedrosousa @cloudflare/pcx-technical-writing
 /content/cloudflare-for-platforms/ @jason-cf @cloudflare/pcx-technical-writing
+/content/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/fundamentals/ @jason-cf @cloudflare/pcx-technical-writing
 /content/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
@@ -124,8 +125,8 @@
 /content/web3/ @kodster28 @cloudflare/pcx-technical-writing
 
 # Radar
-/content/radar/ @meddulla @G4brym @cloudflare/pcx-technical-writing
-/data/changelogs/radar.yaml @meddulla @G4brym @cloudflare/pcx-technical-writing
+/content/radar/ @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
+/data/changelogs/radar.yaml @meddulla @G4brym @tiagoad @cloudflare/pcx-technical-writing
 
 # Reference architecture
 /content/reference-architecture/ @securitypedant @crwaters16 @cloudflare/pcx-technical-writing

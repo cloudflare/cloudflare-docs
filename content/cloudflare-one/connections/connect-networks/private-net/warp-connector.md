@@ -8,7 +8,24 @@ meta:
 
 {{<heading-pill style="beta">}}Set up WARP Connector{{</heading-pill>}}
 
-Cloudflare WARP Connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability |
+| ---------| -------------|
+| Windows  | ❌           |
+| macOS    | ❌           |
+| Linux    | ✅           |
+| iOS      | ❌           |
+| Android  | ❌           |
+| ChromeOS | ❌           |
+
+{{</details>}}
+
+Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
@@ -23,10 +40,8 @@ This guide will cover how to connect two independent subnets, for example `10.0.
 
 ## Prerequisites
 
-- A Linux host{{<fnref num="2">}} on each subnet.
-- A [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/#edit-profile-settings) configured with one of the following WARP modes:
-  - **Gateway with WARP**
-  - **Secure Web Gateway without DNS Filtering**
+- A Linux host{{<fnref num="2">}} on each subnet
+- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 ## 1. Create a service token
 
@@ -214,7 +229,6 @@ Run the following commands on the machine where you installed WARP Connector. Yo
     </div>
     </details>
 
-
 {{<Aside type="note" header="IP forwarding on VPC">}}
 If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
@@ -230,9 +244,9 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
     <summary>Save configuration to persist after reboot</summary>
     <div>
 
-    1. Create a bash script containing the `iptable` commands:
+    1. Create a bash script that writes the `iptable` rules to a file:
 
-      ```bash
+      ```sh
       $ echo '#!/bin/bash
       # Define your rules
       RULES=(
@@ -250,9 +264,16 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
       ' | sudo tee /usr/local/bin/apply_iptables_rules.sh
       ```
 
-    2. Create a systemd service to load the script at startup:
+    2. Run the script:
 
-    ```bash
+    ```sh
+    $ sudo chmod +x /usr/local/bin/apply_iptables_rules.sh
+    $ sudo /usr/local/bin/apply_iptables_rules.sh
+    ```
+
+    3. Create a systemd service to restore the rules at startup:
+
+    ```sh
     $ echo '[Unit]
     Description=Load iptables rules at startup
 
@@ -264,6 +285,7 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
     WantedBy=multi-user.target
     ' | sudo tee /etc/systemd/system/iptables-persistent.service
     ```
+
     </div>
     </details>
 

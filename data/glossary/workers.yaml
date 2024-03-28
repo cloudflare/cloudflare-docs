@@ -1,6 +1,11 @@
 ---
 productName: Workers
 entries:
+
+- term: Auxiliary Worker
+  general_definition: |-
+    A Worker created locally via the [Workers Vitest integration](/workers/testing/vitest-integration/) that runs in a separate isolate to the test runner, with a different global scope.
+
 - term: binding
   general_definition: |-
     [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
@@ -39,7 +44,7 @@ entries:
 
 - term: environment variable
   general_definition: |-
-    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker. 
+    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
 
 - term: handler
   general_definition: |-
@@ -71,13 +76,13 @@ entries:
 
 - term: Queues
   general_definition: |-
-    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery. 
+    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery.
   associated_products:
     - Queues
 
 - term: rollback
   general_definition: |-
-    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network. 
+    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network.
 
 - term: R2
   general_definition: |-
@@ -95,11 +100,11 @@ entries:
 
 - term: subrequest
   general_definition: |-
-    A subrequest is an additional HTTP requests from the Worker to another resource or another Worker.
+    A subrequest is any request that a Worker makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
 - term: Tail Worker
   general_definition: |-
-    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. 
+    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
 
 - term: V8
   general_definition: |-
@@ -120,3 +125,9 @@ entries:
 - term: wrangler.toml
   general_definition: |-
     The [configuration](/workers/wrangler/configuration/) file used to customize the development and deployment setup for a Worker or a Pages Function.
+---
+productName: Workers
+entries:
+- term: auxiliary Worker
+  general_definition: |-
+    a Worker created locally via the Workers Vitest integration that runs in a separate isolate to the test runner, with a different global scope.

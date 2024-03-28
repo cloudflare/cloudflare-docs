@@ -63,7 +63,7 @@ $ yarn create cloudflare
 In your terminal, you will be asked a series of questions related to your project. 
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `yes` to using TypeScript.
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
@@ -174,6 +174,12 @@ You have built a queue and a producer Worker to publish messages to the queue. Y
 A consumer Worker receives messages from your queue. When the consumer Worker receives your queue's messages, it can write them to another source, such as a logging console or storage objects.
 
 In this guide, you will create a consumer Worker and use it to log and inspect the messages with [`wrangler tail`](/workers/wrangler/commands/#tail). You will create your consumer Worker in the same Worker project that you created your producer Worker.
+
+{{<Aside type="note">}}
+
+Queues also supports [pull-based consumers](/queues/reference/pull-consumers/), which allows any HTTP-based client to consume messages from a queue. This guide creates a push-based consumer using Cloudflare Workers.
+
+{{</Aside>}}
 
 To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 

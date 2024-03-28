@@ -1,36 +1,62 @@
 ---
-title: Workers concepts
+title: Cloudflare Workers
 pcx_content_type: learning-unit
-weight: 1
+weight: 3
 layout: learning-unit
 ---
 
-## Workers concepts
+Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare's global network.
 
-Cloudflare Workers allow you to build web functions and applications without configuring or maintaining infrastructure. Workers are deployed globally to over 300+ data centers around the world on Cloudflare’s global network.
+Cloudflare Workers significantly differs from other serverless computing providers in its execution model and architecture.
 
-Before you begin building with Workers, review the following reference material to understand how Workers works.
+## What you can do with Workers
 
-### Serverless computing
+A single Worker project can have logic as complex or as simple as the developer desires. A project of smaller scale might look like a Worker that [returns a small HTML page](/workers/examples/return-html/) on a single route. A more complex Worker project would span multiple domains, multiple routes for each domain, and different logic for each route. The developer decides the architectural complexity of their Worker project.
 
-To understand the fundamentals of Workers technology, refer to these Cloudflare Learning Center articles on [serverless computing](https://www.cloudflare.com/learning/serverless/what-is-serverless/), [containers](https://www.cloudflare.com/learning/serverless/serverless-vs-containers/) and [serverless JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/).
+Your application can be made up of multiple Workers that work together and deliver a single experience to end users. Workers can also add integrate with other Cloudflare Developer Platform functionality such as storage, media and AI. You will learn more about this in the [Developer Platform module](/learning-paths/workers/devplat/).
 
-### Workers
+## Runtime
 
-Explore Cloudflare Workers developer documentation by starting with [How Workers works](/workers/reference/how-workers-works/), and learn the difference between the Workers runtime versus traditional browsers and Node.js. If you are a Node.js user, review [Node.js compatibility](/workers/runtime-apis/nodejs/) in the Workers documentation.
+The [Workers runtime](https://blog.cloudflare.com/workerd-open-source-workers-runtime) is designed to be JavaScript-standards compliant and web-interoperable. The Workers runtime uses the V8 engine — the same engine used by Chromium and Node.js, and has an open-source version, [`workerd`](https://github.com/cloudflare/workerd). 
 
-### The cache
+## Execution
 
-Learn how Workers interacts with the Cloudflare cache by reading [How the cache works](/workers/reference/how-the-cache-works/).
+The Cloudflare Workers runtime runs in every data center of [Cloudflare's global network of over 300 cities](https://www.cloudflare.com/network/). Every Worker run within its own isolate. Isolate architecture is what makes Workers efficient.
 
-### Developer Platform
+### Isolates
 
-Cloudflare Workers is part of the [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/). You will explore this topic in [module 5](/learning-paths/workers/#build-applications-with-cloudflares-developer-platform).
+Workers uses [isolates](/workers/reference/how-workers-works/#isolates): lightweight contexts that provide your code with variables it can access and a safe environment to be executed within. You could even consider an isolate a sandbox for your function to run in.
 
-### Related resources
+{{<render file="_isolate-description.md" productFolder="/workers/">}}
 
-The Cloudflare blog offers updates and further insights to developers on the Cloudflare developer platform, which includes Workers. Explore some curated blog posts below on Workers speed, and scalability.
+<figure>
+  {{<architecture-diagram>}}
+</figure>
 
-* Learn about the Workers security model, supported languages and more in the [Reference](/workers/reference/) section of the Workers documentation.
-* [Cloudflare Workers versus Lambda versus Lambda@Edge](https://blog.cloudflare.com/serverless-performance-comparison-workers-lambda/)
-* [Cloudflare blog posts related to Workers](https://blog.cloudflare.com/tag/workers/)
+## Compute per request
+
+{{<render file="/_compute-per-request.md" productFolder="/workers/">}}
+
+## Summary
+
+By reading this page, you have learned:
+
+- The basics of how Worker projects are organized.
+- The fundamentals of how Workers execute on the Cloudflare network.
+- How the request to reponse flow executes.
+
+In the next module, you build and deploy your first Worker to the Cloudflare global network.
+
+## Related resources
+
+- [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - Blog post detailing the containers versus isolates difference in the context of Cloudflare.
+- [How Workers works](/workers/reference/how-workers-works/) - Learn the difference between the Workers runtime versus traditional browsers and Node.js.
+- [How the cache works](/workers/reference/how-the-cache-works/) - Learn how Workers interacts with the Cloudflare cache.
+
+## Feedback
+
+To improve this learning path or report any missing or incorrect information, [file an issue on GitHub](https://github.com/cloudflare/cloudflare-docs/issues/new/choose).
+
+## Community
+
+Connect with the [Cloudflare Developer Platform community on Discord](https://discord.cloudflare.com) to ask questions, share what you are building, and discuss the platform with other developers.
