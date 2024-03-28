@@ -168,7 +168,7 @@ To execute the schema locally and seed data into your local directory, pass the 
 
 After setting up your D1 database and configuring the `wrangler.toml` file as outlined in previous steps, your database is accessible in your code through the `DB` binding. This allows you to directly interact with the database by preparing and executing SQL statements. In the following step, you will learn how to use this binding to perform common database operations such as retrieving data and inserting new records.
 
-### Retrieving Data from Database
+### Retrieve data from database
 
 ```ts
 ---
