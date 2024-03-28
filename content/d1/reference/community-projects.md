@@ -27,9 +27,8 @@ Two community tools are available for creating backups/exports of D1 databases a
 
 [Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
 
-* [Tutorial](/d1/examples/d1-and-prisma-orm/)
+* [Tutorial](/d1/tutorials/d1-and-prisma-orm/)
 * [Docs](https://www.prisma.io/docs/orm/prisma-client/deployment/edge/deploy-to-cloudflare#d1)
-* Example (Coming soon)
 
 
 ### D1 adapter for Kysely ORM
