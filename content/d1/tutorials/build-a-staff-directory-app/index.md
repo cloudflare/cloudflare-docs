@@ -394,7 +394,7 @@ binding = "MY_BUCKET"
 bucket_name = "employee-avatars"
 ```
 
-Also pass the R2 binding to the `global.d.ts` file:
+Pass the R2 binding to the `global.d.ts` file:
 
 ```ts
 ---
