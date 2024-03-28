@@ -1,0 +1,39 @@
+---
+pcx_content_type: concept
+title: Build watch paths 
+---
+
+# Build watch paths
+
+When connected to your git source, Pages allows you to watch for specific paths to build. By default, Pages will trigger a deployment any time you commit to your repository. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off. 
+
+## Configure paths 
+
+Because commits to your repo by default trigger an automatic build, you can configure both include and exclude paths for your repository. This way, commits that alter any files within the includes list will trigger automatic builds, and commits that alter only files within the excludes list will skip the build. 
+
+To configure deployment options, go to your Pages project > Settings > Builds & deployments > Build watch paths. Pages will default to setting your project’s includes paths to everything ([*]) and excludes paths to nothing (`[]`).  
+
+The configuration fields can be filled in two ways:
+
+* **Static path directories**: Enter the precise name of the directory or file you are looking to include or exclude (for example, `test` or `docs/README.md`).
+* **Wildcard syntax:** Use wildcards to match multiple path directories. You can specify wildcards at the start or end of your rule. The order of execution for the configuration is (1) Excludes, (2) Includes, (3) Skip. Pages will process the exclude configuration first, then go to the include configuration. If a path directory does not match either then it will be skipped.
+
+## Examples
+
+### Example 1
+ If you want to trigger a build from all changes within a set of directories, such as all changes in the folders `project-a/` and `packages/` 
+* Include paths: `project-a/*, packages/*`
+* Exclude paths: ``
+
+### Example 2
+If you want to trigger a build for any changes, but want to exclude changes to a certain directory, such as all changes in a docs/ directory
+* Include paths: `*`
+* Exclude paths: `docs/*`
+
+### Example 3
+If you want to trigger a build for a specific file or specific filetype, for example all files ending in `.md`.
+* Include paths: `*.md`
+* Exclude paths: ``
+
+
+
