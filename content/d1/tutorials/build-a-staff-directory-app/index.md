@@ -329,7 +329,7 @@ The code snippet demonstrates how to import the `findAllEmployees`, `findAllLoca
 
 ### Add an employee
 
-Similarly, when setting up a route to add data to the database, for instance, allowing admins to create a new employee through the `/admin` page, you would follow the same approach but this time use the `export POST` route.
+Use the `export POST` route to create a new employee through the `/admin` page:
 
 ```ts
 ---
