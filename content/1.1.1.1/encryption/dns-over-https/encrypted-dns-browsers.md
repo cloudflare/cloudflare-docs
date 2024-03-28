@@ -35,7 +35,7 @@ Some browsers might already have this setting enabled.
 
 1. Select the menu button in your browser > **Settings**.
 2. Select **Privacy and security** > **Security**.
-3. Enable **Encrypt the names of sites you visit**.
+3. Under **Advanced**, enable **Use secure DNS**.
 4. From the **Select DNS provider** drop-down menu, choose *Cloudflare (1.1.1.1)*.
 
 ## Check if the browser is configured correctly
