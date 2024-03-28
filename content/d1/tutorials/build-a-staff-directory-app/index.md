@@ -89,7 +89,7 @@ database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
 
 You have now configured your application to access and interact with your D1 database, either through the command line or directly within your codebase.
 
-You'll also need to make adjustments to your Vite config file in `vite.config.js`. Add the following config settings to ensure that Vite is properly set up to work with Cloudflare Bindings in local environment:
+You will also need to make adjustments to your Vite config file in `vite.config.js`. Add the following config settings to ensure that Vite is properly set up to work with Cloudflare bindings in local environment:
 
 ```ts
 ---
