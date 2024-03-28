@@ -7,7 +7,11 @@ meta:
 
 {{<heading-pill style="beta">}}Gradual deployments{{</heading-pill>}}
 
-Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers. Using gradual deployments allows you to: 
+Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions. 
+
+![Gradual Deployments](/images/workers/platform/versions-and-deployments/gradual-deployments.png)
+
+Using gradual deployments allows you to: 
 
 - Gradually shift traffic to a newer version of your Worker.
 - Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability--logs-analytics-metrics) tooling.
@@ -15,7 +19,7 @@ Gradual Deployments give you the ability to incrementally deploy new [versions](
 
 {{<Aside type="note">}}
 
-Gradual deployments are in **beta and under active development**. Please read [limitations](/workers/configuration/versions-and-deployments//gradual-deployments/#limitations) before using this feature.
+Gradual deployments are in **beta and under active development**. Please read [limitations](/workers/configuration/versions-and-deployments//gradual-deployments/#limits) before using this feature.
 
 Provide your feeback through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
 
@@ -35,7 +39,12 @@ Minimum required wrangler version: 3.36.0.
 
 **1. Create a new "Hello World" Worker using the `create-cloudflare` CLI (C3) and deploy it.**
 
-{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
+
+```sh
+$ npm create cloudflare@latest <NAME> -- --type=hello-world
+```
+
+Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application.
 
 **2. Create a new version of the Worker.**
 
@@ -128,8 +137,11 @@ The [Version Metadata runtime binding](/workers/runtime-apis/bindings/script-ver
 
 ## Limits
 
-- Gradual rollouts is not supported for Workers using [Smart Placement](/workers/configuration/smart-placement/), the [mTLS binding](/workers/runtime-apis/bindings/mtls/) or [Durable Objects](/durable-objects/). Smart Placement, mTLS bindings and Durable Objects will be supported in the near future.
+- You can only create a new deployment with the last 10 versions of your Worker
 
-These Workers features are currently not supported with Gradual Rollouts. They will be supported in the near future. 
+### Unsupported features
+- Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
+- Gradual deployments is not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/).
+- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported.
 
-**You can only create a new deployment with the last 10 versions of your Worker**
+These Workers features will be supported in the near future. 
