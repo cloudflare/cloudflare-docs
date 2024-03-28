@@ -206,7 +206,7 @@ export const createEmployee = async (db: D1Database, employee: Employee) => {
 };
 ```
 
-For a complete list of all the queries used in the application, please refer to the [db.ts](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts) file in the codebase.
+For a complete list of all the queries used in the application, refer to the [db.ts](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts) file in the codebase.
 
 ## 6. Developing the UI 
 
