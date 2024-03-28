@@ -2009,22 +2009,19 @@ wrangler whoami
 
 ---
 ## `versions`
-{{<Aside type="note">}}
-Versions are currently in closed beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-{{</Aside>}}
 
-{{<Aside type="note">}}
+[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
-The `--experimental-versions` flag is required to use the commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+{{<Aside type="warning">}}
+
+The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
 
 The minimum required wrangler version to use these commands is 3.39.0.
 
 {{</Aside>}}
 
-For more information about versions and how they work, refer to [Versions](/workers/configuration/versions-and-deployments/#versions).
-
-
 ### `upload`
+
 Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
 
 ```txt
@@ -2032,6 +2029,8 @@ wrangler versions upload [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--tag` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Add a version tag. Accepts empty string.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2041,19 +2040,23 @@ wrangler versions upload [OPTIONS] --experimental-versions
     {{</definitions>}}
 
 ### `deploy`
-Follow an interactive prompt and deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version.
+
+Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
 
 ```txt
 wrangler versions deploy [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
     {{</definitions>}}
 
 
 ### `list`
+
 Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
 
 ```txt
@@ -2061,34 +2064,12 @@ wrangler versions list [OPTIONS] --experimental-versions
 ```
 {{<definitions>}}
 
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
 
-Example output:
-
-```sh
-Version ID:  a6921e02-4b79-4e2b-bb83-2f5b89f9a25d
-Created:     2024-03-19T22:23:02.528Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Tag:         1.0.3
-Message:     Bug fixes
-
-Version ID:  2ae44686-4e5e-46e5-ace0-af1b74d4bb44
-Created:     2024-03-13T16:03:27.146Z
-Author:      example@cloudflare.com
-Source:      Dashboard 🖥️
-Tag:         1.0.2
-Message:     Updated CPU Limit
-
-Version ID:  b8959f7b-a3d6-466c-bef0-4e07227da015
-Created:     2024-03-13T15:57:54.627Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Tag:         1.0.1
-Message:     First upload
-```
+{{</definitions>}}
 
 ### `view`
 
@@ -2096,42 +2077,37 @@ Retrieve details for the specified [version](/workers/configuration/versions-and
 
 
 ```txt
-wrangler versions view <VERSION_ID> [OPTIONS] --experimental-versions
+wrangler versions view [OPTIONS] --experimental-versions
 ```
-{{<definitions>}}
 
+{{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the version you wish to view.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
 
-Example output:
+{{</definitions>}}
 
-```sh
-Version ID:  a6921e02-4b79-4e2b-bb83-2f5b89f9a25d
-Created:     2024-03-19T22:23:02.528Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Tag:         1.0.1
-Message:     Bug fixes
-```
 ---
 
 ## `deployments`
 
-Deployments track the version(s) of your Worker that are actively serving traffic. For more information about deployments and how they work, refer to [Deployments](/workers/configuration/versions-and-deployments/#deployments).
+[Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
 
 {{<Aside type="note">}}
-Deployments are currently in beta. Report deployments bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+Deployments are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
 {{</Aside>}}
-### `view` <deployment-id>
+### `view`
 
 Retrieve details for the specified [deployment](/workers/configuration/versions-and-deployments/#deployments), or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on a [rollback](/workers/configuration/versions-and-deployments/rollbacks/).
 
 ```txt
-wrangler deployments view [<DEPLOYMENT_ID>]
+wrangler deployments view [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -2140,33 +2116,12 @@ wrangler deployments view [<DEPLOYMENT_ID>]
   - The ID of the deployment you wish to view.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
 
-Example output:
-
-```sh
-Deployment ID:      07d7143d-0284-427e-ba22-2d5e6e91b479
-Created on:         2023-03-02T21:05:15.622446Z
-Author:             example@cloudflare.com
-Source:             Upload from Wrangler 🤠
-------------------------------------------------------------
-Author ID:          e5a3ca86e08fb0940d3a05691310bb42
-Usage Model:        bundled
-Handlers:           fetch
-Compatibility Date: 2022-10-03
---------------------------bindings--------------------------
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "testr2"
-
-[[kv_namespaces]]
-id = "79300c6d17eb4180a07270f450efe53f"
-binding = "MY_KV"
-```
+{{</definitions>}}
 
 ### `list`
 
-Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on a rollback.
 
 ```txt
 wrangler deployments list [OPTIONS]
@@ -2176,46 +2131,16 @@ wrangler deployments list [OPTIONS]
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
 
-Example output:
+{{</definitions>}}
 
-```sh
-Deployment ID:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-Created on:     2022-11-11T15:49:08.117218Z
-Author:         example@cloudflare.com
-Source:         Dashboard
 
-Deployment ID:  91943f34-4802-4af7-a350-b5894c73ff34
-Created on:     2022-11-11T15:50:08.117218Z
-Author:         example@cloudflare.com
-Source:         Dashboard
-
-Deployment ID:  31d8f2f0-fba3-4ce9-8427-933f42541b56
-Created on:     2022-11-11T15:51:08.117218Z
-Author:         example@cloudflare.com
-Source:         Rollback from Wrangler 🤠
-Rollback from:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-Message:        This is a message submitted on rollback
-
-Deployment ID:  7c2761da-5a45-4cb2-9448-a662978e3a59
-Created on:     2022-11-11T15:52:08.117218Z
-Author:         example@cloudflare.com
-Source:         Rollback from Dashboard 🖥️
-Rollback from:  31d8f2f0-fba3-4ce9-8427-933f42541b56
-
-Deployment ID:  e81fe980-7622-6e1d-740b-1457de3e07e2
-Created on:     2022-11-11T15:53:20.79936Z
-Author:         example@cloudflare.com
-Source:         Wrangler
-🟩 Active
 
 {{<Aside type="note">}}
 
 `Deployment ID` will be changed to `Version ID` in a future version of Wrangler. To learn more, refer to [Versions & deployments](/workers/configuration/versions-and-deployments).
 
 {{</Aside>}}
-```
 
 {{<Aside type="note">}}
 
@@ -2234,41 +2159,13 @@ wrangler deployments list [OPTIONS] --experimental-versions
 
 {{<definitions>}}
 
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for version commands. Can be replaced with `--x-versions`.
+
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
 
-Example output:
-
-```sh
-Created:     2024-03-19T22:23:02.528Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Message:     Release 03.19
-Version(s):  (100%) a6921e02-4b79-4e2b-bb83-2f5b89f9a25d
-                 Created:  2024-03-19T22:23:02.528Z
-                     Tag:  1.0.3
-                 Message:  Bug fixes
-
-Created:     2024-03-16T20:29:05.848Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Message:     Release 03.16 
-Version(s):  (100%) f59c8cc2-c735-4f23-b2dc-df60aebf27c5
-                 Created:  2024-03-16T16:03:27.146Z
-                     Tag:  1.0.2
-                 Message:  Increased character limit
-
-Created:     2024-03-13T20:27:26.591Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Message:     Release 03.13 
-Version(s):  (100%) 2ae44686-4e5e-46e5-ace0-af1b74d4bb44
-                 Created:  2024-03-13T16:03:27.146Z
-                     Tag:  1.0.1
-                 Message:  Enabled smart placement 
-
-```
+{{</definitions>}}
 
 ### `status`
 
@@ -2280,37 +2177,26 @@ wrangler deployments status --experimental-versions
 
 {{<definitions>}}
 
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for version commands. Can be replaced with `--x-versions`.
+
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
-    {{</definitions>}}
 
-Example output:
+{{</definitions>}}
 
-```sh
-Created:     2024-03-28T03:52:27.920Z
-Author:      example@cloudflare.com
-Source:      Wrangler 🤠
-Message:     10% rollout 
-Version(s):  (90%) 633506be-8224-4bdd-841b-ed48e02a1126
-                 Created:  2024-03-20T19:29:05.678Z
-                     Tag:  1.0.1
-                 Message:  First deploy
-             
-             (10%) 8cd49df1-b853-45ae-93d3-8df33cdf4c97
-                 Created:  2024-03-20T19:29:06.499Z
-                     Tag:  1.0.2
-                 Message:  Updated Environment Variables
-```
 
 ## `rollback`
 
 {{<Aside type="note">}}
-[Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) is currently in open beta. Report rollbacks bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+[Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) is currently in open beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
 {{</Aside>}}
 
 [Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The `rollback` command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
 
-There are limitations on what deployments you can rollback to. Refer to [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
+There are limitations on what deployments you can rollback to. Refer to [Rollbacks Limits](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
 
 {{<Aside type="warning">}}
 A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
@@ -2324,6 +2210,8 @@ wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
 
 {{<definitions>}}
 
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for version commands. Can be replaced with `--x-versions`.
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the deployment you wish to roll back to.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2332,13 +2220,6 @@ wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
     {{</definitions>}}
 
-Example output:
-
-```sh
-🚧 `wrangler rollback` is a beta command. Please report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose
-Successfully rolled back to deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
-Current Deployment ID: 04d22369-6e55-49ff-944a-d21e216d9f3e
-```
 ### `rollback --experimental-versions`
 
 ```txt
@@ -2347,35 +2228,16 @@ wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
 
 {{<definitions>}}
 
+
+
 - `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version. 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
-    {{</definitions>}}
 
-Example output:
-
-```sh
-🚧 `wrangler rollback` is a beta command. Please report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose
-
-
- WARNING  Version 7271808b will immediately be deployed to 100% of your traffic and become the active deployment across all your deployed routes and domains. Your currently have 2 versions deployed: 
-
-  (10%) y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-          Created:  2022-11-11 15:49:08
-        Tag:      tag 
-        Message:  Message
-  (10%) y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-          Created:  2022-11-11 15:49:08
-        Tag:      tag 
-        Message:  Message
-
-Are you sure you want to continue? (y/N) yes
-
-Successfully rolled back to version ID: e81fe980-7622-6e1d-740b-1457de3e07e2
-```
+{{</definitions>}}
 
 ---
 

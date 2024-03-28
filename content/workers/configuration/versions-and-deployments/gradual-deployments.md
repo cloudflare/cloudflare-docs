@@ -42,7 +42,7 @@ Minimum required wrangler version: 3.36.0.
 
 {{</Aside>}}
 
-### 1. Create and deploy a Worker
+#### 1. Create and deploy a new Worker
 
 Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it.
 
@@ -51,7 +51,7 @@ Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pa
 $ npm create cloudflare@latest <NAME> -- --type=hello-world
 ```
 
-Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application.
+Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application. This is the first version of your Worker.
 
 #### 2. Create a new version of the Worker
 
@@ -65,7 +65,8 @@ This will create a new version of the Worker that is not automatically deployed.
 
 #### 3. Create a new deployment
 
-Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) command and follow the interactive prompts to create a deployment with the versions uploaded in step #1 and #2. Select your desired percentages for each version. 
+Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) command to 
+create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
 ```sh
 $ npx wrangler versions deploy --experimental-versions
@@ -81,9 +82,11 @@ do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
 done
 ```
-You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in step #3. 
+You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](/workers/configuration/versions-and-deployments/gradual-deployments/#3-create-a-new-deployment). 
 
-**5. Set the new version uploaded in step 2 to a 100% deployment.**
+#### 5. Set your new version to 100% deployment
+
+Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment. 
 
 ```sh
 $ npx wrangler versions deploy --experimental-versions
