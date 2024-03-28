@@ -6,16 +6,6 @@ weight: 1
 
 # Pricing
 
-{{<Aside type="note" header="D1 public beta">}}
-
-Billing will be enabled on March 5, 2024 for developers using D1 on the Workers Paid plan. D1 billing will only apply to usage on and after March 5th.
-
-Developers using the Workers Free plan and D1's Free plan will not be charged.
-
-Read the [announcement blog](https://blog.cloudflare.com/d1-open-beta-is-here/) for more details about what is new in the beta and what is coming in the future.
-
-{{</Aside>}}
-
 D1 bills based on:
 
 - **Usage**: Queries you issue against D1 will count as rows read, rows written, or both (for transactions or batches).
@@ -39,12 +29,6 @@ Yes, the [Workers Free plan](/workers/platform/pricing/#workers) will always inc
 When your account hits the daily read and/or write limits, you will not be able to issue queries against D1. D1 API will return errors to your client indicating that your daily limits have been exceeded. Once you have reached your included storage limit, you will need to delete unused databases or clean up stale data before you can insert new data, create or alter tables or create indexes and triggers.
 
 Upgrading to the Workers Paid plan will remove these limits, typically within minutes.
-
-{{<Aside type="note">}}
-
-These free limits are not currently enforced during the public beta.
-
-{{</Aside>}}
 
 - What happens if I exceed the monthly included reads, writes and/or storage on the paid tier?
 

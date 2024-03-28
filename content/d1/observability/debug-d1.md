@@ -35,12 +35,6 @@ View a stream of live logs from your Worker by using [`wrangler tail`](/workers/
 
 ## Report issues
 
-{{<Aside type="note" header="Reporting bugs during the public beta">}}
-
-D1 is in public beta and Cloudflare welcomes any bug reports or issues.
-
-{{</Aside>}}
-
 * To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85).
 * To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev).
 * If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
