@@ -30,7 +30,7 @@ To get started, run the following command:
 $ npm create hono@latest
 ```
 
-During the setup process, you'll be asked to provide a name for your project directory and to choose a template. When making your selection, opt for the `x-basic` template.
+During the setup process, you will be asked to provide a name for your project directory and to choose a template. When making your selection, choose the `x-basic` template.
 
 ## 2. Initialize your HonoX application
 
