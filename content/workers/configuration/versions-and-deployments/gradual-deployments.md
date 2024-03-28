@@ -97,18 +97,37 @@ By default, the percentages configured when using gradual deployments operate on
 
 You may want requests associated with a particular identifier (such as user, session, or any unique ID) to be handled by a consistent version of your Worker such that when there are two versions of your Worker deployed, the version used does not change back and forth on a per-request basis. 
 
-You can do this by setting the `Cf-Worker-Version-Key` header on the incoming request to your Worker. For example:
+You can do this by setting the `Cloudflare-Workers-Version-Key` header on the incoming request to your Worker. For example:
 
 ```sh
-curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cf-Worker-Version-Key: foo'
+curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
 ```
 
 For a given [deployment](/workers/configuration/deployments/), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
 
-You can set the `Cf-Worker-Version-Key` header both when making an external request from the Internet to your Worker, as well as when making a subrequest from one Worker to another Worker using a [service binding](/workers/runtime-apis/bindings/service-bindings/).
-### Setting `Cf-Worker-Version-Key` using Ruleset Engine
+You can set the `Cloudflare-Workers-Version-Key` header both when making an external request from the Internet to your Worker, as well as when making a subrequest from one Worker to another Worker using a [service binding](/workers/runtime-apis/bindings/service-bindings/).
 
-If the unique identifier that you want to provide to `Cf-Worker-Version-Key` is in the URL of the incoming request, you can configure a [Ruleset Engine](/ruleset-engine/) rule on your zone to extract this key from the path or querystring, and use its value to set `Cf-Worker-Verison-Key`. This allows you to ensure version affinity, while avoiding having to modify the external client that makes the request.
+### Setting `Cloudflare-Workers-Version-Key` using Ruleset Engine
+
+You may want to extract a version key from certain properties of your request such as the URL, headers or cookies. You can configure a [Ruleset Engine](/ruleset-engine/) rule on your zone to do this. This allows you to specify version affinity based on these properties without having to modify the external client that makes the request.
+
+For example, if your worker serves video assets under the URI path `/assets/` and you wanted requests to each unique asset to be handled by a consistent version, you could define the following [request header modification](/rules/transform/request-header-modification/) rule:
+
+{{<example>}}
+
+Text in **Expression Editor**:
+
+```txt
+starts_with(http.request.uri.path, "/asset/")
+```
+
+Selected operation under **Modify request header**: _Set dynamic_
+
+**Header name**: `Cloudflare-Workers-Version-Key`
+
+**Value**: `regex_replace(http.request.uri.path, "/asset/(.*)", "${1}")`
+
+{{</example>}}
 
 ## Observability
 
