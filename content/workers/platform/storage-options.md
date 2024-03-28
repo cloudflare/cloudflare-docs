@@ -29,21 +29,9 @@ Available storage and persistency products include:
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
-## Choosing a storage product
+## Choose a storage product
 
-{{<table-wrap>}}
-
-| Use-case                        | Product                              | Ideal for                                                                                                              |
-| ------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| Key-value storage               | [Workers KV](/kv/)                   | Configuration data, service routing metadata, personalization (A/B testing)                                            |
-| Object storage                  | [R2](/r2/)                           | User-facing web assets, images, machine learning and training datasets, analytics datasets, log and event data.        |
-| SQL database                    | [D1](/d1/)                           | Relational data, including user profiles, product listings and orders, and/or customer data.                           |
-| Global co-ordination            | [Durable Objects](/durable-objects/) | Building collaborative applications; global co-ordination across clients; strongly consistent, transactional storage.  |
-| Vector search (database)        | [Vectorize](/vectorize/)             | Storing [embeddings](/workers-ai/models/#text-embeddings) from AI models for semantic search and classification tasks. |
-| Task processing & batching      | [Queues](/queues/)                   | Background job processing (emails, notifications, APIs) and log processing/batching.                                   |
-| Connect to an existing database | [Hyperdrive](/hyperdrive/)           | Connecting to an existing database in a cloud or on-prem.                                                              |
-
-{{</table-wrap>}}
+{{<render file="/_storage-products-table.md" productFolder="/workers/">}}
 
 ## Performance and consistency
 
