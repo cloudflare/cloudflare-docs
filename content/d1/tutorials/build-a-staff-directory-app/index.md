@@ -250,7 +250,7 @@ declare module 'hono' {
 }
 ```
 
-This application utilizes [Tailwind CSS](https://tailwindcss.com/) for styling, if you want to set it up, please refer to the TailwindCSS docs or follow the steps [provided here](https://github.com/honojs/honox?tab=readme-ov-file#using-tailwind-css).
+This application uses [Tailwind CSS](https://tailwindcss.com/) for styling. To use Tailwind CSS, refer to the [TailwindCSS documentation](https://v2.tailwindcss.com/docs), or follow the steps [provided on GitHub](https://github.com/honojs/honox?tab=readme-ov-file#using-tailwind-css).
 
 To display a list of employees, you'll need to invoke the `findAllEmployees` function from your `db.ts` file and call that within the `routes/index.tsx` file.  The `createRoute()` function present in the file serves as a helper function for defining routes that handle different  HTTP methods like GET, POST, PUT, or DELETE.
 
