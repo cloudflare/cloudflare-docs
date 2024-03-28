@@ -684,7 +684,7 @@ header: wrangler.toml
 ---
 kv_namespaces = [
   { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
-  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
+  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>" }
 ]
 
 # or
