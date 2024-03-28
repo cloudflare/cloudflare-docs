@@ -22,7 +22,9 @@ If you do not want to go through with the setup now, [view the completed code](h
 
 ## 1. Install HonoX
 
-In this tutorial, you will use [HonoX](https://github.com/honojs/honox), a meta-framework for creating full-stack websites and Web APIs to build your application. To use HonoX in your project, you'll run the `hono-create` command. To get started, run the following command:
+In this tutorial, you will use [HonoX](https://github.com/honojs/honox), a meta-framework for creating full-stack websites and Web APIs to build your application. To use HonoX in your project, run the `hono-create` command. 
+
+To get started, run the following command:
 
 ```sh
 $ npm create hono@latest
