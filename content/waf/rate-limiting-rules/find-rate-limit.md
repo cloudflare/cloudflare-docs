@@ -23,7 +23,7 @@ The **Rate limit analysis** tab is available at the zone level in **Security** >
 The main chart displays the distribution of request rates for the top 50 unique clients observed during the selected time interval (for example, `1 minute`) in descending order. You can group the request rates by the following unique request properties:
 
 * **IP address**
-* [**JA3 fingerprint**](/bots/concepts/ja3-fingerprint/) (only available to customers with Bot Management)
+* [**JA3 fingerprint**](/bots/concepts/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
 * **IP address and JA3 fingerprint** (only available to customers with Bot Management)
 
 {{<Aside type="note">}}

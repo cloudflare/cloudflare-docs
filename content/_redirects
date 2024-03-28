@@ -129,6 +129,7 @@
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
+/bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
