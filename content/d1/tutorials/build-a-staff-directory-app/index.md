@@ -208,7 +208,7 @@ export const createEmployee = async (db: D1Database, employee: Employee) => {
 
 For a complete list of all the queries used in the application, refer to the [db.ts](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts) file in the codebase.
 
-## 6. Developing the UI 
+## 6. Develop the UI 
 
 The application uses `hono/jsx` for rendering. You can set up a Renderer  in `app/routes/_renderer.tsx` using the JSX-rendered middleware, serving as the entry point for your application:
 
