@@ -34,7 +34,7 @@ During the setup process, you'll be asked to provide a name for your project dir
 
 ## 2. Initialize your HonoX application
 
-Once your project is set up, you can see a list of generated files below, this is a typical project structure for a HonoX application:
+Once your project is set up, you can see a list of generated files as below. This is a typical project structure for a HonoX application:
 
 ```
 .
