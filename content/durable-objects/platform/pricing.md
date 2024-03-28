@@ -81,7 +81,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 <sup>2</sup> The example uses 1 second because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10 ms to execute (4,320,000 seconds).
 
-### Example 4: Large-scale real-time app
+### Example: Large-scale real-time app
 
 This example represents a horizontally scaled Durable Objects based application using WebSockets to communicate user-specific state to a single client connected to each Durable Object.
 
