@@ -155,7 +155,7 @@ INSERT INTO locations (location_name) VALUES ('London, UK'), ('Paris, France'), 
 INSERT INTO departments (department_name) VALUES ('Software Engineering'), ('Product Management'), ('Information Technology (IT)'), ('Quality Assurance (QA)'), ('User Experience (UX)/User Interface (UI) Design'), ('Sales and Marketing'), ('Human Resources (HR)'), ('Customer Support'), ('Research and Development (R&D)'), ('Finance and Accounting');
 ```
 
-The above queries will create three tables -  Locations, Departments, and Employees. To populate these tables with initial data, use the `INSERT INTO` command. After preparing your schema file with these commands, you can apply it to the D1 database. Do this by using the `--file` flag to specify the schema file for execution:
+The above queries will create three tables:  `Locations`, `Departments`, and `Employees`. To populate these tables with initial data, use the `INSERT INTO` command. After preparing your schema file with these commands, you can apply it to the D1 database. Do this by using the `--file` flag to specify the schema file for execution:
 
 ```sh
 $ wrangler d1 execute staff-directory --file=./schema.sql
