@@ -234,7 +234,7 @@ export default jsxRenderer(({ children, title }) => {
 })
 ```
 
-Add the bindings defined earlier in `global.d.ts` file where the global type definitions for TypeScript is defined ensuring type consistency across your application.
+Add the bindings defined earlier in `global.d.ts` file where the global type definitions for TypeScript is defined ensuring type consistency across your application:
 
 ```ts
 ---
