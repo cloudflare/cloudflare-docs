@@ -35,11 +35,15 @@ In your terminal, you will be asked a series of questions related your project:
 1. Answer `yes` to using TypeScript.
 2. Answer `yes` to deploying your Worker.
 
-Once you deploy your Worker, you should be able to preview your Worker at `https://prisma-d1-example.USERNAME.workers.dev`, which displays "Hello World" in the browser.
+Once you deploy your Worker, you should be able to preview your Worker at `https://prisma-d1-example.USERNAME.workers.dev`, which displays `"Hello World"` in the browser.
 
 ### 2. Initialize Prisma ORM
 
-> D1 is supported in Prisma ORM as of [v5.12.0](https://github.com/prisma/prisma/releases/tag/5.12.0).
+{{<Aside type="note">}}
+
+D1 is supported in Prisma ORM as of [v5.12.0](https://github.com/prisma/prisma/releases/tag/5.12.0).
+
+{{</Aside>}}
 
 To set up Prisma ORM, go into your project directory, and install the Prisma CLI:
 
