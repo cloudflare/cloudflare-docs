@@ -432,7 +432,7 @@ if (imageFile instanceof File) {
 }
 ```
 
-There you have it! The code examples have been shortened for brevity, please [refer to the codebase](https://github.com/lauragift21/staff-directory) for the full codebase. 
+[Refer to GitHub](https://github.com/lauragift21/staff-directory) for the full codebase. 
 
 ## 7. Deploy your HonoX application
 
