@@ -43,6 +43,10 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 
 {{<render file="zero-trust/_blocklist-security-categories.md">}}
 
+| Selector       | Operator | Value                | Action |
+| -------------- | -------- | -------------------- | ------ |
+| Security Risks | in       | _All security risks_ | Block  |
+
 {{</details>}}
 
 {{<details header="All-HTTP-ContentCategories-Blocklist" open="true">}}

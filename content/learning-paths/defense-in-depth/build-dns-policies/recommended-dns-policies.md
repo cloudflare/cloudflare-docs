@@ -22,6 +22,8 @@ Allowlist any known domains and hostnames. With this policy, you ensure that you
 
 {{<render file="zero-trust/_blocklist-security-categories.md">}}
 
+{{<render file="gateway/policies/_block-security-categories.md" productFolder="cloudflare-one">}}
+
 {{</details>}}
 
 {{<details header="All-DNS-ContentCategories-Blocklist" open="true">}}
