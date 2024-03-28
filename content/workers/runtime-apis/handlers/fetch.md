@@ -51,6 +51,12 @@ The `waitUntil()` method extends the lifetime of the `fetch` event. It accepts a
 
 You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
 
+{{<Aside type="note" header="Tail Workers">}}
+
+If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logging/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
+
+{{</Aside>}}
+
 ```js
 export default {
   async fetch(request, env, context) {
