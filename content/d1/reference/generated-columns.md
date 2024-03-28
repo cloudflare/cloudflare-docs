@@ -1,7 +1,7 @@
 ---
 title: Generated columns
 pcx_content_type: concept
-weight: 10
+weight: 4
 ---
 
 # Generated columns

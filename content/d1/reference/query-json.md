@@ -1,7 +1,7 @@
 ---
 title: Query JSON
 pcx_content_type: concept
-weight: 4
+weight: 5
 ---
 
 # Query JSON

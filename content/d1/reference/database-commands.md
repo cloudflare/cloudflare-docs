@@ -1,6 +1,6 @@
 ---
 title: Database commands
-weight: 12
+weight: 6
 pcx_content_type: concept
 ---
 
