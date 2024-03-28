@@ -14,7 +14,7 @@ Session affinity specifies the type of session affinity the load balancer should
 
 ### cookie
 
-On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, a new origin server is calculated and used.
+On the first request to a proxied load balancer, a cookie is generated, encoding information of which endpoint the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the endpoint the cookie encodes for the duration of the cookie and as long as the endpoint remains healthy. If the cookie has expired or the endpoint is unhealthy, a new endpoint is calculated and used.
 
 #### How does it work?
 
@@ -22,7 +22,7 @@ On the first request to a proxied load balancer, a cookie is generated, encoding
 
 ### ip_cookie
 
-This behaves similar to `cookie` except the initial origin selection is stable and based on the client's IP address.
+This behaves similar to `cookie` except the initial endpoint selection is stable and based on the client's IP address.
 
 ### header
 
@@ -48,7 +48,7 @@ Enable Session Affinity when you [create or edit a load balancer](/load-balancin
 
 If you enable Session Affinity, choose one of the following options:
 
-- **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated origin web server.
+- **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated endpoint.
 - **By Cloudflare cookie and Client IP fallback**: Sets a `__cflb` cookie, but also uses the client IP address when no session affinity cookie is provided.
 - **By HTTP header**.
 
@@ -88,13 +88,13 @@ Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)]
 
 ## Zero-Downtime Failover
 
-Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors.
+Zero-Downtime Failover automatically sends traffic to endpoints within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors.
 
 You can enable one of three options:
 
 - **None**: No failover will take place and errors may show to your users.
-- **Temporary**: Traffic will be sent to other origin(s) until the originally pinned origin is available.
-- **Sticky**: The session affinity cookie is updated and subsequent requests are sent to the new origin moving forward as needed.
+- **Temporary**: Traffic will be sent to other endpoint(s) until the originally pinned endpoint is available.
+- **Sticky**: The session affinity cookie is updated and subsequent requests are sent to the new endpoint moving forward as needed.
 
 {{<Aside type="note">}}
 
