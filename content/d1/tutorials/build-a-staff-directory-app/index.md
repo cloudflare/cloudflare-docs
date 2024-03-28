@@ -16,7 +16,7 @@ To do this, you will first need to set up a [D1 database](/d1/get-started/) to m
 Before moving forward with this tutorial, make sure you have the following:
 
 - A Cloudflare account, if you do not have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-- A recent version of [npm](https://docs.npmjs.com/getting-started) installed
+- A recent version of [npm](https://docs.npmjs.com/getting-started) installed.
 
 If you don't want to go through with the set up now. You can [view the completed code](https://github.com/lauragift21/staff-directory) on GitHub.
 
