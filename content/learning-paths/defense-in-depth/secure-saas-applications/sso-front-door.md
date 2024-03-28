@@ -19,11 +19,11 @@ If you use both Cloudflare CASB and Cloudflare Data Loss Prevention (DLP), you c
 
 {{<render file="casb/_casb-dlp-integrations.md" productFolder="cloudflare-one">}}
 
+For more information, refer to [Scan SaaS applications with DLP](/cloudflare-one/applications/scan-apps/casb-dlp/).
+
 #### Upload/download control
 
 When you use a supported integration with DLP, you can place restrictions on uploading and downloading based on a file's contents.
-
-For more information, refer to [Scan SaaS applications with DLP](/cloudflare-one/applications/scan-apps/casb-dlp/).
 
 ## Configure SSO to use allowlisting
 
