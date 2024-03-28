@@ -386,7 +386,7 @@ Use the `wrangler r2 bucket create` command to create a bucket:
 $ wrangler r2 bucket create employee-avatars
 ```
 
-Once the bucket is created add the R2 bucket binding to your `wrangler.toml`  file:
+Once the bucket is created, add the R2 bucket binding to your `wrangler.toml`  file:
 
 ```toml
 ---
