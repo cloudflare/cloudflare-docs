@@ -21,9 +21,7 @@ function writeArrayToStream(array, writableStream) {
   return writer.close();
 }
 
-writeArrayToStream([1, 2, 3, 4, 5], writableStream)
-  .then(() => console.log('All done!'))
-  .catch(e => console.error('Error with the stream: ' + e));
+await writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 ```
 
 ## Properties
@@ -32,11 +30,15 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
 - `writer.desiredSize` {{<type>}}int{{</type>}}
 
-  - The size needed to fill the stream’s internal queue, as an integer. Always returns 1, 0 (if the stream is closed), or `null` (if the stream has errors).
+  - The size needed to fill the stream’s internal queue, as an integer. Returns a positive number greater than 0 if the stream buffer has room for more data, `0` if the stream is closed, or `null` if the stream has errors.
 
 - `writer.closed` {{<type>}}Promise\<void>{{</type>}}
 
   - A promise that indicates if the writer is closed. The promise is fulfilled when the writer stream is closed and rejected if there is an error in the stream.
+
+- `writer.ready` {{<type>}}Promise\</void>{{</type>}}
+
+  - A promise that indicates when the writer is ready to accept more data.
 
 {{</definitions>}}
 

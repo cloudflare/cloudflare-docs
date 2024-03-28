@@ -9,40 +9,38 @@ title: TransformStream
 
 A transform stream consists of a pair of streams: a writable stream, known as its writable side, and a readable stream, known as its readable side. Writes to the writable side result in new data being made available for reading from the readable side.
 
-Workers currently only implements an identity transform stream, a type of transform stream which forwards all chunks written to its writable side to its readable side, without any changes.
+A `TransformStream` can be acquired from:
 
----
+* Constructing a `new TransformStream(...)` directly.
+* Constructing a `new IdentityTransformStream(...)` directly.
+* Constructing a `new FixedLengthStream(...)` directly.
 
-## Constructor
+Developers should refer to [MDN’s `TransformStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream) for general details on using the `TransformStream` API.
 
 ```js
-let { readable, writable } = new TransformStream();
+// Creating a TransformStream from scratch...
+const { readable, writable } = new TransformStream({
+  transform(chunk, controller) {
+    controller.enqueue(chunk);
+  }
+});
+
+// ...
+
+// Creating an IdentityTransformStream from scratch...
+const { readable, writable } = new IdentityTransformStream();
+
+// ...
+
+// Creating a FixedLengthStream from scratch...
+const { readable, writable } = new FixedLengthStream(1000);
 ```
-
-{{<definitions>}}
-
-- `TransformStream()` {{<type>}}TransformStream{{</type>}}
-
-  - Returns a new identity transform stream.
-
-{{</definitions>}}
-
-## Properties
-
-{{<definitions>}}
-
-- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
-  - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
-  - An instance of a `WritableStream`.
-
-{{</definitions>}}
 
 ---
 
 ## `IdentityTransformStream`
 
-The current implementation of `TransformStream` in the Workers platform is not current compliant with the [Streams Standard](https://streams.spec.whatwg.org/#transform-stream) and we will soon be making changes to the implementation to make it conform with the specification. In preparation for doing so, we have introduced the `IdentityTransformStream` class that implements behavior identical to the current `TransformStream` class. This type of stream forwards all chunks of byte data (in the form of `TypedArray`s) written to its writable side to its readable side, without any changes.
+The `IdentityTransformStream` forwards all chunks of byte data (in the form of `TypedArray`s) written to its writable side to its readable side, without any changes.
 
 The `IdentityTransformStream` readable side supports [bring your own buffer (BYOB) reads](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamBYOBReader).
 
