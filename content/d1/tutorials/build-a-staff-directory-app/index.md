@@ -411,7 +411,7 @@ declare module 'hono' {
 }
 ```
 
-To store the uploaded image in the R2 bucket, you can use the `put` method provided by R2. This method allows you to upload the image file to your bucket.
+To store the uploaded image in the R2 bucket, you can use the `put()` method provided by R2. This method allows you to upload the image file to your bucket:
 
 ```ts
 ---
