@@ -6,12 +6,6 @@ weight: 1
 
 # Pricing
 
-{{<Aside type="note" header="Hyperdrive beta">}}
-
-Hyperdrive is currently in public beta and is currently free to use for all [Workers paid plans](/workers/platform/pricing/).
-
-{{</Aside>}}
-
 Hyperdrive has two primary components:
 
 - Connection pooling (always free).

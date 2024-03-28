@@ -28,8 +28,12 @@
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-additional-wrapper">
+        {{- with $page.Params.learning_center -}}
+        {{- partial "external.link" (dict "text" .title "url" .link ) }}
+        {{- else -}}
         {{- $url := default "https://www.cloudflare.com/learning/" $DATA.resources.learning_center -}} {{- partial
         "external.link" (dict "text" "Learning Center" "url" $url) }}
+        {{- end -}}
       </span>
 
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>

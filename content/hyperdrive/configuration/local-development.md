@@ -8,7 +8,7 @@ pcx_content_type: concept
 
 Hyperdrive can be used when developing and testing your Workers locally by connecting to any local database instance running on your machine directly. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
-## Start a local development session
+## Configure local development
 
 {{<Aside type="note">}}
 
@@ -41,8 +41,9 @@ To configure a `localConnectionString` in `wrangler.toml`, ensure your Hyperdriv
 binding = "TEST_DB"
 id = "c020574a-5623-407b-be0c-cd192bab9545"
 localConnectionString = "postgres://user:password@localhost:5432/databasename"
+```
 
-## Example
+## Use `wrangler dev`
 
 The following example shows you how to check your wrangler version, set a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` environmental variable, and run a `wrangler dev` session:
 
