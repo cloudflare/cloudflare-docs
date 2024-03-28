@@ -161,7 +161,7 @@ The above queries will create three tables:  `Locations`, `Departments`, and `Em
 $ wrangler d1 execute staff-directory --file=./schema.sql
 ```
 
-If you want to execute the schema locally and seed data into your local directory, you will need to pass the `--local` flag to the above command.
+To execute the schema locally and seed data into your local directory, pass the `--local` flag to the above command.
 
 
 ## 5. Create SQL Statements
