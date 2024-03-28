@@ -16,4 +16,4 @@ The exact location of these data centers are subject to change at any moment.
 
 The Internet is not the same everywhere around the world and your users may not have the same experience on your application according to where they are. Running Health Checks from different regions lets you know the health of your application from the point of view of the Cloudflare network in each of these regions.
 
-If you select multiple regions or choose **All Regions** (Enterprise only), you may increase traffic to your servers. Each region sends individual health checks from three data centers.
+If you select multiple regions or choose **All Regions** (Business & Enterprise Only), you may increase traffic to your servers. Each region sends individual health checks from three data centers.
