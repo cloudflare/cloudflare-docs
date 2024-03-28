@@ -21,9 +21,9 @@ Using versions and deployments is useful if:
 
 {{<Aside type="note">}}
 
-Versions and deployments are in **beta and under active development**. Refer to [limitations](/workers/configuration/versions-and-deployments/#limits) before using these features.
+Versions and deployments are in **beta and under active development**. Refer to [Limits](/workers/configuration/versions-and-deployments/#limits) before using these features.
 
-Provide your feeback through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
+Provide your feeback on versions and deployments through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
 
 {{</Aside>}}
 
@@ -31,11 +31,11 @@ Provide your feeback through the [feedback form](https://www.cloudflare.com/lp/d
 
 A version is defined by the state of code as well as the state of configuration in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file. Versions track historical changes to [bundled code](/workers/wrangler/bundling/) and changes to configuration like [bindings](/workers/configuration/bindings/) and [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
 
-Versions also track metadata associated with a version, including: the version ID, the user that created the version, deploy source, timestamp. Optionally, a version message and version tag can be configured on version upload. 
+Versions also track metadata associated with a version, including: the version ID, the user that created the version, deploy source, and timestamp. Optionally, a version message and version tag can be configured on version upload. 
 
 {{<Aside type="note">}}
 
-State changes for associated Workers storage resources such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/) and [D1](/d1/) are not tracked with versions.
+State changes for associated Workers [storage resources](/workers/platform/storage-options/) such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/) and [D1](/d1/) are not tracked with versions.
 
 {{</Aside>}}
 
@@ -43,11 +43,11 @@ State changes for associated Workers storage resources such as [KV](/kv/), [R2](
 
 Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker. 
 
-By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, [gradual deployments]((/gradual-deployments)) can be to create a rolling deployment strategy by incrementally shifting traffic a new version of the Worker.
+By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/gradual-deployments) to create a rolling deployment strategy by incrementally shifting traffic a new version of the Worker.
 
-Metadata associated with a deployment is also tracked, including: the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, a deployment message can be configured when a deployment is created. 
+You can also track metadata associated with a deployment, including: the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, you can configure a deployment message when you create a deployment. 
 
-## Using Versions and Deployments
+## Use versions and deployments
 
 ### Create a new version
 
@@ -55,19 +55,18 @@ Review the different ways you can create versions of your Worker and deploy them
 
 #### Upload a new version and deploy it immediately
 
-Changes uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy), via the Cloudflare dashboard or the [Workers Script Upload API](https://developers.cloudflare.com/api/operations/worker-script-upload-worker-module) create a new version that is automatically deployed to 100% of traffic. 
+Changes uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy), via the Cloudflare dashboard, or the [Workers Script Upload API](/api/operations/worker-script-upload-worker-module) create a new version that is automatically deployed to 100% of traffic. 
 
-**Uploading a new version to be [gradually deployed](/gradual-deployments) or deployed at a later time** 
+#### Upload a new version to be gradually deployed or deployed at a later time 
 
-In order to create a new version that is not deployed immediately, use the new wrangler command `npx wrangler versions upload --experimental-versions` or create a new version via the Cloudflare dashboard using the "Save changes" buttons.
+To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload) command or create a new version via the Cloudflare dashboard using the **Save changes** button.
 
-For more details on the wrangler commands, refer to the [`wrangler versions` command documentation](/workers/wrangler/commands/#versions). 
 
 {{<Aside type="note">}}
 
-**New versions are not created when you make changes to [resources connected to your Worker](/workers/runtime-apis/bindings/)**
+### Bindings
 
-For example, if two Workers (Worker A and Worker B) are connected via a [service binding](/workers/configuration/bindings/about-service-bindings/), changing the code of Worker B will not create a new version of Worker A. It will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version of Worker B.
+New versions are not created when you make changes to [resources connected to your Worker](/workers/runtime-apis/bindings/). For example, if two Workers (Worker A and Worker B) are connected via a [service binding](/workers/configuration/bindings/about-service-bindings/), changing the code of Worker B will not create a new version of Worker A. Changing the code of Worker B will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version of Worker B.
 
 {{</Aside>}}
 
@@ -82,12 +81,12 @@ Wrangler allows you to view the 10 most recent versions and deployments. Refer t
 To view your deployments in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your account.
-2. Select your Worker > **Deployments**.  
+2. Go to **Workers & Pages**.
+3. Select your Worker > **Deployments**.  
 
 ## Limits
 
-**Service Workers syntax is not supported**
+### Service worker syntax
+Service worker syntax is not supported for versions that are uploaded through `wrangler versions upload --experimental-versions`. You must use ES modules format. 
 
-Service Workers syntax is not supported for versions that are uploaded through `npx wrangler versions upload --experimental-versions`. You must use ES modules format. 
-
-Refer to [this guide](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the Service Worker format to the ES modules format.
+Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the service worker format to the ES modules format.

@@ -2054,7 +2054,7 @@ wrangler versions deploy [OPTIONS] --experimental-versions
 
 
 ### `list`
-Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source` and optional `Tag` or `Message`.
+Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
 
 ```txt
 wrangler versions list [OPTIONS] --experimental-versions
@@ -2092,7 +2092,7 @@ Message:     First upload
 
 ### `view`
 
-Retrieve details for the specified version. Details include `Version ID`, `Created`, `Author`, `Source`, and optional `Tag` or `Message`.
+Retrieve details for the specified [version](/workers/configuration/versions-and-deployments/#versions). Details include `Version ID`, `Created`, `Author`, `Source`, and optionally, `Tag` or `Message`.
 
 
 ```txt
@@ -2128,7 +2128,7 @@ Deployments are currently in beta. Report deployments bugs in [GitHub](https://g
 {{</Aside>}}
 ### `view` <deployment-id>
 
-Retrieve details for the specified deployment, or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
+Retrieve details for the specified [deployment](/workers/configuration/versions-and-deployments/#deployments), or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on a [rollback](/workers/configuration/versions-and-deployments/rollbacks/).
 
 ```txt
 wrangler deployments view [<DEPLOYMENT_ID>]
@@ -2210,7 +2210,11 @@ Author:         example@cloudflare.com
 Source:         Wrangler
 🟩 Active
 
-NOTE: "Deployment ID" in this output will be changed to "Version ID" in a future version of Wrangler. To learn more visit: https://developers.cloudflare.com/workers/configuration/versions-and-deployments"
+{{<Aside type="note">}}
+
+`Deployment ID` will be changed to `Version ID` in a future version of Wrangler. To learn more, refer to [Versions & deployments](/workers/configuration/versions-and-deployments).
+
+{{</Aside>}}
 ```
 
 {{<Aside type="note">}}
@@ -2222,7 +2226,7 @@ The minimum required wrangler version to use these commands is 3.39.0.
 
 ### `list --experimental-versions`
  
-Retrieve details for the 10 most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment. 
+Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment. 
 
 ```txt
 wrangler deployments list [OPTIONS] --experimental-versions
@@ -2301,15 +2305,15 @@ Version(s):  (90%) 633506be-8224-4bdd-841b-ed48e02a1126
 ## `rollback`
 
 {{<Aside type="note">}}
-Rollback is currently in open beta. Report rollback bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+[Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) is currently in open beta. Report rollbacks bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
-[Rollback](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
+[Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The `rollback` command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
 
-There are limitations on what deployments you can rollback to. Refer to [rollbacks documentation](/workers/configuration/versions-and-deployments/rollbacks/) for more information.
+There are limitations on what deployments you can rollback to. Refer to [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
 
 {{<Aside type="warning">}}
-A rollback will immediately create a new deployment with the version specified and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
+A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
 {{</Aside>}}
 
 ### `rollback`
@@ -2321,7 +2325,7 @@ wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
 {{<definitions>}}
 
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the deployment you wish to rollback to.
+  - The ID of the deployment you wish to roll back to.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2344,7 +2348,7 @@ wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
 {{<definitions>}}
 
 - `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the version you wish to rollback to. If not supplied, this command defaults to the version uploaded before the latest version. 
+  - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version. 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
