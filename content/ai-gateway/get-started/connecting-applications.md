@@ -46,6 +46,14 @@ Once you have configured a Gateway in the AI Gateway dashboard, click on “API 
 
 {{<render file="_bedrock.md">}}
 
+---
+
+## Anthropic
+
+{{<render file="_anthropic.md">}}
+
+---
+
 ## Next Steps
 
 {{<resource-group>}}
