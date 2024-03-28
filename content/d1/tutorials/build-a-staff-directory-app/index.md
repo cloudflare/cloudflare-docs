@@ -454,7 +454,7 @@ database_name = "staff-directory"
 database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
 ```
 
-Now, run `wrangler deploy` to deploy your project to Cloudflare. After deployment you can test your application is working by navigating to the deployed URL provided for you. You should see an application with the base frontend we created. You don't have any data populated in your database so you can navigate to the `/admin` page to add a new employee and this should return a new employee in your home page.
+Run `wrangler deploy` to deploy your project to Cloudflare. After deployment you can test your application is working by accessing the deployed URL provided for you. You should see an application with the base frontend you created. If you do not have any data populated in your database, go to the `/admin` page to add a new employee, and this should return a new employee in your home page.
 
 ## Conclusion
 
