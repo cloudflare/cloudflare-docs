@@ -38,6 +38,7 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 ### XML
 
 ```xml
+<key>configs</key>
 <array>
   <dict>
     <key>organization</key>
