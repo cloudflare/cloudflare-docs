@@ -9,3 +9,5 @@ weight: 2
 Build your first Worker.
 
 {{<directory-listing showDescriptions="true">}}
+
+{{<render file="/_workers-learning-path.md">}}

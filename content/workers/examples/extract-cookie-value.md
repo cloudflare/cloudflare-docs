@@ -33,6 +33,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+import { parse } from "cookie";
 export default {
   async fetch(request) {
     // The name of the cookie

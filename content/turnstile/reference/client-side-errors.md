@@ -1,7 +1,7 @@
 ---
 title: Client-side error codes
 pcx_content_type: reference
-weight: 7
+weight: 6
 ---
 
 # Turnstile client-side error codes
@@ -20,7 +20,7 @@ If the error callback returns with a `no` or a falsy result, Turnstile will log 
 
 An error callback will retrieve an error code as its first parameter.
 
-## Retrying
+## Retry
 
 By default, Turnstile will automatically retry upon encountering a problem. When subsequent failures due to retries are observed, the error callback can be invoked multiple times.
 
@@ -29,6 +29,14 @@ You can adjust the retry behavior by setting the `retry` value to `never` instea
 An implementation may call `turnstile.reset()` in the corresponding `error-callback` to manually trigger a retry.
 
 The interval in between retries of Turnstile can be configured by the `retry-interval` option. 
+
+## Interactivity
+
+If the user fails to engage with an interactive challenge within a reasonable timeframe, the timeout callback function is triggered.
+
+For instance, in a scenario where the Turnstile widget is implemented within a lengthy form that may require several minutes to complete, the interactive challenge within the widget becomes outdated if it remains unaddressed for an extended period.
+
+In such instances, the `timeout-callback` of the widget is activated, enabling the widget to reset itself as needed.
 
 ## Error codes
 
@@ -44,16 +52,16 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `undefined_error` | An unspecific error error occurred with no specific error code associated. | Yes | The challenge should be retried. |
 | `100***` | Error Code Family Initialization Problems: There was a problem initializing Turnstile before a challenge could be started. | No | This could be caused by an old instance of the challenge that was solved. It is advised to reload the page and restart Turnstile. On continuous failures, this is indicative of an automated device. |
 | `102***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device. |
-| `102***` `103***` `104***` `106***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device. |
+| `102***` `103***` `104***` `106***` | Error Code Family Invalid Parameters: The visitor sent an invalid parameter as part of the challenge towards Turnstile. | Yes | It is advised to retry the challenge. On continuous failures, this is indicative of an automated device and you must verify the visitor’s authenticity by other means. |
 | `105***` | Error Code Family: Turnstile API Compatibility: Turnstile was invoked in a deprecated or invalid way. | No | It is advised to refer to the [Turnstile documentation](/turnstile/) again and refresh the page to obtain the most recent Turnstile version. |
-| `106***` | Error Code Family: Invalid Parameters: The visitor sent unexpected invalid parameters to Turnstile. | No | Verify the visitor's authenticity by other means. |
 | `110100` `110110` | Invalid {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}} | No | Turnstile was invoked with an invalid sitekey or a sitekey that is no longer active. Verify if the sitekey provided is still active. |
 | `110200` | Domain not allowed. | No | Turnstile was used on a domain that was not allowed for this widget to be used on. Ensure that the domain Turnstile is intended to run on is allowed in the widget configuration. |
 | `110420` | This error occurs when an unsupported or incorrectly formatted action is submitted. | No | Ensure that the action conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. |
 | `110430` | This error occurs when an unsupported or incorrectly formatted action is submitted. The "Invalid CDATA" error in Turnstile refers to an issue encountered when processing Custom Data (CDATA). This error occurs when the CDATA provided does not adhere to the expected format or contains invalid characters. | No | Ensure that the CDATA conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. | 
 | `110500` | The visitor is using an unsupported browser. | No | Encourage the visitor to upgrade their browser or verify otherwise. |
 | `110510` | The visitor provided an inconsistent user-agent throughout the process of solving Turnstile. | No | The visitor may have browser extensions or settings enabled to spoof their user agent and should disable them to proceed. |
-| `110600` | The visitor took too long to solve the challenge | Yes | Retry the challenge. The visitor additionally may have a system clock set to a wrong date. | 
+| `11060*` | The visitor took too long to solve the challenge and the challenge timed out. | Yes | Retry the challenge. The visitor also may have a system clock set to a wrong date. |
+| `11062*` | Visible Mode only: The visitor took too long to solve the interactive challenge and the challenge became outdated. | Yes | Reset the widget and re-initialize it to give the visitor the chance to solve the widget again. |
 | `120***` | Error Code Family: Internal Errors for Cloudflare Employees. | No | Only encountered by Cloudflare Support Engineers while debugging. | 
 | `200010` | Invalid Caching: Some portion of Turnstile was accidentally cached. | No | Encourage the visitor to clear their cache. | 
 | `200100` | Time Problem: The visitor's clock is incorrect. | No | Encourage the visitor to set their clock to the correct time. | 

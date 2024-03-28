@@ -83,7 +83,7 @@ To verify the token manually:
 
 6. Get your public key:
 
-   1. Go to `https://<your-team-name>/cdn-cgi/access/certs`.
+   1. Go to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
    2. Under `public_certs`, locate the entry with the `kid` value you found in Step 5.
    3. Copy the `cert` value.
 

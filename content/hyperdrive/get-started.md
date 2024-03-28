@@ -60,7 +60,7 @@ $ npm create cloudflare@latest
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
 - Name your directory `hyperdrive-tutorial`.
-- Choose `"Hello World" script` for the type of application.
+- Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using Git.
 - Select `no` to deploying.

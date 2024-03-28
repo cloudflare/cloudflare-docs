@@ -114,7 +114,7 @@ IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 - **Diffie-Hellman group**:
 <br>
 Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
-  - DH group 20 (384-bit random)
+  - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
@@ -139,6 +139,7 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 - **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
 <br>
 Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
+  - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 

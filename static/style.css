@@ -3150,7 +3150,7 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-  max-width: 692px;
+  max-width: 100%;
   margin-bottom: 1em;
 }
 
@@ -3894,6 +3894,16 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsMarkdown details summary + div.NoPadding {
   padding: 0 0.6em;
+}
+
+.DocsMarkdown details summary + div.code-container {
+  padding: 0;
+  border-radius: 0;
+}
+
+.DocsMarkdown details summary + div.code-container .CodeBlock {
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .DocsMarkdown details[open] {

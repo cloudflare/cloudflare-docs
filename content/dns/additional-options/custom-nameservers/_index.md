@@ -10,6 +10,8 @@ With custom (or vanity) nameservers, a domain can use Cloudflare DNS without usi
 
 To use custom nameservers, a zone must be using Cloudflare as [Primary (Full setup)](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) DNS provider.
 
+For domains registered with [Cloudflare Registrar](/registrar/), setup steps may be different, as specified in each setup guide ([zone](/dns/additional-options/custom-nameservers/zone-custom-nameservers/), [account](/dns/additional-options/custom-nameservers/account-custom-nameservers/), or [tenant](/dns/additional-options/custom-nameservers/tenant-custom-nameservers/)).
+
 ## Configuration scope
 
 {{<directory-listing showDescriptions=true char_limit=400 >}}
