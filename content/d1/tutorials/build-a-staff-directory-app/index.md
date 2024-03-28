@@ -186,7 +186,7 @@ export const findAllEmployees = async (db: D1Database) => {
   return employees;
 };
 ```
-### Inserting Data into the Database
+### Insert data into the database
 
 ```ts
 ---
