@@ -458,6 +458,6 @@ Run `wrangler deploy` to deploy your project to Cloudflare. After deployment you
 
 ## Conclusion
 
-In this tutorial, you built a staff directory application where users can view all employees within an organization. To see the full source code for this application, you can visit the [repository](https://github.com/lauragift21/staff-directory). 
+In this tutorial, you built a staff directory application where users can view all employees within an organization. Refer to the [Staff directory repository](https://github.com/lauragift21/staff-directory) for the full source code.
 
 ![staff directory demo](https://github.com/lauragift21/staff-directory/raw/main/demo.gif)
