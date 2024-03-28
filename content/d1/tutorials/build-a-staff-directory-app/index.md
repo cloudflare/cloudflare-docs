@@ -55,7 +55,7 @@ Once your project is set up, you can see a list of generated files as below. Thi
 
 The project includes directories for app code, routes, and server setup, alongside configuration files for package management, TypeScript, and Vite.
 
-## 3. Create a Database
+## 3. Create a database
 
 To create a database for your project, use the Cloudflare CLI tool, [Wrangler](/workers/wrangler), which supports the `wrangler d1` command for D1 database operations. Create a new database named `staff-directory` with the following command:
 
