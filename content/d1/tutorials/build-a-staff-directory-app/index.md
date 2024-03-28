@@ -325,7 +325,7 @@ export const GET = createRoute(async (c) => {
 })
 ```
 
-The code snippet demonstrates how to import the `findAllEmployees`, `findAllLocations`, and `findAllDepartments` functions from the `db.ts` file and how to use the binding `c.env.DB` to invoke these functions. With this, you can retrieve and display the fetched data on the page.
+The code snippet demonstrates how to import the `findAllEmployees`, `findAllLocations`, and `findAllDepartments` functions from the `db.ts` file, and how to use the binding `c.env.DB` to invoke these functions. With these, you can retrieve and display the fetched data on the page.
 
 ### Add an employee
 
