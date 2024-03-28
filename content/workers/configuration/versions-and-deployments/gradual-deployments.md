@@ -17,7 +17,7 @@ Using gradual deployments allows you to:
 - Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability--logs-analytics-metrics) tooling.
 - Perform a [rollback](/workers/configuration/versions-and-deployments/rollbacks/) to a previously stable version if you notice issues when deploying a new version.
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
 Gradual deployments are in **beta and under active development**. Please read [limitations](/workers/configuration/versions-and-deployments//gradual-deployments/#limits) before using this feature.
 
@@ -102,7 +102,7 @@ You should see 10 responses. Responses will reflect the content returned by the 
 
 ## Observability
 
-When using gradual deployments, you want to attribute Workers invocations to a specific version in order to get visibility into the impact of deploying new versions.
+When using gradual deployments, you may want to attribute Workers invocations to a specific version in order to get visibility into the impact of deploying new versions.
 
 ### Logpush
 
