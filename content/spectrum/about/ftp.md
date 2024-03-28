@@ -87,4 +87,5 @@ Unlike FTP or FTPS, enabling Spectrum for SFTP does not require extra configurat
 ## Microsoft Windows IIS FTP
 
 Refer to the [Microsoft Windows IIS documentation](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service) to configure a static data port range and external IP matching your Spectrum application.
+
 Additionally, IIS requires that the source IP for both, FTP control and data connections are the same. However, when using Spectrum, this requirement may not be met, as both connections often terminate on different servers with their own unique egress IPs. To ensure proper functionality, also set `dataChannelSecurity/matchClientAddressForPasv = false`. Refer to [Microsoft Windows IIS FTP Official Guide](https://learn.microsoft.com/en-us/iis/configuration/system.applicationhost/sites/site/ftpserver/security/datachannelsecurity) for further details.
