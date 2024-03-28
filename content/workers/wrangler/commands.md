@@ -2210,8 +2210,6 @@ wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
 
 {{<definitions>}}
 
-- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - Required for version commands. Can be replaced with `--x-versions`.
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the deployment you wish to roll back to.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2228,8 +2226,8 @@ wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
 
 {{<definitions>}}
 
-
-
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for version commands. Can be replaced with `--x-versions`.
 - `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version. 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
