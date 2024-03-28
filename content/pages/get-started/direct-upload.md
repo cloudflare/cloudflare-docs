@@ -134,6 +134,10 @@ After you have your project created, select **Create a new deployment** to begin
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 
+### Production branch configuration
+
+{{<render file="_prod-branch-update.md" productFolder="/pages/">}}
+
 ### Functions
 
 Drag and drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of [Pages Functions](/pages/functions/). To deploy a `functions` folder, you must use Wrangler. When deploying a project using Wrangler, if a `functions` folder exists where the command is run, that `functions` folder will be uploaded with the project.

@@ -102,14 +102,6 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Cron definitions to trigger a Worker's `scheduled` function. Refer to [triggers](#triggers).
 
-- `usage_model` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#workers).
-
-{{<Aside type="note">}}
-After you have opted into the [Workers Standard](/workers/platform/pricing/#workers) usage model, the usage model configured in your Worker's `wrangler.toml` will be ignored . Your usage model must instead be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
-  {{</Aside>}}
-
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
@@ -130,6 +122,12 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
 
   - Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
 
+- `preserve_file_names` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
+    The default is to prepend filenames with a content hash.
+    For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
+
 - `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Whether Wrangler should send usage metrics to Cloudflare for this project.
@@ -147,6 +145,13 @@ After you have opted into the [Workers Standard](/workers/platform/pricing/#work
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
 {{</definitions>}}
+
+### Usage model
+
+As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's `wrangler.toml` will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies.
+
+Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
+
 
 ## Non-inheritable keys
 
@@ -392,9 +397,37 @@ cpu_ms = 100
 
 ## Bindings
 
+### Browser Rendering
+
+The [Workers Browser Rendering API](/browser-rendering/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
+
+A [browser binding](/workers/configuration/bindings/#browser-bindings) will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+browser = { binding = "<BINDING_NAME>" }
+
+# or
+
+[[browser]]
+binding = "<BINDING_NAME>"
+```
+
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-databases/query-databases/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -422,7 +455,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 
@@ -442,6 +475,31 @@ d1_databases = [
 binding = "<BINDING_NAME>"
 database_name = "<DATABASE_NAME>"
 database_id = "<DATABASE_ID>"
+```
+
+### Dispatch namespace bindings (Workers for Platforms)
+
+Dispatch namespace bindings allow for communication between a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamspace"` would both be valid names for the binding.
+
+- `namespace` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
+
+{{</definitions>}}
+
+```toml
+---
+header: wrangler.toml
+---
+[[dispatch_namespaces]]
+binding = "<BINDING_NAME>"
+namespace = "<NAMESPACE_NAME>"
 ```
 
 ### Durable Objects
@@ -528,6 +586,68 @@ renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array
 deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
+### Email bindings
+
+{{<render file="_send-emails-workers-intro.md" productFolder="/email-routing/" withParameters="Then, assign an array to the object `send_email` with the type of email binding you need.">}}
+
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name.
+
+- `destination_address` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The [chosen email address](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+
+- `allowed_destination_addresses` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The [allowlist of email addresses](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
+
+{{</definitions>}}
+
+{{<render file="_types-bindings.md" productFolder="/email-routing/">}}
+
+### Environment variables
+
+[Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
+
+Example:
+
+{{<render file="_envvar-example.md">}}
+
+### Hyperdrive
+
+[Hyperdrive](/hyperdrive/) bindings allow you to interact with and query any Postgres database from within a Worker.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name.
+
+- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the Hyperdrive configuration.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+
+node_compat = true # required for database drivers to function
+
+[[hyperdrive]]
+binding = "<BINDING_NAME>"
+id = "<ID>"
+```
+
+
 ### KV namespaces
 
 [Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
@@ -552,7 +672,7 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 
@@ -681,7 +801,7 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/observability/local-development-and-testing) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 
@@ -743,7 +863,6 @@ vectorize  = [
 binding = "<BINDING_NAME>"
 index_name = "<INDEX_NAME>"
 ```
-
 ### Service bindings
 
 A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
@@ -854,30 +973,7 @@ certificate_id = "<CERTIFICATE_ID2>"
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/bindings/mtls).
 
-### Email bindings
-
-{{<render file="_send-emails-workers-intro.md" productFolder="/email-routing/" withParameters="Then, assign an array to the object `send_email` with the type of email binding you need.">}}
-
-
-{{<definitions>}}
-
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name.
-
-- `destination_address` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The [chosen email address](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
-
-- `allowed_destination_addresses` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The [allowlist of email addresses](/email-routing/email-workers/send-email-workers/#types-of-bindings) you send emails to.
-
-{{</definitions>}}
-
-{{<render file="_types-bindings.md" productFolder="/email-routing/">}}
-
-### AI
+### Workers AI
 
 [Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code –
 whether that be from Workers, Pages, or anywhere via REST API.
@@ -997,18 +1093,11 @@ port = 8080
 local_protocol = "http"
 ```
 
-### Environmental variables
+### Secrets
 
-When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
+[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
 
-This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
-
-```bash
----
-header: .dev.vars
----
-SECRET_KEY=value
-```
+{{<render file="_secrets-in-dev.md">}}
 
 ## Node compatibility
 

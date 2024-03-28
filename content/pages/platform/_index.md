@@ -6,6 +6,4 @@ weight: 9
 
 # Platform
 
-{{<render file="_pages_survey.md">}}
-
 {{<directory-listing>}}

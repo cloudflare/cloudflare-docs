@@ -53,6 +53,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Caching/CDN | ✅ | ✅ | ✅ |
 | Cache Reserve | ⚫️ | 🚧{{<fnref num="29">}} | ✅ |
 | DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| HTTP/3 (with QUIC)  | ⚫️ | ✘ | ⚫️ |
 | Image Resizing | ✅ | ✘ | 🚧{{<fnref num="1">}} |
 | Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 | Onion Routing | ✘ | ✘ | ✘ |
@@ -122,7 +123,6 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Access | 🚧{{<fnref num="14">}} | 🚧{{<fnref num="15">}} | 🚧{{<fnref num="16">}} |
-| Area 1 | ⚫️ | ✅{{<fnref num="23">}} | 🚧{{<fnref num="24">}} |
 | Browser Isolation | ⚫️ | 🚧{{<fnref num="17">}} | ✅ |
 | CASB | ⚫️ | ⚫️ | ✘ |
 | Cloudflare Tunnel | ⚫️ | 🚧{{<fnref num="18">}} | ⚫️ |
@@ -155,8 +155,6 @@ Overview by product-behavior is summarized in the following table. Below you can
 {{<fnentry num="20">}}You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.{{</fnentry>}}
 {{<fnentry num="21">}}Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.{{</fnentry>}}
 {{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
-{{<fnentry num="23">}}[US, EU and India regions](/email-security/deployment/). <br> For Area 1, this is called the **Processing &amp; Inspection Boundary**.{{</fnentry>}}
-{{<fnentry num="24">}}Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).{{</fnentry>}}
 {{<fnentry num="25">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
 {{<fnentry num="26">}}BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
 {{<fnentry num="27">}}Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).{{</fnentry>}}

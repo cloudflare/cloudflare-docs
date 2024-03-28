@@ -141,7 +141,7 @@ spec:
 
 {{</details>}}
 
-The corresponding service definition should also specify the the ports and target ports for the containers (in this case, the database service and the SSH proxy service).
+The corresponding service definition should also specify the ports and target ports for the containers (in this case, the database service and the SSH proxy service).
 
 {{<details header="Service Definition">}}
 
