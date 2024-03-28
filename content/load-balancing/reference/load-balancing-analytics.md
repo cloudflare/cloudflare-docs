@@ -4,7 +4,7 @@ pcx_content_type: how-to
 weight: 46
 meta:
   title: Load balancing analytics
-  description: Use load balancing analytics to evaluate traffic flow, assess the health of origin servers, and review health changes over time.
+  description: Use load balancing analytics to evaluate traffic flow, assess the health of endpoints, and review health changes over time.
 ---
 
 # Load balancing analytics
@@ -12,7 +12,7 @@ meta:
 Using load balancing analytics, you can:
 
 * Evaluate traffic flow.
-* Assess the health status of origin servers in your pools.
+* Assess the health status of endpoints in your pools.
 * Review changes in pools and pool health over time.
 
 {{<Aside type="note">}}
@@ -30,10 +30,10 @@ To view **Overview** metrics for your load balancer, go to **Traffic** > **Load 
 These metrics show the number of requests routed to specific pools within a load balancer, helping you:
 
 * Evaluate the effects of adding or removing a pool.
-* Decide when to create new origin pools.
+* Decide when to create new pools.
 * Plan for peak traffic demands and future infrastructure needs.
 
-Add additional filters for specific pools, times, regions, and origins.
+Add additional filters for specific pools, times, regions, and endpoints.
 
 {{<Aside type="note">}}
 

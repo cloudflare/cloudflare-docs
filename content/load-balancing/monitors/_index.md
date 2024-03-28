@@ -10,7 +10,7 @@ weight: 5
 
 {{<render file="_health-check-diagram.md">}}
 
-Health monitor requests that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
+Health monitor requests that result in a status change for an endpoint are recorded as events in the Load Balancing event logs.
 
 {{<Aside type="note">}}
 
@@ -46,11 +46,11 @@ When you [attach a monitor to a pool](/load-balancing/monitors/create-monitor/#c
 
 ## Host header prioritization
 
-The host headers used on health monitor requests can be configured either [on the monitor itself](/load-balancing/monitors/create-monitor/) or on the [origins within an origin pool](/load-balancing/pools/create-pool/).
+The host headers used on health monitor requests can be configured either [on the monitor itself](/load-balancing/monitors/create-monitor/) or on the [endpoints within a pool](/load-balancing/pools/create-pool/).
 
-When a host header is specified both on the monitor and on the origin, the host header configured on the origin takes precedence over the host header configured on the monitor.
+When a host header is specified both on the monitor and on the endpoint, the host header configured on the endpoint takes precedence over the host header configured on the monitor.
 
-When no host header is specified, Cloudflare uses the **Origin Address** configured on the origins as the host header for the health monitor requests.
+When no host header is specified, Cloudflare uses the **Origin Address** configured on the endpoints as the host header for the health monitor requests.
 
 For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 

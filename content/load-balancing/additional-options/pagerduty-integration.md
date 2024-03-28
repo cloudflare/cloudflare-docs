@@ -10,4 +10,4 @@ To integrate Cloudflare health monitor notifications with PagerDuty, follow the 
 
 PagerDuty will generate an email address that will create incidents based on emails sent to that address. For help locating that email address, refer to the [PagerDuty documentation](https://www.pagerduty.com/docs/guides/email-integration-guide/).
 
-When creating the Notifier object, configure the email to go to the PagerDuty integration email. Consequently, whenever a pool or origin goes down, an Incident will be created to capture it.
+When creating the Notifier object, configure the email to go to the PagerDuty integration email. Consequently, whenever a pool or endpoint goes down, an Incident will be created to capture it.

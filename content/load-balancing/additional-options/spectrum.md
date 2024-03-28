@@ -53,7 +53,7 @@ The exact settings will vary depending on your use case. Refer to the following 
     *   Choose whether to **Save as Draft** or **Save and Deploy**.
 
 ### 2. Configure your Spectrum application
- 
+
 {{<render file="_spectrum-with-load-balancer-dash.md" productFolder="spectrum">}}
 
 ---
@@ -62,5 +62,5 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 {{<render file="_spectrum-lb-limitations.md">}}
 
-[^1]: Within Cloudflare, pools represent your origin servers and how they are organized. As such, a pool can be a group of several origin servers, or you could also have only one origin server per pool.
+[^1]: Within Cloudflare, pools represent your endpoints and how they are organized. As such, a pool can be a group of several endpoints, or you could also have only one endpoint (an origin server, for example) per pool.
 [^2]: A fallback pool is the pool of last resort. When all pools are disabled or unhealthy, this is where the load balancer will send traffic.

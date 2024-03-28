@@ -6,20 +6,20 @@ weight: 15
 
 # Load shedding
 
-Use load shedding to prevent an at-risk origin from [becoming unhealthy](/load-balancing/understand-basics/health-details/) and starting the failover process.
+Use load shedding to prevent an at-risk endpoint from [becoming unhealthy](/load-balancing/understand-basics/health-details/) and starting the failover process.
 
 Once you configure load shedding on a pool, that pool will begin diverting traffic to other pools according to your load shedding settings and the load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/).
 
-## Step 1 — Identify at-risk origins
+## Step 1 — Identify at-risk endpoints
 
-Using your internal metrics, identify origins at risk of reaching their failure threshold.
+Using your internal metrics, identify endpoints at risk of reaching their failure threshold.
 
-* If your origin is seeing increased traffic but is not yet at risk of failure, start with [Step 2](#step-2--shed-default-traffic-from-a-pool).
-* If your origin is about to fail, start with [Step 4](#step-4--shed-additional-traffic-optional).
+* If your endpoint is seeing increased traffic but is not yet at risk of failure, start with [Step 2](#step-2--shed-default-traffic-from-a-pool).
+* If your endpoint is about to fail, start with [Step 4](#step-4--shed-additional-traffic-optional).
 
 ## Step 2 — Shed default traffic from a pool
 
-Once you have identified an at-risk origin, shed a small amount of **Default** traffic from that origin's pool. This traffic is not affiliated with existing [Session affinity](/load-balancing/understand-basics/session-affinity/) sessions.
+Once you have identified an at-risk endpoint, shed a small amount of **Default** traffic from that endpoint's pool. This traffic is not affiliated with existing [Session affinity](/load-balancing/understand-basics/session-affinity/) sessions.
 
 Configure load shedding via the [dashboard](#configure-via-dashboard) or the [API](#configure-via-api).
 
@@ -37,8 +37,8 @@ To enable load shedding for a specific pool via the dashboard:
 
 When shedding **Default traffic**, you have two **Policy** options:
 
-* **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
-* **IP hash**: Sheds the percentage of IP address hash space specified in the *Shed %*. Ensures requests from the same IP will hit the same origin, but may shed a significantly higher or lower percentage of requests.
+* **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different endpoints.
+* **IP hash**: Sheds the percentage of IP address hash space specified in the *Shed %*. Ensures requests from the same IP will hit the same endpoint, but may shed a significantly higher or lower percentage of requests.
 
 For more guidance on choosing a policy, refer to [Shedding policies](#shedding-policies).
 
@@ -96,7 +96,7 @@ Since shedding **Session Affinity traffic** will disrupt [existing sessions](/lo
 
 ## Step 5 — Disable load shedding
 
-Once an origin is no longer at risk, remove load shedding from the pool.
+Once an endpoint is no longer at risk, remove load shedding from the pool.
 
 To remove load shedding in the dashboard, perform the same steps as [Configure load shedding via the dashboard](#configure-via-dashboard) but set the **Shed %** to `0` for both **Default traffic** and **Session affinity traffic**.
 
@@ -112,15 +112,15 @@ A *Random* policy:
 
 * Randomly sheds the percentage of requests specified in the *Shed %*.
 * Distributes traffic more accurately because it sheds at the request level.
-* May cause requests from the same IP to hit different origins, potentially leading to cache misses, inconsistent latency, or session disruption for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing).
+* May cause requests from the same IP to hit different endpoints, potentially leading to cache misses, inconsistent latency, or session disruption for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing).
 
 An *IP hash* policy:
 
 * Sheds the percentage of IP address hash space specified in the *Shed %*.
-* Ensures requests from the same IP will hit the same origin, which will increase cache hits, provide consistent latency, and preserve sessions.
+* Ensures requests from the same IP will hit the same endpoint, which will increase cache hits, provide consistent latency, and preserve sessions.
 * Can over- or under-shed requests, since hashing does not guarantee a perfectly even IP distribution and individual IPs may be responsible for different percentages of your requests.
 
-Choose a *Random* policy when you want a more accurate distribution of raw requests and an *IP hash* policy when you want to prevent a single IP from flapping between different origins.
+Choose a *Random* policy when you want a more accurate distribution of raw requests and an *IP hash* policy when you want to prevent a single IP from flapping between different endpoints.
 
 For **Session Affinity traffic**, you can only use an *IP hash* policy since these requests relate to existing sessions. Only increase the *Shed %* if you are comfortable disrupting [existing sessions](/load-balancing/understand-basics/session-affinity/).
 
@@ -130,4 +130,4 @@ If all pools within a load balancer have *Load shedding* enabled, some traffic w
 
 ### Pools in multiple load balancers
 
-If you enable load shedding on an origin pool, it will shed the same percentage of traffic across all your load balancers. If you need an origin to shed different percentages of traffic for different load balancers, put that origin in multiple pools.
+If you enable load shedding on a pool, it will shed the same percentage of traffic across all your load balancers. If you need an endpoint to shed different percentages of traffic for different load balancers, put that endpoint in multiple pools.
