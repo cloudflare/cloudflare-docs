@@ -83,6 +83,21 @@ A third-party process (usually a third-party DNS software) is bound to port 53, 
 1. Remove or disable DNS interception in the third-party process.
 2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
 
+## CF_FAILED_READ_SYSTEM_DNS_CONFIG
+
+### Symptoms
+
+- Unable to connect WARP
+
+### Cause
+
+The system DNS configuration was invalid and so we could not read it. This could be an invalid nameserver, a mis-typed search domain, etc.
+
+### Resolution
+
+On macOS/Linux, check if `/etc/resolv.conf` contains an invalid character:
+https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#maclinux-the-devices-etcresolvconf-file-has-an-invalid-character
+
 ## CF_FAILED_TO_SET_MTLS
 
 ### Symptoms
