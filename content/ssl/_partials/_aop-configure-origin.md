@@ -11,7 +11,7 @@ Check the examples below for Apache and NGINX or refer to your origin web server
 
 {{<details header="Apache example">}}
 
-For this example, you would have saved the certificate `/path/to/origin-pull-ca.pem`.
+For this example, you would have downloaded and renamed the `authenticated_origin_pull_ca.pem` certificate file, and uploaded it to `/path/to/origin-pull-ca.pem`.
 
 ```txt
 SSLVerifyDepth 1
@@ -22,7 +22,7 @@ SSLCACertificateFile /path/to/origin-pull-ca.pem
 
 {{<details header="NGINX example">}}
 
-For this example, you would have saved your certificate to `/etc/nginx/certs/cloudflare.crt`.
+For this example, you would have downloaded and renamed the `authenticated_origin_pull_ca.pem` certificate file, and uploaded it to `/etc/nginx/certs/cloudflare.crt`.
 
 ```txt
 ssl_verify_client optional;
