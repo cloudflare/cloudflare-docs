@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Alongside its JA3 Fingerprint capabilities, [**JA4 Fingerprint**](https://github.com/FoxIO-LLC/ja4) sorts ClientHello extensions and reduces the amount of JA3 fingerprints to a smaller number of recognizable fingerprints for known browsers. 
+JA4 Fingerprint adds new functionality by sorting ClientHello extensions and reducing the total number of unique fingerprints for modern browsers.
