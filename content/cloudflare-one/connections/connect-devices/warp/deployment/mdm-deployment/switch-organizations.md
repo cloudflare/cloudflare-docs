@@ -48,8 +48,12 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
   <dict>
     <key>organization</key>
     <string>mycompany</string>
+    <key>override_api_endpoint</key>
+    <string>203.0.113.0</string>
+    <key>override_doh_endpoint</key>
+    <string>203.0.113.0</string>
     <key>override_warp_endpoint</key>
-    <string>203.0.113.0:500</string>
+    <string>203.0.113.0:2408</string>
     <key>display_name</key>
     <string>Cloudflare China network</string>
   </dict>
