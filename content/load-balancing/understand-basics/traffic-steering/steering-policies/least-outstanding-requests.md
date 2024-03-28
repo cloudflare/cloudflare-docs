@@ -28,7 +28,7 @@ header: Load Balancers
 Refer to the [API documentation](/api/operations/load-balancers-update-load-balancer) for more information on the load balancer configuration.
 
 {{<Aside type="note">}}
-Least Outstanding Requests steering can also be configured on a pool as an [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-outstanding-requests-pools/), taking into account outstanding request counts and weights for origins within the pool.
+Least Outstanding Requests steering can also be configured on a pool as an [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-outstanding-requests-pools/), taking into account outstanding request counts and weights for endpoints within the pool.
 {{</Aside>}}
 
 ## Limitations

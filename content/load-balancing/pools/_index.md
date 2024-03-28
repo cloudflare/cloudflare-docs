@@ -6,7 +6,7 @@ weight: 4
 
 # Origin pools
 
-{{<glossary-definition term_id="origin pool">}}
+{{<glossary-definition term_id="pool">}}
 
 {{<Aside type="note">}}
 
