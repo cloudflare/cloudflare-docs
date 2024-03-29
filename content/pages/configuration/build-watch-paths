@@ -5,7 +5,7 @@ title: Build watch paths
 
 # Build watch paths
 
-When connected to your git source, Pages allows you to watch for specific paths to build. By default, Pages will trigger a deployment any time you commit to your repository. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off. 
+When connected to your git source, Pages allows you to watch for push events affecting specific paths to build. By default, Pages will trigger a deployment any time you push to your repository. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off. 
 
 ## Configure paths 
 
