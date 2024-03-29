@@ -2200,7 +2200,7 @@ The minimum required wrangler version to use these commands is 3.40.0.
 
 ### `deploy`
 
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/wrangler/commands/#upload). 
+Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload). 
 
 
 ```txt

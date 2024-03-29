@@ -15,7 +15,7 @@ You can upload changes (versions) to your Worker independent of changing the ver
 
 Using versions and deployments is useful if:
 
-- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker.
+- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy or blue/green deployment strategy.
 - You want to monitor for performance differences when deploying new versions of your Worker.
 - You have a CI pipeline configured for Workers but want to cut manual releases.
 
@@ -43,7 +43,7 @@ State changes for associated Workers [storage resources](/workers/platform/stora
 
 Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker. 
 
-By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to create a rolling deployment strategy by incrementally shifting traffic a new version of the Worker.
+By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to create a rolling deployment strategy or blue/green deployment strategy. 
 
 You can also track metadata associated with a deployment, including: the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, you can configure a deployment message when you create a deployment. 
 
@@ -61,11 +61,11 @@ Changes uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy), v
 
 To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
 
-Versions created in this way can then be deployed all at once or gradually deployed using the [wranger versions deploy --experimental-versions](/wrangler/commands/#deploy-2) command or via the Cloudflare dashboard under the **Deployments** tab. 
+Versions created in this way can then be deployed all at once or gradually deployed using the [wranger versions deploy --experimental-versions](/workers/wrangler/commands/#deploy-2) command or via the Cloudflare dashboard under the **Deployments** tab. 
 
 {{<Aside type="note">}}
 
-When using [wrangler](/workers/wrangler/), changes made to a Worker's triggers [routes,  domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/) need to be applied with the command [`wrangler triggers deploy --experimental-versions`](/wrangler/commands/#triggers). 
+When using [wrangler](/workers/wrangler/), changes made to a Worker's triggers [routes,  domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/) need to be applied with the command [`wrangler triggers deploy --experimental-versions`](/workers/wrangler/commands/#triggers). 
 {{</Aside>}}
 
 {{<Aside type="note">}}
