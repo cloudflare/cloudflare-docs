@@ -9,7 +9,7 @@ Similar to the network onboarding practices in the [Replace your VPN](/learning-
 
 ## Available on-ramps
 
-The primary ways to source multi-device or network traffic to the Cloudflare network are via the [WARP Connector](#warp-connector) or [DNS filtering locations](#dns-filtering-locations). Alternatively, Enterprise users can on-ramp traffic by adding [Magic WAN](#magic-wan) to their plan and configuring Magic WAN Connector or a dedicated third-party device.
+The primary ways to source multi-device or network traffic to the Cloudflare network are via the [WARP Connector](#warp-connector) as an all-ports traffix proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations). Alternatively, Enterprise users can add [Magic WAN](#magic-wan) to their plan and configure Magic WAN Connector or a dedicated third-party device.
 
 {{<heading-pill style="beta" heading="h3">}}WARP Connector{{</heading-pill>}}
 
@@ -20,6 +20,12 @@ WARP Connector supports both ingressing and egressing traffic to and from your p
 For more information on setting up Cloudflare Tunnel via WARP Connector, refer to [Set up WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/).
 
 ### DNS filtering locations
+
+{{<glossary-definition term_id="DNS location">}}
+
+The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router. Alternatively, you can on-ramp devices or specific applications via [DNS over HTTPS](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/) or [DNS over TLS](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/).
+
+For more information on setting up DNS locations, refer to [Add locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/).
 
 ### Magic WAN
 
