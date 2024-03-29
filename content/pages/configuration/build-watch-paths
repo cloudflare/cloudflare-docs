@@ -9,14 +9,19 @@ When connected to your git source, Pages allows you to watch for push events aff
 
 ## Configure paths 
 
-Because commits to your repo by default trigger an automatic build, you can configure both include and exclude paths for your repository. This way, commits that alter any files within the includes list will trigger automatic builds, and commits that alter only files within the excludes list will skip the build. 
+Because pushes to your repo by default trigger an automatic build, you can configure both include and exclude paths for your repository. This way, commits that alter any files within the includes list will trigger automatic builds, and commits that alter only files within the excludes list will skip the build. 
 
 To configure deployment options, go to your Pages project > Settings > Builds & deployments > Build watch paths. Pages will default to setting your project’s includes paths to everything ([*]) and excludes paths to nothing (`[]`).  
 
 The configuration fields can be filled in two ways:
 
-* **Static path directories**: Enter the precise name of the directory or file you are looking to include or exclude (for example, `test` or `docs/README.md`).
-* **Wildcard syntax:** Use wildcards to match multiple path directories. You can specify wildcards at the start or end of your rule. The order of execution for the configuration is (1) Excludes, (2) Includes, (3) Skip. Pages will process the exclude configuration first, then go to the include configuration. If a path directory does not match either then it will be skipped.
+* **Static filepaths**: Enter the precise name of the file you are looking to include or exclude (for example, `docs/README.md`).
+* **Wildcard syntax:** Use wildcards to match multiple path directories. You can specify wildcards at the start or end of your rule. 
+
+For each path in a push event, build watch paths will be evaluated as follows:
+  * Paths satisfying excludes conditions are ignored first 
+  * Any remaining paths are checked against includes conditions 
+  * If any matching path is found, a build is triggered. Otherwise the build is skipped
 
 ## Examples
 
