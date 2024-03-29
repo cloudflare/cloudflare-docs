@@ -36,3 +36,5 @@ Only available on Enterprise plans.
 [Magic WAN](/magic-wan/) is Cloudflare's offering most analogous to a traditional SD-WAN. Magic WAN is typically deployed via an IPSec or GRE tunnel terminating on customer devices (such as firewalls or routers), or via our Magic WAN Connector hardware device. You can also be deploy Magic WAN using [Cloudflare Network Interconnect](/network-interconnect/) (CNI) at private peering locations or some public cloud instances (where compatible).
 
 Magic WAN on-ramps and off-ramps traffic via your connections after transiting the Cloudflare global network. Gateway can also apply network and HTTP policies to this traffic for secure egress.
+
+For more information on how Magic WAN integrates with Zero Trust, refer to [Zero Trust integration](/magic-wan/zero-trust/).
