@@ -8,6 +8,8 @@ meta:
 
 # 1.1.1.1 IP addresses
 
+TEST
+
 Consider the tables below to know which IPv4 or IPv6 addresses are used by the different Cloudflare DNS resolver offerings.
 
 For detailed guidance refer to [Set up](/1.1.1.1/setup/).
