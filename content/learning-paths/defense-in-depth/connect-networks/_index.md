@@ -7,7 +7,7 @@ layout: learning-module
 
 # Connect networks to Cloudflare
 
-After connecting your devices to Cloudflare, you can route their traffic through your DNS, network, and HTTP policies. However, not every device can run a Zero Trust client. This module offers detail on connecting networks to Cloudflare to apply policies.
+After connecting your devices to Cloudflare, you can route their traffic through your DNS, network, and HTTP policies. However, not every device can run a Zero Trust client. This module offers detail on connecting your networks to the Cloudflare global network to apply your policies.
 
 ## Objectives
 
