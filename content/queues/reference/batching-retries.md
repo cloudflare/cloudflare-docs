@@ -1,10 +1,10 @@
 ---
-title: Batching and Retries
+title: Batching, Retries and Delays
 pcx_content_type: concept
 weight: 4
 ---
 
-# Batching and Retries
+# Batching, Retries and Delays
 
 ## Batching
 
