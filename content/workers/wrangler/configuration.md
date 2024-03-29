@@ -1206,4 +1206,4 @@ If you change your environment variables in the Cloudflare dashboard, Wrangler w
 
 If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
-Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
+Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

@@ -213,7 +213,7 @@ header: wrangler.toml
   retry_delay = 300 # delay any retried message by 5 minutes before re-attempting delivery
 ```
 
-Note that if you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
+If you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
 
 Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
 
