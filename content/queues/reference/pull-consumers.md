@@ -185,7 +185,7 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 Messages pulled by a consumer need to be either acknowledged or marked for retry.
 
-To acknowledge and/or mark messages to be retried, make a HTTP POST request to `/ack` endpoint of your queue per the [Queues REST API](https://developers.cloudflare.com/api/operations/queue-v2-messages-acknowledge):
+To acknowledge and/or mark messages to be retried, make a HTTP POST request to `/ack` endpoint of your queue per the [Queues REST API](https://developers.cloudflare.com/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
@@ -198,7 +198,7 @@ let resp = await fetch(
       authorization: `Bearer ${QUEUES_API_TOKEN}`,
     },
     // If you have no messages to retry, you can specify an empty array - retries: []
-    body: JSON.stringify({ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4" }]}),
+    body: JSON.stringify({ acks: [{ lease_id: "lease_id1" }, { lease_id: "lease_id2" }, { lease_id: "etc" }], retries: [{ lease_id: "lease_id4" }]}),
   }
 );
 ```
@@ -207,7 +207,7 @@ You may optionally specify the number of seconds to delay a message for when mar
 
 ```json
 {
-  acks: ["lease_id1", "lease_id2", "etc"],
+  acks: [{ lease_id: "lease_id1" }, { lease_id: "lease_id2" }, { lease_id: "lease_id3" }],
   retries: [{ lease_id: "lease_id4", delay_seconds: 600}]
 }
 ```
