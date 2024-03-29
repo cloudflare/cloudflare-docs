@@ -21,4 +21,4 @@ To create a new DNS policy:
 
 6. Select **Create policy**.
 
-For more information, refer to [Egress policies](/cloudflare-one/policies/gateway/egress-policies/).
+For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).

@@ -11,9 +11,7 @@ Add the following recommended HTTP policies.
 
 Bypass HTTP inspection for applications that use embedded certificates. This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
-| Selector    | Operator | Value            | Action         |
-| ----------- | -------- | ---------------- | -------------- |
-| Application | in       | _Do Not Inspect_ | Do Not Inspect |
+{{<render file="gateway/policies/_do-not-inspect-applications.md" productFolder="cloudflare-one">}}
 
 {{</details>}}
 
