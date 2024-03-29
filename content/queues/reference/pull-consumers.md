@@ -110,7 +110,7 @@ You will need to note the token down: it will only be displayed once.
 
 ## 3. Pull messages
 
-To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-create-queue-consumer) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
+To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-v2-messages-pull) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
@@ -183,7 +183,9 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 ## 4. Acknowledge messages
 
-Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
+Messages pulled by a consumer need to be either acknowledged or marked for retry.
+
+To acknowledge and/or mark messages to be retried, make a HTTP POST request to `/ack` endpoint of your queue per the [Queues REST API](https://developers.cloudflare.com/api/operations/queue-v2-messages-acknowledge):
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
@@ -204,7 +206,10 @@ let resp = await fetch(
 You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, delay_seconds: number }` object in the `retries` array:
 
 ```json
-{ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4", delay_seconds: 600}] }
+{
+  acks: ["lease_id1", "lease_id2", "etc"],
+  retries: [{ lease_id: "lease_id4", delay_seconds: 600}]
+}
 ```
 
 Additionally:
