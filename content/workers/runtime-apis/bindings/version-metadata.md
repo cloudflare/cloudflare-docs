@@ -11,31 +11,24 @@ The version metadata binding can be used to access metadata associated with a [v
 
 Worker version ID and version tag are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version.
 
-Update your Worker's `wrangler.toml` file to include the version metadata binding:
+To use the version metdata binding, ipdate your Worker's `wrangler.toml` file:
 ```
 ---
 header: wrangler.toml
 ---
-[[unsafe.bindings]]
-name = "version"
-type = "version_metadata"
+[version_metadata]
+binding = "CF_VERSION_METADATA"
 ```
-
-{{<Aside type="warning">}}
-
-Currently, the `version_metadata` binding is in beta and uses the `unsafe.bindings` flag. Cloudflare will be adding first-class support for this new binding in the near future. 
-
-{{</Aside>}}
 
 ### Interface
 
-An example of how to access the version ID and version tag from within a Worker:
+An example of how to access the version ID and version tag from within a Worker to send events to [Workers Analytics Engine](/analytics/analytics-engine/):
 
 ```js
 export default {
     async fetch(request, env, ctx) {
-      const { versionId } = env.VERSION.id;
-      const { versionTag } = env.VERSION.tag;
+      const { versionId } = env.CF_VERSION_METADATA.id;
+      const { versionTag } = env.CF_VERSION_METADATA.tag;
       env.WAE.writeDataPoint({
       'indexes': [versionId],
       'blobs': [versionTag],

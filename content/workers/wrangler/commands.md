@@ -2104,7 +2104,7 @@ wrangler whoami
 
 The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
 
-The minimum required wrangler version to use these commands is 3.39.0.
+The minimum required wrangler version to use these commands is 3.40.0.
 
 {{</Aside>}}
 
@@ -2142,7 +2142,14 @@ wrangler versions deploy [OPTIONS] --experimental-versions
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
     {{</definitions>}}
 
+{{<Aside type="note">}}
 
+The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2    --experimental-versions`
+
+For example:
+`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90%    --experimental-versions`
+
+{{</Aside>}}
 ### `list`
 
 Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
@@ -2179,6 +2186,36 @@ wrangler versions view [OPTIONS] --experimental-versions
 {{</definitions>}}
 
 ---
+## `triggers`
+
+This command is currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+{{<Aside type="warning">}}
+
+The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+
+The minimum required wrangler version to use these commands is 3.40.0.
+
+{{</Aside>}}
+
+### `deploy`
+
+Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/wrangler/commands/#upload). 
+
+
+```txt
+wrangler triggers deploy [OPTIONS] --experimental-versions
+```
+
+{{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+    {{</definitions>}}
+
+
+--
 
 ## `deployments`
 
@@ -2234,7 +2271,7 @@ wrangler deployments list [OPTIONS]
 
 The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
 
-The minimum required wrangler version to use these commands is 3.39.0. 
+The minimum required wrangler version to use these commands is 3.40.0. 
 {{</Aside>}}
 
 ### `list --experimental-versions`
@@ -2284,7 +2321,7 @@ wrangler deployments status --experimental-versions
 
 [Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The `rollback` command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
 
-There are limitations on what deployments you can rollback to. Refer to [Rollbacks Limits](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
+There are limitations on which versions you can rollback to. Refer to [Rollbacks Limits](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
 
 {{<Aside type="warning">}}
 A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.

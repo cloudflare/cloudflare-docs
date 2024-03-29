@@ -38,7 +38,7 @@ The following section guides you through an example usage of gradual deployments
 
 {{<Aside type="note">}}
 
-Minimum required wrangler version: 3.36.0. 
+Minimum required wrangler version: 3.40.0. 
 
 {{</Aside>}}
 
@@ -122,7 +122,7 @@ You can do this by setting the `Cloudflare-Workers-Version-Key` header on the in
 curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
 ```
 
-For a given [deployment](/workers/configuration/deployments/), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
+For a given [deployment](/workers/configuration/versions-and-deployments/#deployments), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
 
 You can set the `Cloudflare-Workers-Version-Key` header both when making an external request from the Internet to your Worker, as well as when making a subrequest from one Worker to another Worker using a [service binding](/workers/runtime-apis/bindings/service-bindings/).
 
@@ -181,13 +181,13 @@ scriptVersion: {
 
 ### Runtime binding
 
-Use the [Version metadata binding](/workers/runtime-apis/bindings/script-version/) in to access version ID or version tag in your Worker.
+Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) in to access version ID or version tag in your Worker.
 
 ## Limits
 
 ### Deployments limit 
 
-You can only create a new deployment with the last 10 versions of your Worker
+You can only create a new deployment with the last 10 uploaded versions of your Worker. 
 
 ### Unsupported features
 

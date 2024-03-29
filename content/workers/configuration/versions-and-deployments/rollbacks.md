@@ -9,11 +9,9 @@ meta:
 
 You can roll back to a previously deployed [version](/workers/configuration/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/#rollback) or the Cloudflare dashboard. Rolling back to a previous version of your Worker will immediately create a new [deployment](/workers/configuration/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains. 
 
-Roll back via [Wrangler](/workers/configuration/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/configuration/deployments/#via-the-cloudflare-dashboard-1).
-
 ## Via Wrangler
 
-To roll back to a specified version of your Worker via Wrangler, use the [`wrangler rollback`]((/workers/wrangler/commands/#rollback)) command.
+To roll back to a specified version of your Worker via Wrangler, use the [`wrangler rollback`](/workers/wrangler/commands/#rollback) command.
 
 ## Via the Cloudflare Dashboard
 
