@@ -23,6 +23,10 @@ For each path in a push event, build watch paths will be evaluated as follows:
   * Any remaining paths are checked against includes conditions 
   * If any matching path is found, a build is triggered. Otherwise the build is skipped
 
+Pages will bypass the path matching for a push event and default to building the project if: 
+* A push event contains 0 file changes, in case a user pushes a dummy push event 
+* A push event contains 3000+ file changes or 20+ commits
+
 ## Examples
 
 ### Example 1
@@ -39,6 +43,7 @@ If you want to trigger a build for any changes, but want to exclude changes to a
 If you want to trigger a build for a specific file or specific filetype, for example all files ending in `.md`.
 * Include paths: `*.md`
 * Exclude paths: ``
+
 
 
 
