@@ -42,8 +42,8 @@ Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspect
 ### WebSocket metrics
 Durable Objects using [WebSockets](/durable-objects/reference/websockets/) will see request metrics across several GraphQL datasets because WebSockets have different types of requests.
 
-- Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often don't terminate until the Durable Object terminates.
-- Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [hibernation](/durable-objects/reference/websockets/#websocket-hibernation), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
+- Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
+- Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/reference/websockets/#websocket-hibernation), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
 
 ## Example GraphQL query for Durable Objects
 
