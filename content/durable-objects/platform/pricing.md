@@ -45,17 +45,17 @@ This example represents a moderately trafficked Durable Objects based applicatio
 In this scenario, the estimated monthly cost would be calculated as:
 
 **Requests**:
-- 50 requests to each of the 100 Durable Objects to establish the WebSockets (5,000 connections created each day, total 150,000 connection requests).
-- 50 messages per minute \* 100 Durable Objects \* 60 minutes \* 8 hours \* 30 days = (72,000,000 requests + 150,000 connection requests).
-- (150,000 + 72 million) requests / 20 for WebSocket billing ratio = ~3.6 million.
-- (~3.6 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.39.
+- 50 WebSocket connections \* 100 Durable Objects to establish the WebSockets = 5,000 connections created each day \* 30 days = 150,000 WebSocket connection requests.
+- 50 messages per minute \* 100 Durable Objects \* 60 minutes \* 8 hours \* 30 days = 72,000,000 WebSocket message requests.
+- 150,000 + (72 million requests / 20 for WebSocket message billing ratio) = 3.75 million billing request.
+- (3.75 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.41.
 
 **Compute Duration**:
 - 100 Durable Objects \* 60 seconds \* 60 minutes \* 8 hours \* 30 days = 86,400,000 seconds.
 - 86,400,000 seconds \* 128 MB / 1 GB = 11,059,200 GB-s.
 - (11,059,200 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $133.24.
 
-**Estimated total**: $0.39 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $138.63 per month.
+**Estimated total**: $0.41 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $138.38 per month.
 
 ### Example 3
 
@@ -67,10 +67,10 @@ This example represents a horizontally scaled Durable Objects based application 
 In this scenario, the estimated monthly cost would be calculated as:
 
 **Requests**:
-- 100 requests to establish the WebSockets.
-- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
-- (100 + 259.2 million) requests / 20 for WebSocket billing ratio = 12,960,000 requests
-- (12.9 million requests - included 1 million requests) x $0.15 / 1,000,000 = $1.79
+- 100 WebSocket connection requests.
+- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 WebSocket message requests.
+- 100 + (259.2 million requests / 20 for WebSocket billing ratio) = 12,960,100 requests.
+- (12.9 million requests - included 1 million requests) x $0.15 / 1,000,000 = $1.79.
 
 **Compute Duration**:
 - 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
@@ -89,10 +89,10 @@ This example represents a moderately trafficked Durable Objects based applicatio
 In this scenario, the estimated monthly cost would be calculated as:
 
 **Requests**:
-- 100 requests to each of the 100 Durable Objects to establish the WebSockets (10,000 initial connections).
-- 100 messages per minute<sup>1</sup> \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests
-- (10,000 + 432 million) requests / 20 for WebSocket billing ratio = 21.6 million requests
-- (21.6 million requests - included 1 million requests) x $0.15 / 1,000,000 = $3.09
+- 100 WebSocket connections \* 100 Durable Objects to establish the WebSockets = 10,000 initial WebSocket connection requests.
+- 100 messages per minute<sup>1</sup> \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests.
+- 10,000 + (432 million requests / 20 for WebSocket billing ratio) = 21,610,000 million requests.
+- (21.6 million requests - included 1 million requests) x $0.15 / 1,000,000 = $3.09.
 
 **Compute Duration**:
 - 100 Durable Objects \* 1 second<sup>2</sup> \* 60 minutes \* 24 hours \* 30 days = 4,320,000 seconds
