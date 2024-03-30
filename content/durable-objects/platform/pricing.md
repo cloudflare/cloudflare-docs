@@ -55,7 +55,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 - 86,400,000 seconds \* 128 MB / 1 GB = 11,059,200 GB-s.
 - (11,059,200 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $133.24.
 
-**Estimated total**: $0.41 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $138.38 per month.
+**Estimated total**: $0.41 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $138.65 per month.
 
 ### Example 3
 
