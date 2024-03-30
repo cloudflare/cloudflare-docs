@@ -100,6 +100,7 @@ Once you have run the above command, you will need to edit the output SQL file t
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
 
 ## Export an existing D1 database
+
 In addition to importing existing SQLite databases, you might want to import an existing D1 database for local development or testing. To do so, you can export a D1 database to a `.sql` file using [wrangler d1 export](TODO) and then execute (import) with `d1 execute --file`.
 
 To export full D1 database schema and data:
@@ -119,8 +120,13 @@ npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data=
 
 To export only D1 table schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data=tru
+npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data=true
 ```
+
+### Known limitations
+
+- Export is not supported for virtual tables, including databases with virtual tables. D1 supports virtual tables for full-text search using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html). As a workaround, delete any virtual tables, export, and then recreate virtual tables.
+- A running export will block other database requests.
 
 ## Troubleshooting
 
