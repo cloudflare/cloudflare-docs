@@ -101,7 +101,7 @@ You can then follow the steps to [import an existing database](#import-an-existi
 
 ## Export an existing D1 database
 
-In addition to importing existing SQLite databases, you might want to import an existing D1 database for local development or testing. To do so, you can export a D1 database to a `.sql` file using [wrangler d1 export](TODO) and then execute (import) with `d1 execute --file`.
+In addition to importing existing SQLite databases, you might want to import an existing D1 database for local development or testing. To do so, you can export a D1 database to a `.sql` file using [wrangler d1 export](/workers/wrangler/commands/#export) and then execute (import) with `d1 execute --file`.
 
 To export full D1 database schema and data:
 ```sh
