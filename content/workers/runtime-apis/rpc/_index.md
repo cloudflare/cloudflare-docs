@@ -23,8 +23,3 @@ The client, in this case Worker A, calls Worker B and tells it to execute a spec
 ## Details
 
 {{<directory-listing showDescriptions="true">}}
-
-
-
-
-
