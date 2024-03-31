@@ -23,8 +23,10 @@ Context is exposed via the following places:
 - Fire off events to external analytics providers. (note that when you use [Workers Analytics Engine](/analytics/analytics-engine/), you do not need to use `waitUntil`)
 - Put items into cache using the [Cache API](/workers/runtime-apis/cache/)
 
-{{<Aside type="note">}}
-[Cloudflare Queues](/queues/) and [Tail Workers](/workers/observability/logging/tail-workers/) are purpose-built options for performing work out-of-band, without blocking returning a response back to the client Worker. In many cases, you can use them instead of `ctx.waitUntil()`.
+{{<Aside type="note" header="Alternatives to waitUntil">}}
+If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logging/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
+
+[Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking returning a response back to the client Worker.
 {{</Aside>}}
 
 You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
