@@ -23,7 +23,7 @@ This guide will instruct you through installing and setting up the `@cloudflare/
 Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
 
 ```sh
-$ npm install vitest@1.3.0 --save-dev --save-exact
+$ npm install vitest@1.4.0 --save-dev --save-exact
 $ npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
@@ -31,7 +31,7 @@ The above commands will add the packages to your `package.json` file and install
 
 {{<Aside type="note">}}
 
-Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.3.0.
+Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.4.0.
 
 {{</Aside>}}
 

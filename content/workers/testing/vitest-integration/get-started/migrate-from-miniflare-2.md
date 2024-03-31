@@ -29,7 +29,7 @@ First, you will need to uninstall the old environment and install the new pool. 
 
 ```sh
 $ npm uninstall vitest-environment-miniflare
-$ npm install --save-dev --save-exact vitest@1.3.0
+$ npm install --save-dev --save-exact vitest@1.4.0
 $ npm install --save-dev @cloudflare/vitest-pool-workers
 ```
 
