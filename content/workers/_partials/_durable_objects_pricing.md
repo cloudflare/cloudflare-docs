@@ -11,8 +11,11 @@ _build:
 
 |          | Paid plan                                         |
 | -------- | ------------------------------------------------- |
-| Requests<sup>1</sup> | 1 million, + $0.15/million                        |
-| Duration<sup>2</sup> | 400,000 GB-s, + $12.50/million GB-s<sup>3,4</sup> |
+| HTTP requests<sup>1</sup>               | 1 million, + $0.15/million                        |
+| Establish WebSocket connection requests | 1 million, + $0.15/million                        |
+| Incoming WebSocket messages             | 1 million, + $0.15/million                        |
+| Alarm invocations                       | 1 million, + $0.15/million                        |
+| Duration<sup>2</sup>                    | 400,000 GB-s, + $12.50/million GB-s<sup>3,4</sup> |
 
 {{</table-wrap>}}
 
