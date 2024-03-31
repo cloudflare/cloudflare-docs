@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-For example, the following Worker implements the public method `add(a, b)`:
+For example, if Worker B implements the public method `add(a, b)`:
 
 ```toml
 ---
@@ -26,7 +26,7 @@ export class WorkerB extends WorkerEntrypoint {
 }
 ```
 
-Which the following Worker declares a binding to:
+Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 
 ```toml
 ---
@@ -39,7 +39,7 @@ services = [
 ]
 ```
 
-And then calls as an async method:
+Making it possible for Worker A to call the `add()` method from Worker B:
 
 ```js
 ---
