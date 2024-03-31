@@ -1,8 +1,8 @@
 ---
 pcx_content_type: configuration
-title: Console (ctx)
+title: Context (ctx)
 meta:
-  description: Supported methods of the `console` API in Cloudflare Workers
+  description: The Context API in Cloudflare Workers, including waitUntil and passThroughOnException
 ---
 
 # Context (`ctx`)
