@@ -8,6 +8,10 @@ meta:
 
 ## Visibility of Methods and Properties
 
+The Workers RPC system is intended to allow safe communications between Workers that do not trust each other. The system does not allow either side of an RPC session to access arbitrary objects on the other side, much less invoke arbitrary code. Instead, each side can only invoke the objects and functions for which they have explicitly received stubs via previous calls.
+
+This security model is commonly known as Object Capabilities, or Capability-Based Security. Workers RPC is built on [Cap'n Proto RPC](https://capnproto.org/rpc.html), which in turn is based on CapTP, the object transport protocol used by the [distributed programming language E](https://www.crockford.com/ec/etut.html).
+
 ### Private properties
 
 [Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes are never exposed over RPC.
@@ -57,9 +61,3 @@ someRpcMethod() {
 ```
 
 Such properties on a function are accessed asynchronously, like class properties of an RpcTarget. But, unlike the `RpcTarget` example above, the function's instance properties that are accessible to the caller. In practice, properties are rarely added to functions.
-
-## Security Model
-
-The Workers RPC system is intended to allow safe communications between Workers that do not trust each other. The system does not allow either side of an RPC session to access arbitrary objects on the other side, much less invoke arbitrary code. Instead, each side can only invoke the objects and functions for which they have explicitly received stubs via previous calls.
-
-This security model is commonly known as Object Capabilities, or Capability-Based Security. Workers RPC is built on [Cap'n Proto RPC](https://capnproto.org/rpc.html), which in turn is based on CapTP, the object transport protocol used by the [distributed programming language E](https://www.crockford.com/ec/etut.html).
