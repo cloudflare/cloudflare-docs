@@ -97,9 +97,9 @@ export default {
 }
 ```
 
-To run both Worker A and Worker B in local development, you must run two instances of [Wrangler](/workers/wrangler) in your terminal. For each Worker, open a new terminal and run [`npx wrangler@latest dev](/workers/wrangler/commands#dev).
+To run both Worker A and Worker B in local development, you must run two instances of [Wrangler](/workers/wrangler) in your terminal. For each Worker, open a new terminal and run [`npx wrangler@latest dev`](/workers/wrangler/commands#dev).
 
-Each Worker is deployed separately
+Each Worker is deployed separately.
 
 ## Lifecycle
 

@@ -70,7 +70,6 @@ Notice how the function keeps its state. The function is a closure that has capt
 
 How does this work? The Workers runtime does not serialize the function itself. The function always runs as part of the Worker that defines `CounterService`, regardless of who called it.
 
-<!-- TODO: May need to explain "stub" concept earlier -->
 Under the hood, the caller is not really calling the function itself, but calling a what is called a "stub". A "stub" is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that allows the client to call the remote service as if it were local, running in the same Worker. Behind the scenes, it calls back to the Worker that implements `CounterService` and asks it to execute the function closure that had been returned earlier.
 
 Note that:
@@ -199,9 +198,13 @@ export default {
 }
 ```
 
-Classes extending RpcTarget work a lot like functions: the object itself is not serialized, but is instead replaced by a stub. In this case, the stub itself is not callable, but its methods are. Calling any method on the stub actually makes an RPC back to the original object, where it was created.
+{{<Aside type="note" description="The `using` declaration">}}
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn  more about the `using` declaration shown in the example above.
+{{</Aside>}}
 
-As shown above, you can also access properties of classes. Properties are sort of like RPC methods that don't take any arguments. You can simply await a property to asynchronously fetch its current value. Note that the act of awaiting the property (which, behind the scenes, calls .then() on it) is what initiates the property fetch; if you don't await it, it won't be fetched.
+Classes that extend `RpcTarget` work a lot like functions: the object itself is not serialized, but is instead replaced by a stub. In this case, the stub itself is not callable, but its methods are. Calling any method on the stub actually makes an RPC back to the original object, where it was created.
+
+As shown above, you can also access properties of classes. Properties are sort of like RPC methods that don't take any arguments. You can simply await a property to asynchronously fetch its current value. Note that the act of awaiting the property (which, behind the scenes, calls `.then()` on it) is what initiates the property fetch; if you don't await it, it won't be fetched.
 
 Returning a class instance may be compared against returning an object containing several functions. Both ways can be used to create similar interfaces from the caller's point of view. However, if you return an object containing, say, five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Additionally, when returning an object, non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
 
