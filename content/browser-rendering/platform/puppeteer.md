@@ -63,8 +63,77 @@ export default {
 
 This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the `env.MYBROWSER` browser, opens a [new page](https://pptr.dev/api/puppeteer.browser.newpage), [goes to](https://pptr.dev/api/puppeteer.page.goto) https://example.com/, gets the page load [metrics](https://pptr.dev/api/puppeteer.page.metrics), [closes](https://pptr.dev/api/puppeteer.browser.close) the browser and prints metrics in JSON.
 
+
+## Session management
+
+In order to facilitate browser session management, we've added new methods to `puppeteer`:
+
+### List open sessions
+
+`puppeteer.sessions()` lists the current running sessions. It will return an output similar to this:
+
+```
+[
+   {
+      "connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
+      "connectionStartTime": 1711621704607,
+      "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+      "startTime": 1711621703708
+   },
+   {
+      "sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
+      "startTime": 1711621703808
+   }
+]
+```
+
+Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active worker connection (`connectionId=2a2246fa-e234-4dc1-8433-87e6cee80145`), while session `565e05fb-4d2a-402b-869b-5b65b1381db7` is free. While a connection is active, no other workers may connect to that session.
+
+### List recent sessions
+
+`puppeteer.history()` lists recent sessions, both open and closed. It's useful to get a sense of your current usage.
+
+```
+[
+   {
+      "closeReason": 2,
+      "closeReasonText": "BrowserIdle",
+      "endTime": 1711621769485,
+      "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+      "startTime": 1711621703708
+   },
+   {
+      "closeReason": 1,
+      "closeReasonText": "NormalClosure",
+      "endTime": 1711123501771,
+      "sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
+      "startTime": 1711123430918
+   }
+]
+```
+
+Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](../limits/)).
+
+You should also be able to access this information in the dashboard, albeit with a slight delay.
+
+### Active limits
+
+`puppeteer.limits()` lists your active limits:
+
+```
+{
+   "activeSessions": ["478f4d7d-e943-40f6-a414-837d3736a1dc", "565e05fb-4d2a-402b-869b-5b65b1381db7"],
+   "allowedBrowserAcquisitions": 1,
+   "maxConcurrentSessions": 100,
+   "timeUntilNextAllowedBrowserAcquisition": 0
+}
+```
+
+- `activeSessions` lists the IDs of the current open sessions
+- `maxConcurrentSessions` defines how many browsers can be open at the same time
+- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](../limits/) in place
+- `timeUntilNextAllowedBrowserAcquisition` defines the waiting period before a new browser can be launched.
+
 ## Puppeteer API
 
 The full Puppeteer API can be found in the [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md).
-
-

@@ -16,6 +16,7 @@ There are several reasons to migrate your Workers to the ES modules format:
 1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
 2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
 3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
+4.  You can [gradually deploy changes to your Worker](/workers/configuration/versions-and-deployments/gradual-deployments/) when you use the ES modules format.
 
 ## Migrate a Worker
 

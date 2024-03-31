@@ -2,7 +2,7 @@
 link: "/queues/platform/changelog/"
 productName: Queues
 entries:
-- publish_date: '2024-03-27'
+- publish_date: '2024-03-26'
   title: Delay messages published to a queue
   description: |-
     Messages published to a queue and/or marked for retry from a queue consumer can now be explicitly delayed. Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue.

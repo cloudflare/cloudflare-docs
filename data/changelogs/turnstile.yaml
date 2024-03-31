@@ -4,7 +4,7 @@ productName: Turnstile
 entries:
 - publish_date: '2024-03-25'
   description: |-
-    - Added more [supported languages](/turnstile/reference/supported-languages)
+    - Added more [supported languages](/turnstile/reference/supported-languages).
 - publish_date: '2023-12-18'
   description: |-
     - Added [Pre-Clearance mode](/turnstile/get-started/pre-clearance-support/).
