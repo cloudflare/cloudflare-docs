@@ -7,18 +7,18 @@ meta:
 
 # Remote-procedure call (RPC)
 
-Workers provide a built-in, JavaScript-native [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) system, allowing you to:
+Workers provides a built-in, JavaScript-native [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) system, allowing you to:
 
-- Define public methods on your Worker that can be called by other Workers on the same Cloudflare account via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
-- Define public methods on Durable Objects that can be called by other workers on the same Cloudflare account that declare a binding to it.
+- Define public methods on your Worker that can be called by other Workers on the same Cloudflare account, via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
+- Define public methods on [Durable Objects](/durable-objects) that can be called by other workers on the same Cloudflare account that declare a binding to it.
 
 The RPC system is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
-For example, the following Worker implements the public method `add(a, b)`:
+## Example
 
 {{<render file="_service-binding-rpc-example.md" productFolder="workers">}}
 
-You do not need to learn, implement, or think about special protocols to use the RPC system. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with standard JavaScript classes.
+The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with standard JavaScript classes.
 
 ## Details
 

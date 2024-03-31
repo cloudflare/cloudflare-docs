@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Visibility and Security Model
 meta:
   title: Workers RPC — Visibility and Security Model
-  description: Workers RPC — Visibility and Security Model
+  description: Which properties are and are not exposed to clients that communicate with your Worker or Durable Object via RPC
 ---
 
 # Visibility and Security Model

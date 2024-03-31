@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Compatible Types
 meta:
   title: Workers RPC — Compatible Types
-  description: Workers RPC — Compatible Types
+  description: JavaScript types that are compatible with the Workers RPC system
 ---
 
 # Compatible Types
