@@ -10,72 +10,23 @@ meta:
 
 ## Basic types
 
-Any type that is [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes most basic "value" types in JavaScript, including objects, arrays, strings and numbers.
+Nearly all types that are [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes, but is not limited to:
 
-You can also send and receive functions, class instances, ReadableStream, WriteableStream, Request and Response objects.
+- Objects, arrays, strings and numbers
+- Functions
+- ReadableStream, WriteableStream, Request and Response objects.
+
+Instances of classes that you define (those with a custom prototype) are the one exception to this rule — they are only compatible if they extend the `RpcTarget` class. If you attempt to send a class instance over RPC that does not extend `RpcTarget`, this will throw an exception.
+
+The RPC system also supports the following types that are not Structured Cloneable:
+
+- TODO
 
 ## Functions
 
 ### Return functions from RPC methods
 
-RPC methods can return functions. In the example below, `newCounter()` returns a function:
-
-```js
----
-filename: counterService.js
----
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export class CounterService extends WorkerEntrypoint {
-  async newCounter() {
-    let value = 0;
-    return (increment = 0) => {
-      value += increment;
-      return value;
-    }
-  }
-}
-```
-
-This function can then be called by the client Worker:
-
-```toml
----
-filename: wrangler.toml
----
-name = "client_worker"
-main = "./src/clientWorker.js"
-services = [
-  { binding = "COUNTER_SERVICE", service = "counter-service" }
-]
-```
-
-```js
----
-filename: clientWorker.js
----
-export default {
-  async fetch(request, env) {
-    using f = await env.COUNTER_SERVICE.newCounter();
-    await f(2);   // returns 2
-    await f(1);   // returns 3
-    const count = await f(-5);  // returns -2
-
-    return new Response(count);
-  }
-}
-```
-
-Notice how the function keeps its state. The function is a closure that has captured the local variable value.
-
-How does this work? The Workers runtime does not serialize the function itself. The function always runs as part of the Worker that defines `CounterService`, regardless of who called it.
-
-Under the hood, the caller is not really calling the function itself, but calling a what is called a "stub". A "stub" is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that allows the client to call the remote service as if it were local, running in the same Worker. Behind the scenes, it calls back to the Worker that implements `CounterService` and asks it to execute the function closure that had been returned earlier.
-
-Note that:
-
-- Communication over Service bindings is always asynchronous. Even if the method declared on `CounterService` is not async, the client must call it as an async method.
-- Only [compatible types](#compatible-types) can be passed as parameters or returned from the function.
+{{<render file="_service-binding-rpc-functions-example.md" productFolder="workers">}}
 
 ### Send functions as parameters of RPC methods
 

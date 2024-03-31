@@ -20,6 +20,10 @@ The RPC system is designed feel as similar as possible to calling a JavaScript f
 
 The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with standard JavaScript classes.
 
+## How the Workers RPC System Works
+
+{{<render file="_service-binding-rpc-functions-example.md" productFolder="workers">}}
+
 ## Details
 
 {{<directory-listing showDescriptions="true">}}
