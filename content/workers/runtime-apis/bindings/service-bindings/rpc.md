@@ -41,7 +41,7 @@ export class MyWorker extends WorkerEntrypoint {
 }
 ```
 
-A new instance of the class `WorkerB` is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless — the class instance only lasts for the duration of the invocation. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
+A new instance of the class `MyWorker` is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless — the class instance only lasts for the duration of the invocation. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
 
 ### Bindings (`env`)
 
