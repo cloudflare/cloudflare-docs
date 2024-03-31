@@ -99,6 +99,12 @@ Once you have run the above command, you will need to edit the output SQL file t
 
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
 
+## Foreign key constraints
+
+When importing data, you may need to temporarily disable [foreign key constraints](/d1/build-with-d1/foreign-keys/). To do so, call `PRAGMA defer_foreign_keys = true` before making changes that would violate foreign keys.
+
+Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys and D1.
+
 ## Export an existing D1 database
 
 In addition to importing existing SQLite databases, you might want to import an existing D1 database for local development or testing. To do so, you can export a D1 database to a `.sql` file using [wrangler d1 export](/workers/wrangler/commands/#export) and then execute (import) with `d1 execute --file`.
