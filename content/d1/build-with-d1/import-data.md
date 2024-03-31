@@ -30,22 +30,17 @@ CREATE TABLE IF NOT EXISTS users (
 	full_name VARCHAR(50),
 	created_on DATE
 );
-insert into users (id, full_name, created_on) values ('01GREFXCN9519NRVXWTPG0V0BF', 'Catlaina Harbar', '2022-08-20 05:39:52');
-insert into users (id, full_name, created_on) values ('01GREFXCNBYBGX2GC6ZGY9FMP4', 'Hube Bilverstone', '2022-12-15 21:56:13');
-insert into users (id, full_name, created_on) values ('01GREFXCNCWAJWRQWC2863MYW4', 'Christin Moss', '2022-07-28 04:13:37');
-insert into users (id, full_name, created_on) values ('01GREFXCNDGQNBQAJG1AP0TYXZ', 'Vlad Koche', '2022-11-29 17:40:57');
-insert into users (id, full_name, created_on) values ('01GREFXCNF67KV7FPPSEJVJMEW', 'Riane Zamora', '2022-12-24 06:49:04');
+INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCN9519NRVXWTPG0V0BF', 'Catlaina Harbar', '2022-08-20 05:39:52');
+INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNBYBGX2GC6ZGY9FMP4', 'Hube Bilverstone', '2022-12-15 21:56:13');
+INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNCWAJWRQWC2863MYW4', 'Christin Moss', '2022-07-28 04:13:37');
+INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNDGQNBQAJG1AP0TYXZ', 'Vlad Koche', '2022-11-29 17:40:57');
+INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNF67KV7FPPSEJVJMEW', 'Riane Zamora', '2022-12-24 06:49:04');
 ```
 
 With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
 $ wrangler d1 execute example-db --remote --file=users_export.sql
-
-🌀 Mapping SQL input into an array of statements
-🌀 Parsing 1 statements
-🌀 Executing on example-db (c7fe3a2a-9973-4231-85ff-edd63d7a4e6d):
-🚣 Executed 1 command in 61.64555000513792ms
 ```
 
 To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
@@ -53,10 +48,9 @@ To confirm your table was imported correctly and is queryable, execute a `SELECT
 ```sh
 $ wrangler d1 execute example-db --remote --command "SELECT * FROM users LIMIT 100;"
 
-🌀 Mapping SQL input into an array of statements
-🌀 Parsing 1 statements
-🌀 Executing on example-db (63571930-b2f1-4bdb-bffa-a7db6ee04c5d):
-🚣 Executed 1 command in 102.00563299655914ms
+...
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.3165ms
 ┌────────────────────────────┬──────────────────┬─────────────────────┐
 │ id                         │ full_name        │ created_on          │
 ├────────────────────────────┼──────────────────┼─────────────────────┤
@@ -76,7 +70,7 @@ Note that we apply a `LIMIT 100` clause here as a precaution: if you were import
 
 From here, you can now query our new table from our Worker [using the D1 client API](/d1/build-with-d1/d1-client-api/).
 
-## Convert SQLite database files
+### Convert SQLite database files
 
 {{<Aside type="note">}}
 
@@ -104,6 +98,35 @@ Once you have run the above command, you will need to edit the output SQL file t
    ```
 
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
+
+## Export an existing D1 database
+
+In addition to importing existing SQLite databases, you might want to import an existing D1 database for local development or testing. To do so, you can export a D1 database to a `.sql` file using [wrangler d1 export](/workers/wrangler/commands/#export) and then execute (import) with `d1 execute --file`.
+
+To export full D1 database schema and data:
+```sh
+npx wrangler d1 export <database_name> --remote --output=./database.sql
+```
+
+To export single table schema and data:
+```sh
+npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./table.sql
+```
+
+To export only D1 database schema:
+```sh
+npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data=true
+```
+
+To export only D1 table schema:
+```sh
+npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data=true
+```
+
+### Known limitations
+
+- Export is not supported for virtual tables, including databases with virtual tables. D1 supports virtual tables for full-text search using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html). As a workaround, delete any virtual tables, export, and then recreate virtual tables.
+- A running export will block other database requests.
 
 ## Troubleshooting
 
