@@ -2,6 +2,15 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-04-01"
+    title: D1 is generally available
+    description: |-
+      D1 is now GA. Read the [blog post](https://blog.cloudflare.com/building-d1-a-global-database/) for more details on new features in GA and future D1 Sessions API to support global read replication.
+
+      * Developers with a Workers Paid plan now have a 10GB GB per-database limit (up from 2GB), which can be combined with existing limit of 50,000 databases per account.
+      * Developers with a Workers Free plan retain the 500 MB per-database limit and can create up to 10 databases per account.
+      * D1 databases can be [exported](/d1/build-with-d1/import-data/#export-an-existing-d1-database) as a SQL file.
+
   - publish_date: "2024-03-12"
     title: Change in `wrangler d1 execute` default
     description: |-
