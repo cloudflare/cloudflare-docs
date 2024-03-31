@@ -9,7 +9,7 @@ meta:
   title: Workers AI
 ---
 
-{{<heading-pill style="beta" heading="h1">}}Workers AI{{</heading-pill>}}
+Workers AI
 
 {{<description>}}
 Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
