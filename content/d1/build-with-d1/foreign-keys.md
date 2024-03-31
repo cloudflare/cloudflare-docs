@@ -10,7 +10,9 @@ D1 supports defining and enforcing foreign key constraints across tables in a da
 
 Foreign key constraints allow you to enforce relationships across tables. For example, creating a strict binding between a `user_id` in a `users` table and the `user_id` in an `orders` table, so that no order can be created against a user that does not exist.
 
-Foreign key constraints can also prevent you from deleting rows in a `users` table when rows in the `orders` - 
+Foreign key constraints can also prevent you from deleting rows that reference rows in other tables: for example, deleting rows from the `users` table when rows in the `orders` table refer to them.
+
+By default, D1 enforces that foreign key constraints are valid within all queries and migrations. This is identical to the behaviour you would observe when setting `PRAGMA foreign_keys = on` in SQLite for every transaction.
 
 ## Define a foreign key relationship
 
@@ -23,9 +25,11 @@ To illustrate this with an example based on an e-commerce website with two table
 
 This mapping is defined as `FOREIGN KEY`, which ensures that:
 
-* ...
-* ...
-* ...
+* You cannot delete a row from the `users` table that would violate the foreign key constraint. In practice, this means that you can't end up with orders that do not have a valid user to map back to.
+* `orders` are always defined against a valid `user_id`, mitigating the risk of creating orders that refer to invalid (or non-existant) users.
+* Deleting orders does not delete users. The `ON DELETE RESTRICT` action as part of the table definition enables this.
+
+The schema:
 
 ```sql
 CREATE TABLE users (
@@ -44,14 +48,37 @@ CREATE TABLE orders (
 )
 ```
 
+You can define multiple foreign key relationships per-table, and foreign key definitions can reference multiple tables within your overall database schema. 
 
+## `ON UPDATE` and `ON DELETE`
 
-## Updating or deleting rows
+You can define _actions_ as part of your foreign key definitions to either limit or propagate changes to a parent row (`REFERENCES table(column)`). This can make using foreign key constraints in your application easier to reason about, and help either clean up related data or prevent data from being islanded.
 
-* `ON UPDATE`
-* `ON DELETE`
+There are five actions you can set when defining the `ON UPDATE` and/or `ON DELETE` clauses as part of a foreign key relationship. You can also define different actions for `ON UPDATE` and `ON DELETE` depending on your requirements.
 
-https://www.sqlite.org/foreignkeys.html#fk_actions
+* `CASCADE` - updating or deleting a parent key deletes all child keys (rows) associated it.
+* `RESTRICT` - a parent key cannot be updated or deleted when _any_ child key refers to it. Unlike the default foreign key enforcement, relationships with `RESTRICT` applied return errors immediately, and not at the end of the transaction.
+* `SET DEFAULT` - set the child column(s) referred to by the foreign key defintion to the `DEFAULT` value defined in the schema. If no `DEFAULT` is set on the child columns, you cannot use this action.
+* `SET NULL` - set the child column(s) referred to by the foreign key defintion to SQL `NULL`.
+* `NO ACTION` - take no action.
+
+You should take care when using `CASCADE`: although it can be the desired behaviour in some cases, deleting child rows across tables can have undesirable effects and/or result in unintended side effects for your users.
+
+In the following example, deleting a user from the `users` table will delete all related rows in the `scores` table as we've defined `ON DELETE CASCADE`. This may make sense in our application if we did not want to retain the scores for any users we've deleted entirely, but might mean that _other_ users can no longer look up or refer to scores that were still valid.
+
+```sql
+CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY,
+    email_address TEXT,
+)
+
+CREATE TABLE scores (
+    score_id INTEGER PRIMARY KEY,
+    game TEXT,
+    score INTEGER,
+    FOREIGN KEY(player_id) REFERENCES users(user_id) ON DELETE CASCADE
+)
+```
 
 ## Relax foreign key constraints
 
@@ -62,7 +89,8 @@ When running a [query](/d1/platform/client-api/), [migration](/d1/platform/migra
 
 {{<Aside type="warning">}}
 
-If your migration or batch query does not resolve any outstanding foreign key violations, 
+If your migration or batch query does not resolve any outstanding foreign key violations, your migration or query will fail with an error.
+
 The constraints will only be enforced at the end of the query, and if violated, D1 will return a `FOREIGN KEY constraint failed` error.
 
 {{</Aside>}}
@@ -80,10 +108,10 @@ filename: 0002_add_profile_table.sql
 
 https://www.sqlite.org/pragma.html#pragma_defer_foreign_keys
 
-## Handling errors
-
-...
 
 
+## Next Steps
 
-## Notes
+* Read the SQLite [`FOREIGN KEY`](https://www.sqlite.org/foreignkeys.html) documentation.
+* Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
+* Understand how [database migrations work](/d1/reference/migrations/) with D1.
