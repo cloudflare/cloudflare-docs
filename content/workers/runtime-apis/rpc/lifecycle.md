@@ -6,6 +6,8 @@ meta:
   description: Workers RPC — Lifecycle
 ---
 
+# Lifecycle
+
 ## Lifetimes, Memory and Resource Management
 
 When you call another Worker over RPC using a Service binding, you are using memory in the Worker you are calling. Consider the following example:
@@ -20,7 +22,7 @@ This is not a limitation of the Worker runtime, but a limitation inherent to any
 
 This why the examples above implement the `using` declaration — a new JavaScript language feature called [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management).
 
-### Explicit Resource Management
+## Explicit Resource Management
 
 [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management) is a Stage 3 TC39 proposal that lets you explicitly declare when a given resource can be disposed of.
 
@@ -49,7 +51,7 @@ If a variable is declared with `using`, when the variable is no longer in scope,
 
 In the case of an RPC stub, the disposer notifies the callee Worker that the caller Worker is done with the stub, allowing it to then be garbage collected.
 
-### Disposers and `RpcTarget` classes
+## Disposers and `RpcTarget` classes
 
 A class that extends `RpcTarget` can also implement a disposer:
 
@@ -63,11 +65,10 @@ class Foo extends RpcTarget {
 
 Disposers always run asynchronously. The RpcTarget's disposer runs some time after the last stub is disposed. This is especially true because the dispose message needs to cross the network, but is true even in the case that the stub happens to point to a local object. Exceptions thrown by the disposer will be reported as uncaught exceptions.
 
-### Dup
+## Dup
 
 
 ## Promise pipelining
-<!-- TODO: Better heading title? -->
 
 When you call an RPC method and get back an object, it's common to immediately call a method on the object:
 

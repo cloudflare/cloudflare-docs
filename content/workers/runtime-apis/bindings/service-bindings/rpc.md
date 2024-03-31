@@ -1,19 +1,18 @@
 ---
 pcx_content_type: configuration
-title: RPC
+title: RPC (WorkerEntrypoint)
 meta:
-  title: Service bindings - RPC
+  title: Service bindings - RPC (WorkerEntrypoint)
   description: Facilitate Worker-to-Worker communication via RPC
 ---
 
-<!-- TODO: Naming?? -->
 # Service Bindings — RPC
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
 
 You can use Service bindings to create your own internal APIs that your Worker makes available to other Workers. This is done by extending the built-in `WorkerEntrypoint` class, and adding your own public methods. These public methods can then be directly called by other Workers on your Cloudflare account that declare a [binding](/workers/runtime-apis/bindings) to this Worker.
 
-The RPC system is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
+The [RPC system in Workers](/workers/runtime-apis/rpc) is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
 {{<Aside type="note">}}
 You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/).
@@ -23,59 +22,18 @@ You can also use RPC to communicate between Workers and [Durable Objects](/durab
 
 For example, the following Worker implements the public method `add(a, b)`:
 
-```toml
----
-filename: wrangler.toml
----
-name = "worker_b"
-main = "./src/workerB.js"
-```
+{{<render file="_service-binding-rpc-example.md" productFolder="workers">}}
 
-```js
----
-filename: workerB.js
----
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export class WorkerB extends WorkerEntrypoint {
-  async add(a, b) { return a + b; }
-}
-```
-
-Which the following Worker declares a binding to:
-
-```toml
----
-filename: wrangler.toml
----
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
-```
-
-And then calls as an async method:
-
-```js
----
-filename: workerA.js
----
-export default {
-  async fetch(request, env) {
-    const result = await env.WORKER_B.add(1, 2);
-    return new Response(result);
-  }
-}
-```
-
-This provides you with a [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) interface, but without the need to learn, implement, or think about special protocols. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with simple JavaScript classes.
+You do not need to learn, implement, or think about special protocols to use the RPC system. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with standard JavaScript classes.
 
 ## `WorkerEntrypoint`
 
-When you write Workers that expose RPC methods, you must extend the `WorkerEntrypoint` class, as in the example below:
+To provide RPC methods from your Worker, you must extend the `WorkerEntrypoint` class, as shown in the example below:
 
 ```js
+---
+filename: index.js
+---
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class MyWorker extends WorkerEntrypoint {

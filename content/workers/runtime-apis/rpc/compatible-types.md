@@ -1,23 +1,22 @@
 ---
 pcx_content_type: configuration
-title: Supported Types
+title: Compatible Types
 meta:
-  title: Workers RPC — Supported Types
-  description: Workers RPC — Supported Types
+  title: Workers RPC — Compatible Types
+  description: Workers RPC — Compatible Types
 ---
 
+# Compatible Types
 
-## Compatible Types
-
-### Basic types
+## Basic types
 
 Any type that is [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes most basic "value" types in JavaScript, including objects, arrays, strings and numbers.
 
 You can also send and receive functions, class instances, ReadableStream, WriteableStream, Request and Response objects.
 
-### Functions
+## Functions
 
-#### Return functions from RPC methods
+### Return functions from RPC methods
 
 RPC methods can return functions. In the example below, `newCounter()` returns a function:
 
@@ -79,13 +78,13 @@ Note that:
 - Communication over Service bindings is always asynchronous. Even if the method declared on `CounterService` is not async, the client must call it as an async method.
 - Only [compatible types](#compatible-types) can be passed as parameters or returned from the function.
 
-#### Send functions as parameters of RPC methods
+### Send functions as parameters of RPC methods
 
 You can also send a function in the parameters of an RPC. This enables the "server" to call back to the "client", reversing the direction of the relationship.
 
 Because of this, the words "client" and "server" can be ambiguous when talking about RPC. The "server" is a Durable Object or WorkerEntrypoint, and the "client" is the Worker that invoked the server via a binding. But, RPCs can flow both ways between the two. When talking about an individual RPC, you should instead use the words "caller" and "callee".
 
-#### Return objects with methods
+### Return objects with methods
 <!-- TODO: Should we more loudly point people to use classes here? -->
 
 You can return objects from RPC methods that have methods that can be called by the client Worker. This allows you to provide the caller with a remote object that it can perform work with, and provide interfaces that are simple to work with, like [Durable Objects](/durable-objects), even if your state lives elsewhere, outside of Cloudflare.
@@ -128,7 +127,7 @@ export default {
 }
 ```
 
-### Class Instances
+## Class Instances
 
 Objects which are instances of user-defined classes, with custom prototypes, can only be used as a parameter or return value of an RPC method if they extend the built-in `RpcTarget` class. Attempting to send a class instance that does not extend `RpcTarget` will throw an exception.
 
@@ -206,7 +205,7 @@ As shown above, you can also access properties of classes. Properties are sort o
 
 Returning a class instance may be compared against returning an object containing several functions. Both ways can be used to create similar interfaces from the caller's point of view. However, if you return an object containing, say, five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Additionally, when returning an object, non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
 
-### ReadableStream, WriteableStream, Request, Response
+## ReadableStream, WriteableStream, Request, Response
 
 You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control.
 
