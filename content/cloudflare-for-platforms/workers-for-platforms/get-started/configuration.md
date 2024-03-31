@@ -32,8 +32,7 @@ When setting up your `customer-worker-1` Worker, answer the questions as below:
 - Select `no` to using Git for version control.
 - Select `no` to deploying.
 
-## 2. Create dispatch namespace
-## 2. Create a dispatch namespace
+## 2. Create a dispatch namespace 
 
 Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). A dispatch namespace is made up of a collection of [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers). User Workers are Workers that your end users (end developers) create.
 
@@ -85,7 +84,7 @@ filename: wrangler.toml
 
 [[dispatch_namespace]]
 binding = "dispatcher"
-namespace = "<NAMESPACE_NAME>"
+namespace = "<NAMESPACE_NAME>" 
 ```
 
 Add the followinng to the index.js file:
@@ -102,54 +101,9 @@ export default {
 };
 ```
 
-Do the following to define a simple metadata file for the user Worker:
-
-```js
----
-filename: metadata.json
----
-{
-    "main_module": "main.js"
-}
-```
-
-You will use the Cloudflare API to upload the user Worker. This will upload the user Worker to a dispatch namespace. User Workers must be uploaded via the Cloudflare API as Wrangler does not support this operation. Workers uploaded this way will appear in Account Home > your account > **Workers for Platforms** > your namespace.
-
-Update the necessary fields and run the following command:
-
-1. Add your Cloudflare account email to the value of the `X-Auth-Email` header.
-2. Find your `<AUTH_KEY>` by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > user icon > **My Profile** > **API Tokens** > **Global API Key** > **View**.
-3. Add your Cloudflare account ID found in your site's **Overview**.
-4. Add the namespace name you created in step 2 to `<NAMESPACE_NAME>`.
-5. Add the script name `customer-worker-1` to `<SCRIPT_NAME>`.
-
-```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <AUTH_KEY>" \
--H "Content-Type: multipart/form-data" \
--F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
-```
-
-If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` headers. Create an [API token](/fundamentals/api/get-started/create-token/) with **Workers Edit** permission. Select **Account**, **Workers Script**, and **Edit**. Then, add the token to the `"Authorization: Bearer <API_TOKEN>"` header.
-
-
-```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/customer-worker-1" \
--H "Authorization: Bearer <BEARER_TOKEN>" \
--H "Content-Type: multipart/form-data" \
--F 'main_js=@main.js;type=application/javascript+module' -F 'metadata=@metadata.json;type=application/json'
-```
-
-{{<Aside type="note">}}
-
-For more information on the `metadata.json` refer to [Metadata configuration](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/).
-
-{{</Aside>}}
-
 ## 5. Test a request
 
-You will now send a request to the route your dynamic dispatch Worker is on.
+You will now send a request to the route your dynamic dispatch Worker is on. 
 
 Open your terminal and run the following command to test your dynamic dispatch Worker:
 

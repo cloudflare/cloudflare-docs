@@ -8,7 +8,7 @@ entries:
 
 - term: binding
   general_definition: |-
-    [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
+    [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
 - term: Cron Triggers
   general_definition: |-
@@ -82,7 +82,7 @@ entries:
 
 - term: rollback
   general_definition: |-
-    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network.
+    [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) are a way to deploy an older deployment to the Cloudflare global network.
 
 - term: R2
   general_definition: |-
