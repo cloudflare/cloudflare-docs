@@ -17,10 +17,10 @@
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @elithrar @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @cloudflare/pcx-technical-writing
+/content/workers-ai/ @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @cloudflare/pcx-technical-writing
 /content/workers-ai/tutorials @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers-ai/static @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/vectorize/ @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/vectorize/ @elithrar @vy-ton @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
@@ -85,7 +85,7 @@
 /data/changelogs/r2.yaml @dcpena @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing
 /data/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
-/content/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/ @cloudflare/workers-docs @elithrar @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing @irvinebroque @admah
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
