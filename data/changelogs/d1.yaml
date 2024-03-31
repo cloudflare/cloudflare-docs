@@ -5,7 +5,7 @@ entries:
   - publish_date: "2024-04-01"
     title: D1 is generally available
     description: |-
-      D1 is now GA. Read the [blog post](https://blog.cloudflare.com/building-d1-a-global-database/) for more details on new features in GA and future D1 Sessions API to support global read replication.
+      D1 is now generally available and production ready. Read the [blog post](https://blog.cloudflare.com/building-d1-a-global-database/) for more details on new features in GA and to learn more about the upcoming D1 read replication API.
 
       * Developers with a Workers Paid plan now have a 10GB GB per-database limit (up from 2GB), which can be combined with existing limit of 50,000 databases per account.
       * Developers with a Workers Free plan retain the 500 MB per-database limit and can create up to 10 databases per account.
