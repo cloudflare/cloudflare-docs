@@ -47,7 +47,7 @@ services = [
 Worker A that declares a Service binding to Worker B can call Worker B in two different ways:
 
 1. [RPC](/workers/runtime-apis/bindings/service-bindings/rpc) lets you communicate between Workers using function calls that you define. For example, `await env.BINDING_NAME.myMethod(arg1)`. This is recommended for most use cases, and allows you to create your own internal APIs that your Worker makes available to other Workers.
-2. [HTTP](/workers/runtime-apis/bindings/service-bindings/http) lets you communicate between Workers using the `fetch()` API, sending `Request` objects and receiving `Response` objects back. For example, `env.BINDING_NAME.fetch(request)`.
+2. [HTTP](/workers/runtime-apis/bindings/service-bindings/http) lets you communicate between Workers by calling the [`fetch()` handler](/workers/runtime-apis/handlers/fetch) from other Workers, sending `Request` objects and receiving `Response` objects back. For example, `env.BINDING_NAME.fetch(request)`.
 
 ## Example — build your first Service binding using RPC
 
