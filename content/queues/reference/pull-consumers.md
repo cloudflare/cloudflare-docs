@@ -185,7 +185,7 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 Messages pulled by a consumer need to be either acknowledged or marked for retry.
 
-To acknowledge and/or mark messages to be retried, make a HTTP POST request to `/ack` endpoint of your queue per the [Queues REST API](https://developers.cloudflare.com/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
+To acknowledge and/or mark messages to be retried, make a HTTP POST request to `/ack` endpoint of your queue per the [Queues REST API](/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
