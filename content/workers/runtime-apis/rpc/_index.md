@@ -23,3 +23,7 @@ The client, in this case Worker A, calls Worker B and tells it to execute a spec
 ## Details
 
 {{<directory-listing showDescriptions="true">}}
+
+## Limitations
+
+- [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and  Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, any RPC calls to Worker A will run locally.
