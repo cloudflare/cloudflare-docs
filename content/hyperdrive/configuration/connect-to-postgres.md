@@ -43,12 +43,12 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver               | Documentation              | Minimum Version Required |
-| -------------------- | -------------------------- | ------------------------ |
-| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |
-| Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` |
-| Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |
-| Kysely               | https://kysely.dev/        | `0.26.3`^                |
+| Driver               | Documentation              | Minimum Version Required | Notes                    |
+| -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |                           |
+| Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` | Must pass `prepare: false` when creating the client. |
+| Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
+| Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
 
 ^ _The marked libraries use `node-postgres` as a dependency._
 
@@ -74,7 +74,9 @@ Hyperdrive does not currently support uploading client CA certificates. In the f
 
 ## Driver examples
 
-The following Workers code shows examples for `node-postgres`:
+### node-postgres / pg
+
+The following Workers code shows an example for `node-postgres`:
 
 ```sh
 ---
@@ -118,6 +120,62 @@ export default {
 
 			// A very simple test query
 			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
+
+			// Return result rows as JSON
+			return Response.json({ result: result });
+		} catch (e) {
+			console.log(e);
+			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
+		}
+	},
+};
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+### Postgres.js
+
+The following Workers code shows an example for [Postgres.js](https://github.com/porsager/postgres):
+
+```sh
+---
+header: postgres.js
+---
+$ npm install postgres
+```
+
+The following Workers examples show you how to:
+
+1. Create a database client with a database driver.
+2. Pass the Hyperdrive connection string and connect to the database.
+3. Write a query.
+
+{{<tabs labels="postgres-js">}}
+{{<tab label="postgres-js" default="true">}}
+
+```ts
+---
+filename: src/index.ts
+---
+import postgres from "postgres";
+
+export interface Env {
+	// If you set another name in wrangler.toml as the value for 'binding',
+	// replace "HYPERDRIVE" with the variable name you defined.
+	HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+
+    // Important: Set `prepare: false` as Postgres.js named prepared statements
+    // are not compatible with connection pooling systems like Hyperdrive
+    const sql = postgres(env.HYPERDRIVE.connectionString, { prepare: false })
+
+		try {
+			// A very simple test query
+			const result = await sql`select * from pg_tables`
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
