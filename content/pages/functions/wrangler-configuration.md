@@ -263,6 +263,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
 Non-inheritable keys are configurable at the top-level, but, if an environment override is present, these must all be specified in the environment config and overridden.
 
+
 {{<definitions>}}
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -307,7 +308,7 @@ Non-inheritable keys are configurable at the top-level, but, if an environment o
 
 - `ai` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies an AI binding to this Function. Refer to [Workers AI](/workers-ai/configuration/bindings/).
+  - Specifies an AI binding to this Function. Refer to [Workers AI](/pages/functions/bindings/#workers-ai).
 {{</definitions>}}
 
 ## Limits
@@ -322,149 +323,38 @@ Bindings are powerful tools that enhance the functionality of your application b
 
 [D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
-To bind D1 databases to your Pages Functions project, assign an array of the below object to the `[[d1_databases]]` key.
-
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Function. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-
-- `database_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The name of the database. This is a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
-
-- `database_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
-
-{{</definitions>}}
-
 {{<Aside type="note">}}
 
 When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 
-Example:
-
-```toml
----
-header: wrangler.toml
----
-d1_databases = [
-  { binding = "<BINDING_NAME>", database_name = "<DATABASE_NAME>", database_id = "<DATABASE_ID>" }
-]
-
-# or
-
-[[d1_databases]]
-binding = "<BINDING_NAME>"
-database_name = "<DATABASE_NAME>"
-database_id = "<DATABASE_ID>"
-```
+- Configure D1 database bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#d1-databases) the same way they are configured with Cloudflare Workers.
+- Interact with your [D1 Database binding](/pages/functions/bindings/#d1-databases).
 
 ### Durable Objects
 
 [Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
-To bind Durable Objects to your Worker, assign an array of the below object to the `durable_objects.bindings` key.
-
-{{<definitions>}}
-
-- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The name of the binding used to refer to the Durable Object.
-
-- `class_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The exported class name of the Durable Object.
-
-- `script_name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The name of the Worker where the Durable Object is defined, if it is external to this Function. While developing locally, to interact with a Durable Object namespace, run the Worker exporting the Durable object via `wrangler dev` and in parallel, run `wrangler pages dev`.
-
-- `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The environment of the `script_name` to bind to.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-durable_objects.bindings = [
-  { name = "<BINDING_NAME>", class_name = "<CLASS_NAME>" }
-]
-
-# or
-
-[[durable_objects.bindings]]
-name = "<BINDING_NAME>"
-class_name = "<CLASS_NAME>"
-
-```
+- Configure Durable Object namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects) the same way they are configured with Cloudflare Workers.
+- Interact with your [Durable Object namespace binding](/pages/functions/bindings/#durable-objects).
 
 ### Environment variables
 
 [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Pages Function.
 
-Example:
-
-{{<render file="_envvar-example.md">}}
+- Configure environment variables via your [`wrangler.toml` file](/workers/wrangler/configuration/#environment-variables) the same way they are configured with Cloudflare Workers.
+- Interact with your [environment variables](/pages/functions/bindings/#environment-variables).
 
 ### Hyperdrive
 
 [Hyperdrive](/hyperdrive/) bindings allow you to interact with and query any Postgres database from within a Pages Function.
 
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name.
-
-- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The ID of the Hyperdrive configuration.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-
-[[hyperdrive]]
-binding = "<BINDING_NAME>"
-id = "<ID>"
-```
+- Configure Hyperdrive bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#hyperdrive) the same way they are configured with Cloudflare Workers.
 
 ### KV namespaces
 
 [Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
-
-To bind KV namespaces to your Pages Function, assign an array of the below object to the `kv_namespaces` key.
-
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the KV namespace.
-
-- `id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The ID of the KV namespace.
-
-- `preview_id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources. If developing locally (without `--remote`), this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
-
-{{</definitions>}}
 
 {{<Aside type="note">}}
 
@@ -472,27 +362,8 @@ When using Wrangler in the default local development mode, files will be written
 
 {{</Aside>}}
 
-Example:
-
-```toml
----
-header: wrangler.toml
----
-kv_namespaces = [
-  { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
-  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
-]
-
-# or
-
-[[kv_namespaces]]
-binding = "<BINDING_NAME1>"
-id = "<NAMESPACE_ID1>"
-
-[[kv_namespaces]]
-binding = "<BINDING_NAME2>"
-id = "<NAMESPACE_ID2>"
-```
+- Configure KV namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#kv-namespaces) the same way they are configured with Cloudflare Workers.
+- Interact with your [KV namespace binding](/pages/functions/bindings/#kv-namespaces).
 
 ### Queues Producers
 
@@ -504,50 +375,12 @@ Queues Consumers can not currently be bound to Pages Functions
 
 {{</Aside>}}
 
-To add a Queue producer binding to your Pages Function, assign an array of the below object to the `[[queues.producers]]` key.
-
-{{<definitions>}}
-
-- `queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The name of the queue, used on the Cloudflare dashboard.
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-[[queues.producers]]
-  binding = "<BINDING_NAME>"
-  queue = "<QUEUE_NAME>"
-```
+- Configure Queues Producer bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#queues) the same way they are configured with Cloudflare Workers.
+- Interact with your [Queues Producer binding](/pages/functions/bindings/#queue-producers).
 
 ### R2 buckets
 
 [Cloudflare R2 Storage](/r2) allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
-
-To bind R2 buckets to your Pages Function, assign an array of the below object to the `r2_buckets` key.
-
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the R2 bucket.
-
-- `bucket_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The name of this R2 bucket.
-
-- `jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 {{<Aside type="note">}}
 
@@ -555,132 +388,28 @@ When using Wrangler in the default local development mode, files will be written
 
 {{</Aside>}}
 
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-r2_buckets  = [
-  { binding = "<BINDING_NAME1>", bucket_name = "<BUCKET_NAME1>"},
-  { binding = "<BINDING_NAME2>", bucket_name = "<BUCKET_NAME2>"}
-]
-
-# or
-
-[[r2_buckets]]
-binding = "<BINDING_NAME1>"
-bucket_name = "<BUCKET_NAME1>"
-
-[[r2_buckets]]
-binding = "<BINDING_NAME2>"
-bucket_name = "<BUCKET_NAME2>"
-```
+- Configure R2 bucket bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#r2-buckets) the same way they are configured with Cloudflare Workers.
+- Interact with your [R2 bucket bindings](/pages/functions/bindings/#r2-buckets).
 
 ### Vectorize indexes
 
 A [Vectorize index](/vectorize/) allows you to insert and query vector embeddings for semantic search, classification and other vector search use-cases.
 
-To bind Vectorize indexes to your Pages Function, assign an array of the below object to the `vectorize` key.
-
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the bound index from your Pages Function code.
-
-- `index_name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The name of the index to bind.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-vectorize  = [
-  { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"}
-]
-
-# or
-
-[[vectorize]]
-binding = "<BINDING_NAME>"
-index_name = "<INDEX_NAME>"
-```
+- Configure Vectorize bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#vectorize) the same way they are configured with Cloudflare Workers.
 
 ### Service bindings
 
 A service binding allows you to call a Worker from within your Pages Function. This sends HTTP requests to the Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
 
-To add a service binding to your Pages Function, assign an array of the below object to the `services` key.
-
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the bound Worker.
-
-- `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The name of the Worker.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
-]
-
-# or
-
-[[services]]
-binding = "<BINDING_NAME>"
-service = "<WORKER_NAME>"
-```
+- Configure service bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#service-bindings) the same way they are configured with Cloudflare Workers.
+- Interact with your [service bindings](/pages/functions/bindings/#service-bindings).
 
 ### Analytics Engine Datasets
 
 [Workers Analytics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Pages Functions. Write data points within your Pages Function binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
 
-To bind Analytics Engine datasets to your Pages Function, assign an array of the below object to the `analytics_engine_datasets` key.
-
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name used to refer to the dataset.
-
-- `dataset` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - The dataset name to write to. This will default to the same name as the binding if it is not supplied.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-filename: wrangler.toml
----
-analytics_engine_datasets = { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
-
-# or
-
-[[analytics_engine_datasets]]
-binding = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
-```
+- Configure Analytics Engine Dataset bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#analytics-engine-datasets) the same way they are configured with Cloudflare Workers.
+- Interact with your [Analytics Engine Dataset](/pages/functions/bindings/#analytics-engine).
 
 ### Workers AI
 
@@ -691,67 +420,12 @@ whether that be from Workers, Pages, or anywhere via REST API.
 
 Unlike other bindings, this binding is limited to one AI binding per Pages Function project.
 
-{{<definitions>}}
-
-- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-
-  - The binding name.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-filename: wrangler.toml
----
-ai = { binding = "<AI>" }
-
-# or
-
-[ai]
-binding = "AI" # available in your Pages Functions code on `context.env.AI`
-```
+- Configure Workers AI bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#workers-ai) the same way they are configured with Cloudflare Workers.
+- Interact with your [Workers AI binding](/pages/functions/bindings/#workers-ai).
 
 ## Local development settings
 
-You can configure various aspects of local development, such as the local protocol or port.
-
-{{<definitions>}}
-
-- `ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - IP address for the local dev server to listen on. Defaults to `localhost`.
-
-- `port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Port for the local dev server to listen on. Defaults to `8787`.
-
-- `local_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  -  Protocol that local dev server listens to requests on. Defaults to `http`.
-
-- `upstream_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  -  Protocol that the local dev server forwards requests on. Defaults to `https`.
-
-- `host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  -  Host to forward requests to, defaults to the host of the first `route` of the Worker.
-
-{{</definitions>}}
-
-Example:
-
-```toml
----
-header: wrangler.toml
----
-[dev]
-ip = "192.168.1.1"
-port = 8080
-local_protocol = "http"
-```
+The local development settings that you can configure are the same for Pages Functions and Cloudflare Workers. Read [this guide](/workers/wrangler/configuration/#local-development-settings) for more details.
 
 ## Users with existing `wrangler.toml` files
 
