@@ -208,7 +208,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your D1 databases locally
 
-While [developing locally](/d1/configuration/local-development/#develop-locally-with-pages), interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
+While [developing locally](/d1/build-with-d1/local-development/#develop-locally-with-pages), interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
 
 {{<Aside type="note">}}
 By default, [`wrangler dev`](/workers/wrangler/commands/#dev-1) automatically persists data.
