@@ -19,4 +19,4 @@ The following limits apply to Workers Analytics Engine:
 
 Data written to Workers Analytics Engine is stored for three months.
 
-Interested in longer retention periods? Join the `#analytics-engine` channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and tell us more about what you're building.
+Interested in longer retention periods? Join the `#analytics-engine` channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and tell us more about what you are building.

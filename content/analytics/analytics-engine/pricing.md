@@ -17,9 +17,9 @@ Workers Analytics Engine is priced based on two metrics — data points written
 | **Workers Free** | 100,000 included per day                                              | 10,000 included per day                                      |
 
 {{<Aside type="note" header="Pricing availability">}}
-Currently, you will not be billed for your use of Workers Analytics Engine. Pricing information here is shared in advance, so that you can estimate what your costs will be once CLoudflare starts billing for usage in the coming months.
+Currently, you will not be billed for your use of Workers Analytics Engine. Pricing information here is shared in advance, so that you can estimate what your costs will be once Cloudflare starts billing for usage in the coming months.
 
-If you are an Enterprise customer, please contact your account team for information about Workers Analytics Engine pricing and billing.
+If you are an Enterprise customer, contact your account team for information about Workers Analytics Engine pricing and billing.
 {{</Aside>}}
 
 ### Data points written

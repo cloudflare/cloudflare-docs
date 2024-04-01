@@ -42,9 +42,9 @@ You do not need to await `writeDataPoint()` — it will return immediately, and 
 
 A data point is a structured event that consists of:
 
-- **Blobs** (numbers) — the numeric values that you want to record in your data point.
-- **Doubles** (strings) — the dimensions used for grouping and filtering. Sometimes called labels in other metrics systems.
-- **Indexes** — (strings) — used as a [sampling](/analytics/analytics-engine/sql-api/#sampling) key.
+- **Blobs** (numbers) — The numeric values that you want to record in your data point.
+- **Doubles** (strings) — The dimensions used for grouping and filtering. Sometimes called labels in other metrics systems.
+- **Indexes** — (strings) — Used as a [sampling](/analytics/analytics-engine/sql-api/#sampling) key.
 
 In the example above, suppose you are collecting air quality samples. Each data point written represents a reading from your weather sensor. The blobs define city, state, and sensor model — the dimensions you want to be able to filter queries on later. The doubles define the numeric temperature and air pressure readings. And the index is the ID of your customer. You may want to include [context about the incoming request](/workers/runtime-apis/request/), such as geolocation, to add additional data to your datapoint.
 
@@ -54,10 +54,10 @@ Currently, the `writeDataPoint()` API accepts ordered arrays of values. This mea
 
 You can query the data you have written in two ways:
 
-- [**SQL API**](/analytics/analytics-engine/sql-api) — best for writing your own queries and integrating with external tools like Grafana.
-- [**GraphQL API**](/analytics/graphql-api/) — this is the same API that powers the Cloudflare dashboard.
+- [**SQL API**](/analytics/analytics-engine/sql-api) — Best for writing your own queries and integrating with external tools like Grafana.
+- [**GraphQL API**](/analytics/graphql-api/) — This is the same API that powers the Cloudflare dashboard.
 
-For the purpose of this example, we'll use the SQL API.
+For the purpose of this example, we will use the SQL API.
 
 ### Create an API token
 
@@ -88,7 +88,7 @@ You can run this query by making an HTTP request to the SQL API:
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
 ```
 
-Refer to the the [Workers Analytics Engine SQL Reference](/analytics/analytics-engine/sql-reference/) for a full list of supported SQL functionality.
+Refer to the [Workers Analytics Engine SQL Reference](/analytics/analytics-engine/sql-reference/) for a full list of supported SQL functionality.
 
 ### Working with time series data
 
