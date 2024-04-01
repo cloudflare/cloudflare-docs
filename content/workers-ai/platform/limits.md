@@ -6,7 +6,7 @@ weight: 2
 
 # Limits
 
-Since Workers AI is Generally Available now, we've updated our rate limits so you can build bigger production applications.
+Workers AI is now Generally Available. We've updated our rate limits to reflect 
 
 Note that model inferences in local mode using Wrangler will also count towards these limits. Beta models may have lower rate limits while we work on performance and scale.
 

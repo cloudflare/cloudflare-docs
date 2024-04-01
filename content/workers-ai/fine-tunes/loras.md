@@ -14,9 +14,9 @@ Workers AI now supports fine-tuned inference with adapters trained with [Low-Ran
   - `@cf/llama-meta-llama-2-7b-chat-hf-lora`
   - `@cf/mistralai/mistral-7b-instruct-v0.2-lora`
   - `@cf/google/gemma-2b-it-lora`
-  - `@cf/google/gemma-7b-it-lora`
 - Adapter must be trained with rank `r <=8`. You can check the rank of a pre-trained LoRA adapter through the adapter's  `config.json` file
 - LoRA adapter file must be < 100MB
+- LoRA adapter files must be named `adapter_config.json` and `adapter_model.safetensors` exactly
 - You can test up to 30 LoRA adapters per account
 
 ## Choosing compatible LoRA adapters
@@ -53,9 +53,8 @@ You can also use our REST API to upload your adapter files. You will need a Clou
 ## Input: user-defined name of fine tune
 ## Output: unique finetune_id
 
-curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/finetunes/ \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
     -H "Authorization: Bearer XXX" \
-    -H 'accept: application/json' \
     -H 'Content-Type: application/json' \
     -d '{
       "model": "SUPPORTED_MODEL_NAME",
@@ -63,10 +62,8 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/finetune
       "description": "OPTIONAL_DESCRIPTION"
     }'
 ```
-
 {{</tab>}}
 {{<tab label="JSON Output">}}
-
 ```sh
 ---
 header: Example JSON output
@@ -76,34 +73,36 @@ header: Example JSON output
   "success": true,
   "result": {
     "id": "00000000-0000-0000-0000-000000000", 
-    "account_id": "ACCOUNT_ID",
-    "created_at": "2024-03-31T05:38:19.753Z",
-    "modified_at": "2024-03-31T05:38:19.753Z",
-    "model": "string",
     "name": "string",
     "description": "string"
   }
 }
 ```
-
 {{</tab>}}
 {{</tabs>}}
 
+
 #### Uploading your adapter weights and config
+You have to call the upload endpoint each time you want to upload a new file. Make sure you cal
+
 {{<tabs labels="cURL | JSON Output">}}
 {{<tab label="cURL" default="true">}}
-
 ```bash
-## Input: finetune_id, adapter_model.safetensors, adapter_config.json
+## Input: finetune_id, adapter_model.safetensors
 ## Output: success true/false
-curl -X PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/finetunes/{FINETUNE_ID}/finetune-assets/ \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
     -H 'Authorization: Bearer XXX' \
-    -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F 'file_name=ADAPTER_MODEL.safetensors' \
-    -F 'file={PATH/TO/ADAPTER_MODEL.safetensors}' \
-    -F 'file_name=ADAPTER_CONFIG.json' \
-    -F 'file=ADAPTER_CONFIG.json'
+    -F 'file_name=adapter_model.safetensors' \
+    -F 'file=@{PATH/TO/adapter_model.safetensors}' \
+
+## Input: finetune_id, adapter_config.json
+## Output: success true/false
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
+    -H 'Authorization: Bearer XXX' \
+    -H 'Content-Type: multipart/form-data' \
+    -F 'file_name=adapter_config.json' \
+    -F 'file=@{PATH/TO/adapter_config.json}'
 ```
 {{</tab>}}
 {{<tab label="JSON Output">}}
@@ -115,14 +114,6 @@ header: Example JSON output
 # Example output JSON
 {
   "success": true,
-  "result": {
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "finetune_id": "bc451aef-f723-4b26-a6b2-901afd2e7a8a",
-    "file_name": "string",
-    "bucket_name": "string",
-    "created_at": "2024-03-31T05:47:34.929Z",
-    "modified_at": "2024-03-31T05:47:34.929Z"
-  }
 }
 ```
 {{</tab>}}
@@ -135,9 +126,8 @@ header: Example JSON output
 ```bash
 ## Input: n/a
 ## Output: success true/false
-curl -X GET https://api.cloudflare.com/client/v4/accounts/{account_id}/finetunes/ \
+curl -X GET https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/finetunes/ \
     -H 'Authorization: Bearer XXX' \
-    -H 'accept: application/json' \
 ```
 {{</tab>}}
 {{<tab label="JSON Output">}}
@@ -151,14 +141,16 @@ header: Example JSON output
   "success": true,
   "result": [
     [{
-       "id": 123,
-       "model": "@hf/thebloke/llama-2-13b-chat-awq",
-       "name": "llama2-finetune"
+       "id": "00000000-0000-0000-0000-000000000",
+       "model": "@cf/llama-meta-llama-2-7b-chat-hf-lora",
+       "name": "llama2-finetune",
+       "description": "test"
     },
     {
-       "id": 456,
+       "id": "00000000-0000-0000-0000-000000000",
        "model": "@cf/mistral/mistral-7b-instruct-v0.1",
-       "name": "mistral-finetune"
+       "name": "mistral-finetune",
+       "description": "test"
     }]
   ]
 }
