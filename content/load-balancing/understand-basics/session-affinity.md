@@ -26,7 +26,7 @@ This behaves similar to `cookie` except the initial endpoint selection is stable
 
 ### header
 
-On the first request to a proxied load balancer, a session key based on the configured HTTP headers is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session affinity TTL seconds or the origin server is unhealthy, then a new origin server is calculated and used.
+On the first request to a proxied load balancer, a session key based on the configured HTTP headers is generated. The session key encodes the request headers used for storing which endpoint the request will be forwarded to during the load balancer session state. Subsequent requests to the load balancer with the same headers will be sent to the same endpoint, for the duration of the session and as long as the endpoint remains healthy. If the session has been idle for the duration of session affinity TTL seconds or the endpoint is unhealthy, then a new endpoint is calculated and used.
 
 {{<Aside type="note">}}
 
@@ -76,13 +76,13 @@ For more details on API commands in context, refer to [Create a load balancer wi
 
 ---
 
-## Origin Drain
+## Endpoint Drain
 
-Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. For more details on origin drain, refer to [Performing planned maintenance](/load-balancing/additional-options/planned-maintenance/#gradual-rotation).
+Drain or remove all traffic from an endpoint without affecting any active customers using endpoint Drain. For more details on endpoint drain, refer to [Performing planned maintenance](/load-balancing/additional-options/planned-maintenance/#gradual-rotation).
 
 {{<Aside type="warning" header="Important">}}
 
-Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
+Endpoint drain is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
 
 {{</Aside>}}
 
