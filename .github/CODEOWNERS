@@ -97,6 +97,7 @@
 /content/workers/reference/security-model/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 /content/ddos-protection/ @pedrosousa @cloudflare/pcx-technical-writing
