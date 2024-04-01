@@ -26,7 +26,7 @@ For example, the following Worker implements the public method `add(a, b)`:
 
 You do not need to learn, implement, or think about special protocols to use the RPC system. The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with standard JavaScript classes.
 
-## `WorkerEntrypoint`
+## The `WorkerEntrypoint` Class
 
 To provide RPC methods from your Worker, you must extend the `WorkerEntrypoint` class, as shown in the example below:
 
@@ -45,7 +45,7 @@ A new instance of the class `MyWorker` is created every time the Worker is calle
 
 ### Bindings (`env`)
 
-The [`env`](/workers/runtime-apis/bindings/#what-is-a-binding) object is exposed as a class property of the `WorkerEntrypoint` class.
+The [`env`](/workers/runtime-apis/bindings) object is exposed as a class property of the `WorkerEntrypoint` class.
 
 For example, a Worker that declares a binding to the [environment variable](/workers/configuration/environment-variables/) `GREETING`:
 
@@ -71,15 +71,13 @@ export class MyWorker extends WorkerEntrypoint {
 }
 ```
 
-You can use any type of [binding](/workers/runtime-apis/bindings/#what-is-a-binding) this way.
+You can use any type of [binding](/workers/runtime-apis/bindings) this way.
 
 ### Lifecycle methods (`ctx`)
 
 The [`ctx`](/workers/runtime-apis/context) object is exposed as a class property of the `WorkerEntrypoint` class.
 
-You can extend the lifetime of the invocation context by calling the `waitUntil()` method of the context object, [`ctx`](/workers/runtime-apis/context/#waituntil). `waitUntil()` accepts a Promise-based task that is executed before the invocation context is terminated.
-
-Use this when you want to perform other work without blocking giving a response to the client Worker that called your Entrypoint Worker. For example, you might return a response immediately, but fire off an event to an analytics provider:
+For example, you can extend the lifetime of the invocation context by calling the `waitUntil()` method:
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -93,14 +91,14 @@ export class MyWorker extends WorkerEntrypoint {
   }
 
   async #sendEvent(eventName, email) {
-    // Send event by making a subrequest with fetch()
+    //...
   }
 }
 ```
 
-{{<Aside type="note">}}
-[Cloudflare Queues](/queues/) and [Tail Workers](/workers/observability/logging/tail-workers/) are purpose-built options for performing work out-of-band, without blocking returning a response back to the client Worker. In many cases, you can use them instead of `ctx.waitUntil()`.
-{{</Aside>}}
+## Named entrypoints
+
+TODO: Example
 
 ## Further reading
 

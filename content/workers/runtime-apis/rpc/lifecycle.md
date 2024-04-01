@@ -74,17 +74,6 @@ The following code:
 }
 ```
 
-## Sessions
-
-Each top-level RPC call to a `WorkerEntrypoint` is considered its own session. Subsequent stubs that are introduced by that call are considered to be part of this same session. For example, both `user` and `messages` are considered to be part of the same session:
-
-```js
-let user = await env.USER_SERVICE.findUser(id);
-let messages = await user.messages();
-```
-
-TODO: Explain what people need to know about sessions?
-
 ## Automatic disposal and execution contexts
 
 The RPC system automatically disposes of stubs in the following cases:
@@ -119,13 +108,31 @@ If you need to extend the execution context, you can do so by using [`ctx.waitUn
 
 When stubs are received in the parameters of an RPC, those stubs are automatically disposed when the call returns. If you wish to keep the stubs longer than that, you must call the `dup()` method on them.
 
+### Sessions
+
+Each top-level RPC call to a `WorkerEntrypoint` is considered its own session. Subsequent stubs that are introduced by that call are considered to be part of this same session. For example, both `user` and `messages` are considered to be part of the same session:
+
+```js
+let user = await env.USER_SERVICE.findUser(id);
+let messages = await user.messages();
+```
+
 ### Disposing RPC objects disposes stubs that are part of that object
 
-When an RPC returns any kind of object, that object will have a disposer (TODO: show what this looks like for clarity). Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, like a number or string. These types cannot have disposers added, but luckily these types also obviously cannot contain stubs, so there is no need for a disposer in this case.
+When an RPC returns any kind of object, that object will have a disposer. Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, such as a number or string. These types cannot have disposers added to them, but because these types cannot themselves contain stubs, there is no need for a disposer in this case.
+
+This means you should almost always store the result of an RPC into a `using` declaration:
+
+```js
+using result = stub.foo();
+```
+
+This way, if the result contains any new stubs, they will be disposed of. If you decide you want any of these stubs to not be automatically disposed, you can call `dup()` on the stub before the end of the scope that the `using` declaration is in, and then remember to explicitly dispose those stubs later.
+
 
 ## Disposers and `RpcTarget` classes
 
-A class that extends `RpcTarget` can also implement a disposer:
+A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) can also implement a disposer:
 
 ```js
 class Foo extends RpcTarget {
@@ -202,8 +209,47 @@ Here, three different workers are involved:
 2. `COUNTER_SERVICE`
 3. `ANOTHER_SERVICE`
 
-When `ANOTHER_SERVICE` calls a method on the `counter` that is passed to it, this call will automatically be proxied through the introducer and on to the `RpcTarget` class implemented by `COUNTER_SERVICE`.
+When `ANOTHER_SERVICE` calls a method on the `counter` that is passed to it, this call will automatically be proxied through the introducer and on to the [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) class implemented by `COUNTER_SERVICE`.
 
 In this way, the introducer Worker can connect two Workers that did not otherwise have any ability to form direct connections to each other.
 
 Currently, this proxying only lasts until the end of the Workers' execution contexts. A proxy connection cannot be persisted for later use.
+
+## The `dup()` method
+
+Sometimes, you need to pass a stub to a function which will dispose the stub when it is done, but you also want to keep the stub for later use. To solve this problem, you can "dup" the stub:
+
+```js
+let stub = await env.SOME_SERVICE.getThing();
+
+// Create a duplicate.
+let stub2 = stub.dup();
+
+// Call some function that will dispose the stub.
+await func(stub);
+
+// stub2 is still valid
+```
+
+You can think of `dup()` like the [Unix system call of the same name](https://man7.org/linux/man-pages/man2/dup.2.html): it creates a new handle pointing at the same target, which must be independently closed (disposed).
+
+If the instance of the [`RpcTarget` class](/workers/runtime-apis/rpc/compatible-types) that the stubs point to has a disposer, the disposer will only be invoked when all duplicates have been disposed. However, this only applies to duplicates that originate from the same stub. If the same instance of `RpcTarget` is passed over RPC multiple times, a new stub is created each time, and these are not considered duplicates of each other. Thus, the disposer will be invoked once for each time the `RpcTarget` was sent.
+
+In order to avoid this situation, you can manually create a stub locally, and then pass the stub across RPC multiple times. When passing a stub over RPC, ownership of the stub transfers to the recipient, so you must make a `dup()` for each time you send it:\
+
+```js
+import { RpcTarget, RpcStub } from "cloudflare:workers";
+
+class Foo extends RpcTarget {
+  // ...
+}
+
+let obj = new Foo();
+let stub = new RpcStub(obj);
+await rpc1(stub.dup());  // sends a dup of `stub`
+await rpc2(stub.dup());  // sends another dup of `stub`
+stub[Symbol.dispose]();  // disposes the original stub
+
+// obj's disposer will be called when the other two stubs
+// are disposed remotely.
+```

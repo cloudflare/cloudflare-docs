@@ -8,9 +8,11 @@ meta:
 
 # Reserved Methods
 
+When extending `RpcTarget`, `WorkerEntrypoint`, and `DurableObject`, the following methods are reserved and cannot be redefined as RPC methods.
+
 ## `fetch()`
 
-The `fetch()` method of the `WorkerEntrypoint` class is treated specially — it can only be used to handle an HTTP request — equivalent to the [fetch handler](/workers/runtime-apis/handlers/fetch/).
+The `fetch()` method is treated specially — it can only be used to handle an HTTP request — equivalent to the [fetch handler](/workers/runtime-apis/handlers/fetch/).
 
 You may implement a `fetch()` method in your class that extends `WorkerEntrypoint` — but it must accept only one parameter of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), and must return an instance of [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response).
 
@@ -24,39 +26,4 @@ The `connect()` method of the `WorkerEntrypoint` class is reserved for opening a
 
 ### `dup()`
 
-Sometimes, you need to pass a stub to a function which will dispose the stub when it is done, but you also want to keep the stub for later use. To solve this problem, you can "dup" the stub:
-
-```js
-let stub = await env.SOME_SERVICE.getThing();
-
-// Create a duplicate.
-let stub2 = stub.dup();
-
-// Call some function that will dispose the stub.
-await func(stub);
-
-// stub2 is still valid
-```
-
-You can think of `dup()` like the [Unix system call of the same name](https://man7.org/linux/man-pages/man2/dup.2.html): it creates a new handle pointing at the same target, which must be independently closed (disposed).
-
-If the instance of the [`RpcTarget` class](/workers/runtime-apis/rpc/compatible-types) that the stubs point to has a disposer, the disposer will only be invoked when all duplicates have been disposed. However, this only applies to duplicates that originate from the same stub. If the same instance of `RpcTarget` is passed over RPC multiple times, a new stub is created each time, and these are not considered duplicates of each other. Thus, the disposer will be invoked once for each time the `RpcTarget` was sent.
-
-In order to avoid this situation, you can manually create a stub locally, and then pass the stub across RPC multiple times. When passing a stub over RPC, ownership of the stub transfers to the recipient, so you must make a `dup()` for each time you send it:\
-
-```js
-import {RpcTarget,RpcStub} from "cloudflare:workers";
-
-class Foo extends RpcTarget {
-  // ...
-}
-
-let obj = new Foo();
-let stub = new RpcStub(obj);
-await rpc1(stub.dup());  // sends a dup of `stub`
-await rpc2(stub.dup());  // sends another dup of `stub`
-stub[Symbol.dispose]();  // disposes the original stub
-
-// obj's disposer will be called when the other two stubs
-// are disposed remotely.
-```
+The `dup()` method on the `WorkerEntrypoint` class is reserved as a special built-in method used to explicitly manage the lifecycle of stubs. Refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs to learn more about `dup()`.
