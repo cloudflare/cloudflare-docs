@@ -113,4 +113,4 @@ Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-e
 
 ## Further reading
 
-{{<directory-listing folderDirectory="/analytics/analytics-engine/" showDescriptions="true">}}
+{{<directory-listing folderDirectory="/analytics/analytics-engine/">}}
