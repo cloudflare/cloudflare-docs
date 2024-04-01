@@ -5,12 +5,12 @@ title: Signals Intelligence
 
 # Bots Signals Intelligence
 
-For every available [JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/), Bot Management customers can view how Cloudflare sees it on the internet and what behavior we view with the fingerprint. This data can help you understand why a request is scored in a particular fashion or allow you to use the aggregate data in your own ML models, run in either [Cloudflare Workers](/workers/) or at the origin location. 
+For every available [JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/), Bot Management customers can view how Cloudflare sees it on the Internet and what behavior we view with the fingerprint. This data can help you understand why a request is scored in a particular fashion or allow you to use the aggregate data in your own ML models, run in either [Cloudflare Workers](/workers/) or at the origin location. 
 
 Specifically, for each JA4 fingerprint, you will be able to access the following information: 
 
-- The percentage of traffic Cloudflare sees is associated with browsers. 
-- The percentage of traffic Cloudflare sees is associated with known bots.
+- The percentage of traffic associated with browsers that Cloudflare sees.
+- The percentage of traffic associated with known bots that Cloudflare sees.
 - The number of networks Cloudflare sees actively using this fingerprint. 
 - The number of Cloudflare sites that see traffic from this fingerprint. 
 - The frequency that fingerprint requests caches content and generates errors.
