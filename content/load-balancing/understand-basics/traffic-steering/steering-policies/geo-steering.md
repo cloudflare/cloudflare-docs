@@ -41,7 +41,7 @@ When [creating or editing a load balancer](/load-balancing/load-balancers/create
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region.
+Use the `regions_pool` property of the [Update Load Balancers](/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of endpoints to use for that region.
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
