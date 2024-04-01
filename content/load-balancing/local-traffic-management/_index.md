@@ -8,11 +8,11 @@ weight: 6
 
 Local traffic management (LTM) enables you to load balance traffic between your servers within a data center. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud, benefiting from elastic scalability and reliability.
 
-LTM supports not only public IPs but also virtual IPs and private IPs as origin values.
+LTM supports not only public IPs but also virtual IPs and private IPs as endpoint values.
 
 {{<Aside type="warning">}}
 
-Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
+Currently, to be able to connect to private IP endpoints, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
 
 {{</Aside>}}
 
@@ -20,9 +20,9 @@ Currently, to be able to connect to private IP origins, Cloudflare load balancer
 
 ## Health monitor support
 
-Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you are able to better leverage existing health monitoring.
+Since traffic steering decisions or failover mechanisms rely on the health information of pools and endpoints, being able to input your virtual or private IPs directly as endpoints within your load balancer means you are able to better leverage existing health monitoring.
 
-Before, you could only enter tunnel addresses in your load balancer and configure health monitor requests to the tunnels themselves. Now, once the origin and [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) tunnel association is configured, Cloudflare determines not only the tunnel health but also the health of the corresponding virtual or private IP targets.
+Before, you could only enter tunnel addresses in your load balancer and configure health monitor requests to the tunnels themselves. Now, once the endpoint and [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) tunnel association is configured, Cloudflare determines not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
 ---
 
