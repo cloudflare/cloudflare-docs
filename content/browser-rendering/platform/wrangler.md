@@ -21,7 +21,7 @@ To install Wrangler, refer to [Install and Update Wrangler](/workers/wrangler/in
 To deploy a Browser Rendering Worker, you must declare a [browser binding](/workers/configuration/bindings/) in your Worker's `wrangler.toml` configuration file.
 
 {{<Aside type="note" header="Wrangler configuration">}}
-If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add `node_compat = true` to your Worker's `wrangler.toml` configuration.
+If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add `node_compat = true` to your Worker's `wrangler.toml` configuration. More information [here](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), including for [pages functions](/workers/runtime-apis/nodejs/#enable-nodejs-with-pages-functions).
 {{</Aside>}}
 
 
