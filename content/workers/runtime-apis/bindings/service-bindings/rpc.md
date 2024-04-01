@@ -104,4 +104,4 @@ export class MyWorker extends WorkerEntrypoint {
 
 ## Further reading
 
-{{<directory-listing folderDirectory="/workers/runtime-apis/rpc/" >}}
+{{<directory-listing folderDirectory="/workers/runtime-apis/rpc/"  showDescriptions="true">}}
