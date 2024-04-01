@@ -9,7 +9,7 @@ import * as prevent_ddos_attacks from "data/learning-paths/prevent-ddos-attacks.
 import * as get_started_free from "data/learning-paths/get-started-free.json";
 import * as cybersafe from "data/learning-paths/cybersafe.json";
 import * as zero_trust_web_access from "data/learning-paths/zero-trust-web-access.json";
-import * as defense_in_depth from "data/learning-paths/defense-in-depth.json";
+import * as secure_internet_traffic from "data/learning-paths/secure-internet-traffic.json";
 
 let learning_paths = [
   get_started_free,
@@ -23,7 +23,7 @@ let learning_paths = [
   application_security,
   cybersafe,
   zero_trust_web_access,
-  defense_in_depth
+  secure_internet_traffic
 ];
 
 export { learning_paths };

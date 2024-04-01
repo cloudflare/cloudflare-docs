@@ -9,7 +9,7 @@ layout: learning-module
 
 {{<Aside type="note">}}
 
-The following module requires [egress policies](/cloudflare-one/policies/gateway/egress-policies/), a feature only available on Enterprise plans. If you are not an Enterprise user, you can skip ahead to [Secure SaaS applications](/learning-paths/defense-in-depth/secure-saas-applications/).
+The following module requires [egress policies](/cloudflare-one/policies/gateway/egress-policies/), a feature only available on Enterprise plans. If you are not an Enterprise user, you can skip ahead to [Secure SaaS applications](/learning-paths/secure-internet-traffic/secure-saas-applications/).
 
 For more information on egress policies, contact your account team.
 

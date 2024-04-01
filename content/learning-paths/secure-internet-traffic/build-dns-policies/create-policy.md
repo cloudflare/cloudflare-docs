@@ -7,7 +7,7 @@ layout: learning-unit
 
 DNS policies determine how Gateway should handle a DNS request. When a user sends a DNS request, Gateway matches the request against your filters and either allows the query to resolve, blocks the query, or responds to the query with a different IP.
 
-You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [WARP client or Cloudflare One Agent](/learning-paths/defense-in-depth/connect-devices/install-agent/). To learn more, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
+You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [WARP client or Cloudflare One Agent](/learning-paths/secure-internet-traffic/connect-devices/install-agent/). To learn more, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
 
 To create a new DNS policy:
 

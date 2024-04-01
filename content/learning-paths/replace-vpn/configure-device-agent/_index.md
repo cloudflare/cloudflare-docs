@@ -9,7 +9,7 @@ layout: learning-module
 
 {{<Aside type="note">}}
 
-The following steps are identical to [Configure the device agent](/learning-paths/defense-in-depth/configure-device-agent/) in the Defense-in-Depth implementation guide. If you have already completed Defense-in-Depth, you can skip ahead to [Connect user devices](/learning-paths/replace-vpn/connect-devices/).
+The following steps are identical to [Configure the device agent](/learning-paths/secure-internet-traffic/configure-device-agent/) in the Secure your Internet traffic and SaaS apps implementation guide. If you have already completed Secure your Internet traffic and SaaS apps, you can skip ahead to [Connect user devices](/learning-paths/replace-vpn/connect-devices/).
 
 {{</Aside>}}
 

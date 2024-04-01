@@ -9,7 +9,7 @@ layout: learning-module
 
 {{<Aside type="note">}}
 
-The following steps are identical to [Configure the device agent](/learning-paths/defense-in-depth/configure-device-agent/) in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to [Determine when to use PAC files](/learning-paths/defense-in-depth/configure-device-agent/pac-files/).
+The following steps are identical to [Configure the device agent](/learning-paths/secure-internet-traffic/configure-device-agent/) in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to [Determine when to use PAC files](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/).
 
 {{</Aside>}}
 

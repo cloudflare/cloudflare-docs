@@ -9,7 +9,7 @@ layout: learning-module
 
 {{<Aside type="note">}}
 
-The following steps are identical to [Connect user devices](/learning-paths/defense-in-depth/connect-devices/) in the Defense-in-Depth implementation guide. If you have already completed Defense-in-Depth, you can skip ahead to [Build secure access policies](/learning-paths/replace-vpn/build-policies/).
+The following steps are identical to [Connect user devices](/learning-paths/secure-internet-traffic/connect-devices/) in the Secure your Internet traffic and SaaS apps implementation guide. If you have already completed Secure your Internet traffic and SaaS apps, you can skip ahead to [Build secure access policies](/learning-paths/replace-vpn/build-policies/).
 
 {{</Aside>}}
 

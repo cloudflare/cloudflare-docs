@@ -5,7 +5,7 @@ weight: 1
 layout: learning-module
 ---
 
-# Defense-in-Depth concepts
+# Secure your Internet traffic and SaaS apps concepts
 
 Learn the core concepts of using Cloudflare Zero Trust functionality to provide granular security policy for devices and networks accessing the Internet.
 
