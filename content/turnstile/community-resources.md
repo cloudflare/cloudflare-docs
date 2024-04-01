@@ -1,7 +1,7 @@
 ---
 title: Community resources
 pcx_content_type: reference
-weight: 12
+weight: 9
 structured_data: true
 ---
 

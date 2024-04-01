@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 14
+weight: 11
 layout: changelog
 changelog_file_name: [turnstile]
 outputs:
