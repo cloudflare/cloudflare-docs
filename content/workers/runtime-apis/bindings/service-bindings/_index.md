@@ -105,6 +105,8 @@ Each Worker is deployed separately.
 
 The Service bindings API is asynchronous — you must `await` any method you call. If Worker A invokes Worker B via a Service binding, and Worker A does not await the completion of Worker B, Worker B will be terminated early.
 
+For more about the lifecycle of calling a Worker over a Service Binding via RPC, refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs.
+
 ## Local development
 
 Local development is supported for Service bindings. For each Worker, open a new terminal and use [`wrangler dev`](/workers/wrangler/commands/#dev) in the relevant directory or use the `SCRIPT` option to specify the relevant Worker's entrypoint.
