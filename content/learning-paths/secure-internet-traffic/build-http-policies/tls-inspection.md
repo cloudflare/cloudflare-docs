@@ -22,7 +22,7 @@ TLS inspection is requisite for most advanced security and {{<glossary-tooltip t
 3. Do you plan to scan the body of requests or files against DLP profiles or scan downloaded files with an antivirus or anti-malware engine?
 4. Do you intend to use inline {{<glossary-tooltip term_id="Cloudflare Browser Isolation" link="/cloudflare-one/policies/browser-isolation/">}}Remote Browser Isolation{{</glossary-tooltip>}} to take advantage of data security capabilities like copy/paste blocking, keyboard blocking, and print blocking?
 
-If the answer to a majority of these questions is no and your organization relies mostly on hostname or DNS-based security controls, then you may not need to inspect TLS (or may not need to inspect most/all of your users' TLS traffic. Because Cloudflare operates both as a secure web gateway and as a secure DNS resolver for your connected users, you can apply defense-in-depth policy control that may increase your security posture without the need to broadly inspect TLS.
+If the answer to a majority of these questions is no and your organization relies mostly on hostname or DNS-based security controls, then you may not need to inspect TLS (or may not need to inspect most/all of your users' TLS traffic. Because Cloudflare operates both as a secure web gateway and as a secure DNS resolver for your connected users, you can apply policy control that may increase your security posture without the need to broadly inspect TLS.
 
 ### 2. Turn on TLS inspection
 

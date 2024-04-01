@@ -21,7 +21,7 @@ You may either use DLP profiles predefined by Cloudflare, or create your own cus
 
 ## Build effective DLP profiles
 
-For many Cloudflare users, Cloudflare Zero Trust is often one of the only measures in tackling preventing the loss of sensitive data. For other users, Zero Trust may be the one of the early in-line measures of a complex orchestration of a defense-in-depth strategy. No matter which journey you most resemble, developing effective and appropriate DLP policies and practices starts with first-principles definitions.
+For many Cloudflare users, Cloudflare Zero Trust is often one of the only measures in tackling preventing the loss of sensitive data. For other users, Zero Trust may be the one of the early in-line measures of a complex orchestration of an Internet and SaaS app security strategy. No matter which journey you most resemble, developing effective and appropriate DLP policies and practices starts with first-principles definitions.
 
 ### Define your sensitive data
 

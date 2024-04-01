@@ -5,7 +5,7 @@ weight: 5
 layout: learning-unit
 ---
 
-Add the following recommended HTTP policies.
+We recommend you add the following HTTP policies to build an Internet and SaaS app security strategy for your organization.
 
 {{<details header="All-HTTP-Application-InspectBypass" open="true">}}
 

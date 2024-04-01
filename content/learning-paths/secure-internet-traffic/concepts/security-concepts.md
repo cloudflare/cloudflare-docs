@@ -1,11 +1,11 @@
 ---
-title: What is Defense-in-Depth?
+title: What security features does Cloudflare provide?
 pcx_content_type: learning-unit
 weight: 2
 layout: learning-unit
 ---
 
-Learn about concepts related to defense-in-depth.
+Review concepts related to Cloudflare Internet traffic and SaaS app security.
 
 ## What is recursive DNS?
 

@@ -5,7 +5,7 @@ weight: 4
 layout: learning-unit
 ---
 
-We recommend you add the following DNS policies to build a defense-in-depth strategy for your organization.
+We recommend you add the following DNS policies to build an Internet and SaaS app security strategy for your organization.
 
 {{<details header="All-DNS-Domain-Allowlist" open="true">}}
 

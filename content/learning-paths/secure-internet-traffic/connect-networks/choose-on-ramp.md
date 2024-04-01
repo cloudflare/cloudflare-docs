@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-Similar to the network onboarding practices in the [Replace your VPN](/learning-paths/replace-vpn/connect-private-network/) implementation guide, there are a number of ways to on-ramp your network traffic to the Cloudflare global network. In a defense-in-depth approach to security, you will source traffic from devices that would otherwise go to the Internet through a default route. Relevant targets for this may be branch offices, network subnets that need a secure path to the Internet, or anywhere that you control the Internet paths for groups of devices.
+Similar to the network onboarding practices in the [Replace your VPN](/learning-paths/replace-vpn/connect-private-network/) implementation guide, there are a number of ways to on-ramp your network traffic to the Cloudflare global network. In our recommended approach to security, you will source traffic from devices that would otherwise go to the Internet through a default route. Relevant targets for this may be branch offices, network subnets that need a secure path to the Internet, or anywhere that you control the Internet paths for groups of devices.
 
 ## Available on-ramps
 
