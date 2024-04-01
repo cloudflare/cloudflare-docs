@@ -15,7 +15,7 @@ Using this file allows you to:
 - **write configuration that is shared across environments** - define config like bindings and environment variables for local, preview, and production in one file
 - **ensure better access control** - by using a configuration file in your repo, you can control who has access to make changes without giving access to your Cloudflare dashboard
 
-If you have used Workers in the past, you may already be familiar with [this file](/workers/wrangler/configuration/). It should be noted that there are differences with the way this file behaves for Pages Functions, and that the configuration fields do not match exactly between this file and the Workers equivalent.
+If you have used Workers in the past, you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). It should be noted that there are differences with the way `wrangler.toml` behaves for Pages Functions, and that the configuration fields do not match exactly between this file and the Workers equivalent.
 
 ## Example `wrangler.toml` file
 
@@ -24,7 +24,7 @@ If you have used Workers in the past, you may already be familiar with [this fil
 filename: wrangler.toml
 ---
 name = "my-pages-app"
-pages_build_output_dir = “./dist”
+pages_build_output_dir = "./dist"
 
 [[ kv_namespaces ]]
 binding = "KV"
@@ -51,37 +51,37 @@ Run the command, add the file to your project’s root directory, make changes a
 
 ## Configure environments
 
-With `wrangler.toml` you can quickly set default configuration across your local environment, preview deployments, and production.
+With `wrangler.toml` you can quickly set configuration across your local environment, preview deployments, and production.
 
 ### Local development
 
-`wrangler.toml` is always available locally via `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. For example, look at the following config file:
+`wrangler.toml` is always available locally via `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. Refer to the following config file for an example:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 name = "my-pages-app"
-pages_build_output_dir = “./dist”
+pages_build_output_dir = "./dist"
 compatibility_date = "2023-10-12"
-compatibility_flags = [“nodejs_compat”]
+compatibility_flags = ["nodejs_compat"]
 
-[[ kv_namespaces ]]
+[[kv_namespaces ]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 ```
 
-This adds compatibility settings like `nodejs_compat` and a KV namespace binding to the project. Once saved, run `wrangler pages dev` and the compatibility settings will apply locally. You can access the KV binding in your Pages Function code at `context.env.KV`. 
+This config file adds the `nodejs_compat` compatibility flag and a KV namespace binding to your project. Running `wrangler pages dev` in a directory with this config file will apply the `nodejs_compat` compatibility flag locally, and expose the `KV` binding in your Pages Function code at `context.env.KV`.
 
 {{<Aside type="note">}}
 
-For a full list of available configuration options read about [inheritable keys](#inheritable-keys) and [non-inheritable keys](#non-inheritable-keys).
+For a full list of configuration keys refer to [inheritable keys](#inheritable-keys) and [non-inheritable keys](#non-inheritable-keys).
 
 {{</Aside>}}
 
 ### Production and Preview Deployments
 
-Once you are ready to deploy your project, you can set the configuration for production and preview deployments by adding a `wrangler.toml` file and creating a new deployment, either via [git integration](/pages/get-started/git-integration/) or [direct upload](/pages/get-started/direct-upload/). This can be the same configuration you use locally or you can specify overrides.
+Once you are ready to deploy your project, you can set the configuration for production and preview deployments by creating a new deployment containing a `wrangler.toml` file.
 
 {{<Aside type="note">}}
 
@@ -97,7 +97,7 @@ $ npx wrangler pages deploy --branch <PRODUCTION BRANCH>
 
 To deploy the configuration for preview deployments, you can run the same command as above, and change the `--branch` name to any branch besides the one you set as the production branch.
 
-This will set the configuration for all preview deployments, not just the deployments from a specific branch. We do not currently offer branch-based configuration.
+This will set the configuration for all preview deployments, not just the deployments from a specific branch. Pages does not currently support branch-based configuration.
 
 {{<Aside type="note">}}
 
@@ -115,14 +115,14 @@ Unlike [Workers Environments](/workers/wrangler/configuration/#environments), `p
 
 {{</Aside>}}
 
-Using the example above, here’s how you would override just preview deployments:
+Refer to the following config file for an example of how to override preview deployment configuration:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 name = "my-pages-site"
-pages_build_output_dir = “./dist”
+pages_build_output_dir = "./dist"
 
 [[ kv_namespaces ]]
 binding = "KV"
@@ -131,11 +131,11 @@ id = "<NAMESPACE_ID>"
 [vars]
 API_KEY = "1234567asdf"
 
-[env.preview.kv_namespaces]
+[[env.preview.kv_namespaces]]
 binding = "KV"
 id = "<PREVIEW_NAMESPACE_ID>"
 
-[env.preview.vars]
+[[env.preview.vars]]
 API_KEY = "8901234bfgd"
 ```
 
@@ -148,20 +148,20 @@ If you wanted to have configuration values apply to local and preview, but overr
 filename: wrangler.toml
 ---
 name = "my-pages-site"
-pages_build_output_dir = “./dist”
+pages_build_output_dir = "./dist"
 
-[[ kv_namespaces ]]
+[[kv_namespaces ]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 
 [vars]
 API_KEY = "1234567asdf"
 
-[env.production.kv_namespaces]
+[[env.production.kv_namespaces]]
 binding = "KV"
 id = "<PRODUCTION_NAMESPACE_ID>"
 
-[env.production.vars]
+[[env.production.vars]]
 API_KEY = "8901234bfgd"
 ```
 
@@ -172,27 +172,27 @@ You can always be explicit and override both preview and production:
 filename: wrangler.toml
 ---
 name = "my-pages-site"
-pages_build_output_dir = “./dist”
+pages_build_output_dir = "./dist"
 
-[[ kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 
 [vars]
 API_KEY = "1234567asdf"
 
-[env.preview.kv_namespaces]
+[[env.preview.kv_namespaces]]
 binding = "KV"
 id = "<PREVIEW_NAMESPACE_ID>"
 
-[env.preview.vars]
+[[env.preview.vars]]
 API_KEY = "8901234bfgd"
 
-[env.production.kv_namespaces]
+[[env.production.kv_namespaces]]
 binding = "KV"
 id = "<PRODUCTION_NAMESPACE_ID>"
 
-[env.production.vars]
+[[env.production.vars]]
 API_KEY = "6567875fvgt"
 ```
 
@@ -207,7 +207,7 @@ This means this configuration will not work:
 filename: wrangler.toml
 ---
 name = "my-pages-site"
-pages_build_output_dir = “./dist”
+pages_build_output_dir = "./dist"
 
 [[ kv_namespaces ]]
 binding = "KV"
@@ -216,7 +216,7 @@ id = "<NAMESPACE_ID>"
 [vars]
 API_KEY = "1234567asdf"
 
-[env.production.vars]
+[[env.production.vars]]
 API_KEY = "8901234bfgd"
 ```
 

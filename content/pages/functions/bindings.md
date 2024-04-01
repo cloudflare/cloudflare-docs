@@ -343,7 +343,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 {{<Aside type="warning">}}
 
-Pages supports Workers AI in local development. However, the binding will use remote resources counting against usage limits.
+Pages Functions supports Workers AI in local development. However, the binding will use remote resources counting against usage limits.
 
 {{</Aside>}}
 
