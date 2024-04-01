@@ -114,7 +114,7 @@ window.attachEvent && window.attachEvent("onload", init)
 ```
 {{</tabs>}}
 
-The Workers script below verifies the Turnstile token and returns API or JSON pricing response.
+The Workers script below verifies the Turnstile token and returns an API or JSON pricing response.
 
 {{<tabs labels="js">}}
 ```js
