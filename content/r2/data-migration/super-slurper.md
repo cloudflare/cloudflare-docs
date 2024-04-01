@@ -40,7 +40,7 @@ This setting determines what happens when an object being copied from the source
 
 
 ## Supported cloud storage providers
-We currently support copying data from the following cloud object storage providers to R2:
+Cloudflare currently supports copying data from the following cloud object storage providers to R2:
 - Amazon S3
 - Cloudflare R2
 - Google Cloud Storage (GCS) {{<inline-pill style="beta">}}
@@ -49,7 +49,7 @@ We currently support copying data from the following cloud object storage provid
 
 ### Amazon S3
 
-To copy objects from Amazon S3, Super Slurper requires access permissions to your bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions, Cloudflare recommends you create a user with a narrow set of permissions.
+To copy objects from Amazon S3, Super Slurper requires access permissions to your S3 bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions, Cloudflare recommends you create a user with a narrow set of permissions.
 
 To create credentials with the correct permissions:
 
@@ -81,11 +81,11 @@ You can now use both the Access Key ID and Secret Access Key when defining your 
 
 ### Google Cloud Storage
 
-To copy objects from Google Cloud Storage (GCS), Super Slurper requires access permissions to your bucket. You can use the Google Cloud predefined `Storage Admin` role, but Cloudflare recommends creating a custom role with a narrower set of permissions.
+To copy objects from Google Cloud Storage (GCS), Super Slurper requires access permissions to your GCS bucket. You can use the Google Cloud predefined `Storage Admin` role, but Cloudflare recommends creating a custom role with a narrower set of permissions.
 
 To create a custom role with the necessary permissions:
 1. Log in to your Google Cloud console.
-2. Go to **IAM & Admin > Roles**.
+2. Go to **IAM & Admin** > **Roles**.
 3. Find the `Storage Object Viewer` role and select **Create role from this role**.
 4. Give your new role a name.
 5. Select **Add permissions** and add the `storage.buckets.get` permission.
