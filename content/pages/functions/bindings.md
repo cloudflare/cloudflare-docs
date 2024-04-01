@@ -240,25 +240,15 @@ While Pages currently supports Workers AI bindings, they do not work in local de
 5. Give your binding a name under **Variable name**.
 7. Redeploy your project for the binding to take effect.
 
-### Install the Workers AI client library
-
 Below is an example of how to use Workers AI in your Function. Your Workers AI binding is `AI`:
-
-```sh
-$ npm install @cloudflare/ai
-```
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-import { Ai } from '@cloudflare/ai'
-
 export async function onRequest(context) {
-  const ai = new Ai(context.env.AI);
-
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input);
+  const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', input);
 
   return Response.json(answer);
 }
@@ -266,18 +256,14 @@ export async function onRequest(context) {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-import { Ai } from '@cloudflare/ai'
-
 interface Env {
   AI: any;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const ai = new Ai(context.env.AI);
-
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input)
+  const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', input)
 
   return Response.json(answer);
 }
