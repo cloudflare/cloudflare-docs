@@ -11,7 +11,7 @@ The version metadata binding can be used to access metadata associated with a [v
 
 Worker version ID and version tag are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version.
 
-To use the version metdata binding, ipdate your Worker's `wrangler.toml` file:
+To use the version metdata binding, update your Worker's `wrangler.toml` file:
 ```
 ---
 header: wrangler.toml
