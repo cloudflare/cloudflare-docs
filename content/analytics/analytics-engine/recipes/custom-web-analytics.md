@@ -7,6 +7,4 @@ _build:
   publishResources: false
   render: never
 
-meta:
-  description: Example of building a custom web analytics service with Workers Analytics Engine
 ---
