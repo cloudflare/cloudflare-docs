@@ -25,7 +25,7 @@ Workers AI now supports fine-tuned inference with adapters trained with [Low-Ran
 We have started a [Hugging Face Collection](https://huggingface.co/collections/Cloudflare/workers-ai-compatible-loras-6608dd9f8d305a46e355746e) that lists a few LoRA adapters that are compatible with Workers AI. Generally, any LoRA adapter that fits our limitations above should work. 
 
 ### Training your own LoRA adapters
-If 
+If ... craig's tutorial ...
 
 ## Uploading LoRA adapters
 In order to run inference with LoRAs on Workers AI, you'll need to create a new fine tune on your account and upload your adapter files. You should have a `adapter_model.safetensors` file with model weights and `adapter_config.json` with your config information. Note that we only accept adapter files in these types.
@@ -43,7 +43,7 @@ wrangler ai finetune list
 ```
 
 ### REST API
-You can also use our REST API to upload your adapter files. You will need a Cloudflare API Token to make calls to our REST API, which you can generate via the Cloudflare Dashboard.
+You can also use our REST API to upload your adapter files. You will need a Cloudflare API Token with `Workers AI: Edit` permissions to make calls to our REST API, which you can generate via the Cloudflare Dashboard.
 
 #### Creating a fine-tune on your account
 {{<tabs labels="cURL | JSON Output">}}
@@ -54,7 +54,7 @@ You can also use our REST API to upload your adapter files. You will need a Clou
 ## Output: unique finetune_id
 
 curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
-    -H "Authorization: Bearer XXX" \
+    -H "Authorization: Bearer {API_TOKEN}" \
     -H 'Content-Type: application/json' \
     -d '{
       "model": "SUPPORTED_MODEL_NAME",
@@ -83,23 +83,23 @@ header: Example JSON output
 
 
 #### Uploading your adapter weights and config
-You have to call the upload endpoint each time you want to upload a new file. Make sure you cal
+You have to call the upload endpoint each time you want to upload a new file, so you usually run this once for  `adapter_model.safetensors` and once for `adapter_config.json`. Make sure you include the `@` before your path to files.
 
 {{<tabs labels="cURL | JSON Output">}}
 {{<tab label="cURL" default="true">}}
 ```bash
 ## Input: finetune_id, adapter_model.safetensors
 ## Output: success true/false
-curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
-    -H 'Authorization: Bearer XXX' \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
+    -H 'Authorization: Bearer {API_TOKEN}' \
     -H 'Content-Type: multipart/form-data' \
     -F 'file_name=adapter_model.safetensors' \
     -F 'file=@{PATH/TO/adapter_model.safetensors}' \
 
 ## Input: finetune_id, adapter_config.json
 ## Output: success true/false
-curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
-    -H 'Authorization: Bearer XXX' \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
+    -H 'Authorization: Bearer {API_TOKEN}' \
     -H 'Content-Type: multipart/form-data' \
     -F 'file_name=adapter_config.json' \
     -F 'file=@{PATH/TO/adapter_config.json}'
@@ -126,8 +126,8 @@ header: Example JSON output
 ```bash
 ## Input: n/a
 ## Output: success true/false
-curl -X GET https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/finetunes/ \
-    -H 'Authorization: Bearer XXX' \
+curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
+    -H 'Authorization: Bearer {API_TOKEN}' \
 ```
 {{</tab>}}
 {{<tab label="JSON Output">}}
