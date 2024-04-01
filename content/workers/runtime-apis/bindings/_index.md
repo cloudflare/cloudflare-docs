@@ -41,7 +41,3 @@ export default {
 ```
 
 You can think of a binding as a permission and an API in one piece. With bindings, you never have to add secret keys or tokens to your Worker in order to access resources on your Cloudflare account — the permission is embedded within the API itself. The underlying secret is never exposed to your Worker's code, and therefore can't be accidentally leaked.
-
-## Why bindings?
-
-<TODO>
