@@ -19,26 +19,24 @@ By default, D1 enforces that foreign key constraints are valid within all querie
 When running a [query](/d1/build-with-d1/client-api/), [migration](/d1/platform/migrations/) or [importing data](/d1/learning/importing-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
 
 * D1's foreign key enforcement is equivalent to SQLite's `PRAGMA foreign_keys = on` directive. Because D1 runs every query inside an implicit transaction, user queries cannot change this during a query or migration.
-* Instead, D1 allows you to call `PRAGMA defer_foreign_keys = true` or `false`, which allows you to violate foreign key constraints temporarily.
+* Instead, D1 allows you to call `PRAGMA defer_foreign_keys = on` or `off`, which allows you to violate foreign key constraints temporarily (until the end of the current tranasction).
 
-{{<Aside type="warning">}}
+This does not disable foreign key enforcement outside of the current transaction: if you have not resolved outstanding foreign key violations at the end of your transaction, it will fail with a `FOREIGN KEY constraint failed` error.
 
-If your migration or batch query does not resolve any outstanding foreign key violations, your migration or query will fail with an error.
-
-The constraints will only be enforced at the end of the query, and if violated, D1 will return a `FOREIGN KEY constraint failed` error.
-
-{{</Aside>}}
-
-For example, given ...
+To defer foreign key enforcement, set `PRAGMA defer_foreign_keys = on` at the start of your transaction, or ahead of changes that would violate constraints: 
 
 ```sql
----
-filename: 0002_add_profile_table.sql
----
+-- Defer foreign key enforcement in this transaction.
+PRAGMA defer_foreign_keys = on
 
--- example goes here
+-- Run your CREATE TABLE or ALTER TABLE / COLUMN statements
+ALTER TABLE users ...
 
+-- This is implicit if not set by the end of the transaction.
+PRAGMA defer_foreign_keys = off
 ```
+
+You can also explicitly set `PRAGMA defer_foreign_keys = on` immediately after you have resolved outstanding foreign key constraints. If there are still outstanding foreign key constraints, you will receive a `FOREIGN KEY constraint failed` error and will need to resolve the violation.
 
 ## Define a foreign key relationship
 
@@ -53,9 +51,6 @@ This mapping is defined as `FOREIGN KEY`, which ensures that:
 
 * You cannot delete a row from the `users` table that would violate the foreign key constraint. In practice, this means that you can't end up with orders that do not have a valid user to map back to.
 * `orders` are always defined against a valid `user_id`, mitigating the risk of creating orders that refer to invalid (or non-existant) users.
-* Deleting orders does not delete users. The `ON DELETE RESTRICT` action as part of the table definition enables this.
-
-The schema:
 
 ```sql
 CREATE TABLE users (
@@ -71,7 +66,7 @@ CREATE TABLE orders (
     item_desc TEXT,
     shipped_date INTEGER,
     user_who_ordered INTEGER,
-    FOREIGN KEY(user_who_ordered) REFERENCES users(user_id) ON DELETE RESTRICT
+    FOREIGN KEY(user_who_ordered) REFERENCES users(user_id)
 )
 ```
 
