@@ -1,7 +1,7 @@
 ---
 title: Control traffic egress with source IP anchoring and allowlisting
 pcx_content_type: overview
-weight: 9
+weight: 10
 layout: learning-module
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Configure the device agent
 pcx_content_type: overview
-weight: 5
+weight: 3
 layout: learning-module
 ---
 
@@ -9,7 +9,7 @@ layout: learning-module
 
 {{<Aside type="note">}}
 
-The following steps are identical to [Configure the device agent](/learning-paths/defense-in-depth/configure-device-agent/) in the Defense-in-Depth implementation guide. If you have already completed Defense-in-Depth, you can skip ahead to [Connect user devices](/learning-paths/replace-vpn/connect-devices/).
+The following steps are identical to [Configure the device agent](/learning-paths/defense-in-depth/configure-device-agent/) in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to [Determine when to use PAC files](/learning-paths/defense-in-depth/configure-device-agent/pac-files/).
 
 {{</Aside>}}
 

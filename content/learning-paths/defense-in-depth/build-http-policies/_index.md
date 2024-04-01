@@ -1,7 +1,7 @@
 ---
 title: Build HTTP security policies
 pcx_content_type: overview
-weight: 8
+weight: 9
 layout: learning-module
 ---
 

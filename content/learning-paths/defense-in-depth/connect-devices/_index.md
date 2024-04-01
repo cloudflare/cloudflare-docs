@@ -1,7 +1,7 @@
 ---
 title: Connect user devices
 pcx_content_type: overview
-weight: 3
+weight: 4
 layout: learning-module
 ---
 

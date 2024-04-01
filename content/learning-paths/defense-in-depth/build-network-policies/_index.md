@@ -1,7 +1,7 @@
 ---
 title: Build network security policies
 pcx_content_type: overview
-weight: 7
+weight: 8
 layout: learning-module
 ---
 

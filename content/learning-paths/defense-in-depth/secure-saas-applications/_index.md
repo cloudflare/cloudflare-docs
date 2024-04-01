@@ -1,7 +1,7 @@
 ---
 title: Secure SaaS applications
 pcx_content_type: overview
-weight: 10
+weight: 11
 layout: learning-module
 ---
 

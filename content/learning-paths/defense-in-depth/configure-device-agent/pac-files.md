@@ -1,7 +1,7 @@
 ---
-title: When to use PAC files
+title: Determine when to use PAC files
 pcx_content_type: learning-unit
-weight: 4
+weight: 6
 layout: learning-unit
 ---
 

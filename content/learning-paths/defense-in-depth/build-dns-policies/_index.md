@@ -1,7 +1,7 @@
 ---
 title: Build DNS security policies
 pcx_content_type: overview
-weight: 6
+weight: 7
 layout: learning-module
 ---
 
