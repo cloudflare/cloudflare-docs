@@ -7,7 +7,7 @@ title: Fetch Handler
 
 ## Background
 
-Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [request](https://developer.mozilla.org/en-US/docs/Web/API/Request) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
+Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [request](/workers/runtime-apis/request/) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
 
 ```ts
 export default {

@@ -82,7 +82,7 @@ entries:
 
 - term: rollback
   general_definition: |-
-    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network.
+    [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) are a way to deploy an older deployment to the Cloudflare global network.
 
 - term: R2
   general_definition: |-

@@ -1,6 +1,6 @@
 ---
 title: Remote development
-weight: 6
+weight: 4
 pcx_content_type: concept
 ---
 
