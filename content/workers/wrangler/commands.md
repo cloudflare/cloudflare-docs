@@ -310,6 +310,31 @@ You must provide either `--command` or `--file` for this command to run successf
 
 {{</definitions>}}
 
+### `export`
+
+Export a D1 database or table's schema and/or content to a `.sql` file.
+
+```txt
+wrangler d1 export <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to export.
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
+- `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to the SQL file for your export.
+- `--table` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The name of the table within a D1 database to export.
+- `--no-data` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database data.
+- `--no-schema` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database schema.
+
+{{</definitions>}}
+
 ### `time-travel restore`
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).

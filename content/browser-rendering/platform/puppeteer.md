@@ -124,7 +124,7 @@ You should also be able to access this information in the dashboard, albeit with
 {
    "activeSessions": ["478f4d7d-e943-40f6-a414-837d3736a1dc", "565e05fb-4d2a-402b-869b-5b65b1381db7"],
    "allowedBrowserAcquisitions": 1,
-   "maxConcurrentSessions": 100,
+   "maxConcurrentSessions": 2,
    "timeUntilNextAllowedBrowserAcquisition": 0
 }
 ```
