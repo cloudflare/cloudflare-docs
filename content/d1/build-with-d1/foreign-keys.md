@@ -14,6 +14,32 @@ Foreign key constraints can also prevent you from deleting rows that reference r
 
 By default, D1 enforces that foreign key constraints are valid within all queries and migrations. This is identical to the behaviour you would observe when setting `PRAGMA foreign_keys = on` in SQLite for every transaction.
 
+## Defer foreign key constraints
+
+When running a [query](/d1/build-with-d1/client-api/), [migration](/d1/platform/migrations/) or [importing data](/d1/learning/importing-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
+
+* D1's foreign key enforcement is equivalent to SQLite's `PRAGMA foreign_keys = on` directive. Because D1 runs every query inside an implicit transaction, user queries cannot change this during a query or migration.
+* Instead, D1 allows you to call `PRAGMA defer_foreign_keys = true` or `false`, which allows you to violate foreign key constraints temporarily.
+
+{{<Aside type="warning">}}
+
+If your migration or batch query does not resolve any outstanding foreign key violations, your migration or query will fail with an error.
+
+The constraints will only be enforced at the end of the query, and if violated, D1 will return a `FOREIGN KEY constraint failed` error.
+
+{{</Aside>}}
+
+For example, given ...
+
+```sql
+---
+filename: 0002_add_profile_table.sql
+---
+
+-- example goes here
+
+```
+
 ## Define a foreign key relationship
 
 A foreign key relationship can be defined when creating a table via `CREATE TABLE` or when adding a column to an existing table via an `ALTER TABLE` statement.
@@ -44,6 +70,7 @@ CREATE TABLE orders (
     status INTEGER,
     item_desc TEXT,
     shipped_date INTEGER,
+    user_who_ordered INTEGER,
     FOREIGN KEY(user_who_ordered) REFERENCES users(user_id) ON DELETE RESTRICT
 )
 ```
@@ -76,39 +103,10 @@ CREATE TABLE scores (
     score_id INTEGER PRIMARY KEY,
     game TEXT,
     score INTEGER,
+    player_id INTEGER,
     FOREIGN KEY(player_id) REFERENCES users(user_id) ON DELETE CASCADE
 )
 ```
-
-## Relax foreign key constraints
-
-When running a [query](/d1/platform/client-api/), [migration](/d1/platform/migrations/) or [importing data](/d1/learning/importing-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
-
-* D1's foreign key enforcement is equivalent to SQLite's `PRAGMA foreign_keys = on` directive. Because D1 runs every query inside an implicit transaction, user queries cannot change this during a query or migration.
-* Instead, D1 allows you to call `PRAGMA defer_foreign_keys = true` or `false`, which allows you to violate foreign key constraints temporarily.
-
-{{<Aside type="warning">}}
-
-If your migration or batch query does not resolve any outstanding foreign key violations, your migration or query will fail with an error.
-
-The constraints will only be enforced at the end of the query, and if violated, D1 will return a `FOREIGN KEY constraint failed` error.
-
-{{</Aside>}}
-
-For example, given ...
-
-```sql
----
-filename: 0002_add_profile_table.sql
----
-
--- example goes here
-
-```
-
-https://www.sqlite.org/pragma.html#pragma_defer_foreign_keys
-
-
 
 ## Next Steps
 
