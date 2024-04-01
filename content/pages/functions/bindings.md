@@ -69,6 +69,8 @@ If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev`
 
 If you set up your binding via the dashboard, you interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv=<BINDING_NAME>` to your CLI run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST` as shown above.
 
+{{<render file="_cli-precedence-over-file.md">}}
+
 ## Durable Object namespaces
 
 [Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state.
@@ -129,6 +131,8 @@ While developing locally, to interact with a Durable Object namespace, run the W
 If you set up your binding via `wrangler.toml`, you can run the commands above, then interact as outlined in the section above.
 
 If you do not add the binding via `wrangler.toml`, you can interact with it via the CLI by appending `--do <BINDING_NAME>=<CLASS_NAME>@<SCRIPT_NAME>` to `wrangler pages dev` where `CLASS_NAME` indicates the Durable Object class name and `SCRIPT_NAME` the name of your Worker. For example, if your Worker is called `do-worker` and it declares a Durable Object class called `DurableObjectExample`, access this Durable Object by running your `do-worker` via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --do MY_DO=DurableObjectExample@do-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_DO`).
+
+{{<render file="_cli-precedence-over-file.md">}}
 
 ## R2 buckets
 
@@ -194,6 +198,8 @@ By default, [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) automatica
 If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` and interact as outlined in the section above.
 
 If you set up your binding via the dashboard using the binding name `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+
+{{<render file="_cli-precedence-over-file.md">}}
 
 ## D1 databases
 
@@ -266,6 +272,8 @@ Specifically:
 * Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
 
 Refer to the [D1 client API documentation](/d1/build-with-d1/d1-client-api/) for the API methods available on your D1 binding.
+
+{{<render file="_cli-precedence-over-file.md">}}
 
 ## Workers AI
 
@@ -393,6 +401,8 @@ To interact with a [service binding](/workers/configuration/bindings/about-servi
 If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` from the Pages' project root directory and interact as outlined in the section above.
 
 If you set up your binding via the dashboard, open another terminal window. From the root directory of the Pages project, run `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `SCRIPT_NAME` indicates the name of the Worker. For example, if your Worker is called `my-worker`, connect with this Worker by running it via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_SERVICE`).
+
+{{<render file="_cli-precedence-over-file.md">}}
 
 ## Queue Producers
 
