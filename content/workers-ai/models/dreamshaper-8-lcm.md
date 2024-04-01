@@ -11,10 +11,10 @@ model:
   tags:
     - "text-to-image"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/Lykon/DreamShaper"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/Lykon/DreamShaper"
 task_type: "text-to-image"
 model_display_name: "dreamshaper-8-lcm"
 layout: "model"
