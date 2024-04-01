@@ -7,7 +7,7 @@ weight: 1
 
 # Price scraping template
 
-You can use the Workers templates below to provide your users with a demo application in [Workers](/workers/) where product details are shown, but pricing information is not revealed until the Turnstile widget is solved.
+You can use the templates below to provide your users with a demo application in [Workers](/workers/) where product details are shown, but pricing information is not revealed until the Turnstile widget is solved.
 
 ## Worker scripts
 
