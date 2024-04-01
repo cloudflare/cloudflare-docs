@@ -37,7 +37,7 @@ To authenticate to an Access application using your service token, add the follo
 
 `CF-Access-Client-Secret: <Client Secret>`
 
-If the service token is valid, Access generates a JWT scoped to the application. All subsequent requests with that JWT will succeed until the expiration of that JWT. The JWT `CF_Authorization` should be set as a cookie on any subsequent requests.
+If the service token is valid, Access generates a JWT scoped to the application in the form of a cookie. All subsequent requests with that JWT will succeed until the expiration of that JWT. The JWT `CF_Authorization` should be set as a cookie on any subsequent requests.
 
 Example:
 
