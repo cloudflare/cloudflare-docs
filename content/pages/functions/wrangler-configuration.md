@@ -26,11 +26,11 @@ filename: wrangler.toml
 name = "my-pages-app"
 pages_build_output_dir = "./dist"
 
-[[ kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 
-[[ d1_databases ]]
+[[d1_databases]]
 binding = "DB"
 database_name = "northwind-demo"
 database_id = "<DATABASE_ID>"
@@ -66,7 +66,7 @@ pages_build_output_dir = "./dist"
 compatibility_date = "2023-10-12"
 compatibility_flags = ["nodejs_compat"]
 
-[[kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 ```
@@ -124,7 +124,7 @@ filename: wrangler.toml
 name = "my-pages-site"
 pages_build_output_dir = "./dist"
 
-[[ kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 
@@ -150,7 +150,7 @@ filename: wrangler.toml
 name = "my-pages-site"
 pages_build_output_dir = "./dist"
 
-[[kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 
@@ -209,7 +209,7 @@ filename: wrangler.toml
 name = "my-pages-site"
 pages_build_output_dir = "./dist"
 
-[[ kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 
