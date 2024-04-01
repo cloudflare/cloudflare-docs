@@ -218,11 +218,11 @@
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
 /d1/learning/using-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/learning/querying-json/ /d1/reference/query-json/ 301
+/d1/learning/querying-json/ /d1/build-with-d1/query-json/ 301
 /d1/learning/importing-data/ /d1/build-with-d1/import-data/ 301
 /d1/learning/generated-columns/ /d1/reference/generated-columns/ 301
-/d1/learning/local-development/ /d1/configuration/local-development/ 301
-/d1/learning/remote-development/ /d1/configuration/remote-development/ 301
+/d1/learning/local-development/ /d1/build-with-d1/local-development/ 301
+/d1/learning/remote-development/ /d1/build-with-d1/remote-development/ 301
 /d1/learning/data-location/ /d1/configuration/data-location/ 301
 /d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
@@ -238,7 +238,7 @@
 /d1/how-to/ /d1/build-with-d1/ 301
 /d1/how-to/query-databases/ /d1/build-with-d1/d1-client-api/ 301
 /d1/how-to/using-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/how-to/querying-json/ /d1/reference/query-json/ 301
+/d1/how-to/querying-json/ /d1/build-with-d1/query-json/ 301
 /d1/how-to/importing-data/ /d1/build-with-d1/import-data/ 301
 /d1/how-to/generated-columns/ /d1/reference/generated-columns/ 301
 /d1/build-databases/ /d1/build-with-d1/ 301
