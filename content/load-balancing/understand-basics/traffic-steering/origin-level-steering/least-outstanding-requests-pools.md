@@ -8,7 +8,7 @@ meta:
 
 # Least Outstanding Requests steering
 
-**Least Outstanding Requests steering** allows you to route traffic to origins that currently have the fewest number of outstanding requests.
+**Least Outstanding Requests steering** allows you to route traffic to origins that currently have the lowest number of outstanding requests.
 
 This steering policy selects an origin by taking into consideration origin weights, as well as each origin's number of in-flight requests. Origins with more pending requests are weighted proportionately less in relation to others.
 
