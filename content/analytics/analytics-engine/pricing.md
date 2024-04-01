@@ -26,10 +26,10 @@ If you are an Enterprise customer, please contact your account team for informat
 
 Every time you call [`writeDataPoint()`](/analytics/analytics-engine/get-started/#3-write-data-from-your-worker) in a Worker, this counts as one data point written.
 
-Every data point written costs the same amount. There is no extra cost to add dimensions or cardinality, and no additional cost for writing more data in a single data point.
+Each data point written costs the same amount. There is no extra cost to add dimensions or cardinality, and no additional cost for writing more data in a single data point.
 
 ### Read queries
 
 Every time you post to Workers Analytics Engine's [SQL API](/analytics/analytics-engine/sql-api/), this counts as one read query.
 
-Every read query costs the same amount. There is no extra cost for more or less complex queries, and no extra cost for reading only a few rows of data versus many rows of data.
+Each read query costs the same amount. There is no extra cost for more or less complex queries, and no extra cost for reading only a few rows of data versus many rows of data.
