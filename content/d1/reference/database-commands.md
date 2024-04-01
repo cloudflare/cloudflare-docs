@@ -144,5 +144,5 @@ Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to lea
 ## Related resources
 
 * Learn [how to create indexes](/d1/build-with-d1/use-indexes/#list-indexes) in D1.
-* Use D1's [JSON functions](/d1/reference/query-json/) to query JSON data.
+* Use D1's [JSON functions](/d1/build-with-d1/query-json/) to query JSON data.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.
