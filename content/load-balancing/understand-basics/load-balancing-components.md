@@ -24,7 +24,7 @@ For example, if you are only using Cloudflare to globally distribute traffic acr
 
 {{<Aside type="note">}}
 
-Cloudflare [local traffic management (LTM)](/load-balancing/local-traffic-management/) solution and [origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) capabilities enable you to also load balance traffic between your origin servers within a data center. In this use case, each pool would represent a data center and contain several endpoints that represent your origin servers.
+Cloudflare [local traffic management (LTM)](/load-balancing/local-traffic-management/) solution and [endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) capabilities enable you to also load balance traffic between your servers within a data center. In this use case, each pool would represent a data center and contain several endpoints that represent your servers.
 
 {{</Aside>}}
 
