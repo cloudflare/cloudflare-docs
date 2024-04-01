@@ -21,6 +21,8 @@ The RPC system also supports the following types that are not Structured Cloneab
 
 ## Functions
 
+You can send a function over RPC. When you do so, the function is replaced by a "stub". The recipient can call the stub like a function, but doing so makes a new RPC back to the place where the function originated.
+
 ### Return functions from RPC methods
 
 {{<render file="_service-binding-rpc-functions-example.md" productFolder="workers">}}
@@ -104,7 +106,7 @@ export default {
 ```
 
 {{<Aside type="note" description="The `using` declaration">}}
-Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn  more about the `using` declaration shown in the example above.
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above.
 {{</Aside>}}
 
 Classes that extend `RpcTarget` work a lot like functions: the object itself is not serialized, but is instead replaced by a stub. In this case, the stub itself is not callable, but its methods are. Calling any method on the stub actually makes an RPC back to the original object, where it was created.

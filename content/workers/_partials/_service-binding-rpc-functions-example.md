@@ -53,11 +53,10 @@ export default {
 }
 ```
 
+{{<Aside type="note" description="The `using` declaration">}}
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above.
+{{</Aside>}}
+
 How is this possible? The system is not serializing the function itself. When the function returned by `CounterService` is called, it runs within `CounterService` — even if it is called by another Worker.
 
 Under the hood, the caller is not really calling the function itself directly, but calling a what is called a "stub". A "stub" is a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object that allows the client to call the remote service as if it were local, running in the same Worker. Behind the scenes, it calls back to the Worker that implements `CounterService` and asks it to execute the function closure that had been returned earlier.
-
-Note that:
-
-- Communication over Service bindings is always asynchronous. Even if the method declared on `CounterService` is not async, the client must call it as an async method.
-- Only [compatible types](/workers/runtime-apis/rpc/compatible-types) can be passed as parameters or returned from the function.

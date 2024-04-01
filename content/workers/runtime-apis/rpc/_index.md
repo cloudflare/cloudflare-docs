@@ -24,6 +24,14 @@ The client, in this case Worker A, calls Worker B and tells it to execute a spec
 
 {{<render file="_service-binding-rpc-functions-example.md" productFolder="workers">}}
 
+## All calls are asynchronous
+
+Whether or not the method you are calling was declared asynchronous on the server side, it will behave as such on the client side. You must await the result.
+
+Note that RPC calls do not actually return Promises, but they return a type that behaves like a Promise. The type is a "custom thenable", in that it implements the method `then()`. JavaScript supports awaiting any "thenable" type, so for the most part you can treat the return value like a Promise.
+
+(We'll see why the type is not actually a Promise a bit later.)
+
 ## Details
 
 {{<directory-listing showDescriptions="true">}}
