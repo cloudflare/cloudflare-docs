@@ -23,25 +23,25 @@ Generally, there are five questions involved with routing:
 
 ### Distributing requests to pools
 
-A load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) controls how the load balancer distributes requests to pools.
+A load balancer's [traffic steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) controls how the load balancer distributes requests to pools.
 
 Routing decisions can be based on proximity, pool performance, geography, and more.
 
 ### Distributing requests within pools
 
-Once the request reaches a pool, that pool's [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) control how each pool distributes requests to the servers in the pool.
+Once the request reaches a pool, that pool's [endpoint steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) controls how each pool distributes requests to the servers in the pool.
 
 These decisions can be based on default percentages of traffic sent to individual servers (also known as the **Weight**), aspects of the request (such as source IP address), or both.
 
-### Server health
+### Endpoint health
 
-If a server fails a health check - which would mark it as unhealthy - its pool will adjust routing according to its origin steering policy.
+If an endpoint fails a health check - which would mark it as unhealthy - its pool will adjust routing according to its endpoint steering policy.
 
-Both new and existing requests will go to healthy servers in the pool, ignoring the unhealthy server.
+Both new and existing requests will go to healthy endpoints in the pool, ignoring the unhealthy endpoint.
 
 ### Pool health
 
-With enough unhealthy servers, the pool itself may be considered unhealthy as well.
+With enough unhealthy endpoints, the pool itself may be considered unhealthy as well.
 
 {{<render file=_unhealthy-pool-traffic-distribution.md productFolder="load-balancing">}}
 

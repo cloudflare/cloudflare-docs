@@ -15,5 +15,5 @@ By the end of this module, you will be able to:
 
 - Describe the difference between load balancing at different layers of the network stack.
 - Identify when a load balancer should utilize session affinity.
-- Describe the different policies for origin steering and traffic steering.
+- Describe the different policies for endpoint steering and traffic steering.
 - List the different options available to monitor server health.
