@@ -1,5 +1,5 @@
 ---
-title: Foreign keys
+title: Define foreign keys
 pcx_content_type: concept
 weight: 5
 ---
@@ -72,7 +72,7 @@ CREATE TABLE orders (
 
 You can define multiple foreign key relationships per-table, and foreign key definitions can reference multiple tables within your overall database schema. 
 
-## `ON UPDATE` and `ON DELETE`
+## Foreign key actions
 
 You can define _actions_ as part of your foreign key definitions to either limit or propagate changes to a parent row (`REFERENCES table(column)`). This can make using foreign key constraints in your application easier to reason about, and help either clean up related data or prevent data from being islanded.
 
