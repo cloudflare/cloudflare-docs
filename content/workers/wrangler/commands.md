@@ -544,7 +544,7 @@ wrangler hyperdrive update <ID> [OPTIONS]
 - `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to update.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The new name of the Hyperdrive config.
+  - The new name of the Hyperdrive configuration.
 - `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new database hostname or IP address Hyperdrive should connect to.
 - `--origin-port` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
