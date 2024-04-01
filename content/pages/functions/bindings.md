@@ -6,25 +6,23 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments using the Cloudflare dashboard or via a `wrangler.toml` [config file](/pages/functions/wrangler-configuration/#bindings).
+
+In order to create a binding, you must already have a resource set up to bind to.
 
 {{<Aside type="note">}}
 
-Setup instructions for bindings in this guide are for the Cloudflare Dashboard. You can also configure bindings via a `wrangler.toml` [config file](/pages/functions/wrangler-configuration/#bindings).
-
-{{</Aside>}}
-
-You must already have a resource set up to continue.
-
-{{<Aside type="note">}}
-
-Local development uses local storage. It cannot access data stored on Cloudflare’s servers.
+When developing bindings locally, your binding will use local storage. It can not access data stored remotely on Cloudflare’s servers.
 
 {{</Aside>}}
 
 ## KV namespaces
 
-[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
+[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution.
+
+### Set your binding via the dashboard
+
+To bind your KV namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -33,6 +31,12 @@ Local development uses local storage. It cannot access data stored on Cloudflare
 5. Give your binding a name under **Variable name**.
 6. Under **KV namespace**, select your desired namespace. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can bind your KV namespace to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#kv-namespaces) for more details.
+
+### Interact with your KV namespace binding
 
 Below is an example of how to use KV in your Function. Your KV binding is `TODO_LIST`:
 
@@ -59,15 +63,19 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your KV namespaces locally
+#### Local development
 
-You can add a KV namespace binding locally via a `wrangler.toml` file and then interact with it by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#kv-namespaces) for more information.
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` and interact as outlined in the section above.
 
-Alternatively, you can interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv=<BINDING_NAME>` to your run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
+If you set up your binding via the dashboard, you interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv=<BINDING_NAME>` to your CLI run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST` as shown above.
 
 ## Durable Object namespaces
 
-[Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
+[Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state.
+
+### Set your binding via the dashboard
+
+To bind your Durable Object namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -77,7 +85,13 @@ Alternatively, you can interact with your KV namespace by adding `-k <BINDING_NA
 6. Under **Durable Object namespace**, select your desired namespace. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
 
-Below is an example of how to use Durable Objects in your Function. Your DO binding is `DURABLE_OBJECT`:
+### Set your binding via `wrangler.toml`
+
+You can bind your Durable Object to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#durable-objects) for more details.
+
+### Interact with your Durable Object namespace binding
+
+Below is an example of how to use Durable Object namespaces in your Function. Your DO binding is `DURABLE_OBJECT`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -108,17 +122,21 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your Durable Object namespaces locally
+#### Local development
 
-While developing locally, to interact with a Durable Object namespace, run the Worker exporting the Durable object via `wrangler dev` and in parallel, run `wrangler pages dev`.
+While developing locally, to interact with a Durable Object namespace, run the Worker exporting the Durable object via `wrangler dev` in one terminal window. In another terminal window, using the same root directory, run `wrangler pages dev`.
 
-You can add a Durable Object binding locally via a `wrangler.toml` file and then interact with it. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#durable-objects) for more information. 
+If you set up your binding via `wrangler.toml`, you can run the commands above, then interact as outlined in the section above.
 
 If you do not add the binding via `wrangler.toml`, you can interact with it via the CLI by appending `--do <BINDING_NAME>=<CLASS_NAME>@<SCRIPT_NAME>` to `wrangler pages dev` where `CLASS_NAME` indicates the Durable Object class name and `SCRIPT_NAME` the name of your Worker. For example, if your Worker is called `do-worker` and it declares a Durable Object class called `DurableObjectExample`, access this Durable Object by running your `do-worker` via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --do MY_DO=DurableObjectExample@do-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_DO`).
 
 ## R2 buckets
 
-[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. To bind your R2 bucket to your Pages Function:
+[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees.
+
+### Set your binding via the dashboard
+
+To bind your R2 bucket to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -127,6 +145,12 @@ If you do not add the binding via `wrangler.toml`, you can interact with it via 
 5. Give your binding a name under **Variable name**.
 6. Under **R2 bucket**, select your desired R2 bucket. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can bind your R2 bucket to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#r2-buckets) for more details.
+
+### Interact with your R2 bucket binding
 
 Below is an example of how to use R2 buckets in your Function. Your R2 binding is `BUCKET`:
 
@@ -159,21 +183,25 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your R2 buckets locally
-
-You can add an R2 bucket binding locally via a `wrangler.toml` file and then interact with it by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#r2-buckets) for more information.
+#### Local development
 
 {{<Aside type="note">}}
-By default, [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) automatically persists data.
+
+By default, [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) automatically persists data to local storage. Read the [Local Testing guide](/workers/testing/local-development/) for more information.
+
 {{</Aside>}}
 
-Alternatively, if your Pages Function is bound to `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` and interact as outlined in the section above.
 
-Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` file. Refer to [Functions configuration](/pages/functions/wrangler-configuration/) for more information.
+If you set up your binding via the dashboard using the binding name `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
 
 ## D1 databases
 
-[D1](/d1/) is Cloudflare’s native serverless database. To bind your D1 database to your Pages Function:
+[D1](/d1/) is Cloudflare’s native serverless database.
+
+### Set your binding via the dashboard
+
+To bind your D1 database to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -182,6 +210,12 @@ Alternatively, you can interact with an R2 bucket locally via a `wrangler.toml` 
 5. Give your binding a name under **Variable name**.
 6. Under **D1 database**, select your desired D1 database. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can bind your D1 database to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#d1-databases) for more details.
+
+### Interact with your D1 database binding
 
 Below is an example of how to use D1 databases in your Function. Your D1 binding is `NORTHWIND_DB`:
 
@@ -214,15 +248,17 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your D1 databases locally
-
-You can add a D1 database binding locally via a `wrangler.toml` file and then interact with it by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#d1-databases) for more information.
-
-Alternatively, while [developing locally](/d1/configuration/local-development/#develop-locally-with-pages), you can interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
+#### Local development
 
 {{<Aside type="note">}}
-By default, [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) automatically persists data.
+
+By default, [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) automatically persists data to local storage. Read the [Local Testing guide](/workers/testing/local-development/) for more information.
+
 {{</Aside>}}
+
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` and interact as outlined in the section above.
+
+If you set up your binding via the dashboard, while [developing locally](/d1/configuration/local-development/#develop-locally-with-pages), you can interact with a D1 database by adding `--d1 <BINDING_NAME>=<DATABASE_ID>` to your run command.
 
 Specifically:
 
@@ -233,11 +269,11 @@ Refer to the [D1 client API documentation](/d1/build-with-d1/d1-client-api/) for
 
 ## Workers AI
 
-[Workers AI](/workers-ai/) allows you to run  AI models. To bind Workers AI to your Pages Function:
+[Workers AI](/workers-ai/) allows you to run  AI models.
 
-{{<Aside type="warning">}}
-Pages supports Workers AI in local development. However, the binding will run remotely counting against usage limits.
-{{</Aside>}}
+### Set your binding via the dashboard
+
+To bind Workers AI to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -245,6 +281,10 @@ Pages supports Workers AI in local development. However, the binding will run re
 4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
 5. Give your binding a name under **Variable name**.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can bind Workers AI to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#workers-ai) for more details.
 
 ### Install the Workers AI client library
 
@@ -291,13 +331,23 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with Workers AI locally
+#### Local development
 
-You can iadd a Workers AI binding locally via a `wrangler.toml` file and then interact with it by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#workers-ai) for more information.
+{{<Aside type="warning">}}
+
+Pages supports Workers AI in local development. However, the binding will use remote resources counting against usage limits.
+
+{{</Aside>}}
+
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` and interact as outlined in the section above.
 
 ## Service bindings
 
-[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function. 
+
+### Set your binding via the dashboard
+
+To add a service binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -306,6 +356,12 @@ You can iadd a Workers AI binding locally via a `wrangler.toml` file and then in
 5. Give your binding a name under **Variable name**.
 6. Under **Service**, select your desired Worker. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can add a service binding to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#service-bindings) for more details.
+
+### Interact with your service bindings
 
 Below is an example of how to use service bindings in your Function. Your service binding is named `SERVICE`:
 
@@ -330,15 +386,21 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your service bindings locally
+#### Local development
 
-To interact with a [service binding](/workers/configuration/bindings/about-service-bindings/) while developing locally, run the Worker you want to bind to via `wrangler dev` and in parallel, run `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `SCRIPT_NAME` indicates the name of the Worker. For example, if your Worker is called `my-worker`, connect with this Worker by running it via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_SERVICE`).
+To interact with a [service binding](/workers/configuration/bindings/about-service-bindings/) while developing locally, run `wrangler dev` while in the root directory of the Worker you want to bind to.
 
-You can also add a service binding via a `wrangler.toml` file. If you do this, you can set `BINDING_NAME` and `SCRIPT_NAME` in your config file, and run your CLI commands without additional flags. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#service-bindings) for more information.
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` from the Pages' project root directory and interact as outlined in the section above.
+
+If you set up your binding via the dashboard, open another terminal window. From the root directory of the Pages project, run `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `SCRIPT_NAME` indicates the name of the Worker. For example, if your Worker is called `my-worker`, connect with this Worker by running it via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_SERVICE`).
 
 ## Queue Producers
 
-[Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
+[Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. 
+
+### Set your binding via the dashboard
+
+To add a Queue Producer binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -347,6 +409,12 @@ You can also add a service binding via a `wrangler.toml` file. If you do this, y
 5. Give your binding a name under **Variable name**.
 6. Under **Dataset**, input your desired dataset. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can bind Queue Producers to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#queue-producers) for more details.
+
+### Interact with Queue Producers
 
 Below is an example of how to use Queue Producers in your Function. In this example, the binding is named `MY_QUEUE`:
 
@@ -383,13 +451,17 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your Queues producer binding locally
+#### Local development
 
-You can add a Queues producer binding locally via a `wrangler.toml` file and then interact with it by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#queues-producers) for more information.
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` from the Pages' project root directory and interact as outlined in the section above.
 
 ## Analytics Engine
 
-The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function. To add a Analytics Engine binding to your Pages Function:
+The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function. 
+
+### Set your binding via the dashboard
+
+To add a Analytics Engine binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
@@ -398,6 +470,12 @@ The [Analytics Engine](/analytics/analytics-engine/) binding enables you to writ
 5. Give your binding a name under **Variable name**.
 6. Under **Dataset**, input your desired dataset. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
 7. Redeploy your project for the binding to take effect.
+
+### Set your binding via `wrangler.toml`
+
+You can bind Analytics Engine Datasets to your Pages Function the same way you bind it to a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#analytics-engine-datasets) for more details.
+
+### Interact with your Analytics Engine binding
 
 Below is an example of how to use Analytics Engine in your Function. In this example, the binding is named `ANALYTICS_ENGINE`:
 
@@ -438,13 +516,15 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your Analytics Engine binding locally
+#### Local development
 
-You can add an Analytics Engine Dataset binding locally via a `wrangler.toml` file and then interact with it by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#analytics-engine-datasets) for more information.
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` from the Pages' project root directory and interact as outlined in the section above.
 
 ## Environment variables
 
-An [environment variable](/workers/configuration/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. Set your environment variables directly within the Cloudflare Pages dashboard for both your production and preview environments at runtime and build-time.
+An [environment variable](/workers/configuration/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. Set your environment variables for both your production and preview environments at runtime and build-time.
+
+### Set your environment variables via the dashboard
 
 To add Pages project environment variables:
 
@@ -453,6 +533,12 @@ To add Pages project environment variables:
 3. Select your Pages project > **Settings** > **Environment variables**.
 4. Selecting **Add variables** under **Production** and/or **Preview**.
 6. After setting a variable name and value, select **Save**.
+
+### Set your environment variables via `wrangler.toml`
+
+You can add environment variables to your Pages project via `wrangler.toml` the same way you do for a Cloudflare Worker. Read [this guide](/workers/wrangler/configuration/#environment-variables) for more details.
+
+### Interact with environment variables
 
 Below is an example of how to use environment variables in your Function. The environment variable in this example is `ENVIRONMENT`:
 
@@ -485,13 +571,19 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your environment variables locally
+#### Local development
 
-You can add environment variables locally via a `wrangler.toml` file and then interact with them by running `wrangler pages dev`. Refer to [Wrangler configuration](/pages/functions/wrangler-configuration/#environment-variables) for more information.
+If you set up your binding via `wrangler.toml`, you can run `wrangler pages dev` from the Pages' project root directory and interact as outlined in the section above.
 
 ## Secrets
 
 Secrets are environment variables that are encrypted and not visible once set. They are used for storing sensitive information like API keys, and auth tokens.
+
+{{<Aside type="warning">}}
+
+Secrets for production and preview deployments can only be added via the dashboard. They are not configurable via `wrangler.toml`.
+
+{{</Aside>}}
 
 To add secrets to your Pages project:
 
