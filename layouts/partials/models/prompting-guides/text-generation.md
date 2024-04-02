@@ -10,7 +10,7 @@
 Part of getting good results from text generation models is asking questions correctly. LLMs are usually trained with specific predefined templates, which should then be used with the model's tokenizer for better results when doing inference tasks.
 
 {{ if $loraFlag }}
-We recommend using unscoped prompts for inference with LoRa.
+We recommend using unscoped prompts for inference with LoRA.
 {{ else }}
 There are two ways to prompt text generation models with Workers AI:
 {{ end }}
