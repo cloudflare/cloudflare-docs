@@ -1388,6 +1388,64 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `notification create`
+
+{{<Aside type="note">}}
+Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
+{{</Aside>}}
+
+Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
+
+```txt
+wrangler r2 bucket notification create <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to create an event notification rule for.
+- `--event-type` {{<type>}}"object-create"|"object-delete"{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue that will receive event notification messages.
+- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the key name prefix that an object must match to trigger event notifications.
+- `--suffix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the key name suffix that an object must match to trigger event notifications.
+{{</definitions>}}
+
+### `notification delete`
+
+Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+
+```txt
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to delete an event notification rule for.
+- `--queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue that corresponds to the event notification rule.
+
+{{</definitions>}}
+
+### `notification get`
+
+Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+
+```txt
+wrangler r2 bucket notification get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get event notification configuration for.
+
+{{</definitions>}}
+
 ### `sippy enable`
 
 {{<Aside type="note">}}
