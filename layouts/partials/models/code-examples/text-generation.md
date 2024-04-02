@@ -26,10 +26,10 @@ export default {
     const ai = new Ai(env.AI);
 
     const response = await ai.run("{{ .Params.model.name }}", {
-      messages: [{"role": "user", "content": "Hello world"],
+      prompt: "tell me a story",
       raw: true, //skip applying the default chat template
       lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
-      });
+    });
     return Response.json(response);
   },
 };
@@ -45,7 +45,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
   -d '{
-    "messages": [{"role": "user", "content": "Hello world"}],
+    "prompt": "tell me a story",
     "raw": "true",
     "lora": "00000000-0000-0000-0000-000000000"
   }'
