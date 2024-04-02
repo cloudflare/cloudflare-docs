@@ -29,7 +29,7 @@ layout: wide
       <td>100632</td>
       <td>...49621813</td>
       <td>Nginx - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -38,7 +38,7 @@ layout: wide
       <td>100633</td>
       <td>...7dc64fb6</td>
       <td>PHP - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -47,7 +47,7 @@ layout: wide
       <td>100634</td>
       <td>...7eac8439</td>
       <td>Generic Database - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -56,7 +56,7 @@ layout: wide
       <td>100635</td>
       <td>...a0ccf665</td>
       <td>Generic Log - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -65,7 +65,7 @@ layout: wide
       <td>100636</td>
       <td>...e485e537</td>
       <td>Generic Webservers - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -74,7 +74,7 @@ layout: wide
       <td>100637</td>
       <td>...1813c52d</td>
       <td>Generic Home Directory - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -83,7 +83,7 @@ layout: wide
       <td>100638</td>
       <td>...241fb0cb</td>
       <td>Generic System Process - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -92,7 +92,7 @@ layout: wide
       <td>100639</td>
       <td>...d03cd48f</td>
       <td>Command Injection</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -101,7 +101,7 @@ layout: wide
       <td>100640</td>
       <td>...e367ad17</td>
       <td>Generic System - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
     <tr>
       <td>2024-04-02</td>
@@ -110,7 +110,7 @@ layout: wide
       <td>100641</td>
       <td>...a8f03d2d</td>
       <td>Apache - File Inclusion</td>
-      <td>New Detection</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
