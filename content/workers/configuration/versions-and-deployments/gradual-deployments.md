@@ -160,35 +160,14 @@ Imagine that you have previously created 3 Durable Objects, [deriving their IDs 
 
 Your worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
 
-| Durable Object | Version |
-| -------------- | ------- |
-| foo            | A       |
-| bar            | A       |
-| baz            | A       |
+Here's how the versions of your Durable Objects might change as you progress your gradual deployment:
 
-Now you create a gradual deployment, setting version "A" to 80% and version "B" to 20%.
-
-| Durable Object | Version |
-| -------------- | ------- |
-| foo            | B       |
-| bar            | A       |
-| baz            | A       |
-
-Now you want to progress the deployment of version "B", so you set version "A" to 50% and version "B" to 50%.
-
-| Durable Object | Version |
-| -------------- | ------- |
-| foo            | B       |
-| bar            | B       |
-| baz            | A       |
-
-Finally, you progress the deployment so that version "B" is set to 100%.
-
-| Durable Object | Version |
-| -------------- | ------- |
-| foo            | B       |
-| bar            | B       |
-| baz            | B       |
+| Deployment config                      | "foo" | "bar" | "baz" |
+| :------------------------------------: | :---: | :---: | :---: |
+| Version A: 100% <br>                   | A     | A     | A     |
+| Version B: 20% <br> Version A: 80%     | B     | A     | A     |
+| Version B: 50% <br> Version A: 50%     | B     | B     | A     |
+| Version B: 100% <br>                   | B     | B     | B     |
 
 This is only an example, so the versions assigned to your Durable Objects may be different. However, the following is guaranteed:
 - For a given deployment, requests to each Durable Object will always use the same Worker version.
@@ -199,7 +178,7 @@ This is only an example, so the versions assigned to your Durable Objects may be
 
 Typically, your Durable Object Worker will define both your Durable Object class and the Worker that interacts with it. In this case, you cannot deploy changes to your Durable Object and its Worker independently.
 
-[You are advised](/durable-objects/platform/known-issues/#code-updates) to ensure that API changes between your Durable Object and its Worker are forwards and backwards compatible whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
+[You should](/durable-objects/platform/known-issues/#code-updates) ensure that API changes between your Durable Object and its Worker are forwards and backwards compatible whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
 
 {{</Aside>}}
 
