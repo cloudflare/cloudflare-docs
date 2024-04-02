@@ -1759,6 +1759,8 @@ wrangler tail <WORKER> [OPTIONS]
   - Filter by a text match in `console.log` messages.
 - `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+- `--version-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by Worker version.
 
 {{</definitions>}}
 
