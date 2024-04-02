@@ -198,7 +198,7 @@ export default {
     await env.<MY_QUEUE>.send(log);
     return new Response('Success!');
   },
-  async queue(batch: MessageBatch<any>, env: Env): Promise<void> {
+  async queue(batch: MessageBatch, env: Env): Promise<void> {
     let messages = JSON.stringify(batch.messages);
     console.log(`consumed from our queue: ${messages}`);
   },
