@@ -2,7 +2,7 @@
 model:
   id: "a8ef8025-29a2-4585-a4ad-80da2b20c77b"
   source: 2
-  name: "@hf/mistral/mistral-7b-instruct-v0.2"
+  name: "@hf/mistralai/mistral-7b-instruct-v0.2"
   description: "The Mistral-7B-Instruct-v0.2 Large Language Model (LLM) is an instruct fine-tuned version of the Mistral-7B-v0.2. Mistral-7B-v0.2 has the following changes compared to Mistral-7B-v0.1: 32k context window (vs 8k context in v0.1), rope-theta = 1e6, and no Sliding-Window Attention."
   task:
     id: "c329a1f9-323d-4e91-b2aa-582dd4188d34"
