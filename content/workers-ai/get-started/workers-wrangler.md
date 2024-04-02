@@ -1,5 +1,5 @@
 ---
-title: Workers
+title: Deploy a Workers AI project
 pcx_content_type: get-started
 weight: 1
 meta:
@@ -32,7 +32,7 @@ Create a new project named `hello-ai` by running:
 
 {{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
 
-Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI. 
+Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI.
 
 When setting up your `hello-ai` Worker, answer the setup questions as follows:
 
@@ -74,30 +74,7 @@ Your binding is [available in your Worker code](/workers/reference/migrate-to-mo
 <!-- TODO update this once we know if we'll have it -->
 You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#workers-ai).
 
-## 3. Install the Workers AI SDK
-
-The Workers AI SDK makes Workers AI APIs available for use in your code. To import the Workers AI SDK, run the following command in your application directory:
-
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm install --save-dev @cloudflare/ai
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn add --dev @cloudflare/ai
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-{{<render file="_npm-update.md">}}
-
-## 4. Run an inference task in your Worker
+## 3. Run an inference task in your Worker
 
 You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/), to answer a question.
 
@@ -107,8 +84,6 @@ Update the `index.ts` file in your `hello-ai` application directory with the fol
 ---
 filename: "src/index.ts"
 ---
-import { Ai } from '@cloudflare/ai'
-
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
   // replace "AI" with the variable name you defined.
@@ -117,9 +92,7 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
-
-    const response = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+    const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
         prompt: "What is the origin of the phrase Hello, World"
       }
     );
@@ -131,7 +104,7 @@ export default {
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 2 model. You can now test your project locally before you deploy globally.
 
-## 5. Develop locally with Wrangler
+## 4. Develop locally with Wrangler
 
 While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
@@ -151,7 +124,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 }
 ```
 
-## 6. Deploy your AI Worker
+## 5. Deploy your AI Worker
 
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
 

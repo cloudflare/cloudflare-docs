@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
+weight: 2
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
@@ -76,15 +77,9 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 ## 3. Adding the AI package
 
-To begin using Cloudflare's AI products, you can add the `@cloudflare/ai` package to your application, and enable the `AI` binding in your application configuration. This will allow you to query a large language model from directly inside your code.
+To begin using Cloudflare's AI products, you can enable the `AI` binding in your application configuration. This will allow you to query a large language model from directly inside your code.
 
-First, install the `@cloudflare/ai` package:
-
-```sh
-$ npm install @cloudflare/ai
-```
-
-Next, add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform:
+First, add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform:
 
 ```toml
 ---
@@ -101,13 +96,9 @@ Now, find the `src/index.js` file. Inside the `fetch` handler, you can query the
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
-
 export default {
 	async fetch(request, env, ctx) {
-    const ai = new Ai(env.AI)
-
-    const answer = await ai.run(
+    const answer = await env.AI.run(
       '@cf/meta/llama-2-7b-chat-int8',
       {
         messages: [
@@ -203,14 +194,11 @@ Then, import `hono` into your `src/index.js` file. You should also update the `f
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
 import { Hono } from "hono"
 const app = new Hono()
 
 app.get('/', async (c) => {
-  const ai = new Ai(c.env.AI)
-
-  const answer = await ai.run(
+  const answer = await c.env.AI.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
       messages: [
@@ -231,11 +219,7 @@ This will establish a route at the root path `/` that is functionally equivalent
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
-
 app.post('/notes', async (c) => {
-  const ai = new Ai(c.env.AI)
-
   const { text } = await c.req.json()
   if (!text) {
 			return c.text("Missing text", 400);
@@ -251,7 +235,7 @@ app.post('/notes', async (c) => {
 			return c.text("Failed to create note", 500);
 	}
 
-  const { data } = await ai.run('@cf/baai/bge-base-en-v1.5', { text: [text] })
+  const { data } = await c.env.AI.run('@cf/baai/bge-base-en-v1.5', { text: [text] })
   const values = data[0]
 
   if (!values) {
@@ -296,7 +280,6 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
@@ -304,11 +287,9 @@ const app = new Hono()
 // app.post('/notes', async (c) => { ... })
 
 app.get('/', async (c) => {
-  const ai = new Ai(c.env.AI);
-
   const question = c.req.query('text') || "What is the square root of 9?"
 
-  const embeddings = await ai.run('@cf/baai/bge-base-en-v1.5', { text: question })
+  const embeddings = await c.env.AI.run('@cf/baai/bge-base-en-v1.5', { text: question })
   const vectors = embeddings.data[0]
 
   const SIMILARITY_CUTOFF = 0.75
@@ -330,7 +311,7 @@ app.get('/', async (c) => {
 
   const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
-  const { response: answer } = await ai.run(
+  const { response: answer } = await c.env.AI.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
       messages: [

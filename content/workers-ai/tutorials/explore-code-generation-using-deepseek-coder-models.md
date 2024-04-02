@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Explore Code Generation Using DeepSeek Coder Models
+weight: 4
 ---
 
 # Explore Code Generation Using DeepSeek Coder Models
