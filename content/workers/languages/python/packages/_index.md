@@ -24,13 +24,11 @@ In the example above, you likely noticed that there is no explicit version of th
 
 In Workers, Python package versions are set via [Compatibility Dates](/workers/configuration/compatibility-dates/) and [Compatibility Flags](/workers/configuration/compatibility-dates//#compatibility-flags). Given a particular compatibility date, a specific version of the [Pyodide Python runtime](https://pyodide.org/en/stable/project/changelog.html) is provided to your Worker, providing a specific set of Python packages pinned to specific versions.
 
-<!-- TODO — need section here that maps Pyodide releases to compatibility dates and flags, so that someone can understand, for a given compatibility date, which Pyodide version will be used, and which version of Python this includes, and which packages at which versions will be provided. -->
+As new versions of Pyodide and additional Python packages become available in Workers, we will publish compatibility flags and their associated compatibility dates here on this page.
 
 ## Supported Packages
 
-Any pure Python package (no C extensions or code in other languages) with a wheel on [PyPI](https://pypi.org/) can be used in Workers.
-
-Additionally, as of March April 2, 2024, the following Python packages are provided directly by the Workers runtime:
+As of March April 2, 2024, the following Python packages are provided directly by the Workers runtime:
 
 - aiohttp: 3.9.3
 - aiohttp-tests: 3.9.3
@@ -43,7 +41,7 @@ Additionally, as of March April 2, 2024, the following Python packages are provi
 - certifi: 2024.2.2
 - charset-normalizer: 3.3.2
 - distro: 1.9.0
-- fastapi: 0.110.0
+- [fastapi](/workers/languages/python/packages/fastapi): 0.110.0
 - frozenlist: 1.4.1
 - h11: 0.14.0
 - h11-tests: 0.14.0
@@ -81,3 +79,7 @@ Additionally, as of March April 2, 2024, the following Python packages are provi
 - starlette: 0.36.3
 
 Looking for a package not listed here? Tell us what you'd like us to support by [opening a discussion on Github](https://github.com/cloudflare/workerd/discussions/new?category=python-packages).
+
+## HTTP Client Libraries
+
+Only HTTP libraries that are able to make requests asynchronously are supported. Currently, these include [`aiohttp`](https://docs.aiohttp.org/en/stable/index.html) and [`httpx`](https://www.python-httpx.org/). You can also use the [`fetch()` API](/workers/runtime-apis/fetch/) from JavaScript, using Python Workers' [foreign function interface](/workers/languages/python/ffi) to make HTTP requests.

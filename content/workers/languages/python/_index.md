@@ -29,7 +29,7 @@ We'd love your feedback. Join the #python-workers channel in the [Cloudflare Dev
 
 ```bash
 git clone https://github.com/cloudflare/python-workers-examples
-cd hello
+cd 01-hello
 npx wrangler@latest dev
 ```
 
