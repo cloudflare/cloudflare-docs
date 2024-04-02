@@ -1,6 +1,7 @@
 ---
 pcx_content_type: content
 title: Standard Library
+weight: 3
 meta:
   title: Standard Library provided to Python Workers
 ---
@@ -16,20 +17,12 @@ The full [Python Standard Library](https://docs.python.org/3/library/index.html)
 ## Modules with limited functionality
 
 - `hashlib`: Hash algorithms that depend on OpenSSL are not available by default.
-  See Python [hashlib documentation](https://docs.python.org/3/library/hashlib.html)
-  for list of algorithms that are dependent on OpenSSL.
-
 - `decimal`: The decimal module has C (\_decimal) and Python (\_pydecimal) implementations
-  with the same functionality. Only the C implementation is available.
-
-- `pydoc`: Help messages for Python builtins are not available by default
-  in order to reduce the initial download size.
-  TODO — what do we do here?
-
+  with the same functionality. Only the C implementation is available (compiled to WebAssembly)
+- `pydoc`: Help messages for Python builtins are not available
 - `webbrowser`: The original webbrowser module is not available.
-  TODO — none of this makes sense in context of workers (without integration with browser workers — remove?)
 
-### Excluded modules
+## Excluded modules
 
 The following modules are not available in Python Workers:
 
@@ -58,12 +51,7 @@ The following modules can be imported, but are not functional due to the limitat
 - threading
 - sockets
 
-TODO: We removed — correct? So can just remove this section and move these to "excluded modules"?
-
-
 The following are present but cannot be imported due to a dependency on the termios package which has been removed:
 
 - pty
 - tty
-
-TODO: We removed – correct? (so can move this to just "excluded modules")

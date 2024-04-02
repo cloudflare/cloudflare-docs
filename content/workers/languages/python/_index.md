@@ -36,6 +36,9 @@ npx wrangler@latest dev
 A Python Worker can be as simple as three lines of code:
 
 ```python
+---
+filename: index.py
+---
 from js import Response
 
 def on_fetch(request):
@@ -61,6 +64,9 @@ npx wrangler@latest deploy
 Python workers can be split across multiple files. Let's create a new Python file, called `hello.py`:
 
 ```python
+---
+filename: index.py
+---
 def hello(name):
     return "Hello, " + name + "!"
 ```
@@ -68,6 +74,9 @@ def hello(name):
 Now, we can modify `entry.py` to make use of the new module.
 
 ```python
+---
+filename: index.py
+---
 from hello import hello
 from js import Response
 
@@ -88,6 +97,9 @@ Let's try editing the worker to accept a POST request. We know from the
 JSON. In a Python Worker, you would write:
 
 ```python
+---
+filename: index.py
+---
 from js import Response
 from hello import hello
 
@@ -119,6 +131,9 @@ For example, let's try setting and using an environment variable in a Python
 Worker. First, add the environment variable to your Worker's `wrangler.toml`:
 
 ```toml
+---
+filename: wrangler.toml
+---
 name = "hello-python-worker"
 main = "entry.py"
 compatibility_flags = ["python_workers"]
@@ -131,6 +146,9 @@ API_HOST = "example.com"
 Then, you can access the `API_HOST` environment varialbe via the `env` parameter:
 
 ```python
+---
+filename: index.py
+---
 from js import Response
 
 async def on_fetch(request, env):
