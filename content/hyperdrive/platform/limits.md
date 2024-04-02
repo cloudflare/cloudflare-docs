@@ -10,19 +10,21 @@ The following limits apply to Hyperdrive configuration, connections, and queries
 
 | Feature                                        | Limit                                                                                |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Maximum configured databases                   | 10 per account                                                                       |
+| Maximum configured databases                   | 25 per account                                                                       |
 | Initial connection timeout                     | 15 seconds                                                                           |
 | Idle connection timeout                        | 10 minutes                                                                           |
 | Maximum cached query response size             | 50 MB                                                                                |
 | Maximum query (statement) duration             | 60 seconds                                                                           |
-| Maximum username length                        | 63 characters (bytes) <sup>1</sup>                                                   |
-| Maximum database name length                   | 63 characters (bytes) <sup>1</sup>                                                   |
+| Maximum username length                        | 63 characters (bytes) <sup>2</sup>                                                   |
+| Maximum database name length                   | 63 characters (bytes) <sup>2</sup>                                                   |
 | Maximum origin database connections per region | 10-20                                                                                |
-| Maximum potential origin connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>2</sup> |
+| Maximum potential origin connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>3</sup> |
 
-<sup>1</sup> This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
+<sup>1</sup> This can be increased on-asking for Enterprise customers. Refer to the limit increase form on this page.
 
-<sup>2</sup> Hyperdrive maintains semi-regional connection pools to balance between latency, reliability and overall load on your origin database.
+<sup>2</sup> This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
+
+<sup>3</sup> Hyperdrive maintains semi-regional connection pools to balance between latency, reliability and overall load on your origin database.
 
 {{<Aside type="note">}}
 
