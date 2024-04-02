@@ -29,10 +29,6 @@ The full [Python Standard Library](https://docs.python.org/3/library/index.html)
 - `webbrowser`: The original webbrowser module is not available.
   TODO — none of this makes sense in context of workers (without integration with browser workers — remove?)
 
-## Synchronous HTTP libraries
-
-Packages for `urllib3` and `requests` are included. In Workers, this works by... TODO explain how translated to async?
-
 ### Excluded modules
 
 The following modules are not available in Python Workers:

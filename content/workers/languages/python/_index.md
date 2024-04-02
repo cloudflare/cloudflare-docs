@@ -10,26 +10,22 @@ weight: 3
 
 Cloudflare Workers provides first-class support for Python, including:
 
-- [Built-in packages](/workers/languages/python/packages)
-- Importing pure Python wheels from [PyPI](https://pypi.org/) with [micropip](https://github.com/pyodide/micropip), by adding them to `requirements.txt`
-- [FastAPI](https://fastapi.tiangolo.com/) compatibility, to build APIs in idiomatic Python
-- [Langchain](https://pypi.org/project/langchain/) compatibility, to build LLM-powered apps easily
-- Bindings, Environment Variables, and Secrets
-- Support for [bindings](/workers/configuration/bindings/) to [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1) and more
+- Support for the majority of Python's [Standard library](/workers/languages/python/stdlib/)
+- Support for all [bindings](/workers/runtime-apis/bindings/), including [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
+- Support for [Environment Variables](/workers/configuration/environment-variables/), and [Secrets](/workers/configuration/secrets/)
+- A robust foreign function interface
+- [Built-in packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/) and more.
 
-Python Workers are currently in open beta, and we'd love your feedback. Join the [#python-workers channel](https://discord.com/channels/595317990191398933/1212830987495669781) in the Cloudflare Discord community and let us know what you'd like to see next.
+{{<Aside type="note" header="Python Workers are in open beta.">}}
+You can currently only use the [built-in packages](/workers/languages/python/packages) in local development. Support for deploying packages with a `requirements.txt` file is coming soon.
+
+We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
+{{</Aside>}}
 
 ## Get started
 
-<!-- Run the following command in your terminal to create your first Python Worker: -->
-
-<!-- TODO: cloudflare/workers-sdk/issues/5120 -->
-<!-- ```bash
-npm create cloudflare@latest -- --template cloudflare/workers-sdk/templates/python
-``` -->
-
 ```bash
-git clone https://github.com/garrettgu10/python-workers-demos.git
+git clone https://github.com/cloudflare/python-workers-examples
 cd hello
 npx wrangler@latest dev
 ```

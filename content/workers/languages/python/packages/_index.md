@@ -28,7 +28,6 @@ In Workers, Python package versions are set via [Compatibility Dates](/workers/c
 
 ## Supported Packages
 
-
 Any pure Python package (no C extensions or code in other languages) with a wheel on [PyPI](https://pypi.org/) can be used in Workers.
 
 Additionally, as of March 24, 2024, the following Python packages are provided directly by the Workers runtime:
