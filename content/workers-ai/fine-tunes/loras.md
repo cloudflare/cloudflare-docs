@@ -156,7 +156,7 @@ header: Example JSON output
     },
     {
        "id": "00000000-0000-0000-0000-000000000",
-       "model": "@cf/mistralai/mistral-7b-instruct-v0.2-lora",
+       "model": "@cf/mistral/mistral-7b-instruct-v0.2-lora",
        "name": "mistral-finetune",
        "description": "test"
     }]
@@ -179,7 +179,7 @@ To make inference requests and apply the LoRA adapter, you will need your model 
 highlight: [5-6]
 ---
 const response = await ai.run(
-  "@cf/mistralai/mistral-7b-instruct-v0.2-lora", //the model supporting LoRAs
+  "@cf/mistral/mistral-7b-instruct-v0.2-lora", //the model supporting LoRAs
   {
       messages: [{"role": "user", "content": "Hello world"],
       raw: true, //skip applying the default chat template
@@ -194,7 +194,7 @@ const response = await ai.run(
 ---
 highlight: [5-6]
 ---
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mistralai/mistral-7b-instruct-v0.2-lora \
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mistral/mistral-7b-instruct-v0.2-lora \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{
     "messages": [{"role": "user", "content": "Hello world"}],
