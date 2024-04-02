@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Event notifications
 
-Event notifications send messages to your [queue](/queues) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/reference/pull-consumers/) from outside of Cloudflare Workers. 
+Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/reference/pull-consumers/) from outside of Cloudflare Workers. 
 
 
 {{<Aside type="note" header="Open Beta">}}
