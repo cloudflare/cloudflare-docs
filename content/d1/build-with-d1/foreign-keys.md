@@ -89,7 +89,7 @@ There are five actions you can set when defining the `ON UPDATE` and/or `ON DELE
 Although `CASCADE` can be the desired behaviour in some cases, deleting child rows across tables can have undesirable effects and/or result in unintended side effects for your users.
 {{</Aside>}}
 
-In the following example, deleting a user from the `users` table will delete all related rows in the `scores` table as defined `ON DELETE CASCADE`. Delete all related rows in the `scores` table if you do not want to retain the scores for any users you have deleted entirely. This might mean that _other_ users can no longer look up or refer to scores that were still valid.
+In the following example, deleting a user from the `users` table will delete all related rows in the `scores` table as you have defined `ON DELETE CASCADE`. Delete all related rows in the `scores` table if you do not want to retain the scores for any users you have deleted entirely. This might mean that _other_ users can no longer look up or refer to scores that were still valid.
 
 ```sql
 CREATE TABLE users (
