@@ -93,6 +93,7 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 
 * [GitHub](https://github.com/nuxt-hub/core)
 * [Documentation](https://hub.nuxt.com)
+* [Example](https://github.com/Atinux/nuxt-todos-edge)
 
 ## Feedback
 
