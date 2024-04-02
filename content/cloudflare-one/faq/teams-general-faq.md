@@ -35,12 +35,3 @@ These browsers are supported:
 ## What data localization services are supported?
 
 Cloudflare Zero Trust can be used with the Data Localization Suite to ensure that traffic is only inspected in the regions you choose. For more information refer to [Use Zero Trust with Data Localization Suite](/data-localization/how-to/zero-trust/).
-
-## What data is visible to my company through Zero Trust?
-
-When you enroll a device in Cloudflare Zero Trust, your company has access to certain information about your device and Internet browsing history. This article describes the types of data that your company can collect using the Cloudflare WARP software and Cloudflare One Agent app. For information about how your company uses the data, refer to your company's Acceptable Use Policy and Employee Privacy Policy,
-
-### If I have a work profile on my Android mobile device, does the Cloudflare One Agent app only see work profile traffic or all traffic from the device?
-Cloudflare One Agent (aka WARP) only sees traffic from your work profile.
-
-If you do not have a work profile configured, all traffic is visible to WARP.
