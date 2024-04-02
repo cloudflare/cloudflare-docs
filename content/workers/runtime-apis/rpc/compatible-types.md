@@ -12,12 +12,14 @@ meta:
 
 Nearly all types that are [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes, most basic "value" types in JavaScript, including objects, arrays, strings and numbers.
 
-Instances of classes that you define (those with a custom prototype) are the one exception to this rule — they are only compatible if they extend the `RpcTarget` class. If you attempt to send a class instance over RPC that does not extend `RpcTarget`, this will throw an exception.
+As an exception to Structured Clone, application-defined classes (or objects with custom prototypes) cannot be passed over RPC, except as described below.
 
-The RPC system also supports the following types that are not Structured Cloneable:
+The RPC system also supports a number of types that are not Structured Cloneable, including:
 
-- Functions
-- [ReadableStream](/workers/runtime-apis/streams/readablestream/), [WriteableStream](/workers/runtime-apis/streams/writablestream/), [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/) objects.
+- Functions, which are replaced by stubs that call back to the sender.
+- Application-define classes that extend `RpcTarget`, which are similarly replaced by stubs.
+- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
+- [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
 
 ## Functions
 
@@ -115,6 +117,10 @@ As shown above, you can also access properties of classes. Properties behave lik
 
 {{<Aside type="note" description="Returning class instances is more efficient than returning objects with many functions">}}
 While it's possible to define a similar interface to the caller using an object that contains many functions, this is less efficient. If you return an object that contains five functions, then you are creating five stubs. If you return a class instance, where the class declares five methods, you are only returning a single stub. Returning a single stub is often more efficient and easier to reason about. Additionally, when returning an object, non-function properties of the object will be transmitted at the time the object itself is transmitted; they cannot be fetched asynchronously on-demand.
+{{</Aside>}}
+
+{{<Aside type="note" description="Why not use Structured Clone semantics for classes">}}
+Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as clonable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion.
 {{</Aside>}}
 
 ## ReadableStream, WriteableStream, Request and Response
