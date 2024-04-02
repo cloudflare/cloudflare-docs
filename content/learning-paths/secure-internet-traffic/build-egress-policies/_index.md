@@ -7,6 +7,8 @@ layout: learning-module
 
 # Control traffic egress with source IP anchoring and allowlisting
 
+Now that you have created firewall policies to secure your organization, you can begin creating egress policies to control what IP address your users egress to the Internet with.
+
 {{<Aside type="note">}}
 
 The following module requires [egress policies](/cloudflare-one/policies/gateway/egress-policies/), a feature only available on Enterprise plans. If you are not an Enterprise user, you can skip ahead to [Secure SaaS applications](/learning-paths/secure-internet-traffic/secure-saas-applications/).
@@ -14,8 +16,6 @@ The following module requires [egress policies](/cloudflare-one/policies/gateway
 For more information on egress policies, contact your account team.
 
 {{</Aside>}}
-
-Now that you have created firewall policies to secure your organization, you can begin creating egress policies to control what IP address your users egress to the Internet with.
 
 ## Objectives
 

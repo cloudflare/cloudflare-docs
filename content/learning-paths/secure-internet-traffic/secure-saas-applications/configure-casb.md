@@ -18,3 +18,11 @@ For more information on Cloudflare CASB, including available SaaS integrations, 
 ## Manage CASB integrations
 
 {{<render file="casb/_manage-integrations.md" productFolder="cloudflare-one">}}
+
+### Integrate DLP policies
+
+If you use both Cloudflare CASB and Cloudflare Data Loss Prevention (DLP), you can use DLP to discover if files stored in your SaaS application contain sensitive data. CASB integrations supported by DLP include:
+
+{{<render file="casb/_casb-dlp-integrations.md" productFolder="cloudflare-one">}}
+
+For more information, refer to [Scan SaaS applications with DLP](/cloudflare-one/applications/scan-apps/casb-dlp/).

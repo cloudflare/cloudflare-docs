@@ -7,8 +7,12 @@ layout: learning-module
 
 # Secure SaaS applications
 
-To begin securing your users and networks, review device prerequisites and set up Cloudflare Zero Trust.
+Now that you have deployed dedicated egress IPs and created egress policies to anchor your source IPs, you can integrate Cloudflare with your SSO provider and secure your SaaS applications.
 
 ## Objectives
 
 By the end of this module, you will be able to:
+
+- Secure your SaaS applications by integrating them with Cloudflare CASB.
+- Control access to your SSO front door.
+- Layer multiple security methods for protecting SaaS apps.
