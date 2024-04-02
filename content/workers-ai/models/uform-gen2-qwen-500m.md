@@ -11,10 +11,10 @@ model:
   tags:
     - "image-to-text"
   properties:
-    - property_id: "info"
-      value: "https://www.unum.cloud/"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://www.unum.cloud/"
 task_type: "image-to-text"
 model_display_name: "uform-gen2-qwen-500m"
 layout: "model"
