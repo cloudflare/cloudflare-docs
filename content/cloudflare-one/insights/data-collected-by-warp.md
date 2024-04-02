@@ -6,7 +6,7 @@ weight: 10
 
 # Data collected by your company
 
-When you enroll a device in Cloudflare Zero Trust, your company has access to certain information about your device and Internet browsing activity. This page provides a non-exhaustive list of the data visible to your company through Cloudflare WARP (Windows/macOS/Linux) and the Cloudflare One Agent app (iOS/Android). To learn more about what data your company collects, refer to your company's Acceptable Use Policy.
+When you enroll a device in Cloudflare Zero Trust, your company has access to certain information about your device and Internet browsing activity. This page provides a non-exhaustive list of the data visible to your company through Cloudflare WARP (Windows/macOS/Linux) and the Cloudflare One Agent app (iOS/Android). For more information, refer to your company's Acceptable Use Policy.
 
 ## Always visible
 
@@ -31,7 +31,7 @@ The following device details are always visible on Windows, macOS, and Linux dev
 
 The following information may be visible to your company depending on what security policies they have configured.
 
-For example, your company may have Data Loss Prevention (DLP) policies in place which scan your emails, Google drive, and other Internet traffic for certain phrases or proprietary information. If a match is triggered, the matching content is visible to your company's IT department. Refer to your company's Employee Privacy Policy for information on how they handle sensitive data.
+For example, your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is visible to your company's IT department. Refer to your company's Employee Privacy Policy for information on how they handle sensitive data.
 
 | Data | Notes |
 | ---- | ----- |
