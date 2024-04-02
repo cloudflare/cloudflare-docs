@@ -137,4 +137,4 @@ You can either use the [REST API or Wrangler](/workers-ai/fine-tunes/loras/).
 
 ## 8. Use your Fine Tune in your Generations
 
-After you have your new fine tune all set up, you are ready to [put it to use in your inference requests](http://localhost:5173/workers-ai/fine-tunes/loras/#running-inference-with-loras).
+After you have your new fine tune all set up, you are ready to [put it to use in your inference requests](/workers-ai/fine-tunes/loras/#running-inference-with-loras).
