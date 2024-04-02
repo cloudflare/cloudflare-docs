@@ -150,9 +150,9 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 ## Gradual deployments for Durable Objects
 
-Due to [global uniqueness](durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
+Due to [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
 
-When you create a new gradual deployment for a Durable Object Worker, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/deployments/). This version will not change until you create a new deployment.
+When you create a new gradual deployment for a Durable Object Worker, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
 
 ### Example
 
