@@ -27,15 +27,12 @@ Workers AI now supports fine-tuned inference with adapters trained with [Low-Ran
 ### Finding open-source LoRA adapters
 We have started a [Hugging Face Collection](https://huggingface.co/collections/Cloudflare/workers-ai-compatible-loras-6608dd9f8d305a46e355746e) that lists a few LoRA adapters that are compatible with Workers AI. Generally, any LoRA adapter that fits our limitations above should work. 
 
-### Training your own LoRA adapters
-To train your own LoRA adapter, follow the [tutorial here](/workers-ai/tutorials/fine-tune-models-with-autotrain).
-
 ---
 
 ## Uploading LoRA adapters
 In order to run inference with LoRAs on Workers AI, you'll need to create a new fine tune on your account and upload your adapter files. You should have a `adapter_model.safetensors` file with model weights and `adapter_config.json` with your config information. *Note that we only accept adapter files in these types.*
 
-Right now, you can't edit a fine tune's asset files after you upload it. We will support this very soon, but you will need to create a new fine tune and upload new files if you would like to do a new version of a LoRA.
+Right now, you can't edit a fine tune's asset files after you upload it. We will support this soon, but for now you will need to create a new fine tune and upload  files again if you would like to use a new LoRA.
 
 Before you upload your LoRA adapter, you'll need to edit your `adapter_model.config` file to include `model_type` as one of `mistral`, `gemma` or `llama` like below.
 
