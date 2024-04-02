@@ -9,7 +9,7 @@ meta:
 
 [LangChain](https://www.langchain.com/) is the most popular framework for building AI applications powered by large language models (LLMs).
 
-LangChain publishes publishes multiple Python packages. The following are provided by the Workers runtime:
+LangChain publishes multiple Python packages. The following are provided by the Workers runtime:
 
 - [`langchain`](https://pypi.org/project/langchain/) (version `0.1.8`)
 - [`langchain-core`](https://pypi.org/project/langchain-core/) (version `0.1.25`)
