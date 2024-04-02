@@ -25,7 +25,7 @@ Support for Python in Cloudflare Workers is in beta. Review the [documentation o
 Before getting started, you should:
 
 1. Review the [D1 tutorial](/d1/get-started/) for TypeScript and JavaScript to learn how to **create a D1 database and configure a Workers project**.
-2. Visit the [Python language guide](/workers/languages/python/) to understand how Python support works on the Workers platform.
+2. Refer to the [Python language guide](/workers/languages/python/) to understand how Python support works on the Workers platform.
 3. Have basic familiarity with the Python language.
 
 ## Example
@@ -52,7 +52,7 @@ $ npx wrangler d1 info some-existing-db
 # └───────────────────┴──────────────────────────────────────┘
 ```
 
-### Configure bindings
+### 1. Configure bindings
 
 In your `wrangler.toml` file, create a new `[[d1_databases]]` configuration block and set `database_name` and `database_id` to the name and id (respectively) of the D1 database you want to query:
 
@@ -73,7 +73,7 @@ database_id = "YOUR_DATABASE_ID"
 
 The value of `binding` is how you will refer to your database from within your Worker. If you change this, you must change this in your Worker script as well.
 
-### Create your Python Worker
+### 2. Create your Python Worker
 
 To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your `wrangler.toml` file with the contents below:
 
@@ -93,7 +93,7 @@ async def on_fetch(request, env):
 
 ```
 
-Ensure that the value of `binding` in your `wrangler.toml` file exactly matches the name of the variable in your Python code. In this example, we refer to our database via a `DB` binding, and query it via `await env.DB.prepare(...)`.
+The value of `binding` in your `wrangler.toml` file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
 
 You can then deploy your Python Worker directly:
 
@@ -116,12 +116,12 @@ Your Worker will be available at `https://python-and-d1.YOUR_SUBDOMAIN.workers.d
 
 If you receive an error deploying:
 
-* Make sure you have configured your `wrangler.toml` with the `database_id` and `database_name` of a valid D1 database
-* That you have set `compatibility_flags = ["python_workers"]` in your `wrangler.toml`, which is required for Python
-* You have reviewed the [list of error codes](/workers/observability/errors/) and ensured your code does not throw an uncaught exception.
+* Make sure you have configured your `wrangler.toml` with the `database_id` and `database_name` of a valid D1 database.
+* Ensure `compatibility_flags = ["python_workers"]` is set in your `wrangler.toml`, which is required for Python.
+* Review the [list of error codes](/workers/observability/errors/), and ensure your code does not throw an uncaught exception.
 
 ## Next steps
 
-* Visit the [documentation on Python Workers](/workers/languages/python/) to learn more about how to use Python in Workers.
+* Refer to [Workers Python documentation](/workers/languages/python/) to learn more about how to use Python in Workers.
 * Review the [D1 client API](/d1/build-with-d1/d1-client-api/) and how to query D1 databases.
 * Learn [how to import data](/d1/build-with-d1/import-data/) to your D1 database.
