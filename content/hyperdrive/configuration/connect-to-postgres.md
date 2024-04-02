@@ -112,7 +112,13 @@ export default {
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+		const client = new Client({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			port: Number(env.HYPERDRIVE.port),
+			database: env.HYPERDRIVE.database
+		})
 
 		try {
 			// Connect to your database
