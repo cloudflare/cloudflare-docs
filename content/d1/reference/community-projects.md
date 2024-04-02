@@ -87,6 +87,13 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 * [GitHub](https://github.com/lauragift21/staff-directory)
 * [D1 functionality](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts)
 
+### NuxtHub
+
+`NuxtHub` is a Nuxt module that brings Cloudflare Worker bindinds into your Nuxt application with zero configuration. It leverages [Cloudflare Wrangler Plaform Proxy](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) in development and direct binding in production to interact with D1, KV and R2 with server composables (`hubDatabase()`, `hubKV()` and `hubBlob()`).
+
+* [GitHub](https://github.com/nuxt-hub/core)
+* [Documentation](https://hub.nuxt.com)
+
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository.
