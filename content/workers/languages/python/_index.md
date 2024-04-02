@@ -37,7 +37,7 @@ A Python Worker can be as simple as three lines of code:
 
 ```python
 ---
-filename: index.py
+filename: entry.py
 ---
 from js import Response
 
@@ -75,7 +75,7 @@ Now, we can modify `entry.py` to make use of the new module.
 
 ```python
 ---
-filename: index.py
+filename: entry.py
 ---
 from hello import hello
 from js import Response
@@ -98,7 +98,7 @@ JSON. In a Python Worker, you would write:
 
 ```python
 ---
-filename: index.py
+filename: entry.py
 ---
 from js import Response
 from hello import hello
@@ -147,7 +147,7 @@ Then, you can access the `API_HOST` environment varialbe via the `env` parameter
 
 ```python
 ---
-filename: index.py
+filename: entry.py
 ---
 from js import Response
 
