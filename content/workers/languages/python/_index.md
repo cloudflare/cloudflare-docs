@@ -65,7 +65,7 @@ Python workers can be split across multiple files. Let's create a new Python fil
 
 ```python
 ---
-filename: index.py
+filename: hello.py
 ---
 def hello(name):
     return "Hello, " + name + "!"
