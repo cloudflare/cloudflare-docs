@@ -215,7 +215,7 @@ export default {
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
 		const client = new Client({
-			host: env.HYPERDRIVE.host,
+      host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
 			password: env.HYPERDRIVE.password,
 			port: Number(env.HYPERDRIVE.port),
