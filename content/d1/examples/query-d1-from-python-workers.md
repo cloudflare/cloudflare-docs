@@ -26,7 +26,7 @@ Before getting started, you should:
 2. Refer to the [Python language guide](/workers/languages/python/) to understand how Python support works on the Workers platform.
 3. Have basic familiarity with the Python language.
 
-If you are new to Cloudflare Workers, we recommend [following the getting started guide](/workers/get-started/guide/) first before coming back to this example.
+If you are new to Cloudflare Workers, refer to the [Get started guide](/workers/get-started/guide/) first before continuing with this example.
 
 ## Query from Python
 
