@@ -89,7 +89,7 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 
 ### NuxtHub
 
-`NuxtHub` is a Nuxt module that brings Cloudflare Worker bindinds into your Nuxt application with zero configuration. It leverages [Cloudflare Wrangler Plaform Proxy](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) in development and direct binding in production to interact with D1, KV and R2 with server composables (`hubDatabase()`, `hubKV()` and `hubBlob()`). It also provide a way to use your remote D1 database in development using the `nuxi dev --remote` command.
+`NuxtHub` is a Nuxt module that brings Cloudflare Worker bindings into your Nuxt application with no configuration. It leverages [Cloudflare Wrangler Plaform Proxy](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) in development and direct binding in production to interact with [D1](/d1/), [KV](/kv/) and [R2](/r2/) with server composables (`hubDatabase()`, `hubKV()` and `hubBlob()`). `NuxtHub` also provides a way to use your remote D1 database in development using the `nuxi dev --remote` command.
 
 * [GitHub](https://github.com/nuxt-hub/core)
 * [Documentation](https://hub.nuxt.com)
