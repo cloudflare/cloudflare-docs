@@ -3,21 +3,24 @@ pcx_content_type: navigation
 title: Python
 meta:
   title: Write Cloudflare Workers in Python
+  description: Write Workers in 100% Python
 weight: 3
 ---
 
 {{<heading-pill style="beta">}}Python{{</heading-pill>}}
 
-Cloudflare Workers provides first-class support for Python, including:
+Cloudflare Workers provides first-class support for Python, including support for:
 
-- Support for the majority of Python's [Standard library](/workers/languages/python/stdlib/)
-- Support for all [bindings](/workers/runtime-apis/bindings/), including [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
-- Support for [Environment Variables](/workers/configuration/environment-variables/), and [Secrets](/workers/configuration/secrets/)
-- A robust foreign function interface
+- The majority of Python's [Standard library](/workers/languages/python/stdlib/)
+- All [bindings](/workers/runtime-apis/bindings/), including [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
+- [Environment Variables](/workers/configuration/environment-variables/), and [Secrets](/workers/configuration/secrets/)
+- A robust [foreign function interface (FFI)](/workers/languages/python/ffi) that lets you use JavaScript objects and functions directly from Python — including all [Runtime APIs](/workers/runtime-apis/)
 - [Built-in packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/) and more.
 
 {{<Aside type="note" header="Python Workers are in open beta.">}}
 You can currently only use the [built-in packages](/workers/languages/python/packages) in local development. Support for deploying packages with a `requirements.txt` file is coming soon.
+
+You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta.
 
 We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
 {{</Aside>}}
@@ -39,22 +42,23 @@ def on_fetch(request):
     return Response.new("Hello World!")
 ```
 
-To run a Python Worker locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers.
+Similar to Workers written in [JavaScript](/workers/languages/javascript), [TypeScript](/workers/languages/typescript), or [Rust](/workers/languages/rust/), the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch). In a Python Worker, this handler is named `on_fetch`.
+
+To run a Python Worker locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
 
 ```bash
 npx wrangler@latest dev
 ```
 
-Similar to Workers written in JavaScript or TypeScript, the main entry point for a Python worker is the
-[`fetch` handler](/workers/runtime-apis/handlers/fetch). You'll notice that
-the code looks very similar to a "Hello World" worker written in JavaScript.
-In fact, if you have experience developing JavaScript workers, you should feel
-right at home, since most of the functionality you're used to is still here.
+To deploy a Python Worker to Cloudflare, run [`wrangler deploy`](/workers/wrangler/commands/#deploy):
 
-## Using Modules
+```bash
+npx wrangler@latest deploy
+```
 
-Python workers can also be split across multiple files. Let's create a new
-Python file, called `hello.py`.
+## Modules
+
+Python workers can be split across multiple files. Let's create a new Python file, called `hello.py`:
 
 ```python
 def hello(name):
@@ -72,18 +76,16 @@ def on_fetch(request):
 ```
 
 Once you edit `entry.py`, Wrangler will automatically detect the change and
-reload the worker.
+reload your Worker.
 
-## Using the `Request` Interface
+## The `Request` Interface
 
-The `request` parameter passed to your `fetch` handler can be used in very much
-the same way as it's used in JavaScript.
+The `request` parameter passed to your `fetch` handler is a JavaScript Request object, exposed via the foreign function interface, allowing you to access it directly from your Python code.
 
 Let's try editing the worker to accept a POST request. We know from the
-[documentation](/workers/runtime-apis/request) that we can call
+[documentation for `Request`](/workers/runtime-apis/request) that we can call
 `await request.json()` within an `async` function to parse the request body as
-JSON. This same functionality we're used to using within JavaScript is also
-available to Python workers!
+JSON. In a Python Worker, you would write:
 
 ```python
 from js import Response
@@ -94,9 +96,9 @@ async def on_fetch(request):
     return Response.new(hello(name))
 ```
 
-Once we edit the `entry.py`, Wrangler should automatically restart the local
-development server. Now, if we send a POST request with the appropriate body,
-we should get a personalized message.
+Once you edit the `entry.py`, Wrangler should automatically restart the local
+development server. Now, if you send a POST request with the appropriate body,
+your Worker should respond with a personalized message.
 
 ```bash
 $ curl --header "Content-Type: application/json" \
@@ -105,7 +107,7 @@ $ curl --header "Content-Type: application/json" \
 # Hello, Python!
 ```
 
-## Using the `env` Parameter
+## The `env` Parameter
 
 In addition to the `request` parameter, the `env` parameter is also passed to
 the Python `fetch` handler and can be used to access
@@ -113,8 +115,8 @@ the Python `fetch` handler and can be used to access
 [secrets](/workers/configuration/secrets),and
 [bindings](/workers/configuration/bindings).
 
-For instance, let's try setting and using an environment variable in a Python
-worker. First, let's create a `wrangler.toml` file for our worker.
+For example, let's try setting and using an environment variable in a Python
+Worker. First, add the environment variable to your Worker's `wrangler.toml`:
 
 ```toml
 name = "hello-python-worker"
@@ -126,8 +128,7 @@ compatibility_date = "2024-03-20"
 API_HOST = "example.com"
 ```
 
-Now, let's update our `fetch` handler to make use of the new `API_HOST`
-environment variable.
+Then, you can access the `API_HOST` environment varialbe via the `env` parameter:
 
 ```python
 from js import Response
@@ -136,40 +137,8 @@ async def on_fetch(request, env):
     return Response.new(env.API_HOST)
 ```
 
-Now, to make use of our `wrangler.toml` file, we can launch the worker using
-simply:
+## Further Reading
 
-```bash
-$ wrangler dev
-```
-
-In another terminal window:
-
-```bash
-$ curl http://localhost:8787
-# example.com
-```
-
-## Using Python Packages
-
-Python workers support a variety of packages, including pure Python packages
-with wheels on PyPI and
-[packages built in Pyodide](https://pyodide.org/en/stable/usage/packages-in-pyodide.html).
-
-First, let's make a `requirements.txt` file and specify our required packages.
-
-```
-numpy
-```
-
-Now, we can simply import and use the package within our Python worker!
-
-```python
-from js import Response
-import numpy as np
-
-def on_fetch(request):
-    arr = np.array([1, 2, 3])
-    return Response.new(str(arr))
-```
-
+- Understand which parts of the [Python Standard Library](/workers/languages/python/stdlib) are supported in Python Workers.
+- Learn about Python Workers' [foreign function interface (FFI)](/workers/languages/python/ffi), and how to use it to work with [bindings](/workers/runtime-apis/bindings) and [Runtime APIs](/workers/runtime-apis/).
+- Explore the [Built-in Python packages](/workers/languages/python/packages) that the Workers runtime provides.

@@ -2,7 +2,8 @@
 title: Rust
 pcx_content_type: concept
 meta:
-  title: Write Cloudflare Workers in Rust
+  title: Cloudflare Workers — Rust language support
+  description: Write Workers in 100% Rust using the [`workers-rs` crate](https://github.com/cloudflare/workers-rs)
 weight: 4
 ---
 
