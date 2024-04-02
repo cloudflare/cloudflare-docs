@@ -1,10 +1,10 @@
 ---
-title: Create Durable Object stubs
+title: Create Durable Object stubs and send requests
 pcx_content_type: concept
-weight: 16
+weight: 2
 ---
 
-# Create Durable Object stubs
+# Create Durable Object stubs and send requests
 
 A Durable Object stub is a client Object used to send requests to a remote Durable Object.
 
@@ -22,7 +22,7 @@ E-order is a concept deriving from the [E distributed programming language](<htt
 
 {{</Aside>}}
 
-## 1. Obtain a Durable Object stub
+## Get a Durable Object stub
 
 ```js
 let durableObjectStub = OBJECT_NAMESPACE.get(id);
@@ -33,7 +33,7 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 {{<definitions>}}
 
 - `id` {{<type>}}DurableObjectId{{</type>}}
-  - An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this Durable Object namespace.
+  - An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this Durable Object namespace. For details, refer to [Access a Durable Object](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly) .
 
   - This method constructs an Object, which is a local client that provides access to a remote Object.
 
@@ -43,7 +43,51 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 
 {{</definitions>}}
 
-## 2. Send HTTP requests
+## Call a Durable Object
+
+You can call a Durable Object by:
+
+- [Sending HTTP requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#send-http-requests) to a Durable Object's `fetch()` handler.
+- Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#remote-procedure-call-rpc)).
+- Using the [WebSocket API](/durable-objects/reference/websockets/).
+
+### Call RPC methods
+
+To use RPC, a Durable Objects class must extend the built-in type `DurableObject`. Then, public methods on a Durable Objects class are exposed as [RPC methods](/workers/runtime-apis/rpc/), which you can call from a Durable Object stub in a Worker. All RPC calls are [asynchronous](/workers/runtime-apis/rpc/lifecycle), accept and return [serializable types](/workers/runtime-apis/rpc/supported-types), and [propagate exceptions](/workers/runtime-apis/rpc/error-handling) to the caller without a stack trace. Refer to [Workers RPC](/workers/runtime-apis/rpc/supported-types) for complete details.
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class Counter extends DurableObject {
+
+	async increment(amount = 1) {
+    let value: number = (await this.ctx.storage.get("value")) || 0;
+    value += amount;
+    this.ctx.storage.put("value", value);
+    return value;
+  }
+}
+```
+
+```ts
+// A Worker calling a Durable Object
+let durableObjectStub = env.COUNTERS.get(id);
+let response = await durableObjectStub.increment();
+```
+
+{{<Aside type="note">}}
+
+When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#remote-procedure-call-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
+
+With RPC, the `DurableObject` superclass defines `ctx` and `env` as class properties. What was previously called `state` is now called `ctx` when you extend the `DurableObject` class.
+
+This naming change from `state` to `ctx` was made both to ensure consistency between `DurableObject` and `WorkerEntrypoint`, and to avoid setting the false expectation that directly mutating the value of `state` would persist data.
+
+{{</Aside>}}
+
+Refer to [Build a Counter](/durable-objects/examples/build-a-counter/) for a full example.
+
+### Send HTTP requests
 
 ```js
 let response = await durableObjectStub.fetch(request);
@@ -74,7 +118,7 @@ To understand how exceptions are thrown from within a Durable Object, refer to t
 
 {{</Aside>}}
 
-## 3. List Durable Objects
+## List Durable Objects
 
 The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a Durable Object namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 

@@ -1,10 +1,10 @@
 ---
 title: Access a Durable Object from a Worker
 pcx_content_type: concept
-weight: 16
+weight: 1
 ---
 
-# Access a Durable Object from a Worker
+# Access Durable Objects from a Worker
 
 To access a Durable Object from a Worker, you must first create a [Durable Object binding](/workers/configuration/bindings/#durable-object-bindings) in your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular class and controls access to instances of that class.
 
