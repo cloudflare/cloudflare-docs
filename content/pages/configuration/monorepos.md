@@ -4,19 +4,30 @@ title: Monorepos
 ---
 
 # Monorepos
-While some apps are built from a repository’s root, Pages also supports apps with more complex setups. A monorepo is a repository that has multiple subdirectories each containing its own application.
+
+While some apps are built from a single repository, Pages also supports apps with more complex setups. A monorepo is a repository that has multiple subdirectories each containing its own application.
 
 ## Set up
-You can create multiple projects with the same repository. You have the option to set the root directory of your project to tell Pages where you would like your build command to run. All project names must be unique even if connected to the same repository.
+
+You can create multiple projects using the same repository, [in the same way that you would create any other Pages project](/pages/get-started/git-integration). You have the option to vary the build command and/or root directory of your project to tell Pages where you would like your build command to run. All project names must be unique even if connected to the same repository.
 
 ## Builds
-When you connect a monorepo to Pages, any change to that repository despite the path will trigger a build to Pages by default. To avoid duplicative builds, you can [include/exclude build watch paths](/pages/configuration/build-watch-paths) to specify if Pages should skip a build.
+
+When you connect a git repository to Pages, by default a change to any file in the repository will trigger a Pages build.
+
+![Monorepo example diagram](/images/pages/configuration/pages-path.png)
+
+Take for example `my-monorepo` above with two associated Pages projects (`marketing-app` and `ecommerce-app`) and their listed dependencies. By default, if you change a file in the project directory for `marketing-app`, then a build for the `ecommerce-app` project will also be triggered, even though `ecommerce-app` and its dependencies have not changed. To avoid such duplicate builds, you can include and exclude both [build watch paths](/pages/configuration/build-watch-paths) or [branches](/pages/configuration/branch-build-controls) to specify if Pages should skip a build for a given project.
 
 ## Git integration
-Once you've created a separate project for each of the directories within your Git repository, each commit will issue a new build and deployment for all connected projects unless specified in your branch watch paths configuration. Your git source will display separate comments for each project with the updated project and deployment URL.
+
+Once you've created a separate Pages project for each of the projects within your Git repository, each Git push will issue a new build and deployment for all connected projects unless specified in your build configuration.
+
+Github will display separate comments for each project with the updated project and deployment URL if there is a Pull Request associated with the branch.
 
 ### GitHub check runs and GitLab commit statuses
-If you have multiple projects associated with your repository, your check run/commit status will appear like the following on your repository:
+
+If you have multiple projects associated with your repository, your [Github check run](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
 
 ![GitHub check run](/images/pages/configuration/ghcheckrun.png)
 ![GitLab commit status](/images/pages/configuration/glcommitstatus.png)
@@ -24,8 +35,24 @@ If you have multiple projects associated with your repository, your check run/co
 If a build skips for any reason (i.e. CI Skip, build watch paths, or branch deployment controls), the check run/commit status will not appear.
 
 ## Monorepo management tools:
-It is common to use additional tooling when bringing a monorepo to Pages to help manage your repository. For simple subpackage management, you can utilize tools like [npm](https://docs.npmjs.com/cli/v8/using-npm/workspaces), [pnpm](https://pnpm.io/workspaces), and [Yarn](https://yarnpkg.com/features/workspaces) workspaces. You can also use more powerful tools such as [Turborepo](https://turbo.build/repo/docs), [NX](https://nx.dev/getting-started/intro), or [Lerna](https://nx.dev/getting-started/intro) to additionally manage dependencies and task execution.
+
+While Pages does not provide specialized tooling for dependency management in monorepos, you may choose to bring additional tooling to help manage your repository. For simple subpackage management, you can utilize tools like [npm](https://docs.npmjs.com/cli/v8/using-npm/workspaces), [pnpm](https://pnpm.io/workspaces), and [Yarn](https://yarnpkg.com/features/workspaces) workspaces. You can also use more powerful tools such as [Turborepo](https://turbo.build/repo/docs), [NX](https://nx.dev/getting-started/intro), or [Lerna](https://nx.dev/getting-started/intro) to additionally manage dependencies and task execution.
+
+{{<Aside type="note" header="Intelligent build ignores">}}
+
+You can use commands like [`turbo-ignore`](https://www.npmjs.com/package/turbo-ignore) or [`nx-ignore`](https://www.npmjs.com/package/nx-ignore?activeTab=readme) to skip unnecessary builds, however this requires a slightly more complex build command. For example, to check if there were any changes in the previous commit that would trigger a rebuild of the `web` package, you can use the following build command:
+
+```sh
+# 1. fetches the previous commit to diff against
+# 2. check for changes in `web` and its dependencies, exit the build if there are no changes
+# 3. if there are changes, rebuild the site
+$ git fetch origin --depth=2 && ! npx turbo-ignore web --task=pages:build && npx turbo pages:build --filter=web
+```
+
+Note that any ignored builds will be marked as `Failed` and will not create a Pages deployment.
+
+{{</Aside>}}
 
 ## Limitations
-* You must be using Build System V2 or later in order for monorepo support to be enabled.
-* A soft limit of 5 projects per repo is imposed in order to prevent abuse. If you need this limit raised, contact your Cloudflare account team or use the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform).
+* You must be using [Build System V2](/pages/configuration/language-support-and-tools) or later in order for monorepo support to be enabled.
+* You can configure a maximum of 5 Pages projects per repository. If you need this limit raised, contact your Cloudflare account team or use the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform).
