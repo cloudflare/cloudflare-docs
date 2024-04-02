@@ -152,13 +152,16 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 Due to [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
 
-When you create a new gradual deployment for a Durable Object Worker, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
+When you create a new gradual deployment for a Durable Object Worker, each Durable Object instance is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
+
+![Gradual Deployments Durable Objects](/images/workers/platform/versions-and-deployments/durable-objects.png)
+
 
 ### Example
 
 Imagine that you have previously created 3 Durable Objects, [deriving their IDs from the names](/durable-objects/configuration/access-durable-object-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
 
-Your worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
+Your Worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
 
 Here's how the versions of your Durable Objects might change as you progress your gradual deployment:
 
@@ -228,5 +231,6 @@ You can only create a new deployment with the last 10 uploaded versions of your 
 These Workers features will be supported in the near future. 
 
 - Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
-- Gradual deployments is not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/).
-- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported.
+- Gradual deployments is not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding. 
+- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled. 
+- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a DO migration. 
