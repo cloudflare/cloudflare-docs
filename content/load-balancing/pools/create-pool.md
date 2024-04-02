@@ -13,6 +13,10 @@ meta:
 
 For more background information on pools, refer to [Endpoint pools](/load-balancing/pools/).
 
+{{<Aside type="warning">}}
+{{<render file="_endpoints-introduction-callout.md">}}
+{{</Aside>}}
+
 ---
 
 ## Create a pool

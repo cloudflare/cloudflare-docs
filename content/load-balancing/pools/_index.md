@@ -8,10 +8,10 @@ weight: 4
 
 {{<glossary-definition term_id="pool">}}
 
-{{<Aside type="note">}}
+For more details about how endpoints and pools become unhealthy, refer to [Endpoint and pool health](/load-balancing/understand-basics/health-details/).
 
-For an overview of how the Cloudflare Load Balancing solution works, refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For more details about how endpoints and pools become unhealthy, refer to [Endpoint and pool health](/load-balancing/understand-basics/health-details/).
-
+{{<Aside type="warning">}}
+{{<render file="_endpoints-introduction-callout.md">}}
 {{</Aside>}}
 
 ---
