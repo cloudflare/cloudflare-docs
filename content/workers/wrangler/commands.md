@@ -2133,7 +2133,6 @@ Retrieve your user information and test your authentication configuration.
 ```txt
 wrangler whoami
 ```
-
 ---
 ## `versions`
 
@@ -2141,7 +2140,7 @@ wrangler whoami
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in wrangler's output, it's recommended that you use the flag for all commands where it is an option. 
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2231,7 +2230,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.  For consistency in wrangler's output, it's recommended that you use the flag for all commands where it is an option.
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2308,7 +2307,7 @@ wrangler deployments list [OPTIONS]
 
 {{<Aside type="note">}}
 
-The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.  For consistency in wrangler's output, it's recommended that you use the flag for all commands where it is an option.
 
 The minimum required wrangler version to use these commands is 3.40.0. 
 {{</Aside>}}
