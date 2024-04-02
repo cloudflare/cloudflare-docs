@@ -37,7 +37,7 @@ A Python Worker can be as simple as three lines of code:
 
 ```python
 ---
-filename: index.py
+filename: src/entry.py
 ---
 from js import Response
 
@@ -61,21 +61,21 @@ npx wrangler@latest deploy
 
 ## Modules
 
-Python workers can be split across multiple files. Let's create a new Python file, called `hello.py`:
+Python workers can be split across multiple files. Let's create a new Python file, called `src/hello.py`:
 
 ```python
 ---
-filename: index.py
+filename: src/hello.py
 ---
 def hello(name):
     return "Hello, " + name + "!"
 ```
 
-Now, we can modify `entry.py` to make use of the new module.
+Now, we can modify `src/entry.py` to make use of the new module.
 
 ```python
 ---
-filename: index.py
+filename: src/entry.py
 ---
 from hello import hello
 from js import Response
@@ -84,7 +84,7 @@ def on_fetch(request):
     return Response.new(hello("World"))
 ```
 
-Once you edit `entry.py`, Wrangler will automatically detect the change and
+Once you edit `src/entry.py`, Wrangler will automatically detect the change and
 reload your Worker.
 
 ## The `Request` Interface
@@ -98,7 +98,7 @@ JSON. In a Python Worker, you would write:
 
 ```python
 ---
-filename: index.py
+filename: src/entry.py
 ---
 from js import Response
 from hello import hello
@@ -108,7 +108,7 @@ async def on_fetch(request):
     return Response.new(hello(name))
 ```
 
-Once you edit the `entry.py`, Wrangler should automatically restart the local
+Once you edit the `src/entry.py`, Wrangler should automatically restart the local
 development server. Now, if you send a POST request with the appropriate body,
 your Worker should respond with a personalized message.
 
@@ -135,7 +135,7 @@ Worker. First, add the environment variable to your Worker's `wrangler.toml`:
 filename: wrangler.toml
 ---
 name = "hello-python-worker"
-main = "entry.py"
+main = "src/entry.py"
 compatibility_flags = ["python_workers"]
 compatibility_date = "2024-03-20"
 
@@ -143,11 +143,11 @@ compatibility_date = "2024-03-20"
 API_HOST = "example.com"
 ```
 
-Then, you can access the `API_HOST` environment varialbe via the `env` parameter:
+Then, you can access the `API_HOST` environment variable via the `env` parameter:
 
 ```python
 ---
-filename: index.py
+filename: src/entry.py
 ---
 from js import Response
 
