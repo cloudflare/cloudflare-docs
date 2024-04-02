@@ -42,9 +42,9 @@ You do not need to await `writeDataPoint()` — it will return immediately, and 
 
 A data point is a structured event that consists of:
 
-- **Blobs** (strings) — The numeric values that you want to record in your data point.
-- **Doubles** (numbers) — The dimensions used for grouping and filtering. Sometimes called labels in other metrics systems.
-- **Indexes** — (strings) — Used as a [sampling](/analytics/analytics-engine/sql-api/#sampling) key.
+- **Blobs** (strings) — The dimensions used for grouping and filtering. Sometimes called labels in other metrics systems.
+- **Doubles** (numbers) — The numeric values that you want to record in your data point.
+- **Indexes** (strings) — Used as a [sampling](/analytics/analytics-engine/sql-api/#sampling) key.
 
 In the example above, suppose you are collecting air quality samples. Each data point written represents a reading from your weather sensor. The blobs define city, state, and sensor model — the dimensions you want to be able to filter queries on later. The doubles define the numeric temperature and air pressure readings. And the index is the ID of your customer. You may want to include [context about the incoming request](/workers/runtime-apis/request/), such as geolocation, to add additional data to your datapoint.
 
