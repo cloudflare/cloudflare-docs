@@ -1,12 +1,22 @@
 ---
 pcx_content_type: how-to
-title: Wrangler Configuration
+title: Configuration
 weight: 6
 ---
 
-# Configure `wrangler.toml`
+# Configuration via `wrangler.toml`
 
-Pages Functions can be configured via a `wrangler.toml` file in your project's root directory. `wrangler.toml` allows you to configure things like [bindings](/pages/functions/bindings/), [environment variables](/pages/functions/bindings/#environment-variables), and [local development settings](#local-development-settings) alongside the rest of your code.
+Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or [Wrangler](/workers/wrangler), the Cloudflare Developer Platform CLI. 
+
+This guide will focus on configuring your project via `wrangler.toml`.
+
+{{<Aside type="note" header="Configuration via `wrangler.toml` is in open beta.">}}
+
+We’d love your feedback. Join the #functions channel in the Cloudflare Developers Discord and let us know what you’d like to see next.
+
+{{</Aside>}}
+
+`wrangler.toml` allows you to configure things like [bindings](/pages/functions/bindings/), [environment variables](/pages/functions/bindings/#environment-variables), and [local development settings](#local-development-settings), and should be placed in your project's root directory.
 
 Using this file allows you to:
 
@@ -325,7 +335,7 @@ Bindings are powerful tools that enhance the functionality of your application b
 
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 
@@ -358,7 +368,7 @@ When using Wrangler in the default local development mode, files will be written
 
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 
@@ -384,7 +394,7 @@ Queues Consumers can not currently be bound to Pages Functions
 
 {{<Aside type="note">}}
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development](/workers/testing/local-development/) for more details.
 
 {{</Aside>}}
 

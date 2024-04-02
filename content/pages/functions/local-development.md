@@ -26,7 +26,7 @@ This will then start serving your Pages project. You can press `b` to open the b
 
 {{<Aside type="note">}}
 
-If you have a `wrangler.toml` file and have added `pages_build_output_dir`, you can simply run `npx wrangler pages dev` without specifying a directory.
+If you have a `wrangler.toml` file, you can simply run `npx wrangler pages dev` without specifying a directory. 
 
 {{</Aside>}}
 
