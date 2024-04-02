@@ -5,12 +5,12 @@ pcx_content_type: how-to
 
 # Event notifications
 
-Event notifications send messages to your [Queue](/queues) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/reference/pull-consumers/) from outside of Cloudflare Workers. 
+Event notifications send messages to your [queue](/queues) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/reference/pull-consumers/) from outside of Cloudflare Workers. 
 
 
 {{<Aside type="note" header="Open Beta">}}
 
-This feature is currently in beta. To report bugs or request features, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or fill out our [feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
+The event notifications feature is currently in open beta. To report bugs or request features, go to the #r2-storage channel in the [Cloudflare Developer Discord](https://discord.cloudflare.com) or fill out the [feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
 
 {{</Aside>}}
 
@@ -19,23 +19,23 @@ This feature is currently in beta. To report bugs or request features, reach out
 ### Prerequisites
 
 Before getting started, you will need:
-- An existing R2 bucket. If you don’t already have one, refer to [Create buckets](/r2/buckets/create-buckets/).
-- An existing Queue. If you don’t already have one, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
+- An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
+- An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
 - A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/reference/pull-consumers/) enabled on your Queue.
 
 ### Set up Wrangler
 
-To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/). Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
+To begin, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/#install-wrangler) to install Wrangler, the Cloudflare Developer Platform CLI. Log into Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
 
 ### Enable event notifications on your R2 bucket
 
-To enable event notifications, add an event notification rule to your bucket by running the [r2 bucket notification create command](/workers/wrangler/commands/#notification-create). Event notification rules determine the [event types](/r2/buckets/event-notifications/#event-types) that trigger notifications and enable filtering based on object `prefix` and `suffix`.
+To enable event notifications, add an event notification rule to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#notification-create). Event notification rules determine the [event types](/r2/buckets/event-notifications/#event-types) that trigger notifications and enable filtering based on object `prefix` and `suffix`.
 
 ```sh
 $ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>
 ```
 
-For a more complete step-by-step example, please refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
+For a more complete step-by-step example, refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
 
 ## Event types
 
@@ -84,7 +84,7 @@ For a more complete step-by-step example, please refer to the [Log and store upl
 
 ## Message format
 
-Queue consumers receive notifications as [Messages](/queues/reference/javascript-apis/#message). This is an example of the body of a message that a consumer will receive:
+Queue consumers receive notifications as [Messages](/queues/reference/javascript-apis/#message). The following is an example of the body of a message that a consumer Worker will receive:
 
 ```json
 {
@@ -196,6 +196,6 @@ Queue consumers receive notifications as [Messages](/queues/reference/javascript
 
 During the beta, event notifications has the following limitations:
 - Queues [per-queue message throughput](/queues/platform/limits/) is currently 400 messages per second. If your workload produces more than 400 notifications per second, messages may be dropped.
-- For a given bucket, only one event notification rule can be created per Queue.
+- For a given bucket, only one event notification rule can be created per queue.
 - Each bucket can have up to 5 event notification rules.
 - Deletes that occur as a result of object lifecycle policies will not trigger an event notification.

@@ -5,21 +5,21 @@ pcx_content_type: how-to
 
 # Log and store upload events in R2 with event notifications
 
-This example provides a step-by-step guide on using event notifications to capture and store R2 upload logs in a separate bucket.
+This example provides a step-by-step guide on using [event notifications](/r2/buckets/event-notifications/) to capture and store R2 upload logs in a separate bucket.
 
 ## Prerequisites
 
 To continue, you will need:
-- A subscription to Workers Paid, required for using Queues.
+- A subscription to [Workers Paid](/workers/platform/pricing/#workers), required for using queues.
 
-## 1. Set up Wrangler
+## 1. Install Wrangler
 
-To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+To begin, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/#install-wrangler) to install Wrangler, the Cloudflare Developer Platform CLI.
 
 ## 2. Create R2 buckets
 
 You will need to create two R2 buckets:
-- `example-upload-bucket`: When new objects are uploaded to this bucket, our consumer Worker will write logs.
+- `example-upload-bucket`: When new objects are uploaded to this bucket, your [consumer Worker](/queues/get-started/#5-create-your-consumer-worker) will write logs.
 - `example-log-sink-bucket`: Upload logs from `example-upload-bucket` will be written to this bucket.
 
 To create the buckets, run the following Wrangler commands:
@@ -29,15 +29,15 @@ $ npx wrangler r2 bucket create example-upload-bucket
 $ npx wrangler r2 bucket create example-log-sink-bucket
 ```
 
-## 3. Create a Queue
+## 3. Create a queue
 
 {{<Aside type="note">}}
 
-You will need a [Workers paid plan](/workers/platform/pricing/) to create and use Queues and Cloudflare Workers to consume Event Notifications.
+You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use Queues and Cloudflare Workers to consume event notifications.
 
 {{</Aside>}}
 
-Event notifications will be used to capture changes to data in `example-upload-bucket`, so you'll need to create a new Queue to receive notifications:
+Event notifications capture changes to data in `example-upload-bucket`. You will need to create a new queue to receive notifications:
 
 ```sh
 $ npx wrangler queues create example-event-notification-queue
@@ -45,13 +45,11 @@ $ npx wrangler queues create example-event-notification-queue
 
 ## 4. Create a Worker
 
-Before you enable event notifications for `example-upload-bucket` you need to create a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) to receive the notifications.
+Before you enable event notifications for `example-upload-bucket`, you need to create a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) to receive the notifications.
 
-Create a new Worker with the C3 (create-cloudflare-cli) CLI, a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
+Create a new Worker with C3 (`create-cloudflare` CLI). [C3](/pages/get-started/c3/) is a command-line tool designed to help you set up and deploy new applications, including Workers, to Cloudflare.
 
-```sh
-$ npm create cloudflare@latest 
-```
+{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
 
 C3 will then prompt you for some information on your Worker.
 1. Provide a name for your consumer Worker. This is also the name of the new directory where the Worker will be created.
@@ -62,7 +60,7 @@ This will create your Worker.
 
 ## 5. Configure your Worker
 
-In the `wrangler.toml` file, add a Queue consumer and R2 bucket binding. This will register your Worker as a consumer of your future event notifications and allow us to access your R2 bucket.
+In your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/) file, add a [queue consumer](/workers/wrangler/configuration/#queues) and [R2 bucket binding](/workers/wrangler/configuration/#r2-buckets). The queues consumer bindings will register your Worker as a consumer of your future event notifications and the R2 bucket bindings will allow your Worker to access your R2 bucket.
 
 ```toml
 ---
@@ -85,7 +83,7 @@ bucket_name = "example-log-sink-bucket"
 
 ## 6. Write event notification messages to R2
 
-Add a `queue` handler to `src/index.ts` to handle writing batches of notifications to our log sink bucket (you don’t need a fetch handler):
+Add a [`queue` handler](/queues/reference/javascript-apis/#consumer) to `src/index.ts` to handle writing batches of notifications to our log sink bucket (you do not need a [fetch handler](/workers/runtime-apis/handlers/fetch/)):
 
 ```ts
 ---
@@ -115,7 +113,7 @@ export default {
 
 ## 7. Deploy your Worker
 
-To deploy your consumer Worker, run the following command:
+To deploy your consumer Worker, run the [`wrangler deploy`](/workers/wrangler/commands/#deploy) command:
 
 ```sh
 $ npx wrangler deploy
@@ -123,12 +121,12 @@ $ npx wrangler deploy
 
 ## 8. Enable event notifications
 
-Now that you have your consumer Worker ready to handle incoming event notification messages, you need to enable event notifications for `example-upload-bucket`:
+Now that you have your consumer Worker ready to handle incoming event notification messages, you need to enable event notifications with the [`wrangler r2 bucket notification create` command](/workers/wrangler/commands/#notification-create) for `example-upload-bucket`:
 
 ```sh
 $ npx wrangler r2 bucket notification create example-upload-bucket --event-type object-create --queue example-event-notification-queue
 ```
 
-## 9. Done, time to test
+## 9. Test
 
-That’s it! Now you can test the full end to end flow by uploading an object to `example-upload-bucket` in the dashboard. After you’ve uploaded an object, logs will appear in `example-log-sink-bucket` in a few seconds.
+Now you can test the full end-to-end flow by uploading an object to `example-upload-bucket` in the Cloudflare dashboard. After you have uploaded an object, logs will appear in `example-log-sink-bucket` in a few seconds.
