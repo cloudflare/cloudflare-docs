@@ -65,7 +65,7 @@ Python workers can be split across multiple files. Let's create a new Python fil
 
 ```python
 ---
-filename: index.py
+filename: hello.py
 ---
 def hello(name):
     return "Hello, " + name + "!"
@@ -75,7 +75,7 @@ Now, we can modify `entry.py` to make use of the new module.
 
 ```python
 ---
-filename: index.py
+filename: entry.py
 ---
 from hello import hello
 from js import Response
