@@ -75,18 +75,18 @@ You can define multiple foreign key relationships per-table, and foreign key def
 
 ## Foreign key actions
 
-You can define _actions_ as part of your foreign key definitions to either limit or propagate changes to a parent row (`REFERENCES table(column)`). Defining _actions_ make using foreign key constraints in your application easier to reason about, and help either clean up related data or prevent data from being islanded.
+You can define _actions_ as part of your foreign key definitions to either limit or propagate changes to a parent row (`REFERENCES table(column)`). Defining _actions_ makes using foreign key constraints in your application easier to reason about, and help either clean up related data or prevent data from being islanded.
 
 There are five actions you can set when defining the `ON UPDATE` and/or `ON DELETE` clauses as part of a foreign key relationship. You can also define different actions for `ON UPDATE` and `ON DELETE` depending on your requirements.
 
-* `CASCADE` - updating or deleting a parent key deletes all child keys (rows) associated to it.
-* `RESTRICT` - a parent key cannot be updated or deleted when _any_ child key refers to it. Unlike the default foreign key enforcement, relationships with `RESTRICT` applied return errors immediately, and not at the end of the transaction.
-* `SET DEFAULT` - set the child column(s) referred to by the foreign key defintion to the `DEFAULT` value defined in the schema. If no `DEFAULT` is set on the child columns, you cannot use this action.
-* `SET NULL` - set the child column(s) referred to by the foreign key defintion to SQL `NULL`.
-* `NO ACTION` - take no action.
+* `CASCADE` - Updating or deleting a parent key deletes all child keys (rows) associated to it.
+* `RESTRICT` - A parent key cannot be updated or deleted when _any_ child key refers to it. Unlike the default foreign key enforcement, relationships with `RESTRICT` applied return errors immediately, and not at the end of the transaction.
+* `SET DEFAULT` - Set the child column(s) referred to by the foreign key defintion to the `DEFAULT` value defined in the schema. If no `DEFAULT` is set on the child columns, you cannot use this action.
+* `SET NULL` - Set the child column(s) referred to by the foreign key defintion to SQL `NULL`.
+* `NO ACTION` - Take no action.
 
 {{<Aside type="warning" header="CASCADE usage">}}
-Although `CASCADE` can be the desired behaviour in some cases, deleting child rows across tables can have undesirable effects and/or result in unintended side effects for your users.
+Although `CASCADE` can be the desired behavior in some cases, deleting child rows across tables can have undesirable effects and/or result in unintended side effects for your users.
 {{</Aside>}}
 
 In the following example, deleting a user from the `users` table will delete all related rows in the `scores` table as you have defined `ON DELETE CASCADE`. Delete all related rows in the `scores` table if you do not want to retain the scores for any users you have deleted entirely. This might mean that _other_ users can no longer look up or refer to scores that were still valid.
