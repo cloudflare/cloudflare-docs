@@ -10,7 +10,7 @@ weight: 10
 layout: example
 ---
 
-The Cloudflare Workers platform supports [multiple languages](/workers/languages/), including TypeScript, JavaScript, Rust and Python. This guide shows you how to query a D1 database from [Python]((/workers/languages/python/) and deploy your application globally.
+The Cloudflare Workers platform supports [multiple languages](/workers/languages/), including TypeScript, JavaScript, Rust and Python. This guide shows you how to query a D1 database from [Python](/workers/languages/python/) and deploy your application globally.
 
 {{<Aside type="note">}}
 
