@@ -1,7 +1,7 @@
 ---
-title: D1 client API
+title: Query D1
 pcx_content_type: concept
-weight: 3
+weight: 1
 ---
 
 # D1 client API

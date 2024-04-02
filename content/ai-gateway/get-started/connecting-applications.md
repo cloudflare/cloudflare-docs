@@ -21,30 +21,43 @@ Once you have configured a Gateway in the AI Gateway dashboard, click on “API 
 
 ---
 
-## OpenAI
+## Anthropic
+{{<render file="_anthropic.md">}}
 
-{{<render file="_openai.md">}}
+---
+## Amazon Bedrock
+{{<render file="_bedrock.md">}}
 
 ---
 
 ## Azure OpenAI
-
 {{<render file="_azureopenai.md">}}
 
 ---
-## HuggingFace
 
+## Google Vertex AI
+{{<render file="_vertex.md">}}
+
+---
+
+## HuggingFace
 {{<render file="_huggingface.md">}}
 
 ---
-## Replicate
+## OpenAI
+{{<render file="_openai.md">}}
 
+---
+
+## Perplexity
+{{<render file="_perplexity.md">}}
+
+---
+
+## Replicate
 {{<render file="_replicate.md">}}
 
 ---
-## Amazon Bedrock
-
-{{<render file="_bedrock.md">}}
 
 ## Next Steps
 

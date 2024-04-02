@@ -3,6 +3,9 @@ pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/219178057-Configuring-Cloudflare-Mirage
 title: Cloudflare Mirage
 weight: 3
+learning_center:
+    title: What is lazy loading?
+    link: https://www.cloudflare.com/learning/performance/what-is-lazy-loading/
 ---
 
 # Cloudflare Mirage

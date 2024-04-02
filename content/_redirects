@@ -218,11 +218,11 @@
 /d1/learning/using-d1-from-pages/ /pages/functions/bindings/#d1-databases 301
 /d1/learning/debug-d1/ /d1/observability/debug-d1/ 301
 /d1/learning/using-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/learning/querying-json/ /d1/reference/query-json/ 301
+/d1/learning/querying-json/ /d1/build-with-d1/query-json/ 301
 /d1/learning/importing-data/ /d1/build-with-d1/import-data/ 301
 /d1/learning/generated-columns/ /d1/reference/generated-columns/ 301
-/d1/learning/local-development/ /d1/configuration/local-development/ 301
-/d1/learning/remote-development/ /d1/configuration/remote-development/ 301
+/d1/learning/local-development/ /d1/build-with-d1/local-development/ 301
+/d1/learning/remote-development/ /d1/build-with-d1/remote-development/ 301
 /d1/learning/data-location/ /d1/configuration/data-location/ 301
 /d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
@@ -238,7 +238,7 @@
 /d1/how-to/ /d1/build-with-d1/ 301
 /d1/how-to/query-databases/ /d1/build-with-d1/d1-client-api/ 301
 /d1/how-to/using-indexes/ /d1/build-with-d1/use-indexes/ 301
-/d1/how-to/querying-json/ /d1/reference/query-json/ 301
+/d1/how-to/querying-json/ /d1/build-with-d1/query-json/ 301
 /d1/how-to/importing-data/ /d1/build-with-d1/import-data/ 301
 /d1/how-to/generated-columns/ /d1/reference/generated-columns/ 301
 /d1/build-databases/ /d1/build-with-d1/ 301
@@ -246,6 +246,9 @@
 /d1/build-databases/use-indexes/ /d1/build-with-d1/use-indexes/ 301
 /d1/build-databases/import-data/ /d1/build-with-d1/import-data/ 301
 /d1/build-databases/client-api/ /d1/build-with-d1/d1-client-api/ 301
+/d1/reference/query-json/ /d1/build-with-d1/query-json/ 301
+/d1/configuration/local-development/ /d1/build-with-d1/local-development/ 301
+/d1/configuration/remote-development/ /d1/build-with-d1/remote-development/ 301
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
@@ -1231,6 +1234,8 @@
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
+/workers/runtime-apis/webassembly/rust/ /workers/languages/rust/ 301
+/workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
@@ -1250,6 +1255,7 @@
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/reference/languages/ 301
 /workers/learning/languages/ /workers/reference/languages/ 301
+/workers/reference/languages/ /workers/languages/ 301
 /workers/platform/protocols/ /workers/reference/protocols/ 301
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
@@ -1295,6 +1301,8 @@
 /workers/runtime-apis/queues/ /workers/runtime-apis/bindings/bindings/queues/ 301
 /workers/runtime-apis/service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/observability/local-development-and-testing/ /workers/testing/local-development/ 301
+/workers/configuration/deployments/ /workers/configuration/versions-and-deployments/ 301
+/workers/tutorials/hello-world-rust/ /workers/tutorials/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1313,7 +1321,8 @@
 /workers-ai/platform/rest-api/ /workers-ai/rest-api/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/workers-pages-sdk/ /workers-ai/configuration/workers-ai-sdk/ 301
-
+/workers-ai/rest-api/ /workers-ai/configuration/rest-api/ 301
+/workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301

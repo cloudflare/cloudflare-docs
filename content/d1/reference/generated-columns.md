@@ -1,12 +1,12 @@
 ---
 title: Generated columns
 pcx_content_type: concept
-weight: 10
+weight: 4
 ---
 
 # Generated columns
 
-D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/reference/query-json/).
+D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/build-with-d1/query-json/).
 
 This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
 
@@ -48,7 +48,7 @@ As a concrete example, to automatically extract the `location` value from the fo
 }
 ```
 
-To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/reference/query-json/#extract-values) function to extract the value from the `raw_data` column each time you write to that row:
+To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/build-with-d1/query-json/#extract-values) function to extract the value from the `raw_data` column each time you write to that row:
 
 ```sql
 CREATE TABLE sensor_readings (
