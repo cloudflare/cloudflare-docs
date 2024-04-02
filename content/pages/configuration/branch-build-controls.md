@@ -21,7 +21,7 @@ You can also enable or disable automatic deployment behavior on the production b
 
 ## Preview branch control
 
-When configuring automatic deployments for preview deployments, there are three options to choose from.
+When configuring automatic preview deployments, there are three options to choose from.
 
 * **All non-Production branches**: By default, Pages will automatically deploy any and every commit to a preview branch.
 * **None**: Turns off automatic builds for all preview branches.
