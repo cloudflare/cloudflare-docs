@@ -5,7 +5,7 @@ meta:
   description: Upload and use LoRA adapters to get fine-tuned inference on Workers AI.
 ---
 
-# Running fine-tuned inference with LoRA adapters 
+# Running fine-tuned inference with LoRA adapters
 
 Workers AI now supports fine-tuned inference with adapters trained with [Low-Rank Adaptation](https://blog.cloudflare.com/fine-tuned-inference-with-loras). This feature is in open beta and free during this period. {{<inline-pill style="beta">}}
 
@@ -25,7 +25,11 @@ Workers AI now supports fine-tuned inference with adapters trained with [Low-Ran
 ## Choosing compatible LoRA adapters
 
 ### Finding open-source LoRA adapters
-We have started a [Hugging Face Collection](https://huggingface.co/collections/Cloudflare/workers-ai-compatible-loras-6608dd9f8d305a46e355746e) that lists a few LoRA adapters that are compatible with Workers AI. Generally, any LoRA adapter that fits our limitations above should work. 
+We have started a [Hugging Face Collection](https://huggingface.co/collections/Cloudflare/workers-ai-compatible-loras-6608dd9f8d305a46e355746e) that lists a few LoRA adapters that are compatible with Workers AI. Generally, any LoRA adapter that fits our limitations above should work.
+
+### Training your own LoRA adapters
+
+To train your own LoRA adapter, follow the [tutorial](/workers-ai/tutorials/fine-tune-models-with-autotrain).
 
 ---
 
@@ -179,7 +183,7 @@ const response = await ai.run(
   {
       messages: [{"role": "user", "content": "Hello world"],
       raw: true, //skip applying the default chat template
-      lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name 
+      lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
   }
 );
 ```
