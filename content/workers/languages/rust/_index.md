@@ -1,20 +1,23 @@
 ---
 title: Rust
-pcx_content_type: tutorial
+pcx_content_type: concept
 meta:
-  title: Rust WebAssembly guide
-updated: 2023-05-10
+  title: Cloudflare Workers — Rust language support
+  description: Write Workers in 100% Rust using the [`workers-rs` crate](https://github.com/cloudflare/workers-rs)
+weight: 4
 ---
 
-# Rust WebAssembly guide
+# Rust
 
-By following this guide, you will learn how to build a Worker entirely in the Rust programming language. You will accomplish this using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+
+By following this guide, you will learn how to build a Worker entirely in the Rust programming language.
 
 ## Prerequisites
 
 Before starting this guide, make sure you have:
 
-* A recent version of [`Rust`](https://rustup.rs/) 
+* A recent version of [`Rust`](https://rustup.rs/)
 * [`npm`](https://docs.npmjs.com/getting-started)
 * The Rust `wasm32-unknown-unknown` toolchain:
 
@@ -41,12 +44,12 @@ You will find the following files and folders in the `hello-world-rust` director
 * `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
-* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/runtime-apis/webassembly/rust/#bundling-worker-build)).
+* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/languages/rust/#bundling-worker-build)).
 * `src` - Rust source directory, pre-populated with Hello World Worker.
 
 ## 2. Develop locally
 
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development. 
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development.
 
 ```sh
 $ npx wrangler dev
@@ -77,8 +80,8 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
 
 There is some counterintuitive behavior going on here:
 
-1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers. 
-1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/runtime-apis/webassembly/rust/#async-wasm-bindgen-futures)). 
+1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers.
+1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/languages/rust/#async-wasm-bindgen-futures)).
 {{</Aside>}}
 
 ### Related runtime APIs
@@ -104,7 +107,7 @@ An object representing the incoming request. This includes methods for accessing
 
 2. **[`Env`](https://docs.rs/worker/latest/worker/struct.Env.html)**
 
-Provides access to Worker [bindings](https://developers.cloudflare.com/workers/configuration/bindings/). 
+Provides access to Worker [bindings](/workers/configuration/bindings/).
 
 * [`Secret`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Secret value configured in Cloudflare dashboard or using `wrangler secret put`.
 * [`Var`](https://github.com/cloudflare/workers-rs/blob/e15f88110d814c2d7759b2368df688433f807694/worker/src/env.rs#L92) - Environment variable defined in `wrangler.toml`.
@@ -146,11 +149,11 @@ dependencies and write code in Rust to implement your Worker application. If you
 
 ## How this deployment works
 
-Wasm Workers are invoked from a JavaScript entrypoint script which is created automatically for you when using `workers-rs`. 
+Wasm Workers are invoked from a JavaScript entrypoint script which is created automatically for you when using `workers-rs`.
 
 ### JavaScript Plumbing (`wasm-bindgen`)
 
-To access platform features such as bindings, Wasm Workers must be able to access methods from the JavaScript runtime API. 
+To access platform features such as bindings, Wasm Workers must be able to access methods from the JavaScript runtime API.
 
 This interoperability is achieved using [`wasm-bindgen`](https://rustwasm.github.io/wasm-bindgen/), which provides the glue code needed to import runtime APIs to, and export event handlers from, the Wasm module. `wasm-bindgen` also provides [`js-sys`](https://docs.rs/js-sys/latest/js_sys/), which implements types for interacting with JavaScript objects. In practice, this is an implementation detail, as `workers-rs`'s API handles conversion to and from JavaScript objects, and interaction with imported JavaScript runtime APIs for you.
 
@@ -163,7 +166,7 @@ To patch the JavaScript that `wasm-bindgen` emits:
 2. Patch the JavaScript file that it produces (the following code block assumes the file is called `mywasmlib.js`):
 ```js
 import * as imports from "./mywasmlib_bg.js";
- 
+
 // switch between both syntax for node and for workerd
 import wkmod from "./mywasmlib_bg.wasm";
 import * as nodemod from "./mywasmlib_bg.wasm";
@@ -173,7 +176,7 @@ if ((typeof process !== 'undefined') && (process.release.name === 'node')) {
     const instance = new WebAssembly.Instance(wkmod, { "./mywasmlib_bg.js": imports });
     imports.__wbg_set_wasm(instance.exports);
 }
- 
+
 export * from "./mywasmlib_bg.js";
 ```
 3. In your Worker entrypoint, import the function and use it directly:
@@ -190,13 +193,13 @@ into a single JavaScript Promise and run on the JavaScript event loop. Calls to 
 
 ### Bundling (`worker-build`)
 
-To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool called [`worker-build`](https://github.com/cloudflare/workers-rs/tree/main/worker-build) which: 
+To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool called [`worker-build`](https://github.com/cloudflare/workers-rs/tree/main/worker-build) which:
 
-1. Creates a JavaScript entrypoint script that properly invokes the module using `wasm-bindgen`'s JavaScript API.  
+1. Creates a JavaScript entrypoint script that properly invokes the module using `wasm-bindgen`'s JavaScript API.
 2. Invokes `web-pack` to minify and bundle the JavaScript code.
 3. Outputs a directory structure that Wrangler can use to bundle and deploy the final Worker.
 
-`worker-build` is invoked by default in the template project using a custom build command specified in `wrangler.toml`. 
+`worker-build` is invoked by default in the template project using a custom build command specified in `wrangler.toml`.
 
 ### Binary Size (`wasm-opt`)
 
