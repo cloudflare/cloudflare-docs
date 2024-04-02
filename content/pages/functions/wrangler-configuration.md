@@ -25,8 +25,6 @@ Using this file allows you to:
 - **write configuration that is shared across environments** - define config like bindings and environment variables for local, preview, and production in one file
 - **ensure better access control** - by using a configuration file in your repo, you can control who has access to make changes without giving access to your Cloudflare dashboard
 
-If you have used Workers in the past, you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). It should be noted that there are differences with the way `wrangler.toml` behaves for Pages Functions, and that the configuration fields do not match exactly between this file and the Workers equivalent.
-
 ## Example `wrangler.toml` file
 
 ```toml
@@ -58,6 +56,14 @@ $ npx wrangler pages download config <PROJECT_NAME>
 ```
 
 Run the command, add the file to your project’s root directory, make changes as needed, and create a new deployment either via git integration or direct upload to begin leveraging `wrangler.toml` for your configuration.
+
+## Differences between this and Workers
+
+If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages project:
+
+- the configuration fields **do not match exactly** between this file and the Workers equivalent
+- the concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers
+- this file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file
 
 ## Configure environments
 
@@ -454,3 +460,9 @@ id = "<NAMESPACE_ID>"
 You can continue to use this file as-is. However when you run `wrangler pages deploy` you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
 
 If you would like to use this file for production and preview deployments add the missing fields, update the file as needed, and deploy again.
+
+## Source of truth
+
+When used in your Pages Functions projects, this file is the source of truth. You will be able to see, but not edit, the same fields when you log into the dashboard.
+
+If you decide that you don't want to use `wrangler.toml` for configuration, you can safely delete it and create a new deployment. Configuration values from your last deployment will still apply and you will be able to edit them from the dashboard.
