@@ -25,17 +25,17 @@ Before getting started, you will need:
 
 ### Set up Wrangler
 
-To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/). Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
 
 ### Enable event notifications on your R2 bucket
 
-Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then run the [r2 bucket notification create command](/workers/wrangler/commands/#notification-create):
+To enable event notifications, add an event notification rule to your bucket by running the [r2 bucket notification create command](/workers/wrangler/commands/#notification-create). Event notification rules determine the [event types](/r2/buckets/event-notifications/#event-types) that trigger notifications and enable filtering based on object `prefix` and `suffix`.
 
 ```sh
 $ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>
 ```
 
-Optionally, you can also provide a prefix or suffix to narrow down when event notifications are triggered. For a more complete step-by-step example, please refer to the example: [Store upload logs to R2 with event notifications](/r2/examples/upload-logs-event-notifications/).
+For a more complete step-by-step example, please refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
 
 ## Event types
 
@@ -198,4 +198,4 @@ During the beta, event notifications has the following limitations:
 - Queues [per-queue message throughput](/queues/platform/limits/) is currently 400 messages per second. If your workload produces more than 400 notifications per second, messages may be dropped.
 - For a given bucket, only one event notification rule can be created per Queue.
 - Each bucket can have up to 5 event notification rules.
-- Deletes that occur as a result of object lifecycle policies will not trigger this event.
+- Deletes that occur as a result of object lifecycle policies will not trigger an event notification.

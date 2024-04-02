@@ -1,9 +1,9 @@
 ---
-title: Store upload logs to R2 with event notifications
+title: Log and store upload events in R2 with event notifications
 pcx_content_type: how-to
 ---
 
-# Store upload logs to R2 with event notifications
+# Log and store upload events in R2 with event notifications
 
 This example provides a step-by-step guide on using event notifications to capture and store R2 upload logs in a separate bucket.
 
@@ -30,6 +30,12 @@ $ npx wrangler r2 bucket create example-log-sink-bucket
 ```
 
 ## 3. Create a Queue
+
+{{<Aside type="note">}}
+
+You will need a [Workers paid plan](/workers/platform/pricing/) to create and use Queues and Cloudflare Workers to consume Event Notifications.
+
+{{</Aside>}}
 
 Event notifications will be used to capture changes to data in `example-upload-bucket`, so you'll need to create a new Queue to receive notifications:
 
@@ -90,19 +96,12 @@ export interface Env {
 }
 
 export default {
-	async queue(batch: MessageBatch<any>, env: Env): Promise<void> {
+	async queue(batch: MessageBatch, env: Env): Promise<void> {
 		const batchId = new Date().toISOString().replace(/[:.]/g, '-');
 		const fileName = `upload-logs-${batchId}.json`;
-
-		const logRecords = batch.messages.map(({ timestamp, body }) => ({
-			timestamp: timestamp,
-			action: body.action,
-			key: body.object.key,
-			bucket: body.bucket
-		  }));
 	
 		// Serialize the entire batch of messages to JSON
-		const fileContent = new TextEncoder().encode(JSON.stringify(logRecords));
+		const fileContent = new TextEncoder().encode(JSON.stringify(batch.messages));
 
 		// Write the batch of messages to R2
 		await env.LOG_SINK.put(fileName, fileContent, {
