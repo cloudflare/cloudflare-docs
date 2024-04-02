@@ -10,7 +10,7 @@ Adaptive routing controls features that modify the routing of requests to pools 
 
 ## Failover across pools
 
-When there are no healthy endpoints in the same pool, failover across pools extend the zero-downtime failover of requests to healthy endpoints in alternate pools according to the failover order defined by traffic and origin steering.
+When there are no healthy endpoints in the same pool, failover across pools extend the zero-downtime failover of requests to healthy endpoints in alternate pools according to the failover order defined by traffic and endpoint steering.
 
 ### Enable failover across pools
 

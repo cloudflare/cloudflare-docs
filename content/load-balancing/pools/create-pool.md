@@ -3,15 +3,15 @@ title: Manage pools
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Manage origin server pools
-  description: Learn how to set up and maintain origin server pools.
+  title: Manage endpoint pools
+  description: Learn how to set up and maintain endpoint pools.
 ---
 
-# Manage origin server pools
+# Manage endpoint pools
 
 {{<glossary-definition term_id="pool">}}
 
-For more background information on pools, refer to [Origin pools](/load-balancing/pools/).
+For more background information on pools, refer to [Endpoint pools](/load-balancing/pools/).
 
 ---
 
