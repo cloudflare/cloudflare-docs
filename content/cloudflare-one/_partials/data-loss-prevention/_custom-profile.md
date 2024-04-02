@@ -25,7 +25,7 @@ _build:
 
    {{<details header="Add existing entries">}}
 
-   Existing entries include [predefined detection entries](predefined-profiles/) and [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/).
+   Existing entries include [predefined detection entries](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/) and [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/).
 
    1. Select **Add existing entries**.
    2. Choose which entries you want to add, then select **Confirm**.
