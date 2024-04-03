@@ -15,7 +15,7 @@ Clipping works differently for uploaded / on-demand videos; see [Clip Videos](/s
 
 ## Prerequisites
 
-When configuring a [Live Input]({{< ref start-stream-live >}}), ensure "Live Playback and Recording" (`mode`) is enabled.
+When configuring a [Live Input](/stream/stream-live/start-stream-live/), ensure "Live Playback and Recording" (`mode`) is enabled.
 
 API keys are not needed to generate a preview or clip, but are needed to create Live Inputs.
 
