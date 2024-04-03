@@ -19,7 +19,7 @@ These examples use:
 
 - [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-score) to target requests from bots
 - [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-verified_bot) to identify requests from [known good bots](https://radar.cloudflare.com/verified-bots)
-- [`cf.bot_management.ja3_hash`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-ja3_hash) to target specific [JA3 Fingerprints](/bots/concepts/ja3-fingerprint/)
+- [`cf.bot_management.ja3_hash`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-ja3_hash) to target specific [JA3 Fingerprints](/bots/concepts/ja3-ja4-fingerprint/)
 
 ## Suggested rules
 
@@ -86,7 +86,7 @@ This example offers the same protection as the browser-only rule, but allows aut
 
 Since Bot Management can be more sensitive to mobile traffic, you may want to add in additional logic to avoid blocking legitimate requests.
 
-If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](/bots/concepts/ja3-fingerprint/).
+If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
 
 <table style="table-layout:fixed; width:100%">
   <thead>
