@@ -16,30 +16,33 @@ When you call another Worker over RPC using a Service binding, you are using mem
 let user = await env.USER_SERVICE.findUser(id);
 ```
 
-As long as the caller Worker is running, garbage collection in the callee Worker cannot run. The garbage collector for the callee Worker cannot know when the caller Worker is done with the user it has provided. This is different from what would happen if the user service ran in the same Worker that it was called in — the garbage collector would know when `user` could be safely and automatically disposed of.
+Assume that `findUser()` on the server side returns an object extending `RpcTarget`, thus `user` on the client side ends up being a stub pointing to that remote object.
 
-This is not a limitation of the Worker runtime, but a limitation inherent to any distributed system. In a distributed system, the garbage collector has no visibility into the remote object graph nor any idea when the remote end is encountering memory pressure.
+As long as the stub still exists on the client, the corresponding object on the server cannot be garbage collected. But, each isolate has its own garbage collector which cannot see into other isolates. So, in order for the server's isolate to know that the object can be collected, the calling isolate must send it an explicit signal saying so, called "disposing" the stub.
+
+In many cases (described below), the system will automatically realize when a stub is no longer needed, and will dispose it automatically. However, for best performance, your code should dispose stubs explicitly when it is done with them.
 
 ## Explicit Resource Management
 
-To ensure resources are properly disposed of, you should use [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management), a new JavaScript language feature that allows you to explicitly signal when resources can be disposed of. Explicit Resource Management is a Stage 3 TC39 proposal — it is [coming to V8 soon](https://groups.google.com/g/v8-reviews/c/LAk0iBZcIbM).
+To ensure resources are properly disposed of, you should use [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management), a new JavaScript language feature that allows you to explicitly signal when resources can be disposed of. Explicit Resource Management is a Stage 3 TC39 proposal — it is [coming to V8 soon](https://bugs.chromium.org/p/v8/issues/detail?id=13559).
 
 Explicit Resource Management adds the following language features:
 
-- The [`using` desclaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
+- The [`using` declaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
 - [`Symbol.dispose` and `Symbol.asyncDispose`](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#additions-to-symbol)
 
-If a variable is declared with `using`, when the variable is no longer in scope, the variable can be safely disposed of. For example:
+If a variable is declared with `using`, when the variable is no longer in scope, the variable's disposer will be invoked. For example:
 
 ```js
 function sendEmail(id, message) {
   using user = await env.USER_SERVICE.findUser(id);
   await user.sendEmail(message);
-  return;
-} // Exited scope, so user can be safely disposed of
+
+  // user[Symbol.dispose]() is implicitly called at the end of the scope.
+}
 ```
 
-When you declare variables that point to resources that are accessed via RPC, from other Workers or Durable Objects, you should generally declare them with the `using` declaration. This tells the callee Worker that the caller Worker is done with the resource, allowing it to be garbage collected and disposed of.
+`using` declarations are useful to make sure you can't forget to dispose stubs — even if your code is interrupted by an exception.
 
 ### How to use the `using` declaration in your Worker
 
@@ -78,13 +81,15 @@ The following code:
 
 The RPC system automatically disposes of stubs in the following cases:
 
-### End of Execution Context
+### End of event handler / execution context
 
-When the Worker's "execution context" ends, all stubs created in that context are implicitly disposed.
+When an event handler is "done", any stubs created as part of the event are automatically disposed.
 
-An "execution context" is the context in which a single event is handled. For example, when a worker implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch) to receive HTTP requests, each HTTP request creates a new execution context.
+For example, consider a [`fetch()` handler](/workers/runtime-apis/handlers/fetch) which handles incoming HTTP events. The handler may make outgoing RPCs as part of handling the event, and those may return stubs. When the final HTTP response is sent, the handler is "done", and all stubs are immediately disposed.
 
-When the client of the HTTP request disconnects, the context is immediately terminated, ending all asynchronous tasks and disposing all stubs. For example, the Worker below does not make use of the `using` declaration, but stubs will be disposed of once the `fetch()` handler returns a response:
+More precisely, the event has an "execution context", which begins when the handler is first invoked, and ends when the HTTP response is sent. The execution context may also end early if the client disconnects before receiving a response, or it can be extended past its normal end point by calling [`ctx.waitUntil()`](/workers/runtime-apis/context).
+
+For example, the Worker below does not make use of the `using` declaration, but stubs will be disposed of once the `fetch()` handler returns a response:
 
 ```js
 export default {
@@ -100,26 +105,15 @@ export default {
 };
 ```
 
-When a Worker is running as a result of an RPC call on a `WorkerEntrypoint`, the execution context remains open until the client and server have both disposed all stubs passed between the two, or when the client's execution context ends, whichever comes first.
-
-If you need to extend the execution context, you can do so by using [`ctx.waitUntil()`](/workers/runtime-apis/context).
+A Worker invoked via RPC also has an execution context. The context begins when an RPC method on a `WorkerEntrypoint` is invoked. If no stubs are passed in the parameters or results of this RPC, the context ends (the event is "done") when the RPC returns. However, if any stubs are passed, then the execution context is implicitly extended until all such stubs are disposed (and all calls made through them have returned). As with HTTP, if the client disconnects, the server's execution context is canceled immediately, regardless of whether stubs still exist. A client that is itself another Worker is considered to have disconnected when its own execution context ends. Again, the context can be extended with [`ctx.waitUntil()`](/workers/runtime-apis/context).
 
 ### Stubs received as parameters in an RPC call
 
 When stubs are received in the parameters of an RPC, those stubs are automatically disposed when the call returns. If you wish to keep the stubs longer than that, you must call the `dup()` method on them.
 
-### Sessions
-
-Each top-level RPC call to a `WorkerEntrypoint` is considered its own session. Subsequent stubs that are introduced by that call are considered to be part of this same session. For example, both `user` and `messages` are considered to be part of the same session:
-
-```js
-let user = await env.USER_SERVICE.findUser(id);
-let messages = await user.messages();
-```
-
 ### Disposing RPC objects disposes stubs that are part of that object
 
-When an RPC returns any kind of object, that object will have a disposer. Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, such as a number or string. These types cannot have disposers added to them, but because these types cannot themselves contain stubs, there is no need for a disposer in this case.
+When an RPC returns any kind of object, that object will have a disposer added by the system. Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, such as a number or string. These types cannot have disposers added to them, but because these types cannot themselves contain stubs, there is no need for a disposer in this case.
 
 This means you should almost always store the result of an RPC into a `using` declaration:
 
@@ -127,12 +121,13 @@ This means you should almost always store the result of an RPC into a `using` de
 using result = stub.foo();
 ```
 
-This way, if the result contains any new stubs, they will be disposed of. If you decide you want any of these stubs to not be automatically disposed, you can call `dup()` on the stub before the end of the scope that the `using` declaration is in, and then remember to explicitly dispose those stubs later.
+This way, if the result contains any stubs, they will be disposed of. Even if you don't expect the RPC to return stubs, if it returns any kind of an object, it is a good idea to store it into a `using` declaration. This way, if the RPC is extended in the future to return stubs, your code is ready.
 
+If you decide you want to keep a returned stub beyond the scope of the `using` declaration, you can call `dup()` on the stub before the end of the scope. (Remember to explicitly dispose the duplicate later.)
 
 ## Disposers and `RpcTarget` classes
 
-A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) can also implement a disposer:
+A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) can optionally implement a disposer:
 
 ```js
 class Foo extends RpcTarget {
@@ -142,22 +137,33 @@ class Foo extends RpcTarget {
 }
 ```
 
-Disposers always run asynchronously. The RpcTarget's disposer runs some time after the last stub is disposed. This is especially true because the dispose message needs to cross the network, but is true even in the case that the stub happens to point to a local object. Exceptions thrown by the disposer will be reported as uncaught exceptions.
+The RpcTarget's disposer runs after the last stub is disposed. Note that the client-side call to the stub's disposer does not wait for the server-side disposer to be called; the server's disposer is called later on. Because of this, any exceptions thrown by the disposer do not propagate to the client; instead, they are reported as uncaught exceptions. Note that an `RpcTarget`'s disposer must be declared as `Symbol.dispose`. `Symbol.asyncDispose` is not supported.
 
 ## Promise pipelining
 
 When you call an RPC method and get back an object, it's common to immediately call a method on the object:
 
 ```js
+// Two round trips.
 using counter = await env.COUNTER_SERVICE.getCounter();
 await counter.increment();
 ```
 
-But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/runtime-apis/bindings/service-bindings/#smart-placement) or [Durable Objects](/durable-objects). On the surface, you might guess that the code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`.
+But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/runtime-apis/bindings/service-bindings/#smart-placement) or [Durable Objects](/durable-objects). The code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`. We'd like to avoid this.
 
-In practice, both calls are completed in a single round trip over the network. After sending the first call, the client immediately sends a second message instructing the server that when `getCounter()` is done, it should call `increment()` on the result.
+With most RPC systems, the only way to avoid the problem would be to combine the two calls into a single "batch" call, perhaps called `getCounterAndIncrement()`. However, this makes the interface worse. You wouldn't design a local interface this way.
 
-This works because RPC methods return a custom ["Thenable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#thenables) — a Promise-like object that conform to the semantics and interface of a JavaScript Promise. You can treat this in your own code just like you would a normal JavaScript Promise — the optimization is handled automatically behind the scenes.
+Workers RPC allows a different approach: You can simply omit the first `await`:
+
+```js
+// Only one round trip! Note the missing `await`.
+using promiseForCounter = env.COUNTER_SERVICE.getCounter();
+await promiseForCounter.increment();
+```
+
+In this code, `getCounter()` returns a promise for a counter. Normally, the only thing you would do with a promise is `await` it. However, Workers RPC promises are special: they also allow you to initiate speculative calls on the future result of the promise. These calls are sent to the server immediately, without waiting for the initial call to complete. Thus, multiple chained calls can be completed in a single round trip.
+
+How does this work? The promise returned by an RPC is not a real JavaScript `Promise`. Instead, it is a custom ["Thenable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#thenables). It has a `.then()` method like `Promise`, which allows it to be used in all the places where you'd use a normal `Promise`. For instance, you can `await` it. But, in addition to that, an RPC promise also acts like a stub. Calling any method name on the promise forms a speculative call on the promise's eventual result. This is known as "promise pipelining".
 
 This works when calling properties of objects returned by RPC methods as well. For example:
 
@@ -190,6 +196,8 @@ export default {
   }
 }
 ```
+
+If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
 
 ## Proxying and forwarding stubs
 
