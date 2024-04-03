@@ -229,8 +229,8 @@ Alternatively, you can interact with a D1 database locally via a `wrangler.toml`
 
 [Workers AI](/workers-ai/) allows you to run  AI models. To bind Workers AI to your Pages Function:
 
-{{<Aside type="warning">}}
-While Pages currently supports Workers AI bindings, they do not work in local dev mode. Cloudflare aims to provide local dev support soon, but recommends you use the [REST API](/workers-ai/get-started/rest-api/) with Pages in the meantime.
+{{<Aside type="note">}}
+When developing locally using `wrangler`, you can define an AI binding using the `--ai` flag. Start `wrangler` in development mode like so: `wrangler pages dev --ai AI` to expose the `context.env.AI` binding.
 {{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
