@@ -199,30 +199,6 @@ export default {
 
 If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
 
-## Proxying and forwarding stubs
-
-A stub received over RPC from one Worker can be forwarded over RPC to another Worker.
-
-```js
----
-filename: introducer.js
----
-using counter = env.COUNTER_SERVICE.getCounter();
-await env.ANOTHER_SERVICE.useCounter(counter);
-```
-
-Here, three different workers are involved:
-
-1. The calling Worker (we'll call this the "introducer")
-2. `COUNTER_SERVICE`
-3. `ANOTHER_SERVICE`
-
-When `ANOTHER_SERVICE` calls a method on the `counter` that is passed to it, this call will automatically be proxied through the introducer and on to the [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) class implemented by `COUNTER_SERVICE`.
-
-In this way, the introducer Worker can connect two Workers that did not otherwise have any ability to form direct connections to each other.
-
-Currently, this proxying only lasts until the end of the Workers' execution contexts. A proxy connection cannot be persisted for later use.
-
 ## The `dup()` method
 
 Sometimes, you need to pass a stub to a function which will dispose the stub when it is done, but you also want to keep the stub for later use. To solve this problem, you can "dup" the stub:

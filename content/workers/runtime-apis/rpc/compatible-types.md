@@ -20,6 +20,7 @@ The RPC system also supports a number of types that are not Structured Cloneable
 - Application-define classes that extend `RpcTarget`, which are similarly replaced by stubs.
 - [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
 - [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
+- RPC stubs themselves, even if the stub was received from a third Worker.
 
 ## Functions
 
@@ -136,3 +137,27 @@ You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readab
 Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_byte_streams) (streams with an underlying byte source of `type: "bytes"`) are supported.
 
 In all cases, ownership of the stream is transferred to the recipient. The sender can no longer read/write the stream after sending it. If the sender wishes to keep its own copy, it can use the [`tee()` method of `ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee) or the [`clone()` method of `Request` or `Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response/clone). Keep in mind that doing this may force the system to buffer bytes and lose the benefits of flow control.
+
+## Forwarding RPC stubs
+
+A stub received over RPC from one Worker can be forwarded over RPC to another Worker.
+
+```js
+---
+filename: introducer.js
+---
+using counter = env.COUNTER_SERVICE.getCounter();
+await env.ANOTHER_SERVICE.useCounter(counter);
+```
+
+Here, three different workers are involved:
+
+1. The calling Worker (we'll call this the "introducer")
+2. `COUNTER_SERVICE`
+3. `ANOTHER_SERVICE`
+
+When `ANOTHER_SERVICE` calls a method on the `counter` that is passed to it, this call will automatically be proxied through the introducer and on to the [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) class implemented by `COUNTER_SERVICE`.
+
+In this way, the introducer Worker can connect two Workers that did not otherwise have any ability to form direct connections to each other.
+
+Currently, this proxying only lasts until the end of the Workers' execution contexts. A proxy connection cannot be persisted for later use.
