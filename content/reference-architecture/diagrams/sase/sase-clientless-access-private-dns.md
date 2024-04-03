@@ -11,7 +11,7 @@ meta:
 
 Using Cloudflare to access private resources - such as applications, servers, and networks that are not exposed directly to the internet - usually involves deploying an ([agent](/cloudflare-one/connections/connect-devices/warp/)) to devices and then using a server-side agent ([cloudflared](/cloudflare-one/connections/connect-networks/private-net/cloudflared/), [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/)), to connect the private network or application to Cloudflare. This document describes an alternative approach which removes the need to deploy software to the user's device, making it easier for allowing third party access such as contractors and partners.
 
-Typically, to provide access to internal resources, you use Cloudflare Zero Trust Network Access [ZTNA](/en-gb/learning/access-management/what-is-ztna/) which supports two methods for how the user device accesses a private resource. 
+Typically, to provide access to internal resources, you use Cloudflare Zero Trust Network Access [ZTNA](https://www.cloudflare.com/learning/access-management/what-is-ztna/) which supports two methods for how the user device accesses a private resource. 
 
 * A CNAME in public DNS, that resolves to a hostname representing the Cloudflare tunnel which proxies the request to the internal application.
 
