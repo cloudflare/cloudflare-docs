@@ -1,7 +1,7 @@
 ---
 title: Configuration guides
 pcx_content_type: navigation
-weight: 5
+weight: 7
 ---
 
 # Configuration guides

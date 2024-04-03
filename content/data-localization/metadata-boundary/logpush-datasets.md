@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Logpush datasets supported
+layout: wide
 weight: 2
 ---
 
