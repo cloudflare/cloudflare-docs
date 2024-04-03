@@ -5,7 +5,7 @@ title: Live Instant Clipping
 
 {{<heading-pill style="beta" heading="h1">}}Live Instant Clipping{{</heading-pill>}}
 
-Stream supports generating clips of live streams and recordings so creators and viewers alike can highlight short, engaging pieces of a longer broadcast or recording. Live instant clips can be created by end-users and do not result in additional storage fees or new entries in the video library.
+Stream supports generating clips of live streams and recordings so creators and viewers alike can highlight short, engaging pieces of a longer broadcast or recording. Live instant clips can be created by end users and do not result in additional storage fees or new entries in the video library.
 
 {{<Aside type="note" header="Note:">}}
 
