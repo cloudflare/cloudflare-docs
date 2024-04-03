@@ -111,15 +111,6 @@ If you need to extend the execution context, you can do so by using [`ctx.waitUn
 
 When stubs are received in the parameters of an RPC, those stubs are automatically disposed when the call returns. If you wish to keep the stubs longer than that, you must call the `dup()` method on them.
 
-### Sessions
-
-Each top-level RPC call to a `WorkerEntrypoint` is considered its own session. Subsequent stubs that are introduced by that call are considered to be part of this same session. For example, both `user` and `messages` are considered to be part of the same session:
-
-```js
-let user = await env.USER_SERVICE.findUser(id);
-let messages = await user.messages();
-```
-
 ### Disposing RPC objects disposes stubs that are part of that object
 
 When an RPC returns any kind of object, that object will have a disposer. Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, such as a number or string. These types cannot have disposers added to them, but because these types cannot themselves contain stubs, there is no need for a disposer in this case.
