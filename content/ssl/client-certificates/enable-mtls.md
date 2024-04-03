@@ -18,7 +18,7 @@ To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare 
 4.  Enter the name of a host in your current application and press `Enter`.
 5.  Select **Save**.
 
-After enabling mTLS for your host, you can enforce mTLS with [API Shield™](/api-shield/security/mtls/configure/). While API Shield is **not required** to use mTLS, many teams may use mTLS to protect their APIs.
+After enabling mTLS for your host, you can enforce mTLS with [API Shield](/api-shield/security/mtls/configure/). While API Shield is **not required** to use mTLS, many teams may use mTLS to protect their APIs.
 
 {{<render file="_cloudflare-managed-client-cert.md">}}
 
