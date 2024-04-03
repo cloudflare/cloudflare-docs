@@ -1,7 +1,7 @@
 ---
 title: Use egress policies to deliver consistent egress IPs
 pcx_content_type: learning-unit
-weight: 2
+weight: 3
 layout: learning-unit
 ---
 

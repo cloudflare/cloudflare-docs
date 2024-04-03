@@ -1,7 +1,7 @@
 ---
-title: Egress IP deployment best practices
+title: Egress IP best practices
 pcx_content_type: learning-unit
-weight: 3
+weight: 2
 layout: learning-unit
 ---
 
