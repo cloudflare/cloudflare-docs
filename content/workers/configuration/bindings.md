@@ -8,5 +8,5 @@ _build:
   render: never
 
 meta:
-  description: Configure your Worker to present a client certificate to services that enforce an mTLS connection.
+  description: The various bindings that are available to Cloudflare Workers.
 ---

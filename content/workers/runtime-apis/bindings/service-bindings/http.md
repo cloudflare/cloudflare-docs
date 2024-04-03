@@ -22,7 +22,7 @@ main = "./src/workerB.js"
 
 ```js
 ---
-filename: workerB.js
+filename: src/workerB.js
 ---
 export default {
   async fetch(request, env, ctx) {
@@ -48,11 +48,11 @@ And then can forward a request to it:
 
 ```js
 ---
-filename: workerA.js
+filename: src/workerA.js
 ---
 export default {
 	async fetch(request, env) {
-		return await env.BINDING_NAME.fetch(request);
+		return await env.WORKER_B.fetch(request);
 	},
 };
 ```

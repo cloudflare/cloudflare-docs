@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Compatible Types
 meta:
   title: Workers RPC — Compatible Types
-  description: JavaScript types that are compatible with the Workers RPC system
+  description: JavaScript types that are compatible with the Workers RPC system.
 ---
 
 # Compatible Types
@@ -33,7 +33,7 @@ You can send a function over RPC. When you do so, the function is replaced by a 
 
 You can also send a function in the parameters of an RPC. This enables the "server" to call back to the "client", reversing the direction of the relationship.
 
-Because of this, the words "client" and "server" can be ambiguous when talking about RPC. The "server" is a Durable Object or WorkerEntrypoint, and the "client" is the Worker that invoked the server via a binding. But, RPCs can flow both ways between the two. When talking about an individual RPC, you should instead use the words "caller" and "callee".
+Because of this, the words "client" and "server" can be ambiguous when talking about RPC. The "server" is a Durable Object or WorkerEntrypoint, and the "client" is the Worker that invoked the server via a binding. But, RPCs can flow both ways between the two. When talking about an individual RPC, we recommend instead using the words "caller" and "callee".
 
 ## Class Instances
 
@@ -51,7 +51,7 @@ main = "./src/counter.js"
 
 ```js
 ---
-filename: counter.js
+filename: src/counter.js
 ---
 import { WorkerEntrypoint, RpcTarget } from "cloudflare:workers";
 
@@ -71,6 +71,12 @@ class Counter extends RpcTarget {
 export class CounterService extends WorkerEntrypoint {
   async newCounter() {
     return new Counter();
+  }
+}
+
+export default {
+  fetch() {
+    return new Response("ok")
   }
 }
 ```
@@ -127,6 +133,6 @@ Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This di
 
 You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control.
 
-Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_byte_streams) are supported. (Streams with an underlying byte source of `type: "bytes"`)
+Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_byte_streams) (streams with an underlying byte source of `type: "bytes"`) are supported.
 
 In all cases, ownership of the stream is transferred to the recipient. The sender can no longer read/write the stream after sending it. If the sender wishes to keep its own copy, it can use the [`tee()` method of `ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee) or the [`clone()` method of `Request` or `Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response/clone). Keep in mind that doing this may force the system to buffer bytes and lose the benefits of flow control.

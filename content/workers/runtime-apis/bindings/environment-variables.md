@@ -8,5 +8,5 @@ _build:
   render: never
 
 meta:
-  description: Add string and JSON values to your Worker
+  description: Add string and JSON values to your Worker.
 ---

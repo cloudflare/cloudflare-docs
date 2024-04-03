@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Lifecycle
 meta:
   title: Workers RPC — Lifecycle
-  description: Memory management, resource management, and the lifecycle of RPC stubs
+  description: Memory management, resource management, and the lifecycle of RPC stubs.
 ---
 
 # Lifecycle

@@ -3,19 +3,19 @@ pcx_content_type: configuration
 title: RPC (WorkerEntrypoint)
 meta:
   title: Service bindings - RPC (WorkerEntrypoint)
-  description: Facilitate Worker-to-Worker communication via RPC
+  description: Facilitate Worker-to-Worker communication via RPC.
 ---
 
 # Service Bindings — RPC
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
 
-You can use Service bindings to create your own internal APIs that your Worker makes available to other Workers. This is done by extending the built-in `WorkerEntrypoint` class, and adding your own public methods. These public methods can then be directly called by other Workers on your Cloudflare account that declare a [binding](/workers/runtime-apis/bindings) to this Worker.
+You can use Service bindings to create your own internal APIs that your Worker makes available to other Workers. This can be done by extending the built-in `WorkerEntrypoint` class, and adding your own public methods. These public methods can then be directly called by other Workers on your Cloudflare account that declare a [binding](/workers/runtime-apis/bindings) to this Worker.
 
 The [RPC system in Workers](/workers/runtime-apis/rpc) is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
 {{<Aside type="note">}}
-You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/).
+You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs/#rpc-methods).
 {{</Aside>}}
 
 ## Example
@@ -36,12 +36,12 @@ filename: index.js
 ---
 import { WorkerEntrypoint } from "cloudflare:workers";
 
-export class MyWorker extends WorkerEntrypoint {
+export default class extends WorkerEntrypoint {
   async add(a, b) { return a + b; }
 }
 ```
 
-A new instance of the class `MyWorker` is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless — the class instance only lasts for the duration of the invocation. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
+A new instance of the class is created every time the Worker is called. Note that even though the Worker is implemented as a class, it is still stateless — the class instance only lasts for the duration of the invocation. If you need to persist or coordinate state in Workers, you should use [Durable Objects](/durable-objects).
 
 ### Bindings (`env`)
 
@@ -82,7 +82,9 @@ For example, you can extend the lifetime of the invocation context by calling th
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
-export class MyWorker extends WorkerEntrypoint {
+export default class extends WorkerEntrypoint {
+  fetch() { return new Response("Hello from my-worker"); }
+  
   async signup(email, name) {
     // sendEvent() will continue running, even after this method returns a value to the caller
     this.ctx.waitUntil(this.#sendEvent("signup", email))

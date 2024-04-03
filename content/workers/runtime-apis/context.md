@@ -2,7 +2,7 @@
 pcx_content_type: configuration
 title: Context (ctx)
 meta:
-  description: The Context API in Cloudflare Workers, including waitUntil and passThroughOnException
+  description: The Context API in Cloudflare Workers, including waitUntil and passThroughOnException.
 ---
 
 # Context (`ctx`)
@@ -36,7 +36,7 @@ For example:
 ```js
 export default {
   async fetch(request, env, ctx) {
-    // Forward / Proxy original request
+    // Forward / proxy original request
     let res = await fetch(request);
 
     // Add custom header(s)
@@ -59,7 +59,7 @@ The `passThroughOnException` method allows a Worker to [fail open](https://commu
 
 ```js
 export default {
-  async fetch(request, env, context) {
+  async fetch(request, env, ctx) {
     // Proxy to origin on unhandled/uncaught exceptions
     context.passThroughOnException();
     throw new Error('Oops');

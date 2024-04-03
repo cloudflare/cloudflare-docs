@@ -27,13 +27,13 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/configuration/environment-variables/) available to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) is passed to all requests.
+  - The [bindings](/workers/configuration/environment-variables/) available to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) may be passed to multiple requests.
 
-- {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}ctx.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`waitUntil`](/workers/runtime-apis/context/#waituntil).
 
-- {{<code>}}context.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}ctx.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passThroughOnException).
 

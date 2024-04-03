@@ -17,7 +17,7 @@ main = "./src/workerB.js"
 
 ```js
 ---
-filename: workerB.js
+filename: src/workerB.js
 ---
 import { WorkerEntrypoint } from "cloudflare:workers";
 
@@ -43,7 +43,7 @@ Making it possible for Worker A to call the `add()` method from Worker B:
 
 ```js
 ---
-filename: workerA.js
+filename: src/workerA.js
 ---
 export default {
   async fetch(request, env) {

@@ -8,5 +8,5 @@ _build:
   render: never
 
 meta:
-  description: Add encrypted secrets to your Worker
+  description: Add encrypted secrets to your Worker.
 ---

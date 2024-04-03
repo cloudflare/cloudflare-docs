@@ -5,7 +5,7 @@ meta:
   description: Worker Bindings that allow for interaction with other Cloudflare Resources.
 ---
 
-# Bindings
+# Bindings (`env`)
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform.
 
