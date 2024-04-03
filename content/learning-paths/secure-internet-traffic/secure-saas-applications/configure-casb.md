@@ -1,7 +1,7 @@
 ---
 title: Scan SaaS applications with Cloudflare CASB
 pcx_content_type: learning-unit
-weight: 1
+weight: 3
 layout: learning-unit
 ---
 
