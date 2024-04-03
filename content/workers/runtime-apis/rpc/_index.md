@@ -20,10 +20,6 @@ The RPC system is designed to feel as similar as possible to calling a JavaScrip
 
 The client, in this case Worker A, calls Worker B and tells it to execute a specific procedure using specific arguments that the client provides. This is accomplished with standard JavaScript classes.
 
-## How the Workers RPC System Works
-
-{{<render file="_service-binding-rpc-functions-example.md" productFolder="workers">}}
-
 ## All calls are asynchronous
 
 Whether or not the method you are calling was declared asynchronous on the server side, it will behave as such on the client side. You must `await` the result.
@@ -32,7 +28,7 @@ Note that RPC calls do not actually return `Promise`s, but they return a type th
 
 (We'll see why the type is not actually a Promise a bit later.)
 
-## Basic types
+## Structured clonable types, and more
 
 Nearly all types that are [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes, most basic "value" types in JavaScript, including objects, arrays, strings and numbers.
 
@@ -246,7 +242,7 @@ In this way, the introducer Worker can connect two Workers that did not otherwis
 
 Currently, this proxying only lasts until the end of the Workers' execution contexts. A proxy connection cannot be persisted for later use.
 
-## Details
+## More Details
 
 {{<directory-listing showDescriptions="true">}}
 
