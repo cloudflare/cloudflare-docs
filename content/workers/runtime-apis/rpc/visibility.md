@@ -18,7 +18,7 @@ This security model is commonly known as Object Capabilities, or Capability-Base
 
 ### Private properties
 
-[Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes are never exposed over RPC.
+[Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties) of classes are not directly exposed over RPC.
 
 ### Class instance properties
 
@@ -46,7 +46,7 @@ class Foo extends RpcTarget {
 }
 ```
 
-This behavior is intentional —  it is intended to protect you from accidentally exposing private class internals. Generally, instance properties should be declared private, [by prefixing them with `#`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties). However, private properties are a relatively new feature of JavaScript, and are not consistently used.
+This behavior is intentional — it is intended to protect you from accidentally exposing private class internals. Generally, instance properties should be declared private, [by prefixing them with `#`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties). However, private properties are a relatively new feature of JavaScript, and are not yet widely used in the ecosystem.
 
 Since the RPC interface between two of your Workers may be a security boundary, we need to be extra-careful, so instance properties are always private when communicating between Workers using RPC, whether or not they have the `#` prefix. You can always declare an explicit getter at the class level if you wish to expose the property, as shown above.
 

@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: HTTP
 meta:
   title: Service bindings - HTTP
-  description: Facilitate Worker-to-Worker communication by forwarding Request objects
+  description: Facilitate Worker-to-Worker communication by forwarding Request objects.
 ---
 
 # Service bindings — HTTP

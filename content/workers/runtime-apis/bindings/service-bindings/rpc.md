@@ -64,7 +64,9 @@ Can access it by calling `this.env.GREETING`:
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
 
-export class MyWorker extends WorkerEntrypoint {
+export default class extends WorkerEntrypoint {
+  fetch() { return new Response("Hello from my-worker"); }
+  
   async greet(name) {
     return this.env.GREETING + name;
   }

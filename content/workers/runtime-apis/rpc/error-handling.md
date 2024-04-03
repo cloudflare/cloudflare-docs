@@ -10,4 +10,4 @@ meta:
 
 ## Exceptions
 
-An exception thrown by an RPC method implementation will propagate to the caller. If it is one of the standard JavaScript Error types, the type and description will be retained, though the stack trace is not.
+An exception thrown by an RPC method implementation will propagate to the caller. If it is one of the standard JavaScript Error types, the `message` and prototype's `name` will be retained, though the stack trace is not.

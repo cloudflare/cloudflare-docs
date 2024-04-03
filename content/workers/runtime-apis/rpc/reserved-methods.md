@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Reserved Methods
 meta:
   title: Workers RPC — Reserved Methods
-  description: Reserved methods with special behavior that are treated differently
+  description: Reserved methods with special behavior that are treated differently.
 ---
 
 # Reserved Methods
@@ -18,7 +18,7 @@ For backwards compatibility, when extending `WorkerEntrypoint` or `DurableObject
 
 The `fetch()` method is treated specially — it can only be used to handle an HTTP request — equivalent to the [fetch handler](/workers/runtime-apis/handlers/fetch/).
 
-You may implement a `fetch()` method in your class that extends `WorkerEntrypoint` — but it must accept only one parameter of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), and must return an instance of [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response).
+You may implement a `fetch()` method in your class that extends `WorkerEntrypoint` — but it must accept only one parameter of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), and must return an instance of [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response), or a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) of one.
 
 On the client side, `fetch()` called on a service binding or Durable Object stub works like the standard global `fetch()`. That is, the caller may pass one or two parameters to `fetch()`. If the caller does not simply pass a single `Request` object, then a new `Request` is implicitly constructed, passing the parameters to its constructor, and that request is what is actually sent to the server.
 

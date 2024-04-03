@@ -21,8 +21,10 @@ filename: src/workerB.js
 ---
 import { WorkerEntrypoint } from "cloudflare:workers";
 
-export class WorkerB extends WorkerEntrypoint {
-  async add(a, b) { return a + b; }
+export default class extends WorkerEntrypoint {
+  async fetch() { return new Response("Hello from Worker B"); }
+  
+  add(a, b) { return a + b; } 
 }
 ```
 

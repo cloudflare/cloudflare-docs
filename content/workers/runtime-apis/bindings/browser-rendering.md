@@ -8,5 +8,5 @@ _build:
   render: never
 
 meta:
-  description: Programmatically control and interact with a headless browser instance
+  description: Programmatically control and interact with a headless browser instance.
 ---
