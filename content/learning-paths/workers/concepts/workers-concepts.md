@@ -49,7 +49,7 @@ In the next module, you build and deploy your first Worker to the Cloudflare glo
 
 ## Related resources
 
-- [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - Blog post detailing the containers versus isolates difference in the context of Cloudflare.
+- [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - A blog post detailing the containers versus isolates difference in the context of Cloudflare.
 - [How Workers works](/workers/reference/how-workers-works/) - Learn the difference between the Workers runtime versus traditional browsers and Node.js.
 - [How the cache works](/workers/reference/how-the-cache-works/) - Learn how Workers interacts with the Cloudflare cache.
 
