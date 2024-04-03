@@ -31,15 +31,18 @@ async def on_fetch(request, env):
     # Parse the query parameters into a Python dictionary
     params = parse_qs(url.query)
 
-    if url.path == "/favicon.ico":
-      return new Response("")
+    if "name" in params:
+        greeting = "Hello there, {name}".format(name=params["name"][0])
+        return Response.new(greeting)
 
-    return new Response("Hello world!")
+
+    if url.path == "/favicon.ico":
+      return new Response.new("")
+
+    return Response.new("Hello world!")
 ```
 
 ### Parse JSON from the incoming request
-
-What about `json.loads` as an alternative here?
 
 ```python
 from js import Response
@@ -76,7 +79,6 @@ async def on_fetch(request):
 
     return Response.new("We're testing logging!")
 ```
-
 
 ### Respond with JSON
 
