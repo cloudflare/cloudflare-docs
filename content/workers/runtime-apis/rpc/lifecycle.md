@@ -153,7 +153,7 @@ But consider the case where the Worker service that you are calling may be far a
 
 With most RPC systems, the only way to avoid the problem would be to combine the two calls into a single "batch" call, perhaps called `getCounterAndIncrement()`. However, this makes the interface worse. You wouldn't design a local interface this way.
 
-Workers RPC allows a different approach: You can simply elide the first `await`:
+Workers RPC allows a different approach: You can simply omit the first `await`:
 
 ```js
 // Only one round trip! Note the missing `await`.
