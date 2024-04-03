@@ -15,7 +15,7 @@ You can upload changes (versions) to your Worker independent of changing the ver
 
 Using versions and deployments is useful if:
 
-- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy or blue/green deployment strategy.
+- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy.
 - You want to monitor for performance differences when deploying new versions of your Worker.
 - You have a CI pipeline configured for Workers but want to cut manual releases.
 
@@ -43,7 +43,7 @@ State changes for associated Workers [storage resources](/workers/platform/stora
 
 Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker. 
 
-By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to create a rolling deployment strategy or blue/green deployment strategy. 
+By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to create a rolling deployment strategy. 
 
 You can also track metadata associated with a deployment, including: the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, you can configure a deployment message when you create a deployment. 
 
@@ -89,8 +89,27 @@ To view your deployments in the Cloudflare dashboard:
 
 ## Limits
 
+### First upload
+
+You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload) the first time you upload a Worker will fail.
+
+
 ### Service worker syntax
 
 Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload). You must use ES modules format. 
 
 Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the service worker format to the ES modules format.
+
+### Smart Placement 
+
+Smart Placement is not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`]. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you have Smart Placement enabled on a Worker. 
+
+Smart Placement support for versions will be coming in the near future.
+
+### mTLS bindings 
+
+[mTLS bindings](/workers/runtime-apis/bindings/mtls/) are not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload). You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you configured mTLS bindings in your Worker. 
+
+mTLS bindings support for versions will be coming in the near future.
+
+
