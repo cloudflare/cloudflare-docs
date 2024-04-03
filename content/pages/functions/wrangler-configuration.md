@@ -155,7 +155,7 @@ API_KEY = "1234567asdf"
 binding = "KV"
 id = "<PREVIEW_NAMESPACE_ID>"
 
-[[env.preview.vars]]
+[env.preview.vars]
 API_KEY = "8901234bfgd"
 ```
 
@@ -181,7 +181,7 @@ API_KEY = "1234567asdf"
 binding = "KV"
 id = "<PRODUCTION_NAMESPACE_ID>"
 
-[[env.production.vars]]
+[env.production.vars]
 API_KEY = "8901234bfgd"
 ```
 
@@ -205,14 +205,14 @@ API_KEY = "1234567asdf"
 binding = "KV"
 id = "<PREVIEW_NAMESPACE_ID>"
 
-[[env.preview.vars]]
+[env.preview.vars]
 API_KEY = "8901234bfgd"
 
 [[env.production.kv_namespaces]]
 binding = "KV"
 id = "<PRODUCTION_NAMESPACE_ID>"
 
-[[env.production.vars]]
+[env.production.vars]
 API_KEY = "6567875fvgt"
 ```
 
@@ -272,7 +272,7 @@ id = "<NAMESPACE_ID>"
 [vars]
 API_KEY = "1234567asdf"
 
-[[env.production.vars]]
+[env.production.vars]
 API_KEY = "8901234bfgd"
 ```
 
@@ -451,7 +451,7 @@ Before you could define your preview and production configuration in `wrangler.t
 ---
 filename: wrangler.toml
 ---
-[[ kv_namespaces ]]
+[[kv_namespaces]]
 binding = "KV"
 id = "<NAMESPACE_ID>"
 ```
