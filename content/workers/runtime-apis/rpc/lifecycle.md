@@ -81,13 +81,15 @@ The following code:
 
 The RPC system automatically disposes of stubs in the following cases:
 
-### End of Execution Context
+### End of event handler / execution context
 
-When the Worker's "execution context" ends, all stubs created in that context are implicitly disposed.
+When an event handler is "done", any stubs created as part of the event are automatically disposed.
 
-An "execution context" is the context in which a single event is handled. For example, when a worker implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch) to receive HTTP requests, each HTTP request creates a new execution context.
+For example, consider a [`fetch()` handler](/workers/runtime-apis/handlers/fetch) which handles incoming HTTP events. The handler may make outgoing RPCs as part of handling the event, and those may return stubs. When the final HTTP response is sent, the handler is "done", and all stubs are immediately disposed.
 
-When the client of the HTTP request disconnects, the context is immediately terminated, ending all asynchronous tasks and disposing all stubs. For example, the Worker below does not make use of the `using` declaration, but stubs will be disposed of once the `fetch()` handler returns a response:
+More precisely, the event has an "execution context", which begins when the handler is first invoked, and ends when the HTTP response is sent. The execution context may also end early if the client disconnects before receiving a response, or it can be extended past its normal end point by calling [`ctx.waitUntil()`](/workers/runtime-apis/context).
+
+For example, the Worker below does not make use of the `using` declaration, but stubs will be disposed of once the `fetch()` handler returns a response:
 
 ```js
 export default {
@@ -103,9 +105,7 @@ export default {
 };
 ```
 
-When a Worker is running as a result of an RPC call on a `WorkerEntrypoint`, the execution context remains open until the client and server have both disposed all stubs passed between the two, or when the client's execution context ends, whichever comes first.
-
-If you need to extend the execution context, you can do so by using [`ctx.waitUntil()`](/workers/runtime-apis/context).
+A Worker invoked via RPC also has an execution context. The context begins when an RPC method on a `WorkerEntrypoint` is invoked. If no stubs are passed in the parameters or results of this RPC, the context ends (the event is "done") when the RPC returns. However, if any stubs are passed, then the execution context is implicitly extended until all such stubs are disposed (and all calls made through them have returned). As with HTTP, if the client disconnects, the server's execution context is canceled immediately, regardless of whether stubs still exist. A client that is itself another Worker is considered to have disconnected when its own execution context ends. Again, the context can be extended with [`ctx.waitUntil()`](/workers/runtime-apis/context).
 
 ### Stubs received as parameters in an RPC call
 
@@ -113,7 +113,7 @@ When stubs are received in the parameters of an RPC, those stubs are automatical
 
 ### Disposing RPC objects disposes stubs that are part of that object
 
-When an RPC returns any kind of object, that object will have a disposer. Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, such as a number or string. These types cannot have disposers added to them, but because these types cannot themselves contain stubs, there is no need for a disposer in this case.
+When an RPC returns any kind of object, that object will have a disposer added by the system. Disposing it will dispose all stubs returned by the call. For instance, if an RPC returns an array of four stubs, the array itself will have a disposer that disposes all four stubs. The only time the value returned by an RPC does not have a disposer is when it is a primitive value, such as a number or string. These types cannot have disposers added to them, but because these types cannot themselves contain stubs, there is no need for a disposer in this case.
 
 This means you should almost always store the result of an RPC into a `using` declaration:
 
@@ -121,12 +121,13 @@ This means you should almost always store the result of an RPC into a `using` de
 using result = stub.foo();
 ```
 
-This way, if the result contains any new stubs, they will be disposed of. If you decide you want any of these stubs to not be automatically disposed, you can call `dup()` on the stub before the end of the scope that the `using` declaration is in, and then remember to explicitly dispose those stubs later.
+This way, if the result contains any stubs, they will be disposed of. Even if you don't expect the RPC to return stubs, if it returns any kind of an object, it is a good idea to store it into a `using` declaration. This way, if the RPC is extended in the future to return stubs, your code is ready.
 
+If you decide you want to keep a returned stub beyond the scope of the `using` declaration, you can call `dup()` on the stub before the end of the scope. (Remember to explicitly dispose the duplicate later.)
 
 ## Disposers and `RpcTarget` classes
 
-A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) can also implement a disposer:
+A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) can optionally implement a disposer:
 
 ```js
 class Foo extends RpcTarget {
@@ -136,7 +137,7 @@ class Foo extends RpcTarget {
 }
 ```
 
-Disposers always run asynchronously. The RpcTarget's disposer runs some time after the last stub is disposed. This is especially true because the dispose message needs to cross the network, but is true even in the case that the stub happens to point to a local object. Exceptions thrown by the disposer will be reported as uncaught exceptions.
+The RpcTarget's disposer runs after the last stub is disposed. Note that the client-side call to the stub's disposer does not wait for the server-side disposer to be called; the server's disposer is called later on. Because of this, any exceptions thrown by the disposer do not propagate to the client; instead, they are reported as uncaught exceptions. Note that an `RpcTarget`'s disposer must be declared as `Symbol.dispose`. `Symbol.asyncDispose` is not supported.
 
 ## Promise pipelining
 
