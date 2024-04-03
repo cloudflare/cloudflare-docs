@@ -289,9 +289,24 @@ To configure a Workers AI binding via the Cloudflare dashboard:
 
 ### Install the Workers AI SDK
 
-Below is an example of how to use Workers AI in your Function. To use Workers AI in your Pages Function, you must first install the [Workers AI SDK](/workers-ai/configuration/workers-ai-sdk/) in your Pages project directory:
+To use Workers AI in your Pages Function, you must first install the [Workers AI SDK](/workers-ai/configuration/workers-ai-sdk/) in your Pages project directory:
 
-{{<render file="_workers-ai-sdk-install.md" productFolder="/workers-ai/">}}
+{{<tabs labels="npm | yarn">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm install --save-dev @cloudflare/ai
+```
+
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn add --dev @cloudflare/ai
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ### Use Workers AI bindings
 
