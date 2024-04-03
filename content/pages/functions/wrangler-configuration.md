@@ -272,18 +272,17 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
   - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/smart-placement/).
 
-
 {{</definitions>}}
 
 ## Non-inheritable keys
 
-Non-inheritable keys are configurable at the top-level, but, if any one non-inheritable key is overridden for any environment (ex: `[[env.production.kv_namespaces]]`), all non-inheritable keys must also be specified in the environment config and overridden.
+Non-inheritable keys are configurable at the top-level, but, if any one non-inheritable key is overridden for any environment (ex: `[[env.production.kv_namespaces]]`), all non-inheritable keys must also be specified in the environment config and overridden. Refer to [this section](/pages/functions/wrangler-configuration/#important-reminder-for-overrides) for more details.
 
 {{<definitions>}}
 
 - `vars` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A map of environment variables to set when deploying your Function. Refer to [Environment variables](/workers/configuration/environment-variables/).
+  - A map of environment variables to set when deploying your Function. Refer to [Environment variables](/pages/functions/bindings/#environment-variables).
 
 - `d1_databases` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -444,7 +443,7 @@ The local development settings that you can configure are the same for Pages Fun
 
 ## Users with existing `wrangler.toml` files
 
-It has been possible to use `wrangler.toml` for development with local bindings. That means you may have a file in your project that looks like this:
+Before you could define your preview and production configuration in `wrangler.toml` — it was possible to use `wrangler.toml` to define which bindings should be available to your Pages project in local development. That means you may already have a file in your project that looks like this:
 
 
 ```toml
