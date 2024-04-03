@@ -16,9 +16,11 @@ When you call another Worker over RPC using a Service binding, you are using mem
 let user = await env.USER_SERVICE.findUser(id);
 ```
 
-As long as the caller Worker is running, garbage collection in the callee Worker cannot run. The garbage collector for the callee Worker cannot know when the caller Worker is done with the user it has provided. This is different from what would happen if the user service ran in the same Worker that it was called in — the garbage collector would know when `user` could be safely and automatically disposed of.
+Assume that `findUser()` on the server side returns an object extending `RpcTarget`, thus `user` on the client side ends up being a stub pointing to that remote object.
 
-This is not a limitation of the Worker runtime, but a limitation inherent to any distributed system. In a distributed system, the garbage collector has no visibility into the remote object graph nor any idea when the remote end is encountering memory pressure.
+As long as the stub still exists on the client, the corresponding object on the server cannot be garbage collected. But, each isolate has its own garbage collector which cannot see into other isolates. So, in order for the server's isolate to know that the object can be collected, the calling isolate must send it an explicit signal saying so, called "disposing" the stub.
+
+In many cases (described below), the system will automatically realize when a stub is no longer needed, and will dispose it automatically. However, for best performance, your code should dispose stubs explicitly when it is done with them.
 
 ## Explicit Resource Management
 
