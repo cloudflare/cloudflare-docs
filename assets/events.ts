@@ -130,7 +130,7 @@ export function tabs() {
           const tabId = parts.slice(0, parts.length - 1).join("-");
 
           const defaultTabLabel = wrappers[i].querySelector(
-            `a[data-link="${tabId}"]`
+            `a[data-link=${tabId}]`
           );
 
           (defaultTab as HTMLElement).style.display = "block";
