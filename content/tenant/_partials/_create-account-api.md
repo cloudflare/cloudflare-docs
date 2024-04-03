@@ -24,7 +24,7 @@ To create an account using the API, make a `POST` request to the `/accounts` end
 
 ### Know-Your-Customer (optional)
 
-All KYC parameters are text fields, have a 120 character limit and are optional unless enforced by the Tenant.
+All KYC parameters are text fields, have a 120 character limit, and are optional unless enforced by the Tenant.
 
 - `business_name` {{<type>}}string{{</type>}}
 
