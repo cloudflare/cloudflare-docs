@@ -31,7 +31,7 @@ The following device details are always visible on Windows, macOS, and Linux dev
 
 The following information may be visible to your company depending on what security policies they have configured.
 
-For example, your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is visible to your company's IT department. Refer to your company's Employee Privacy Policy for information on how they handle sensitive data.
+For example, your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is encrypted and only visible to your company's IT department. Cloudflare cannot decrypt this data. For more information on how your company handles sensitive data, refer to your company's Employee Privacy Policy.
 
 | Data | Notes |
 | ---- | ----- |
