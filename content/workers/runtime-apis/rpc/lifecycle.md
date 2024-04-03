@@ -31,17 +31,18 @@ Explicit Resource Management adds the following language features:
 - The [`using` declaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
 - [`Symbol.dispose` and `Symbol.asyncDispose`](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#additions-to-symbol)
 
-If a variable is declared with `using`, when the variable is no longer in scope, the variable can be safely disposed of. For example:
+If a variable is declared with `using`, when the variable is no longer in scope, the variable's disposer will be invoked. For example:
 
 ```js
 function sendEmail(id, message) {
   using user = await env.USER_SERVICE.findUser(id);
   await user.sendEmail(message);
-  return;
-} // Exited scope, so user can be safely disposed of
+
+  // user[Symbol.dispose]() is implicitly called at the end of the scope.
+}
 ```
 
-When you declare variables that point to resources that are accessed via RPC, from other Workers or Durable Objects, you should generally declare them with the `using` declaration. This tells the callee Worker that the caller Worker is done with the resource, allowing it to be garbage collected and disposed of.
+`using` declarations are useful to make sure you can't forget to dispose stubs — even if your code is interrupted by an exception.
 
 ### How to use the `using` declaration in your Worker
 
