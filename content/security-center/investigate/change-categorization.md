@@ -6,15 +6,9 @@ weight: 4
 
 # Change categorization
 
-Domains are sorted into categories by their content and security type. Refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/) for more information. You can request categorization changes in three ways:
+Cloudflare sorts domains into categories based on their content and security type. You can request categorization changes via the [Cloudflare dashboard](#change-categorization-via-the-cloudflare-dashboard), [Cloudflare Radar](#radar-feedback), or the [API](#api).
 
-## API
-
-You can request categorization changes by creating a [miscategorization API Token](/api/operations/miscategorization-create-miscategorization).
-
-## Radar feedback
-
-You can use [Cloudflare Radar](https://radar.cloudflare.com/domains/feedback) to submit feedback to request recategorization.
+For a detailed list of categories, refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
 ## Change categorization via the Cloudflare dashboard
 
@@ -26,9 +20,7 @@ When you search for a domain, you can request to change its categorization under
 4. Choose whether to change a security or a content category.
 5. Select **Submit** to submit your request for review after you have selected the categories.
 
-{{<Aside type="note">}}
 The interface will not allow a domain to have more than two content categories associated with it. To change the proposed categories, remove some of the selected categories.
-{{</Aside>}}
 
 Once the reports have been reviewed and actioned by the Cloudflare team, the new categories will be visible in Investigate and in Cloudflare Radar.
 
@@ -41,3 +33,11 @@ The category change requests will be revised by the Cloudflare team, depending o
 {{<Aside type="note">}}
 There is no guarantee the category change will be approved.
 {{</Aside>}}
+
+## Radar feedback
+
+To request recategorization via Cloudflare Radar, submit feedback in [Radar Domain Categorization](https://radar.cloudflare.com/domains/feedback).
+
+## API
+
+You can request categorization changes by creating a [miscategorization API Token](/api/operations/miscategorization-create-miscategorization).
