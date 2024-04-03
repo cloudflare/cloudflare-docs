@@ -102,7 +102,7 @@ Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate
 
 ### Smart Placement 
 
-Smart Placement is not support for versions that are uploaded through [`wrangler versions upload --experimental-versions`]. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you have Smart Placement enabled on a script. 
+Smart Placement is not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`]. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you have Smart Placement enabled on a Worker. 
 
 Smart Placement support for versions will be coming in the near future.
 
