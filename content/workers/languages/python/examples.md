@@ -23,11 +23,13 @@ async def on_fetch(request, env):
 
 ```python
 from js import Response, Headers
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 async def on_fetch(request, env):
-    # https://docs.python.org/3/library/urllib.parse.html#module-urllib.parse
+    # Parse the incoming request URL
     url = urlparse(request.url)
+    # Parse the query parameters into a Python dictionary
+    params = parse_qs(url.query)
 
     if url.path == "/favicon.ico":
       return new Response("")
