@@ -8,11 +8,8 @@
 
   let {
     apikey: apiKey,
-    product,
     index: indexName,
   } = algoliaConfig
-
-  const facetFilters = product ? [`product:${product}`] : []
 
   function loaded() {
     window.docsearch({
@@ -32,9 +29,6 @@
       },
       getMissingResultsUrl({ query }) {
         return `/search/?q=${query}`;
-      },
-      searchParameters: {
-        optionalFilters: facetFilters
       },
       transformItems: items => {
         return items.filter(item => {
