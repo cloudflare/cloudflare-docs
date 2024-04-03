@@ -40,16 +40,16 @@ INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNF67KV7FPPSEJVJME
 With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
-$ wrangler d1 execute example-db --remote --file=users_export.sql
+$ wrangler d1 execute example-db --file=users_export.sql
 ```
 
 To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
 
 ```sh
-$ wrangler d1 execute example-db --remote --command "SELECT * FROM users LIMIT 100;"
+$ wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
 
 ...
-🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🌀 To execute on your local development database, add the --local flag to your wrangler command.
 🚣 Executed 1 commands in 0.3165ms
 ┌────────────────────────────┬──────────────────┬─────────────────────┐
 │ id                         │ full_name        │ created_on          │
@@ -112,22 +112,22 @@ In addition to importing existing SQLite databases, you might want to import an 
 
 To export full D1 database schema and data:
 ```sh
-npx wrangler d1 export <database_name> --remote --output=./database.sql
+npx wrangler d1 export <database_name> --output=./database.sql
 ```
 
 To export single table schema and data:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./table.sql
+npx wrangler d1 export <database_name> --table=<table_name> --output=./table.sql
 ```
 
 To export only D1 database schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data=true
+npx wrangler d1 export <database_name> --output=./schema.sql --no-data=true
 ```
 
 To export only D1 table schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data=true
+npx wrangler d1 export <database_name> --table=<table_name> --output=./schema.sql --no-data=true
 ```
 
 ### Known limitations
