@@ -25,7 +25,7 @@ There is no definite answer on which you should use. Instead, consider your use 
 | Usage from within an existing application or framework      | ❌   | ✅   |
 | More complex usage where you need to chain together outputs | ❌   | ✅   |
 
-\* You can use SDKs in CI with a few additional steps.
+\* You can use SDKs in CI with a few additional validation steps.
 
 ## Example
 
