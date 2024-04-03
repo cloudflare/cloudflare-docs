@@ -10,6 +10,9 @@ meta:
 ### Return a custom status code and/or response headers
 
 ```python
+---
+filename: src/entry.py
+---
 from js import Response, Headers
 
 async def on_fetch(request, env):
@@ -22,6 +25,9 @@ async def on_fetch(request, env):
 ### Parse an incoming request URL
 
 ```python
+---
+filename: src/entry.py
+---
 from js import Response, Headers
 from urllib.parse import urlparse, parse_qs
 
@@ -45,6 +51,9 @@ async def on_fetch(request, env):
 ### Parse JSON from the incoming request
 
 ```python
+---
+filename: src/entry.py
+---
 from js import Response
 
 async def on_fetch(request):
@@ -55,6 +64,9 @@ async def on_fetch(request):
 ### Emit logs from your Python Worker
 
 ```python
+---
+filename: src/entry.py
+---
 # To use the JavaScript console APIs
 from js import console
 # To use the native Python logging
@@ -83,6 +95,9 @@ async def on_fetch(request):
 ### Respond with JSON
 
 ```python
+---
+filename: src/entry.py
+---
 from js import Response
 import json
 
