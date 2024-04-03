@@ -40,6 +40,10 @@ Additionally, customers have the option to configure [Logpush](/logs/about/) to 
 
 {{<render file="_customer_metadata_boundary_error.md" productFolder="analytics">}}
 
+## Dashboard UI Analytics
+
+In some cases, when using Customer Metadata Boundary set to the EU, some Dashboard UI Analytics might show up empty.
+
 ## Product specific-behavior
 
 For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page.

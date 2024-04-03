@@ -45,9 +45,3 @@ There are certain limitations and caveats when using Customer Metadata Boundary.
 Specifically most of the Zone Analytics & Logs UI Tabs will be showing up as empty, when configuring Customer Metadata Boundary to EU only. It is recommended to use the UI [Security Analytics](/waf/analytics/security-analytics/) instead, or the [HTTP request](/logs/reference/log-fields/zone/http_requests/) logs via [Logpush](/logs/about/).
 
 For product-specific caveats, refer to [Cloudflare product compatibility](/data-localization/compatibility/) page.
-
-## Dashboard UI Analytics
-
-In some cases, when using Customer Metadata Boundary set to the EU, some Dashboard UI Analytics might show up empty.
-
-Reach out to Cloudflare for any questions.
