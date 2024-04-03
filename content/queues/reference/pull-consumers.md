@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Pull consumers
-weight: 15
+weight: 6
 meta:
   title: Cloudflare Queues - Pull consumers
 ---
@@ -14,7 +14,7 @@ A pull-based consumer allows you to pull from a queue over HTTP from any environ
 
 Deciding whether to configure a push-based consumer or a pull-based consumer will depend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
 
-- Starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
+- **Starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue**. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
 - Use a pull-based consumer if you need to consume messages from existing infrastucture outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
 
 You can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
@@ -87,7 +87,7 @@ API tokens are presented as Bearer tokens in the `Authorization` header of a HTT
 
 ```sh
 $ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
-  --data '{ "visibilityTimeout": 10000, "batchSize": 2 }' \
+  --data '{ "visibility_timeout": 10000, "batch_size": 2 }' \
   -H "Authorization: Bearer ${QUEUES_TOKEN}" \
   -H "Content-Type: application/json"
 ```
@@ -110,7 +110,7 @@ You will need to note the token down: it will only be displayed once.
 
 ## 3. Pull messages
 
-To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-create-queue-consumer) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
+To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-v2-messages-pull) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
@@ -183,7 +183,9 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 ## 4. Acknowledge messages
 
-Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
+Messages pulled by a consumer need to be either acknowledged or marked for retry.
+
+To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
@@ -196,7 +198,7 @@ let resp = await fetch(
       authorization: `Bearer ${QUEUES_API_TOKEN}`,
     },
     // If you have no messages to retry, you can specify an empty array - retries: []
-    body: JSON.stringify({ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4" }]}),
+    body: JSON.stringify({ acks: [{ lease_id: "lease_id1" }, { lease_id: "lease_id2" }, { lease_id: "etc" }], retries: [{ lease_id: "lease_id4" }]}),
   }
 );
 ```
@@ -204,7 +206,10 @@ let resp = await fetch(
 You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, delay_seconds: number }` object in the `retries` array:
 
 ```json
-{ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4", delay_seconds: 600}] }
+{
+  acks: [{ lease_id: "lease_id1" }, { lease_id: "lease_id2" }, { lease_id: "lease_id3" }],
+  retries: [{ lease_id: "lease_id4", delay_seconds: 600}]
+}
 ```
 
 Additionally:
