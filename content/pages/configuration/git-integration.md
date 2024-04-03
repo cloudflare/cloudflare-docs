@@ -78,21 +78,29 @@ When encountering Git integration related issues, one potential troubleshooting 
 
 ## Troubleshooting
 
-If you run into any issues related to deployments failing, check your project dashboard to see if there are any SCM installation warnings listed as shown in the screenshot below.
+### Project Creation
+
+#### `This repository is being used for a Cloudflare Pages project on a different Cloudflare account.`
+
+Using the same Github/Gitlab repository across separate Cloudflare accounts is disallowed. To use the repository for a Pages project in that Cloudflare account, you should delete any Pages projects using the repository in other Cloudflare accounts.
+
+### Deployments
+
+If you run into any issues related to deployments or failing, check your project dashboard to see if there are any SCM installation warnings listed as shown in the screenshot below.
 
 ![Pausing a deployment in the Settings of your Pages project](/images/pages/platform/git.dashboard-error.png)
 
 To resolve any errors displayed in the Cloudflare Pages dashboard, follow the steps listed below.
 
-### `This project is disconnected from your Git account, this may cause deployments to fail.`
+#### `This project is disconnected from your Git account, this may cause deployments to fail.`
 
 To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/configuration/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
 
-### `Cloudflare Pages is not properly installed on your Git account, this may cause deployments to fail.`
+#### `Cloudflare Pages is not properly installed on your Git account, this may cause deployments to fail.`
 
 To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/configuration/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
 
-### `The Cloudflare Pages installation has been suspended, this may cause deployments to fail.`
+#### `The Cloudflare Pages installation has been suspended, this may cause deployments to fail.`
 
 Go to your GitHub installation settings:
 
@@ -101,11 +109,11 @@ Go to your GitHub installation settings:
 
 Click **Configure** on the Cloudflare Pages application. Scroll down to the bottom of the page and click **Unsuspend** to allow Cloudflare Pages to make future deployments.
 
-### `The project is linked to a repository that no longer exists, this may cause deployments to fail.`
+#### `The project is linked to a repository that no longer exists, this may cause deployments to fail.`
 
 You may have deleted or transferred the repository associated with this Cloudflare Pages project. For a deleted repository, you will need to create a new Cloudflare Pages project with a repository that has not been deleted. For a transferred repository, you can either transfer the repository back to the original Git account or you will need to create a new Cloudflare Pages project with the transferred repository.
 
-### `The repository cannot be accessed, this may cause deployments to fail.`
+#### `The repository cannot be accessed, this may cause deployments to fail.`
 
 You may have excluded this repository from your installation's repository access settings.  Go to your GitHub installation settings:
 
@@ -114,6 +122,6 @@ You may have excluded this repository from your installation's repository access
 
 Click **Configure** on the Cloudflare Pages application. Under **Repository access**, ensure that the repository associated with your Cloudflare Pages project is included in the list.
 
-### `There is an internal issue with your Cloudflare Pages Git installation.`
+#### `There is an internal issue with your Cloudflare Pages Git installation.`
 
 This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/configuration/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).
