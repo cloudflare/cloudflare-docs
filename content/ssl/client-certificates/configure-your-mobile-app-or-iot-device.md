@@ -6,7 +6,7 @@ weight: 4
 
 # Configure your mobile app or IoT device
 
-This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](/api-shield/).
+This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield](/api-shield/).
 
 ## Scenario details
 

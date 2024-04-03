@@ -1,5 +1,5 @@
 ---
-title: Workers
+title: Deploy a Workers AI project
 pcx_content_type: get-started
 weight: 1
 meta:

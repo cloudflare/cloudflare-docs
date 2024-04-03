@@ -129,6 +129,7 @@
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
+/bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -1219,6 +1220,8 @@
 /workers/platform/webassembly/javascript/ /workers/runtime-apis/webassembly/javascript/ 301
 /workers/platform/webassembly/rust/ /workers/runtime-apis/webassembly/rust/ 301
 /workers/platform/webassembly/rust/crates/ /workers/runtime-apis/webassembly/rust/crates/ 301
+/workers/runtime-apis/webassembly/rust/ /workers/languages/rust/ 301
+/workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
 /workers/learning/logging-workers/ /workers/observability/log-from-workers/ 301
@@ -1238,6 +1241,7 @@
 /workers/configuration/durable-objects/ /durable-objects/get-started/ 301
 /workers/platform/languages/ /workers/reference/languages/ 301
 /workers/learning/languages/ /workers/reference/languages/ 301
+/workers/reference/languages/ /workers/languages/ 301
 /workers/platform/protocols/ /workers/reference/protocols/ 301
 /workers/learning/protocols/ /workers/reference/protocols/ 301
 /workers/platform/workers-with-page-rules/ /workers/configuration/workers-with-page-rules/ 301
@@ -1303,7 +1307,8 @@
 /workers-ai/platform/rest-api/ /workers-ai/rest-api/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/workers-pages-sdk/ /workers-ai/configuration/workers-ai-sdk/ 301
-
+/workers-ai/rest-api/ /workers-ai/configuration/rest-api/ 301
+/workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301

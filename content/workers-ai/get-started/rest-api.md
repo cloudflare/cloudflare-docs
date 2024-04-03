@@ -1,5 +1,5 @@
 ---
-title: Workers AI REST API
+title: Use the Workers AI REST API
 pcx_content_type: get-started
 weight: 2
 meta:
