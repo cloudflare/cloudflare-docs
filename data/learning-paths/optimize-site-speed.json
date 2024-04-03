@@ -9,7 +9,7 @@
       "Speed",
       "Cache"
     ],
-    "category": ["Performance"],
+    "product_group": "Application performance",
     "elements": [
       {
         "type": "module",
@@ -57,20 +57,18 @@
         "estimated_time": 60,
         "pages": [
           {
-            "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200168196",
+            "url_path": "/speed/optimization/content/auto-minify/",
             "link_title": "Auto Minify",
             "additional_description": "Remove unnecessary characters from HTML, JavaScript, and CSS files."
           },
           {
-            "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200168396",
+            "url_path": "/speed/optimization/content/brotli/",
             "link_title": "Brotli",
             "additional_description": "Apply gzip and brotli compression to some types of content."
           },
           {
             "external_link": true,
-            "url_path": "/fundamentals/speed/rocket-loader/",
+            "url_path": "/speed/optimization/content/rocket-loader/",
             "link_title": "Rocket Loader",
             "additional_description": "Defer JavaScript loading until after page content (applied through client-side JavaScript)."
           },
@@ -87,7 +85,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/219178057",
+            "url_path": "/speed/optimization/images/mirage/",
             "link_title": "Mirage",
             "additional_description": "Lazy load all images in a browser (applied through client-side JavaScript)."
           }
@@ -119,7 +117,7 @@
           {
             "url_path": "/images/",
             "link_title": "Image Optimization",
-            "additional_description": "Choose between Cloudflare Images, Cloudflare Image Resizing, and Polish, three products tailored to your different image needs."
+            "additional_description": "Choose between Cloudflare Images and Polish, two products tailored to your different image needs."
           },
           {
             "url_path": "/load-balancing/",
@@ -135,11 +133,6 @@
             "url_path": "/pages/",
             "link_title": "Cloudflare Pages",
             "additional_description": "Deploy your dynamic front-end applications using Cloudflare Pages. Pages are super fast, always up to date, and deployed directly from your Git provider."
-          },
-          {
-            "url_path": "/railgun/",
-            "link_title": "Railgun",
-            "additional_description": "Improve caching for dynamic content."
           },
           {
             "url_path": "/stream/",
@@ -174,7 +167,7 @@
         "title": "Next steps",
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/task-guides/improve-seo/",
+            "url_path": "/fundamentals/basic-tasks/improve-seo/",
             "link_title": "Optimize SEO"
           }
         ]

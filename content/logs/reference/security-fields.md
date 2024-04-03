@@ -49,7 +49,7 @@ The Security fields contain rules to block requests that contain specific types 
 | `securityLevel`   | Allow or block based on requester's security level.                                                              |
 | `zoneLockdown`    | Restrict all access to a specific zone.                                                                          |
 | `waf`             | Allow or block based on the WAF product settings. This is the WAF/managed rules system that is being phased out. |
-| `firewallRules`   | Allow or block based on a zone's firewall rules configuration.                                                   |
+| `firewallRules`   | Allow or block based on a zone's firewall rules configuration (deprecated).                                                   |
 | `uaBlock`         | Allow or block based on the Cloudflare User Agent Blocking product settings.                                     |
 | `rateLimit`       | Allow or block based on a rate limiting rule, whether set by you or by Cloudflare.                               |
 | `bic`             | Allow or block based on the Browser Integrity Check product settings.                                            |
@@ -59,7 +59,7 @@ The Security fields contain rules to block requests that contain specific types 
 | `botFight`        | Allow or block based on the Bot Fight Mode (classic) product settings.                                           |
 | `botManagement`   | Allow or block based on the Bot Management product settings.                                                     |
 | `dlp`             | Allow or block based on the Data Loss Prevention product settings.                                               |
-| `firewallManaged` | Allow or block based on the Firewall Managed Rules product settings.                                             |
-| `firewallCustom`  | Allow or block based on a rule configured in the Firewall Custom Rulesets.                                       |
+| `firewallManaged` | Allow or block based on WAF Managed Rules' settings.                                             |
+| `firewallCustom`  | Allow or block based on a rule configured in WAF custom rules.                                       |
 
 {{</table-wrap>}}

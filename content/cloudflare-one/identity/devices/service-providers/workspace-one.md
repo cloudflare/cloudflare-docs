@@ -6,9 +6,12 @@ weight: 4
 
 # Workspace ONE
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
+{{<render file="posture/_service-provider-intro.md" withParameters="Workspace ONE">}}
 
-Device posture with Workspace ONE requires the Workspace ONE agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the posture check.
+## Prerequisites
+
+- Workspace ONE agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## 1. Obtain Workspace ONE Settings
 
@@ -22,7 +25,7 @@ The following Workspace ONE values are needed to set up the Workspace ONE postur
 To retrieve those values:
 
 1. Log in to your Workspace ONE dashboard.
-1. Navigate to **Groups & Settings** > **Configurations**.
+1. Go to **Groups & Settings** > **Configurations**.
 1. Enter `OAuth` in the search bar labeled **Enter a name or category**.
 1. Select **OAuth Client Management** in the results. The OAuth Client Management screen displays.
 1. Select **Add**.
@@ -35,7 +38,7 @@ To retrieve those values:
 
 ## 2. Add Workspace ONE as a service provider
 
-1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+1. Go to **Settings** > **Devices** > **Device posture providers** and select **Add new**.
 1. Select **Workspace ONE**.
 1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
 1. Enter the **Client ID** and **Client secret** you noted down above.

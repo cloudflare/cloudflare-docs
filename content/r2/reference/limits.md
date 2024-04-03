@@ -5,14 +5,6 @@ pcx_content_type: concept
 
 # Limits
 
-{{<Aside type="note">}}
-
-We want to encourage you to build any application you can dream up, but we realize that does not always fit within our limits. 
-
-To increase any of our limits, fill out the [Limit Increase Request form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
-{{</Aside>}}
-
 ## Rate limiting on managed public buckets through `r2.dev`
 
 Managed public bucket access through an `r2.dev` subdomain is not intended for production usage and has a rate limit applied to it. If you exceed the rate limit, requests through your `r2.dev` subdomain will be temporarily throttled and you will receive a `429 Too Many Requests` response. For production use cases, consider linking a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket.
@@ -25,17 +17,26 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 | ------------------------------- | ------------------------------------- |
 | Bucket                          | 1000 buckets per account              |
 | Data storage per bucket         | Unlimited                             |
-| Object metadata size            | 2,048 bytes                           |
-| Object size                     | 5 TiB per object<sup>1</sup>           |
-| Maximum upload size<sup>3</sup> | 5 GiB<sup>2</sup>                      |
+| Object key length               | 1,024 bytes                           |
+| Object metadata size            | 8,192 bytes                           |
+| Object size                     | 5 TiB per object<sup>1</sup>          |
+| Maximum object name length      | 1024 bytes                            |
+| Maximum upload size<sup>3</sup> | 5 GiB<sup>2</sup>                     |
 | Maximum upload parts            | 10,000                                |
+| Maximum custom domains per bucket | 50                                  |
 
 {{</table-wrap>}}
 
-<sup>1</sup>The object size limit is 5 GiB less than 5 TiB, so 4.995 TiB.<br>
-<sup>2</sup>The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB.<br>
-<sup>3</sup>Max upload size applies to uploading a file via one request, uploading a part of a multipart upload, or copying into a part of a multipart upload. If you have a Worker, its inbound request size is
+<sup>1</sup> The object size limit is 5 GiB less than 5 TiB, so 4.995 TiB.<br>
+<sup>2</sup> The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB.<br>
+<sup>3</sup> Max upload size applies to uploading a file via one request, uploading a part of a multipart upload, or copying into a part of a multipart upload. If you have a Worker, its inbound request size is
 constrained by [Workers request limits](/workers/platform/limits#request-limits). The max upload size limit does not apply to subrequests.<br>
-Review the [Examples](/r2/examples/) on how to use SDKs with the S3 API to upload large files.<br>
+Review the [Examples](/r2/examples/) on how to use the SDKs.<br>
 
-To increase these limits, contact your Cloudflare account team.
+Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storage units of measurement based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup> bytes). This is distinct from 1 GB (gigabyte), which is 10<sup>9</sup> bytes (or 1000<sup>3</sup> bytes).
+
+{{<render file="_limits_increase.md" productFolder="workers">}}
+
+## Caching
+
+Currently Cloudflare's [Tiered Cache](/cache/how-to/tiered-cache/) feature is not compatible with responses from R2. These responses will act as if Tiered Cache is not configured. 

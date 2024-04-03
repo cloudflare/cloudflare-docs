@@ -12,11 +12,17 @@ title: Restoring original visitor IPs
 
 When your [website traffic is routed through the Cloudflare network](https://support.cloudflare.com/hc/articles/205177068), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
 
-For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). By following our [web server instructions](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
+For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [_CF-Connecting-IP_](/fundamentals/reference/http-request-headers/). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
+
+{{<Aside type="note">}}
+
+{{<render file="_pseudo-ipv4-warning.md" productFolder="fundamentals">}}
+
+{{</Aside>}}
 
 The diagram below illustrates the different ways that IP addresses are handled with and without Cloudflare.
 
-![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
+![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/images/support/Restoring_IPs__1_.png)
 
 {{<Aside type="warning">}}
 Cloudflare no longer updates and supports *mod\_cloudflare*, starting
@@ -153,15 +159,7 @@ delete this file to remove _mod\_cloudflare_, then restart Apache.
 
 ### Nginx
 
-Mod\_cloudflare is installed by modifying [the nginx configuration file](http://nginx.org/en/docs/http/ngx_http_realip_module.html) `nginx.conf` with the `ngx_http_realip_module`.
-
-To remove _mod\_cloudflare_ you should comment or remove this line, then restart nginx, and _mod\_cloudflare_ should be gone_._
-
-{{<Aside type="note">}}
-To remove *mod\_cloudflare* from other web server types, consult your
-web server documentation for how to remove modules.
-{{</Aside>}}
-
+_mod\_cloudflare_ is not needed for Nginx. Use the [`ngx_http_realip_module` NGINX module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and the configuration parameters described in the [Web server instructions](https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/#web-server-instructions) instead.
 ___
 
 ## Web server instructions
@@ -184,7 +182,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 2.  Clone the following for the most recent build of _mod\_cloudflare_:
     -   Red Hat/Fedora/Debian/Ubuntu:`git clone https://github.com/cloudflare/mod_cloudflare.git; cd mod_cloudflare`
 3.  Use the Apache extension tool to convert the .c file into a module:
-    -   Red Hat/Fedora/Debain/Ubuntu:`apxs -a -i -c mod_cloudflare.c`
+    -   Red Hat/Fedora/Debian/Ubuntu:`apxs -a -i -c mod_cloudflare.c`
 4.  Restart and verify the module is active:
     -   Red Hat/Fedora`service httpd restart; httpd -M|grep cloudflare`
     -   Debian/Ubuntu:`sudo apachectl restart; apache2ctl -M|grep cloudflare`
@@ -232,12 +230,9 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
-
-When using Railgun (or other reverse proxy software, such as Varnish), user's requests will come from your Railgun server instead of Cloudflare. Because requests are not coming directly from Cloudflare, any added mods will not restore visitor IP addresses by default.
-
-1.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
-2.  At the very end add:`CloudflareRemoteIPTrustedProxy railgun_address`So, if your Railgun server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
-3.  If you have more than one server to add to the trusted proxy list, you can add them at the end:CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
+3.  To fix this, open up your Apache configuration. This can typically be found in `/etc/apache2/apache2.conf`, `/etc/httpd/httpd.conf`, `/usr/local/apache/conf/httpd.conf` or another location depending on configuration. If you're unsure, ask your hosting provider.
+4.  At the very end add:`CloudflareRemoteIPTrustedProxy {LOOPBACK_ADDRESS}` So, if your server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
+5.  If you have more than one server to add to the trusted proxy list, you can add them at the end: CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
 
 To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.
 
@@ -254,7 +249,7 @@ extforward.headers = ("CF-Connecting-IP")
 (repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If your origin connects to the Internet with IPv6,
 **\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
 ranges does not work when IPv6 is enabled. Using the above method will
@@ -269,7 +264,7 @@ lighttpd.conf as an alternative solution:
 
 ##### For IIS 7 - 8:
 
-Follow the directions [here](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
+Follow the directions in the [Microsoft Community](https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115).
 
 ##### For IIS 8.5 - 10:
 
@@ -386,7 +381,7 @@ ___
 
 In order to extract the original client IP in the X\_FORWARDD\_FOR header, you need to use the following configuration in HAProxy:
 
-1.  Create a text file CF`_ips.lst` containing all IP ranges from https://www.cloudflare.com/en-gb/ips/
+1.  Create a text file `CF_ips.lst` containing all IP ranges from https://www.cloudflare.com/en-gb/ips/
 2.  Ensure to disable `option forwardfor` in HAProxy
 
 HAProxy config:
@@ -401,5 +396,5 @@ ___
 
 ## Related Resources
 
--   [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/)
+-   [HTTP request headers](/fundamentals/reference/http-request-headers/)
 -   [Transform Rules](/rules/transform/)

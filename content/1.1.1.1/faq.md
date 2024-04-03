@@ -48,7 +48,7 @@ The resolver then asks the TLD’s servers where it can find the domain it is lo
 
 Once the resolver has the final IP address, it returns the answer to the computer that asked.
 
-This whole system is called the Domain Name System (DNS). This system includes the servers that host the information (called authoritative DNS) and the servers that seek the information (the DNS resolvers).
+This whole system is called the [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/). This system includes the servers that host the information (called [authoritative DNS](https://www.cloudflare.com/learning/dns/dns-server-types/)) and the servers that seek the information (the DNS resolvers).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -74,11 +74,11 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="​Does 1.1.1.1 send EDNS client subnet header?" >}}
+{{<faq-question level=2 text="​Does 1.1.1.1 send EDNS Client Subnet header?" >}}
 
 {{<faq-answer>}}
 
-1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the EDNS Client Subnet Header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
+1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the {{<glossary-tooltip term_id="EDNS Client Subnet (ECS)" link="/glossary/?term=ecs">}}EDNS Client Subnet (ECS){{</glossary-tooltip>}} header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
 
 {{</faq-answer>}}
 {{</faq-item>}}

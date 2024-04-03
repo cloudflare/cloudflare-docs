@@ -1,0 +1,73 @@
+---
+link: "/zaraz/changelog/"
+productName: Zaraz
+entries:
+- publish_date: '2024-02-15'
+  title:
+  description: |-
+    * **NEW**: add `manager.route` support for Managed Components
+    * **NEW**: introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
+    * **NEW**: add support for client-evaluated triggers (UI update following shortly)
+    * **Pinterest MC**: Add ecommerce support
+    * **Google Ads MC**: Append url and rnd params to pagead/landing endpoint
+    * **Bugfix**: Add noindex robots headers for Zaraz GET endpoint responses
+    * **Bugfix**: Gracefully handle responses from custom MCs without mapped endpoints
+- publish_date: '2024-02-05'
+  title:
+  description: |-
+    * **Dashboard**: rename "tracks" to "events" for consistency
+    * **Pinterest Conversion API MC**: update parameters sent to api
+    * **HTTP MC**: update _settings prefix usage handling
+    * **Bugfix**: better minification of client-side js
+    * **Bugfix**: fix bug where anchor link click events were not bubbling when using click listener triggers
+    * **API update**: begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration
+- publish_date: '2023-12-19'
+  title:
+  description: |-
+    * **Google Analytics 4 Managed Component**: Fix Google Analytics 4 average engagement time metric.
+- publish_date: '2023-11-13'
+  title:
+  description: |-
+    * **HTTP Request Managed Component**: Re-added `__zarazTrack` property.
+- publish_date: '2023-10-31'
+  title:
+  description: |-
+    * **Google Analytics 4 Managed Component**: Remove `debug_mode` key if falsy or `false`.
+- publish_date: '2023-10-26'
+  title:
+  description: |-
+    * **Custom HTML**: Added support for non-JavaScript script tags.
+- publish_date: '2023-10-20'
+  title:
+  description: |-
+    * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
+    * **Dashboard**: Improved welcome screen for new Zaraz users".
+- publish_date: '2023-10-03'
+  title:
+  description: |-
+    * **Bugfix**: Fixed an issue that prevented some server-side requests from arriving to their destination
+    * **Google Analytics 4 Managed Component**: Add support for `dbg` and `ir` fields.
+- publish_date: '2023-09-13'
+  title:
+  description: |-
+    * **Consent Management**: Add support for custom button translations.
+    * **Consent Management**: Modal stays fixed when scrolling.
+    * **Google Analytics 4 Managed Component**: `hideOriginalIP` and `ga-audiences` can be set from tool event.
+- publish_date: '2023-09-11'
+  title:
+  description: |-
+    * **Reddit Managed Component**: Support new "Account ID" formats (e.g. "ax_xxxxx").
+- publish_date: '2023-09-06'
+  title:
+  description: |-
+    * **Consent Management**: Consent cookie name can now be customized.
+- publish_date: '2023-09-05'
+  title:
+  description: |-
+    * **Segment Managed Component**: API Endpoint can be customized.
+- publish_date: '2023-08-21'
+  title:
+  description: |-
+    * **TikTok Managed Component**: Support setting `ttp` and `event_id`.
+    * **Consent Management**: Accessibility improvements.
+    * **Facebook Managed Component**: Support for using "Limited Data Use" features.

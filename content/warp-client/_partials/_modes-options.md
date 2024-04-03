@@ -27,7 +27,7 @@ The following is a list of options you can configure in the **Connection** tab:
 
 * **Disable for all Wi-Fi / wired networks**: Check the box corresponding to the network where you want to prevent WARP from working on.
 * **DNS Protocol**: The available options depend on the WARP mode you have enabled:
-  * **WARP**: Only available when you have the WARP mode enabled. All DNS traffic encrypted and [sent to Cloudflare's edge](/warp-client/warp-modes/#_1.1.1.1_with_warp).
+  * **WARP**: Only available when you have the WARP mode enabled. All DNS traffic encrypted and [sent to Cloudflare's global network](/warp-client/warp-modes/#1111-with-warp).
   * **HTTPS**: All DNS traffic is sent outside the tunnel via [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/).
   * **TLS**: All DNS traffic is sent outside the tunnel via [encrypted TLS](/1.1.1.1/encryption/dns-over-tls/).
 * **1.1.1.1 for Families**: Allows you to [enable 1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) and choose between blocking malware, or blocking malware and adult content.

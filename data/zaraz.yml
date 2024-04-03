@@ -4,19 +4,19 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M4 14
 product:
   title: Zaraz
   url: /zaraz/
-  group: Application performance
+  group: Developer platform
+  additional_groups: [Application performance, Analytics]
 
 meta:
   title: Cloudflare Zaraz docs
   description: Run third-party tools and services on the cloud, and improve the
     loading speed and security of your website.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/c/developers/zaraz/67
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/zaraz
-  discord: https://discord.gg/2TRr6nSxdd
+  discord: https://discord.cloudflare.com
 
 
 externals:

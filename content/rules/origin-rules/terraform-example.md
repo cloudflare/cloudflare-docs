@@ -8,7 +8,7 @@ meta:
 
 # Terraform example
 
-The following example defines a single Origin Rule for a zone using Terraform. The rule overrides the `Host` header, the resolved hostname, and the destination port of API requests.
+The following example defines a single origin rule for a zone using Terraform. The rule overrides the `Host` header, the resolved hostname, and the destination port of API requests.
 
 ```tf
 # Change origin for API requests

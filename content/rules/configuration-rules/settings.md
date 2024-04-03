@@ -8,15 +8,13 @@ meta:
 
 # Configuration Rules settings
 
-You can change the configuration settings described below in a Configuration Rule.
+You can change the configuration settings described below in a configuration rule.
 
 ## Automatic HTTPS Rewrites
 
 Enable or disable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) [^1] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"automatic_https_rewrites"` (boolean).
 
@@ -29,18 +27,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Auto Minify
 
-Select which file extensions to minify automatically using [Auto Minify](https://support.cloudflare.com/hc/articles/200168196) [^2].
+Select which file extensions to minify automatically using [Auto Minify](/speed/optimization/content/auto-minify/) [^2].
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration object name: `"autominify"` (object).
 
@@ -57,18 +52,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Browser Integrity Check
 
-Enable or disable [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086) [^3] for matching requests.
+Enable or disable [Browser Integrity Check](/waf/tools/browser-integrity-check/) [^3] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"bic"` (boolean).
 
@@ -81,18 +73,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Disable Apps
 
 Disable all active [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started) [^4] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"disable_apps"` (boolean).
 
@@ -105,42 +94,19 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
-## Disable Railgun
-
-Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
-
-<details>
-<summary>API information</summary>
-<div>
-
-API configuration property name: `"disable_railgun"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "disable_railgun": true
-}
-```
-
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
-
-</div>
-</details>
+{{<Aside type="warning">}}
+This setting will not disable [Apps with Workers](https://cloudflareapps.com/apps/developer/docs/workers). These apps request permission to add a Worker when you are installing them.
+{{</Aside>}}
 
 ## Disable Zaraz
 
 Disable [Cloudflare Zaraz](/zaraz/) [^6] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"disable_zaraz"` (boolean).
 
@@ -153,18 +119,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Hotlink Protection
 
-Enable or disable [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026) [^7] for matching requests.
+Enable or disable [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) [^7] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"hotlink_protection"` (boolean).
 
@@ -177,18 +140,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Email Obfuscation
 
-Enable or disable [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016) [^8] for matching requests.
+Enable or disable [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) [^8] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"email_obfuscation"` (boolean).
 
@@ -201,18 +161,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Mirage
 
-Enable or disable [Mirage](https://support.cloudflare.com/hc/articles/219178057) [^9] for matching requests.
+Enable or disable [Mirage](/speed/optimization/images/mirage/) [^9] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"mirage"` (boolean).
 
@@ -225,18 +182,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Opportunistic Encryption
 
 Enable or disable [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) [^10] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"opportunistic_encryption"` (boolean).
 
@@ -249,18 +203,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Polish
 
 Set [Polish](/images/polish/) [^11] compression options for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"polish"` (string).
 
@@ -275,18 +226,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Rocket Loader
 
-Enable or disable [Rocket Loader](/fundamentals/speed/rocket-loader/) [^12] for matching requests.
+Enable or disable [Rocket Loader](/speed/optimization/content/rocket-loader/) [^12] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"rocket_loader"` (boolean).
 
@@ -299,18 +247,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Security Level
 
-Select the [Security Level](https://support.cloudflare.com/hc/articles/200170056) [^13] for matching requests.
+Select the [Security Level](/waf/tools/security-level/) [^13] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"security_level"` (string).
 
@@ -325,18 +270,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Server Side Excludes
 
-Enable or disable [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036) [^14] for matching requests.
+Enable or disable [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) [^14] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"server_side_excludes"` (boolean).
 
@@ -349,18 +291,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## SSL
 
 Select the [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) [^15] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"ssl"` (string).
 
@@ -375,18 +314,15 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/fundamentals/speed/signed-exchanges/) [^16] for matching requests.
+Enable or disable [Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) [^16] for matching requests.
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 API configuration property name: `"sxg"` (boolean).
 
@@ -399,10 +335,9 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 [^1]: Automatic HTTPS Rewrites prevents end users from seeing “mixed content” errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
 
@@ -410,9 +345,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 [^3]: Browser Integrity Check blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
-[^4]: Cloudflare Apps is a platform for sharing high-quality apps that are easy to use by anyone with a website.
-
-[^5]: Railgun is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
+[^4]: Cloudflare Apps is a platform for sharing high-quality apps that anyone with a website can use.
 
 [^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 

@@ -6,7 +6,7 @@ _build:
 ---
 
 ```mermaid
-    flowchart LR
+    flowchart RL
       accTitle: Load balancing monitor flow
       accDescr: Monitors issue health monitor requests, which validate the current status of servers within each origin pool.
       Monitor -- Health Monitor ----> Origin2

@@ -11,7 +11,6 @@ meta:
   title: Cloudflare D1 docs
   description: Documentation for Cloudflare D1, a SQL database.
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
@@ -21,7 +20,7 @@ externals:
   - title: Workers home
     url: https://workers.cloudflare.com
   - title: Discord
-    url: https://discord.gg/cloudflaredev
+    url: https://discord.cloudflare.com
 
 algolia:
   index: developers-cloudflare2

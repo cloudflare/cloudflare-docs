@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-[Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) connects your resources to Cloudflare without a publicly routable IP address, by creating an outbound-only connections to Cloudflare’s global network.
+[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) connects your resources to Cloudflare without a publicly routable IP address, by creating an outbound-only connections to Cloudflare’s global network.
 
 - **Security**: Very secure.
 - **Availability**: All customers.

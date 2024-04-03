@@ -16,7 +16,7 @@ As a developer using webpack with Workers, you may be in one of four categories:
 
 2. [I use `type = webpack`, but do not provide my own configuration and let Wrangler take care of it.](#i-use-type--webpack-but-do-not-provide-my-own-configuration-and-let-wrangler-take-care-of-it).
 
-3. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, Typescript, WebAssembly, HTML files, and other non-standard filetypes.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-handle-jsx-typescript-webassembly-html-files-and-other-non-standard-filetypes).
+3. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, TypeScript, WebAssembly, HTML files, and other non-standard filetypes.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-handle-jsx-typescript-webassembly-html-files-and-other-non-standard-filetypes).
 
 4. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-perform-code-transforms-andor-other-code-modifying-functionality).
 
@@ -90,7 +90,7 @@ module.exports = {
 ```json
 {
   "name": "my-worker",
-  "verion": "2.0.0",
+  "version": "2.0.0",
   // ...
   "scripts": {
     "build": "webpack" // <-- Add this line!
@@ -122,4 +122,4 @@ command = "npm run build" # or "yarn build"
 
 6. Test your project.
 
-Try running `wrangler publish` to test that your configuration works as expected.
+Try running `npx wrangler deploy` to test that your configuration works as expected.

@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: TCP sockets
+meta:
+  description: Use the `connect()` API to create outbound TCP connections from Workers.
 ---
 
 # TCP sockets
@@ -8,6 +10,10 @@ title: TCP sockets
 The Workers runtime provides the `connect()` API for creating outbound [TCP connections](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from Workers.
 
 Many application-layer protocols are built on top of the Transmission Control Protocol (TCP). These application-layer protocols, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB, require an underlying TCP socket API in order to work.
+
+{{<Aside type="note">}}
+Connecting to a PostgreSQL database? You should use [Hyperdrive](/hyperdrive/), which provides the `connect()` API with built-in connection pooling and query caching.
+{{</Aside>}}
 
 ## `connect()`
 
@@ -65,11 +71,23 @@ export default {
   - Specifies whether or not to use [TLS](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) when creating the TCP socket.
   - `off` — Do not use TLS.
   - `on` — Use TLS.
-  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#how-to-implement-the-starttls-pattern).
+  - `starttls` — Do not use TLS initially, but allow the socket to be upgraded to use TLS by calling [`startTls()`](/workers/runtime-apis/tcp-sockets/#opportunistic-tls-starttls).
 
 - `allowHalfOpen` {{<type>}}boolean{{</type>}} — Defaults to `false`
   - Defines whether the writable side of the TCP socket will automatically close on end-of-file (EOF). When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
   - This option is similar to that offered by the Node.js [`net` module](https://nodejs.org/api/net.html) and allows interoperability with code which utilizes it.
+
+{{</definitions>}}
+
+### `SocketInfo`
+
+{{<definitions>}}
+
+- `remoteAddress` {{<type>}}string | null{{</type>}}
+  - The address of the remote peer the socket is connected to. May not always be set.
+ 
+- `localAddress` {{<type>}}string | null{{</type>}}
+  - The address of the local network endpoint for this socket. May not always be set.
 
 {{</definitions>}}
 
@@ -80,8 +98,12 @@ export default {
 - {{<code>}}readable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - Returns the readable side of the TCP socket.
 
-- {{<code>}}writeable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WriteableStream{{</type-link>}}
+- {{<code>}}writable{{</code>}} : {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - Returns the writable side of the TCP socket.
+  - The `WritableStream` returned only accepts chunks of `Uint8Array` or its views.
+
+- `opened` {{<type>}}`Promise<SocketInfo>`{{</type>}}
+  - This promise is resolved when the socket connection is established and is rejected if the socket encounters an error.
 
 - `closed` {{<type>}}`Promise<void>`{{</type>}}
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
@@ -140,7 +162,7 @@ export default {
 
 ## Close TCP connections
 
-You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
+You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writable sides of the socket.
 
 ```typescript
 import { connect } from "cloudflare:sockets"
@@ -156,7 +178,25 @@ const reader = socket.readable.getReader(); // This fails
 ## Considerations
  
 - Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
-- When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, to use `connect()`.
-- TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
+- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/handlers/scheduled/), [`queue()`](/queues/reference/javascript-apis/#consumer)) or [`alarm()`](/durable-objects/api/alarms/).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
 - By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
+- Support for handling inbound TCP connections is [coming soon](https://blog.cloudflare.com/workers-tcp-socket-api-connect-databases/). Currently, it is not possible to make an inbound TCP connection to your Worker, for example, by using the `CONNECT` HTTP method.
+
+## Troubleshooting
+
+Review descriptions of common error messages you may see when working with TCP Sockets, what the error messages mean, and how to solve them.
+
+### `proxy request failed, cannot connect to the specified address`
+
+Your socket is connecting to an address that was disallowed. Examples of a disallowed address include Cloudflare IPs, `localhost`, and private network IPs.
+
+If you need to connect to addresses on port `80` or `443` to make HTTP requests, use [`fetch`](/workers/runtime-apis/fetch/).
+
+### `TCP Loop detected`
+
+Your socket is connecting back to the Worker that initiated the outbound connection. In other words, the Worker is connecting back to itself. This is currently not supported.
+
+### `Connections to port 25 are prohibited`
+
+Your socket is connecting to an address on port `25`. This is usually the port used for SMTP mail servers. Workers cannot create outbound connections on port `25`. Consider using [Cloudflare Email Workers](/email-routing/email-workers/) instead.

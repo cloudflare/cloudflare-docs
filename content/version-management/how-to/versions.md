@@ -7,13 +7,6 @@ weight: 3
 # Manage versions
 
 {{<render file="_version-definition.md">}}
-<br/>
-
-{{<Aside type="note">}}
-
-During the open beta, you can only interact with environments and versions using the Cloudflare dashboard.
-
-{{</Aside>}}
 
 ---
 
@@ -59,7 +52,7 @@ To change the version associated with an environment, you need to update setting
 In order to change settings in a version associated with a [read-only environment](/version-management/reference/read-only-environments/), either:
 
 - [Change the environment version](/version-management/how-to/environments/#change-environment-version) to another version and then make changes to your version.
-- [Edit](/version-management/how-to/environments/#edit-environment) the environment's settings to remove the **Read-only environment** setting. Then, make changes to your version.
+- [Edit](/version-management/how-to/environments/#edit-environment) the environment's settings to remove the **Read-only environment** setting. Then, promote a new version to this environment.
 
 ---
 

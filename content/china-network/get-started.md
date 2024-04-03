@@ -16,7 +16,7 @@ Contact your sales team for more information on these steps.
 
 ## Step 2 — Obtain ICP and vet domain content
 
-1. [Obtain Internet Content Provider (ICP) filings or licenses](/china-network/concepts/icp/#obtain-an-icp-number) for all the root domains you wish to onboard.
+1. [Obtain Internet Content Provider (ICP) filings or licenses](/china-network/concepts/icp/#obtain-an-icp-number) for all the apex domains you wish to onboard.
 
 2. Present valid ICP filings or licenses for the zones you are onboarding.
 
@@ -32,6 +32,6 @@ Contact your sales team for more information on these steps.
 
 ## Step 3 — Onboard your domains to the Cloudflare China Network
 
-After content vetting is complete, [add your domains to Cloudflare](/fundamentals/get-started/setup/add-site/).
+After content vetting is complete, [add your domains to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 
 It will take a minimum of 24 hours to enable user traffic (that is, until DNS starts answering with JD Cloud's network IP addresses).

@@ -8,7 +8,7 @@ weight: 2
 
 ## Disposition actions
 
-Create actions for emails with specific [dispositions](/email-security/reference/dispositions-and-attributes/). `URL defang` means that every URL in an email of the selected type will be rewritten so that the user cannot follow the link. For example, `https://www.example.com` will become `https[:]//www[.]example[.]com`.
+Create actions for emails with specific {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}dispositions{{</glossary-tooltip>}}. `URL defang` means that every URL in an email of the selected type will be rewritten so that the user cannot follow the link. For example, `https://www.example.com` will become `https[:]//www[.]example[.]com`.
 
 To update or create a new disposition action:
 
@@ -33,6 +33,8 @@ When you enable Email Link Isolation, Cloudflare no longer takes into account [U
 Link rewriting applies to all email dispositions. If you have link actions set for dispositions, you will see a warning when enabling Email Link Isolation. This indicates that Email Link Isolation's rewriting will apply globally.
 
 ### Enable Email Link Isolation
+
+{{<Aside type="warning" header="Email Link Isolation and Microsoft O365">}}If you use Microsoft Office 365, you need to allowlist the URL `https://linkdefender.cloudflare.com` before enabling Email Link Isolation. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/tenant-allow-block-list-urls-configure) to learn how to allowlist a URL.{{</Aside>}}
 
 To enable Email Link Isolation you must have an [inline deployment](/email-security/deployment/inline/) for your Area 1 setup. Email Link Isolation is not available if Area 1 is deployed through [journaling or BCC](/email-security/deployment/api/setup/) setups.
 

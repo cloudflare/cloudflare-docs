@@ -1,10 +1,13 @@
 ---
-pcx_content_type: how_to
-title: Migrating custom hostnames
-weight: 2
+pcx_content_type: how-to
+title: Move hostnames
+weight: 3
+meta:
+    title: Move hostnames between zones
+    description: Learn how to move hostnames between different zones.
 ---
 
-# Migrating Custom Hostnames
+# Move hostnames between zones
  
 As a SaaS provider, you may want, or have, multiple zones to manage hostnames. Each zone can have different configurations or origins, as well as correlate to varying products. You might shift custom hostnames between zones to enable or disable certain features. Cloudflare allows migration within the same account through the steps below:
  
@@ -16,7 +19,7 @@ If your custom hostname uses a CNAME record, add the custom hostname to the new 
  
 {{<Aside type="note">}}
  
-If you would like to migrate the custom hostname without end customers changing the DNS target, use [apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-proxying).
+If you would like to migrate the custom hostname without end customers changing the DNS target, use [apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/).
  
 {{</Aside>}}
  
@@ -34,7 +37,7 @@ Once these steps are complete, the custom hostname's traffic will route to the s
  
 ## A record
  
-Through [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-proxying) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
+Through [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/) or [BYOIP](/byoip/), you can migrate the custom hostname without action from your end customer.
 
 1. Verify with the account team that your apex proxying IPs have been assigned to both SaaS zones.
  

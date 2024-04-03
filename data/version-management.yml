@@ -12,7 +12,6 @@ meta:
   description: Cloudflare Version Management lets you safely manage configurations on the edge with versioning, staging, and rollbacks.
   author: '@cloudflare'
   
-
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/versioning
 

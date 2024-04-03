@@ -3,14 +3,13 @@ pcx_content_type: how-to
 type: overview
 title: Create custom rules via API
 weight: 3
-layout: list
 ---
 
 # Create custom rules via API
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule via API.
 
-You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset).
+You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
 ## Create a custom rule
 
@@ -20,13 +19,13 @@ You must deploy custom rules to the `http_request_firewall_custom` [phase entry 
 
 This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
 
-The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a threat score greater than `10`:
+The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a {{<glossary-tooltip term_id="threat score">}}threat score{{</glossary-tooltip>}} greater than `10`:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My custom rule",
   "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 10",
   "action": "challenge"
@@ -46,9 +45,9 @@ The new rule, which will be the last rule in the ruleset, includes the definitio
 highlight: 9-13
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My custom rule with plain text response",
   "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 50",
   "action": "block",
@@ -63,3 +62,11 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 ```
 
 {{<render file="_api-create-ruleset-with-rule.md">}}
+
+---
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks:
+
+{{<render file="_rules-next-steps-table.md" withParameters="custom rules;;http_request_firewall_custom">}}

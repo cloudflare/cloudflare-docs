@@ -5,6 +5,7 @@ product:
   title: Stream
   url: /stream/
   group: Developer platform
+  additional_groups: [Media]
   preview_tryout: true
 
 meta:
@@ -12,7 +13,6 @@ meta:
   description: Store, encode, deliver, and play videos on your sites and applications.
   author: '@cloudflare'
   
-
 resources:
   community: https://community.cloudflare.com/c/developers/stream/52
   dashboard_link: https://dash.cloudflare.com/?to=/:account/stream

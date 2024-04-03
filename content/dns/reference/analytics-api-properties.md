@@ -57,6 +57,7 @@ In API requests, dimensions are set in the `dimensions` parameter. If you need t
 ## Filters
 
 Filters use the form `dimension operator expression`, where each part corresponds to the following:
+
 - **Dimension**: Specifies the [dimension](#dimensions) to filter on. For example, `queryName`.
 - **Operator**: Defines the type of filter match to use. Operators are specific to dimensions.
 - **Expression**: States the values to include or exclude from the results. Expressions use regular expression (regex) syntax.
@@ -69,23 +70,16 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 {{<render file="_api-combine-filters.md" productFolder="fundamentals">}}
 
-
-<details>
-<summary>Examples using OR</summary>
-<div>
+{{<details header="Examples using OR">}}
 
 - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
 - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
   
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Examples using AND</summary>
-<div>
+{{<details header="Examples using AND">}}
   
 - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
 - `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
 
-</div>
-</details>
+{{</details>}}

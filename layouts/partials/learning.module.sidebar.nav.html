@@ -1,18 +1,14 @@
 {{- $url := .RelPermalink -}}
-{{- $urlSplit := (split $url "/") -}}
-{{- $root := relURL (printf "/%s/" .Section) -}}
 {{- $DATA := (index $.Site.Data .Section) -}}
+{{- $ancestorRefIndex := 1 -}}
+{{- $moduleCounter := 1 -}}
 
-{{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
-{{- $page := $.Site.GetPage (replaceRE "/$" "" $url) -}}
-{{- $pageType := $page.Kind -}}
-{{- $pageModule := "" -}}
-
-{{- if eq $pageType "section" -}}
-  {{ $pageModule = index $urlSplit (sub (len $urlSplit) 2) }}
-{{- else -}}
-  {{ $pageModule = index $urlSplit (sub (len $urlSplit) 3) }}
+{{- if eq (len .Ancestors) 3 -}}
+{{- $ancestorRefIndex = 0 -}}
 {{- end -}}
+
+{{- $learningPathTitle := print (index .Ancestors $ancestorRefIndex).Title " (Learning Path)" -}}
+{{- $learningPathURL := (index .Ancestors $ancestorRefIndex).RelPermalink -}}
 
 <div class="DocsSidebar">
   <div class="DocsSidebar--sections">
@@ -27,16 +23,16 @@
     <div class="DocsSidebar--section-separator"></div>
 
     <div class="DocsSidebar--section DocsSidebar--docs-title-section">
-      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="{{ $root }}">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="{{ $learningPathURL }}">
         <div class="DocsNavLogoLockup">
           <div class="DocsNavLogoLockup--logo">
-            <span title="Cloudflare {{ $title }} logo">
+            <span title="Cloudflare {{ $learningPathTitle }} Learning Path logo">
               {{- safeHTML $DATA.logo -}}
             </span>
           </div>
 
           <span class="DocsNavLogoLockup--text">
-            <span class="DocsSidebar--docs-title-text-scaler" style="--length:{{ len $title }}">{{ $title }}</span>
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:{{ len $learningPathTitle }}">{{ $learningPathTitle }}</span>
           </span>
         </div>
       </a>
@@ -49,7 +45,7 @@
               <title id="title-6032186738345315">Dropdown icon</title>
               <path d="M2,2v0m0,6v0m0,6v0z"></path>
             </svg>
-            <span is-visually-hidden>{{ $title }} menu</span>
+            <span is-visually-hidden>{{ $learningPathTitle }} Learning Path menu</span>
           </div>
         </button>
 
@@ -70,9 +66,13 @@
         <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
 
         <ul class="DocsSidebar--nav">
-          {{ with .Site.GetPage "section" $pageModule }}
-            {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url "ShowTime" true) }}
-          {{ end }}
+         {{- range (index .Ancestors $ancestorRefIndex).Sections -}}
+
+         <li class="moduleCounter">Module {{$moduleCounter}}</li>
+
+         {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
+         {{- $moduleCounter = add $moduleCounter 1 -}}
+         {{- end -}}
         </ul>
       </div>
       <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
@@ -82,11 +82,6 @@
         <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
       </div>
     </div>
-    <div class="toggleSidebar" >
-    <button id="toggleSidebarButton" style="width: 2em; height: 2em;" title="Click to collapse and expand the sidebar navigation">
-      <svg id="toggleSidebarSVG" aria-hidden="true" class="" height="1" width="1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path id="toggleSidebarSVGPath" d="M15 2a1 1 0 0 0-1 1v10a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1zm-10.407.993l-4.3 4.3a1 1 0 0 0 0 1.414l4.3 4.3a1 1 0 0 0 1.415-1.416L3.417 9H10a1 1 0 1 0 0-2H3.417l2.591-2.591a1 1 0 1 0-1.415-1.416z"></path></svg>
-    </button>
-  </div>
   </div>
   <div class="DocsSidebar--shadow"></div>
 </div>

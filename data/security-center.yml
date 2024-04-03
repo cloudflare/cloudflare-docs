@@ -5,6 +5,7 @@ product:
   title: Security Center
   url: /security-center/
   group: Application security
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Security Center docs
@@ -13,7 +14,6 @@ meta:
     vulnerabilities, and providing a one-click solution for Cloudflare
     configuration issues.
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/security-center

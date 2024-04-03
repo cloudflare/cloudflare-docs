@@ -12,9 +12,3 @@ _build:
 3. Select the custom hostname and select **Delete**. 
 
 4. A confirmation window will appear. Acknowledge the warning and select **Delete** again.
-
-{{<Aside type="note">}}
-
-For end customers: if you have recently churned with your service (SaaS) provider but traffic continues to route to them, your service provider likely still has your domain listed as a custom hostname. Contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) for further assistance.
-
-{{</Aside>}}

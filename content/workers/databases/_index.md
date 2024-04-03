@@ -6,6 +6,8 @@ weight: 8
 
 # Databases
 
-{{<directory-listing>}}
+Explore database integrations for your Worker projects.
+
+{{<directory-listing showDescriptions="true">}}
 
 

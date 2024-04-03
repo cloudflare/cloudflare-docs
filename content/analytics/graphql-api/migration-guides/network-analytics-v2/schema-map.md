@@ -3,7 +3,7 @@ type: overview
 pcx_content_type: reference
 title: NAv1 to NAv2 schema map
 weight: 5
-layout: list
+layout: wide
 ---
 
 # NAv1 to NAv2 schema map
@@ -16,7 +16,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
   <thead>
     <tr>
       <th>ipFlows1mGroups</th>
-      <th>magicTransitNetworkAnalytics-AdaptiveGroups</th>
+      <th>magicTransitNetworkAnalytics-AdaptiveGroups /<br/>spectrumNetworkAnalytics-AdaptiveGroups</th>
       <th>dosdNetworkAnalytics-AdaptiveGroups</th>
       <th>dosdAttackAnalytics-Groups</th>
       <th>flowtrackdNetworkAnalytics-AdaptiveGroups</th>
@@ -314,7 +314,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
   <tbody>
     <tr>
       <th>ipFlows1mGroups</th>
-      <th>magicTransitNetworkAnalytics-AdaptiveGroups</th>
+      <th>magicTransitNetworkAnalytics-AdaptiveGroups /<br/>spectrumNetworkAnalytics-AdaptiveGroups</th>
       <th>dosdNetworkAnalytics-AdaptiveGroups</th>
       <th>dosdAttackAnalytics-Groups</th>
       <th>flowtrackdNetworkAnalytics-AdaptiveGroups</th>

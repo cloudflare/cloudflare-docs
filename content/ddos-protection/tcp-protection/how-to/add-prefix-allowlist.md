@@ -2,6 +2,8 @@
 title: Add an IP or prefix to the allowlist
 pcx_content_type: how-to
 weight: 4
+meta:
+  title: Add an IP address/prefix to the Advanced TCP Protection allowlist
 ---
 
 # Add an IP address or prefix to the allowlist

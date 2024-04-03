@@ -17,4 +17,4 @@ You can edit the details for a video, such as the name or creator, from the Clou
 
 ## Edit videos using the Stream API
 
-To edit your video using the Stream API, make a `POST` request using the example as reference from [Edit video details](https://developers.cloudflare.com/api/operations/stream-videos-update-video-details) in the Stream API documentation.
+To edit your video using the Stream API, make a `POST` request using the example as reference from [Edit video details](/api/operations/stream-videos-update-video-details) in the Stream API documentation.

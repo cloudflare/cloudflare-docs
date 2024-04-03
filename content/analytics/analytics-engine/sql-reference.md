@@ -173,8 +173,7 @@ FROM temperature_readings
 GROUP BY probe_name
 ```
 
-In the usual case the `<expression>` can just be a column name but it is also possible to suppy a complex expression here.
-Multiple expressions or column names can be supplied separated by commas.
+In the usual case the `<expression>` can just be a column name but it is also possible to supply a complex expression here. Multiple expressions or column names can be supplied separated by commas.
 
 ### ORDER BY clause
 
@@ -738,7 +737,7 @@ We also support the `BETWEEN` operator for checking a value is in an inclusive r
 
 | Operator  | Description |
 |-----|----------|
-| `-` | negation operator (e.g. `-42`) |
+| `-` | negation operator (for example, `-42`) |
 
 {{</table-wrap>}}
 

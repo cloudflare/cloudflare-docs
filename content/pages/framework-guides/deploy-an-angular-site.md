@@ -11,39 +11,26 @@ In this guide, you will create a new Angular application and deploy it using Clo
 
 ## Setting up a new project
 
-If you already have [Angular CLI](https://angular.io/cli) installed globally, invoke the `ng` executable directly:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Angular's official setup tool, and provide the option to deploy instantly.
+To use `create-cloudflare` to create a new Angular project, run the following command:
+
+To use `create-cloudflare` to create a new Angular project, run the following command:
 
 ```sh
-# Create the project
-$ ng new my-angular-app
-# Enter the new directory
-$ cd my-angular-app
+$ npm create cloudflare@latest my-angular-app -- --framework=angular
 ```
 
-Alternatively, you can use [`npx`](https://www.npmjs.com/package/npx), which is included with all modern `npm` versions, to avoid the global installation:
-
-{{<Aside type="note">}}
-
-All modern versions of `npm` already include the `npx` executable. You do not need to install anything for this approach.
-
-{{</Aside>}}
-
-```sh
-# Create the project
-$ npx @angular/cli new my-angular-app
-# Enter the new directory
-$ cd my-angular-app
-```
-
-With both approaches, the Angular CLI will prompt you for customization choices. Your answers will not affect the rest of this tutorial. Choose the option that is ideal for your project.
+`create-cloudflare` will install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the Cloudflare Pages adapter, and ask you setup questions.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Angular">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
@@ -52,21 +39,7 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value                            |
-| -------------------- | -------------------------------- |
-| Production branch    | `main`                           |
-| Build command        | `npm run build -- -c production` |
-| Build directory      | `dist/my-angular-app`            |
-
-</div>
-
-{{<Aside type="warning" header="Minimum Node.js version">}}
-
-Angular requires a Node version of `14.15` or `16.10` to deploy successfully to Cloudflare Pages. When setting up your project, select **Environment variables (advanced)** and input an environment variable `NODE_VERSION` with one of these values.
-
-{{</Aside>}}
+{{<pages-build-preset framework="angular-cli">}}
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
@@ -119,6 +92,6 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Angular">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Angular">}}

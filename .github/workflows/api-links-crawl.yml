@@ -1,0 +1,43 @@
+name: Crawl API docs links
+
+# **What it does**: Regularly audits API links in our documentation.
+# **Why we have it**: It's too burdensome to check on every commit like we do for internal links.
+# **Who does it impact**: PCX team
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: Compiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.1
+      
+      - name: Install dependencies
+        run: npm install @actions/core puppeteer
+
+      - name: Run API docs link checker
+        id: check-api-links
+        run: npm run crawl-api-links
+
+      - name: Create issue
+        env:
+          EXPORTED_VARIABLE: ${{ steps.check-api-links.outputs.brokenLinks }}
+        if: env.EXPORTED_VARIABLE
+        run: |
+          # Create the issue and reference the exported variable
+          curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
+            -d "{\"title\": \"Broken API docs links\", \"body\": \"The following API doc links are broken: ${EXPORTED_VARIABLE}\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+
+            
+

@@ -4,19 +4,20 @@ pcx_content_type: reference
 weight: 4
 meta:
   title: Workers Analytics Engine SQL API
+  description: The SQL API for Workers Analytics Engine
 ---
 
 # Workers Analytics Engine SQL API
 
 The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL queries against your Workers Anaytics Engine datasets.
 
-The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`. 
+The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`.
 
 ## Authentication
 
 Authentication is done via bearer token. An `Authorization: Bearer <token>` header must be supplied with every request to the API.
 
-Use the dashboard to create a token with permssion to read analytics data on your account:
+Use the dashboard to create a token with permission to read analytics data on your account:
 
 1. Visit the [API tokens](https://dash.cloudflare.com/profile/api-tokens) page in the Cloudflare dashboard.
 2. Select **Create Token**.
@@ -58,7 +59,7 @@ The table will have the following columns:
 |------|------|-------------|
 | dataset | string | This column will contain the dataset name in every row. |
 | timestamp | DateTime | The timestamp at which the event was logged in your worker. |
-| _sample_interval | integer | In case that the data has been sampled, this column indicates what the sample rate is for this row (i.e. how many rows of the original data are represented by this row). Refer to the [sampling](#sampling) section below for more information. |
+| _sample_interval | integer | In case that the data has been sampled, this column indicates what the sample rate is for this row (that is, how many rows of the original data are represented by this row). Refer to the [sampling](#sampling) section below for more information. |
 | index1 | string | The index value that was logged with the event. The value in this column is used as the key for sampling.
 | blob1<br>...<br>blob20 | string | The blob values that were logged with the event. |
 | double1<br>...<br>double20 | double | The double values that were logged with the event. |

@@ -1,8 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Scan SaaS applications
-layout: single
-weight: 5
+weight: 3
 ---
 
 # Scan SaaS applications
@@ -11,7 +10,7 @@ weight: 5
 Cloudflare CASB is only available on Enterprise plans.
 {{</Aside>}}
 
-Cloudflare’s API-driven Cloud Access Security Broker (CASB) scans SaaS applications for misconfigurations, unauthorized user activity, shadow IT, and other data security issues that can occur after a user has successfully logged in.
+Cloudflare’s API-driven Cloud Access Security Broker (CASB) scans SaaS applications for misconfigurations, unauthorized user activity, {{<glossary-tooltip term_id="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">}}shadow IT{{</glossary-tooltip>}}, and other data security issues that can occur after a user has successfully logged in.
 
 When you integrate a third-party SaaS application with Cloudflare CASB, you allow CASB to make API calls to the application and read relevant data on your behalf. The CASB integration permissions are read-only and follow the least privileged model. In other words, only the minimum access required to perform a scan is granted.
 

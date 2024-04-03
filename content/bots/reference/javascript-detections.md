@@ -32,3 +32,7 @@ Customers who enabled Enterprise Bot Management before June 2020 do not have Jav
 ### If you have a Content Security Policy (CSP)
 
 {{<render file="_javascript-detections-csp.md">}}
+
+### If you have ETags
+
+Enabling JavaScript Detections (JSD) will strip [ETags](/cache/reference/etag-headers/) from HTML responses where JSD is injected.

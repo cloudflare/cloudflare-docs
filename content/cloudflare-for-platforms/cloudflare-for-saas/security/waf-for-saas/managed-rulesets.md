@@ -1,5 +1,5 @@
 ---
-pcx_content_type: content
+pcx_content_type: how-to
 title: Managed Rulesets
 weight: 4
 meta:

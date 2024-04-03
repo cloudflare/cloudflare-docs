@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Update and deploy rulesets
 weight: 6
-layout: list
+layout: wide
 ---
 
 # Update and deploy rulesets
@@ -14,10 +14,10 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Update an account ruleset][ur-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
-| [Update a zone ruleset][ur-zone] | `PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
-| [Update an account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
-| [Update a zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Update an account ruleset][ur-account] | `PUT /accounts/{account_id}/rulesets/{ruleset_id}` |
+| [Update a zone ruleset][ur-zone] | `PUT /zones/{zone_id}/rulesets/{ruleset_id}` |
+| [Update an account entry point ruleset][uep-account] | `PUT /accounts/{account_id}/rulesets/phases/{phase_name}/entrypoint` |
+| [Update a zone entry point ruleset][uep-zone] | `PUT /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint` |
 
 [ur-account]: /api/operations/updateAccountRuleset
 [ur-zone]: /api/operations/updateZoneRuleset
@@ -34,15 +34,14 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -55,12 +54,9 @@ curl -X PUT \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -79,10 +75,10 @@ curl -X PUT \
         "action_parameters": {
           "id": "<MANAGED_RULESET_ID>"
         },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
+        "last_updated": "2023-03-17T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "last_updated": "2023-03-17T15:42:37.917815Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -91,24 +87,22 @@ curl -X PUT \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Example - Deploy a ruleset
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`<ZONE_ID>`).
+The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone_id}`).
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -122,12 +116,9 @@ curl -X PUT \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -148,12 +139,12 @@ curl -X PUT \
         },
         "expression": "true",
         "description": "Execute Cloudflare Managed Ruleset on my phase entry point",
-        "last_updated": "2021-03-21T11:02:08.769537Z",
+        "last_updated": "2023-03-21T11:02:08.769537Z",
         "ref": "<RULE_REF_1>",
         "enabled": true
       }
     ],
-    "last_updated": "2021-03-21T11:02:08.769537Z",
+    "last_updated": "2023-03-21T11:02:08.769537Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -162,10 +153,9 @@ curl -X PUT \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-For more information on deploying rulesets, check [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).
+For more information on deploying rulesets, refer to [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).
 
 ## Example - Update ruleset description
 
@@ -177,27 +167,23 @@ You cannot update the description or the rules in a managed ruleset. You can onl
 
 {{</Aside>}}
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "My updated phase entry point"
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset definition, including all the rules.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -210,7 +196,7 @@ The response includes the complete ruleset definition, including all the rules.
     "rules": [
       // (...)
     ],
-    "last_updated": "2021-03-30T10:49:11.006109Z",
+    "last_updated": "2023-03-30T10:49:11.006109Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -219,5 +205,4 @@ The response includes the complete ruleset definition, including all the rules.
 }
 ```
 
-</div>
-</details>
+{{</details>}}

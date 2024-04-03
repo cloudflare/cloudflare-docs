@@ -6,7 +6,7 @@ rss: file
 
 # Atlassian Jira
 
-The Atlassian Jira integration detects a variety of data loss prevention, account misconfiguration, and user security risks in an integrated Atlassian Jira Cloud account that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Atlassian Jira;;Atlassian Jira Cloud account">}}
 
 {{<Aside type="note">}}
 At this time, the CASB integration for Jira is only compatible with Jira Cloud accounts. Support for Jira Data Center will come at a future date.
@@ -29,9 +29,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Jira Cloud integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/manage-findings/#severity-levels).
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Jira Cloud;;atlassian-jira">}}
 
 ### Access security
 

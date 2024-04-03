@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 pcx_content_type: troubleshooting
-weight: 7
+weight: 9
 meta:
   title: Troubleshooting client certificates
 ---
@@ -34,12 +34,12 @@ Check whether [mTLS has been enabled](/ssl/client-certificates/enable-mtls/) for
 
 To review mTLS rules:
 
-1.  Select **Security** > **WAF** > **Firewall rules**.
+1.  Select **Security** > **WAF** > **Custom rules**.
 2.  On a specific rule, select **Edit**.
 3.  On that rule, check whether:
 
     - The Expression Preview is correct.
-    - The hostname matches your API endpoint. For example, for the API endpoint `api.trackers.ninja/time`, the rule should look like:
+    - The hostname, if defined, matches your API endpoint. For example, for the API endpoint `api.trackers.ninja/time`, the rule should look like:
 
       ```txt
       (http.host in {"api.trackers.ninja"} and not cf.tls_client_auth.cert_verified)

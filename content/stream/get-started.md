@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="note" header="Before you get started:">}}
 
-You must first [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/) and [create an API token](/fundamentals/api/get-started/create-token/) to begin using Stream.
+You must first [create a Cloudflare account](/fundamentals/setup/account/create-account/) and [create an API token](/fundamentals/api/get-started/create-token/) to begin using Stream.
 
 {{</Aside>}}
 
@@ -56,9 +56,9 @@ highlight: [6]
 ---
 {
   "result": {
-    "uid": "b236bde30eb07b9d01318940e5fc3eda",
-    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
-    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
+    "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
+    "preview": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/watch",
+    "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
     "readyToStream": true,
     "status": {
       "state": "ready"

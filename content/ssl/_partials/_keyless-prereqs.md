@@ -15,11 +15,11 @@ In addition to running on bare metal, the key server should run without issue in
 
 ### Supported operating systems
 
-You will need to be running a supported operating system (OS) to run Keyless. Supported operating systems include:
+You will need to have a supported operating system (OS) to run Keyless. Supported operating systems include:
 
-- Ubuntu 12.04.5 LTS, 14.04 LTS, 15.10, 16.04, 17.10
-- Debian 7, 8, 9
-- RHEL and CentOS 6, 7
+- Ubuntu 14.04 LTS, 16.04 LTS, 18.04 LTS, 20.04 LTS, 22.04 LTS, 22.10
+- Debian 8, 9, 10, 11, 12
+- RHEL and CentOS 6, 7, 8, 9
 - Amazon Linux 1, 2
 
 We strongly recommend that you use an operating system still supported by the vendor (still receiving security updates) as your key server will have access to your private keys.

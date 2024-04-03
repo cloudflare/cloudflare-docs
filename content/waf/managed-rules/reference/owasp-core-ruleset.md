@@ -18,12 +18,12 @@ Each rule in the managed ruleset is associated with a certain paranoia level (PL
 
 You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
 
-*   **Set the paranoia level.** The available levels are *PL1*, *PL2*, *PL3*, and *PL4* (default).
-*   **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
-*   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
-*   **Disable specific rules or rules with specific tags.**
-*   **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
-*   **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
+* **Set the paranoia level.** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
+* **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
+* **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
+* **Disable specific rules or rules with specific tags.**
+* **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
+* **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
 
 For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
@@ -33,9 +33,9 @@ To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a r
 
 To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 
-*   [Set the paranoia level](#setting-the-paranoia-level).
-*   [Configure the score threshold](#configuring-the-score-threshold-and-the-action).
-*   [Specify the action to perform](#configuring-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
+* [Set the paranoia level](#setting-the-paranoia-level).
+* [Configure the score threshold](#configuring-the-score-threshold-and-the-action).
+* [Specify the action to perform](#configuring-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
 
 You can also disable specific rules in the managed ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
@@ -47,27 +47,22 @@ To enable all the rules up to a specific paranoia level, create tag overrides th
 
 This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone to PL2. To perform this configuration, you must disable the tags associated with levels PL3 and PL4 (`paranoia-level-3` and `paranoia-level-4`) using tag overrides.
 
-1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
+1. Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
 
-    <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
+{{<details header="Request">}}
+
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
-  -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-    <details>
-      <summary>Response</summary>
-      <div>
-      {{<markdown>}}
+{{</details>}}
+
+{{<details header="Response">}}
+
 ```json
 ---
-highlight: [4,5]
+highlight: 4-5
 ---
 {
   "result": [
@@ -88,31 +83,25 @@ highlight: [4,5]
   "messages": []
 }
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+{{</details>}}
 
-    <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
+2. Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+
+{{<details header="Request">}}
+
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-    <details>
-      <summary>Response</summary>
-      <div>
-      {{<markdown>}}
+{{</details>}}
+
+{{<details header="Response">}}
+
 ```json
 ---
-highlight: [12,14,15,16]
+highlight: 12,14-16
 ---
 {
   "result": {
@@ -147,24 +136,22 @@ highlight: [12,14,15,16]
   "messages": []
 }
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-3.  Update the rule you just identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+{{</details>}}
 
-     <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
-```json
+3. Update the rule you identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+
+{{<details header="Request">}}
+
+```bash
 ---
-highlight: [9,10,11,12,13,14,15,16,17,18,19,20]
+highlight: 9-20
 ---
-curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<ENTRY_POINT_RULESET_ID>/rules/<EXECUTE_RULE_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "execute",
   "action_parameters": {
     "id": "4814384a9e5d4991b9815dcfc25d2f1f",
@@ -186,9 +173,8 @@ curl -X PATCH \
   "enabled": true
 }'
 ```
-      {{</markdown>}}
-      </div>
-    </details>
+
+{{</details>}}
 
 For more information on creating overrides, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
@@ -196,34 +182,29 @@ For more information on creating overrides, refer to [Override a managed ruleset
 
 To define the score threshold value, or to specify the action to perform when the threat score is greater than the threshold, create a rule override for the last rule in the managed ruleset that:
 
-*   Specifies the action to take in the `action` property.
-*   Defines the desired threat score threshold (an integer value) in the `score_threshold` property.
+* Specifies the action to take in the `action` property.
+* Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.
 
 #### Example
 
 This example configures the managed ruleset score threshold and the performed action by creating a rule override for the last rule of the managed ruleset.
 
-1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
+1. Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
 
-    <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
+{{<details header="Request">}}
+
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-    <details>
-      <summary>Response</summary>
-      <div>
-      {{<markdown>}}
+{{</details>}}
+
+{{<details header="Response">}}
+
 ```json
 ---
-highlight: [4,5]
+highlight: 4-5
 ---
 {
   "result": [
@@ -244,31 +225,25 @@ highlight: [4,5]
   "messages": []
 }
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-2.  Get the ID of the **last rule** in the Cloudflare OWASP Core Ruleset. Use the [Get an account ruleset](/api/operations/getAccountRuleset) method to obtain the list of rules in the ruleset. Alternatively, use the following rule ID directly: `6179ae15870a4bb7b2d480d4843b323c`.
+{{</details>}}
 
-    <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
+2. Get the ID of the **last rule** in the Cloudflare OWASP Core Ruleset. Use the [Get an account ruleset](/api/operations/getAccountRuleset) method to obtain the list of rules in the ruleset. Alternatively, use the following rule ID directly: `6179ae15870a4bb7b2d480d4843b323c`.
+
+{{<details header="Request">}}
+
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<OWASP_RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{owasp_ruleset_id}" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
-      {{</markdown>}}
-     </div>
-    </details>
 
-    <details>
-      <summary>Response</summary>
-      <div>
-      {{<markdown>}}
+{{</details>}}
+
+{{<details header="Response">}}
+
 ```json
 ---
-highlight: [12]
+highlight: 12
 ---
 {
   "result": {
@@ -299,31 +274,25 @@ highlight: [12]
   "messages": []
 }
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-3.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+{{</details>}}
 
-    <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
+3. Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+
+{{<details header="Request">}}
+
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-    <details>
-      <summary>Response</summary>
-      <div>
-      {{<markdown>}}
+{{</details>}}
+
+{{<details header="Response">}}
+
 ```json
 ---
-highlight: [12,14,15,16]
+highlight: 12,14-16
 ---
 {
   "result": {
@@ -358,27 +327,25 @@ highlight: [12,14,15,16]
   "messages": []
 }
 ```
-      {{</markdown>}}
-      </div>
-    </details>
 
-4.  Update the rule you just identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+{{</details>}}
 
-    *   `"score_threshold": 60`
-    *   `"action": "managed_challenge"`
+4. Update the rule you identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
-    <details>
-      <summary>Request</summary>
-      <div>
-      {{<markdown>}}
-```json
+    * `"score_threshold": 60`
+    * `"action": "managed_challenge"`
+
+{{<details header="Request">}}
+
+```bash
 ---
-highlight: [9,10,11,12,13,14,15,16,17]
+highlight: 10-18
 ---
-curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<ENTRY_POINT_RULESET_ID>/rules/<EXECUTE_RULE_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "execute",
   "action_parameters": {
     "id": "4814384a9e5d4991b9815dcfc25d2f1f",
@@ -397,9 +364,8 @@ curl -X PATCH \
   "enabled": true
 }'
 ```
-      {{</markdown>}}
-      </div>
-    </details>
+
+{{</details>}}
 
 ### Additional resources
 

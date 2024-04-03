@@ -5,12 +5,12 @@ product:
   title: Rules
   url: /rules/
   group: Cloudflare essentials
+  additional_groups: [Application performance, Application security, Network security]
 
 meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/c/general/rules/66

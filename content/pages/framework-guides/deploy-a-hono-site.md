@@ -9,27 +9,12 @@ title: Deploy a Hono site
 
 ## Create a new project
 
-Create a new project by running the following commands in your terminal:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to create a new project. C3 will create a new project directory, initiate Hono's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Hono project, run the following command:
 
 ```sh
-$ mkdir my-hono-app
-$ cd my-hono-app
-$ npm init -y
-
-# Make sure Hono is installed
-$ npm install hono
-
-# Install the required dependencies
-# ESBuild is needed to bundle the hono app code
-# npm-run-all enables us to run multiple npm commands at once
-$ npm install --save-dev wrangler esbuild npm-run-all
-```
-
-If you want your application to use TypeScript, you need to generate a `tsconfig.json` file. To generate a `tsconfig.json` file, run:
-
-```sh
-$ npm install --save-dev typescript
-$ npx tsc --init
+$ npm create cloudflare@latest my-hono-app -- --framework=hono
 ```
 
 Open your project and create a `src/server.js` file (or `src/server.ts` if you are using TypeScript). Add the following content to your file:
@@ -47,7 +32,7 @@ To serve static files like CSS, image or JavaScript files, add the following to 
 
 ```javascript
 app.get("/public/*", async (ctx) => {
-  return await ctx.env.ASSETS.fetch(ctx.req);
+  return await ctx.env.ASSETS.fetch(ctx.req.raw);
 });
 ```
 
@@ -112,11 +97,13 @@ You should be able to review your generated web application at `http://localhost
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Hono">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
@@ -141,6 +128,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Hono">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hono">}}

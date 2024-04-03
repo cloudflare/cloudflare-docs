@@ -1,13 +1,21 @@
 ---
 pcx_content_type: configuration
 title: WebSockets
+meta:
+  description: Communicate in real time with your Cloudflare Workers.
 ---
 
 # WebSockets
 
 ## Background
 
-WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. For a complete example, refer to [Using the WebSockets API](/workers/examples/websockets/).
+
+{{<Aside type="note">}}
+
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/api/websockets/).
+
+{{</Aside>}}
 
 ## Constructor
 
@@ -32,7 +40,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - {{<code>}}accept(){{</code>}}
 
-  - Accepts the Websocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+  - Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
 
 {{</definitions>}}
 
@@ -90,7 +98,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - {{<code>}}send(message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}}
 
-  Send a message to the other WebSocket in this WebSocket pair.
+  - Send a message to the other WebSocket in this WebSocket pair.
 
 {{</definitions>}}
 

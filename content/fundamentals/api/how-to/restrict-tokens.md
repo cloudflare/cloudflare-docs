@@ -1,7 +1,7 @@
 ---
 title: Restrict tokens
 pcx_content_type: concept
-weight: 13
+weight: 4
 ---
 
 # Restrict token use

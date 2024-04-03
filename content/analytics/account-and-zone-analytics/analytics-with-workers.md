@@ -24,7 +24,7 @@ ___
 
 ## Worker analytics
 
-For a breakdown of subrequest traffic (origin facing traffic), you may go to the Cloudflare **Analytics** app and click on the **Workers** tab. Under the **Workers** tab, below the Service Workers panel, are a **Subrequests** breakdown by count, **Bandwidth** and **Status Codes**. This will help you spot and debug errors at your origin (such as spikes in 500s), and identify your cache-hit ratio to help you understand traffic going to your origin.
+For a breakdown of subrequest traffic (origin facing traffic), you may go to the Cloudflare **Analytics** app and select the **Workers** tab. Under the **Workers** tab, below the Service Workers panel, are a **Subrequests** breakdown by count, **Bandwidth** and **Status Codes**. This will help you spot and debug errors at your origin (such as spikes in 500s), and identify your cache-hit ratio to help you understand traffic going to your origin.
 
 ___
 

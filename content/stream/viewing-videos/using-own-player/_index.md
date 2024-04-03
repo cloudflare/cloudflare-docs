@@ -1,7 +1,6 @@
 ---
 title: Use your own player
 weight: 1
-layout: single
 pcx_content_type: how-to
 ---
 
@@ -17,7 +16,7 @@ Platform-specific guides:
 
 ## Fetch HLS and Dash manifests
 
-### URL 
+### URL
 
 Each video and live stream has its own unique HLS and DASH manifest. You can access the manifest by replacing `<UID>` with the UID of your video or live input, and replacing `<CODE>` with your unique customer code, in the URLs below:
 
@@ -35,6 +34,17 @@ header: DASH
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 ```
 
+{{<heading-pill heading="h4" style="beta">}}LL-HLS playback{{</heading-pill>}}
+
+If a Live Inputs is enabled for the Low-Latency HLS beta, add the query string `?protocol=llhls` to the HLS manifest URL to test the low latency manifest in a custom player. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.
+
+```text
+---
+header: HLS
+---
+https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8?protocol=llhls
+```
+
 ### Dashboard
 
 1. Log into the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
@@ -44,7 +54,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### API
 
-Refer to the [Stream video details API documentation](/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](/api/operations/stream-videos-retrieve-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 
@@ -66,7 +76,7 @@ Refer to the example below to display only the video representation with a bitra
 ---
 header: Example
 ---
-https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8?clientBandwidthHint=1.8
+https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8?clientBandwidthHint=1.8
 ```
 
 
@@ -84,9 +94,5 @@ We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cr
 
 ### Examples
 
-* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback)
-* [SRT playback with ffplay](/stream/examples/srt_playback)
-
-## Limitations
-
-[Client-side Analytics](/stream/getting-analytics/#client-side-analytics) are not available if you use your own player.
+* [RTMPS Playback with ffplay](/stream/examples/rtmps_playback/)
+* [SRT playback with ffplay](/stream/examples/srt_playback/)

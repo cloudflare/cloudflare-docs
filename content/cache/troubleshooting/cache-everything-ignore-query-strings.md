@@ -6,14 +6,15 @@ title: Cache Everything while ignoring query strings
 
 # Cache Everything while ignoring query strings
 
-There might be times when you wish to cache content resources that are not in the list of file extensions that Cloudflare [caches by default](/cache/about/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (`form.html`) associated with the following URLs is cached in the Cloudflare edge network:
+There might be times when you wish to cache content resources that are not in the list of file extensions that Cloudflare [caches by default](/cache/concepts/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (`form.html`) associated with the following URLs is cached in the Cloudflare edge network:
 
-`https://www.example.com/support/form.html?param1=abc&param2=def`
+```txt
+https://www.example.com/support/form.html?param1=abc&param2=def
 
-`https://www.example.com/support/form.html?param1=ghi&param2=jkl`
+https://www.example.com/support/form.html?param1=ghi&param2=jkl
 
-`https://www.example.com/support/form.html?param1=stu&param2=vwx`
-
+https://www.example.com/support/form.html?param1=stu&param2=vwx
+```
 ___
 
 ## Page Rules limitations
@@ -22,11 +23,11 @@ By default, Cloudflare Page Rules does not allow creating a rule that combines t
 
 Currently, you can pick just one **Cache Level** setting per page rule. As such, for the options discussed in this use case, you could only pick either _Cache Everything_ or _Ignore Query String_.
 
-The _Cache Everything_ setting forces Cloudflare to consider all content that matches the page rule URL pattern as potentially cacheable. Whether we actually store the asset and for how long is determined by the **Cache-Control** headers returned with responses from the origin server. Learn more about [Origin Cache Control](/cache/about/cache-control/).
+The _Cache Everything_ setting forces Cloudflare to consider all content that matches the page rule URL pattern as potentially cacheable. Whether we actually store the asset and for how long is determined by the **Cache-Control** headers returned with responses from the origin server. Learn more about [Origin Cache Control](/cache/concepts/cache-control/).
 
 _Ignore Query String_ modifies the cache key used at the Cloudflare edge to improve cache hit rates by reducing the number of unnecessary variations of an object that could be stored. It does so by storing and serving the same object from the edge regardless of any query string key value pairs appearing in the request path.
 
-If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/about/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
+If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/how-to/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
 
 ___
 
@@ -35,7 +36,7 @@ ___
 Once your cache key is activated for your Enterprise domain, you can add it to Page Rules as shown below:
 
 ![Best Practice: Caching Everything While Ignoring Query Strings
-](/support/static/hc-import-cf_page_rules_custom_cache_key.png)
+](/images/support/hc-import-cf_page_rules_custom_cache_key.png)
 
 In this example, the rule enforces the ignore query string cache key `${uri\_iqs` behaviour for all HTML pages and allows the rule creator to set the **Cache Level**: _Cache Everything_ setting that is also needed.
 
@@ -77,6 +78,6 @@ ___
 
 ## Related resources
 
--   [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427)
--   [Using Custom Cache Keys](/cache/about/cache-keys/)
--   [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache/)
+-   [Page Rules](/rules/page-rules/)
+-   [Using Custom Cache Keys](/cache/how-to/cache-keys/)
+-   [How do I use Cache Everything with Cloudflare?](/cache/concepts/customize-cache/)

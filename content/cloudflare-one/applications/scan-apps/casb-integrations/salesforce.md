@@ -2,11 +2,13 @@
 pcx_content_type: reference
 title: Salesforce
 rss: file
+meta:
+    title: Salesforce - CASB
 ---
 
 # Salesforce
 
-The Salesforce integration detects a variety of misconfiguration, data loss prevention, and user security risks in an integrated Salesforce environment that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="Salesforce;;Salesforce environment">}}
 
 ## Integration prerequisites
 
@@ -29,9 +31,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Salesforce integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/manage-findings/#severity-levels).
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="Salesforce;;salesforce">}}
 
 ### File sharing
 

@@ -20,6 +20,19 @@
       appId: '8MU1G3QO9P',
       apiKey,
       container: '#algolia',
+      maxResultsPerGroup: 10,
+      insights: true,
+      translations: {
+        modal: {
+        noResultsScreen: {
+          reportMissingResultsText: "",
+          reportMissingResultsLinkText: 'View all results'
+        }
+      }
+      },
+      getMissingResultsUrl({ query }) {
+        return `/search/?q=${query}`;
+      },
       searchParameters: {
         optionalFilters: facetFilters
       },
@@ -28,7 +41,27 @@
           const url = new URL(item.url)
           return url.pathname.endsWith('/')
         })
-      }
+      },
+      resultsFooterComponent({ state }) {
+        return {
+          // The HTML `tag`
+          type: 'a',
+          ref: undefined,
+          constructor: undefined,
+          key: state.query,
+          // Its props
+          props: {
+            target: "_blank",
+            href: `/search/?q=${state.query}`,
+            // Raw text rendered in the HTML element
+            children: `View all results`,
+            onClick: () => {
+              zaraz.track("view all results", {query: state.query})
+            },
+          },
+          __v: null,
+        };
+      },
     });
 
     // instantiate mobile search button

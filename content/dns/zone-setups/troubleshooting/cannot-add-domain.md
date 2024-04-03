@@ -8,7 +8,7 @@ meta:
 
 # Cannot add domain
 
-If you encounter issues [adding a domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, follow these troubleshooting steps.
+If you encounter issues [adding a domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, follow these troubleshooting steps.
 
 ## Step 1 - Disable DNSSEC
 
@@ -20,7 +20,7 @@ If you do not disable **DNSSEC** before changing your nameservers, you might e
 -   DNS query response status is `SERVFAIL`.
 -   The domain remains in a [Pending status](/dns/zone-setups/reference/domain-status/).
 
-If you experience these issues, refer to [Configuring DNSSEC](/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](/dns/additional-options/dnssec/troubleshooting/).
+If you experience these issues, refer to [Configuring DNSSEC](/dns/dnssec) and [Troubleshooting DNSSEC](/dns/dnssec/troubleshooting/).
 
 ___
 
@@ -34,13 +34,13 @@ If the issue is with your registrar, you may receive the following error message
 
 If you receive these error messages, make sure that:
 
--   You are providing the root domain (`example.com`) and not a subdomain (`www.example.com`).
+-   You are providing the apex domain (also known as "root domain", e.g. `example.com`) and not a subdomain (`www.example.com`).
 -   You domain is fully registered and its registration data lists its nameservers.
 -   Your domain uses a verified [top-level domain (TLD)](https://publicsuffix.org/list/).
 
 ___
 
-## Step 3 - Resolve DNS for root domain
+## Step 3 - Resolve DNS for apex domain
 
 Before a domain can be added to Cloudflare, the domain must return `NS` records for valid, working nameservers. `NS` records can be checked via third-party online tools such as [https://www.whatsmydns.net](https://www.whatsmydns.net/) or via a command-line terminal using a dig command:
 
@@ -74,11 +74,11 @@ If Cloudflare has temporary or permanent restrictions on a domain, you will rece
     -   **Resolution**: Wait 3 hours before attempting to re-add the domain to Cloudflare. Support cannot speed up this process.
 -   _**Error 1093 or 1116**
     -   **Message**: `This zone cannot be added to Cloudflare at this time, please contact Cloudflare Support. (Code: 1093)`
-    -   **Cause**: You may have entered a subdomain (`www.example.com`) instead of the root domain (`example.com`).
-    -   **Resolution**: Verify that you are entering a root domain. If you are and still experience issues, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+    -   **Cause**: You may have entered a subdomain (`www.example.com`) instead of the apex domain (also known as "root domain", e.g. `example.com`).
+    -   **Resolution**: Verify that you are entering the apex domain. If you are and still experience issues, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 -   _**Error 1097**
     -   **Message**: `This web property cannot be added to Cloudflare at this time. If you are an Enterprise customer, contact your Customer Success Manager. Otherwise, email abusereply@cloudflare.com with a detailed explanation of your association with this zone. (Code: 1097)`
     -   **Resolution**: Contact abusereply@cloudflare.com with a detailed explanation of your association with this zone.
 -   **Error: Cannot be found** OR **<your domain> is not a registered domain (code: 1049)**
     -   This can happen if the domain has not been registered yet. Some domains, like `.gov` domains, have special requirements that require the domain be added first.
-    -   **Resolution:** Please contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) if you require assistance adding a `.gov` and/or other domains that require manual registration.
+    -   **Resolution:** Please contact [Cloudflare Support](/support/contacting-cloudflare-support/) if you require assistance adding a `.gov` and/or other domains that require manual registration.

@@ -19,7 +19,7 @@ Three health monitor probes are sent from each specified region within the pool 
 
 {{<Aside type="warning">}}
 
-Because of how Cloudflare checks health from [multiple regions](#health-check-regions), adding multiple regions — or choosing to check health from **All Data Centers** — can send a lot of traffic to your origin.
+Because of how Cloudflare checks health from [multiple regions](#health-monitor-regions), adding multiple regions — or choosing to check health from **All Data Centers** — can send a lot of traffic to your origin.
 
 The same problem can occur when setting low values for a monitor's **Interval**.
 

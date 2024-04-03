@@ -2,7 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   description: Cloudflare SSL/TLS offers free Universal SSL alongside advanced and enterprise features to meet your encryption and certificate management needs.
 ---
@@ -10,30 +10,39 @@ meta:
 # Cloudflare SSL/TLS
 
 {{<description>}}
-Encrypt your web traffic to prevent data theft and other tampering
+Encrypt your web traffic to prevent data theft and other tampering.
 {{</description>}}
 
 {{<plan type = "all">}}
 
-Through Universal SSL, Cloudflare is the first Internet performance and security company to offer free SSL/TLS protection.
+Through [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare is the first Internet performance and security company to offer free SSL/TLS protection.
 Cloudflare SSL/TLS also provides a number of other features to meet your encryption requirements and certificate management needs.
-
-{{<button-group>}}
-  {{<button type="primary" href="/ssl/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="https://www.cloudflare.com/learning/ssl/what-is-ssl/" target="_blank">}}Learn more{{</button>}}
-{{</button-group>}}
 
 ---
 
 ## Features
 
-{{<product-table id="ssl">}}
+{{<feature header="Total TLS" href="/ssl/edge-certificates/additional-options/total-tls/">}}
+Extending the protection offered by Universal SSL, Total TLS is an easy way to automatically issue certificates for all levels of subdomains that you have.
+{{</feature>}}
+
+{{<feature header="Delegated DCV" href="/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/">}}
+Even if you use a different provider for authoritative DNS, you can delegate domain control validation (DCV) to Cloudflare, reducing the need of manual intervention.
+{{</feature>}}
+
+{{<feature header="Custom TLS settings" href="/ssl/edge-certificates/additional-options/minimum-tls/">}}
+Cloudflare also allows you to specify the minimum TLS version that visitors must use to connect to your website or application, and restrict cipher suites according to your security requirements.
+{{</feature>}}
+
+<br />
+
+Refer to [features and availability](/ssl/reference/all-features/) for a complete list of SSL/TLS features and their availability according to different Cloudflare plans.
 
 ---
 
 ## Related products
 
-{{<related header="Cloudflare DNS" href="/dns/" product="dns">}} 
+{{<related header="Cloudflare DNS" href="/dns/" product="dns">}}
 When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global Anycast network. This network delivers performance and global availability.
 {{</related>}}
 

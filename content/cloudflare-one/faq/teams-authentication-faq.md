@@ -4,6 +4,7 @@ title: Identity
 weight: 4
 meta:
   description: Review frequently asked questions about identity and identity providers in Cloudflare Zero Trust.
+  title: Identity FAQ
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

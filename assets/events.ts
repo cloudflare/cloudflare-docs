@@ -35,7 +35,7 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.getElementById(hash);
+  let item = hash && document.getElementById(hash.toLowerCase());
   let timer =
     item &&
     setInterval(() => {
@@ -90,7 +90,9 @@ function $tab(ev: MouseEvent) {
   ev.preventDefault();
 
   // Get the tabs for this tab block
-  const tabBlockId = (ev.target as HTMLElement).getAttribute("data-id");
+  const tabBlockId = (ev.target as HTMLElement)
+    .closest("[data-id]")
+    ?.getAttribute("data-id");
 
   let tabs = document.querySelectorAll(
     `div[tab-wrapper-id="${tabBlockId}"] > .tab`
@@ -100,17 +102,19 @@ function $tab(ev: MouseEvent) {
     (tabs[i] as HTMLElement).style.display = "none";
   }
 
-  let target = ev.target;
-  let link = (target as HTMLElement).getAttribute("data-link");
+  let link = (ev.target as HTMLElement)
+    .closest("[data-link]")
+    ?.getAttribute("data-link");
 
   document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
+  zaraz.track("tab click", {selected_option: ev.target.innerText})
 }
 
 export function tabs() {
   // Find all tab wrappers
   let wrappers = document.querySelectorAll(".tabs-wrapper");
 
-  addEventListener("load", () => {
+  addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
       const labels = wrappers[i].querySelectorAll(".tab-label");
       const tabs = wrappers[i].querySelectorAll(".tab");
@@ -165,6 +169,7 @@ export function dropdowns() {
   let attr = "data-expanded";
 
   document.querySelectorAll(".Dropdown").forEach((div) => {
+    
     let btn = div.querySelector("button");
     let links = div.querySelectorAll<HTMLAnchorElement>("li>a");
     let focused = 0; // index
@@ -232,7 +237,7 @@ export function dropdowns() {
 
 export function toggleSidebar() {
   const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if (toggleButton) {
+  if (toggleButton.length > 0) {
     let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
@@ -243,7 +248,7 @@ export function toggleSidebar() {
         ".DocsContent",
         ".DocsMarkdown",
         ".DocsSidebar--sections .toggleSidebar",
-        ".breadcrumb"
+        ".breadcrumb",
       ];
 
       classToggleList.forEach(function (querySelector) {
@@ -264,6 +269,101 @@ export function toggleSidebar() {
         let isHidden = item.hasAttribute(attr);
         item.toggleAttribute(attr, !isHidden);
       });
+
+      let moduleCounters = document.getElementsByClassName("moduleCounter")
+      if (moduleCounters) {
+        for (const counter of moduleCounters) {
+          let isHidden2 = counter.hasAttribute(attr);
+          counter.toggleAttribute(attr, !isHidden2)
+        }
+      }
     });
   }
+}
+
+export function zarazTrackDocEvents() {
+  const links = document.getElementsByClassName("DocsMarkdown--link");
+  const dropdowns = document.getElementsByTagName("details")
+  const glossaryTooltips = document.getElementsByClassName("glossary-tooltip")
+  const playgroundLinks = document.getElementsByClassName("playground-link")
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links as any) {  // Type cast to any for iteration
+        const linkURL = new URL(link)
+        const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`)
+        if (linkURL.hostname !== "developers.cloudflare.com") {
+          if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('playground link click', link);
+            });
+          } else if (cfSubdomainRegex.test(linkURL.hostname)) {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('Cross Domain Click', link);
+            });
+          } else {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('external link click', link);
+            });
+          }
+        }
+      }
+    }
+    if (dropdowns.length > 0) {
+      for (const dropdown of dropdowns as any) { 
+        dropdown.addEventListener("click", () => {
+          $zarazDropdownEvent(dropdown.getElementsByTagName("summary")[0]);
+        });
+    }
+  }
+  if (glossaryTooltips.length > 0) {
+    for (const tooltip of glossaryTooltips as any) { 
+      tooltip.addEventListener("pointerleave", () => {
+        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
+      });
+      tooltip.addEventListener("blur", () => {
+        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
+      });
+  }
+}
+  if (playgroundLinks.length > 0) {
+    for (const playgroundLink of playgroundLinks as any) { 
+      playgroundLink.addEventListener("click", () => {
+        $zarazLinkEvent('playground link click', playgroundLink);
+      });
+  }
+  }
+  });
+}
+
+function $zarazLinkEvent(type: string, link: Element) {
+  zaraz.track(type, {href: link.href, hostname: link.hostname})
+}
+
+function $zarazDropdownEvent(summary: string) {
+  zaraz.track('dropdown click', {text: summary.innerText})
+}
+
+function $zarazGlossaryTooltipEvent(term: string) {
+  zaraz.track('glossary tooltip view', {term: term})
+}
+
+export function zarazTrackHomepageLinks() {
+  const links = document.getElementsByClassName("DocsMarkdown--link");
+  const playgroundLinks = document.getElementsByClassName("playground-link")
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links as any) {  // Type cast to any for iteration
+        link.addEventListener("click", () => {
+          zaraz.track('homepage link click', {href: link.href})
+        });
+      } 
+    }
+    if (playgroundLinks.length > 0) {
+      for (const playgroundLink of playgroundLinks as any) { 
+        playgroundLink.addEventListener("click", () => {
+          $zarazLinkEvent('playground link click', playgroundLink);
+        });
+    }
+    }
+  });
 }

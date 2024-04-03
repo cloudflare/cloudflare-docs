@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: HTMLRewriter
+meta:
+  description: Build comprehensive and expressive HTML parsers inside of a Worker application.
 ---
 
 # HTMLRewriter
@@ -21,9 +23,9 @@ new HTMLRewriter().on('*', new ElementHandler()).onDocument(new DocumentHandler(
 
 ---
 
-## Global Types
+## Global types
 
-Throughout the HTMLRewriter API, there are a few consistent types that many properties and methods use:
+Throughout the `HTMLRewriter` API, there are a few consistent types that many properties and methods use:
 
 {{<definitions>}}
 
@@ -164,6 +166,8 @@ The `element` argument, used only in element handlers, is a representation of a 
 
   - Inserts content before the element.
 
+  {{<render file="_content_and_contentoptions.md">}}
+
 - {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content right after the element.
@@ -224,6 +228,8 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
   - Inserts content right after the end tag.
 
+  {{<render file="_content_and_contentoptions.md">}}
+
 - {{<code>}}remove(){{</code>}} : {{<type>}}EndTag{{</type>}}
 
   - Removes the element with all its content.
@@ -260,6 +266,8 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 - {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content before the element.
+
+  {{<render file="_content_and_contentoptions.md">}}
 
 - {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
@@ -307,6 +315,8 @@ class ElementHandler {
 - {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content before the element.
+
+  {{<render file="_content_and_contentoptions.md">}}
 
 - {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
@@ -371,6 +381,8 @@ class DocumentHandler {
 - {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}DocumentEnd{{</type>}}
 
   - Inserts content after the end of the document.
+
+  {{<render file="_content_and_contentoptions.md">}}
 
 {{</definitions>}}
 

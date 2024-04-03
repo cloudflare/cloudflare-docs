@@ -14,30 +14,33 @@ System properties, which are automatically collected by Zaraz, provide insights 
 
 {{<table-wrap>}}
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `system.page.query` | Object | Key-Value object containing all query parameters in the current URL. |
-| `system.page.title` | String | Current page title. |
-| `system.page.url` | URL | [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) Object containing information about the current URL |
-| `system.page.referrer` | String | Current page referrer from `document.referrer`. |
-| `system.page.encoding` | String | Current page character encoding from `document.characterSet`. |
-| `system.cookies` | Object | Key-Value object containg all present cookies. |
-| `system.device.ip` | String | Visitor incoming IP address. |
-| `system.device.resolution` | String | Screen resolution for device. |
-| `system.device.viewport` | String | Visible web page area in user’s device. |
-| `system.device.language` | String | Language used in user's device. |
-| `system.device.user-agent.ua` | Object | Browser user agent. |
-| `system.device.user-agent.browser.name` | String | Browser name. |
-| `system.device.user-agent.browser.version` | String | Browser version. |
-| `system.device.user-agent.engine.name` | String | Type of browser engine (for example, WebKit). |
-| `system.device.user-agent.engine.version` | String | Version of the browser engine. |
-| `system.device.user-agent.os.name` | String | Operating system. |
-| `system.device.user-agent.os.version` | String | Version of the operating system. |
-| `system.device.user-agent.device` | String | Type of device used (for example, iPhone). |
-| `system.device.user-agent.cpu` | String | Device’s CPU. |
-| `system.misc.random` | Number | Random number unique to each request. |
-| `system.misc.timestamp` | Number | Unix time in seconds. |
-| `system.misc.timestampMilliseconds` | Number | Unix time in milliseconds. |
+| Property                                   | Type   | Description                                                                                                     |
+| ---                                        | ---    | ---                                                                                                             |
+| `system.page.query`                        | Object | Key-Value object containing all query parameters in the current URL.                                            |
+| `system.page.title`                        | String | Current page title.                                                                                             |
+| `system.page.url`                          | URL    | [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) Object containing information about the current URL |
+| `system.page.referrer`                     | String | Current page referrer from `document.referrer`.                                                                 |
+| `system.page.encoding`                     | String | Current page character encoding from `document.characterSet`.                                                   |
+| `system.cookies`                           | Object | Key-Value object containing all present cookies.                                                                |
+| `system.device.ip`                         | String | Visitor incoming IP address.                                                                                    |
+| `system.device.resolution`                 | String | Screen resolution for device.                                                                                   |
+| `system.device.viewport`                   | String | Visible web page area in user’s device.                                                                         |
+| `system.device.language`                   | String | Language used in user's device.                                                                                 |
+| `system.device.location`                   | Object | All location-related keys from [IncomingRequestCfProperties](/workers/runtime-apis/request/#incomingrequestcfproperties) |
+| `system.device.user-agent.ua`              | String | Browser user agent.                                                                                             |
+| `system.device.user-agent.browser.name`    | String | Browser name.                                                                                                   |
+| `system.device.user-agent.browser.version` | String | Browser version.                                                                                                |
+| `system.device.user-agent.engine.name`     | String | Type of browser engine (for example, WebKit).                                                                   |
+| `system.device.user-agent.engine.version`  | String | Version of the browser engine.                                                                                  |
+| `system.device.user-agent.os.name`         | String | Operating system.                                                                                               |
+| `system.device.user-agent.os.version`      | String | Version of the operating system.                                                                                |
+| `system.device.user-agent.device`          | String | Type of device used (for example, iPhone).                                                                      |
+| `system.device.user-agent.cpu`             | String | Device’s CPU.                                                                                                   |
+| `system.misc.random`                       | Number | Random number unique to each request.                                                                           |
+| `system.misc.timestamp`                    | Number | Unix time in seconds.                                                                                           |
+| `system.misc.timestampMilliseconds`        | Number | Unix time in milliseconds.                                                                                      |
+| `system.consent`                           | Object | Keys are purpose IDs, values are `true` for consent, `false` for lack of consent                                |
+
 
 {{</table-wrap>}}
 

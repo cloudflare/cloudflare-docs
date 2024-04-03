@@ -64,11 +64,11 @@ Generate a presigned URL by referring to the following examples:
 
 ## Presigned URL alternative with Workers
 
-A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/platform/bindings/) that implements your security policy.
+A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/configuration/bindings/) that implements your security policy.
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/platform/environment-variables) for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/kv/api/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -186,6 +186,10 @@ Presigned URLs can be generated for any S3 operation. After a presigned URL is g
 [Public buckets](/r2/buckets/public-buckets/) are available on a regular HTTP endpoint. By default, there is no authorization or access controls associated with a public bucket. Anyone with a public bucket URL can access an object in that public bucket. If you are using a custom domain to expose the R2 bucket, you can manage authorization and access controls as you would for a Cloudflare zone. Public buckets only provide `GET`/`HEAD` on a known object path. Public bucket errors are rendered as HTML pages.
 
 Choosing between presigned URLs and public buckets is dependent on your specific use case. You can also use both if your architecture should use public buckets in one situation and presigned URLs in another. It is useful to note that presigned URLs will expose your account ID and bucket name to whoever gets a copy of the URL. Public bucket URLs do not contain the account ID or bucket name. Typically, you will not share presigned URLs directly with end users or browsers, as presigned URLs are used more for internal applications.
+
+## Limitations
+
+Presigned URLs can only be used with the `<accountid>.r2.cloudflarestorage.com` S3 API domain and cannot be used with custom domains. Instead, you can use the [general purpose HMAC validation feature of the WAF](/ruleset-engine/rules-language/functions/#hmac-validation), which requires a Pro plan or above.
 
 ## Related resources
 

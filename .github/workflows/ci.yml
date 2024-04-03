@@ -5,6 +5,10 @@ on:
     branches:
       - production
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   compile:
     name: Compiles
@@ -18,7 +22,7 @@ jobs:
           node-version: 18.1
       - uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.92.0'
+          hugo-version: '0.123.5'
           extended: true
 
       - name: (env) pnpm
@@ -34,13 +38,9 @@ jobs:
         run: pnpm run crawl
         if: success()
 
-      - name: Check - Broken header links
-        uses: untitaker/hyperlink@0.1.27
-        with:
-          args: public/ --sources content/ --check-anchors
-        continue-on-error: true
+      - name: Check - Validate redirects (infinite loops, sources with fragment)
+        run: npx tsm bin/validate-redirects.ts
 
-      
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest

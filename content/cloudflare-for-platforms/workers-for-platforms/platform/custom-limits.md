@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom limits
+weight: 2
 ---
 
 # Custom limits
@@ -9,7 +10,7 @@ Custom limits allow you to programmatically set limits on your customer’s Work
 
 ## Set Custom limits
 
-Custom limits can be set in the Dispatch Worker:
+Custom limits can be set in the dynamic dispatch Worker:
 
 ```js
 ---
@@ -24,7 +25,7 @@ export default {
        workerName,
        {},
        {// set limits
-         limits: {cpuMs: 10, subrequests: 5}
+         limits: {cpuMs: 10, subRequests: 5}
        }
      );
      return await userWorker.fetch(request);

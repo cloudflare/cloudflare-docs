@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: CNAME flattening
-weight: 5
+weight: 6
 ---
 
 # CNAME flattening
@@ -10,7 +10,7 @@ weight: 5
 
 {{<Aside type="note">}}
 
-This functionality is also what allows you to use a [root custom domain](/pages/platform/custom-domains/) with a Cloudflare Pages site.
+This functionality is also what allows you to use a [root custom domain](/pages/configuration/custom-domains/) with a Cloudflare Pages site.
 
 {{</Aside>}}
 

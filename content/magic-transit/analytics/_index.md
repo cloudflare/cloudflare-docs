@@ -1,11 +1,17 @@
 ---
-pcx_content_type: navigation
 title: Analytics
-weight: 6
+pcx_content_type: how-to
+weight: 7
+meta:
+    title: How to view GRE and IPsec tunnel analytics
 ---
 
-# Magic Transit analytics
+# GRE and IPsec tunnel analytics
 
-Review the topics below to learn more about analytics in Magic Transit.
+## Query analytics with GraphQL
+
+You can query Magic Transit analytics using GraphQL. Review the topics below to learn more:
 
 {{<directory-listing>}}
+
+{{<render file="_network-analytics.md" productFolder="magic-wan" withParameters="Magic Transit">}}

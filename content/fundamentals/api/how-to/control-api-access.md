@@ -1,7 +1,7 @@
 ---
 title: Control API Access
 pcx_content_type: concept
-weight: 13
+weight: 4
 ---
 
 # Control API access

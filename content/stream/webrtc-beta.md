@@ -4,7 +4,7 @@ weight: 8
 title: WebRTC (beta)
 ---
 
-{{<beta>}}WebRTC{{</beta>}}
+{{<heading-pill style="beta">}}WebRTC{{</heading-pill>}}
 
 Sub-second latency live streaming (using WHIP) and playback (using WHEP) to unlimited concurrent viewers.
 
@@ -55,7 +55,7 @@ Every live input has a unique URL that one creator can be stream to. This URL sh
 
 Copy the URL from the `webRTC` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs).
 
-Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whip.html#L13), which you can [run in your web browser on Stackblitz](https://workers.new/stream/webrtc-whip):
+Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whip.html#L13).
 
 ```javascript
 ---
@@ -80,7 +80,7 @@ You can also use this URL with any client that supports the [WebRTC-HTTP ingesti
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
 
-Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whep.html#L13), which you [can run in your browser on Stackblitz](https://workers.new/stream/webrtc-whep).
+Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whep.html#L13).
 
 ```javascript
 ---
@@ -103,11 +103,11 @@ You can also use this URL with any client that supports the [WebRTC-HTTP egress 
 
 ## Using WebRTC in native apps
 
-If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native implementations of WebRTC APIs, available [here](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
+If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
 
 ## Debugging WebRTC
 
-- **Chrome**: Navigate to `chrome://webrtc-internals` tov view detailed logs and graphs.
+- **Chrome**: Navigate to `chrome://webrtc-internals` to view detailed logs and graphs.
 - **Firefox**: Navigate to `about:webrtc` to view information about WebRTC sessions, similar to Chrome.
 - **Safari**: To enable WebRTC logs, from the inspector, open the settings tab (cogwheel icon), and set WebRTC logging to "Verbose" in the dropdown menu.
 
@@ -117,15 +117,15 @@ Beyond the [example WHIP client](https://github.com/cloudflare/workers-sdk/blob/
 
 ### WHIP
 
-- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
+- [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (TypeScript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 - [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
 
 ### WHEP
 
-- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
-- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
+- [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (TypeScript)
+- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (TypeScript)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
@@ -148,7 +148,7 @@ You can find the specific version of WHIP and WHEP being used in the `protocol-v
 
 ## Limitations while in beta
 
-- [Recording](/stream/stream-live/watch-live-stream/#replaying-recordings) is not yet supported (coming soon)
+- [Recording](/stream/stream-live/watch-live-stream/#live-stream-recording-playback) is not yet supported (coming soon)
 - [Simulcasting](/stream/stream-live/simulcasting) (restreaming) is not yet supported (coming soon)
 - [Live viewer counts](/stream/getting-analytics/live-viewer-count/) are not yet supported (coming soon)
 - [Analytics](/stream/getting-analytics/fetching-bulk-analytics/) are not yet supported (coming soon)

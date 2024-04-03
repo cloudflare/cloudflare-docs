@@ -3,6 +3,7 @@ title: Web standards
 pcx_content_type: configuration
 meta:
   title: JavaScript and web standards
+  description: Standardized APIs for use by Workers running on Cloudflare's global network.
 ---
 
 # JavaScript and web standards
@@ -69,6 +70,16 @@ Timers are only available inside of [the Request Context](/workers/runtime-apis/
 
 {{</Aside>}}
 
+### `performance.timeOrigin` and `performance.now()`
+
+- {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin">}}performance.timeOrigin{{</type-link>}}
+
+  - Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
+
+- {{<type-link href="">}}performance.now(){{</type-link>}}
+
+  - Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
+
 ### `EventTarget` and `Event`
 
 The [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) and [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) API allow objects to publish and subscribe to events.
@@ -107,7 +118,7 @@ The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextE
 
 ## URL API
 
-The URL API supports URLs conforming to HTTP and HTTPs schemes.
+The URL API supports URLs conforming to HTTP and HTTPS schemes.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
@@ -115,7 +126,7 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
 The default URL class behavior differs from the URL Spec documented above.
 
-A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/platform/compatibility-dates/#compatibility-flags).
+A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/configuration/compatibility-dates/#compatibility-flags).
 
 {{</Aside>}}
 
@@ -137,9 +148,17 @@ The `URLPattern` API provides a mechanism for matching URLs based on a convenien
 
 ---
 
+## `Intl`
+
+The `Intl` API allows you to format dates, times, numbers, and more to the format that is used by a provided locale (language and region).
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+
+---
+
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/platform/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
 
 ## Unhandled promise rejections
 
@@ -160,4 +179,23 @@ addEventListener('rejectionhandled', (event) => {
   console.log(event.promise);  // The promise that was rejected.
   console.log(event.reason);  // The value or Error with which the promise was rejected.
 });
+```
+
+---
+
+## `navigator.sendBeacon(url[, data])`
+
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP `POST` request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or diagnostics information asynchronously on a best-effort basis.
+
+For example, you can replace:
+
+```js
+const promise = fetch('https://example.com', { method: 'POST', body: 'hello world' });
+ctx.waitUntil(promise);
+```
+
+with `navigator.sendBeacon(...)`:
+
+```js
+navigator.sendBeacon('https://example.com', 'hello world');
 ```

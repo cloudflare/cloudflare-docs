@@ -26,7 +26,7 @@ The response payload will vary based on the request method:
 
 A 200 response **should** always have a payload, but is not required. Occasionally, an origin server may generate a 200 with a zero length. To adhere to RFC standards, the server should generate a 204 code (exception CONNECT).
 
-200 responses are cacheable by default for proxy servers and browsers. If not specified by Cloudflare [cache controls](https://support.cloudflare.com/hc/en-us/articles/202775670), [static resources](/cache/about/default-cache-behavior/) with this response will cache default for 2 hours at our edge.  
+200 responses are cacheable by default for proxy servers and browsers. If not specified by Cloudflare [cache controls](https://support.cloudflare.com/hc/en-us/articles/202775670), [static resources](/cache/concepts/default-cache-behavior/) with this response will cache default for 2 hours at our edge.  
 
 ___
 
@@ -46,7 +46,7 @@ A **203** response means that the request was successful but the response did no
 
 Servers use this response to tell a client that this resource has been cached at a proxy.
 
-Cloudflare does not cache 203 responses. For details about Cloudflare handles 203 responses, refer to [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/).
+Cloudflare does not cache 203 responses. For details about Cloudflare handles 203 responses, refer to [HTTP request headers](/fundamentals/reference/http-request-headers/).
 
 ___
 

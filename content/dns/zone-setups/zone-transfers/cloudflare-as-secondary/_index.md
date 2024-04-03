@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Cloudflare as Secondary
 weight: 2
+layout: wide
 ---
 
 # Secondary DNS - Incoming Zone Transfers
@@ -13,8 +14,8 @@ When you make edits in your primary DNS provider, those DNS records will be tran
 ```mermaid
 flowchart LR
 accTitle: Cloudflare as Secondary DNS
-A((Zone Admin)) --DNS record management--> B[Primary DNS provider]
-B --Zone transfer--> C[Cloudflare DNS]
+A((Zone Admin)) --DNS record <br /> management--> B[Primary DNS <br /> provider]
+B --Zone transfer--> C[Cloudflare <br /> DNS]
 B & C <--DNS lookups--> D[Resolver] <--DNS lookups--> E((User))
 ```
 

@@ -1,8 +1,7 @@
 ---
 title: Alerts
 pcx_content_type: reference
-weight: 2
-layout: single
+weight: 1
 ---
 
 # WAF alerts
@@ -14,11 +13,11 @@ The WAF provides two types of alerts that inform you of any spikes in security e
 
 For details on alert types and their availability, refer to [Alert types](#alert-types).
 
-To receive WAF alerts, you must configure a [notification](/fundamentals/notifications/). Notifications help you stay up to date with your Cloudflare account through email, PagerDuty, or webhooks, depending on your Cloudflare plan.
+To receive WAF alerts, you must configure a [notification](/notifications/). Notifications help you stay up to date with your Cloudflare account through email, PagerDuty, or webhooks, depending on your Cloudflare plan.
 
 ## Set up a notification for WAF alerts
 
-For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/fundamentals/notifications/create-notifications/).
+For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/notifications/get-started/#create-a-notification).
 
 ---
 

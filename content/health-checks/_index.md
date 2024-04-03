@@ -15,7 +15,7 @@ Standalone Health Checks support various configurations to hone in on what you c
 
 {{<Aside type="note">}}
 
-Standalone Health Checks are different from health monitors associated with load balancers. For more details about health monitors, refer to the [Load Balancing documentation](/load-balancing/understand-basics/monitors/).
+Standalone Health Checks are different from health monitors associated with load balancers. For more details about health monitors, refer to the [Load Balancing documentation](/load-balancing/monitors/).
 
 {{</Aside>}}
 

@@ -33,7 +33,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+import { parse } from "cookie";
+export default {
   async fetch(request) {
     // The name of the cookie
     const COOKIE_NAME = "__uid";
@@ -44,9 +45,7 @@ const handler: ExportedHandler = {
     }
     return new Response("No cookie with name: " + COOKIE_NAME);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

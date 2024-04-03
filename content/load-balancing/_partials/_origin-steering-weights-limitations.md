@@ -9,4 +9,4 @@ If you choose **Hash** for your **Origin Steering** or enable [session affinity]
 
 Additionally, session affinity takes precedence over any selected weight or origin steering policy.
 
-When using [DNS-only load balancing](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), DNS resolves may cache resolved IPs for clients and affect traffic distribution.
+When using [DNS-only load balancing](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), DNS resolvers may cache resolved IPs for clients and affect traffic distribution.

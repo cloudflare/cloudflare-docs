@@ -1,9 +1,7 @@
 ---
 title: Domain management
 pcx_content_type: reference
-weight: 10
-layout: single
-
+weight: 2
 ---
 
 # Domain management
@@ -26,7 +24,5 @@ but not on the following domains:
 When the widget is embedded on a domain not listed, it will show an error message.
 
 {{<Aside type="note">}}
-
-Turnstile has an alpha feature that enables widgets to work on every page without needing a list of domains. For more information on this feature, contact your account team.
-
+Enterprise Bot Management customers can remove the domain validation requirement for a widget. For more information on this feature, contact your account team.
 {{</Aside>}}

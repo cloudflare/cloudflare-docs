@@ -1,4 +1,11 @@
-export async function onRequestGet() {
+export async function onRequestGet(context) {
+  const cachedSchema = await context.env.API_DOCS_KV.get("schema", "json")
+  if (cachedSchema) {
+    return new Response(JSON.stringify(cachedSchema), {
+      headers: { 'Content-type': 'application/json' }
+    })
+  }
+
   const schemaUrl = "https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.json"
 
   const req = new Request(schemaUrl)
@@ -62,6 +69,9 @@ export async function onRequestGet() {
       response = new Response(JSON.stringify(sortedSchema), {
         headers: { 'Content-type': 'application/json' }
       })
+
+      const expirationTtl = 60 * 60
+      await context.env.API_DOCS_KV.put("schema", JSON.stringify(sortedSchema), { expirationTtl })
     }
 
     return response

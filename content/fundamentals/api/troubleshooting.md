@@ -12,7 +12,7 @@ Ensure the token has been verified by running the following `curl` command and c
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
--H "Authorization: Bearer <API_TOKEN"
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

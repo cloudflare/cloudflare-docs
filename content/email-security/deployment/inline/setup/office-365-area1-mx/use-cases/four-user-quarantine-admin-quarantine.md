@@ -1,26 +1,27 @@
 ---
 title: 4 - User managed quarantine and administrative quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 4
 meta:
     title: User managed quarantine and administrative quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the user managed quarantine and administrative quarantine
 
-In this tutorial, you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the user managed quarantine, and `MALICIOUS` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
+{{<render file="deployment/_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
 
 ## Create quarantine policies
 
-{{<render file="_o365-use-case-2-4-create-quarantine-policy.md">}}
+{{<render file="deployment/_o365-use-case-2-4-create-quarantine-policy.md">}}
 
 ## Configure quarantine notifications
 
-{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
+{{<render file="deployment/_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 
@@ -35,7 +36,7 @@ To configure anti-spam policies:
 
     <div class="large-img">
 
-    ![Go to Actions and find Edit actions](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
+    ![Go to Actions and find Edit actions](/email-security/static/flexible-partial-images/o365-area1-mx/step6-edit-actions.png)
 
     </div>
 
@@ -52,7 +53,7 @@ To configure anti-spam policies:
 
     <div class="large-img">
 
-    ![Select the spam actions in the above step](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step7-quarantine-message-case4.png)
+    ![Select the spam actions in the above step](/email-security/static/flexible-partial-images/o365-area1-mx/step7-quarantine-message-case4.png)
 
     </div>
 
@@ -60,4 +61,4 @@ To configure anti-spam policies:
 
 ## Create transport rules
 
-{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 User Quarantine Message`;;`SPAM`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Area 1 User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}
+{{<render file="deployment/_o365-use-case-transport-rules.md" withParameters="`Area 1 User Quarantine Message`;;`UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Area 1 User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}

@@ -23,9 +23,7 @@ Example:
 
 Discord has a limit of 25 options in slash commands, so DNS over Discord offers the 25 most common DNS record types to choose from.
 
-<details>
-<summary>Supported DNS record types</summary>
-<div>
+{{<details header="Supported DNS record types">}}
 
 * `A`
 * `AAAA`
@@ -53,8 +51,7 @@ Discord has a limit of 25 options in slash commands, so DNS over Discord offers 
 * `TXT`
 * `URI`
 
-</div>
-</details>
+{{</details>}}
 
 To query other DNS record types, or multiple record types at once, use the `/multi-dig` command.
 
@@ -94,9 +91,7 @@ Example:
 
 When providing DNS record types for the `/multi-dig` command, Discord will not prompt you with options. You have to provide a space-separated list of valid DNS record types to lookup, as any invalid options will be silently dropped. `A` records will be used as the default if no valid types are given.
 
-<details>
-<summary>DNS record types supported and considered valid by the bot</summary>
-<div>
+{{<details header="DNS record types supported and considered valid by the bot">}}
 
 Use a `*` (asterisk) in place of a record type to get DNS results for all supported types.
 
@@ -146,8 +141,7 @@ Use a `*` (asterisk) in place of a record type to get DNS results for all suppor
 * `URI`
 * `ZONEMD`
 
-</div>
-</details>
+{{</details>}}
 
 ### Short form response
 

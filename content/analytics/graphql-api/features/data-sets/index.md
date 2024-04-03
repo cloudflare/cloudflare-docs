@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Datasets (tables)
 weight: 3
-layout: single
 ---
 
 # Datasets (tables)
@@ -16,7 +15,7 @@ identifies the type of data they return:
   name of the relevant product, for instance `loadBalancingRequests*` nodes.
 
 * **Adaptive Sampling** - Nodes that represent data acquired using adaptive
-  sampling incorporate the `Adaptive` suffix. For more details, please see
+  sampling incorporate the `Adaptive` suffix. For more details, refer to
   [sampling][1].
 
 * **Aggregated data** - Nodes that represent aggregated data include the

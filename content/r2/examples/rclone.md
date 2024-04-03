@@ -42,6 +42,10 @@ endpoint = https://<accountid>.r2.cloudflarestorage.com
 acl = private
 ```
 
+{{<Aside type="note">}}
+If you are using a token with [Object-level permissions](/r2/api/s3/tokens/#permissions), you will need to add `no_check_bucket = true` to the configuration to avoid errors.
+{{</Aside>}}
+
 You may then use the new `rclone` provider for any of your normal workflows.
 
 ## List buckets & objects
@@ -97,7 +101,7 @@ $ rclone copy long-video.mp4 r2demo:user-uploads/ --s3-upload-cutoff=100M --s3-c
 You can also generate presigned links which allow you to share public access to a file temporarily using the [rclone link](https://rclone.org/commands/rclone_link/) command.
 
 ```sh
-# You can pass the --expire flag to determine how long the presigned link is valid.
+# You can pass the --expire flag to determine how long the presigned link is valid. The --unlink flag isn't supported by R2.
 $ rclone link r2demo:my-bucket-name/cat.png --expire 3600
 # https://<accountid>.r2.cloudflarestorage.com/my-bucket-name/cat.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```

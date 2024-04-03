@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Redirects
 weight: 5
-layout: single
 ---
 
 # Redirects
@@ -14,6 +13,8 @@ Use the following Cloudflare products to perform URL redirects, according to you
 - [**Single Redirects**](/rules/url-forwarding/single-redirects/): Allow you to create static or dynamic redirects at the zone level. Dynamic redirects are advanced URL redirects, such as redirects based on the source country of requests. Depending on your Cloudflare plan, you can use regular expressions to define the redirect URL.
 
 - [**Bulk Redirects**](/rules/url-forwarding/bulk-redirects/): Allow you to define a large number of redirects at the account level. These URL redirects are essentially static — they do not support string replacement operations or regular expressions. However, you can configure parameters that affect the redirects' URL matching behavior and their runtime behavior.
+
+{{<render file="_rules-requirements.md" withParameters="Single Redirects and Bulk Redirects require">}}
 
 ## Availability
 

@@ -1,4 +1,5 @@
 {{ $DATA := (index $.Site.Data .Section) }}
+{{- $page := . -}}
 
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
@@ -12,7 +13,7 @@
 
       {{ with $DATA.resources.discord }}
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := "https://discord.gg/cloudflaredev" -}} {{- partial
+        {{- $url := "https://discord.cloudflare.com" -}} {{- partial
         "external.link" (dict "text" "Discord" "url" $url) }}
       </span>
 
@@ -27,14 +28,18 @@
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-additional-wrapper">
+        {{- with $page.Params.learning_center -}}
+        {{- partial "external.link" (dict "text" .title "url" .link ) }}
+        {{- else -}}
         {{- $url := default "https://www.cloudflare.com/learning/" $DATA.resources.learning_center -}} {{- partial
         "external.link" (dict "text" "Learning Center" "url" $url) }}
+        {{- end -}}
       </span>
 
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := "https://dash.cloudflare.com/?to=/:account/support" -}} {{- partial
+        {{- $url := "/support/contacting-cloudflare-support/" -}} {{- partial
         "external.link" (dict "text" "Support Portal" "url" $url) }}
       </span>
 
@@ -54,11 +59,18 @@
         "url" $url) }} {{- end -}}
       </span>
 
+      {{- with .Params.pcx_content_type -}}
+      {{- if ne . "changelog" -}}
+
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-time">
-        Updated {{ partial "datetime" .Lastmod }}
+        Updated {{ partial "datetime" $page.Lastmod }}
       </span>
+      {{- end -}}
+      {{- end -}}
     </div>
   </div>
+  <script type="text/javascript" src="/lightbox.js" defer></script>
+  <link rel="stylesheet" href="/lightbox.css">
 </footer>

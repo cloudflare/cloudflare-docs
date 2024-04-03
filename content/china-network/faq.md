@@ -26,7 +26,7 @@ Cloudflare requires that you have a valid [ICP (Internet Content Provider)](/chi
 
 ### Will my Cloudflare account or configuration information be stored in China?
 
-Cloudflare has taken numerous steps to ensure your security and the integrity of your data in China. Your identification information such as email addresses, password hashes, and billing information are never stored on the Cloudflare China Network or shared with the Cloudflare partner, except for zone configuration information and bindings with Cloudflare's Developer Suite, which are stored on the China Network operated by our partners in China once you enable the China Service for a particular zone.
+Cloudflare has taken numerous steps to ensure your security and the integrity of your data in China. Your identification information such as email addresses, password hashes, and billing information are never stored on the Cloudflare China Network or shared with the Cloudflare partner except for Zone configuration information and bindings with Cloudflare’s Developer Suite which are stored on the China Network operated by our partners in China upon your enabling the China Service for a particular Zone.
 
 ## Licensing and onboarding
 

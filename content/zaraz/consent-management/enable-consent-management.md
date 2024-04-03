@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Enable Consent Management
 weight: 1
 meta:
-    title: Enable the Consent Management platform (CMP)
+  title: Enable the Consent Management platform (CMP)
 ---
 
 # Enable the Consent Management platform (CMP)
@@ -17,6 +17,15 @@ meta:
 7. Select **Save**.
 
 Your Consent Management platform is ready. Your website should now display a modal asking for consent for the tools you have configured.
+
+## Adding different languages
+
+In your Zaraz consent settings, you can add your consent modal text and purposes in various languages.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. Go to **Zaraz** > **Consent**.
+3. Select a default language of your choice. The default setting is English.
+4. In **Consent modal text** and **Purposes**, you can select different languages and add translations.
 
 ## Next steps
 

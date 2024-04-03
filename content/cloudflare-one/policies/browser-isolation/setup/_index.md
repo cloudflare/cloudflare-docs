@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Setup
-layout: single
 weight: 1
 ---
 
@@ -16,7 +15,7 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 {{<table-wrap>}}
 | Connection | Mode | Description |
 | ---------------------|-----------|--------------|
-| [Gateway with WARP](/cloudflare-one/policies/filtering/initial-setup/http/) | In-line | Apply identity-based HTTP policies to traffic proxied through the WARP client. |
+| [Gateway with WARP](/cloudflare-one/policies/gateway/initial-setup/http/) | In-line | Apply identity-based HTTP policies to traffic proxied through the WARP client. |
 | [Access](/cloudflare-one/policies/access/isolate-application/) | In-line | Apply identity-based HTTP policies to Access applications that are rendered in a remote browser. |
 | [Gateway proxy endpoint](/cloudflare-one/policies/browser-isolation/setup/non-identity/) | In-line | Apply non-identity HTTP policies to traffic forwarded to a proxy endpoint. |
 | [Magic WAN](/cloudflare-one/policies/browser-isolation/setup/non-identity/) | In-line | Apply non-identity HTTP policies to traffic connected through a GRE or IPsec tunnel. |
@@ -29,8 +28,8 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 To configure Browser Isolation policies:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
-2. Select **Create a policy** and enter a name for the policy.
-3. Use the HTTP policy [selectors](/cloudflare-one/policies/filtering/http-policies/#selectors) and [operators](/cloudflare-one/policies/filtering/http-policies/#comparison-operators) to specify the websites or content you want to isolate.
+2. Select **Add a policy** and enter a name for the policy.
+3. Use the HTTP policy [selectors](/cloudflare-one/policies/gateway/http-policies/#selectors) and [operators](/cloudflare-one/policies/gateway/http-policies/#comparison-operators) to specify the websites or content you want to isolate.
 4. For **Action**, choose either [_Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate) or [_Do not Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 5. (Optional) Configure [settings](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) for an Isolate policy.
 6. Select **Create policy**.
@@ -48,21 +47,21 @@ Users can see if a webpage is isolated by using one of the following methods:
 
 - A non-Cloudflare root certificate indicates that Cloudflare did not proxy this web page.
 
-  ![Website does not present a Cloudflare root certificate](/cloudflare-one/static/documentation/rbi/non-cloudflare-root-ca.png)
+  ![Website does not present a Cloudflare root certificate](/images/cloudflare-one/rbi/non-cloudflare-root-ca.png)
 
 - The right-click context menu will have all of the normal options.
 
-  ![Normal right-click menu in browser](/cloudflare-one/static/documentation/rbi/non-isolated-browser.png)
+  ![Normal right-click menu in browser](/images/cloudflare-one/rbi/non-isolated-browser.png)
 
 ### Isolated browsing
 
 - A Cloudflare root certificate indicates traffic was proxied through Cloudflare Gateway.
 
-  ![Website presents a Cloudflare root certificate](/cloudflare-one/static/documentation/rbi/cloudflare-gateway-root-ca.png)
+  ![Website presents a Cloudflare root certificate](/images/cloudflare-one/rbi/cloudflare-gateway-root-ca.png)
 
 - The right-click context menu will be simplified.
 
-  ![Simplified right-click menu in browser](/cloudflare-one/static/documentation/rbi/isolated-browser.png)
+  ![Simplified right-click menu in browser](/images/cloudflare-one/rbi/isolated-browser.png)
 
 #### Disconnect Browser Isolation
 

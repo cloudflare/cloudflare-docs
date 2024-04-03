@@ -1,17 +1,14 @@
 ---
 pcx_content_type: concept
 title: Single Redirects
-layout: single
 weight: 2
 meta:
-  title: Single Redirects (beta)
+  title: Single Redirects
 ---
 
-{{<beta>}} Single Redirects {{</beta>}}
+# Single Redirects
 
-Single Redirects allow you to create static or dynamic URL redirects [^1]. Dynamic URL redirects support advanced features such as string replacement operations and regular expressions (depending on your Cloudflare plan).
-
-[^1]: URL redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
+Single Redirects allow you to create static or dynamic URL {{<glossary-tooltip term_id="redirect">}}redirects{{</glossary-tooltip>}}. Dynamic URL redirects support advanced features such as string replacement operations and [regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions) (depending on your Cloudflare plan).
 
 ---
 

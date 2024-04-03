@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-To manage account members, you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/).
+To manage account members, you must have a role of **Super Administrator** and have a [verified email address](/fundamentals/setup/account/verify-email-address/).

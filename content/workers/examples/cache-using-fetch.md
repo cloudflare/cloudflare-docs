@@ -45,7 +45,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     const url = new URL(request.url);
     // Only use the path for the cache key, removing query strings
@@ -67,9 +67,7 @@ const handler: ExportedHandler = {
     response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -94,7 +92,7 @@ This feature is available only to Enterprise customers.
 
 {{</Aside>}}
 
-A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/create-cache-keys/) documentation.
+A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/cache-keys/#create-custom-cache-keys) documentation.
 
 ```js
 // Set cache key for this request to "some-string".
@@ -131,7 +129,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     let url = new URL(request.url);
 
@@ -146,9 +144,7 @@ const handler: ExportedHandler = {
       cf: { cacheKey: request.url },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -160,12 +156,6 @@ Workers operating on behalf of different zones cannot affect each other's cache.
 
 ## Override based on origin response code
 
-{{<Aside type="note">}}
-
-This feature is available only to Enterprise customers.
-
-{{</Aside>}}
-
 ```js
 // Force response to be cached for 86400 seconds for 200 status
 // codes, 1 second for 404, and do not cache 500 errors.
@@ -174,7 +164,7 @@ fetch(request, {
 });
 ```
 
-This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#requestinitcfproperties).
+This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties).
 
 {{</content-column>}}
 
@@ -230,11 +220,11 @@ export default {
                       '400-499': cache.clientError,
                       '500-599': cache.serverError
                       },
-                  cacheTags: [ 
+                  cacheTags: [
                       'static'
                       ]
               },
-          
+
           })
 
   const response = new Response(newResponse.body, newResponse)
@@ -245,6 +235,7 @@ export default {
   }
 }
 ```
+
 {{</tab>}}
 {{<tab label="js/sw">}}
 
@@ -291,11 +282,11 @@ const newResponse = await fetch(request,
                     '400-499': cache.clientError,
                     '500-599': cache.serverError
                     },
-                cacheTags: [ 
+                cacheTags: [
                     'static'
                     ]
             },
-        
+
         })
 
 const response = new Response(newResponse.body, newResponse)
@@ -305,5 +296,6 @@ response.headers.set('debug', JSON.stringify(cache))
 return response
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}

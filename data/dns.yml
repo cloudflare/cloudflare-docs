@@ -11,7 +11,6 @@ meta:
   description: Cloudflare DNS provides the fastest, most resilient, and simplest
     managed DNS platform to meet your needs.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/tags/c/reliability/7/none

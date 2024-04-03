@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Sometimes, you might want all traffic to a subdomain (`www.example.com`)  to actually go to your root domain (`example.com`).
+Sometimes, you might want all traffic to a subdomain (`www.example.com`)  to actually go to your apex domain (`example.com`).
 
 1.  Create a [proxied DNS A record](/dns/manage-dns-records/how-to/create-dns-records/) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
@@ -13,7 +13,7 @@ Sometimes, you might want all traffic to a subdomain (`www.example.com`)  to act
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `www`    | `192.0.2.1`      | Proxied          |
 
-2.  Create a [Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to forward traffic from your subdomain to your root domain.
+2.  Create a [Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to forward traffic from your subdomain to your apex domain.
 
 {{<example>}}
 

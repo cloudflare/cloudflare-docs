@@ -12,10 +12,12 @@ Network-layer phases apply to packets received on the Cloudflare global network.
 
 {{<table-wrap>}}
 
-Phase name      | Used in product/feature
-----------------|-------------------------------------
-`ddos_l4`       | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/configure-api/)
-`magic_transit` | [Magic Firewall](/magic-firewall/reference/examples/)
+Phase name       | Used in product/feature
+-----------------|-------------------------------------
+`ddos_l4`        | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/configure-api/)
+`magic_transit`  | [Magic Firewall](/magic-firewall/how-to/add-rules/)
+`mt_managed`     | [Magic Firewall managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/)
+`mt_ids_managed` | [Magic Firewall Intrusion Detection System (IDS)](/magic-firewall/about/ids/)
 
 {{</table-wrap>}}
 
@@ -34,7 +36,7 @@ The phases execute in the order they appear in the table.
 | `http_request_sanitize` | [URL normalization](/rules/normalization/) |
 | `http_request_transform` | [Rewrite URL Rules](/rules/transform/url-rewrite/create-api/) |
 | `http_request_origin` | [Origin Rules](/rules/origin-rules/) |
-| `http_request_cache_settings` | [Cache Rules](/cache/about/cache-rules/) |
+| `http_request_cache_settings` | [Cache Rules](/cache/how-to/cache-rules/) |
 | `http_config_settings` | [Configuration Rules](/rules/configuration-rules/) |
 | `http_request_dynamic_redirect` | [Single Redirects](/rules/url-forwarding/single-redirects/) |
 | `ddos_l7`* | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/configure-api/) |
@@ -63,6 +65,7 @@ The phases execute in the order they appear in the table.
 | http_custom_errors | [Custom error responses](/rules/custom-error-responses/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-api/) |
+| `http_response_compression` | [Compression Rules](/rules/compression-rules/) |
 | `http_response_firewall_managed` | [Cloudflare Sensitive Data Detection](/waf/managed-rules/) (Data Loss Prevention) |
 | `http_log_custom_fields` | [Logpush custom fields](/logs/reference/custom-fields/) |
 

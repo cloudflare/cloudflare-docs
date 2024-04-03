@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-If you have a Content Security Policy (CSP), you need to take additional steps to implement JavaScript detections:
+If you have a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}}, you need to take additional steps to implement JavaScript detections:
 
 - Ensure that anything under `/cdn-cgi/challenge-platform/` is allowed. Your CSP should allow scripts served from your origin domain (`script-src self`).
 - If your CSP uses a `nonce` for script tags, Cloudflare will add these nonces to the scripts it injects by parsing your CSP response header.

@@ -1,23 +1,25 @@
 ---
 title: Office 365 - Area 1 as MX Record
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
-layout: single
 meta:
    title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
+updated: 2023-01-12
 ---
 
 # Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
 
-![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/deployment/inline-setup/o365-area1-mx/office365-mx.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/o365-area1-mx/office365-mx.png)
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
+
+{{<render file="deployment/_o365-gcc.md">}}
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 {{<render file="_outbound-email.md">}}
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to Allow List
 
@@ -26,10 +28,10 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 2. Go to **Email & collaboration** > **Policies & Rules** > **Threat policies**.
 
 3. Select the [Anti-spam option](https://security.microsoft.com/antispam).
-    
+
     <div class="large-img">
-    
-    ![Select the anti-spam option](/email-security/static/deployment/inline-setup/o365-area1-mx/step3-anti-spam.png)
+
+    ![Select the anti-spam option](/images/email-security/deployment/inline-setup/o365-area1-mx/step3-anti-spam.png)
 
     </div>
 
@@ -37,7 +39,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
     <div class="large-img">
 
-    ![Select edit connection filter policy](/email-security/static/deployment/inline-setup/o365-area1-mx/step4-edit-filter-policy.png)
+    ![Select edit connection filter policy](/images/email-security/deployment/inline-setup/o365-area1-mx/step4-edit-filter-policy.png)
 
     </div>
 
@@ -45,7 +47,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
     <div class="large-img">
 
-    ![Enter the egress IP addresses](/email-security/static/deployment/inline-setup/o365-area1-mx/step5-egress-ips.png)
+    ![Enter the egress IP addresses](/images/email-security/deployment/inline-setup/o365-area1-mx/step5-egress-ips.png)
 
     </div>
 6. Select **Save**.
@@ -58,7 +60,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
     <div class="large-img">
 
-    ![Select the spam threshold and properties button](/email-security/static/deployment/inline-setup/o365-area1-mx/step9-spam-threshold.png)
+    ![Select the spam threshold and properties button](/images/email-security/deployment/inline-setup/o365-area1-mx/step9-spam-threshold.png)
 
     </div>
 
@@ -66,7 +68,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
     <div class="large-img">
 
-    ![Make sure SPF record: hard fail is set to off](/email-security/static/deployment/inline-setup/o365-area1-mx/step10-spf-record-hard-fail.png)
+    ![Make sure SPF record: hard fail is set to off](/images/email-security/deployment/inline-setup/o365-area1-mx/step10-spf-record-hard-fail.png)
 
     </div>
 
@@ -74,7 +76,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 ## 2. Enhanced Filtering configuration
 
-This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: 
+This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps:
 
 * Creating an inbound connector.
 * Enabling the enhanced filtering configuration of the connector.
@@ -87,7 +89,7 @@ This option will allow Office 365 to properly identify the original connecting I
 
     <div class="large-img">
 
-    ![Select Connectors from Mail flow](/email-security/static/deployment/inline-setup/o365-area1-mx/step2-mailflow-conectors.png)
+    ![Select Connectors from Mail flow](/images/email-security/deployment/inline-setup/o365-area1-mx/step2-mailflow-conectors.png)
 
     </div>
 
@@ -103,7 +105,7 @@ This option will allow Office 365 to properly identify the original connecting I
 
     <div class="large-img">
 
-    ![Enter a name and descriptions for your connector](/email-security/static/deployment/inline-setup/o365-area1-mx/step6-connector-options.png)
+    ![Enter a name and descriptions for your connector](/images/email-security/deployment/inline-setup/o365-area1-mx/step6-connector-options.png)
 
     </div>
 
@@ -115,7 +117,7 @@ This option will allow Office 365 to properly identify the original connecting I
 
     <div class="large-img">
 
-    ![Enter all of Area 1's Egress IPs](/email-security/static/deployment/inline-setup/o365-area1-mx/step9-egress-ips.png)
+    ![Enter all of Area 1's Egress IPs](/images/email-security/deployment/inline-setup/o365-area1-mx/step9-egress-ips.png)
 
     </div>
 
@@ -137,15 +139,15 @@ Now that the inbound connector has been configured, you will need to enable the 
 
     <div class="large-img">
 
-    ![Go to Enhanced filtering](/email-security/static/deployment/inline-setup/o365-area1-mx/step2-enhanced-filtering.png)
+    ![Go to Enhanced filtering](/images/email-security/deployment/inline-setup/o365-area1-mx/step2-enhanced-filtering.png)
 
     </div>
 
-2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters. 
+2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters.
 
 3. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
 
-    ![Select Automatically detect and skip the last IP address, and Apply to entire organization](/email-security/static/deployment/inline-setup/o365-area1-mx/step3-selectors.png)
+    ![Select Automatically detect and skip the last IP address, and Apply to entire organization](/images/email-security/deployment/inline-setup/o365-area1-mx/step3-selectors.png)
 
 4. Select **Save**.
 
@@ -153,7 +155,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 ### Select the disposition you want to quarantine
 
-Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration: 
+Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
@@ -163,15 +165,15 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 4. Select the **...** > **Edit**.
 
-5. Select the additional dispositions you want to quarantine.
+5. Select the additional {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} you want to quarantine.
 
     <div class="large-img">
 
-    ![Manage domain quarantines](/email-security/static/deployment/inline-setup/o365-area1-mx/step4-area1-dispositions.png)
+    ![Manage domain quarantines](/images/email-security/deployment/inline-setup/o365-area1-mx/step4-area1-dispositions.png)
 
     </div>
 
-{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, `Malicious` and `Spam` detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
+{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, `MALICIOUS` and `SPAM` detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
 
 ### Manage the Admin Quarantine
 
@@ -183,7 +185,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
     <div class="large-img">
 
-    ![Manage admin quarantines](/email-security/static/deployment/inline-setup/o365-area1-mx/step4-manage-admin-quarantine.png)
+    ![Manage admin quarantines](/images/email-security/deployment/inline-setup/o365-area1-mx/step4-manage-admin-quarantine.png)
 
     </div>
 
@@ -201,7 +203,7 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 
 Office 365 (O365) has various options, as well as limitations, as to how quarantine email messages. Refer to [Office 365 use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for more information.
 
-The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 example tutorials will cover:
+The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 [example tutorials](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) will cover:
 
 - **Use case 1**: Deliver emails to Office 365 junk email folder and Admin Quarantine in Area 1 (Recommended)
 - **Use case 2**: Deliver emails to junk email folder and user managed quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 dashboard)
@@ -213,14 +215,14 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts. For example:
 
-{{<render file="_mx-deployment-values.md">}}
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
 ### Secure Office 365 from MX records bypass (recommended)
 
-One method of DNS attacks is to search for old MX records and send phishing emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encryption. This step is optional but recommended.
+One method of DNS attacks is to search for old MX records and send {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encryption. This step is optional but recommended.
 
 {{<Aside type="warning" header="Important">}}
 This step should not be performed until 24 hours after all domains (excluding your `<on_microsoft.com>` domain) in your Office 365 organization have been onboarded to Area 1, and Area 1 is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
@@ -228,7 +230,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 
 #### Configure domains
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/). 
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -258,7 +260,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 
     <div class="large-img">
 
-    ![Enter an asterisk in the text box, and select the plus button](/email-security/static/deployment/inline-setup/o365-area1-mx/step9-create-conector.png)
+    ![Enter an asterisk in the text box, and select the plus button](/images/email-security/deployment/inline-setup/o365-area1-mx/step9-create-conector.png)
 
     </div>
 
@@ -268,7 +270,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 
     <div class="large-img">
 
-    ![Enter all the egress IPs for Office 365](/email-security/static/deployment/inline-setup/o365-area1-mx/step12-egress-ips.png)
+    ![Enter all the egress IPs for Office 365](/images/email-security/deployment/inline-setup/o365-area1-mx/step12-egress-ips.png)
 
     </div>
 
@@ -281,50 +283,50 @@ The following steps are only required if you have not previously customized your
 
 1. Run PowerShell as administrator, and execute the following command. Reply `Yes` when prompted:
 
-```txt
+```powershell
 PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 ```
 
-![Run the install-module command in PowerShell](/email-security/static/deployment/inline-setup/o365-area1-mx/step1-install-module.png)
+![Run the install-module command in PowerShell](/images/email-security/deployment/inline-setup/o365-area1-mx/step1-install-module.png)
 
 {{<Aside type="note">}}This module is a Microsoft module.{{</Aside>}}
 
 2. Run the following commands to execute the policy change and connect to the Office 365 instance:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> set-executionpolicy remotesigned
     ```
 
     Confirm that you want to execute the policy change, and then run the following command:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> Import-Module ExchangeOnlineManagement
     ```
 
     Finally, run the following to authenticate against your Office 365 instance:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> Connect-ExchangeOnline
     ```
 
-    ![Run the commands to execute the policy change](/email-security/static/deployment/inline-setup/o365-area1-mx/step2-set-executionpolicy.png)
+    ![Run the commands to execute the policy change](/images/email-security/deployment/inline-setup/o365-area1-mx/step2-set-executionpolicy.png)
 
 3. The `Connect-ExchangeOnline` cmdlet will prompt you to login. Log in using an Office 365 administrator account. Once authenticated, you will be returned to the PowerShell prompt.
 
-    ![Log in with an Office 365 admin account](/email-security/static/deployment/inline-setup/o365-area1-mx/step3-connect-exchange.png)
+    ![Log in with an Office 365 admin account](/images/email-security/deployment/inline-setup/o365-area1-mx/step3-connect-exchange.png)
 
 4. You can verify that the `OrganizationCustomization` is enabled by running the command:
 
-```txt
+```powershell
 PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
 ```
 
-![Run the get-organizationconfig command](/email-security/static/deployment/inline-setup/o365-area1-mx/step4-get-organizationconfig.png)
+![Run the get-organizationconfig command](/images/email-security/deployment/inline-setup/o365-area1-mx/step4-get-organizationconfig.png)
 
 If the result is `false`, `OrganizationCustomization` is already enabled and no further actions are required. If it is true, you need to enable it:
 
-```txt
+```powershell
 PS C:\> Enable-OrganizationCustomization
 ```
 
-![If the previous result is true, enable the organization customization mode](/email-security/static/deployment/inline-setup/o365-area1-mx/step4-enable-organizationcustomization.png)
+![If the previous result is true, enable the organization customization mode](/images/email-security/deployment/inline-setup/o365-area1-mx/step4-enable-organizationcustomization.png)

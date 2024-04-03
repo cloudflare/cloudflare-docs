@@ -8,17 +8,6 @@ meta:
 
 # Require WARP
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP with Gateway                                                                         | All plans                                                     |
-
-</div>
-</details>
-
 {{<Aside type="note">}}
 
 This device posture attribute will check for all versions of WARP, including the consumer version.
@@ -26,6 +15,10 @@ This device posture attribute will check for all versions of WARP, including the
 {{</Aside>}}
 
 Cloudflare Zero Trust enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare Zero Trust.
+
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## 1. Enable the WARP check
 
@@ -39,7 +32,7 @@ You are now ready to start requiring WARP for your Access applications.
 
 ## 2. Add the check to an Access policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access > Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Locate the application for which you want to require WARP.
 

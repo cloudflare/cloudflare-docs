@@ -11,7 +11,6 @@ meta:
   title: Cloudflare Spectrum docs
   description: DDoS protection for everything.
   author: '@cloudflare'
-  
 
 resources:
   community: https://community.cloudflare.com/c/website-application-performance/spectrum/48

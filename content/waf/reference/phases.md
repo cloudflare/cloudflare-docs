@@ -1,8 +1,8 @@
 ---
 title: Phases
 pcx_content_type: reference
-weight: 3
-layout: list
+weight: 2
+layout: wide
 ---
 
 # WAF phases
@@ -19,7 +19,7 @@ These phases exist both at the account level and at the zone level. Considering 
 
 WAF feature  | Scope | Phase | Ruleset kind | Location in the dashboard
 -------------|-------|-------|--------------|--------------------------
-[Custom rulesets](/waf/custom-rulesets/)<br> | Account | `http_request_firewall_custom` | `custom`&nbsp;(create)<br/>`root` (deploy) | Account Home > **WAF** > **Custom rulesets**
+[Custom rulesets](/waf/custom-rules/custom-rulesets/)<br> | Account | `http_request_firewall_custom` | `custom`&nbsp;(create)<br/>`root` (deploy) | Account Home > **WAF** > **Custom rulesets**
 [Custom rules](/waf/custom-rules/) | Zone | `http_request_firewall_custom` | `zone` | Your zone > **Security** > **WAF** > **Custom rules**
 [Rate limiting rules](/waf/rate-limiting-rules/) | Account | `http_ratelimit` | `root` | Account Home > **WAF** > **Rate limiting rulesets**
 [Rate limiting rules](/waf/rate-limiting-rules/) | Zone | `http_ratelimit` | `zone` | Your zone > **Security** > **WAF** > **Rate limiting rules**

@@ -1,7 +1,6 @@
 ---
 title: Get started
 pcx_content_type: get-started
-layout: single
 weight: 3
 meta:
   title: Enabling Cloudflare Web Analytics
@@ -32,7 +31,7 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 
 {{<render file="_web-analytics-proxied-setup.md">}}
 
-Your website is now using Web Analytics through the automatic setup, which is enabled by default. 
+Your website is now using Web Analytics through the automatic setup, which is enabled by default.
 
 To set up Web Analytics manually:
 1. After step 4 (above), expand **Advanced options**.
@@ -48,7 +47,7 @@ For more information on how to configure which sites or pages you track with Web
 
 {{<Aside type="warning" header="Important">}}
 
-If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information.
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information.
 
 {{</Aside>}}
 

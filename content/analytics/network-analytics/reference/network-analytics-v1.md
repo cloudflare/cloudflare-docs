@@ -1,27 +1,28 @@
 ---
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics-v1
-title: Cloudflare Network Analytics v1
+title: Network Analytics v1 (deprecated)
+meta:
+  title: Cloudflare Network Analytics v1 (deprecated)
+  description: Network Analytics v1 (deprecated) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
+weight: 3
 ---
 
-# Cloudflare Network Analytics v1
+{{<heading-pill style="deprecated">}} Cloudflare Network Analytics v1 {{</heading-pill>}}
+
+{{<Aside type="warning">}}
+- {{<render file="_network-analytics-v1-deprecation.md">}}
+- If you are using the Network Analytics GraphQL API, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{</Aside>}}
 
 Access to Network Analytics requires the following:
 
 -   A Cloudflare Enterprise plan
 -   Cloudflare [Magic Transit](/magic-transit/) or [Spectrum](/spectrum/).
 
-Cloudflare’s **Network Analytics** view provides near real-time visibility into network- and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the [GraphQL Analytics API](/analytics/graphql-api/).
+Cloudflare’s **Network Analytics** view provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the [GraphQL Analytics API](/analytics/graphql-api/).
 
-{{<Aside type="note">}}
--   **The Network Analytics v2 (NAv2) dashboard is now available.** For
-    more information, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
--   There is also new version of the Network Analytics GraphQL API. If
-    you are still using NAv1, you should migrate from NAv1 to NAv2 by
-    following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
-{{</Aside>}}
-
-![Analytics panel showing packets summary per type](/support/static/na-main-dashboard.png)
+![Analytics panel showing packets summary per type](/images/analytics/network-analytics/v1-main-dashboard.png)
 
 Network Analytics accelerates reporting and investigation of malicious traffic. You can filter data by these parameters:
 
@@ -42,32 +43,24 @@ Use Network Analytics to quickly identify key intelligence:
 
 ___
 
-You can access the **Network Analytics** view from your Cloudflare account’s Home page.
+## Access Network Analytics v1
 
-To access the **Network Analytics** view, follow these steps:
-
-1.  Log in to your Cloudflare account.
-2.  If you have multiple accounts, select an account that has access to Magic Transit or Spectrum.
-3.  On the account’s **Home** page, click **Network Analytics**.
-
-{{<Aside type="note">}}
-Source IPs are stored for 30 days. Report periods older than 30 days do
-not include source IP data.
-{{</Aside>}}
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account that has access to Magic Transit or Spectrum.
+2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
 ___
 
-## Navigate Network Analytics
+## Navigate Network Analytics v1
 
 ### Headline summary and side panels
 
 The headline and the side panels provide a summary of activity over the period selected in the **timeframe** drop-down list.
 
-![Headline and side panel summarizing activity over the last 24 hours](/support/static/na-navigate.png)
+![Headline and side panel summarizing activity over the last 24 hours](/images/analytics/network-analytics/v1-navigate.png)
 
 The headline provides the total packets or bits and the number of attacks detected and mitigated. When there is an attack in progress, the headline displays the maximum rate of packets (or bits) rather than the total count.
 
-To toggle your view of the data, click the **Packets** or **Bits** side panels.
+To toggle your view of the data, select the **Packets** or **Bits** side panels.
 
 ### Set the timeframe for the view
 
@@ -75,9 +68,13 @@ Use the **timeframe** drop-down list to change the time range over which Network
 
 When you select _Last 30 minutes_, the **Network Analytics** view displays the data from the last 30 minutes, refreshing every 20 seconds. A _Live_ notification appears next to the statistic drop-down list to let you know that the view keeps updating automatically:
 
-![Auto-refresh enabled in Network Analytics](/support/static/hc-dash-Network_Analytics-auto_refresh.png)
+![Auto-refresh enabled in Network Analytics](/images/analytics/network-analytics/v1-auto-refresh.png)
 
 When you select the _Custom range_ option, you can specify a time range of up to 30 days throughout any period during the last 365 days.
+
+{{<Aside type="note">}}
+Source IPs are stored for 30 days. Report periods older than 30 days do not include source IP data.
+{{</Aside>}}
 
 ### View by average rate or total volume 
 
@@ -85,31 +82,29 @@ Choose a statistic from the drop-down list to toggle between plotting _Average r
 
 ### Show IP prefix advertisement/withdrawal events
 
-Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Click each annotation to get more details.
+Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Select each annotation to get more details.
 
-![Toggle button for displaying annotations in Network Analytics chart](/support/static/hc-dash-Network_Analytics-show_annotations.png)
+![Toggle button for displaying annotations in Network Analytics chart](/images/analytics/network-analytics/v1-show-annotations.png)
 
 ### Zoom into the Packets summary 
 
-Click and drag your mouse on a region of the chart to zoom in. Using this technique you can zoom into a time range as short as 3 minutes.
+Select and drag to zoom in on a region of the chart. Using this technique you can zoom into a time range as short as three minutes.
 
-![Zooming into the Packets summary ](/support/static/unnamed.gif)
+![Zooming into the Packets summary ](/images/analytics/network-analytics/v1-zoom-in.gif)
 
-To zoom out, click the **X** icon in the **time range** selector.
+To zoom out, select **X** in the **time range** selector.
 
 ___
 
 ## Apply filters to data
 
-You can apply multiple filters and exclusions to adjust the scope of the data displayed in Network Analytics.
+You can apply multiple filters and exclusions to adjust the scope of the data displayed in Network Analytics. Filters affect all the data displayed in the Network Analytics page.
 
-Filters affect all of the data displayed in the Network Analytics page.
-
-There are two ways to filter Network Analytics data—use the **Add filter** button or click on one of the **stat filters**.
+There are two ways to filter Network Analytics data: use the **Add filter** button or select one of the stat filters.
 
 ### Use the Add filter button
 
-Click the **Add filter** button to open the **New filter** popover. Specify a field, an operator, and a value to complete your filter expression. Click **Apply** to update the view.
+Select **Add filter** to open the **New filter** popover. Specify a field, an operator, and a value to complete your filter expression. Select **Apply** to update the view.
 
 When applying filters, observe these guidelines:
 
@@ -121,7 +116,7 @@ When applying filters, observe these guidelines:
 
 To filter based on the type of data associated with one of the Network Analytics stats, use the **Filter** and **Exclude** buttons that display when you hover your pointer over the stat. 
 
-In this example, clicking the **Filter** button narrows the scope of the view to only traffic associated with the _Allow_ action.
+In this example, selecting **Filter** narrows the scope of the view to only traffic associated with the _Allow_ action.
 
 ### Create a Magic Firewall rule from the applied filters
 
@@ -143,15 +138,15 @@ Do the following:
 
 1. Apply one or more filters in Network Analytics.
 
-2. Click **Create Magic Firewall rule**. 
+2. Select **Create Magic Firewall rule**.
 
-![Creating a Firewall Rule link in Network Analytics](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
+    ![Link in Network Analytics to create a Magic Firewall rule](/images/analytics/network-analytics/v1-create-magic-firewall-rule.png)
 
-The Magic Firewall rule editor displays with the selected filters and values.
+    The Magic Firewall rule editor displays with the selected filters and values.
 
 3. Review the rule definition in the Magic Firewall rule editor.
 
-4. Click **Add new**.
+4. Select **Add new**.
 
 ### Supported filter fields, operators, and values 
 
@@ -182,8 +177,6 @@ You can plot Network Analytics data along a variety of dimensions. By default, N
 
 Select one of the **Summary** tabs to view the data along a different dimension.
 
-![Visualizing data across multiple dimensions](/support/static/unnamed__1_.gif)
-
 You can choose from these options: 
 
 -   Action
@@ -200,8 +193,7 @@ You can choose from these options: 
 -   TCP flag
 
 {{<Aside type="note">}}
-Data for source ASN, source IP, source port, and TCP flag is only
-available over the last 24 hours.
+Data for source ASN, source IP, source port, and TCP flag is only available over the last 24 hours.
 {{</Aside>}}
 
 ### Share Network Analytics filters 
@@ -210,7 +202,7 @@ When you add filters and specify a time range in the Network Analytics page, the
 
 To share your view of the data, copy the URL and send it to other users so that they can work with the same view.
 
-![Selecting the URL of the Network Analytics page](/support/static/hc-dashboard-network-analytics-6.png)
+![Selecting the URL of the Network Analytics page](/images/analytics/network-analytics/v1-share-url.png)
 
 ___
 
@@ -218,11 +210,11 @@ ___
 
 The Network Analytics **Activity log** shows up to 500 log events in the currently selected time range, paginated with 10 results per page per time range view. (The [GraphQL Analytics API](/analytics/graphql-api/) does not have this limitation.) 
 
-To display event details, click the expansion widget associated with the events.
+To display event details, select the expansion widget associated with the events.
 
 ### Configure columns
 
-To configure which columns display in the Activity log, click the **Edit columns** button. 
+To configure which columns display in the Activity log, select **Edit columns**. 
 
 This is particularly useful when you would like to identify a DDoS attack, during which you can specify the desired attributes such as IP addresses, max bit rate, and attack ID among others.
 
@@ -240,19 +232,19 @@ ___
 
 ### Export activity log data 
 
-You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a security information and event management system (SIEM).
+You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}}.
 
-To export log data, click **Export**.
+To export log data, select **Export**.
 
 Choose either CSV or JSON format for rendering exported data. The downloaded file name will reflect the selected time range, using this pattern:
 
-_network-analytics-attacks-\[start time\]-\[end time\].json_
+```txt
+network-analytics-attacks-[start_time]-[end_time].json
+```
 
 ### Export a Network Analytics report 
 
-To print or download a snapshot report from **Network Analytics**, follow these steps:
-
-Click **Print report**. Your web browser's print interface displays options for printing or saving as a PDF.
+To print or download a snapshot report from **Network Analytics**, select **Print report**. Your web browser's print interface displays options for printing or saving as a PDF.
 
 ___
 
@@ -261,12 +253,15 @@ ___
 Network Analytics currently has these limitations:
 
 -   Network Analytics v1 provides insights on [denial of service daemon (dosd)](https://blog.cloudflare.com/who-ddosd-austin/) attacks. Although it provides a timely view of the data, it does not have a complete view of all events. 
+
 -   The following data sources are not available in Network Analytics v1:
-    -   Firewall Rules _(available in Network Analytics v2)_
+
+    -   Firewall Rules (available in [Network Analytics v2](/analytics/network-analytics/))
     -   Application layer rules
     -   Gatekeeper and manually applied rules
-    -   [flowtrackd](https://blog.cloudflare.com/announcing-flowtrackd/) (Advanced TCP protection) _(available in Network Analytics v2)_
-    -   WARP traffic and [Orange-clouded traffic](https://support.cloudflare.com/hc/en-us/articles/205177068)
+    -   [flowtrackd](https://blog.cloudflare.com/announcing-flowtrackd/) (Advanced TCP protection) (available in Network Analytics v2)
+    -   WARP traffic and [Orange-clouded traffic](/fundamentals/concepts/how-cloudflare-works/)
+
 -   Data from Cloudflare services that proxy traffic, such as CDN, is not available in Network Analytics.
 
 ___

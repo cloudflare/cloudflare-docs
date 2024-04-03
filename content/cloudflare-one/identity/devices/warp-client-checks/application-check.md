@@ -6,19 +6,21 @@ weight: 1
 
 # Application check
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
-
 The Application Check device posture attribute checks that a specific application process is running on a device. You can create multiple application checks for each operating system you need to run it on, or if you need to check for multiple applications.
+
+## Prerequisites
+
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/)">}}
 
 ## Configure an application check
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
-2.  Scroll down to **WARP client checks** and select **Add new**.
+2. Scroll down to **WARP client checks** and select **Add new**.
 
-3.  Select **Application Check**.
+3. Select **Application Check**.
 
-4.  You will be prompted for the following information:
+4. You will be prompted for the following information:
     1. **Name**: Enter a unique name for this device posture check.
     2. **Operating system**: Select your operating system.
     3. **Application path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
@@ -33,7 +35,7 @@ The Application Check device posture attribute checks that a specific applicatio
 
 5. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the application check is returning the expected results.
+Next, go to **Logs** > **Posture** and verify that the application check is returning the expected results.
 
 ## Determine the signing thumbprint
 
@@ -45,7 +47,7 @@ When setting up new device posture checks, we recommend first testing them witho
 
 {{</Aside>}}
 
-### On macOS
+### macOS
 
 1. Create a directory.
 
@@ -69,20 +71,20 @@ When setting up new device posture checks, we recommend first testing them witho
    SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E
    ```
 
-### On Windows
+### Windows
 
 1. Open a PowerShell window.
 2. Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
 
-   ```bash
-   PS C:\>Users\JohnDoe> Get-AuthenticodeSignature -FilePath c:\myfile.exe
+   ```powershell
+   PS C:\Users\JohnDoe> Get-AuthenticodeSignature -FilePath c:\myfile.exe
    ```
 
 ## Determine the SHA-256 value
 
 The SHA-256 value almost always changes between versions of a file/application.
 
-### On macOS
+### macOS
 
 1. Open a Terminal window.
 2. Use the `shasum` command to find the SHA256 value of the file. For example:
@@ -91,35 +93,35 @@ The SHA-256 value almost always changes between versions of a file/application.
    $ shasum -a 256 myfile
    ```
 
-### On Windows
+### Windows
 
 1. Open a PowerShell window.
 2. Use the `get-filehash` command to find the SHA256 value of the file. For example:
 
-   ```bash
-   PS C:\>Users\JohnDoe> get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
+   ```powershell
+   PS C:\Users\JohnDoe> get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
    ```
 
 ## How WARP checks for an application
 
 Learn how the WARP client determines if an application is running on various systems.
 
-### On macOS
+### macOS
 
 To get the list of active processes, run the following command:
 
 ```sh
-$ ps -eo comm | xargs which | sort | uniq -u
+$ ps -eo comm | xargs which | sort | uniq
 ```
 
 The application path must appear in the output for the check to pass.
 
-### On Linux
+### Linux
 
 The WARP client gets the list of running binaries by following the soft links in `/proc/<pid>/exe`. To view all active processes and their soft links:
 
 ```sh
-$ ps -eo pid | awk '{print "/proc/"$1"/exe"}' | xargs readlink -f | awk '{print $1}' | sort | uniq -u
+$ ps -eo pid | awk '{print "/proc/"$1"/exe"}' | xargs readlink -f | awk '{print $1}' | sort | uniq
 ```
 
 The application path must appear in the `/proc/<pid>/exe` output for the check to pass.

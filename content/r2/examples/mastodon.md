@@ -1,6 +1,7 @@
 ---
 title: Mastodon
 pcx_content_type: tutorial
+updated: 2023-01-31
 ---
 
 # Use R2 with Mastodon
@@ -42,16 +43,16 @@ While configuring your Mastodon instance based on the official [configuration fi
 S3_ENABLED=true
 S3_ALIAS_HOST={{mastodon-files.example.com}}                  # Change to the hostname determined in step 1
 S3_BUCKET={{your-bucket-name}}                                # Change to the bucket name set in step 2
-S3_ENDPOINT=https://{{unique-id}}.r2.cloudflarestorage.com/   # Change the {{unique-id}} to the part of S3 API retrived in step 2
-AWS_ACCESS_KEY_ID={{your-access-key-id}}                      # Change to the Access Key ID retrived in step 2
-AWS_SECRET_ACCESS_KEY={{your-secret-access-key}}              # Change to the Secret Access Key retrived in step 2
+S3_ENDPOINT=https://{{unique-id}}.r2.cloudflarestorage.com/   # Change the {{unique-id}} to the part of S3 API retrieved in step 2
+AWS_ACCESS_KEY_ID={{your-access-key-id}}                      # Change to the Access Key ID retrieved in step 2
+AWS_SECRET_ACCESS_KEY={{your-secret-access-key}}              # Change to the Secret Access Key retrieved in step 2
 S3_PROTOCOL=https
 S3_PERMISSION=private
 ```
 
 After configuration, you can run your instance. After the instance is running, upload a media attachment and verify the attachment is retrieved from the hostname set above. When navigating back to the bucket's page in R2, you should see the following structure.
 
-![Mastodon bucket structure after instance is set up and running](/r2/static/mastodon-r2-bucket-structure.png)
+![Mastodon bucket structure after instance is set up and running](/images/r2/mastodon-r2-bucket-structure.png)
 
 ## Migrate to R2
 
@@ -71,7 +72,7 @@ If you had the media files hosted locally, you will likely need to set up redire
 
 [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) are available for all plans. Refer to [Create Bulk Redirects in the dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/) for more information.
 
-![List of Source URLs and their new Target URLs as part of Bulk Redirects](/r2/static/mastodon-r2-bulk-redirects.png)
+![List of Source URLs and their new Target URLs as part of Bulk Redirects](/images/r2/mastodon-r2-bulk-redirects.png)
 
 ### 3. Verify bucket and redirects
 

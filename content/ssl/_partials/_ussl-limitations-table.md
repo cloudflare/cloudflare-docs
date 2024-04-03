@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-By default, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) only cover your root domain and one level of subdomain.
+By default, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) only cover your apex domain and one level of subdomain.
 
 | Hostname | Covered by Universal certificate? |
 | --- | --- |

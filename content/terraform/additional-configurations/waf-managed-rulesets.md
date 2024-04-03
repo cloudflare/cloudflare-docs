@@ -69,11 +69,10 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 }
 ```
 
-<details>
-<summary>Account-level example configuration</summary>
-<div>
+{{<details header="Account-level example configuration">}}
 
 {{<Aside type="note" header="Before you start">}}
+
 * Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 * Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
@@ -113,12 +112,11 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Configure skip rules
 
-The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
+The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or exceptions) for the Cloudflare Managed Ruleset:
 
 * The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`) for specific URLs, according to the rule expression.
 * The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
@@ -187,8 +185,6 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 {{<Aside type="warning" header="Important">}}
 Ruleset overrides and tag overrides apply to both existing and **future** rules in the managed ruleset. If you wish to override existing rules only, you must use rule overrides.
-
-In the rules-level or category-level override, use the `status` field to indicate whether the override enables or disables the ruleset rules or category.
 {{</Aside>}}
 
 The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
@@ -209,16 +205,16 @@ highlight: 9-24
         rules {
           id = "5de7edfa648c4d6891dc3e7f84534ffa"
           action = "log"
-          status = "enabled"
+          enabled = true
         }
         rules {
           id = "75a0060762034a6cb663fd51a02344cb"
-          status = "disabled"
+          enabled = false
         }
         categories {
           category = "wordpress"
           action = "js_challenge"
-          status = "enabled"
+          enabled = true
         }
       }
     }
@@ -296,11 +292,11 @@ highlight: 8-25
         # tags "paranoia-level-3" and "paranoia-level-4".
         categories {
           category = "paranoia-level-3"
-          status = "disabled"
+          enabled = false
         }
         categories {
           category = "paranoia-level-4"
-          status = "disabled"
+          enabled = false
         }
         rules {
           id = "6179ae15870a4bb7b2d480d4843b323c"

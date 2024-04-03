@@ -10,7 +10,6 @@ meta:
   title: Cloudflare Page Shield docs
   description: Provide client-side protection as part of your domain's firewall
   author: '@cloudflare'
-  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/page-shield

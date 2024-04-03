@@ -6,13 +6,17 @@ weight: 0
 
 # Bot Management variables
 
-## Firewall fields
+## Ruleset Engine fields
 
 {{<render file="_firewall-variables.md">}}
 
 ## Workers variables
 
 {{<render file="_workers-cf-request.md">}}
+
+## Corporate Proxy
+
+{{<render file="_corporate_proxy.md">}}
 
 ## Log fields
 

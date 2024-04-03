@@ -69,7 +69,7 @@ Mobile devices tend to be considerably more present when examining human generat
 Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use.
 {{</Aside>}}
 
-For more information refer to [Get time series of device types](/api/operations/radar_get_TimeseriesDeviceType).
+For more information refer to [Get device types time series](/api/operations/radar-get-http-timeseries-group-by-device-type).
 
 ### Summary
 
@@ -97,7 +97,7 @@ Here is the abbreviated response:
 }
 ```
 
-For more information refer to the [API reference](/api/operations/radar_get_SummaryDeviceType) for this endpoint.
+For more information refer to the [API reference](/api/operations/radar-get-http-summary-by-device-type) for this endpoint.
 
 #### Example: breakdown by IP version and human/bot traffic
 
@@ -123,7 +123,7 @@ This returns the following:
 
 Bots tend to use more IPv4 addresses.
 
-It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/operations/radar_get_SummaryIpVersion) for other parameters.
+It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/operations/radar-get-http-summary-by-ip-version) for other parameters.
 
 If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
@@ -166,7 +166,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_ve
 
 According to the returned data, India is leading in IPv6 adoption.
 
-For more information refer to the [API reference](/api/operations/radar_get_HttpTopLocationsByIpVersion) for this endpoint.
+For more information refer to the [API reference](/api/operations/radar-get-http-top-locations-by-ip-version) for this endpoint.
 
 ## Next steps
 

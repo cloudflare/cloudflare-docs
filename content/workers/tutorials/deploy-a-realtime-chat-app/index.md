@@ -1,5 +1,5 @@
 ---
-updated: 2022-07-21
+updated: 2023-09-13
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -8,13 +8,13 @@ title: Deploy a real-time chat application
 
 # Deploy a real-time chat application
 
-In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/workers/learning/using-durable-objects/). 
+{{<render file="_tutorials-before-you-start.md">}}
+
+In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/). 
 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 
-To continue with this tutorial, you must:
-1. Install [Wrangler v2](/workers/wrangler/install-and-update/).
-2. Purchase the Workers Paid plan and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > select your Worker > **Durable Objects**.
+To continue with this tutorial, you must purchase the [Workers Paid plan](/workers/platform/pricing/#workers) and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > select your Worker > **Durable Objects**.
 
 ## Clone the chat application repository
 
@@ -29,15 +29,15 @@ $ git clone https://github.com/cloudflare/workers-chat-demo.git
 After you have cloned the repository, authenticate Wrangler by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
-## Publish your project
+## Deploy your project
 
 When you are ready to deploy your application, run:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
 Your application will be deployed to your `*.workers.dev` subdomain. 
@@ -90,7 +90,7 @@ tag = "v2"
 deleted_classes = ["ChatRoom", "RateLimiter"]
 ```
 
-Then run `wrangler publish`.
+Then run `npx wrangler deploy`.
 
 To delete your Worker:
 

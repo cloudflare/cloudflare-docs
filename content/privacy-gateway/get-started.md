@@ -36,7 +36,7 @@ Use the following resources for help with server configuration:
     - [Sample gateway server](https://github.com/cloudflare/privacy-gateway-server-go)
     - [Gateway library](https://github.com/chris-wood/ohttp-go)
 - **Rust**: [Gateway library](https://github.com/martinthomson/ohttp/tree/main/ohttp-server)
-- **Javascript / Typescript**: [Gateway library](https://github.com/chris-wood/ohttp-js)
+- **JavaScript / TypeScript**: [Gateway library](https://github.com/chris-wood/ohttp-js)
 
 ---
 
@@ -52,7 +52,7 @@ Use the following resources for help with client configuration:
 
 - **Objective C**: [Sample application](https://github.com/cloudflare/privacy-gateway-client-demo)
 - **Rust**: [Client library](https://github.com/martinthomson/ohttp/tree/main/ohttp-client)
-- **Javascript / Typescript**: [Client library](https://github.com/chris-wood/ohttp-js)
+- **JavaScript / TypeScript**: [Client library](https://github.com/chris-wood/ohttp-js)
 
 ---
 

@@ -1,7 +1,9 @@
 ---
 pcx_content_type: navigation
 title: Logs
-weight: 6
+weight: 3
+meta:
+    title: Zero Trust logs
 ---
 
 # Zero Trust logs
@@ -18,6 +20,8 @@ Cloudflare Zero Trust logs are stored for a varying period of time based on the 
 | --------------- | ---------- | ----------- | -------- | ------------ | --------- |
 | **Free**        | 24 hours   | 24 hours    | 24 hours | 24 hours     | 24 hours  |
 | **Standard**    | 30 days    | 30 days     | 30 days  | 30 days      | 30 days   |
+| **Access**      | 30 days    | 30 days     | 24 hours | 24 hours     | 24 hours  |
+| **Gateway**     | 30 days    | 24 hours    | 30 days  | 30 days      | 30 days   |
 | **Enterprise**  | 180 days   | 180 days    | 180 days | 30 days      | 30 days   |
 
 ## Customer Metadata Boundary
@@ -26,4 +30,4 @@ Cloudflare Zero Trust can be used with the Data Localization Suite to ensure tha
 
 ## Data privacy
 
-For more information on how we use this data, please refer to our [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/).
+For more information on how we use this data, refer to our [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/).

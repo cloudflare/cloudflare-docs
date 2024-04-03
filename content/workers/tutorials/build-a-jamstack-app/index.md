@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list JAMstack application
-layout: single
 ---
 
 # Build a todo list JAMstack application
@@ -15,16 +14,16 @@ layout: single
 
 ## Overview
 
-In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/workers/runtime-apis/kv/).
+In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
-![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](./media/finished.png)
+![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](/images/workers/tutorials/jamstack/finished.png)
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 
 1.  How building with Workers makes it easy to focus on writing code and ship finished products.
 2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
-If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
+If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/kristianfreeman/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
 
 ## Init
 
@@ -36,7 +35,7 @@ In your terminal, create a Worker project with your desired project name; for ex
 ---
 header: Generate a project
 ---
-$ wrangler init todos
+$ npx wrangler init todos
 $ cd todos
 ```
 
@@ -89,7 +88,7 @@ To get started with KV, set up a namespace. All of your cached data will be stor
 ---
 header: Create a new KV namespace
 ---
-$ wrangler kv:namespace create "TODOS" --preview
+$ npx wrangler kv:namespace create "TODOS" --preview
 ```
 
 Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
@@ -750,4 +749,4 @@ addEventListener('fetch', event => {
 });
 ```
 
-You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos).
+You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/kristianfreeman/cloudflare-workers-todos).

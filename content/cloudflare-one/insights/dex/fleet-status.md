@@ -10,9 +10,9 @@ With DEX, you can monitor your users' devices and connection status.
 
 ## View metrics
 
-To view an overview of all enrolled devices, go to **DEX** > **Monitoring**. The **Fleet status** tab will show real-time and historical connectivity metrics for all devices in your organization.
+To view an overview of all enrolled devices, go to **DEX** > **Monitoring**. The **Fleet Status** tab will show real-time and historical connectivity metrics for all devices in your organization.
 
-To view analytics on a per-device level, go to **My Team** > **Devices**. The **DEX** tab will show real-time and historical connectivity metrics for the selected device.
+To view analytics on a per-device level, go to **My Team** > **Devices**. The **Fleet Status** tab will show real-time and historical connectivity metrics for the selected device.
 
 ## Available metrics
 

@@ -20,7 +20,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 
 - Azure AD Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
-- [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) enabled on your devices
+- [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) enabled on your devices
 - (Recommended) [`wrangler`](/workers/wrangler/install-and-update/) installation
 
 ## 1. Set up Azure AD as an identity provider
@@ -41,7 +41,7 @@ Once the base IdP integration is tested and working, enable additional permissio
 
 2. Select the application you created for the IdP integration.
 
-3. Navigate to **API permissions** and select **Add a permission**.
+3. Go to **API permissions** and select **Add a permission**.
 
 4. Select **Microsoft Graph**.
 
@@ -58,7 +58,7 @@ Once the base IdP integration is tested and working, enable additional permissio
 
 You will see the list of enabled permissions.
 
-![API permissions in Azure AD](/cloudflare-one/static/documentation/identity/azure/risky-users-permissions.png)
+![API permissions in Azure AD](/images/cloudflare-one/identity/azure/risky-users-permissions.png)
 
 ## 3. Add risky users to Azure AD group
 
@@ -78,7 +78,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    $ wrangler generate risky-users https://github.com/cloudflare/msft-risky-user-ad-sync
    ```
 
-3. Navigate to the project directory.
+3. Go to the project directory.
 
    ```sh
    $ cd risky-users
@@ -86,7 +86,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
 4. Modify `wrangler.toml` to include the following values:
 
-   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+   - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
    - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
@@ -110,13 +110,13 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    ```
 
 {{<Aside type="note">}}
-The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/triggers/cron-triggers/#supported-cron-expressions) about supported cron expressions.
+The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedules the script to run every minute. Learn more about [supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 {{</Aside>}}
 
-5. Publish the Worker to your Workers account.
+5. Deploy the Worker to Cloudflare's global network.
 
    ```sh
-   $ wrangler publish
+   $ npx wrangler deploy
    ```
 
 6. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
@@ -135,7 +135,7 @@ $ wrangler tail --format pretty
 
 After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
 
-![Risky user groups in the Azure AD dashboard](/cloudflare-one/static/documentation/identity/azure/risky-users-groups.png)
+![Risky user groups in the Azure AD dashboard](/images/cloudflare-one/identity/azure/risky-users-groups.png)
 
 ## 4. Synchronize risky user groups
 
@@ -152,25 +152,17 @@ Cloudflare Access will now synchronize changes in group membership with Azure AD
 
 ## 5. Create a browser isolation policy
 
-Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/filtering/http-policies/) to isolate traffic for risky user groups.
+Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to isolate traffic for risky user groups.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
-2. Select **Create a policy**.
+2. Select **Add a policy**.
 
 3. Build an [Isolate policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
 
-   | Policy name         |
-   | ------------------- |
-   | Isolate risky users |
-
-   | Selector         | Operator | Value                                         |
-   | ---------------- | -------- | --------------------------------------------- |
-   | Domain           | In       | `app1.example.com`, `app2.example.com`        |
-   | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |
-
-   | Action  |
-   | ------- |
-   | Isolate |
+   | Selector         | Operator | Value                                         | Logic | Action  |
+   | ---------------- | -------- | --------------------------------------------- | ----- | ------- |
+   | Domain           | in       | `app1.example.com`, `app2.example.com`        | And   | Isolate |
+   | User Group Names | in       | `IdentityProtection-RiskyUser-RiskLevel-high` |       |         |
 
 To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk).

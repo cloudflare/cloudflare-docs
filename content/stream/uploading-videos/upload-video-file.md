@@ -71,6 +71,10 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
   - If this key is present, the video playback for this video will be required to use signed urls after upload.
 
+- `scheduleddeletion`
+
+  - Specifies a date and time when a video will be deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. The specified date and time cannot be earlier than 30 days from the video's created timestamp.
+
 - `allowedorigins`
 
   - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
@@ -87,7 +91,9 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 ### Set creator property
 
-Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
+Setting a creator value in the `Upload-Creator` header can be used to identify the creator of the video content, linking the way you identify your users or creators to videos in your Stream account.
+
+For examples of how to set and modify the creator ID, refer to [Associate videos with creators](/stream/manage-video-library/creator-id/).
 
 ### Getting the video ID when using TUS
 
@@ -209,10 +215,10 @@ var options = {
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
   retryDelays: [0, 3000, 5000, 10000, 20000], // Indicates to tus-js-client the delays after which it will retry if the upload fails
   metadata: {
-    filename: 'test.mp4',
+    name: 'test.mp4',
     filetype: 'video/mp4',
-    defaulttimestamppct: 0.5,
-    watermark: '<WATERMARK_UID>',
+    // Optional if you want to include a watermark
+    // watermark: '<WATERMARK_UID>',
   },
   uploadSize: size,
   onError: function (error) {

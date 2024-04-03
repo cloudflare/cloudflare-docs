@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Get Global API key (legacy)
-weight: 12
+weight: 4
 ---
 
 # Get Global API key (legacy)
@@ -10,7 +10,7 @@ Global API key is the previous authorization scheme for interacting with the Clo
 
 {{<Aside type="note">}}
 
-Global API key is only available after the [account email address is verified](/fundamentals/account-and-billing/account-setup/verify-email-address/).
+Global API key is only available after the [account email address is verified](/fundamentals/setup/account/verify-email-address/).
 
 {{</Aside>}}
 

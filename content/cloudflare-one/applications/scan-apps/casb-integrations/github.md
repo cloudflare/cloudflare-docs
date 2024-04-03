@@ -2,11 +2,13 @@
 pcx_content_type: reference
 title: GitHub
 rss: file
+meta:
+    title: GitHub - CASB
 ---
 
 # GitHub
 
-The GitHub integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated GitHub Organization that could leave you and your organization vulnerable.
+{{<render file="casb/_integration-description.md" withParameters="GitHub;;GitHub Organization">}}
 
 ## Integration prerequisites
 
@@ -28,9 +30,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The GitHub integration currently scans for the following findings, or security risks.
-
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+{{<render file="casb/_security-findings.md" withParameters="GitHub;;github">}}
 
 ### Repository access
 

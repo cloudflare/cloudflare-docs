@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Access
-layout: single
 weight: 2
 meta:
   title: Access policies
@@ -54,27 +53,23 @@ For example, this configuration blocks every request to the application, except 
 
 ### Bypass
 
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
+{{<Aside type="warning" header="Warning">}}
 
-A Bypass policy based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field:
+Bypass does not enforce any Access security controls and requests are not logged. This should be tested before deploying to production. Consider using Service Auth if you would like to enforce policies and maintain logging without requiring user authentication.
+
+{{</Aside>}}
+
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. Bypass is typically used to enable applications that require specific endpoints to be public. For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the following Bypass policy:
 
 | Action | Rule type  | Selector  | Value             |
 |--------| ------- | --------- | ----------------- |
-| Bypass  | Include | IP ranges | `192.xxx.xxx.xxx` |
+| Bypass  | Include | Everyone | `Everyone` |
 
-This means Access won’t be enforced on the set of IP addresses you have specified. To complete the setup, you need an additional rule to ensure that anyone asking to access your application from a different IP address will only be granted access if they only meet certain criteria, like email addresses ending with a given domain.
-
-To do so, set up an additional Allow policy like the following:
-
-| Action | Rule    | Selector       | Value                              |
-| ------- | ------- | ---------------- | ---------------------------------- |
-| Allow | Include | Emails ending in | `@contractors.com`, `@company.com` |
-
-This ensures that everyone connecting from outside your specified IP range will be prompted to authenticate.
+As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) and have users connect through WARP.
 
 {{<Aside type="note">}}
 
-When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
 
 {{</Aside>}}
 
@@ -142,8 +137,8 @@ These criteria are available for all Access application types, including [SaaS](
 | Login Methods | Checks the identity provider used at the time of login. | ✅ | ❌ |
 | Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
 | Identity provider group| Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use AzureAD, GitHub, Google, or Okta as your IdP.  | ✅ | ❌ |
-| SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a generic SAML identity provider. | ✅ | ❌ |
-| OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a generic OIDC identity provider. | ✅ | ❌ |
+| SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/identity/idp-integration/generic-saml/) identity provider. | ✅ | ❌ |
+| OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider. | ✅ | ❌ |
 | Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |
 | Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
 | Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |

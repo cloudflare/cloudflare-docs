@@ -25,7 +25,7 @@ Another way of thinking about this concept is that visitors directly connect wit
 
 ### With Cloudflare
 
-With Cloudflare — meaning your domain or subdomain is using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) — DNS lookups for your application's URL will resolve to [Cloudflare Anycast IPs](https://www.cloudflare.com/ips/) instead of their original DNS target.
+With Cloudflare — meaning your domain or subdomain is using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) — DNS lookups for your application's URL will resolve to [Cloudflare Anycast IPs](https://www.cloudflare.com/ips/) instead of their original DNS target. 
 
 | URL | Returned IP address |
 | --- | --- |
@@ -38,3 +38,5 @@ This means that all requests intended for proxied hostnames will go to Cloudflar
         accTitle: Connections with Cloudflare
         A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[Origin server]
 ```
+
+Cloudflare assigns specific Anycast IPs to your domain dynamically and these IPs may change at any time. This is an expected part of the operation of our Anycast network and does not affect the proxy behavior described above.

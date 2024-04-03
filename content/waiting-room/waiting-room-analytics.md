@@ -21,7 +21,7 @@ To access your waiting room’s analytics in the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Traffic** > **Waiting Room**.
 3. Expand the waiting room you would like to review metrics for, to display a preview of your waiting room analytics. The preview gives you insights into peak traffic through your waiting room over the last 24 hours including: Maximum active users, Maximum queued users and Typical time in queue for queued users.
-4. Select **View More** under the Waiting Room Analytics section to see more historical analytics for your waiting room.
+4. Select **View More** under the Waiting Room Analytics section to get more historical analytics for your waiting room.
 5. The time range for all of the metrics displayed defaults to the last 24 hours. To change the time range, select from the drop down. You can select any time range from the last 30 days that is a minimum of 30 minutes.
 
 ## Event Analytics
@@ -30,7 +30,7 @@ If your waiting room has a completed scheduled event, you can quickly access the
 
 To save this event information, you can either select **Download data** or **Print report**. If you delete the event, the time period link will no longer appear in your dashboard. If you edit the timing of the event, the time period link will update as well.
 
-If you do not see a link to your event’s analytics, one of the following may have happened:
+If you do not get a link to your event’s analytics, one of the following may have happened:
 
 - Your event has not happened yet.
 - Your event started more than 30 days ago.
@@ -79,7 +79,7 @@ These may be indicators that users do not need as much time on your site and are
 
 ### Active users
 
-The Active users chart is a time series chart that displays the maximum active users on any URLs covered by your waiting room as well as maximum queued users. These values are shown compared to your configured active user target threshold. 
+The Active users chart is a time series chart that displays the maximum active users on any URLs covered by your waiting room as well as maximum queued users. These values are shown compared to your configured active user target threshold.
 
 To identify and hone in on peak traffic, select a longer time period, such as 30 days. Then, drag your cursor to the left and right of any time period you would like to check with more granularity to zoom in. You can zoom in until each bar represents a one minute interval. All other metrics on the page will update automatically to reflect the data behind the time period selected.
 
@@ -99,9 +99,7 @@ You can query your Waiting Room analytics data via GraphQL API. Waiting Room ana
 
 Here are some query examples to get started:
 
-<details>
-<summary>Fetch values for total active users and new users per minute over a certain period.</summary>
-<div>
+{{<details header="Fetch values for total active users and new users per minute over a certain period.">}}
 
 This is a simple query to fetch metrics values. You can filter the data with the zone tag and query the  `waitingRoomAnalyticsAdaptive` dataset. In this example, we have applied this query only on two metrics, but you can explore the schema and fetch the raw values from the GraphQL dataset without applying any aggregation methods.
 
@@ -151,12 +149,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Find the average of total active users and new users per minute over a certain period, and aggregate this data over a period of 15 minutes.</summary>
-<div>
+{{<details header="Find the average of total active users and new users per minute over a certain period, and aggregate this data over a period of 15 minutes.">}}
 
 This query calculates the average of total active users and new users per minute. The time dimension in the query is 15 minutes, therefore the data is aggregated over 15 minutes for the selected time period.
 
@@ -224,12 +219,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Find the weighted averages of time on origin (50th percentile) and total time waited (90th percentile) for a certain period and aggregate this data over one hour.</summary>
-<div>
+{{<details header="Find the weighted averages of time on origin (50th percentile) and total time waited (90th percentile) for a certain period and aggregate this data over one hour.">}}
 
 This query calculates the weighted averages of the metrics for a certain period of time aggregated hourly.
 
@@ -279,8 +271,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Why is there no data for my waiting room?
 

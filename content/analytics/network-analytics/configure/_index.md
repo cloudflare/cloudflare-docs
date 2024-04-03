@@ -1,11 +1,11 @@
 ---
-title: Configuring Network Analytics
+title: Configure
 pcx_content_type: navigation
 weight: 4
 meta:
-  title: Configuring Cloudflare Network Analytics v2
+  title: Configure Cloudflare Network Analytics
 ---
 
-# Configuring Cloudflare Network Analytics
+# Configure Cloudflare Network Analytics
 
 {{<directory-listing>}}

@@ -1,0 +1,11 @@
+{
+    "title": "Get started with DNS filtering",
+    "path": "/learning-paths/dns-filtering/",
+    "priority": 5,
+    "description": "Protect corporate devices from malware, phishing, and other prohibited web content.",
+    "products": [
+        "Cloudflare Gateway",
+        "WARP"
+      ],
+      "product_group": "Cloudflare One"
+}

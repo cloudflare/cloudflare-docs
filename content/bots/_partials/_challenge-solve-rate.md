@@ -11,4 +11,4 @@ The Challenge Solve Rate (CSR) is the percentage of issued challenges — Intera
 CSR = number of challenges solved / number of challenges issued
 ```
 
-This metric helps you evaluate your rule's effectiveness, as well as whether you need to make any adjustments to the rule's criteria or action.
+This metric helps you evaluate your rule's effectiveness, as well as whether you need to make any adjustments to the rule's criteria or action. Rules in Challenge mode will start generating Challenge Solve Rate data (CSR) which indicates the false positive percentage.

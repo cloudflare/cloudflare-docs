@@ -2,6 +2,9 @@
 pcx_content_type: tutorial
 title: Start a live stream
 weight: 1
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Start a live stream
@@ -72,6 +75,10 @@ header: Response
 
   - When the mode property is set to `automatic`, the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays. By default, recording mode is set to `off`, and the input will not be recorded or available for playback.
 
+- `preferLowLatency` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}} {{<inline-pill style="beta">}}
+
+  - When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. (Recording `mode` property must also be set to `automatic`.)
+
 - `timeoutSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `0`{{</prop-meta>}}
 
   -  The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.
@@ -79,6 +86,14 @@ header: Response
 - `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}}
 
   - The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
+
+- `deleteRecordingAfterDays` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
+
+  - Specifies a date and time when the recording, not the input, will be deleted. This property applies from the time the recording is made available and ready to stream. After the recording is deleted, it is no longer viewable and no longer counts towards storage for billing. Minimum value is `30`.
+
+    When the stream ends, a `scheduledDeletion` timestamp is calculated using the `deleteRecordingAfterDays` value if present.
+
+    Note that if the value is added to a live input while a stream is live, the property will only apply to future streams.
 
 - `allowedOrigins` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
 
@@ -116,7 +131,14 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:i
 ### Recommendations
 
 - Your creators should use an appropriate bitrate for their live streams, typically well under 12Mbps (12000Kbps). High motion, high frame rate content typically should use a higher bitrate, while low motion content like slide presentations should use a lower bitrate.
-- Your creators should use a [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 10 seconds. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream. 
+- Your creators should use a [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 8 seconds. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
+- When possible, select CBR (constant bitrate) instead of VBR (variable bitrate) as CBR helps to ensure a stable streaming experience while preventing buffering and interruptions.
+
+{{<heading-pill heading="h4" style="beta">}}Low-Latency HLS broadcast recommendations{{</heading-pill>}}
+
+- For lowest latency, use a GOP size (keyframe interval) of 1 or 2 seconds.
+- Broadcast to the RTMP endpoint if possible.
+- If using OBS, select the "ultra low" latency profile.
 
 ### Requirements
 

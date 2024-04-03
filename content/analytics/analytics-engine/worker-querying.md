@@ -17,7 +17,7 @@ In order that your Worker can authenticate with the API you will need your accou
 * Your 32 character account ID can be obtained from the Cloudflare dashboard.
 * An API token can also be generated in the dashboard. Refer to the [SQL API docs](/analytics/analytics-engine/sql-api/#authentication) for more information on this.
 
-We recommend storing the account ID as an environment variable and the API token as a secret in your worker. This can be done through the dashboard or through Wrangler. Refer to the [Workers documentation](/workers/platform/environment-variables/) for more details on this.
+We recommend storing the account ID as an environment variable and the API token as a secret in your worker. This can be done through the dashboard or through Wrangler. Refer to the [Workers documentation](/workers/configuration/environment-variables/) for more details on this.
 
 ## Querying
 

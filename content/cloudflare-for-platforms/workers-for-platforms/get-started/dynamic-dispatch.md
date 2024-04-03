@@ -2,16 +2,16 @@
 pcx_content_type: how-to
 title: Create a dynamic dispatch Worker
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Create a dynamic dispatch Worker
 
-After you have created a dispatch namespace, you can fetch any user Workers in the namespace using a dispatcher Worker. The [dispatcher Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/) has a namespace binding.
+After you have created a dispatch namespace, you can fetch any user Workers in the namespace using a dynamic dispatch Worker. The [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/) has a namespace binding.
 
 Use any method of routing to a namespaced Worker (reading the subdomain, request header, or lookup in a database). Ultimately you need the name of the user Worker.
 
-In the following example, routing to user Workers is done through reading the subdomain `<USER_WORKER_NAME>.example.com/*`. For example, `my-customer.example.com` will run the script uploaded to `PUT accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/my-dispatch-namespace/scripts/my-customer`.
+In the following example, routing to a user Worker is done through reading the subdomain `<USER_WORKER_NAME>.example.com/*`. For example, `my-customer.example.com` will run the script uploaded to `PUT accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/my-dispatch-namespace/scripts/my-customer`.
 
 ```js
 ---

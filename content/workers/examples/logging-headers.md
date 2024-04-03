@@ -13,6 +13,9 @@ layout: example
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     console.log(new Map(request.headers));
@@ -25,14 +28,12 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request) {
     console.log(new Map(request.headers));
     return new Response("Hello world");
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -56,7 +57,7 @@ Use the `spread` operator if you need to quickly stringify a `Headers` object:
 let requestHeaders = JSON.stringify([...request.headers]);
 ```
 
-Or use ES2019 `Object.fromEntries` to convert it to an object:
+Use `Object.fromEntries` to convert the headers to an object:
 
 ```js
 let requestHeaders = Object.fromEntries(request.headers);
@@ -98,7 +99,7 @@ This works because:
 
 ### Spread headers into an array
 
-The `Map` approach works for simple calls to `console.log()`. If you need to stringify your headers, you will discover that stringifying a `Map` yields nothing more than `[object Map]`.
+The `Map` approach works for calls to `console.log()`. If you need to stringify your headers, you will discover that stringifying a `Map` yields nothing more than `[object Map]`.
 
 Even though a `Map` stores its data in enumerable properties, those properties are [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)-keyed. Because of this, `JSON.stringify()` will [ignore Symbol-keyed properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#symbols_and_json.stringify) and you will receive an empty `{}`.
 
@@ -111,7 +112,7 @@ console.log(`Request headers: ${requestHeaders}`);
 
 ### Convert headers into an object with Object.fromEntries (ES2019)
 
-[ES2019 provides `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), so it is a simple call to convert the headers into an object:
+ES2019 provides [`Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries) which is a call to convert the headers into an object:
 
 ```js
 let headersObject = Object.fromEntries(request.headers);

@@ -14,7 +14,7 @@ This tutorial uses [Azure Dedicated HSM](https://azure.microsoft.com/en-us/servi
 
 Make sure you have:
 
-- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using Powershell
+- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using PowerShell
 - Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
 ---

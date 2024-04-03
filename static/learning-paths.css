@@ -113,6 +113,7 @@ html {
     margin-top: 3em;
     display: flex;
     flex-direction: column;
+    counter-reset: lpstepCounter;
 }
 
 .learningPathModule:first-of-type {
@@ -198,39 +199,74 @@ html {
     font-weight: 400;
 }
 
+.background a:hover,
+.viewOtherPaths a:hover {
+    text-decoration: underline;
+}
+
 [theme=dark] .background a,
 [theme=dark] .viewOtherPaths a {
     color: #ff9e40;
 }
 
-.pathDetails div ul li {
-    list-style: none;
-    padding-left: 0;
-    border-bottom: .5px solid #242628;
+.pathDetails {
+    margin-top: 0 !important;
 }
 
-[theme=dark] .pathDetails div ul li {
-    border-bottom: .5px solid #f3f3f4;
+.pathDetails div {
+    border: none !important;
+    padding-left: .5em !important;
+}
+
+.pathDetails summary {
+    background: none !important;
+    line-height: 1.5 !important;
+    padding-left: .5em !important;
+    padding-right: .5em !important;
+    width: 10em;
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.pathDetails summary:hover {
+    background: rgba(var(--orange-rgb), 0.3) !important;
+    transition: background 0.1s ease-in-out;
+}
+
+.pathDetails div ul li {
+    list-style: none;
+    padding-left: 0.5em;
+    border-left: 4px solid gray;
+}
+
+.pathDetails div ul li:hover {
+    border-left: 4px solid #0055DC;
+    transition: border-left 0.1s ease-in-out;
+}
+
+[theme="dark"] .pathDetails div ul li:hover {
+    border-left: 4px solid #ff9e40;
 }
 
 @media (min-width: 599px) {
     .pathDetails div ul li {
-        line-height: 4;
+        line-height: 2;
+        margin-bottom: .8em;
     }
     .readingTime {
-        margin-top: -2em; 
-        font-size: .8em;
+        margin-top: -.5em; 
+        font-size: .7em;
     }
 }
 
 @media (max-width: 599px) {
     .pathDetails div ul li {
         line-height: 2;
-        margin-bottom: 3em;
+        margin-bottom: .8em;
     }
     .readingTime {
-        margin-top: 0em; 
-        font-size: .8em;
+        margin-top: -.5em; 
+        font-size: .7em;
     }
     .learningPathModule {
         padding-left: 1em;
@@ -296,4 +332,23 @@ label {
   
   [theme="dark"] .learningSummary a:hover {
     --background-color-alpha: 0.1;
+  }
+
+  .moduleCounter {
+    opacity: .7;
+    padding-left: 1.5em;
+  }
+
+  .lpstepCounter {
+    padding-right: .35em;
+    padding-left: .35em;
+    margin-right: .5em;
+    border: 2px solid var(--orange-5);
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  
+  .lpstepCounter::before {
+    content: counter(lpstepCounter);
+    counter-increment: lpstepCounter;
   }

@@ -1,0 +1,129 @@
+---
+link: "/workers/platform/changelog/"
+productName: Workers
+entries:
+- publish_date: '2024-03-11'
+  description: |-
+    - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
+    - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
+    - Updated v8 to version 12.3.
+- publish_date: '2024-02-23'
+  description: |-
+    - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
+    - [Durable Object alarm handlers](/durable-objects/api/alarms/#alarm) now impose a maximum wall time of 15 minutes.
+- publish_date: '2023-12-04'
+  description: |-
+    - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
+    - V8 updated to 12.0.
+- publish_date: '2023-10-30'
+  description: |-
+    - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
+    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model). 
+    - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
+- publish_date: '2023-10-20'
+  description: |-
+    - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field)
+      compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
+      the WebCrypto API.
+- publish_date: '2023-10-18'
+  description: |-
+    - The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+      Cron Triggers across all Workers still apply.
+- publish_date: '2023-10-12'
+  description: |-
+    - A [TCP Socket](/workers/runtime-apis/tcp-sockets/)'s WritableStream now ensures the connection has opened before resolving the promise returned by `close`.
+- publish_date: '2023-10-09'
+  description: |-
+    - The Web Platform standard [`CustomEvent` class](https://dom.spec.whatwg.org/#interface-customevent) is now available in Workers.
+    - Fixed a bug in the WebCrypto API where the `publicExponent` field of the algorithm of RSA keys would have the wrong type. Use the [`crypto_preserve_public_exponent` compatibility flag](/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field) to enable the new behavior.
+- publish_date: '2023-09-14'
+  description: |-
+    - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
+      API from Node.js is now available when the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/)
+      is enabled.
+- publish_date: '2023-07-14'
+  description: |-
+    - An implementation of the [`util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype)
+      API from Node.js is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/)
+      is enabled.
+- publish_date: '2023-07-07'
+  description: |-
+    - An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+    - An implementation of the [`diagnostics_channel`](/workers/runtime-apis/nodejs/diagnostics-channel) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+- publish_date: '2023-06-22'
+  description: |-
+    - Added the [`strict_crypto_checks`](/workers/configuration/compatibility-dates/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+    - Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
+- publish_date: '2023-06-19'
+  description: |-
+    - The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
+    - Updated V8 to 11.5.
+- publish_date: '2023-06-09'
+  description: |-
+    - `AbortSignal.any()` is now available.
+    - Updated V8 to 11.4.
+    - Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/configuration/compatibility-dates/#new-url-parser-implementation) compatibility flags.
+    - Added the [`strict_compression_checks`](/workers/configuration/compatibility-dates/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
+- publish_date: '2023-05-26'
+  description: |-
+    - A new [Hibernatable WebSockets API](/durable-objects/api/websockets/)
+    (beta) has been added to [Durable Objects](/durable-objects/). The Hibernatable
+    WebSockets API allows a Durable Object that is not currently running an event
+    handler (for example, processing a WebSocket message or alarm) to be removed from
+    memory while keeping its WebSockets connected (“hibernation”). A Durable Object
+    that hibernates will not incur billable Duration (GB-sec) charges.
+- publish_date: '2023-05-16'
+  description: |-
+    - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/reference/protocols/).
+    - We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+    - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/hyperdrive/configuration/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+    - The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+- publish_date: '2023-05-15'
+  description: |-
+    - [Cursor](/workers/ai/), an experimental AI assistant, trained to answer
+    questions about Cloudflare's Developer Platform, is now available to preview!
+    Cursor can answer questions about Workers and the Cloudflare Developer Platform,
+    and is itself built on Workers. You can read more about Cursor in the [announcement
+    blog](https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/).
+- publish_date: '2023-05-12'
+  description: |-
+    - The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now)
+    and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin)
+    APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security
+    reasons](/workers/reference/security-model/) time only advances after I/O.
+- publish_date: '2023-05-05'
+  description: |-
+    - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
+    - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.
+- publish_date: '2023-04-28'
+  description: |-
+    - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
+    - The global `connect` method has been moved to a `cloudflare:sockets` module.
+- publish_date: '2023-04-14'
+  description: |-
+    - No externally-visible changes this week.
+- publish_date: '2023-04-10'
+  description: |-
+    - `URL.canParse(...)` is a new standard API for testing that an input string can be parsed successfully as a URL without the additional cost of creating and throwing an error.
+    - The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
+- publish_date: '2023-03-24'
+  description: |-
+    - Fixed a bug in Wrangler tail and live logs on the dashboard that
+    prevented the Administrator Read-Only and Workers Tail Read roles from successfully
+    tailing Workers.
+- publish_date: '2023-03-09'
+  description: |-
+    - No externally-visible changes.
+- publish_date: '2023-03-06'
+  description: |-
+    - [Workers Logpush](/workers/observability/logging/logpush/#limits) now supports
+    300 characters per log line. This is an increase from the previous limit of 150
+    characters per line.
+- publish_date: '2023-02-06'
+  description: |-
+    - Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
+    - Previously, an error would be thrown when trying to access unimplemented standard `Request` and `Response` properties. Now those will be left as `undefined`.
+- publish_date: '2023-01-13'
+  description: |-
+    - Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.
+    - V8 updated to 10.9.

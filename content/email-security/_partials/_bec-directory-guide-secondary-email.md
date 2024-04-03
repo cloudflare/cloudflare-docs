@@ -17,10 +17,10 @@ In some instances, you may want to allow your protected users to send emails fro
 
 4. Select the three-dots button > **Edit**.
 
-    ![Select edit to add alternate email addresses to your user](/email-security/static/bec/o365/step4-edit-user.png)
+    ![Select edit to add alternate email addresses to your user](/images/email-security/bec/o365/step4-edit-user.png)
 
 5. In **Secondary Emails** add the additional email addresses. Place each entry on a new line.
 
-    ![Add each new email address to the Secondary Emails field. Place each address on a separate line](/email-security/static/bec/o365/step5-new-email.png)
+    ![Add each new email address to the Secondary Emails field. Place each address on a separate line](/images/email-security/bec/o365/step5-new-email.png)
 
 6. Select **Save** to finish.

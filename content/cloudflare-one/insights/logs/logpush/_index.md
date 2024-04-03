@@ -1,15 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Logpush integration
-layout: single
 weight: 8
 ---
 
 # Cloudflare Logpush integration
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
-This feature is only available on Zero Trust Enterprise plans.
+Only available on Enterprise plans.
 
 {{</Aside>}}
 
@@ -17,9 +16,15 @@ With Cloudflare's [Logpush](/logs/about/) service, you can configure the automat
 
 ## Export Zero Trust logs with Logpush
 
+{{<Aside header="Dashboard limitation" type="warning">}}
+
+Zero Trust does not support configuring [Cloudflare R2](/logs/get-started/enable-destinations/r2/) as a Logpush destination via the dashboard. To use R2 as a destination for Zero Trust logs, configure your Logpush jobs [via the API](/logs/get-started/enable-destinations/r2/#manage-via-api).
+
+{{</Aside>}}
+
 To enable Logpush for Zero Trust logs:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Logs** > **Logpush**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
 2. Select **Add Logpush job**.
 3. Enter a **Job name**.
 4. From the drop-down menu, choose the [dataset](#zero-trust-datasets) to export.

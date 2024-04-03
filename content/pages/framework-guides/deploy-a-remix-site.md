@@ -11,57 +11,45 @@ In this guide, you will create a new Remix application and deploy to Cloudflare 
 
 ## Setting up a new project
 
-Start by installing the latest version of Remix. Create a new project directory and then intialize a Remix project by running:
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Remix's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Remix project, run the following command:
 
 ```sh
-$ npx create-remix@latest
-
+$ npm create cloudflare@latest my-remix-app -- --framework=remix
 ```
 
-After running `npx create-remix@latest`, you will be prompted to answer configuration questions and select your deploy method. This guide uses Cloudflare Pages.
-
-After selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your Remix Project will generate a `functions/[[path]].js` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
 
 {{<Aside type="warning" header="Before you deploy">}}
-The `functions/[[path]].js` file will not be generated until you interact with Remix the first time, via `remix dev` or `remix build`. The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
+Your Remix Project will generate a `functions/[[path]].js` file the first time you run `remix dev` or `remix build`. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/functions/routing/#dynamic-routes) to learn more.
+
+The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
 {{</Aside>}}
 
-After selecting your deployment option, change the directory to your project and render your project by running the following command:
+After setting up your project, change the directory and render your project by running the following command:
 
 ```sh
 # choose Cloudflare Pages
-$ cd <YOUR_PROJECT>
+$ cd my-remix-app
 $ npm run dev
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="Remix">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<div>
-
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Framework preset     | `Remix`         |
-| Build command        | `npm run build` |
-| Build directory      | `public`        |
-
-</div>
-
-{{<Aside type="warning">}}
-
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version greater than `14.0.0` to build on Cloudflare Pages. To set the Node version, go to your Pages project > **Settings** > **Environment Variables** > **Production** and add `NODE_VERSION` environment variable with a value of `14` or greater in your Production option.
-
-{{</Aside>}}
+{{<pages-build-preset framework="remix">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.
 
@@ -72,19 +60,20 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Create and add a binding to your Remix application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+To add a binding to your Remix application, refer to [Bindings](/pages/functions/bindings/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
-To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
+### Binding resources to your Remix application
 
-### Use a binding in your Remix application
+To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
 
-If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv).
+The following example uses a KV namespace called `PRODUCTS_KV` [bound to a Pages Function](/pages/functions/bindings/#kv-namespaces). The `PRODUCTS_KV` binding is accessible on the `context` parameter passed to a `LoaderFunction` as `context.env.<BINDING_NAME>`.
 
-The following code block shows an example of accessing a KV namespace in Remix.
+The following example shows a Remix `LoaderFunction` accessing a KV namespace in Remix:
 
 ```typescript
 ---
@@ -95,12 +84,20 @@ import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader = async ({
+// Define the bindings associated with our Function
+// so that they are typed
+interface Env {
+  PRODUCTS_KV: KVNamespace;
+}
+
+export const loader: LoaderFunction = async ({
   context,
   params,
-}: LoaderArgs) => {
+}) => {
+  // Bindings are accessible on context.env
+  let env = context.env as Env
   return json(
-    await context.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
+    await env.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
       type: "json",
     })
   );
@@ -120,10 +117,13 @@ export default function Product() {
     </div>
   );
 }
-
 ```
 
-Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. For example:
+Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-loading) to learn more about data loading within a Remix application.
+
+#### Durable Objects
+
+Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
 ```ts
 export const loader = async ({ context, params }: LoaderArgs) => {
@@ -135,8 +135,6 @@ export const loader = async ({ context, params }: LoaderArgs) => {
 };
 ```
 
-You have to do this because there is no way to export the Durable Object class from a Pages Function.
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/durable-objects/).
 
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
-
-{{<render file="_learn-more.md" withParameters="Remix">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Remix">}}

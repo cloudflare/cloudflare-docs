@@ -29,11 +29,9 @@ Before you create your first bucket, you must purchase R2 from the Cloudflare da
 
 {{</Aside>}}
 
-1. [Install Wrangler](/workers/wrangler/install-and-update/) globally using npm and Node.js or Yarn.
+1. [Install Wrangler](/workers/wrangler/install-and-update/) within your project using npm and Node.js or Yarn.
 
-```txt
-npm install -g wrangler
-```
+{{<render file="_install_wrangler.md" productFolder="workers" >}}
 
 2. [Authenticate Wrangler](/workers/wrangler/commands/#login) to enable deployments to Cloudflare. When Wrangler automatically opens your browser to display Cloudflare’s consent screen, select **Allow** to send the API Token to Wrangler.
 
@@ -62,5 +60,5 @@ You will receive a confirmation message after a successful upload.
 Cloudflare provides multiple ways for developers to access their R2 buckets:
 
 - [Workers Runtime API](/r2/api/workers/workers-api-usage/)
-- [S3 API compatibility](/r2/api/s3/tokens/)
+- [S3 API compatibility](/r2/api/s3/api/)
 - [Public buckets](/r2/buckets/public-buckets/)

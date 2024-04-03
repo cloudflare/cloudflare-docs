@@ -1,18 +1,19 @@
 ---
 title: Office 365 Graph API setup
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 4
 meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
+updated: 2023-07-31
 ---
 
 # Office 365 Graph API set up with Area 1
 
 For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph API is quick and easy. The following email flow shows how this works:
 
-![Email flow when setting up Area 1 with the Microsoft Graph API](/email-security/static/deployment/api-setup/ms-graph/ms-graph.png)
+![Email flow when setting up Area 1 with the Microsoft Graph API](/images/email-security/deployment/api-setup/ms-graph/ms-graph.png)
 
-{{<Aside type="note">}}For this beta release, scanning Microsoft 365 domains via the Microsoft Graph API is only available for onboarding new domains. This option will not show up on domains already onboarded on your Area 1 dashboard. If you want to use Microsoft Graph API with a domain already set up, you will need to delete it and add it again.{{</Aside>}}
+{{<render file="deployment/_o365-gcc.md">}}
 
 ## User roles
 
@@ -21,7 +22,7 @@ Area 1 uses two roles for retraction and directory integration purposes:
 - **Privileged authentication administrator**: Users with this role can view the current authentication method information and set or reset non-password credentials for all users, including global administrators. Privileged authentication administrators can force users to re-register against existing non-password credentials (like MFA or FIDO) and revoke the `remember MFA on the device` message prompting for MFA on the next login of all users.
 - **Privileged role administrator**: Users with this role can manage role assignments in Azure Active Directory, as well as within Privileged Identity Management. In addition, this role allows management of all aspects of Privileged Identity Management.
 
-Directory Integration requires the use of both roles mentioned above. Email retraction only requires the **Privileged role administrator**. Any Azure administrator with a membership in the required role can perform these authorizations. The authorization process grants the Area 1 dashboard access to the Azure environment. This access is performed with the least applicable privileges required to function, as shown in the [table below](#azure-applications). 
+Directory Integration requires the use of both roles mentioned above. Email retraction only requires the **Privileged role administrator**. Any Azure administrator with a membership in the required role can perform these authorizations. The authorization process grants the Area 1 dashboard access to the Azure environment. This access is performed with the least applicable privileges required to function, as shown in the [table below](#azure-applications).
 
 The Enterprise Applications that Area 1 registers are not tied to any administrator account. Inside of the Azure Active Directory admin center you can review the permissions granted to each application in the Enterprise Application section. Refer to [Application management documentation](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/) for more information.
 
@@ -39,32 +40,30 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 
 
     <div class="medium-img">
-    
-    ![Select Authorize access to give the correct permissions do Area 1](/email-security/static/deployment/api-setup/ms-graph/step5.png)
+
+    ![Select Authorize access to give the correct permissions do Area 1](/images/email-security/deployment/api-setup/ms-graph/step5.png)
 
     </div>
 
-6. In the new tab that opens, choose an Office 365 account you want to authorize, or enter your credentials. 
+6. In the new tab that opens, choose an Office 365 account you want to authorize, or enter your credentials.
 
-7. Read the permissions, and select **Accept** to continue. You will be directed back to the Area 1 dashboard. 
+7. Read the permissions, and select **Accept** to continue. You will be directed back to the Area 1 dashboard.
 
-8. In **Directory Scanning**, select **Authorize Access**.  
+8. In **Directory Scanning**, select **Authorize Access**.
 
 9. In the new tab that opens, choose an Office 365 account you want to authorize, or enter your credentials.
 
 10. Read the permissions, and select **Accept** to continue. You will be directed back to the Area 1 dashboard.
 
-11. Now that both types of authorizations have been complete, select **Publish Domain**.
+11. In **Protection Scope**, choose if Area 1 should scan only the inbox or all folders. Scanning all folders is useful for situations where the email is automatically routed to other folders that users still have access to:
+    1. **Protect Inbox only**: Area 1 will only scan the user's inbox.
+    2. **Protect all folders**: Area 1 will scan all non-hidden email folders.
 
-    <div class="medium-img">
-    
-    ![Now that both authorizations are complete, select Publish domain](/email-security/static/deployment/api-setup/ms-graph/step11.png)
-
-    </div>
+12. Now that both types of authorizations have been complete, select **Publish Domain**.
 
 Your authorized domain will show up in **Email Configuration** > **Domains & Routing** > **Domains**, with messages about the progress of directory syncing between Office 365 and Area 1.
 
-![Now that both authorizations are complete, select Publish domain](/email-security/static/deployment/api-setup/ms-graph/domain-sync-state.png)
+![Now that both authorizations are complete, select Publish domain](/images/email-security/deployment/api-setup/ms-graph/domain-sync-state.png)
 
 ## Azure applications
 

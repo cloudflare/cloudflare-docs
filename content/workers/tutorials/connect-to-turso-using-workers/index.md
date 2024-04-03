@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to and query your Turso database using Workers
-layout: single
 ---
 
 # Connect to and query your Turso database using Workers
@@ -85,7 +84,7 @@ Type `.quit` to exit the shell.
 
 ## Use Wrangler to create a Workers project
 
-The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to create, locally develop, and publish your Workers projects.
+The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to create, locally develop, and deploy your Workers projects.
 
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
@@ -123,7 +122,7 @@ For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevan
 The Turso client library requires two pieces of information to make a connection:
 
 1. `LIBSQL_DB_URL` - The connection string for your Turso database.
-2. `LIBSQL_DB_AUTH_TOKEN` - The authentication token for your Turos database. This should be kept a secret, and not committed to source code.
+2. `LIBSQL_DB_AUTH_TOKEN` - The authentication token for your Turso database. This should be kept a secret, and not committed to source code.
 
 To get the URL for your database, run the following Turso CLI command, and copy the result:
 
@@ -133,7 +132,7 @@ $ turso db show my-db --url
 libsql://my-db-<your-github-username>.turso.io
 ```
 
-Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/platform/environment-variables/) for your project:
+Open `wrangler.toml` in your editor and at the bottom of the file, create a new `[vars]` section representing the [environment variables](/workers/configuration/environment-variables/) for your project:
 
 ```toml
 ---
@@ -152,7 +151,21 @@ $ turso db tokens create my-db -e none
 # Will output a long text string (an encoded JSON Web Token)
 ```
 
-You will now [create a secret](/workers/platform/environment-variables/#add-secrets-to-your-project) to keep your authentication token confidential:
+To keep this token secret:
+
+1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore` file if you are using Git.
+* You will also create a [secret](/workers/configuration/secrets/) to keep your authentication token confidential.
+
+First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
+
+```
+---
+filename: .dev.vars
+---
+LIBSQL_DB_AUTH_TOKEN="<YOUR_AUTH_TOKEN>"
+```
+
+Save your changes to `.dev.vars`. Next, store the authentication token as a secret for your production Worker to reference. Run the following `wrangler secret` command to create a Secret with your token:
 
 ```sh
 # Ensure you specify the secret name exactly: your Worker will need to reference it later.
@@ -203,14 +216,14 @@ export interface Env {
 }
 
 export default {
-    async fetch(request: Request, env: Env): Promise<Response> {
+    async fetch(request, env): Promise<Response> {
         if (env.router === undefined) {
             env.router = buildRouter(env);
         }
 
         return env.router.handle(request);
     },
-};
+} satisfies ExportedHandler<Env>;
 
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();
@@ -284,7 +297,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-$ npx wrangler dev --local
+$ npx wrangler dev
 ```
 
 You should be able to review output similar to the following:
@@ -332,17 +345,17 @@ You should see the text `“Added”`. If you load the first URL with the `/user
 
 Quit Wrangler by typing `q` into the shell where it was started.
 
-## Publish to Cloudflare
+## Deploy to Cloudflare
 
-After you have validated that your Worker can connect to your Turso database, publish your Worker. Run the following Wrangler command to publish our Worker publicly:
+After you have validated that your Worker can connect to your Turso database, deploy your Worker. Run the following Wrangler command to deploy your Worker to the Cloudflare global network:
 
 ```sh
-$ npx wrangler publish
+$ npx wrangler deploy
 ```
 
 The first time you run this command, it will launch a browser, ask you to sign in with your Cloudflare account, and grant permissions to Wrangler.
 
-The `publish` command will output the following:
+The `deploy` command will output the following:
 
 ```sh
 Your worker has access to the following bindings:
@@ -354,18 +367,18 @@ Published worker-turso-ts (0.19 sec)
 Current Deployment ID: f9e6b48f-5aac-40bd-8f44-8a40be2212ff
 ```
 
-You have now published a Worker that can connect to your Turso database, query it, and insert new data.
+You have now deployed a Worker that can connect to your Turso database, query it, and insert new data.
 
 ## Optional: Clean up
 
 To clean up the resources you created as part of this tutorial:
 
-* If you do not want to keep this Worker, run `wrangler delete worker-turso-ts` to delete the published Worker.
+* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the deployed Worker.
 * You can also delete your Turso database via `turso db destroy my-db`.
 
 ## Related resources
 
 * Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
-* Understand how to [debug your Cloudflare Worker](/workers/learning/debugging-workers/).
-* Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
+* Understand how to [debug your Cloudflare Worker](/workers/observability/).
+* Join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
 * Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

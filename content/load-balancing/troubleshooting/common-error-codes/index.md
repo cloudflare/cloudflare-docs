@@ -2,7 +2,6 @@
 pcx_content_type: troubleshooting
 title: Common error codes
 weight: 51
-layout: single
 ---
 
 # Common error codes
@@ -168,7 +167,7 @@ Data transmission was not acknowledged and retransmit of data did not succeed.
 
 ### Solution
 
-Confirm whether the SYN-ACK for the handshake takes place at your origin and _[contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
+Confirm whether the SYN-ACK for the handshake takes place at your origin and [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ---
 
@@ -264,7 +263,7 @@ Load Balancing is not enabled for your account or zone.
 
 ### Solution
 
-For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/how-to/enable-load-balancing/).
+For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/get-started/enable-load-balancing/).
 
 ---
 
@@ -288,7 +287,7 @@ You will receive this error when you attempt to delete an origin pool that is re
 
 ### Solution
 
-Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [reenable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
 
 ---
 
@@ -300,6 +299,4 @@ If the failure cannot be classified as any other type of failure mentioned above
 
 ### Solution
 
-_[Contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
-
----
+[Contact Cloudflare Support](/support/contacting-cloudflare-support/).

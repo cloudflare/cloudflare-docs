@@ -12,7 +12,6 @@ meta:
     Web Application Firewall (WAF).
   author: '@cloudflare'
   
-
 resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf

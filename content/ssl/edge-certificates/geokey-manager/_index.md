@@ -2,10 +2,9 @@
 pcx_content_type: overview
 title: Geo Key Manager
 weight: 5
-layout: single
 ---
 
-{{<beta>}} Geo Key Manager {{</beta>}}
+{{<heading-pill style="beta">}} Geo Key Manager {{</heading-pill>}}
 
 {{<description>}}
 Restrict where the private keys used for TLS certificates are stored and managed.
@@ -30,7 +29,7 @@ The Data Localization Suite (DLS) is a set of products that helps customers who 
 {{</related>}}
 
 {{<related header="Geo Key Manager (v1)" href="https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/" product="ssl">}}
-{{<render file="_geokey-manager-v1.md">}} 
+{{<render file="_geokey-manager-v1.md">}}
 {{</related>}}
 
 ---

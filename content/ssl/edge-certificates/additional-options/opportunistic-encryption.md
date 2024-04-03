@@ -15,6 +15,8 @@ Use HTTPS when both strong encryption and authentication are required. HTTP Oppo
 
 ## Enable Opportunistic Encryption
 
+You do not need to configure your origin web server to support Opportunistic Encryption. All it requires is updating your settings in the Cloudflare dashboard.
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
@@ -32,8 +34,4 @@ To adjust your Opportunistic Encryption settings with the API, send a [`PATCH`](
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
-
-You do not need to configure your origin web server to support Opportunistic Encryption.
-
-{{</Aside>}}
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}

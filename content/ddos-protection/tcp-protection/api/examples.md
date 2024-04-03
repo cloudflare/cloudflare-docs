@@ -6,7 +6,7 @@ weight: 2
 
 # Common API calls
 
-The following sections contain example cURL requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/tcp-protection/api/#endpoints).
+The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/tcp-protection/api/#endpoints).
 
 ## Get Advanced TCP Protection status
 
@@ -14,15 +14,15 @@ This example obtains the current status of Advanced TCP Protection (enabled or d
 
 ```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_protection_status" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/tcp_protection_status \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {
@@ -38,15 +38,15 @@ header: Example response
 
 This example enables Advanced TCP Protection.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X PATCH \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_protection_status" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/tcp_protection_status \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "enabled": true
 }'
 ```
@@ -57,15 +57,15 @@ This example fetches all existing prefixes in Advanced TCP Protection.
 
 ```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/prefixes \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": [
@@ -83,17 +83,16 @@ header: Example response
 
 ## Add prefixes
 
-This example adds two prefixes. The second prefix excludes a subset of the first prefix from Advanced TCP Protection.
+This example `POST` request adds two prefixes. The second prefix excludes a subset of the first prefix from Advanced TCP Protection.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes/bulk" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '[
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/prefixes/bulk \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '[
   {
     "prefix": "192.0.2.0/24",
     "comment": "Game ranges",
@@ -109,7 +108,7 @@ $ curl -X POST \
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": [
@@ -138,17 +137,19 @@ header: Example response
 
 ## Get all prefixes in allowlist
 
+This example fetches all the prefixes in the allowlist.
+
 ```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/allowlist \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": [
@@ -169,17 +170,16 @@ header: Example response
 
 ## Add a prefix to the allowlist
 
-This example adds a prefix to the allowlist of the account.
+This example `POST` request adds a prefix to the allowlist of the account.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/allowlist \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "prefix": "203.0.113.0/26",
   "comment": "Partner range",
   "enabled": true
@@ -188,7 +188,7 @@ $ curl -X POST \
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {
@@ -207,17 +207,16 @@ header: Example response
 
 ## Create a SYN flood rule
 
-This example creates a SYN flood rule with a regional scope (Western Europe) in monitoring mode.
+This example `POST` request creates a SYN flood rule with a regional scope (Western Europe) in monitoring mode.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/syn_protection/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "scope": "region",
   "name": "WEUR",
   "mode": "monitoring",
@@ -228,7 +227,7 @@ $ curl -X POST \
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {
@@ -251,17 +250,16 @@ Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for m
 
 ## Create an out-of-state TCP rule
 
-This example creates an out-of-state TCP rule in monitoring mode, with a regional scope, and with low rate and burst sensitivities.
+This example `POST` request creates an out-of-state TCP rule in monitoring mode, with a regional scope, and with low rate and burst sensitivities.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "scope": "region",
   "name": "WEUR",
   "mode": "monitoring",
@@ -272,7 +270,7 @@ $ curl -X POST \
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {
@@ -295,17 +293,16 @@ Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for m
 
 ## Create a SYN flood filter
 
-This example creates a SYN flood filter setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
+This example `POST` request creates a SYN flood [filter](/ddos-protection/tcp-protection/concepts/#filter), setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/syn_protection/filters \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "expression": "ip.dst in { 192.0.2.0/24 }",
   "mode": "monitoring"
 }'
@@ -313,7 +310,7 @@ $ curl -X POST \
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {
@@ -333,17 +330,16 @@ Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for m
 
 ## Create an out-of-state TCP filter
 
-This example creates an out-of-state TCP filter disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
+This example `POST` request creates an out-of-state TCP [filter](/ddos-protection/tcp-protection/concepts/#filter), disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
 
-```json
+```bash
 ---
-header: Example cURL request
+header: Request
 ---
-$ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "expression": "ip.dst in { 203.0.113.0/24 } and tcp.dstport in { 8000..8081 }",
   "mode": "disabled"
 }'
@@ -351,7 +347,7 @@ $ curl -X POST \
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {

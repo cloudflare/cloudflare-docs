@@ -21,9 +21,10 @@ The descriptions below detail the fields available for `zero_trust_network_sessi
 | ClientTLSCipher | TLS cipher suite used in the connection between the client and Cloudflare. | string |
 | ClientTLSHandshakeDurationMs | Duration of handshaking the TLS connection between the client and Cloudflare in milliseconds. | int |
 | ClientTLSVersion | TLS protocol version used in the connection between the client and Cloudflare. | string |
-| ConnectionCloseReason | The reason for closing the connection, only applicable for TCP. <br />Possible values are <em>clientClosed</em> \| <em>originClosed</em> \| <em>timeout</em> \| <em>clientTcpError</em> \| <em>clientTlsError</em> \| <em>originTcpError</em> \| <em>originTlsError</em>. | string |
+| ConnectionCloseReason | The reason for closing the connection, only applicable for TCP. <br />Possible values are <em>CLIENT_CLOSED</em> \| <em>CLIENT_IDLE_TIMEOUT</em> \| <em>CLIENT_TLS_ERROR</em> \| <em>CLIENT_ERROR</em> \| <em>ORIGIN_CLOSED</em> \| <em>ORIGIN_TLS_ERROR</em> \| <em>ORIGIN_ERROR</em> \| <em>ORIGIN_UNREACHABLE</em> \| <em>PROXY_CONN_REFUSED</em> \| <em>UNKNOWN</em> \| <em>MISMATCHED_IP_VERSIONS</em>. | string |
 | ConnectionReuse | Whether the TCP connection was reused for multiple HTTP requests. | bool |
 | DestinationTunnelID | Identifier of the Cloudflare One connector to which the network session was routed to, if any, such as Cloudflare Tunnel or WARP device. | string |
+| DetectedProtocol | Detected traffic protocol of the network session. | string |
 | DeviceID | Identifier of the client device which initiated the network session, if applicable, (for example, WARP Device ID). | string |
 | DeviceName | Name of the client device which initiated the network session, if applicable, (for example, WARP Device ID). | string |
 | EgressColoName | The name of the Cloudflare colo from which traffic egressed to the origin. | string |
@@ -33,15 +34,15 @@ The descriptions below detail the fields available for `zero_trust_network_sessi
 | EgressRuleName | The name of the egress rule that was applied by the Secure Web Gateway, if any. | string |
 | Email | Email address associated with the user identity which initiated the network session. | string |
 | IngressColoName | The name of the Cloudflare colo to which traffic ingressed. | string |
-| Offramp | The type of destination to which the network session was routed. <br />Possible values are <em>internet</em> \| <em>magic</em> \| <em>cfd_tunnel</em> \| <em>WARP</em>. | string |
+| Offramp | The type of destination to which the network session was routed. <br />Possible values are <em>INTERNET</em> \| <em>MAGIC</em> \| <em>CFD_TUNNEL</em> \| <em>WARP</em>. | string |
 | OriginIP | The IP of the destination ("origin") for the network session. | string |
 | OriginPort | The port of the destination origin for the network session. | int |
 | OriginTLSCertificateIssuer | The issuer of the origin TLS certificate. | string |
-| OriginTLSCertificateValidationResult | The result of validating the TLS certificate of the origin. <br />Possible values are <em>valid</em> \| <em>expired</em> \| <em>revoked</em> \| <em>hostnameMismatch</em>. | string |
+| OriginTLSCertificateValidationResult | The result of validating the TLS certificate of the origin. <br />Possible values are <em>VALID</em> \| <em>EXPIRED</em> \| <em>REVOKED</em> \| <em>HOSTNAME_MISMATCH</em> \| <em>NONE</em> \| <em>UNKNOWN</em>. | string |
 | OriginTLSCipher | TLS cipher suite used in the connection between Cloudflare and the origin. | string |
 | OriginTLSHandshakeDurationMs | Duration of handshaking the TLS connection between Cloudflare and the origin in milliseconds. | int |
 | OriginTLSVersion | TLS protocol version used in the connection between Cloudflare and the origin. | string |
-| Protocol | Network protocol used for this network session. <br />Possible values are <em>tcp</em> \| <em>udp</em> \| <em>icmp</em> \| <em>icmpv6</em>. | string |
+| Protocol | Network protocol used for this network session. <br />Possible values are <em>TCP</em> \| <em>UDP</em> \| <em>ICMP</em> \| <em>ICMPV6</em>. | string |
 | RuleEvaluationDurationMs | The duration taken by Secure Web Gateway applying applicable Network, HTTP, and Egress rules to the network session in milliseconds. | int |
 | SessionEndTime | The network session end timestamp with nanosecond precision. | int or string |
 | SessionID | The identifier of this network session. | string |

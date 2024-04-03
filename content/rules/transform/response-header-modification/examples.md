@@ -15,7 +15,7 @@ The following examples illustrate how to perform response header modifications w
 
 ## Set an HTTP response header to a static value
 
-The following HTTP Response Header Modification Rule sets a header named `X-Source` to a static value (`Cloudflare`) in the response:
+The following HTTP response header modification rule sets a header named `X-Source` to a static value (`Cloudflare`) in the response:
 
 {{<example>}}
 
@@ -37,7 +37,7 @@ This rule would overwrite any existing `X-Source` headers already present in the
 
 ## Set an HTTP response header to the current bot score
 
-The following HTTP Response Header Modification Rule sets a header named `X-Bot-Score` to the current bot score in the response:
+The following HTTP response header modification rule sets a header named `X-Bot-Score` to the current bot score in the response:
 
 {{<example>}}
 
@@ -59,7 +59,7 @@ This rule would overwrite any existing `X-Bot-Score` headers already present in 
 
 ## Add an HTTP response header with a static value
 
-The following HTTP Response Header Modification Rule adds a header named `set-cookie` with a static value (`cookiename=value`) to the response:
+The following HTTP response header modification rule adds a header named `set-cookie` with a static value (`cookiename=value`) to the response:
 
 {{<example>}}
 
@@ -81,7 +81,7 @@ This rule would keep any existing `set-cookie` headers already present in the re
 
 ## Remove an HTTP response header
 
-The following HTTP Response Header Modification Rule removes the `cf-connecting-ip` header from the response:
+The following HTTP response header modification rule removes the `cf-connecting-ip` header from the response:
 
 {{<example>}}
 

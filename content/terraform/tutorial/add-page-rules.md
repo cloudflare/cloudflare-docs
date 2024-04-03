@@ -8,7 +8,7 @@ meta:
 
 # Add exceptions with Page Rules
 
-In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/) tutorial, you configured zone settings that apply to all incoming requests for `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
+In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/) tutorial, you configured zone settings that apply to all incoming requests for `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](/rules/page-rules/).
 
 Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
@@ -77,7 +77,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
           + security_level      = "under_attack"
@@ -96,7 +95,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
 
@@ -168,7 +166,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
           + security_level      = "under_attack"
@@ -187,7 +184,6 @@ Terraform will perform the following actions:
           + always_use_https    = false
           + disable_apps        = false
           + disable_performance = false
-          + disable_railgun     = false
           + disable_security    = false
           + disable_zaraz       = false
 

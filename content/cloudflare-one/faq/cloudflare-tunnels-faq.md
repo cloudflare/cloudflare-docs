@@ -36,7 +36,7 @@ Yes. Cloudflare Tunnel has full support for Websockets.
 
 {{<faq-answer>}}
 
-Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-apps/private-net/). Public hostname deployments are not supported at this time.
+Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-networks/private-net/). Public hostname deployments are not supported at this time.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -46,7 +46,7 @@ Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cl
 
 {{<faq-answer>}}
 
-Cloudflare offers two modes of setup: [Full Setup](/dns/zone-setups/full-setup/), in which the domain uses Cloudflare DNS name servers, and [Partial Setup](/dns/zone-setups/partial-setup/) (also known as CNAME setup) in which the domain uses non-Cloudflare DNS servers.
+Cloudflare offers two modes of setup: [Full Setup](/dns/zone-setups/full-setup/), in which the domain uses Cloudflare DNS nameservers, and [Partial Setup](/dns/zone-setups/partial-setup/) (also known as CNAME setup) in which the domain uses non-Cloudflare DNS servers.
 
 The best experience with Cloudflare Tunnel is using Full Setup because Cloudflare manages DNS for the domain and can automatically configure DNS records for newly started Tunnels.
 
@@ -99,7 +99,7 @@ Named Tunnels can be routed via DNS records, in which case we use CNAME records 
 
 No. When using Cloudflare Tunnel, all requests to the origin are made internally between `cloudflared` and the origin.
 
-To log external visitor IPs, you will need to [configure an alternative method](https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs-Logging-visitor-IP-addresses-with-mod-cloudflare-).
+To log external visitor IPs, you will need to [configure an alternative method](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -115,50 +115,11 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured from Zero Trust?" >}}
+{{<faq-question level=2 text="Is it possible to restore a deleted tunnel?">}}
 
 {{<faq-answer>}}
 
-### Ensure that only one instance of `cloudflared` is installed as a service
-
-If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
-
-### Check your DNS records
-
-If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
-
-### View debug logs
-
-Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
-{{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured through the CLI?" >}}
-
-{{<faq-answer>}}
-
-### View debug logs
-
-Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
-
-### Check SSL/TLS encryption mode
-
-1.  On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
-1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
-
-When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
-
-### Check location of credentials file
-
-If you encounter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
-
-```sh
-$ cloudflared tunnel run
-2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
-Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
-```
+No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`config.yaml` file](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#configuration-file) will still be present and you can create a new tunnel with the same configuration. If the tunnel was remotely-managed, both the tunnel and its configuration are permanently deleted.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -176,17 +137,27 @@ Before contacting the Cloudflare support team:
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
-- Set [`transport-loglevel`](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#transport-loglevel) to `debug`.
+- Gather any relevant error/access logs from your server.
 
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) either on the command line or in your configuration file.
+Set [`loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 
-- Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+### I am having an issue with a remotely-managed/dashboard tunnel.
+
+Before contacting the Cloudflare support team:
+
+- Take note of any specific error messages and/or problematic behaviors.
+
+- Make sure that `cloudflared` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
 - Gather any relevant error/access logs from your server.
+
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, add [`--logfile <PATH>`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#logfile) and [`--loglevel debug`](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#loglevel) to your system service configuration. To modify the system service, refer to [Configure a remotely-managed tunnel](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/).
 
 {{</faq-answer>}}
 {{</faq-item>}}

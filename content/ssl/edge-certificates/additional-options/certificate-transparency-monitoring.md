@@ -2,33 +2,30 @@
 pcx_content_type: concept
 title: Certificate Transparency Monitoring
 weight: 3
+meta:
+  description: Certificate Transparency (CT) Monitoring is an opt-in feature in public beta that aims at improving security by allowing you to double-check any SSL/TLS certificates issued for your domain.
 ---
 
 # Certificate Transparency Monitoring
 
-Certificate Transparency (CT) Monitoring sends you emails when certificates — including [backup certificates](/ssl/edge-certificates/universal-ssl/#backup-certificates) — are issued for your domain. This feature is in **public beta** and is opt-in.
+Certificate Transparency (CT) Monitoring is an [opt-in](#opt-in-and-out) feature in public beta that aims at improving security by allowing you to double-check any SSL/TLS certificates issued for your domain.
 
-{{<Aside type="note">}}
+CT Monitoring alerts are triggered not only by Cloudflare processes - including [backup certificates](/ssl/edge-certificates/backup-certificates/) -, but whenever a certificate that covers your monitored domain is issued by a [Certificate Authority (CA)](/ssl/concepts/#certificate-authority-ca) and added to a public CT log. You can learn more about how this works in the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/).
 
-If you use a shared certificate, you may receive notifications for domains or subdomains that do not belong to you.
+{{<Aside type="warning" header="Aspects to consider">}}
+
+* If you use other services that automatically issue certificates for your domain or subdomains, this may trigger CT Monitoring emails as well.
+* If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as {{<glossary-tooltip term_id="Subject Alternative Names (SANs)">}}subject alternative names (SANs){{</glossary-tooltip>}} together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) to gather more information in such cases.
+* CT Monitoring does not detect phishing attempts. For example, for `cloudflare.com`, an alert would not trigger if a certificate was issued for `cloudf1are.com` or `cloud-flare.com`.
 
 {{</Aside>}}
 
 ---
 
-## Overview
+## Availability
 
-Every website must have a certificate to be trusted by major browsers. A certificate is a proof of identity — it says that you are who you say you are. These certificates help browsers like Google Chrome "know" that a connection is secure before presenting content. Certificates are recorded in public **CT logs**, such as Google’s Argon log and Cloudflare’s Nimbus log.
 
-If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you an email whenever your domain is recognized in a CT log. Usually, these certificates are legitimate and do not require further action. Cloudflare sends emails so you can double-check for yourself. If you use a shared certificate, you may receive emails for domains or subdomains that do not belong to you.
-
-In rare cases, you may believe a certificate is illegitimate. This is when you should [take action](#how-to-take-action).
-
-{{<Aside type="note">}}
-
-For even more details, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/).
-
-{{</Aside>}}
+{{<feature-table id="ssl.cert_transparency">}}
 
 ---
 
@@ -36,13 +33,7 @@ For even more details, refer to the [introductory blog post](https://blog.cloudf
 
 Alerts are turned off by default. If you want to receive alerts, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) and enable **Certificate Transparency Monitoring**. If you are in a Business or Enterprise zone, select **Add Email**.
 
-{{<feature-table id="ssl.cert_transparency">}}
-
 To stop receiving alerts, disable **Certificate Transparency Monitoring** or remove your email from the feature card.
-
-{{<Aside type="note" header="Note:">}}
-CT monitoring does not detect phishing attempts. For example, for <code>cloudflare.com</code>, an alert would not trigger for a certificate issued for <code>cloudf1are.com</code> or <code>cloud-flare.com</code>.
-{{</Aside>}}
 
 ---
 
@@ -54,8 +45,8 @@ Additionally, you should check whether the certificate was issued through Cloudf
 
 You _should_ take action when something is clearly wrong, such as if you:
 
-- Do not recognize the certificate issuer
-- Have recently noticed problems with your website
+- Do not recognize the certificate issuer.
+- Have recently noticed problems with your website.
 
 ---
 
@@ -83,9 +74,11 @@ Domain registrars may be able to **suspend** potentially malicious domains. If, 
 
 ### Option 3: Improvise
 
-There are other ways to combat malicious certificates. You can warn your visitors with an on-site notification, ask browser makers (Google for Chrome, etc.) to block these domains, or you can [contact us to help combat malicious certificates](https://support.cloudflare.com/hc/articles/200172476).
+There are other ways to combat malicious certificates. You can warn your visitors with an on-site notification or ask browser makers (Google for Chrome, etc.) to block these domains.
 
 If someone is attempting to impersonate you online, you should absolutely take action. This is usually difficult to recognize, so exercise caution. **Remember: the vast majority of certificates are not malicious. Only take action if you believe something is wrong.**
+
+---
 
 ## HTTP Public Key Pinning
 

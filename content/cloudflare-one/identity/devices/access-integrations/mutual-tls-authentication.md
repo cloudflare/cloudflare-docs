@@ -6,24 +6,15 @@ weight: 3
 
 # Mutual TLS
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP not required                                                                         | Enterprise plans                                              |
-
-</div>
-</details>
+{{<Aside type="note">}}
+Only available on Enterprise plans.
+{{</Aside>}}
 
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
-Currently, mTLS does not work with HTTP/3 traffic.
-
-![mTLS handshake diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
+![mTLS handshake diagram](/images/cloudflare-one/identity/devices/mtls.png)
 
 ## Add mTLS authentication to your Access configuration
 
@@ -42,6 +33,9 @@ To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com
 3. Select **Add mTLS Certificate**.
 4. Give the Root CA any name.
 5. Paste the content of the `ca.pem` file into the **Certificate content** field.
+
+   {{<render file="_byo-ca-mtls-cert-requirements.md" productFolder="ssl" >}}
+
 6. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
    These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
@@ -69,7 +63,7 @@ To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com
 
 {{<Aside type="warning">}}
 
-Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domain.
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for the domain.
 {{</Aside>}}
 
 ## Test mTLS using cURL
@@ -242,4 +236,13 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
    $ cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
    ```
 
-You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)
+You will need to add the CRL to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be found on the [Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template).
+
+{{<render file="_forward-client-certificate.md" productFolder="ssl">}}
+
+## Known limitations
+
+mTLS does not currently work for:
+
+- HTTP/3 traffic
+- Cloudflare Pages site served on a [custom domain](/pages/configuration/custom-domains/)

@@ -12,7 +12,7 @@ title: Deploy a Gridsome site
 Install the `@gridsome/cli` by running the following command in your terminal:
 
 ```sh
-$ npm install --global @gridsome/cli 
+$ npm install --global @gridsome/cli
 ```
 
 ## Set up a new project
@@ -20,12 +20,12 @@ $ npm install --global @gridsome/cli
 With Gridsome installed, set up a new project by running `gridsome create`. The `create` command accepts a name that defines the directory of the project created and an optional starter kit name. You can review more starters in the [Gridsome starters section](https://gridsome.org/docs/starters/).
 
 ```sh
-$ gridsome create my-gridsome-website
+$ npx gridsome create my-gridsome-website
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -35,15 +35,7 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, the following information will be provided:
 
-<div>
-
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `gridsome build` |
-| Build directory      | `dist`          |
-
-</div>
+{{<pages-build-preset framework="gridsome">}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `vuepress`, your project dependencies, and building your site, before deploying it.
 
@@ -53,6 +45,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Gridsome project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Gridsome project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Gridsome">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Gridsome">}}

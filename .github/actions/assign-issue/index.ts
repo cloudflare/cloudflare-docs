@@ -3,27 +3,15 @@
 
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { OWNERS } from '../owners';
+import * as codeOwnersUtils from "codeowners-utils";
 
-/**
- * Map "Product Name" => "product-slug"
- * The slug must match the `content/{slug}` and `data/{slug}.yml` value.
- * The "Name" must match the names/values from the ISSUE_TEMPLATE file(s).
- */
-function slugify(input: string): string {
-  input = input.toLowerCase().replace(/\s+/g, '-');
-  if (input === 'image-optimization') return 'images';
-  if (input === 'pub/sub') return 'pub-sub';
-  if (input === 'zero-trust') return 'cloudflare-one';
-  return input.replace(/\//g, '');
-}
+// This pulls assignment logic from our codeowners file
 
 (async function () {
   try {
     const token = core.getInput('GITHUB_TOKEN', { required: true });
 
     const payload = github.context.payload;
-    console.log('event payload:', JSON.stringify(payload, null, 2));
 
     const { action, repository, issue } = payload;
     if (!issue) throw new Error('Missing "issue" object!');
@@ -34,43 +22,52 @@ function slugify(input: string): string {
     const labels: string[] = (issue.labels || []).map(x => x.name);
     if (labels.includes('engineering')) return console.log('ignore "engineering" issues');
 
+    // continue for other assignments
+    let cwd = process.cwd();
+    let codeowners = await codeOwnersUtils.loadOwners(cwd);
+    const assignees = new Set<string>();
     const content = issue.body;
     if (!content) throw new Error('Missing "issue.body" content!');
     if (!issue.number) throw new Error('Missing "issue.number" value!');
 
-    if (!content.startsWith('### Which Cloudflare product')) {
-      throw new Error('Missing "Which Cloudflare product(s)" dropdown!');
+    const regex = /https?:\/\/developers\.cloudflare\.com([^\s|)]*)/gm;
+    let links = []
+    let m;
+
+    while ((m = regex.exec(content)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        
+        // The result can be accessed through the `m`-variable.
+        m.forEach((match, groupIndex) => {
+          if (groupIndex === 1) {
+            links.push(match);
+          }
+        });
     }
 
-    const [, answer] = /\n\n([^\n]+)\n\n/.exec(content) || [];
-    if (!answer) throw new Error('Error parsing "products" response');
+    console.log("Links are:")
+    console.log(links);
 
-    const users = new Set<string>();
-    const products = answer.split(/,\s*/g).filter(Boolean);
-
-    for (const p of products) {
-      let slug = slugify(p);
-      let list = OWNERS[slug];
-
-      if (!list) {
-        console.error({ name: p, slug });
-        throw new Error('Unknown product!');
+    for (const item of links) {
+      const updatedLink = "content".concat(item);
+      console.log("Updated link is:")
+      console.log(updatedLink);
+      const match = codeOwnersUtils.matchFile(updatedLink, codeowners);
+      for (const owner of match.owners) {
+        if (!owner.includes("/")) {
+          assignees.add(owner.replace(/^@/, ""));
+        }
       }
-
-      if (list.length > 0) {
-        list.forEach(x => users.add(x));
-      } else {
-        // ping Haley for assignment
-        users.add('haleycode');
-      }
     }
+    console.log("Assignees are:")
+    console.log(assignees);
 
-    // will throw if already assigned
-    for (const u of issue.assignees) {
-      users.delete(u.login);
+    if (assignees.size === 0) {
+      assignees.add("kodster28");
     }
-
-    console.log({ products, users });
 
     const client = github.getOctokit(token);
 
@@ -78,8 +75,35 @@ function slugify(input: string): string {
       owner: repository.owner.login,
       issue_number: issue.number,
       repo: repository.name,
-      assignees: [...users],
+      assignees: [...assignees],
     });
+
+    console.log('Assignees added (if present)')
+
+    // Add labels for future reporting
+
+    const labelPrefix = 'product:';
+    const newLabels = new Set<string>();
+
+    for (const link of links) {
+      const parts = link.split('/');
+      if (parts[1] !== undefined) {
+        newLabels.add(labelPrefix.concat(parts[1]));
+      }
+    }
+
+    console.log(newLabels)
+  
+    if (newLabels.size > 0) {
+      await client.rest.issues.addLabels({
+        owner: repository.owner.login,
+        issue_number: issue.number,
+        repo: repository.name,
+        labels: [...newLabels],
+      });
+    }
+
+    console.log('Labels added')
 
     console.log('DONE~!');
   } catch (error) {

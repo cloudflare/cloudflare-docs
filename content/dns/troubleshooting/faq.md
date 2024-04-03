@@ -1,11 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: FAQ
+title: General FAQ
 weight: 1
 ---
 
-# FAQ
+# General FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -22,13 +22,19 @@ Cloudflare never limits or caps DNS queries, but the pricing depends on your pla
 
 For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.
 
-For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote. Any overages will not be charged.
+For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
 ___
 
 ## Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOis search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
+
+{{<Aside type="warning">}}
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool.
+{{</Aside>}}
+
+Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
 
 ___
 
@@ -102,7 +108,7 @@ ___
 
 {{<render file="_dnssec-providers.md">}}
 
-For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/additional-options/dnssec/).
+For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
 ___
 
@@ -147,7 +153,7 @@ ___
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
+By default, only A and CNAME records that handle web traffic (HTTP and HTTPS) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -175,18 +181,20 @@ ___
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
-This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record).
+This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
-1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
+1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/get-started/setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/manage-domains/add-site/) the domain.
 
 ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a proxied DNS record that can use Cloudflare Page Rules or Cloudflare Workers.
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
+
+___
 
 ## Why are DNS queries returning incorrect results?
 
@@ -194,7 +202,7 @@ Third-party tools can sometimes fail to return correct DNS results if a recursiv
 
 -   [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
 -   [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
--   [Purging your DNS cache locally](https://documentation.cpanel.net/display/CKB/How%2BTo%2BClear%2BYour%2BDNS%2BCache)
+-   [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
 
 ___
 
@@ -206,7 +214,7 @@ ___
 
 {{<Aside type="note">}}
 Sites generally have at least an `A` record that points to the origin
-server IP address, typically for the `www` subdomain and the root domain.
+server IP address, typically for the `www` subdomain and the apex domain (also known as "root domain" and represented by `@`).
 {{</Aside>}}
 
 ___
@@ -225,4 +233,15 @@ ___
 
 The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk` TLDs. Use the Cloudflare Dashboard for managing such TLDs.
 
-Enterprise customer can [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to remove this limitation.
+Enterprise customer can [contact Cloudflare Support](/support/contacting-cloudflare-support/) to remove this limitation.
+
+___
+
+## How to configure records on local DNS servers?
+
+You can create CNAME records pointing to `cdn.cloudflare.net` in your local DNS to locally resolve hostnames through Cloudflare.
+For example, if you need to resolve `example.com` through Cloudflare in your local DNS server, you need to create a CNAME record such as:
+
+```txt
+example.com CNAME example.com.cdn.cloudflare.net
+```

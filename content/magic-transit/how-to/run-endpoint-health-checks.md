@@ -22,4 +22,4 @@ Refer to the table below for an example of an endpoint health check configuratio
 | `103.21.244.0/24` | `103.21.244.100`    | 
 | `103.21.245.0/24` | `103.21.245.100`    |
 
-Refer to [Probe construction](/magic-transit/reference/probe-construction/) for more information on this topic.
+Refer to [Tunnel health checks](/magic-transit/reference/tunnel-health-checks/) for more information on this topic.

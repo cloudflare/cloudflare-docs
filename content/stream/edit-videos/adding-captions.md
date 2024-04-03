@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how to
+pcx_content_type: how-to
 title: Add captions
 weight: 5
 ---
@@ -127,7 +127,7 @@ deleted.
 - Videos may include several language captions, but each language must be unique.
   For example, a video may have English, French, and German captions associated
   with it, but it cannot have two French captions.
-- Each caption file is limited to 10 MB in size. Please [contact support](https://support.cloudflare.com/hc/articles/200172476)
+- Each caption file is limited to 10 MB in size. Please [contact support](/support/contacting-cloudflare-support/)
   if you need to upload a larger file.
 
 ## Most common language codes

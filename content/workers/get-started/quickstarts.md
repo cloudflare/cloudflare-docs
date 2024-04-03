@@ -3,7 +3,9 @@ type: overview
 pcx_content_type: get-started
 title: Quickstarts
 weight: 3
-layout: list
+layout: wide
+meta:
+  description: GitHub repositories that are designed to be a starting point for building a new Cloudflare Workers project.
 ---
 
 # Quickstarts
@@ -88,7 +90,7 @@ description="Measure download/upload connection speed from the client side, usin
 
 {{<worker-starter title="Flareact" repo="flareact/flareact" description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs.">}}
 
-{{<worker-starter title="Sunder" repo="sunderjs/sunder-worker-template" description="Sundar is a minimal and unopinionated framework for Service Workers. This template uses Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass, as well as Workers Sites for static assets.">}}
+{{<worker-starter title="Sunder" repo="sunderjs/sunder-worker-template" description="Sunder is a minimal and unopinionated framework for Service Workers. This template uses Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass, as well as Workers Sites for static assets.">}}
 
 ---
 

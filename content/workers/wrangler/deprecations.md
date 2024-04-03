@@ -1,7 +1,8 @@
 ---
 pcx_content_type: concept
 title: Deprecations
-weight: 2
+meta:
+  description: The differences between Wrangler versions, specifically deprecations and breaking changes.
 ---
 
 # Deprecations
@@ -14,29 +15,37 @@ Review the difference between Wrangler versions, specifically deprecations and b
 
 The following commands are deprecated in Wrangler as of Wrangler v3. These commands will be fully removed in v4.
 
-### `generate`
+#### `generate`
 
 The `wrangler generate` command is deprecated, but still active in v3. `wrangler generate` will be fully removed in v4.
 
-Try using `npm create cloudflare` for new Workers and Pages projects.
+Use `npm create cloudflare@latest` for new Workers and Pages projects.
 
-#### `init`
-
-The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
-
-Try using `npm create cloudflare` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
-
-### `publish`
+#### `publish`
 
 The `wrangler publish` command is deprecated, but still active in v3. `wrangler publish` will be fully removed in v4.
 
-Try using [`wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Workers.
+Use [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Workers.
 
-### `pages publish`
+#### `pages publish`
 
 The `wrangler pages publish` command is deprecated, but still active in v3. `wrangler pages publish` will be fully removed in v4.
 
-Try using [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
+Use [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
+
+### Deprecated options
+
+#### `--experimental-local`
+
+`wrangler dev` in v3 is local by default so this option is no longer necessary.
+
+#### `--local`
+
+`wrangler dev` in v3 is local by default so this option is no longer necessary.
+
+#### `--persist`
+
+`wrangler dev` automatically persists data by default so this option is no longer necessary.
 
 ## Wrangler v2
 
@@ -49,8 +58,8 @@ Wrangler v2 introduces new fields for configuration and new features for develop
 - JSON bindings for `vars`.
 - Local mode for `wrangler dev`.
 - Module system (for both modules and service worker format Workers).
-- Devtools.
-- Typescript support.
+- DevTools.
+- TypeScript support.
 - Sharing development environment on the Internet.
 - Wider platform compatibility.
 - Developer hotkeys.
@@ -207,7 +216,7 @@ Routes are specified in the `wrangler.toml` configuration file.
   });
   ```
 
-  Wrangler v1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in Wrangler v2, but will also log a deprecation warning. In the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
+  Wrangler v1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in Wrangler v2, but will also log a deprecation warning. In the future, this will break with an error. Instead, you should rewrite the import to specify that it is a relative path, like so:
 
   ```diff
   - import SomeDependency from "some-dependency.js";
@@ -252,4 +261,4 @@ Routes are specified in the `wrangler.toml` configuration file.
 | Feature    | v1  | v2  | Notes                                                                                                                                                                 |
 | ---------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.     |
-| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/miniflare). |
+| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare/). |

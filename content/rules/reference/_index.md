@@ -1,8 +1,7 @@
 ---
 title: Reference
 pcx_content_type: navigation
-weight: 9
-layout: single
+weight: 20
 meta:
   description: Reference information for Rules.
 ---

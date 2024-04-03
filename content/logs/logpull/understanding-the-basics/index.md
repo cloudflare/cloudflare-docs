@@ -2,10 +2,9 @@
 pcx_content_type: reference
 title: Understanding the basics
 weight: 12
-layout: single
 ---
 
-# Understanding the basics
+# Understand the basics
 
 ## Access pattern
 

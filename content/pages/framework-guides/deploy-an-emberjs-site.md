@@ -20,7 +20,7 @@ $ npm install -g ember-cli
 Use the `ember new` command to create a new application:
 
 ```sh
-$ ember new ember-quickstart --lang en
+$ npx ember new ember-quickstart --lang en
 ```
 
 After the application is generated, change the directory to your project and run your project by running the following commands:
@@ -32,7 +32,7 @@ $ npm start
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -42,20 +42,12 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Ember_ as your **Framework preset**. Your selection will provide the following information:
 
-{{<table-wrap>}}
-
-| Configuration option | Value         |
-| -------------------- | ------------- |
-| Production branch    | `main`        |
-| Build command        | `ember build` |
-| Build directory      | `dist`        |
-
-{{</table-wrap>}}
+{{<pages-build-preset framework="ember-js">}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
-Every time you commit new code to your Ember site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests and be able to preview how changes to your site look before deploying them to production.
+Every time you commit new code to your Ember site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests and be able to preview how changes to your site look before deploying them to production.
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-{{<render file="_learn-more.md" withParameters="Ember">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Ember">}}

@@ -100,13 +100,13 @@ If you are a postmaster and are having trouble receiving Email Routing's emails,
 
 **IPv4**
 
-`104.30.0.0/19`
+`104.30.0.0/20`
 
 **IPv6**
 
 `2405:8100:c000::/38`
 
-_Ranges last updated: October 4th, 2022_
+_Ranges last updated: December 13th, 2023_
 
 ### Sender rewriting
 
@@ -116,7 +116,7 @@ This has no effect to the end user's experience, though. The message headers wil
 
 ### SMTP errors
 
-In most cases, Email Routing simply forwards the upstream SMTP errors back to the sender client in-session.
+In most cases, Email Routing forwards the upstream SMTP errors back to the sender client in-session.
 
 ### Spam and abusive traffic
 
@@ -187,7 +187,3 @@ Email Routing does not support sending or replying from your Cloudflare domain. 
 ### Signs such "`+`" and "`.`" are treated as normal characters for custom addresses
 
 Email Routing does not have advanced routing options. Characters such as `+` or `.`, which perform special actions in email providers like Gmail and Outlook, are currently treated as normal characters on custom addresses. More flexible routing options are in our roadmap.
-
-### Subdomains are only supported for Enterprise customers
-
-Subdomains cannot use Email Routing to forward emails, unless they are part of an Enterprise account.

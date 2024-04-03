@@ -45,7 +45,7 @@ stateDiagram-v2
 {{<render file="_environment-definition.md">}}
 <br/>
 
-When you first [enable](/version-management/how-to/enable/) version management, Cloudflare will automatically create three environments for you: 
+After you [enable](/version-management/how-to/enable/) version management, you will have the ability to create default environments: 
 
 {{<render file="_environment-defaults.md">}}
 

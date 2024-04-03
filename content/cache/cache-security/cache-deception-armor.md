@@ -19,17 +19,17 @@ For example, an attacker could send a user a link to `http://www.example.com/new
 
 You can protect users from Web Cache Deception attacks by adding a Cache Deception Armor Page Rule. With this rule, you can continue to cache static assets, but the rule will verify a URL's extension matches the returned `Content-Type`.
 
-In the newsfeed example above, if `http://www.example.com/newsfeed` is a script that outputs a web page, the `Content-Type` is `text/html`. On the other hand, `http://www.example.com/newsfeed/foo.jpg` is expected to have `image/jpeg` as `Content-Type`. When a mismatch that could result in a Web Cache Deception attack is found, Cloudflare does not cache the response.
+In the newsfeed example above, if `http://www.example.com/newsfeed` is a script that outputs a webpage, the `Content-Type` is `text/html`. On the other hand, `http://www.example.com/newsfeed/foo.jpg` is expected to have `image/jpeg` as `Content-Type`. When a mismatch that could result in a Web Cache Deception attack is found, Cloudflare does not cache the response.
 
 ### Exceptions
 
 - If the returned `Content-Type` is `application/octet-stream`, the extension does not matter because that is typically a signal to instruct the browser to save the asset instead of to display it.
 - Cloudflare allows `.jpg` to be served as `image/webp` or `.gif` as `video/webm` and other cases that we think are unlikely to be attacks.
-- Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/about/cache-control/). A `Cache-Control` header from the origin,  [Edge Cache TTL Page Rule](/cache/about/edge-browser-cache-ttl/) or Browser Cache TTL zone setting may override the protection.
+- Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/concepts/cache-control/). A `Cache-Control` header from the origin,  [Edge Cache TTL Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) or Browser Cache TTL zone setting may override the protection.
 
 ## Enable Cache Deception Armor
 
-To enable Cache Deception Armor, you need to start by creating a Page Rule. Follow the steps bellow for guidance:
+To enable Cache Deception Armor, you need to start by creating a Page Rule. Follow the steps below for guidance:
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2.  Select **Rules** > **Page Rules**. 

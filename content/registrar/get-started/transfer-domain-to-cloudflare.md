@@ -14,6 +14,10 @@ This section contains generic instructions on how to transfer your domain to Clo
 
 ---
 
+{{<render file="_requirements.md">}}
+
+---
+
 {{<render file="_before-you-begin.md">}}
 
 ---
@@ -31,6 +35,7 @@ To begin, complete the following steps in your current registrar to transfer you
 - [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/258/84/what-should-i-do-to-transfer-a-domain-from-namecheap/)
 - [Network Solutions](https://customerservice.networksolutions.com/prweb/PRAuth/webkm/help/article/KC-474/networksolutions)
 - [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
+- [Google](https://support.google.com/domains/answer/3251178?hl=en)
 
 ### 1. Log in to your registrar account
 
@@ -70,12 +75,12 @@ You will not be billed at this step. Cloudflare will only bill your card when yo
 
 Sites can be unavailable for a few reasons, including:
 
-- You did not [add your domain](/fundamentals/get-started/setup/add-site/) to your Cloudflare.
+- You did not [add your domain](/fundamentals/setup/manage-domains/add-site/) to your Cloudflare.
 - The site was registered in the last 60 days.
 - Cloudflare does not yet support the TLD.
 - The domain is designated as a premium domain by the registry.
 - The domain has a status that does not allow for a transfer.
-- You failed to follow the steps highlighted above in [creating an account with your domain](/fundamentals/account-and-billing/account-setup/create-account/) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
+- You failed to follow the steps highlighted above in [creating an account with your domain](/fundamentals/setup/account/create-account/) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
 
 {{</Aside>}}
 

@@ -6,7 +6,7 @@ weight: 5
 
 # Non-identity on-ramps
 
-With Cloudflare Zero Trust, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/connections/connect-devices/agentless/pac-files/) or [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/). Since these on-ramps do not require users to log in to Cloudflare WARP, [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) are not supported.
+With Cloudflare Zero Trust, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/connections/connect-devices/agentless/pac-files/) or [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/). Since these on-ramps do not require users to log in to Cloudflare WARP, [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) are not supported.
 
 {{<Aside type="note">}}
 If you want to apply Isolate policies based on user identity, you will need to either install the [WARP client](/cloudflare-one/connections/connect-devices/warp/) or manually redirect users to the [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) URL.

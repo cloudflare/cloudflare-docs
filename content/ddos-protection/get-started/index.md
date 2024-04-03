@@ -2,7 +2,6 @@
 pcx_content_type: get-started
 title: Get started
 weight: 3
-layout: single
 ---
 
 # Get started
@@ -28,9 +27,9 @@ Cloudflare’s DDoS protection systems automatically detect and mitigate DDoS at
 To prevent this situation, Cloudflare recommends that you perform these steps to get started:
 
 1. Set the ruleset actions for all the [DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/) to _Log_.
-1. Analyze the flagged traffic.
-1. Adjust the sensitivity or action of individual managed ruleset rules, if required.
-1. Switch ruleset actions from _Log_ back to the default.
+2. Analyze the flagged traffic.
+3. Adjust the sensitivity or action of individual managed ruleset rules, if required.
+4. Switch ruleset actions from _Log_ back to the default.
 
 ### Prerequisites
 

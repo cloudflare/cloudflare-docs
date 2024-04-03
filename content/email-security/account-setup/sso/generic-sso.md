@@ -8,7 +8,7 @@ meta:
 
 # Generic single sign-on integration guide
 
-Below is a generic guide to successfully set up an identity provider based SAML. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
+Below is a generic guide to successfully set up an identity provider based {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}}. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
 
 ## 1. Identity Provider SAML setup
 
@@ -40,11 +40,11 @@ After configuring settings in your SSO provider, log in to the Area 1 dashboard 
 
 3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
-    ![Fill out your authorized administrators](/email-security/static/sso/generic/step3-users-actions.png)
+    ![Fill out your authorized administrators](/images/email-security/sso/generic/step3-users-actions.png)
 
 4. Go to **SSO**, and enable **Single Sign on**.
 
-    ![Enable SSO](/email-security/static/sso/generic/step4-sso.png)
+    ![Enable SSO](/images/email-security/sso/generic/step4-sso.png)
 
 5. In **SSO Enforcement**, choose one of the settings, according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
@@ -64,4 +64,4 @@ If you have trouble connecting your SAML provider to Area 1, make sure that:
 - You are using the SHA-1 algorithm.
 - Your encryption is set to 2048 bits.
 
-If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

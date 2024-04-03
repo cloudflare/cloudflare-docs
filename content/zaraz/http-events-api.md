@@ -10,9 +10,6 @@ weight: 4
 
 The Zaraz HTTP Events API allows you to send information to Zaraz from places that cannot run the [Web API](/zaraz/web-api/), such as your server or your mobile app. It is useful for tracking events that are happening outside the browser, like successful transactions, sign-ups and more. The API also allows sending multiple events in batches.
 
-{{<Aside type="note">}}
-The HTTP Events API is only available for accounts on a [Workers Paid plan](/workers/platform/pricing/).
-{{</Aside>}}
 
 ## Configure the API endpoint
 
@@ -95,6 +92,10 @@ For all available system keys, refer to the table below:
 | `system.page.url` | String | The URL of the page associated with the event. |
 | `system.page.referrer` | String | The URL of the referrer page in the time the event took place.  |
 | `system.page.encoding` | String | The encoding of the page associated with the event. |
+
+{{<Aside type="note">}}
+It is currently not possible to override location related properties, such as City, Country, and Continent.
+{{</Aside>}}
 
 ## Process API responses
 

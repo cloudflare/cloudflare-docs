@@ -10,7 +10,7 @@ Use this tutorial to start using Cloudflare's Web3 Gateways to the IPFS and Ethe
 
 ## Before you begin
 
-Before you start, make sure the you have [set up an account](/fundamentals/account-and-billing/account-setup/) and [added your website](/fundamentals/get-started/setup/add-site/) to Cloudflare.
+Before you start, make sure the you have [set up an account](/fundamentals/setup/account/) and [added your website](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
 
 ## Step 1 - Subscribe to a gateway
 
@@ -20,23 +20,17 @@ To get access to Web3 gateways for your account, you need to first [subscribe to
 
 After purchasing a gateway subscription, create a gateway.
 
-<details>
-<summary>Create via dashboard</summary>
-<div>
+{{<details header="Create via dashboard">}}
 
 {{<render file="_create-gateway-dashboard.md">}}
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Create via API</summary>
-<div>
+{{<details header="Create via API">}}
 
 {{<render file="_create-gateway-api.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 {{<render file="_post-creation-steps.md">}}
 
@@ -54,4 +48,4 @@ If you are using your gateway for backend services, you may want to use Cloudfla
 
 ## Step 6 - Use the gateway
 
-Once you have created a gateway and updated your Cloudflare settings, you can start using your [IPFS](/web3/how-to/use-ipfs-gateway/), [Ethereum](/web3/how-to/use-ethereum-gateway/), or [Polygon](/web3/how-to/use-polygon-gateway/) gateway.
+Once you have created a gateway and updated your Cloudflare settings, you can start using your [IPFS](/web3/how-to/use-ipfs-gateway/) or [Ethereum](/web3/how-to/use-ethereum-gateway/).
