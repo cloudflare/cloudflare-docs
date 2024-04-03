@@ -43,6 +43,8 @@ When you run `npx wrangler@latest dev` in local dev, the Workers runtime will:
 
 There no extra toolchain or precompilation steps needed. The Python execution environment is provided directly by the Workers runtime, mirroring how Workers written in JavaScript work.
 
+Refer to the [Python examples](/workers/languages/python/examples/) to learn how to use Python within Workers.
+
 ## Deployment Lifecycle
 
 To reduce cold start times, when you deploy a Python Worker, Cloudflare performs as much of the expensive work as possible upfront, at deploy time. When you run npx `wrangler@latest deploy`, the following happens:
