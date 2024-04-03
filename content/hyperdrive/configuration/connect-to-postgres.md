@@ -45,7 +45,7 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
 | -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
-| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |                           |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this.   |
 | Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` | Must pass `prepare: false` when creating the client. |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
@@ -112,7 +112,13 @@ export default {
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+		const client = new Client({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			port: Number(env.HYPERDRIVE.port),
+			database: env.HYPERDRIVE.database
+		})
 
 		try {
 			// Connect to your database
