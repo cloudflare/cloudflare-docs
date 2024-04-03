@@ -45,6 +45,53 @@ When the preview manifest is delivered, inspect the headers for two properties:
 
 This manifest can be played and seeked using any HLS-compatible player.
 
+### Reading Headers
+
+Reading headers when loading a manifest requires adjusting how players handle
+the response. For example, if using [HLS.js](https://github.com/video-dev/hls.js)
+and the default loader, override the `pLoader` (playlist loader) class:
+
+``` js
+let currentPreviewStart;
+let currentPreviewVideoID;
+
+// Override the pLoader (playlist loader) to read the manifest headers:
+class pLoader extends Hls.DefaultConfig.loader {
+  constructor(config) {
+    super(config);
+    var load = this.load.bind(this);
+    this.load = function (context, config, callbacks) {
+      if (context.type == 'manifest') {
+        var onSuccess = callbacks.onSuccess;
+        // copy the existing onSuccess handler to fire it later.
+
+        callbacks.onSuccess = function (response, stats, context, networkDetails) {
+          // The fourth argument here is undocumented in HLS.js but contains
+          // the response object for the manifest fetch, which gives us headers:
+
+          currentPreviewStart =
+            parseFloat(networkDetails.getResponseHeader('preview-start-seconds'));
+          // Save the start time of the preview manifest
+
+          currentPreviewVideoID =
+            networkDetails.getResponseHeader('stream-media-id');
+          // Save the video ID in case the preview was loaded with an input ID
+
+          onSuccess(response, stats, context);
+          // And fire the exisint success handler.
+        };
+      }
+      load(context, config, callbacks);
+    };
+  }
+}
+
+// Specify the new loader class when setting up HLS
+const hls = new Hls({
+  pLoader: pLoader,
+});
+```
+
 ## Clip Manifest
 
 To play a clip of a live stream or recording, request a clip manifest with a duration and a start time, relative to the start of the live stream.
