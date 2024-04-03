@@ -91,7 +91,7 @@ To view your deployments in the Cloudflare dashboard:
 
 ### First upload
 
-You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions deploy --experimental-versions`](/workers/wrangler/commands/#upload) the first time you deploy a Worker will fail.
+You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload) the first time you upload a Worker will fail.
 
 
 ### Service worker syntax
