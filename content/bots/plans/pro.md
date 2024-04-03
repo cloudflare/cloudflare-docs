@@ -24,7 +24,7 @@ meta:
 
 {{<render file="_bots-heuristics.md">}}
 
-#### Account Takeover detections
+#### Account takeover detections
 
 {{<render file="_account-takeover-detections.md">}}
 
