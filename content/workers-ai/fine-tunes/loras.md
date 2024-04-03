@@ -125,7 +125,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finet
 You can call this method to confirm what fine-tunes you have created in your account
 
 {{<tabs labels="cURL | JSON Output">}}
-{{<tab label="cURL" default="true">}}
+{{<tab label="curl" no-code="true">}}
 
 ```bash
 ---
@@ -138,7 +138,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetu
     -H 'Authorization: Bearer {API_TOKEN}' \
 ```
 {{</tab>}}
-{{<tab label="JSON Output">}}
+{{<tab label="json output" no-code="true">}}
 
 ```sh
 ---
@@ -172,7 +172,7 @@ header: Example JSON output
 To make inference requests and apply the LoRA adapter, you will need your model and finetune `name` or `id`. You should use the chat template that your LoRA was trained on, but you can try running it with `raw: true` and the messages template like below.
 
 {{<tabs labels="Workers AI SDK | REST API">}}
-{{<tab label="Workers AI SDK" default="true">}}
+{{<tab label="workers ai sdk" no-code="true">}}
 
 ```javascript
 ---
@@ -189,7 +189,7 @@ const response = await ai.run(
 ```
 
 {{</tab>}}
-{{<tab label="REST API">}}
+{{<tab label="rest api" no-code="true">}}
 ```bash
 ---
 highlight: [5-6]
