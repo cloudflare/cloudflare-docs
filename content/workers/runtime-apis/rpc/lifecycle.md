@@ -28,7 +28,7 @@ To ensure resources are properly disposed of, you should use [Explicit Resource 
 
 Explicit Resource Management adds the following language features:
 
-- The [`using` desclaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
+- The [`using` declaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
 - [`Symbol.dispose` and `Symbol.asyncDispose`](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#additions-to-symbol)
 
 If a variable is declared with `using`, when the variable is no longer in scope, the variable can be safely disposed of. For example:
