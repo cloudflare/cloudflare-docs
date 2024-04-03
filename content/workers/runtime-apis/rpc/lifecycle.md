@@ -24,7 +24,7 @@ In many cases (described below), the system will automatically realize when a st
 
 ## Explicit Resource Management
 
-To ensure resources are properly disposed of, you should use [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management), a new JavaScript language feature that allows you to explicitly signal when resources can be disposed of. Explicit Resource Management is a Stage 3 TC39 proposal — it is [coming to V8 soon](https://groups.google.com/g/v8-reviews/c/LAk0iBZcIbM).
+To ensure resources are properly disposed of, you should use [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management), a new JavaScript language feature that allows you to explicitly signal when resources can be disposed of. Explicit Resource Management is a Stage 3 TC39 proposal — it is [coming to V8 soon](https://bugs.chromium.org/p/v8/issues/detail?id=13559).
 
 Explicit Resource Management adds the following language features:
 
