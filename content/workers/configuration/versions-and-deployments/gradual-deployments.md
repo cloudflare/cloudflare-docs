@@ -159,11 +159,11 @@ When you create a new gradual deployment for a Durable Object Worker, each Durab
 
 ### Example
 
-Imagine that you have previously created 3 Durable Objects, [deriving their IDs from the names](/durable-objects/configuration/access-durable-object-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
+This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/configuration/access-durable-object-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
 
 Your Worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
 
-Here's how the versions of your Durable Objects might change as you progress your gradual deployment:
+Here is how the versions of your Durable Objects might change as you progress your gradual deployment:
 
 | Deployment config                      | "foo" | "bar" | "baz" |
 | :------------------------------------: | :---: | :---: | :---: |
@@ -173,15 +173,16 @@ Here's how the versions of your Durable Objects might change as you progress you
 | Version B: 100% <br>                   | B     | B     | B     |
 
 This is only an example, so the versions assigned to your Durable Objects may be different. However, the following is guaranteed:
+
 - For a given deployment, requests to each Durable Object will always use the same Worker version.
-- When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In our example, Durable Object "foo" would never revert from version "B" to version "A".
-- The Durable Object will only be [reset](/durable-objects/reference/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in our example.
+- When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In this example, Durable Object "foo" would never revert from version "B" to version "A".
+- The Durable Object will only be [reset](/durable-objects/reference/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
 
 {{<Aside type="note">}}
 
 Typically, your Durable Object Worker will define both your Durable Object class and the Worker that interacts with it. In this case, you cannot deploy changes to your Durable Object and its Worker independently.
 
-[You should](/durable-objects/platform/known-issues/#code-updates) ensure that API changes between your Durable Object and its Worker are forwards and backwards compatible whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
+You should ensure that API changes between your Durable Object and its Worker are [forwards and backwards compatible](/durable-objects/platform/known-issues/#code-updates) whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
 
 {{</Aside>}}
 
@@ -231,6 +232,6 @@ You can only create a new deployment with the last 10 uploaded versions of your 
 These Workers features will be supported in the near future. 
 
 - Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
-- Gradual deployments is not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding. 
-- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled. 
-- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a DO migration. 
+- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding. 
+- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled. 
+- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/). 
