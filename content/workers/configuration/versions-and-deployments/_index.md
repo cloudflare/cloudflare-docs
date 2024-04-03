@@ -108,7 +108,7 @@ Smart Placement support for versions will be coming in the near future.
 
 ### mTLS bindings 
 
-[mTLS bindings](/workers/runtime-apis/bindings/mtls/) are not support for versions that are uploaded through [`wrangler versions upload --experimental-versions`]. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you mTLS bindings on a script. 
+[mTLS bindings](/workers/runtime-apis/bindings/mtls/) are not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload). You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you configured mTLS bindings in your Worker. 
 
 mTLS bindings support for versions will be coming in the near future.
 
