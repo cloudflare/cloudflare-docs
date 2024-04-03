@@ -11,7 +11,7 @@ Refer to the [Video clipping API documentation](/api/operations/stream-video-cli
 
 {{<Aside type="note" header="Note:">}}
 
-Clipping works differently for live streams and recordings; see [Live Instant Clipping]({{< ref live-instant-clipping >}})
+Clipping works differently for live streams and recordings; see [Live Instant Clipping](/stream/stream-live/live-instant-clipping/).
 
 {{</Aside>}}
 

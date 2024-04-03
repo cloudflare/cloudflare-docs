@@ -9,7 +9,7 @@ Stream supports generating clips of live streams and recordings so creators and 
 
 {{<Aside type="note" header="Note:">}}
 
-Clipping works differently for uploaded / on-demand videos; see [Clip Videos]({{< ref video-clipping >}}).
+Clipping works differently for uploaded / on-demand videos; see [Clip Videos](/stream/edit-videos/video-clipping/).
 
 {{</Aside>}}
 
@@ -17,26 +17,31 @@ Clipping works differently for uploaded / on-demand videos; see [Clip Videos]({{
 
 When configuring a [Live Input]({{< ref start-stream-live >}}), ensure "Live Playback and Recording" (`mode`) is enabled.
 
-API keys are not needed to generate a preview or clip, but are needed to create Live Inputs or look up Video IDs.
+API keys are not needed to generate a preview or clip, but are needed to create Live Inputs.
 
-Live instant clips are generated dynamically from the recording of a live stream. When generating clips by manifest or MP4, always reference the Video ID, not the Live Input ID. If the recording is deleted, the instant clip will no longer be available.
+Live instant clips are generated dynamically from the recording of a live stream. When generating clips manifests or MP4s, always reference the Video ID, not the Live Input ID. If the recording is deleted, the instant clip will no longer be available.
 
 ## Preview Manifest
 
-To help users replay and seek recent content to pick the boundaries for a clip, request a preview manifest by adding a `duration` parameter to the HLS manifest URL:
+To help users replay and seek recent content, request a preview manifest by adding a `duration` parameter to the HLS manifest URL:
 
 ```text
 ---
 header: Preview Manifest
 ---
-https://customer-<CODE>.cloudflarestream.com/<VIDEO_ID>/manifest/video.m3u8?duration=5m
+https://customer-<CODE>.cloudflarestream.com/<VIDEO_ID||INPUT_ID>/manifest/video.m3u8?duration=5m
 ```
 
 {{<definitions>}}
 - `duration` {{<type>}}string{{</type>}} duration of the preview, up to 5 minutes as either a number of seconds ("30s") or minutes ("3m")
 {{</definitions>}}
 
-When the preview manifest is delivered, inspect the `clip-start-seconds` header to know when the preview started relative to the start of the live stream broadcast. This is useful for applications which allow a user to select a range from the preview, because the clip will need to reference the broadcast start time, not the preview start time.
+When the preview manifest is delivered, inspect the headers for two properties:
+
+{{<definitions>}}
+- `preview-start-seconds` {{<type>}}float{{</type>}} seconds into the start of the live stream or recording that the preview manifest starts. Useful in applications which allow a user to select a range from the preview because the clip will need to reference its offset from the _broadcast_ start time, not the _preview_ start time.
+- `stream-media-id` {{<type>}}string{{</type>}} the video ID of the live stream or recording. Useful in applications which render the player using an _input_ ID because the clip URL should reference the _video_ ID.
+{{</definitions>}}
 
 This manifest can be played and seeked using any HLS-compatible player.
 
