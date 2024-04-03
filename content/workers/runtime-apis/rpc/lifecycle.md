@@ -139,66 +139,6 @@ class Foo extends RpcTarget {
 
 The RpcTarget's disposer runs after the last stub is disposed. Note that the client-side call to the stub's disposer does not wait for the server-side disposer to be called; the server's disposer is called later on. Because of this, any exceptions thrown by the disposer do not propagate to the client; instead, they are reported as uncaught exceptions. Note that an `RpcTarget`'s disposer must be declared as `Symbol.dispose`. `Symbol.asyncDispose` is not supported.
 
-## Promise pipelining
-
-When you call an RPC method and get back an object, it's common to immediately call a method on the object:
-
-```js
-// Two round trips.
-using counter = await env.COUNTER_SERVICE.getCounter();
-await counter.increment();
-```
-
-But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/runtime-apis/bindings/service-bindings/#smart-placement) or [Durable Objects](/durable-objects). The code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`. We'd like to avoid this.
-
-With most RPC systems, the only way to avoid the problem would be to combine the two calls into a single "batch" call, perhaps called `getCounterAndIncrement()`. However, this makes the interface worse. You wouldn't design a local interface this way.
-
-Workers RPC allows a different approach: You can simply omit the first `await`:
-
-```js
-// Only one round trip! Note the missing `await`.
-using promiseForCounter = env.COUNTER_SERVICE.getCounter();
-await promiseForCounter.increment();
-```
-
-In this code, `getCounter()` returns a promise for a counter. Normally, the only thing you would do with a promise is `await` it. However, Workers RPC promises are special: they also allow you to initiate speculative calls on the future result of the promise. These calls are sent to the server immediately, without waiting for the initial call to complete. Thus, multiple chained calls can be completed in a single round trip.
-
-How does this work? The promise returned by an RPC is not a real JavaScript `Promise`. Instead, it is a custom ["Thenable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#thenables). It has a `.then()` method like `Promise`, which allows it to be used in all the places where you'd use a normal `Promise`. For instance, you can `await` it. But, in addition to that, an RPC promise also acts like a stub. Calling any method name on the promise forms a speculative call on the promise's eventual result. This is known as "promise pipelining".
-
-This works when calling properties of objects returned by RPC methods as well. For example:
-
-```js
----
-filename: myService.js
----
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export class MyService extends WorkerEntrypoint {
-  async foo() {
-    return {
-      bar: {
-        baz: () => "qux"
-      }
-    }
-  }
-}
-```
-
-```js
----
-filename: client.js
----
-export default {
-  async fetch(request, env) {
-    using foo = await env.MY_SERVICE.foo();
-    let baz = await foo.bar.baz();
-    return new Response(baz);
-  }
-}
-```
-
-If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
-
 ## The `dup()` method
 
 Sometimes, you need to pass a stub to a function which will dispose the stub when it is done, but you also want to keep the stub for later use. To solve this problem, you can "dup" the stub:
