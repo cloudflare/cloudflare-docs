@@ -43,7 +43,7 @@ async def on_fetch(request, env):
 
 
     if url.path == "/favicon.ico":
-      return new Response.new("")
+      return Response.new("")
 
     return Response.new("Hello world!")
 ```
@@ -107,6 +107,33 @@ async def on_fetch(request):
 
     headers = Headers.new({"content-type": "application/json"}.items())
     return Response.new(payload, headers=headers)
+```
+
+### Publish to a Queue
+
+```python
+---
+filename: src/entry.py
+---
+from js import Response, Object
+from pyodide.ffi import to_js as _to_js
+
+# to_js converts between Python dictionaries and JavaScript Objects
+def to_js(obj):
+   return _to_js(obj, dict_converter=Object.fromEntries)
+
+async def on_fetch(request, env):
+    # Bindings are available on the 'env' parameter
+    # https://developers.cloudflare.com/queues/ 
+
+    # The default contentType is "json"
+    # We can also pass plain text strings
+    await env.QUEUE.send("hello", contentType="text")
+    # Send a JSON payload
+    await env.QUEUE.send(to_js({"hello": "world"}))
+
+    # Return a response
+    return Response.json(to_js({"write": "success"}))
 ```
 
 ## Next steps
