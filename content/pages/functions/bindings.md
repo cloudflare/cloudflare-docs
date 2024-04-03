@@ -57,9 +57,9 @@ You can also interact with your KV namespace locally via the Wrangler CLI by add
 
 {{<render file="_cli-precedence-over-file.md">}}
 
-## Durable Object namespaces
+## Durable Objects
 
-[Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. 
+[Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state.
 
 To bind your DO namespace to your Pages Function you can use [`wrangler.toml`](/pages/functions/wrangler-configuration/bindings/#durable-objects) or the dashboard::
 

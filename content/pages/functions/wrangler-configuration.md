@@ -10,7 +10,7 @@ Pages Functions can be configured two ways, either via the [Cloudflare dashboard
 
 This guide will focus on configuring your project via `wrangler.toml`.
 
-{{<Aside type="note" header="Configuration via `wrangler.toml` is in open beta.">}}
+{{<Aside type="note" header="Configuration via wrangler.toml is in open beta.">}}
 
 We’d love your feedback. Join the #functions channel in the Cloudflare Developers Discord and let us know what you’d like to see next.
 
@@ -57,9 +57,9 @@ $ npx wrangler pages download config <PROJECT_NAME>
 
 Run the command, add the file to your project’s root directory, make changes as needed, and create a new deployment either via git integration or direct upload to begin leveraging `wrangler.toml` for your configuration.
 
-## Differences between this and Workers
+## Differences using `wrangler.toml` for Pages Functions and Workers
 
-If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages project:
+If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages Functions project:
 
 - the configuration fields **do not match exactly** between this file and the Workers equivalent
 - the concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers
@@ -71,7 +71,7 @@ With `wrangler.toml` you can quickly set configuration across your local environ
 
 ### Local development
 
-`wrangler.toml` is always available locally via `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. Refer to the following config file for an example:
+`wrangler.toml` works locally when using `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. Refer to the following config file for an example:
 
 ```toml
 ---
@@ -236,7 +236,7 @@ API_KEY = "1234567asdf"
 API_KEY = "8901234bfgd"
 ```
 
-This configuration file is missing the production override for `kv_namespaces`, and will fail to validate on deployment.
+This configuration file is missing the production override for `kv_namespaces`. It will work locally, but will fail to validate when you try to deploy.
 
 ## Inheritable keys
 
@@ -277,8 +277,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
 ## Non-inheritable keys
 
-Non-inheritable keys are configurable at the top-level, but, if an environment override is present, these must all be specified in the environment config and overridden.
-
+Non-inheritable keys are configurable at the top-level, but, if any one non-inheritable key is overridden for any environment (ex: `[[env.production.kv_namespaces]]`), all non-inheritable keys must also be specified in the environment config and overridden.
 
 {{<definitions>}}
 
@@ -292,7 +291,7 @@ Non-inheritable keys are configurable at the top-level, but, if an environment o
 
 - `durable_objects` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - A list of Durable Objects that your Function should be bound to. Refer to [Durable Objects](/pages/functions/bindings/#durable-object-namespacess).
+  - A list of Durable Objects that your Function should be bound to. Refer to [Durable Objects](/pages/functions/bindings/#durable-objects).
 
 - `hyperdrive` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -329,7 +328,7 @@ Non-inheritable keys are configurable at the top-level, but, if an environment o
 
 ## Limits
 
-Limits can be configured the same way they are for Workers. Read [this guide](/workers/wrangler/configuration/#limits) for more details.
+You can configure limits for your Pages project in the same way you can for Workers. Read [this guide](/workers/wrangler/configuration/#limits) for more details.
 
 ## Bindings
 
