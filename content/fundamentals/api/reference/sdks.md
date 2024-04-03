@@ -1,24 +1,22 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: reference
 title: SDKs
 weight: 5
 ---
 
 # SDKs
 
-Despite many examples using `curl` to demonstrate usage of the Cloudflare API,
-there are also language SDKs (software development kits) available. These
-libraries provide the ability to interact with the Cloudflare API in language
-specific syntax and integrate with your existing application.
+Cloudflare offers language software development kits (SDKs) as well as `curl` examples to demonstrate how to use the Cloudflare API. The SDK libraries allow you to interact with the Cloudflare API in language-specific syntax and more easily integrate with your existing applications.
+
+Cloudflare currently offers the following SDKs:
 
 - [Go](https://github.com/cloudflare/cloudflare-go)
 - [Typescript](https://github.com/cloudflare/cloudflare-typescript)
 - [Python](https://github.com/cloudflare/cloudflare-python)
 
-## curl vs SDK
+## When to use curl vs SDK
 
-There is no definite answer on which you should use. Instead, you should consider
-your use case and determine which is the best fit.
+There is no definite answer on which you should use. Instead, consider your use case and determine whether curl or an SDK is the best fit.
 
 | Use case                                                    | curl | SDK  |
 | ----------------------------------------------------------- | ---- | ---- |
@@ -27,21 +25,20 @@ your use case and determine which is the best fit.
 | Usage from within an existing application or framework      | ❌   | ✅   |
 | More complex usage where you need to chain together outputs | ❌   | ✅   |
 
-\* You can use SDKs in CI however, it requires installing and additional steps to get working.
+\* You can use SDKs in CI with a few additional steps.
 
 ## Example
 
-Consider the scenario where you need to query all the Cloudflare zones you have
-access to. Here is a small comparison of the two approaches:
+The following are examples of how you would query all of the Cloudflare zones you have access to.
 
-With curl:
+### With curl:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-With the Typescript SDK:
+### With the Typescript SDK:
 
 ```js
 const client = new Cloudflare({
