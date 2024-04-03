@@ -8,7 +8,7 @@ weight: 6
 
 Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or `wrangler.toml`, a configuration file used to customize the development and deployment setup for Workers and Pages Functions.
 
-This guide will focus on configuring your project via `wrangler.toml`.
+This guide will focus on configuring your Pages project via `wrangler.toml`.
 
 {{<Aside type="note" header="Configuration via wrangler.toml is in open beta.">}}
 
@@ -87,15 +87,15 @@ binding = "KV"
 id = "<NAMESPACE_ID>"
 ```
 
-This config file adds the `nodejs_compat` compatibility flag and a KV namespace binding to your project. Running `wrangler pages dev` in a directory with this config file will apply the `nodejs_compat` compatibility flag locally, and expose the `KV` binding in your Pages Function code at `context.env.KV`.
+This `wrangler.toml` configuration file adds the `nodejs_compat` compatibility flag and a KV namespace binding to your Pages project. Running `wrangler pages dev` in a Pages project directory with this `wrangler.toml` configuration file will apply the `nodejs_compat` compatibility flag locally, and expose the `KV` binding in your Pages Function code at `context.env.KV`.
 
 {{<Aside type="note">}}
 
-For a full list of configuration keys refer to [inheritable keys](#inheritable-keys) and [non-inheritable keys](#non-inheritable-keys).
+For a full list of configuration keys, refer to [inheritable keys](#inheritable-keys) and [non-inheritable keys](#non-inheritable-keys).
 
 {{</Aside>}}
 
-### Production and Preview Deployments
+### Production and preview deployments
 
 Once you are ready to deploy your project, you can set the configuration for production and preview deployments by creating a new deployment containing a `wrangler.toml` file.
 
@@ -121,7 +121,7 @@ To deploy the configuration for preview deployments, you can run the same comman
 
 {{<Aside type="note">}}
 
-The `--branch` flag is optional with `wrangler pages deploy`. If you use git integration, Wrangler will infer the branch you are on from the repo you are currently in and implicitly add it to the command.
+The `--branch` flag is optional with `wrangler pages deploy`. If you use git integration, Wrangler will infer the branch you are on from the repository you are currently in and implicitly add it to the command.
 
 {{</Aside>}}
 
