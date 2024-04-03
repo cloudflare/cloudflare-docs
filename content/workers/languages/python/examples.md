@@ -82,4 +82,20 @@ async def on_fetch(request):
 
 ### Respond with JSON
 
-TODO
+```python
+from js import Response
+import json
+
+async def on_fetch(request):
+    # Use json.loads to serialize Python objects to JSON strings
+    payload = json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True) 
+
+    headers = Headers.new({"content-type": "application/json"}.items())
+    return Response.new(payload, headers=headers)
+```
+
+## Next steps
+
+* If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
+* Learn more about [calling JavaScript methods and accessing JavaScript objects](/workers/languages/python/ffi/) from Python
+* Understand the [supported packages and versions](/workers/languages/python/packages/) currently available to Python Workers.
