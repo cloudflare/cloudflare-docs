@@ -101,29 +101,33 @@ Once you are ready to deploy your project, you can set the configuration for pro
 
 {{<Aside type="note">}}
 
-For the following commands, it is important to remember the branch that you set as your [production branch](/pages/configuration/branch-build-controls/#production-branch-control) as well as your [preview branch settings](/pages/configuration/branch-build-controls/#preview-branch-control).
+For the following commands, if you are using git it is important to remember the branch that you set as your [production branch](/pages/configuration/branch-build-controls/#production-branch-control) as well as your [preview branch settings](/pages/configuration/branch-build-controls/#preview-branch-control).
 
 {{</Aside>}}
 
-To use the configuration example above for production configuration, you can run:
+To use the example above as your configuration for production, make a new production deployment using:
+
+```sh
+$ npx wrangler pages deploy
+```
+
+or more specifically:
 
 ```sh
 $ npx wrangler pages deploy --branch <PRODUCTION BRANCH>
 ```
 
-To deploy the configuration for preview deployments, you can run the same command as above, and change the `--branch` name to the branch or branches you have configured for [preview deployments](/pages/configuration/branch-build-controls/#preview-branch-control).
-
-This will set the configuration for all preview deployments, not just the deployments from a specific branch. Pages does not currently support branch-based configuration.
+To deploy the configuration for preview deployments, you can run the same command as above while on a branch you have configured to work with [preview deployments](/pages/configuration/branch-build-controls/#preview-branch-control). This will set the configuration for all preview deployments, not just the deployments from a specific branch. Pages does not currently support branch-based configuration.
 
 {{<Aside type="note">}}
 
-`--branch` is optional. If you omit it, Wrangler will infer the branch you are on from the repo you are currently in and implicitly add it to the command.
+The `--branch` flag is optional with `wrangler pages deploy`. If you use git integration, Wrangler will infer the branch you are on from the repo you are currently in and implicitly add it to the command.
 
 {{</Aside>}}
 
 ### Environment-specific overrides
 
-There are times that you might want to use different configuration across local, preview, and production. You can override configuration for production and preview deployments by using `[env.production]` or `[env.preview]`.
+There are times that you might want to use different configuration across local, preview deployments, and production. It is possible to override configuration for production and preview deployments by using `[env.production]` or `[env.preview]`.
 
 {{<Aside type="note">}}
 
