@@ -10,7 +10,7 @@ meta:
 
 There are some caveats and limitations when deploying Data Localization Suite features.
 
-Cloudflare is working hard to improve this offering and fill the gaps. If you have a specific feature requests, please contact your [Account Team](/support/contacting-cloudflare-support/).
+Cloudflare is working hard to improve this offering and fill the gaps. If you have a specific feature request, please contact your [Account Team](/support/contacting-cloudflare-support/).
 
 ## Key Management
 
@@ -34,7 +34,7 @@ The following features and protocols are not supported by Regional Services and 
 - [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/)
 - [Onion Routing (Tor)](/network/onion-routing/)
 
-Due to the fact that Regional Services leverages Spectrum in the background, [Spectrum limitations](/spectrum/reference/limitations/) apply.
+Since Regional Services leverages Spectrum in the background, [Spectrum limitations](/spectrum/reference/limitations/) apply.
 
 Regional Services does not apply to [Subrequests](/workers/platform/limits/#subrequests).
 
