@@ -60,3 +60,5 @@ from js import Response
 def on_fetch(request):
     return Response.new("Hello World!")
 ```
+
+Refer to the [Python examples](/workers/languages/python/examples/) to learn how to call into JavaScript functions from Python, including `console.log` and logging, providing options to `Response`, and parsing JSON.
