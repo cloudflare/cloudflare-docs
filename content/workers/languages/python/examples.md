@@ -62,7 +62,12 @@ async def on_fetch(request):
 
     # Alternatively, use the native Python logger
     logger = logging.getLogger(__name__)
-    logger.info("logger.info from Python!")
+
+    # The default level is warning. We can change that to info.
+    logging.basicConfig(level=logging.INFO)
+
+    logger.error("error from Python!")
+    logger.info("info log from Python!")
 
     # Or just use print()
     print("print() from Python!)
