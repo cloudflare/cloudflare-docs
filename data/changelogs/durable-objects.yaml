@@ -2,6 +2,13 @@
 link: "/durable-objects/platform/changelog/"
 productName: Durable Objects
 entries:
+  - publish_date: "2024-04-03"
+    title: Durable Objects support for Oceania region
+    description: |-
+      Durable Objects can reside in Oceania, lowering Durable Objects request latency for eyeball Workers in Oceania locations.
+
+      Refer to [Durable Objects](https://developers.cloudflare.com/durable-objects/reference/data-location/#provide-a-location-hint) to provide location hints to objects.
+
   - publish_date: "2024-04-01"
     title: Billing reduction for WebSocket messages
     description: |-
