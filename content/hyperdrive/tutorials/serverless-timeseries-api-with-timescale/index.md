@@ -123,10 +123,6 @@ To create a new Hyperdrive instance you will need:
 - Your **SERVICEURL** from [step 2](/hyperdrive/tutorials/serverless-timeseries-api-with-timescale/#2-prepare-your-timescale-service).
 - A name for your Hyperdrive service. For this tutorial, you will use **hyperdrive**.
 
-{{<Aside type="note">}}
-Hyperdrive is currently in public beta and free to use under [Workers Paid plans](https://developers.cloudflare.com/workers/platform/pricing/).
-{{</Aside>}}
-
 Hyperdrive uses the `create` command with the `--connection-string` argument to pass this information. Run it as follows:
 
 ```sh

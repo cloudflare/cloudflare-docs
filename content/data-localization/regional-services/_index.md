@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Regional Services
-weight: 2
+weight: 6
 ---
 
 # Regional Services
@@ -57,4 +57,4 @@ sequenceDiagram
 
 ## Additional information
 
-For more details about the products that are compatible with Regional Services, refer to the [Overview section](/data-localization/). If you have purchased these products as part of your Enterprise subscription plan, Cloudflare will only terminate TLS connections for these products in the geographic region you have configured for Regional Services.
+For more details about the products that are compatible with Regional Services, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page. If you have purchased these products as part of your Enterprise subscription plan, Cloudflare will only terminate TLS connections for these products in the geographic region you have configured for Regional Services.

@@ -11,12 +11,12 @@ model:
   tags:
     - "text-generation"
   properties:
+    - property_id: "beta"
+      value: "true"
     - property_id: "info"
       value: "https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct"
     - property_id: "terms"
       value: "https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL"
-    - property_id: "beta"
-      value: "true"
 task_type: "text-generation"
 model_display_name: "deepseek-math-7b-instruct"
 layout: "model"

@@ -9,7 +9,7 @@ meta:
   title: Workers AI
 ---
 
-{{<heading-pill style="beta" heading="h1">}}Workers AI{{</heading-pill>}}
+# Workers AI
 
 {{<description>}}
 Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
@@ -31,12 +31,6 @@ With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to its glob
 {{<feature header="Models" href="/workers-ai/models/" cta="Browse models">}}
 
 Workers AI comes with a curated set of popular open-source models that enable you to do tasks such as image classification, text generation, object detection and more.
-
-{{</feature>}}
-
-{{<feature header="Workers AI SDK" href="/workers-ai/configuration/workers-ai-sdk/" cta="Use the Workers AI SDK">}}
-
-The Workers AI SDK provides an interface between a [Worker](/workers/) or [Pages Function](/pages/functions/) and Workers AI.
 
 {{</feature>}}
 

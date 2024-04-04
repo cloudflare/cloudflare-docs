@@ -13,7 +13,7 @@ meta:
 
 {{<Aside type="warning">}}
 
-With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
+With the [change](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to certificates issued by DigiCert, email DCV will soon be unsupported.
 
 {{</Aside>}}
  
