@@ -37,7 +37,7 @@ Opening port 443 enables some optional features. Failure to allow these connecti
 | ----------- | -------- | --------- | ------- |
 | `api.cloudflare.com`        | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
 | `update.argotunnel.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
-| `github.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to download the latest software binary in update. |
+| `github.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to download the latest release and perform a software update. |
 | `<your-team-name>.cloudflareaccess.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to validate the Access JWT.  Only required if the [`access`](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access) setting is enabled. |
 | `pqtunnels.cloudflareresearch.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudflare.com/post-quantum-tunnel/) errors to Cloudflare. |
 
