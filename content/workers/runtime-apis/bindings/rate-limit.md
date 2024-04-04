@@ -30,20 +30,29 @@ We want your feedback. Tell us what you'd like to see in the #rate-limiting-beta
 First, add a [binding](/workers/runtime-apis/bindings) to your Worker that gives it access to the Rate Limiting API:
 
 ```toml
+---
+filename: wrangler.toml
+---
 main = "src/index.js"
 
-# The rate limiting API is in open beta
+# The rate limiting API is in open beta.
 [[unsafe.bindings]]
 name = "MY_RATE_LIMITER"
 type = "ratelimit"
-namespace_id = "1001" # An identifier you define, that is unique to your Cloudflare account
+# An identifier you define, that is unique to your Cloudflare account.
+# Must be an integer.
+namespace_id = "1001" 
 
-# Limit: the number of tokens allowed within a given period, in a single Cloudflare location
-# Period: the duration of the period, in seconds. Must be either 60 or 10
+# Limit: the number of tokens allowed within a given period in a single
+# Cloudflare location
+# Period: the duration of the period, in seconds. Must be either 10 or 60
 simple = { limit = 100, period = 60 }
 ```
 
 This binding makes the `MY_RATE_LIMITER` binding available, which provides a `limit()` method:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```javascript
 ---
@@ -63,7 +72,65 @@ export default {
 }
 ```
 
-The `limit()` API accepts a single argument — a configuration object with the `key` field. The key you provide can be any string value. A common pattern is to define your key by combining a string that uniquely identifies the actor initiating the request (ex: a user ID or customer ID) and a string that identifies a specific resource (ex: a particular API route).
+{{</tab>}}
+{{<tab label="ts">}}
+
+
+```ts
+---
+filename: src/index.ts
+---
+interface Env {
+  MY_RATE_LIMITER: any;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const { pathname } = new URL(request.url)
+
+    const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }) // key can be any string of your choosing
+    if (!success) {
+      return new Response(`429 Failure – rate limit exceeded for ${pathname}`, { status: 429 })
+    }
+
+    return new Response(`Success!`)
+  }
+}
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+The `limit()` API accepts a single argument — a configuration object with the `key` field.
+
+* The key you provide can be any `string` value.
+* A common pattern is to define your key by combining a string that uniquely identifies the actor initiating the request (ex: a user ID or customer ID) and a string that identifies a specific resource (ex: a particular API route).
+
+You can define and configure multiple rate limiting configurations per Worker, which allows you to define different limits against incoming request and/or user parameters as needed to protect your application or upstream APIs.
+
+## Configuration
+
+A rate limiting binding has three settings:
+
+1. `namespace_id` (number) - a positive integer that uniquely defines this rate limiting configuration - e.g. `namespace_id = 999`.
+2. `limit` (number) - the limit (number of requests, number of API calls) to be applied. This is incremented when you call the `limit()` function in your Worker.
+3. `period` (seconds) - must be `10` or `60`. The period to measure increments to the `limit` over, in seconds. 
+
+For example, to apply a rate limit of 1500 requests per minute, you would define a rate limiting configuration as follows:
+
+```toml
+---
+filename: wrangler.toml
+---
+
+[[unsafe.bindings]]
+name = "MY_RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001" 
+
+# 1500 requests - calls to limit() increment this 
+simple = { limit = 1500, period = 60 }
+```
 
 ## Locality
 
