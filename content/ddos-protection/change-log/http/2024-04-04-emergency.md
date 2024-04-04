@@ -1,20 +1,16 @@
 ---
+title: 2024-04-04 - Emergency
 pcx_content_type: changelog
-title: Scheduled changes
-weight: 2
+weight: 27665
 layout: wide
-meta:
-    title: Scheduled changes — HTTP DDoS
 ---
 
-# Scheduled changes
+# 2024-04-04 - Emergency
 
 {{<table-wrap>}}
 <table style="width: 100%">
   <thead>
     <tr>
-      <th>Announcement Date</th>
-      <th>Change Date</th>
       <th>Rule ID</th>
       <th>Description</th>
       <th>Previous Action</th>
@@ -24,13 +20,18 @@ meta:
   </thead>
   <tbody>
     <tr>
+      <td>...177059f1</td>
+      <td>HTTP requests from known botnet (signature #31).</td>
+      <td>log</td>
       <td>N/A</td>
+      <td></td>
+    </tr>
+<tr>
+      <td>...7b231fb2</td>
+      <td>HTTP requests from known botnet (signature #81).</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>block</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
