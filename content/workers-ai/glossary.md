@@ -9,4 +9,4 @@ weight: 8
 
 Review the definitions for terms in the Workers AI documentation.
 
-{{<glossary product="workers-ai">}}
+{{<glossary product="Workers AI">}}

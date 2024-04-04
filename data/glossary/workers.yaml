@@ -16,7 +16,7 @@ entries:
 
 - term: C3
   general_definition: |-
-    [C3](/learning-paths/workers/get-started/first-worker/#c3-and-wrangler) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+    The `create-cloudflare` CLI (C3) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
 - term: CPU time
   general_definition: |-

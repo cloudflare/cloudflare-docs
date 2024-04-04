@@ -1308,7 +1308,6 @@
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/workers-pages-sdk/ /workers-ai/configuration/workers-ai-sdk/ 301
 /workers-ai/rest-api/ /workers-ai/configuration/rest-api/ 301
-/workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
