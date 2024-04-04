@@ -2,6 +2,10 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-04'
+  description: |-
+    - There is no longer an explicit limit on the total amount of data which may be uploaded with Cache API [`put()`](/workers/runtime-apis/cache/#put) per request. Other [Cache API Limits](/workers/platform/limits/#cache-api-limits) continue to apply.
+    - The Web standard `ReadableStream.from()` API is now implemented. The API enables creating a `ReadableStream` from a either a sync or async iterable.
 - publish_date: '2024-04-03'
   description: |-
     - When the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
