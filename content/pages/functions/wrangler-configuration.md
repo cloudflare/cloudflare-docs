@@ -135,10 +135,12 @@ If you have used [Workers](/workers), you may already be familiar with [`wrangle
 
 {{<table-wrap>}}
 
-| Key                                                        | Workers                 | Pages                      |
-| -------------------------------------------------------------------------|------------------------ | -------------------------- |
-| `name`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | The name of your Worker | A valid Pages project name |
-| `main`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | The path to the entry  point of your Worker that will be executed | ❌ Not supported |
+| Key                                                                      | Workers                                                          | Pages                       |
+| -------------------------------------------------------------------------|----------------------------------------------------------------- | --------------------------  |
+| `name`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | The name of your Worker                                          | A valid Pages project name  |
+| `main`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | The path to the entry point of your Worker that will be executed | ❌ Not supported            |
+| `pages_build_output_dir`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | ❌ Not supported                               | The folder of static assets |
+| `compatibility_date`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}}| A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used | A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used |
 
 {{</table-wrap>}}
 
@@ -413,7 +415,7 @@ You can configure limits for your Pages project in the same way you can for Work
 
 ## Bindings
 
-A [binding](/pages/functions/bindings/) enables your Pages Functions to interact with resources on the Cloudflare Developer Platform. Use bindings to add storage functionality to your Pages project with resources like [KV](), [Durable Objects](), [R2](), and [D1](). You can set bindings for both production and preview environments.
+A [binding](/pages/functions/bindings/) enables your Pages Functions to interact with resources on the Cloudflare Developer Platform. Use bindings to add storage functionality to your Pages project with resources like [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 ### D1 databases
 
