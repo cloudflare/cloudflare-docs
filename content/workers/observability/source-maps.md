@@ -14,7 +14,7 @@ Source maps translate compiled and minified code back to the original code that 
 
 {{<Aside type="warning">}}
 
-Support for uploading source maps is available now in open beta. Minimum required wrangler version: 3.44.0. 
+Support for uploading source maps is available now in open beta. Minimum required wrangler version: 3.46.0. 
 
 Stack traces support is going to be in open beta on April 15. 
 
