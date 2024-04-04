@@ -12,7 +12,7 @@ This guide will instruct you on configuring a binding for your Pages Function. Y
 
 ## KV namespaces
 
-[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution. 
+[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution.
 
 To bind your KV namespace to your Pages Function, you can configure a KV namespace binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
 
@@ -130,7 +130,7 @@ For example, if your Worker is called `do-worker` and it declares a Durable Obje
 
 ## R2 buckets
 
-[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. 
+[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees.
 
 To bind your R2 bucket to your Pages Function, you can configure a R2 bucket binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#r2-buckets) or the Cloudflare dashboard.
 
@@ -368,7 +368,7 @@ $ npx wrangler pages dev --ai=<BINDING_NAME>
 
 ## Service bindings
 
-[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function. 
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function.
 
 To bind your Pages Function to a Worker, configure a Service binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#service-bindings) or the Cloudflare dashboard.
 
@@ -424,7 +424,7 @@ For example, to develop locally, if your Worker is called `my-worker`, run `npx 
 
 [Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
 
-To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#queue-producers) or the Cloudflare dashboard:
+To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#queues-producers) or the Cloudflare dashboard:
 
 To configure a queue producer binding via the Cloudflare dashboard:
 
@@ -479,7 +479,7 @@ If using a queue producer binding with a Pages Function, you will be able to sen
 
 The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function.
 
-To bind an Analytics Engine dataset to your Pages Function, you must configure an Analytics Engine binding using [`wrangler.toml`](/pages/functions/wrangler-configuration/#analytics-engine) or the Cloudflare dashboard:
+To bind an Analytics Engine dataset to your Pages Function, you must configure an Analytics Engine binding using [`wrangler.toml`](/pages/functions/wrangler-configuration/#analytics-engine-datasets) or the Cloudflare dashboard:
 
 To configure an Analytics Engine binding via the Cloudflare dashboard:
 
