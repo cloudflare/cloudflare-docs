@@ -18,7 +18,7 @@ Workers for Platforms is available for Enterprise customers only. To enable Work
 
 ### Learn about Workers for Platforms
 
-Get familar with Workers for Platforms terminology and architecture: [How Workers for Platforms works](cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/).
+Refer to [How Workers for Platforms Works](cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/) to learn more about Workers for Platforms terminology and architecture.
 
 ---
 

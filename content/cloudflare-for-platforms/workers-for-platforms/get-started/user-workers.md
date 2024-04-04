@@ -9,21 +9,22 @@ layout: wide
 
 [User Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) contain code written by your end users (end developers). 
 
-## Uploading User Workers
+## Upload User Workers
 
-Uploading User Workers to a namespace is supported via wrangler and the Cloudflare API. Workers uploaded to a namespace will not appear on the Workers & Pages section of the Cloudflare dashboard, instead they will appear in a namespace under the [Workers for Platforms](https://dash.cloudflare.com/?to=/:account/workers-for-platforms) tab. 
+Uploading User Workers to a namespace is supported via wrangler and the Cloudflare API. Workers uploaded to a namespace will not appear on the **Workers & Pages** section of the Cloudflare dashboard. Instead, they will appear in a namespace under the [Workers for Platforms](https://dash.cloudflare.com/?to=/:account/workers-for-platforms) tab. 
 
-To run workers uploaded to a namespace, you'll need to create a [dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker)
+To run Workers uploaded to a namespace, you will need to create a [dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker)
 with a [dispatch namespace binding](/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms). 
 
 
 ### Via wrangler
+
 Uploading user Workers is supported through [wrangler](/workers/wrangler/) by running the following command:
 
 ```sh
 $ npx wrangler deploy --dispatch-namespace <NAMESPACE_NAME>
 ```
-For simplicity, we reccomend starting with wrangler when  [getting started](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/).
+For simplicity, start with wrangler when [getting started](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/).
 
 ### Via API
 
