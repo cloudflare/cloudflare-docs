@@ -150,7 +150,7 @@ async def on_fetch(request, env):
     return Response.json(results)
 ```
 
-Refer to [this guide](https://developers.cloudflare.com/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
+Refer to [this guide](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
 
 ## Next steps
 
