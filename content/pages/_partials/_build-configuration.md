@@ -38,7 +38,7 @@ build_configs:
   remix:
     display_name: Remix
     build_command: npm run build
-    build_output_directory: public
+    build_output_directory: build
     icon: /icons/framework-icons/logo-remix.svg
   svelte:
     display_name: Svelte
