@@ -10,7 +10,7 @@ You can scan HTTP traffic for sensitive data through Secure Web Gateway policies
 
 ## Prerequisites
 
-- Turn on [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
+- Set up [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
   - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP traffic.
 - Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-tls-decryption).
 
