@@ -1983,8 +1983,8 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 
 {{<definitions>}}
 
-- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload.
+- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information. 
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
