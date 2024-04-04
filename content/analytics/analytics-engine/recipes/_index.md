@@ -1,13 +1,13 @@
 ---
 pcx_content_type: navigation
-title: Common use cases
-weight: 5
+title: Examples
+weight: 2
 meta:
-  title: Common use cases for Analytics Engine
+  title: Example projects
 ---
 
-# Common use cases for Analytics Engine
+# Examples
 
-The following common use cases illustrate how to gain insights using Analytics Engine:
+Example implementations of common use cases for Workers Analytics Engine:
 
 {{<directory-listing>}}

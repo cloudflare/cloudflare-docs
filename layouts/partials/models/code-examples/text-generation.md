@@ -1,5 +1,59 @@
 {{/* */}}
+
 ## Code Examples
+
+{{- $loraFlag := false }}
+{{- range .Params.model.properties }}
+{{- if and (eq .property_id "lora") (eq .value "true") }}
+{{- $loraFlag = true }}
+{{- end }}
+{{- end }}
+
+{{ if $loraFlag }}
+
+<details>
+  <summary>Worker</summary>
+
+```ts
+import { Ai } from "@cloudflare/ai";
+
+export interface Env {
+  AI: any;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const ai = new Ai(env.AI);
+
+    const response = await ai.run("{{ .Params.model.name }}", {
+      prompt: "tell me a story",
+      raw: true, //skip applying the default chat template
+      lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
+    });
+    return Response.json(response);
+  },
+};
+```
+
+</details>
+
+<details>
+  <summary>curl</summary>
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Params.model.name }} \
+  -X POST \
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
+  -d '{
+    "prompt": "tell me a story",
+    "raw": "true",
+    "lora": "00000000-0000-0000-0000-000000000"
+  }'
+```
+
+</details>
+
+{{ else }}
 
 <details>
   <summary>Worker - Streaming</summary>
@@ -23,13 +77,10 @@ export default {
       },
     ];
 
-    const stream = await ai.run(
-      "{{ .Params.model.name }}",
-      {
-        messages,
-        stream: true,
-      }
-    );
+    const stream = await ai.run("{{ .Params.model.name }}", {
+      messages,
+      stream: true,
+    });
 
     return new Response(stream, {
       headers: { "content-type": "text/event-stream" },
@@ -108,3 +159,4 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 ```
 
 </details>
+{{ end }}

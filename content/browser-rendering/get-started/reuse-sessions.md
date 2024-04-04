@@ -6,7 +6,7 @@ weight: 3
 
 # Reuse sessions
 
-The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](../browser-rendering-with-do/). Another way is to keep the browser open after you've finished with it, making it available for the next request.
+The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](../browser-rendering-with-do/), which allows you to keep a long running connection from a worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
 
 In short, this entails using `browser.disconnect()` instead of `browser.close()`, and, if there are available sessions, using `puppeteer.connect(env.MY_BROWSER, sessionID)` instead of launching a new browser session.
 
@@ -53,6 +53,8 @@ browser = { binding = "MYBROWSER" }
 ## 4. Code
 
 The script below starts by fetching the current running sessions. If there are any that don't already have a worker connection, it picks a random session ID and attempts to connect (`puppeteer.connect(..)`) to it. If that fails or there were no running sessions to start with, it launches a new browser session (`puppeteer.launch(..)`). Then, it goes to the website and fetches the dom. Once that's done, it disconnects (`browser.disconnect()`), making the connection available to other workers.
+
+Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](../../platform/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
 
 ```ts
 import puppeteer from "@cloudflare/puppeteer";

@@ -18,7 +18,9 @@ If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `
 
 ### Import zone file to Cloudflare
 
-#### Using the dashboard
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To import a zone file using the dashboard:
 
@@ -28,9 +30,13 @@ To import a zone file using the dashboard:
 4.  For **Import DNS records**, select your [formatted file](#format-your-zone-file).
 5.  If you do not want [applicable records](/dns/manage-dns-records/reference/proxied-dns-records/) proxied, unselect **Proxy imported DNS records**.
 
-#### Using the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To import records using the API, send a [POST request](/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted file](#format-your-zone-file).
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -38,7 +44,9 @@ To import records using the API, send a [POST request](/api/operations/dns-recor
 
 You can also bulk export records from Cloudflare.
 
-### Using the dashboard
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To export records using the dashboard:
 
@@ -47,9 +55,13 @@ To export records using the dashboard:
 3.  Select **Import and Export**.
 4.  Select **Export**.
 
-### Using the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To export records using the API, send a [GET request](/api/operations/dns-records-for-a-zone-export-dns-records).
+
+{{</tab>}}
+{{</tabs>}}
 
 ---
 
@@ -59,10 +71,10 @@ When exporting or importing a zone file, Cloudflare formats [comments and tags](
 
 | Combination | Description |
 | --- | --- |
-| **Only tags** | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if they contain `"`, `=`, `,`, or `\`. When enclosed within double quotes (`"`), tag values are represented as JSON strings, so other quotes within the value can be escaped as `\"`.<br/><br/>A tag with an empty value can be represented either as `my-tag-name:""`, `my-tag-name:`, or `my-tag-name`. | 
+| **Only tags** | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if they contain `"`, `=`, `,`, or `\`. When enclosed within double quotes (`"`), tag values are represented as JSON strings, so other quotes within the value can be escaped as `\"`.<br/><br/>A tag with an empty value can be represented either as `my-tag-name:""`, `my-tag-name:`, or `my-tag-name`. |
 | **Only a comment** | Comments have [fewer limitations](/dns/manage-dns-records/reference/record-attributes/#comments) on characters, meaning that the comment is included verbatim.<br/><br/>If the comment includes the string `cf_tags=`, you need to include an additional ` cf_tags=` at the end of the line. |
 | **Comment and tags** | The zone file comment would be of the form ; `<comment>` cf_tags=`<tags>`, as described above. Note the added space character before `cf_tags=`. |
-| **Neither attribute** | The comment in the zone file may be empty or omitted entirely. Comments in the zone file that do not immediately follow a record are also ignored. | 
+| **Neither attribute** | The comment in the zone file may be empty or omitted entirely. Comments in the zone file that do not immediately follow a record are also ignored. |
 
 ```txt
 ---

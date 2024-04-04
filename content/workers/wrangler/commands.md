@@ -310,6 +310,31 @@ You must provide either `--command` or `--file` for this command to run successf
 
 {{</definitions>}}
 
+### `export`
+
+Export a D1 database or table's schema and/or content to a `.sql` file.
+
+```txt
+wrangler d1 export <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to export.
+- `--remote` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
+- `--output` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to the SQL file for your export.
+- `--table` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The name of the table within a D1 database to export.
+- `--no-data` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database data.
+- `--no-schema` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database schema.
+
+{{</definitions>}}
+
 ### `time-travel restore`
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
@@ -523,6 +548,12 @@ wrangler hyperdrive create <ID> [OPTIONS]
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
+- `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Disables the caching of SQL responses.
+- `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
+- `--swr` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
 {{</definitions>}}
 
@@ -538,6 +569,8 @@ wrangler hyperdrive update <ID> [OPTIONS]
 
 - `ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The ID of the Hyperdrive configuration to update.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The new name of the Hyperdrive configuration.
 - `--origin-host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new database hostname or IP address Hyperdrive should connect to.
 - `--origin-port` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -548,6 +581,12 @@ wrangler hyperdrive update <ID> [OPTIONS]
   - The new username used to authenticate to the database.
 - `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new password used to authenticate to the database.
+- `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Disables the caching of SQL responses.
+- `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
+- `--swr` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
 
 {{</definitions>}}
 
@@ -1388,6 +1427,64 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `notification create`
+
+{{<Aside type="note">}}
+Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
+{{</Aside>}}
+
+Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
+
+```txt
+wrangler r2 bucket notification create <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to create an event notification rule for.
+- `--event-type` {{<type>}}"object-create"|"object-delete"{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue that will receive event notification messages.
+- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the key name prefix that an object must match to trigger event notifications.
+- `--suffix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the key name suffix that an object must match to trigger event notifications.
+{{</definitions>}}
+
+### `notification delete`
+
+Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+
+```txt
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to delete an event notification rule for.
+- `--queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue that corresponds to the event notification rule.
+
+{{</definitions>}}
+
+### `notification get`
+
+Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+
+```txt
+wrangler r2 bucket notification get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get event notification configuration for.
+
+{{</definitions>}}
+
 ### `sippy enable`
 
 {{<Aside type="note">}}
@@ -2094,7 +2191,6 @@ Retrieve your user information and test your authentication configuration.
 ```txt
 wrangler whoami
 ```
-
 ---
 ## `versions`
 
@@ -2102,7 +2198,7 @@ wrangler whoami
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option. 
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2192,7 +2288,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option. 
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2269,7 +2365,7 @@ wrangler deployments list [OPTIONS]
 
 {{<Aside type="note">}}
 
-The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option. 
 
 The minimum required wrangler version to use these commands is 3.40.0. 
 {{</Aside>}}

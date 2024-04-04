@@ -23,7 +23,7 @@ weight: 2
    $filename = filename.msi'
 
    <# Download URL of the installer. #>
-   $url = 'https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi'
+   $url = 'https://www.cloudflarewarp.com/Cloudflare_WARP.msi'
    Write-Host 'Downloading App from' $url
    Invoke-WebRequest -Uri $url -OutFile $filename
 
@@ -72,7 +72,7 @@ weight: 2
 
 4. Add an app name, category and description.
 
-5. Upload the `cloudflare_WARP.pkg` file and select **Add**.
+5. Upload the `Cloudflare_WARP_<VERSION>.pkg` file and select **Add**.
 
 6. Set up an XML file with the supported app configurations for the app.
    Here is a sample XML file with the accepted parameters.

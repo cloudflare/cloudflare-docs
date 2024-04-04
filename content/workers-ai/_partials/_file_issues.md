@@ -5,8 +5,8 @@ _build:
   list: never
 ---
 
-{{<Aside type="warning" header="Workers AI is in open beta">}}
+{{<Aside type="warning" header="Workers AI is now Generally Available">}}
 
-To report bugs or give feedback, go to the [#workers-ai-beta Discord channel](https://discord.com/invite/cloudflaredev). If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+To report bugs or give feedback, go to the [#workers-ai Discord channel](https://discord.com/invite/cloudflaredev). If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</Aside>}}
