@@ -136,7 +136,7 @@ simple = { limit = 1500, period = 60 }
 
 Rate limits that you define and enforce in your Worker are local to the [Cloudflare location](https://www.cloudflare.com/network/) that your Worker runs in.
 
-For example, if a request comes in from Sydney, Australia, to the Worker shown above, after 100 requests in a 60 second window, and further requests for a particular path would be rejected, and a 429 HTTP status code returned. But this would only apply to requests served in Sydney. For each unique key you pass to your rate limiting binding, there is a unique limit per Cloudflare location.
+For example, if a request comes in from Sydney, Australia, to the Worker shown above, after 100 requests in a 60 second window, any further requests for a particular path would be rejected, and a 429 HTTP status code returned. But this would only apply to requests served in Sydney. For each unique key you pass to your rate limiting binding, there is a unique limit per Cloudflare location.
 
 ## Performance
 
