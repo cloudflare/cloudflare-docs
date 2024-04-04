@@ -94,7 +94,7 @@ On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/config
 
 | Feature                       | Workers Free  | [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) |
 | ----------------------------- | ------------- | ------- | ------- |
-| [Max object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  |
+| [Maximum object size](#cache-api-limits) | 512 MB | 512 MB  | 512 MB  |
 | [Calls/request](#cache-api-limits)   | 50     | 50      | 1,000   |
 
 {{</table-wrap>}}
