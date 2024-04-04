@@ -112,7 +112,7 @@ You can define and configure multiple rate limiting configurations per Worker, w
 
 A rate limiting binding has three settings:
 
-1. `namespace_id` (number) - a positive integer that uniquely defines this rate limiting configuration - e.g. `namespace_id = 999`.
+1. `namespace_id` (number) - a positive integer that uniquely defines this rate limiting configuration - e.g. `namespace_id = "999"`.
 2. `limit` (number) - the limit (number of requests, number of API calls) to be applied. This is incremented when you call the `limit()` function in your Worker.
 3. `period` (seconds) - must be `10` or `60`. The period to measure increments to the `limit` over, in seconds. 
 
