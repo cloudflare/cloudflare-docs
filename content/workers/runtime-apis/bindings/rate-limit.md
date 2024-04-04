@@ -37,10 +37,10 @@ main = "src/index.js"
 name = "MY_RATE_LIMITER"
 type = "ratelimit"
 namespace_id = "1001" # An identifier you define, that is unique to your Cloudflare account
-simple = {
-  limit = 100, # The number of tokens allowed within a given period, in a single Cloudflare location
-  period = 60 # The duration of the period, in seconds. Must be either 60 or 10
-}
+
+# Limit: the number of tokens allowed within a given period, in a single Cloudflare location
+# Period: the duration of the period, in seconds. Must be either 60 or 10
+simple = { limit = 100, period = 60 }
 ```
 
 This binding makes the `MY_RATE_LIMITER` binding available, which provides a `limit()` method:
