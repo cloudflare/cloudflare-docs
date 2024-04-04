@@ -22,19 +22,19 @@ The Data Localization Suite (DLS) is a collection of tools that enable customers
 
 {{<feature header="Key Management" href="/data-localization/key-management/">}}
 
-Push your request or event logs to your cloud service provider using Logpush, which can be configured via the Cloudflare dashboard or API.
-
-{{</feature>}}
-
-{{<feature header="Regional Services" href="/data-localization/regional-services/">}}
-
-View HTTP request logs instantly in the Cloudflare dashboard or the CLI.
+Guarantee that private SSL/TLS key material remains in the region you selected.
 
 {{</feature>}}
 
 {{<feature header="Customer Metadata Boundary" href="/data-localization/metadata-boundary/">}}
 
-Use Logs Engine to store your logs in R2 and query them directly.
+Ensure that any traffic metadata that can identify your end user stays in the region you selected. 
+
+{{</feature>}}
+
+{{<feature header="Regional Services" href="/data-localization/regional-services/">}}
+
+Comply with regional restrictions by choosing which subset of data centers decrypts and services your HTTPS traffic.
 
 {{</feature>}}
 
@@ -56,10 +56,10 @@ Cloudflare's global DNS platform provides speed and resilience. DNS customers al
 
 {{<resource-group>}}
 
-{{<resource header="Whitepaper" href="https://cf-assets.www.cloudflare.com/slt3lc6tev37/1Q4mtd7RL9I6UyCEYYsQPk/cfcccb4a75aa8286afa358b4ac36b085/How_Cloudflare_helps_address_data_protection_and_locality_obligations_in_Europe_-_June_2022.pdf?_gl=1*1dsz4gg*_ga*MTU0NDA3OTI2NC4xNzEyMjMwODU5*_ga_SQCRB0TXZW*MTcxMjIzMjgwOS4xLjEuMTcxMjIzMzUyMC4wLjAuMA.." icon="documentation-clipboard">}}How Cloudflare helps address data protection and locality obligations in Europe.{{</resource>}}
+{{<resource header="Resource hub" href="https://www.cloudflare.com/resource-hub/?topic=Privacy " icon="documentation-clipboard">}}Refer to our latest resources to learn more about privacy.{{</resource>}}
 
-{{<resource header="Cloudflare blog" href="https://blog.cloudflare.com/" icon="learning-center-book">}}
-Read articles and announcements about the latest Cloudflare products and features.
+{{<resource header="Cloudflare blog" href="https://blog.cloudflare.com/tag/data-localization-suite" icon="learning-center-book">}}
+Read articles and announcements about the latest updates to the Data Localization Suite.
 {{</resource>}}
 
 {{</resource-group>}}
