@@ -8,15 +8,15 @@ weight: 6
 
 Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or `wrangler.toml`, a configuration file used to customize the development and deployment setup for [Workers](/workers/) and Pages Functions.
 
-This guide will focus on configuring your Pages project via `wrangler.toml`.
+This page serves as a reference on how to configure your Pages project via `wrangler.toml`.
 
-{{<Aside type="note" header="Configuration via wrangler.toml is in open beta.">}}
+If using `wrangler.toml`, you must treat your `wrangler.toml` as the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) for your Pages project configuration.
+
+{{<Aside type="note" header="Configuration via `wrangler.toml` is in open beta.">}}
 
 Cloudflare welcomes your feedback. Join the #functions channel in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev) to report bugs and request features.
 
 {{</Aside>}}
-
-`wrangler.toml` allows you to configure things like [bindings](/pages/functions/bindings/), [environment variables](/pages/functions/bindings/#environment-variables), and [local development settings](#local-development-settings), and should be placed in your Pages project's root directory.
 
 Using `wrangler.toml` to configure your Pages project allows you to:
 
@@ -49,17 +49,78 @@ API_KEY = "1234567asdf"
 
 ## Requirements
 
+### V2 build system
+
 Pages Functions configuration via `wrangler.toml` requires the [V2 build system](/pages/configuration/language-support-and-tools/) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/configuration/language-support-and-tools/#v2-build-system).
+
+### Wrangler
+
+You must have Wrangler version 3.45.0 or higher to use `wrangler.toml` for your Pages project's configuration. To check your Wrangler version, update Wrangler or install Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 
 ## Migrate from dashboard configuration
 
-If you have existing Pages projects with configuration setup via the dashboard you can use the following Wrangler command to download your existing configuration and provide you with a valid `wrangler.toml` file:
+The migration instructions for Pages projects that do not have a `wrangler.toml` file currently are different than those for Pages projects with an existing `wrangler.toml` file. Read the instructions based on your situation carefully to avoid errors in production.
+
+### Projects with existing `wrangler.toml` file
+
+Before you could use `wrangler.toml` to define your preview and production configuration, it was possible to use `wrangler.toml` to define which [bindings](/pages/functions/bindings/) should be available to your Pages project in local development.
+
+If you have been using `wrangler.toml` for local development, you may already have a file in your Pages project that looks like this:
+
+
+```toml
+---
+filename: wrangler.toml
+---
+[[kv_namespaces]]
+binding = "KV"
+id = "<NAMESPACE_ID>"
+```
+
+If you would like to use your existing `wrangler.toml` file for your Pages project configuration, you must:
+
+1. Add the `pages_build_output_dir` key with the appropriate value of your [build output directory](/pages/configuration/build-configuration/#build-commands-and-directories) (for example, `pages_build_output_dir = "./dist"`.)
+2. Review your existing `wrangler.toml` configuration carefully to make sure it aligns with your desired project configuration before deploying.
+
+If you add the `pages_build_output_dir` key to `wrangler.toml` and deploy your Pages project, Pages will use whatever configuration was defined for local use, which is very likely to be non-production. Do not deploy until you are confident that your `wrangler.toml` is ready for production use.
+
+{{<Aside type="warning" header="Overwriting configuration">}}
+
+Running [`wrangler pages download config`](/pages/functions/wrangler-configuration/#projects-without-existing-wranglertoml-file) will overwrite your existing `wrangler.toml` file with a generated `wrangler.toml` file based on your Cloudflare dashboard configuration. Run this command only if you want to discard your previous `wrangler.toml` file that you used for local development and start over with configuration pulled from the Cloudflare dashboard.
+
+{{</Aside>}}
+
+You can continue to use your `wrangler.toml` file for local developerment without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
+
+### Projects without existing `wrangler.toml` file
+
+If you have an existing Pages project with configuration set up via the Cloudflare dashboard and do not have an existing `wrangler.toml` file in your Project, run the `wrangler pages download config` command in your Pages project directory. The `wrangler pages download config` command will download your existing Cloudflare dashboard configuration and generate a valid `wrangler.toml` file in your Pages project directory.
+
+{{<tabs labels="npm | yarn | pnpm">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
 $ npx wrangler pages download config <PROJECT_NAME>
 ```
 
-Run the command, add the file to your project’s root directory, make changes as needed, and create a new deployment either via git integration or direct upload to begin leveraging `wrangler.toml` for your configuration.
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn wrangler pages download config <PROJECT_NAME>
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm wrangler pages download config <PROJECT_NAME>
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+Review your generated `wrangler.toml` file. To start using `wrangler.toml` for your Pages project's configuration, create a new deployment, via [Git integration](/pages/get-started/git-integration/) or [Direct Upload](/pages/get-started/direct-upload/).
 
 ## Differences using `wrangler.toml` for Pages Functions and Workers
 
@@ -446,24 +507,6 @@ Unlike other bindings, this binding is limited to one AI binding per Pages Funct
 ## Local development settings
 
 The local development settings that you can configure are the same for Pages Functions and Cloudflare Workers. Read [this guide](/workers/wrangler/configuration/#local-development-settings) for more details.
-
-## Users with existing `wrangler.toml` files
-
-Before you could define your preview and production configuration in `wrangler.toml` — it was possible to use `wrangler.toml` to define which bindings should be available to your Pages project in local development. That means you may already have a file in your project that looks like this:
-
-
-```toml
----
-filename: wrangler.toml
----
-[[kv_namespaces]]
-binding = "KV"
-id = "<NAMESPACE_ID>"
-```
-
-You can continue to use this file as-is. However when you run `wrangler pages deploy` you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
-
-If you would like to use this file for production and preview deployments add the missing fields, update the file as needed, and deploy again.
 
 ## Source of truth
 
