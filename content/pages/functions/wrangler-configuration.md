@@ -12,18 +12,18 @@ This guide will focus on configuring your Pages project via `wrangler.toml`.
 
 {{<Aside type="note" header="Configuration via wrangler.toml is in open beta.">}}
 
-We’d love your feedback. Join the #functions channel in the Cloudflare Developers Discord and let us know what you’d like to see next.
+Cloudflare needs your feedback. Join the #functions channel in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev) to report bugs and request features.
 
 {{</Aside>}}
 
-`wrangler.toml` allows you to configure things like [bindings](/pages/functions/bindings/), [environment variables](/pages/functions/bindings/#environment-variables), and [local development settings](#local-development-settings), and should be placed in your project's root directory.
+`wrangler.toml` allows you to configure things like [bindings](/pages/functions/bindings/), [environment variables](/pages/functions/bindings/#environment-variables), and [local development settings](#local-development-settings), and should be placed in your Pages project's root directory.
 
-Using this file allows you to:
+Using `wrangler.toml` to configure your Pages project allows you to:
 
-- **store your configuration file in source control** - keep your configuration in your repo alongside the rest of your code
-- **edit your config via your code editor** - remove the need to switch back and forth between interfaces
-- **write configuration that is shared across environments** - define config like bindings and environment variables for local, preview, and production in one file
-- **ensure better access control** - by using a configuration file in your repo, you can control who has access to make changes without giving access to your Cloudflare dashboard
+- **Store your configuration file in source control:** Keep your configuration in your repository alongside the rest of your code.
+- **Edit your configuration via your code editor:** Remove the need to switch back and forth between interfaces.
+- **Write configuration that is shared across environments:** Define configuration like [bindings](/pages/functions/bindings/) and [environment variables](/pages/functions/bindings/#environment-variables) for local, preview, and production in one file.
+- **Ensure better access control:** By using a configuration file in your project repository, you can control who has access to make changes without giving access to your Cloudflare dashboard.
 
 ## Example `wrangler.toml` file
 
@@ -51,7 +51,7 @@ API_KEY = "1234567asdf"
 
 Pages Functions configuration via `wrangler.toml` requires the [V2 build system](/pages/configuration/language-support-and-tools/) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/configuration/language-support-and-tools/#v2-build-system).
 
-## Migrating from dashboard configuration
+## Migrate from dashboard configuration
 
 If you have existing Pages projects with configuration setup via the dashboard you can use the following Wrangler command to download your existing configuration and provide you with a valid `wrangler.toml` file:
 
@@ -65,8 +65,9 @@ Run the command, add the file to your project’s root directory, make changes a
 
 If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages Functions project:
 
-- the configuration fields **do not match exactly** between this file and the Workers equivalent
-- the concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers
+- The configuration fields **do not match exactly** between Pages Functions `wrangler.toml` file and the Workers equivalent. For example, configuration keys like `main`, which are Workers specific, do not apply to a Pages Function's `wrangler.toml`.
+- The Pages `wrangler.toml` introduces a new key, `pages_build_output_dir`, which is only used for Pages projects.
+- The concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers.
 - this file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
 
 ## Configure environments

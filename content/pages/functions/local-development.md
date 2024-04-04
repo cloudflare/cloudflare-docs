@@ -64,4 +64,4 @@ To attach a binding to local development, refer to [Bindings](/pages/functions/b
 
 ## Additional configuration via `wrangler.toml`
 
-If you are using a `wrangler.toml` configuration file in your project, you can set up dev server values like: port, local protocol, ip, and port. For more information read about configuring [Local Development settings](/pages/functions/wrangler-configuration/#local-development-settings).
+If you are using a `wrangler.toml` configuration file in your project, you can set up dev server values like: `port`, `local protocol`, `ip`, and `port`. For more information, read about [configuring local development settings](/pages/functions/wrangler-configuration/#local-development-settings).
