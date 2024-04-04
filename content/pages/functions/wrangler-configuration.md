@@ -47,6 +47,10 @@ database_id = "<DATABASE_ID>"
 API_KEY = "1234567asdf"
 ```
 
+## Requirements
+
+Pages Functions configuration via `wrangler.toml` requires the [V2 build system](/pages/configuration/language-support-and-tools/) or later. To update from V1, refer to the [V2 build system migration instructions](/pages/configuration/language-support-and-tools/#v2-build-system).
+
 ## Migrating from dashboard configuration
 
 If you have existing Pages projects with configuration setup via the dashboard you can use the following Wrangler command to download your existing configuration and provide you with a valid `wrangler.toml` file:
