@@ -10,28 +10,29 @@ Cloudflare sorts domains into categories based on their content and security typ
 
 For a detailed list of categories, refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
-## Change categorization via the Cloudflare dashboard
+## Cloudflare dashboard
 
-When you search for a domain, you can request to change its categorization under the **Domain Overview**.
+To request a categorization change via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Security Center** > **Investigate**.
-3. Select **Request to change categorization**.
-4. Choose whether to change a security or a content category.
-5. Select **Submit** to submit your request for review after you have selected the categories.
+3. Search for the domain you want to change.
+4. In **Domain overview**, select **Request to change categorization**.
+5. Choose whether to change a [security category](/cloudflare-one/policies/gateway/domain-categories/#security-categories) or a [content category](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
+6. Choose which categories you want to change the site to.
 
-The interface will not allow a domain to have more than two content categories associated with it. To change the proposed categories, remove some of the selected categories.
+   {{<Aside type="note" header="Content category limit">}}
+   A domain cannot have more than two associated content categories. To propose changes to categories of a domain with more than two existing categories, remove one or more of the existing categories.
+   {{</Aside>}}
 
-Once the reports have been reviewed and actioned by the Cloudflare team, the new categories will be visible in Investigate and in Cloudflare Radar.
+7. Select **Submit** to submit your request for review.
 
-Requesting a change to **Security** Categories will trigger a deeper investigation on the Cloudflare side to confirm that the submission is valid.
+Requesting a security category change will trigger a deeper investigation by Cloudflare to confirm that the submission is valid. Requesting a content category change also requires Cloudflare validation, but the turnaround time for these submissions is usually shorter as it requires less investigation.
 
-Requesting a **Content** Category change also requires Cloudflare validation but the turnaround time for these submissions is usually lower as it requires less investigation.
+Your category change requests will be revised by the Cloudflare team depending on the type of change. If your requests have been reviewed and applied by the Cloudflare team, the new categories will be visible in the Cloudflare dashboard in **Security Center** > **Investigate**, as well as in [Cloudflare Radar](https://radar.cloudflare.com/).
 
-The category change requests will be revised by the Cloudflare team, depending on the type of change. Check back to see if the change was implemented
-
-{{<Aside type="note">}}
-There is no guarantee the category change will be approved.
+{{<Aside type="warning">}}
+Cloudflare does not guarantee the category change will be approved.
 {{</Aside>}}
 
 ## Radar feedback
