@@ -6,7 +6,7 @@ weight: 20
 
 # Metrics
 
-You can view the metrics for a Hyperdrive on your account via the [Cloudflare dashboard](https://dash.cloudflare.com). Navigate to **Workers** > **Hyperdrive** > **your Hyperdrive config** under the **Metrics** tab.
+You can view the metrics for a Hyperdrive on your account via the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Workers** > **Hyperdrive** > **your Hyperdrive config** under the **Metrics** tab.
 
 The metrics displayed in the Cloudflare dashboard charts are all pulled from Cloudflare's GraphQL Analytics API. You can access the metrics programmatically.
 
@@ -42,7 +42,7 @@ query HyperdriveQueries($accountTag: string!, $configId: string!, $datetimeStart
 }
 ```
 
-### Get the average query and connection latency for queries handled via your Hyperdrive config within a range of time
+### Get the average query and connection latency for queries handled via your Hyperdrive config within a range of time, excluding queries that failed due to an error
 
 ```graphql
 query AverageHyperdriveLatencies($accountTag: string!, $configId: string!, $datetimeStart: Time!, $datetimeEnd: Time!) {
@@ -52,6 +52,7 @@ query AverageHyperdriveLatencies($accountTag: string!, $configId: string!, $date
         limit: 10000
         filter: {
           configId: $configId
+          eventStatus: "complete"
           datetime_geq: $datetimeStart
           datetime_leq: $datetimeEnd
         }
@@ -66,7 +67,7 @@ query AverageHyperdriveLatencies($accountTag: string!, $configId: string!, $date
 }
 ```
 
-### Get the total amount of query and result bytes flowing through your Hyperdrive config, excluding queries that failed due to an error
+### Get the total amount of query and result bytes flowing through your Hyperdrive config
 
 ```graphql
 query HyperdriveQueryAndResultBytesForSuccessfulQueries($accountTag: string!, $configId: string!, $datetimeStart: Date!, $datetimeEnd: Date!) {
@@ -76,7 +77,6 @@ query HyperdriveQueryAndResultBytesForSuccessfulQueries($accountTag: string!, $c
         limit: 10000
         filter: {
           configId: $configId
-          eventStatus: "complete"
           datetime_geq: $datetimeStart
           datetime_leq: $datetimeEnd
         }
