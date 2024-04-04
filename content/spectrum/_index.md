@@ -42,7 +42,7 @@ With Bringing Your Own IPs (BYOIP), Cloudflare announces your IPs in all our loc
 {{</related>}}
 
 {{<related header="Load Balancing" href="/load-balancing/" product="load-balancing">}}
-Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
+Cloudflare Load Balancing distributes traffic across your {{<glossary-tooltip term_id="endpoint">}}endpoints{{</glossary-tooltip>}}, which reduces endpoint strain and latency and improves the experience for end users.
 {{</related>}}
 
 {{<related header="DNS" href="/dns/" product="dns">}}

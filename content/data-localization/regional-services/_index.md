@@ -22,7 +22,7 @@ Regional Services ensures that all edge application services operate within the 
 - Blocking malicious HTTP payloads with the Web Application Firewall (WAF).
 - Detecting and blocking suspicious activity with Bot Management.
 - Running Cloudflare Workers scripts.
-- Load Balancing traffic to the best origin servers.
+- Load Balancing traffic to the best origin servers (or other {{<glossary-tooltip term_id="endpoint">}}endpoints{{</glossary-tooltip>}}).
 
 ## Request flow example
 
@@ -36,7 +36,7 @@ sequenceDiagram
     participant CloudflarePoPNYC as Closest data center <br> in US
     participant CloudflarePoPDUB as Data center in EU
     participant EUOriginServer as Origin Server
- 
+
     User in US->>CloudflarePoPNYC: TCP connection
     Note right of User in US: TLS encryption
     Note left of CloudflarePoPNYC: TCP connection<br> (no TLS unwrapping)

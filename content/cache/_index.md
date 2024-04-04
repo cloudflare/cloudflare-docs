@@ -56,7 +56,7 @@ Clear cached files to force Cloudflare to fetch a fresh version of those files f
 ## Related products
 
 {{<related header="Load Balancing" href="/load-balancing/" product="load-balancing">}}
-Cloudflare Load Balancing distributes traffic across your servers, reducing server strain and latency and improving the end users experience.
+Cloudflare Load Balancing distributes traffic across your {{<glossary-tooltip term_id="endpoint">}}endpoints{{</glossary-tooltip>}}, reducing endpoint strain and latency and improving the end users experience.
 {{</related>}}
 
 {{<related header="Images" href="/images/" product="images">}}

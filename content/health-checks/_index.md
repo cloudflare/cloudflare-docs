@@ -7,7 +7,7 @@ weight: 1
 
 # Health Checks
 
-Standalone Health Checks monitors an IP address or hostname for origin servers or applications and notifies you in near real-time if there happens to be a problem. 
+Standalone Health Checks monitors an IP address or hostname for origin servers or applications and notifies you in near real-time if there happens to be a problem.
 
 A Health Check is a service that runs on Cloudflare’s edge network to monitor whether an origin server is online. This allows you to view the health of your origin servers even if there is only one origin or you do not yet need to balance traffic across your infrastructure.
 
@@ -22,20 +22,20 @@ Standalone Health Checks are different from health monitors associated with load
 ---
 
 ## Features
- 
+
 {{<feature header="Health Checks Analytics" href="/health-checks/health-checks-analytics/">}}
 
-You can use Health Checks Analytics to evaluate origin uptime, latency, failure reason, and specific event logs to debug possible origin issues. 
+You can use Health Checks Analytics to evaluate origin uptime, latency, failure reason, and specific event logs to debug possible origin issues.
 
 {{</feature>}}
 
---- 
+---
 
 ## Related products
- 
+
 {{<related header="Load Balancing" href="/load-balancing/" product="load-balancing">}}
 
-Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
+Cloudflare Load Balancing distributes traffic across your {{<glossary-tooltip term_id="endpoint" link="/load-balancing/understand-basics/load-balancing-components/">}}endpoints{{</glossary-tooltip>}}, which reduces endpoint strain and latency and improves the experience for end users.
 
 {{</related>}}
 
