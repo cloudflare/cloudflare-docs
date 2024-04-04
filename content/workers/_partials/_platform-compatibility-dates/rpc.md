@@ -4,7 +4,7 @@ _build:
   render: never
   list: never
 
-name: "Durable Object stubs and Service Bindings supprot RPC"
+name: "Durable Object stubs and Service Bindings support RPC"
 sort_date: "2024-04-03"
 enable_date: "2024-04-03"
 enable_flag: "rpc"
