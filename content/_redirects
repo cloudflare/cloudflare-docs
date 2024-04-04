@@ -881,6 +881,12 @@
 /cloudflare-for-platforms/workers-for-platforms/platform/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/tags/ /cloudflare-for-platforms/workers-for-platforms/reference/tags/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/metadata/  /cloudflare-for-platforms/workers-for-platforms/reference/metadata/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/custom-limits/ /cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/observability/ /cloudflare-for-platforms/workers-for-platforms/configuration/observability/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/tags/ /cloudflare-for-platforms/workers-for-platforms/configuration/tags/ 301
+
+
 
 # Includes dynamic redirects listed at bottom
 

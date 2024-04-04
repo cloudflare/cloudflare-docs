@@ -70,4 +70,4 @@ Service bindings and Workers for Platforms can be used simultaneously when build
 
 Workers for Platforms user Workers have access to the [cache API](/workers/runtime-apis/cache/). The cache, both default and namespaced,  is isolated across user Workers.
 
-To learn more about the cache, refer to [How the cache Works](/workers/reference/how-the-cache-works/)
+To learn more about the cache, refer to [How the cache Works](/workers/reference/how-the-cache-works/).

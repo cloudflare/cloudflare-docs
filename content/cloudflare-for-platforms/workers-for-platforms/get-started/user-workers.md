@@ -28,7 +28,7 @@ For simplicity, start with wrangler when [getting started](/cloudflare-for-platf
 
 ### Via API
 
-Since you will be deploying Workers on behalf of your users, uploading user Workers will happen through [Workers for Platforms script upload APIs](/api/operations/namespace-worker-put-script-content). This is the same as our [Worker upload API](/api/operations/worker-script-upload-worker-module), but it will upload the Worker to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace) instead of to your account directly. 
+Since you will be deploying Workers on behalf of your users, you will likely want to use the [Workers for Platforms script upload APIs](/api/operations/namespace-worker-put-script-content) directly instead of wrangler to have more control over the upload process. The Workers for Platforms script upload API is the same as our [Worker upload API](/api/operations/worker-script-upload-worker-module), but it will upload the Worker to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace) instead of to your account directly. 
 
 ## Bindings
 

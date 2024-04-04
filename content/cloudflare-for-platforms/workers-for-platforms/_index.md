@@ -17,7 +17,7 @@ With Workers for Platforms you can deploy custom code on behalf of your users or
 
 {{<Aside type="note">}}
 
-Workers for Platforms will be available as new pay-as-you-go offering on April 16th. For more details visit [pricing](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
+Workers for Platforms will be available as new pay-as-you-go offering on April 16th. For pricing details visit [pricing](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
 {{</Aside>}}
 
 
