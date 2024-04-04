@@ -1139,6 +1139,29 @@ It is not possible to polyfill all Node APIs or behaviors, but it is possible to
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
+## Source maps
+
+[Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
+
+
+{{<definitions>}}
+
+- `upload_source_maps` {{<type>}}boolean{{</type>}}
+
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2).
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+upload_source_maps = true 
+
+```
+
 ## Workers Sites
 
 {{<Aside type="note" header="Cloudflare Pages">}}
