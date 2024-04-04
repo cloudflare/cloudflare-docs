@@ -6,13 +6,13 @@ weight: 6
 
 # Configuration via `wrangler.toml`
 
-Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or `wrangler.toml`, a configuration file used to customize the development and deployment setup for Workers and Pages Functions.
+Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or `wrangler.toml`, a configuration file used to customize the development and deployment setup for [Workers](/workers/) and Pages Functions.
 
 This guide will focus on configuring your Pages project via `wrangler.toml`.
 
 {{<Aside type="note" header="Configuration via wrangler.toml is in open beta.">}}
 
-Cloudflare needs your feedback. Join the #functions channel in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev) to report bugs and request features.
+Cloudflare welcomes your feedback. Join the #functions channel in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev) to report bugs and request features.
 
 {{</Aside>}}
 
@@ -22,7 +22,7 @@ Using `wrangler.toml` to configure your Pages project allows you to:
 
 - **Store your configuration file in source control:** Keep your configuration in your repository alongside the rest of your code.
 - **Edit your configuration via your code editor:** Remove the need to switch back and forth between interfaces.
-- **Write configuration that is shared across environments:** Define configuration like [bindings](/pages/functions/bindings/) and [environment variables](/pages/functions/bindings/#environment-variables) for local, preview, and production in one file.
+- **Write configuration that is shared across environments:** Define configuration like [bindings](/pages/functions/bindings/) for local development, preview and production in one file.
 - **Ensure better access control:** By using a configuration file in your project repository, you can control who has access to make changes without giving access to your Cloudflare dashboard.
 
 ## Example `wrangler.toml` file
