@@ -4,7 +4,7 @@ pcx_content_type: concept
 weight: 9
 ---
 
-# Consumer concurrency 
+# Consumer concurrency
 
 Consumer concurrency allows a [consumer Worker](/queues/reference/how-queues-works/#consumers) processing messages from a queue to automatically scale out horizontally to keep up with the rate that messages are being written to a queue.
 
@@ -14,9 +14,9 @@ Note that queue producers are always scalable, up to the [maximum supported mess
 
 ## Enable concurrency
 
-By default, all queues have concurrency enabled. Queue consumers will automatically scale up [to the maximum concurrent invocations](/queues/platform/limits/) as needed to manage a queue's backlog and/or error rates. 
+By default, all queues have concurrency enabled. Queue consumers will automatically scale up [to the maximum concurrent invocations](/queues/platform/limits/) as needed to manage a queue's backlog and/or error rates.
 
-## How concurrency works 
+## How concurrency works
 
 The number of consumers concurrently invoked for a queue will autoscale based on several factors, including:
 
@@ -28,7 +28,7 @@ Where possible, Queues will optimize for keeping your backlog from growing expon
 
 {{<Aside type="note" header="Consumer concurrency and retried messages">}}
 
-[Retrying messages with `retry()`](/queues/reference/batching-retries/#retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
+[Retrying messages with `retry()`](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
 
 {{</Aside>}}
 
@@ -64,7 +64,7 @@ Note that if you are writing messages to a queue faster than you can process the
 
 {{<Aside type="note">}}
 
-Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is only supported in wrangler [`2.13.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%402.13.0) or greater. 
+Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is only supported in wrangler [`2.13.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%402.13.0) or greater.
 
 {{</Aside>}}
 
@@ -79,9 +79,9 @@ filename: wrangler.toml
   max_concurrency = 1
 ```
 
-To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update. 
+To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update.
 
-<!-- Not yet available but will be very soon 
+<!-- Not yet available but will be very soon
 ### wrangler CLI
 
 ```sh
@@ -103,7 +103,7 @@ When multiple consumer Workers are invoked, each Worker invocation incurs [CPU t
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
 
-Billing for consumers follows the [Workers standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model) meaning a developer is billed for the request and for CPU time used in the request. 
+Billing for consumers follows the [Workers standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model) meaning a developer is billed for the request and for CPU time used in the request.
 
 ### Example
 
