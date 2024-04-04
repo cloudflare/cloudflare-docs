@@ -41,3 +41,39 @@ To request recategorization via Cloudflare Radar, submit feedback in [Radar Doma
 ## API
 
 You can request categorization changes by creating a [miscategorization API Token](/api/operations/miscategorization-create-miscategorization).
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with permission to edit your Intel account:
+
+    | **Permissions** |       |      |
+    | --------------- | ----- | ---- |
+    | Account         | Intel | Edit |
+
+    | **Account Resources** |              |
+    | --------------------- | ------------ |
+    | Include               | All accounts |
+
+2. Make a call to the [miscategorization endpoint](/api/operations/miscategorization-create-miscategorization) including the domain name and any categories you would like to add or remove. For example:
+
+    ```bash
+    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization> \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "content_adds": [
+        82
+      ],
+      "content_removes": [
+        155
+      ],
+      "indicator_type": "domain",
+      "ip": null,
+      "security_adds": [
+        117,
+        131
+      ],
+      "security_removes": [
+        83
+      ],
+      "url": "example.com"
+    }'
+    ```
