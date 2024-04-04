@@ -43,6 +43,6 @@ This section provides an overview of the typical lifecycle of a simple session, 
 
 <div class="full-img">
 
-![Example Lifecycle](/images/calls/calls-timeline.png)
+![Example Lifecycle](/images/calls/lifecycle-of-a-session.png)
 
 </div>

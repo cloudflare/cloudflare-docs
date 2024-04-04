@@ -2,14 +2,14 @@
 pcx_content_type: troubleshooting
 title: Delete all DNS records
 meta:
-    description: Learn how to delete all your DNS records in Cloudflare with a script so you can start from zero instead of using the quick scan results.
+    description: Learn how to bulk delete DNS records in Cloudflare with a script so you can start from zero instead of using the quick scan results.
 ---
 
-# Delete all DNS records
+# Bulk delete all DNS records
 
 When you connect your domain to Cloudflare, the [DNS records quick scan](/dns/zone-setups/reference/dns-quick-scan/) may automatically add several records to your zone.
 
-If you realize most of them are not applicable and want to delete all DNS records, follow the steps below. This method assumes you are familiar with [API calls fundamentals](/fundamentals/api/).
+If you realize most of them are not applicable and want to bulk delete DNS records, follow the steps below. This method assumes you are familiar with [API calls fundamentals](/fundamentals/api/).
 
 1. Make sure you have [an API token](/fundamentals/api/get-started/create-token/) that allows you to edit DNS for your zone.
 2. Get your [zone ID](/fundamentals/setup/find-account-and-zone-ids/).

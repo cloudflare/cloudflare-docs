@@ -31,6 +31,7 @@ Listed below are the specific insights currently available:
 | [Overprovisioned Access Policies](/cloudflare-one/policies/access/) | We detect an Access policy to allow everyone access to your application. |
 | [Page Shield not enabled](/page-shield/get-started/) | Page Shield helps meet PCI DSS v4.0 compliance regarding requirement 6.4.3. | 
 | [SPF Record Errors](/dns/manage-dns-records/reference/dns-record-types/#spf) | We detect an incorrect or missing `SPF` record. |
+| [Turn on JavaScript Detection](/bots/reference/javascript-detections/#javascript-detections) | One or more of your Bot Management enabled zones does not have JavaScript Detection enabled, which is a critical part of our bot detection suite. |
 | [Unassigned Access seats](/cloudflare-one/) | We detect a Zero Trust subscription that is not configured yet. | 
 | [Unprotected Cloudflare Tunnels](/cloudflare-one/applications/configure-apps/self-hosted-apps/#4-connect-your-origin-to-cloudflare) | We detect an application that is served by a Cloudflare Tunnel but not protected by a corresponding Access policy. |
 | [Unproxied `A` Records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) | This DNS record is not proxied by Cloudflare. Cloudflare can not protect this origin because it is exposed to the public Internet. |
