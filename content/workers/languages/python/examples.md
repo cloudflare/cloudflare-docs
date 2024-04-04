@@ -136,6 +136,22 @@ async def on_fetch(request, env):
     return Response.json(to_js({"write": "success"}))
 ```
 
+### Query a D1 Database
+
+```python
+---
+filename: src/entry.py
+---
+from js import Response
+
+async def on_fetch(request, env):
+    results = await env.DB.prepare("PRAGMA table_list").all()
+    # Return a JSON response
+    return Response.json(results)
+```
+
+Refer to [this guide](https://developers.cloudflare.com/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
+
 ## Next steps
 
 * If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
