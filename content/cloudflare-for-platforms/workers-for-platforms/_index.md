@@ -9,15 +9,21 @@ pcx_content_type: overview
 
 {{<description>}}
 
-Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms extends the capabilities of Cloudflare Workers to SaaS businesses that want to deploy Worker scripts on behalf of their customers or let their users write Worker scripts directly.
+With Workers for Platforms you can deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, without you or your users having to manage any infrastructure. 
 
 {{</description>}}
 
 {{<plan type="enterprise">}}
 
-Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your user's code, create custom logic, and use additional APIs such as script tags for bulk operations.
+{{<Aside type="note">}}
 
-Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
+Workers for Platforms will be available as new pay-as-you-go offering on Aprl 16th. For more details visit [pricing](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
+{{</Aside>}}
+
+
+Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your user's code, create custom logic, and use additional APIs such as [script tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) for bulk operations.
+
+Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
 
 ---
 
