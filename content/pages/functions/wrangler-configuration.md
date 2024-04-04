@@ -122,22 +122,22 @@ $ pnpm wrangler pages download config <PROJECT_NAME>
 
 Review your generated `wrangler.toml` file. To start using `wrangler.toml` for your Pages project's configuration, create a new deployment, via [Git integration](/pages/get-started/git-integration/) or [Direct Upload](/pages/get-started/direct-upload/).
 
-## Differences using `wrangler.toml` for Pages Functions and Workers
+## Differences in `wrangler.toml` for Pages Functions and Workers
 
 If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages Functions project:
 
 - The configuration fields **do not match exactly** between Pages Functions `wrangler.toml` file and the Workers equivalent. For example, configuration keys like `main`, which are Workers specific, do not apply to a Pages Function's `wrangler.toml`.
 - The Pages `wrangler.toml` introduces a new key, `pages_build_output_dir`, which is only used for Pages projects.
 - The concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers.
-- this file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
+- The `wrangler.toml` file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
 
 ## Configure environments
 
-With `wrangler.toml` you can quickly set configuration across your local environment, preview deployments, and production.
+With `wrangler.toml`, you can set configuration across your local environment, and your preview and production deployments.
 
 ### Local development
 
-`wrangler.toml` works locally when using `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. Refer to the following config file for an example:
+`wrangler.toml` works locally when using [`wrangler pages dev`](/workers/wrangler/commands/#dev-1). You can test out configuration changes quickly your Pages project by making changes to `wrangler.toml` without a need to log in to the Cloudflare dashboard. Refer to the following `wrangler.toml` file for an example:
 
 ```toml
 ---
@@ -163,11 +163,11 @@ For a full list of configuration keys, refer to [inheritable keys](#inheritable-
 
 ### Production and preview deployments
 
-Once you are ready to deploy your project, you can set the configuration for production and preview deployments by creating a new deployment containing a `wrangler.toml` file.
+You set your Pages project's [production branch](/pages/configuration/branch-build-controls/#production-branch-control) and [preview branch](/pages/configuration/branch-build-controls/#preview-branch-control) via the Cloudflare dashboard. Using `wrangler.toml`, you can set the configuration for production and preview deployments to suit your project's needs.
 
 {{<Aside type="note">}}
 
-For the following commands, if you are using git it is important to remember the branch that you set as your [production branch](/pages/configuration/branch-build-controls/#production-branch-control) as well as your [preview branch settings](/pages/configuration/branch-build-controls/#preview-branch-control).
+For the following commands, if you are using Git it is important to remember the branch that you set as your [production branch](/pages/configuration/branch-build-controls/#production-branch-control) as well as your [preview branch settings](/pages/configuration/branch-build-controls/#preview-branch-control).
 
 {{</Aside>}}
 
@@ -399,7 +399,7 @@ You can configure limits for your Pages project in the same way you can for Work
 
 ## Bindings
 
-A [binding](/pages/functions/bindings/) enables your Pages Functions to interact with resources on the Cloudflare Developer Platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/pages/functions/bindings/) enables your Pages Functions to interact with resources on the Cloudflare Developer Platform. Use bindings to add storage functionality to your Pages project with resources like [KV](), [Durable Objects](), [R2](), and [D1](). You can set bindings for both production and preview environments.
 
 ### D1 databases
 
