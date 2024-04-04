@@ -10,9 +10,9 @@ entries:
   general_definition: |-
     The `create-cloudflare` CLI (C3) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
-- term: model
+ term: model
   general_definition: |-
-    
+    need definition
 
 - term: Neuron
   general_definition: |-
