@@ -56,7 +56,7 @@ To request a categorization change via the API:
 2. Make a call to the [miscategorization endpoint](/api/operations/miscategorization-create-miscategorization) including the domain name and any categories you would like to add or remove. For example:
 
     ```bash
-    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization> \
+    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization \
     --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \
     --data '{
