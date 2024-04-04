@@ -131,6 +131,20 @@ If you have used [Workers](/workers), you may already be familiar with [`wrangle
 - The concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers.
 - The `wrangler.toml` file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
 
+{{<details header="Configuration key availability for Pages Functions versus Workers `wrangler.toml`">}}
+
+{{<table-wrap>}}
+
+| Key                                                        | Workers                 | Pages                      |
+| -------------------------------------------------------------------------|------------------------ | -------------------------- |
+| `name`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | The name of your Worker | A valid Pages project name |
+| `main`{{<type>}}string{{</type>}}{{<prop-meta>}}required{{</prop-meta>}} | The path to the entry  point of your Worker that will be executed | ❌ Not supported |
+
+{{</table-wrap>}}
+
+{{</details>}}
+
+
 ## Configure environments
 
 With `wrangler.toml`, you can set configuration across your local environment, and your preview and production deployments.
