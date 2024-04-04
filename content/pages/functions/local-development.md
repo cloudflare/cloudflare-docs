@@ -24,6 +24,12 @@ $ npx wrangler pages dev <DIRECTORY-OF-ASSETS>
 
 This will then start serving your Pages project. You can press `b` to open the browser on your local site.
 
+{{<Aside type="note">}}
+
+If you have a [`wrangler.toml`](/pages/functions/wrangler-configuration/) file configured for your Pages project, you can run [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) without specifying a directory. 
+
+{{</Aside>}}
+
 If you are using a framework, you can pass through the framework-provided dev command (such as, `npm run dev`) to run development. This enables you to benefit from the framework hot-reloading and any special build process around it. To run a framework-provided dev command:
 
 ```sh
@@ -40,7 +46,7 @@ This will start a local Wrangler development server that serves your Pages proje
 
 ### HTTPS support
 
-To serve your local development server over HTTPS with a self-signed certificate, pass the `--local-protocol=https` argument to `npx wrangler pages dev`:
+To serve your local development server over HTTPS with a self-signed certificate, you can [set `local_protocol` via `wrangler.toml`](/pages/functions/wrangler-configuration/#local-development-settings) or you can pass the `--local-protocol=https` argument to [`wrangler pages dev`](/workers/wrangler/commands/#dev-1):
 
 ```sh
 $ npx wrangler pages dev --local-protocol=https <DIRECTORY-OF-ASSETS>
@@ -54,4 +60,8 @@ $ NODE_EXTRA_CA_CERTS=<PATH_TO_CERTIFICATE> npx wrangler pages dev --local-proto
 
 ## Attach bindings to local development
 
-To attach a binding to local development, refer to [Bindings](/pages/functions/bindings/) and find the resource you would like to work with.
+To attach a binding to local development, refer to [Bindings](/pages/functions/bindings/) and find the Cloudflare Developer Platform resource you would like to work with.
+
+## Additional configuration via `wrangler.toml`
+
+If you are using a `wrangler.toml` configuration file in your project, you can set up dev server values like: `port`, `local protocol`, `ip`, and `port`. For more information, read about [configuring local development settings](/pages/functions/wrangler-configuration/#local-development-settings).
