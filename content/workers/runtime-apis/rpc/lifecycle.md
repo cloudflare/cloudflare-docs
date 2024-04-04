@@ -49,7 +49,7 @@ function sendEmail(id, message) {
 Because it has not yet landed in V8, the `using` keyword is not yet available directly in the Workers runtime. To use it in your code, you must use a prerelease version of the [Wrangler CLI](/workers/wrangler/) to run and deploy your Worker:
 
 ```sh
-npx wrangler@using-declaration-experimental dev
+npx wrangler@using-keyword-experimental dev
 ```
 
 This version of Wrangler will transpile `using` into direct calls to `Symbol.dispose()`, before running your code or deploying it to Cloudflare.
