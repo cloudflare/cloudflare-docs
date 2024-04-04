@@ -137,7 +137,7 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
    <tr>
       <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://docs.servicenow.com/bundle/tokyo-application-development/page/administer/integrationhub-store-spokes/task/govnotify-wbhk.html">ServiceNow</a></td>
       <td>User decides. Ensure that the secret entered in Cloudflare Notifications matches with ServiceNow. Refer to <a target="_blank" rel="noopener noreferrer" href="https://docs.servicenow.com/bundle/washingtondc-integrate-applications/page/administer/integrationhub/concept/rest-trigger.html">ServiceNow's documentation</a> for details.</td>
-      <td><code>https://ServiceNow-instance.com/base-api-path</code></td>
+      <td><code>https://{servicenow_instance}.com/{base_api_path}</code></td>
    </tr>
    <!-- generic webhook    -->
    <tr>
