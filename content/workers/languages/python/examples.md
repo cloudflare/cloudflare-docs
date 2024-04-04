@@ -87,7 +87,7 @@ async def on_fetch(request):
     logger.info("info log from Python!")
 
     # Or just use print()
-    print("print() from Python!)
+    print("print() from Python!")
 
     return Response.new("We're testing logging!")
 ```
