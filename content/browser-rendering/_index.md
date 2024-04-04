@@ -7,7 +7,7 @@ meta:
   title: Browser Rendering
 ---
 
-{{<heading-pill style="beta">}}Browser Rendering{{</heading-pill>}}
+# Browser Rendering
 
 {{<description>}}
 Browser automation for [Cloudflare Workers](/workers/).
