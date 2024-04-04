@@ -5,6 +5,9 @@ entries:
 - publish_date: '2024-04-03'
   description: |-
     - When the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+- publish_date: '2024-04-02'
+  description: |-
+    - You can now [write Workers in Python](/workers/languages/python)
 - publish_date: '2024-04-01'
   description: |-
     - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-dates/#support-for-accepting-custom-thenables-in-internal-apis) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
@@ -27,7 +30,7 @@ entries:
 - publish_date: '2023-10-30'
   description: |-
     - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
-    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model). 
+    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model).
     - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
 - publish_date: '2023-10-20'
   description: |-
