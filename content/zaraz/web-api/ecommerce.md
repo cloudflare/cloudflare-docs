@@ -14,7 +14,7 @@ You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
-Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
+Right now, Zaraz e-commerce is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing, Facebook Pixel, Amplitude, Pinterest Conversions API, TikTok and Branch.
 
 {{<Aside type="note" header="Note">}}It is crucial you follow the guidelines set by third-party tools, such as Google Analytics 3 and Google Analytics 4, to ensure compliance with their limitations on payload size and length. For instance, if your `Order Completed` call includes a large number of products, it may exceed the limitations of the selected tool.{{</Aside>}}
 

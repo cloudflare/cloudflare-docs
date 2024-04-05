@@ -35,7 +35,7 @@ $ npm create cloudflare@latest
 
 For setup, select the following options:
 * For `Where do you want to create your application?`, indicate `openai-function-calling-workers`.
-* For `What type of application do you want to create?`, choose `"Hello World" script`.
+* For `What type of application do you want to create?`, choose `"Hello World" Worker`.
 * For `Do you want to use TypeScript?`, choose `no`.
 * For `Do you want to deploy your application?`, choose `yes`.
 

@@ -22,7 +22,7 @@
 	<array>
 		<dict>
     	<key>organization</key>
-    	<string>yourorganization</string>
+    	<string>your-team-name</string>
     	<key>auto_connect</key>
     	<integer>120</integer>
     	<key>onboarding</key>

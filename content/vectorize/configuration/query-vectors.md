@@ -24,7 +24,16 @@ let matches = await env.YOUR_INDEX.query(queryVector);
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
 
 ```json
-{"matches":{"count":3,"matches":[{"score":0.999909486,"id":"5"},{"score":0.789848214,"id":"4"},{"score":0.720476967,"id":"4444"}]}}
+{
+  "matches": {
+    "count": 3,
+    "matches": [
+      { "score": 0.999909486, "id": "5" },
+      { "score": 0.789848214, "id": "4" },
+      { "score": 0.720476967, "id": "4444" }
+    ]
+  }
+}
 ```
 
 You can optionally change the number of results returned and/or whether results should include metadata and values:
@@ -32,20 +41,36 @@ You can optionally change the number of results returned and/or whether results 
 ```ts
 let queryVector = [54.8, 5.5, 3.1];
 // topK defaults to 3; returnValues defaults to false; returnMetadata defaults to false
-let matches = await env.YOUR_INDEX.query(queryVector, { topK: 1, returnValues: true, returnMetadata: true })
+let matches = await env.YOUR_INDEX.query(queryVector, {
+  topK: 1,
+  returnValues: true,
+  returnMetadata: true,
+});
 ```
 
 This would return a set of matches resembling the following, based on a `cosine` distance metric:
 
 ```json
-{"matches":{"count":1,"matches":[{"score":0.999909486,"id":"5","values":[58.79999923706055,6.699999809265137,3.4000000953674316],"metadata":{"url":"/products/sku/55519183"}}]}}
+{
+  "matches": {
+    "count": 1,
+    "matches": [
+      {
+        "score": 0.999909486,
+        "id": "5",
+        "values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
+        "metadata": { "url": "/products/sku/55519183" }
+      }
+    ]
+  }
+}
 ```
 
 Refer to the [Workers Client API documentation](/vectorize/reference/client-api/) for additional examples.
 
 ## Workers AI
 
-If you are generating embeddings from a [Workers AI](/workers-ai/models/text-embeddings/) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
+If you are generating embeddings from a [Workers AI](/workers-ai/models/#text-embeddings) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
 
 ```ts
 interface EmbeddingResponse {

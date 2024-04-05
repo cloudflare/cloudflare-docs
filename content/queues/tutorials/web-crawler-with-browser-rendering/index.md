@@ -63,7 +63,7 @@ $ npm create cloudflare@latest # or yarn create cloudflare
 C3 will then prompt you for some information on your Worker.
 
 1. Provide a name for your Worker. This is also the name of the new directory where the Worker will be created.
-2. For the question `What type of application do you want to create?`, select `"Hello World" script`.
+2. For the question `What type of application do you want to create?`, select `"Hello World" Worker`.
 3. For the question `Would you like to use TypeScript? (y/n)`, select `y`.
 4. For the question `Do you want to deploy your application?`, select `n`.
 
@@ -82,7 +82,6 @@ name = "queues-web-crawler"
 main = "src/index.ts"
 compatibility_date = "2023-06-09"
 node_compat = true
-usage_model = "unbound"
 
 browser = { binding = "CRAWLER_BROWSER", type = "browser" }
 

@@ -22,17 +22,42 @@ The WARP client does not run on Windows Server. Refer to the [downloads page](/c
 
 The WARP client does not support multiple users on a single Windows device. WARP uses hard-coded global paths to store settings and keys and does not save information on a per-user basis. Therefore, after one user logs into WARP, their settings will apply to all traffic from the device.
 
+## nslookup on Windows in DoH mode
+
+On Windows devices in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
+
+```txt
+C:\Users\JohnDoe>nslookup google.com
+Server:  UnKnown
+Address:  ::ffff:127.0.2.2
+
+*** UnKnown can't find google.com: No response from server
+```
+
+To work around the issue, specify the IPv4 address of the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) in your query:
+  ```bash
+  C:\Users\JohnDoe>nslookup google.com 127.0.2.2
+  ```
+
+Alternatively, use Powershell:
+  ```powershell
+  PS C:\Users\JohnDoe> Resolve-DnsName -Name google.com
+  ```
+
 ## 4G/5G embedded modules
 
 Because of how the WARP client instantiates the local DNS Proxy, it is incompatible with 4G/5G cellular adaptors which have IPv6 enabled.  To run WARP on these devices, you will need to disable IPv6 on the system.
 
 ## Comcast DNS servers
 
-Comcast DNS traffic to `75.75.75.75` and `75.75.76.76` cannot be proxied through WARP. This is because Comcast rejects DNS traffic that is not sent directly from the user's device.
+Comcast DNS traffic (to the IPs below) cannot be proxied through WARP. This is because Comcast rejects DNS traffic that is not sent directly from the user's device.
+
+- IPv4 Addresses: `75.75.75.75` and `75.75.76.76`
+- IPv6 Addresses: `2001:558:feed::1` and `2001:558:feed::2`
 
 To work around the issue, you can either:
 
-- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.76.76/32` from WARP.
+- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes the above IPs from WARP.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
 ## Cox DNS servers

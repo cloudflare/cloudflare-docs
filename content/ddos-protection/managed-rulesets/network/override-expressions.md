@@ -1,7 +1,7 @@
 ---
 title: Override expressions
 pcx_content_type: reference
-weight: 6
+weight: 7
 meta:
   title: Override expressions for Network-layer DDoS Attack Protection
 ---

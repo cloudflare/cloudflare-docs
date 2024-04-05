@@ -1,4 +1,4 @@
-baseURL = "https://developers.cloudflare.com"
+baseURL = "https://developers.cloudflare.com/"
 
 title = "Cloudflare Docs"
 languageCode = "en"

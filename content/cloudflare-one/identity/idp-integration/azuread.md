@@ -179,6 +179,10 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 Access and Gateway policies for an Azure group will also apply to all [nested groups](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/how-to-manage-groups#add-or-remove-a-group-from-another-group). For example, if a user belongs to the group `US devs`, and `US devs` is part of the broader group `Devs`, the user would be allowed or blocked by all policies created for `Devs`.
 
+## Force user interaction during WARP reauthentication
+
+You can require users to re-enter their credentials into Azure AD whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/operations/access-identity-providers-update-an-access-identity-provider) and set the `prompt` parameter to either `login` or `select_account`.
+
 ## Example API Configuration
 
 ```json

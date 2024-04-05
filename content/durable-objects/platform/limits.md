@@ -6,7 +6,7 @@ weight: 2
 
 # Limits
 
-Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers).
+Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers). Durable Objects limits are the same as [Workers Limits](/workers/platform/limits/), as well as the following limits that are specific to Durable Objects:
 
 
 | Feature                                    | Limit                                             |

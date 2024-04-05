@@ -10,14 +10,14 @@ weight: 2
 
 ### Prerequisites
 
-[Download the `Cloudflare_WARP_Release-x64.msi` installer](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows).
+[Download the `Cloudflare_WARP_<VERSION>.msi` installer](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows).
 
 ### Configure Intune for Windows
 
 1. Log in to your Microsoft Intune account.
 2. Go to **Apps** > **All Apps** > **Add**.
 3. In **App type**, select _Line-of-business app_ from the drop-down menu. Select **Select**.
-4. Select **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
+4. Select **Select app package file** and upload the `Cloudflare_WARP_<VERSION>.msi` installer you downloaded previously.
 5. Select **OK**.
 6. In the **Name** field, we recommend entering the version number of the package being uploaded.
 7. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.

@@ -7,7 +7,7 @@ title: Fetch Handler
 
 ## Background
 
-Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [request](https://developer.mozilla.org/en-US/docs/Web/API/Request) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
+Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [request](/workers/runtime-apis/request/) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
 
 ```ts
 export default {
@@ -48,6 +48,8 @@ When responding to a HTTP request, the `fetch` handler may use any of the follow
 ### `context.waitUntil()`
 
 The `waitUntil()` method extends the lifetime of the `fetch` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
+
+You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
 
 ```js
 export default {
