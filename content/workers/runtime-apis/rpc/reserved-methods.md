@@ -1,6 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Reserved Methods
+weight: 2
 meta:
   title: Workers RPC — Reserved Methods
   description: Reserved methods with special behavior that are treated differently.
