@@ -5,7 +5,7 @@ title: Signals Intelligence
 
 # Bots Signals Intelligence
 
-For every available [JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/), Bot Management customers can view how Cloudflare sees it on the Internet and what behavior we view with the fingerprint. This data can help you understand why a request is scored in a particular fashion or allow you to use the aggregate data in your own ML models, run in either [Cloudflare Workers](/workers/) or at the origin location. 
+For every available [JA4 fingerprint](/bots/concepts/ja3-ja4-fingerprint/), Bot Management customers can view how Cloudflare sees it on the Internet and what behavior we view with the fingerprint. This data can help you understand why a request is scored in a particular fashion or allow you to use the aggregate data in your own ML models, run in either [Cloudflare Workers](/workers/) or at the origin location. 
 
 Specifically, for each JA4 fingerprint, you will be able to access the following information: 
 
@@ -21,10 +21,15 @@ This data gives you access to insights only available via the Cloudflare network
 
 Signals Intelligence fields show observations about a particular JA4 that Cloudflare has seen globally over the last hour.
 
-| <div style="width:140px">Field name</div> | Description |
+| <div style="width:170px">Field name</div> | Description |
 | --- | --- | 
-| `browser_pct` | Percentage of global traffic from user-agents identifying as browsers in the last hour using this fingerprint. |
-| `heuristics_pct` | Percentage of global traffic identified by our heuristics engine as bad bots. |
-| `cache_hit_pct` | Percentage of global traffic from in the last hour made to cached objects using this fingerprint. |
-| `unique_zones` | Percentage of unique zones Cloudflare sees this fingerprint on in the past hour. |
-| `4xx_pct` | Percentage of global traffic from in the last hour using this fingerprint that resulted in an HTTP 4xx response. |
+| `h2h3_ratio_1h` | The ratio of HTTP/2 and HTTP/3 requests combined with the total number of requests for the JA4 fingerprint in the last hour. Higher values indicate a higher proportion of HTTP/2 and HTTP/3 requests compared to other protocol versions. |
+| `heuristic_ratio_1h` | The ratio of requests with a `scoreSrc` value of "heuristics" for the JA4 fingerprint in the last hour. Higher values suggest a larger proportion of requests being flagged by heuristic-based scoring. |
+| `reqs_quantile_1h` | The quantile position of the JA4 fingerprint based on the number of requests across all fingerprints in the last hour. Higher values indicate a relatively higher number of requests compared to other fingerprints. |
+| `uas_rank_1h` | The rank of the JA4 fingerprint based on the number of distinct user agents across all fingerprints in the last hour. Lower values indicate a higher diversity of user agents associated with the fingerprint. |
+| `browser_ratio_1h` | The ratio of requests originating from browser-based user agents for the JA4 fingerprint in the last hour. Higher values suggest a higher proportion of browser-based requests. |
+| `paths_rank_1h` | The rank of the JA4 fingerprint based on the number of unique request paths across all fingerprints in the last hour. Lower values indicate a higher diversity of request paths associated with the fingerprint. |
+| `reqs_rank_1h` | The rank of the JA4 fingerprint based on the number of requests across all fingerprints in the last hour. Lower values indicate a higher number of requests associated with the fingerprint. |
+| `cache_ratio_1h` | The ratio of cacheable responses for the JA4 fingerprint in the last hour. Higher values suggest a higher proportion of responses that can be cached. |
+| `ips_rank_1h` | The rank of the JA4 fingerprint based on the number of unique client IP addresses across all fingerprints in the last hour. Lower values indicate a higher number of distinct client IPs associated with the fingerprint. |
+| `ips_quantile_1h` | The quantile position of the JA4 fingerprint based on the number of unique client IP addresses across all fingerprints in the last hour. Higher values indicate a relatively higher number of distinct client IPs compared to other fingerprints. |

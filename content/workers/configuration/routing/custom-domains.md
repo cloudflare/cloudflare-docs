@@ -40,7 +40,7 @@ To set up a Custom Domain in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select your Worker.
-3. Go to **Triggers** > **Custom Domains** > **Add Custom Domain**.
+3. Go to **Settings** > **Triggers** > **Custom Domains** > **Add Custom Domain**.
 4. Enter the domain you want to configure for your Worker.
 5. Select **Add Custom Domain**.
 
