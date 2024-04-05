@@ -11,7 +11,7 @@ _build:
 
 |          | Paid plan                                         |
 | -------- | ------------------------------------------------- |
-| Requests               | 1 million, + $0.15/million<br> Includes HTTP requests, RPC sessions, WebSocket messages<sup>2</sup>, and alarm invocations                      |
+| Requests               | 1 million, + $0.15/million<br> Includes HTTP requests, RPC sessions<sup>1</sup>, WebSocket messages<sup>2</sup>, and alarm invocations                      |
 | Duration<sup>3</sup>                    | 400,000 GB-s, + $12.50/million GB-s<sup>4,5</sup> |
 
 {{</table-wrap>}}
