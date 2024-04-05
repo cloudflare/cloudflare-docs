@@ -19,8 +19,8 @@
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
 /content/workers-ai/ @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @cloudflare/pcx-technical-writing
-/content/workers-ai/tutorials @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/workers-ai/static @craigsdennis @logangrasby @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers-ai/tutorials @craigsdennis @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers-ai/static @craigsdennis @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @vy-ton @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
@@ -79,16 +79,16 @@
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/kv/ @elithrar @rts-rob  @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/kv/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/pub-sub/ @elithrar @rts-rob @Maddy-Cloudflare @dcpena @cloudflare/pcx-technical-writing
 /content/queues/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/queues.yaml @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/r2/ @dcpena @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/data/changelogs/r2.yaml @dcpena @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/data/changelogs/r2.yaml @dcpena @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /data/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
-/content/workers/ @cloudflare/workers-docs @elithrar @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
-/assets/images/workers/ @cloudflare/workers-docs @elithrar @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing @irvinebroque @admah
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
@@ -145,8 +145,8 @@
 /content/security-center/ @jason-cf @cloudflare/pcx-technical-writing
 /content/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
-/content/waf/change-log/ @pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
-/data/changelogs/waf.yaml @pedrosousa @cloudflare/firewall @unknownhad @vs-mg @cloudflare/pcx-technical-writing
+/content/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
+/data/changelogs/waf.yaml @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
 
 # Support
 /content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
