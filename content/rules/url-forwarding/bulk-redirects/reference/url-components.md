@@ -23,19 +23,22 @@ https://user:password@www.example.com:443/search?q=term#results
 | URL component                                           | Supported in source URL                    | Supported in target URL                               |
 | ------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
 | **Scheme**<br/>(for example, `https`)                   | Yes, `http` or `https` only<br/>(optional) | Yes                                                   |
-| **User information**<br/>(for example, `user:password`) | No                                         | Yes (optional)                                        |
+| **User information**<br/>(for example, `user:password`) | No [^1]                                    | Yes (optional)                                        |
 | **Host**<br/>(for example, `www.example.com`)           | Yes                                        | Yes (optional)                                        |
-| **Port**<br/>(for example, `443`)                       | No                                         | Yes (optional)                                        |
+| **Port**<br/>(for example, `443`)                       | No [^1]                                    | Yes (optional)                                        |
 | **Path**<br/>(for example, `/search`)                   | Yes                                        | Yes                                                   |
-| **Query string**<br/>(for example, `q=term`)            | No                                         | Yes, if **Preserve query string** is false (optional) |
-| **Fragment**<br/>(for example, `results`)               | No                                         | Yes (optional)                                        |
+| **Query string**<br/>(for example, `q=term`)            | No [^1]                                    | Yes, if **Preserve query string** is false (optional) [^2]: |
+| **Fragment**<br/>(for example, `results`)               | No [^1]                                    | Yes (optional)                                        |
 
 {{</table-wrap>}}
 
-Bulk Redirects also support target URLs without an authority component [^1], like the following URL:
+Bulk Redirects also support target URLs without an authority component [^3], like the following URL:
 
 ```txt
 magnet:?xt=urn:btih:2bd9d334e8d1e5bd7768755173222db5c6dea13b&dn=archlinux-2021.07.01-x86_64.iso
 ```
+[^1]: The URL component is not supported as a matching component (so it should not be included in Source URL inserted) but it will be passed to the target URL if the correspondant flag is set to TRUE.
 
-[^1]: The URL authority is the combination of user information, host, and port components.
+[^2]: The target URL query string can only be added if the original query string was not retained (Preserve query string set to false). If the query string is being retained then this will be passed along where the Source URL matches.
+
+[^3]: The URL authority is the combination of user information, host, and port components.
