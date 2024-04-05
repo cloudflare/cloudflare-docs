@@ -10,6 +10,10 @@ meta:
 
 Secure Web Gateway allows you to inspect HTTP traffic and control which websites users can visit.
 
+{{<Aside type="note">}}
+For a more detailed guide to filtering HTTP requests and other traffic for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/) implementation guide.
+{{</Aside>}}
+
 ## 1. Connect to Gateway
 
 To filter HTTP requests from a device:

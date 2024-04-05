@@ -11,7 +11,7 @@ meta:
 Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit.
 
 {{<Aside type="note">}}
-For a more detailed guide to filtering DNS queries, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-dns-policies/) implementation guide.
+For a more detailed guide to filtering DNS queries and other traffic for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/) implementation guide.
 {{</Aside>}}
 
 ## 1. Connect to Gateway
