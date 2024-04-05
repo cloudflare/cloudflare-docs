@@ -18,6 +18,18 @@ Allowlist any known domains and hostnames. With this policy, you ensure that you
 
 {{</details>}}
 
+{{<details header="Quarantined-Users-DNS-Restricted-Access" open="true">}}
+
+{{<render file="zero-trust/_blocklist-restricted-users.md">}}
+
+| Selector         | Operator    | Value                               | Logic | Action |
+| ---------------- | ----------- | ----------------------------------- | ----- | ------ |
+| Domain           | in list     | _Known Domains_                     | Or    | Block  |
+| Host             | in list     | _Known Domains_                     | And   |        |
+| User Group Names | in          | _Quarantined Users_                 |       |        |
+
+{{</details>}}
+
 {{<details header="All-DNS-SecurityCategories-Blocklist" open="true">}}
 
 {{<render file="zero-trust/_blocklist-security-categories.md">}}
