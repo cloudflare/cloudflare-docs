@@ -8,10 +8,6 @@ meta:
 
 # Data Localization Suite
 
-{{<description>}}
-Manage your data locality, privacy, and compliance requirements.
-{{</description>}}
-
 The Data Localization Suite (DLS) is a collection of tools that enable customers to choose the location where Cloudflare inspects and stores data, while maintaining the security and performance benefits of our global network.
 
 {{<plan type="ent-add-on">}}
