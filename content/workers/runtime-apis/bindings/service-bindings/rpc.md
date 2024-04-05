@@ -102,7 +102,90 @@ export default class extends WorkerEntrypoint {
 
 ## Named entrypoints
 
-TODO: Example
+You can also export any number of named `WorkerEntrypoint` classes from within a single Worker, in addition to the default export. You can then declare a Service binding to a specific named entrypoint.
+
+You can use this to group multiple pieces of compute together. For example, you might create a distinct `WorkerEntrypoint` for each permission role in your application, and use these to provide role-specific RPC methods:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "todo-app"
+
+[[d1_databases]]
+binding = "D1"
+database_name = "todo-app-db"
+database_id = "<unique-ID-for-your-database>"
+```
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class AdminEntrypoint extends WorkerEntrypoint {
+  async createUser(username) {
+    await this.env.D1.prepare("INSERT INTO users (username) VALUES (?)")
+      .bind(username)
+      .run();
+  }
+
+  async deleteUser(username) {
+    await this.env.D1.prepare("DELETE FROM users WHERE username = ?")
+      .bind(username)
+      .run();
+  }
+}
+
+export class UserEntrypoint extends WorkerEntrypoint {
+  async getTasks(userId) {
+    return await this.env.D1.prepare(
+      "SELECT title FROM tasks WHERE user_id = ?"
+    )
+      .bind(userId)
+      .all();
+  }
+
+  async createTask(userId, title) {
+    await this.env.D1.prepare(
+      "INSERT INTO tasks (user_id, title) VALUES (?, ?)"
+    )
+      .bind(userId, title)
+      .run();
+  }
+}
+
+export default class extends WorkerEntrypoint {
+  async fetch(request, env) {
+    return new Response("Hello from my to do app");
+  }
+}
+```
+
+You can then declare a Service binding directly to `AdminEntrypoint` in another Worker:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "admin-app"
+
+[[services]]
+binding = "ADMIN"
+service = "todo-app"
+entrypoint = "AdminEntrypoint"
+```
+
+```js
+export default {
+  async fetch(request, env) {
+    await env.ADMIN.createUser("aNewUser");
+    return new Response("Hello from admin app");
+  },
+};
+```
+
+You can learn more about how to configure D1 in the [D1 documentation](/d1/get-started/#4-bind-your-worker-to-your-d1-database)
+
+You can try out a complete example of this to do app, as well as a Discord bot built with named entrypoints, by cloning the [cloudflare/js-rpc-and-entrypoints-demo repository](https://github.com/cloudflare/js-rpc-and-entrypoints-demo) from Github.
 
 ## Further reading
 
