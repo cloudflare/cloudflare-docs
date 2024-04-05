@@ -209,7 +209,7 @@ Service bindings cost the same as any normal Worker. Each invocation is charged 
 
 If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
 
-For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
+For more information on how service bindings work, refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ## Fine Print
 

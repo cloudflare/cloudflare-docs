@@ -14,9 +14,9 @@ Remix is a full-stack web framework that operates on both client and server. You
 
 To set up a new Remix site on Cloudflare Pages that can query D1:
 
-1. Refer to [the Remix guide](/pages/framework-guides/deploy-a-remix-site/).
+1. **Refer to [the Remix guide](/pages/framework-guides/deploy-a-remix-site/)**.
 2. Bind a D1 database to your [Pages Function](/pages/functions/bindings/#d1-databases).
-3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your `wrangler.toml`: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
+3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your wrangler.toml: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 
 The following example shows you how to define a Remix [`loader`](https://remix.run/docs/en/main/route/loader) that has a binding to a D1 database.
 

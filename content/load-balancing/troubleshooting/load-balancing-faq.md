@@ -24,7 +24,7 @@ This issue may be caused by a combination of two issues.
 
 When you [attach a monitor to a pool](/load-balancing/monitors/create-monitor/#create-a-monitor), you can specify the **Health Monitor Regions** that Cloudflare uses to monitor your endpoint health.
 
-If you select multiple regions or choose **All Data Centers (Enterprise Only)**, you may [dramatically increase traffic](/load-balancing/understand-basics/health-details#how-an-origin-becomes-unhealthy) to that pool and its associated endpoints. Each region sends individual health monitor requests from 3 data centers. Using **All Data Centers** sends individual health monitor requests from all existing Cloudflare data centers (and that number of data centers is growing all the time).
+If you select multiple regions or choose **All Data Centers (Enterprise Only)**, you may [dramatically increase traffic](/load-balancing/understand-basics/health-details/#how-an-origin-becomes-unhealthy) to that pool and its associated endpoints. Each region sends individual health monitor requests from 3 data centers. Using **All Data Centers** sends individual health monitor requests from all existing Cloudflare data centers (and that number of data centers is growing all the time).
 
 To reduce traffic, reduce the number of selected regions or choose an option besides **All Data Centers**.
 

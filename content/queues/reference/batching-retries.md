@@ -1,10 +1,10 @@
 ---
-title: Batching and Retries
+title: Batching, Retries and Delays
 pcx_content_type: concept
 weight: 4
 ---
 
-# Batching and Retries
+# Batching, Retries and Delays
 
 ## Batching
 
@@ -91,7 +91,7 @@ Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivale
 * If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.
 * If you call either `ack()` or `retry()` on a single message, and then either/any of `ackAll()` or `retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does not apply to that message (or messages, if multiple calls were made).
 
-## Delivery falure
+## Delivery failure
 
 When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed. You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
 
@@ -183,7 +183,9 @@ export default {
 };
 ```
 
-You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers:
+You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers.
+
+Delays can be configured via the `wrangler` CLI:
 
 ```sh
 # Push-based consumers
@@ -194,6 +196,24 @@ $ npx wrangler@latest queues consumer worker add $QUEUE_NAME $WORKER_SCRIPT_NAME
 # Delay any messages that are retried by 60 seconds (1 minute) by default.
 $ npx wrangler@latest queues consumer http add $QUEUE_NAME --retry-delay-secs=60
 ```
+
+Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.producers]]
+  binding = "<BINDING_NAME>"
+  queue = "<QUEUE_NAME>"
+  delivery_delay = 60 # delay every message delivery by 1 minute
+
+[[queues.consumers]]
+  queue = "my-queue"
+  retry_delay = 300 # delay any retried message by 5 minutes before re-attempting delivery
+```
+
+If you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
 
 Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
 

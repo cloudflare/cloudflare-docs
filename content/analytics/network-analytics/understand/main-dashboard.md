@@ -87,10 +87,6 @@ You can filter by the following parameters:
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
 
-{{<Aside type="warning">}}
-Currently, the Network Analytics dashboard does not fully support [leased IPs/prefixes](/magic-transit/cloudflare-ips/) for Magic Transit customers.
-{{</Aside>}}
-
 ### Traffic direction
 
 The available values in the **Direction** filter have the following meaning, from the point of view of a specific customer's network:
