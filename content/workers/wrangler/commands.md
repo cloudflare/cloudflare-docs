@@ -1841,23 +1841,17 @@ Configure Cloudflare Pages.
 Develop your full-stack Pages application locally.
 
 ```txt
-wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
+wrangler pages dev [<DIRECTORY>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The directory of static assets to serve.
-- `COMMAND...` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The proxy command(s) to run.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Run on your local machine.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
-- `--proxy` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The port to proxy (where the static assets are served).
-- `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
-  - The location of the single Worker file if not using functions.
 - `--binding` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
