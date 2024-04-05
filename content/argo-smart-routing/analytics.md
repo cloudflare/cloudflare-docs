@@ -28,8 +28,4 @@ The dashboard displays two different views for performance data:
 
 * **Geography**: A map shows the improvement in response time at each Cloudflare data center.
 
-{{<Aside type="note">}}
-
- A negative value in the Percent Improvement indicates that requests from that location would not have benefited from Argo Smart Routing, so instead would have been routed directly.
-
-{{</Aside>}}
+    *  A negative value indicates that requests from that location would not have benefited from Argo Smart Routing, so instead would have been routed directly.
