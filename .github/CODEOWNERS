@@ -2,18 +2,19 @@
 * @cloudflare/pcx-technical-writing
 
 # More dev-specific files
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
-/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
-/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
-*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
-*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode
-/assets/json-collector.ts @cloudflare/pcx-technical-writing
+/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
+/assets/json-collector.ts @GregBrimble @cloudflare/pcx-technical-writing
 /data/calculations/ @kristianfreeman @kodster28 @pedrosousa
 /layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa
+/content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
 /content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
@@ -76,6 +77,7 @@
 /data/changelogs/d1.yaml @elithrar @rozenmd @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/images/ @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/kv/ @elithrar @rts-rob  @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/pub-sub/ @elithrar @rts-rob @Maddy-Cloudflare @dcpena @cloudflare/pcx-technical-writing
@@ -86,6 +88,7 @@
 /content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /data/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @elithrar @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
+/assets/images/workers/ @cloudflare/workers-docs @elithrar @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing @irvinebroque @admah
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
