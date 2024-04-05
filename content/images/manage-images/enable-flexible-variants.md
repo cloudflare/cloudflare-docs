@@ -25,7 +25,7 @@ curl -X PATCH https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
     --data '{"flexible_variants": true}'
 ```
 
-After activation, you can use [transformation parameters](/images/transform-images/transform-via-url/#options) on any Cloudflare image. For example:
+After activation, you can use [transformation parameters](/images/transform-images/transform-via-url/#options) on any Cloudflare image. For example,
 
 `https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/w=400,sharpen=3`
 
