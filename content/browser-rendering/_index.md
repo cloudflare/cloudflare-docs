@@ -25,12 +25,6 @@ Use Browser Rendering to:
 
 Deploy Browser Rendering using [Wrangler](/browser-rendering/platform/wrangler/) and our version of [Puppeteer](/browser-rendering/platform/puppeteer/). Refer to [Get started](/browser-rendering/get-started/) to deploy your first Browser Rendering project using Wrangler and Puppeteer.
 
-{{<Aside type="warning" header="Join the waitlist">}}
-
-The Workers Browser Rendering API is currently in beta. [Add yourself to the waitlist](https://www.cloudflare.com/lp/workers-browser-rendering-api/) to reserve your spot, and as we expand availability, we will reach out to you and grant access.
-
-{{</Aside>}}
-
 ## More resources
 
 {{<resource-group>}}

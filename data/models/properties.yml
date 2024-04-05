@@ -9,3 +9,6 @@ limits:
   sequence_length_limit: "Sequence tokens limit"
   max_input_tokens: "Max input tokens"
   output_dimensions: "Output dimensions"
+  max_batch_prefill_tokens: "Max batch prefill tokens"
+  max_input_length: "Max input tokens"
+  max_total_tokens: "Max total tokens"

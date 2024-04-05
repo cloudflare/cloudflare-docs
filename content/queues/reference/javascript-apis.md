@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: JavaScript APIs
-weight: 8
+weight: 5
 meta:
   title: Cloudflare Queues - JavaScript APIs
 ---
@@ -55,8 +55,8 @@ A binding that allows a producer to send messages to a Queue.
 
 ```ts
 interface Queue<Body = unknown> {
-  send(body: Body, options?: { contentType?: QueuesContentType }): Promise<void>;
-  sendBatch(messages: Iterable<MessageSendRequest<Body>>): Promise<void>;
+  send(body: Body, options?: QueueSendOptions): Promise<void>;
+  sendBatch(messages: Iterable<MessageSendRequest<Body>>, options?: QueueSendBatchOptions): Promise<void>;
 }
 ```
 
@@ -81,7 +81,7 @@ A wrapper type used for sending message batches.
 ```ts
 type MessageSendRequest<Body = unknown> = {
   body: Body;
-  contentType?: QueuesContentType;
+  options?: QueueSendOptions;
 };
 ```
 
@@ -92,13 +92,36 @@ type MessageSendRequest<Body = unknown> = {
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
+- {{<code>}}options{{<param-type>}}QueueSendOptions{{</param-type>}}{{</code>}}
+
+  - Options to apply to the current message, including content type and message delay settings.
+
+
+{{</definitions>}}
+
+### `QueueSendOptions`
+
+Optional configuration that applies when sending a message to a queue.
+
 - {{<code>}}contentType{{<param-type>}}QueuesContentType{{</param-type>}}{{</code>}}
 
   - The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
   - As of now, this option is for internal use. In the future, `contentType` will be used by alternative consumer types to explicitly mark messages as serialized so they can be consumed in the desired type.
   - See [QueuesContentType](#queuescontenttype) for possible values.
 
-{{</definitions>}}
+- {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
+
+  - The number of seconds to [delay a message](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  - Must be an integer between 0 and 43200 (12 hours). Setting this value to zero will explicitly prevent the message from being delayed, even if there is a global (default) delay at the queue level.
+
+### `QueueSendBatchOptions`
+
+Optional configuration that applies when sending a batch of messages to a queue.
+
+- {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
+
+  - The number of seconds to [delay messages](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  - Must be a positive integer. 
 
 ### `QueuesContentType`
 
@@ -116,7 +139,7 @@ type QueuesContentType = "text" | "bytes" | "json" | "v8";
 
 {{<Aside type="note">}}
 
-The default content type for Queues changed to `json` (from `v8`) to improve compatibility with pull-based consumers for any Workers with a [compatibility date](/workers/configuration/compatibility-dates/#queues_json_messages) after `2024-03-18`.
+The default content type for Queues changed to `json` (from `v8`) to improve compatibility with pull-based consumers for any Workers with a [compatibility date](/workers/configuration/compatibility-dates/#queues-send-messages-in-json-format) after `2024-03-18`.
 
 {{</Aside>}}
 
@@ -158,7 +181,7 @@ export default {
 
 The `env` and `ctx` fields are as [documented in the Workers documentation](/workers/reference/migrate-to-module-workers/).
 
-Or alternatively, a queue consumer can be written using service worker syntax:
+Or alternatively, a queue consumer can be written using the (deprecated) service worker syntax:
 
 ```js
 addEventListener('queue', (event) => {
@@ -183,7 +206,7 @@ interface MessageBatch<Body = unknown> {
   readonly queue: string;
   readonly messages: Message<Body>[];
   ackAll(): void;
-  retryAll(): void;
+  retryAll(options?: QueueRetryOptions): void;
 }
 ```
 
@@ -201,9 +224,10 @@ interface MessageBatch<Body = unknown> {
 
   - Marks every message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not.
 
-- {{<code>}}retryAll(){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}retryAll(options?: QueueRetryOptions){{</code>}} {{<type>}}void{{</type>}}
 
   - Marks every message to be retried in the next batch.
+  - Supports an optional `options` object.
 
 {{</definitions>}}
 
@@ -217,7 +241,7 @@ interface Message<Body = unknown> {
   readonly timestamp: Date;
   readonly body: Body;
   ack(): void;
-  retry(): void;
+  retry(options?: QueueRetryOption): void;
 }
 ```
 
@@ -240,8 +264,24 @@ interface Message<Body = unknown> {
 
   - Marks a message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not.
 
-- {{<code>}}retry(){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}retry(options?: QueueRetryOptions){{</code>}} {{<type>}}void{{</type>}}
 
   - Marks a message to be retried in the next batch.
+  - Supports an optional `options` object.
 
 {{</definitions>}}
+
+### `QueueRetryOptions`
+
+Optional configuration when marking a message or a batch of messages for retry.
+
+```ts
+declare interface QueueRetryOptions {
+  delaySeconds?: number;
+}
+```
+
+- {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
+
+  - The number of seconds to [delay a message](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  - Must be a positive integer. 

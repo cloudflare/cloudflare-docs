@@ -2,6 +2,9 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170476-Troubleshooting-mixed-content-errors
 title: Mixed content errors
+learning_center:
+    title: What is mixed content?
+    link: https://www.cloudflare.com/learning/ssl/what-is-mixed-content/
 ---
 
 # Mixed content errors

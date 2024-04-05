@@ -2,12 +2,24 @@
 link: "/queues/platform/changelog/"
 productName: Queues
 entries:
+- publish_date: '2024-03-26'
+  title: Delay messages published to a queue
+  description: |-
+    Messages published to a queue and/or marked for retry from a queue consumer can now be explicitly delayed. Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue.
+
+    Refer to [Batching and Retries](/queues/reference/batching-retries/) to learn how to delay messages written to a queue.
+- publish_date: '2024-03-25'
+  title: Support for pull-based consumers
+  description: |-
+    Queues now supports [pull-based consumers](/queues/reference/pull-consumers/). A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
+  
+    Review the [documentation on pull-based consumers](/queues/reference/pull-consumers/) to configure HTTP-based pull.
 - publish_date: '2024-03-18'
   title: Default content type now set to JSON
   description: |-
     The default [content type](/queues/reference/javascript-apis/#queuescontenttype) for messages published to a queue is now `json`, which improves compatibility with the upcoming pull-based queues.
 
-    Any Workers created on or after the [compatibility date](/workers/configuration/compatibility-dates/#queues_json_messages) of `2024-03-18`, or that explicitly set the `queues_json_messages` compatibility flag, will use the new default behaviour. Existing Workers with a compatibility date prior will continue to use `v8` as the default content type for published messages.
+    Any Workers created on or after the [compatibility date](/workers/configuration/compatibility-dates/#queues-send-messages-in-json-format) of `2024-03-18`, or that explicitly set the `queues_json_messages` compatibility flag, will use the new default behaviour. Existing Workers with a compatibility date prior will continue to use `v8` as the default content type for published messages.
 - publish_date: '2024-02-24'
   title: Explicit retries no longer impact consumer concurrency/scaling.
   description: |-

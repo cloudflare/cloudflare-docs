@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Local Development 
-weight: 6
+weight: 19
 ---
 
 # Develop locally
