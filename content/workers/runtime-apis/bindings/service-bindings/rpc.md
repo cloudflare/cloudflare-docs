@@ -102,7 +102,90 @@ export default class extends WorkerEntrypoint {
 
 ## Named entrypoints
 
-TODO: Example
+Additionally, it is also possible to export any number of named `WorkerEntrypoint` classes from within a single Worker, in addition to the default export. These can also be bound directly to with a Service binding.
+
+This can be useful if you have multiple pieces of compute that are grouped together in some respect. For example, you might create different `WorkerEntrypoint`s containing a set of operations available for each permission role in your application.
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "todo-app"
+
+[[d1_databases]]
+binding = "D1"
+database_name = "todo-app-db"
+database_id = "<unique-ID-for-your-database>"
+```
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class AdminEntrypoint extends WorkerEntrypoint {
+  async createUser(username) {
+    await this.env.D1.prepare("INSERT INTO users (username) VALUES (?)")
+      .bind(username)
+      .run();
+  }
+
+  async deleteUser(username) {
+    await this.env.D1.prepare("DELETE FROM users WHERE username = ?")
+      .bind(username)
+      .run();
+  }
+}
+
+export class UserEntrypoint extends WorkerEntrypoint {
+  async getTasks(userId) {
+    return await this.env.D1.prepare(
+      "SELECT title FROM tasks WHERE user_id = ?"
+    )
+      .bind(userId)
+      .all();
+  }
+
+  async createTask(userId, title) {
+    await this.env.D1.prepare(
+      "INSERT INTO tasks (user_id, title) VALUES (?, ?)"
+    )
+      .bind(userId, title)
+      .run();
+  }
+}
+
+export default class extends WorkerEntrypoint {
+  async fetch(request, env) {
+    return new Response("Hello from my to do app");
+  }
+}
+```
+
+You can bind to `AdminEntrypoint` and `UserEntrypoint` with a Service binding:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "admin-app"
+
+[[services]]
+binding = "ADMIN"
+service = "todo-app"
+entrypoint = "AdminEntrypoint"
+```
+
+```js
+export default {
+  async fetch(request, env) {
+    await env.ADMIN.createUser("aNewUser");
+    return new Response("Hello from admin app");
+  },
+};
+```
+
+More information about configuring [D1](/workers/wrangler/configuration/#d1-databases) and [Service bindings](/workers/wrangler/configuration/#service-bindings) can be found in the Wrangler documentation.
+
+Additionally, a complete example of this to do app, as well as another example of a Discord bot built with named entrypoints, can be found in our [js-rpc-and-entrypoints-demo repository on GitHub](https://github.com/cloudflare/js-rpc-and-entrypoints-demo).
 
 ## Further reading
 
