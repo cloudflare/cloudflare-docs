@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
+weight: 2
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
@@ -38,7 +39,7 @@ This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/
 For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `no` to using TypeScript.
 
 You will be asked if you would like to deploy the project to Cloudflare.

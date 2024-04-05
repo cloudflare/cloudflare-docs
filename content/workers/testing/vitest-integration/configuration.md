@@ -152,7 +152,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 - {{<code>}}wrangler{{</code>}}: {{<type>}}{ configPath?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Path to Wrangler configuration file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/configuration/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/configuration/bindings/about-service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
+  - Path to Wrangler configuration file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/configuration/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
 
 {{</definitions>}}
 

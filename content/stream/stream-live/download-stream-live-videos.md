@@ -2,6 +2,9 @@
 pcx_content_type: how-to
 title: Download live stream videos
 weight: 4
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Download live stream videos

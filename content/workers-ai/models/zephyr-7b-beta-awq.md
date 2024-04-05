@@ -12,10 +12,10 @@ model:
     - "huggingface"
     - "text-generation"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/TheBloke/zephyr-7B-beta-AWQ"
 task_type: "text-generation"
 model_display_name: "zephyr-7b-beta-awq"
 layout: "model"

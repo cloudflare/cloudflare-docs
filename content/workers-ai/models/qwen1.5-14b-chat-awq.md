@@ -11,10 +11,10 @@ model:
   tags:
     - "text-generation"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/qwen/qwen1.5-14b-chat-awq"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/qwen/qwen1.5-14b-chat-awq"
 task_type: "text-generation"
 model_display_name: "qwen1.5-14b-chat-awq"
 layout: "model"

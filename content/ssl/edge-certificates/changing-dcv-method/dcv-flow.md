@@ -8,7 +8,7 @@ meta:
 
 # Domain control validation flow
 
-In order to obtain [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates, Cloudflare partners with different publicly trusted [certificate authorities (CAs)](/ssl/reference/certificate-authorities/).
+To obtain [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates, Cloudflare partners with different publicly trusted [certificate authorities (CAs)](/ssl/reference/certificate-authorities/).
 
 However, every time a CA is requested to issue or renew a certificate, the requester must prove that they have control over the domain. That is when the DCV process takes place, with the proof usually consisting of placing an HTTP token at a standard URL path (`/.well-known/pki-validation`), or placing a TXT record at the authoritative DNS provider.
 
@@ -33,6 +33,7 @@ In summary, five steps have to succeed after Cloudflare requests a CA to issue o
 ## Aspects to consider
 
 * Settings that interfere with the validation URLs - firewall blocks or misconfigured DNSSEC, for example - can cause issues with your certificate issuance or renewal. Refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+* {{<render file="_dcv-path-security.md">}}
 * Certificate authority authorization (CAA) records may block certificate issuance. Refer to [CAA records](/ssl/edge-certificates/caa-records/).
 
 ### DCV tokens

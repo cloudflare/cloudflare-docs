@@ -5,7 +5,7 @@ title: User Worker metadata
 
 # User Worker metadata
 
-You define the Worker's metadata as part of the [multipart upload of user Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-upload-user-workers-to-a-namespace). This metadata defines the Workers'configuration analogue to the [wrangler.toml file](/workers/wrangler/configuration/) for regular Workers.
+You define the Worker's metadata as part of the [multipart upload of user Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#3-upload-a-user-worker-to-the-dispatch-namespace). This metadata defines the Workers'configuration analogue to the [wrangler.toml file](/workers/wrangler/configuration/) for regular Workers.
 
 ## Sample metadata.json
 
