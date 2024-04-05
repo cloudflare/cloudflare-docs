@@ -10,12 +10,12 @@ title: JA3/JA4 Fingerprint
 {{<render file="_ja4-fingerprint.md">}}
 
 {{<Aside type="note">}}
-JA3 and JA4 Fingerprints are only available to Enterprise customers who have purchased Bot Management.
+JA3 and JA4 fingerprints are only available to Enterprise customers who have purchased Bot Management.
 {{</Aside>}}
 
 ## Analytics
 
-To get more information about potential bot requests, use these JA3 and JA4 Fingerprints in:
+To get more information about potential bot requests, use these JA3 and JA4 fingerprints in:
 
 - [Bot Analytics](/bots/bot-analytics/bm-subscription/)
 - [Security Events](/waf/analytics/security-events/) and [Security Analytics](/waf/analytics/security-analytics/)

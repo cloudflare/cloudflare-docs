@@ -386,7 +386,7 @@ This will work for local development, but will fail to validate when you try to 
 
 - `analytics_engine_datasets` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies analytics engine datasets that are bound to this Function. Refer to [Workers Analytics Engine](/analytics/analytics-engine/get-started/#2-configure-your-dataset-and-binding-in-wrangler).
+  - Specifies analytics engine datasets that are bound to this Function. Refer to [Workers Analytics Engine](/analytics/analytics-engine/get-started/).
 
 - `ai` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -477,11 +477,11 @@ When using Wrangler in the default local development mode, files will be written
 
 A [Vectorize index](/vectorize/) allows you to insert and query vector embeddings for semantic search, classification and other vector search use-cases.
 
-- Configure Vectorize bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#vectorize) the same way they are configured with Cloudflare Workers.
+- Configure Vectorize bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#vectorize-indexes) the same way they are configured with Cloudflare Workers.
 
 ### Service bindings
 
-A service binding allows you to call a Worker from within your Pages Function. Binding a Pages Function to a Worker allows you to send HTTP requests to the Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
+A service binding allows you to call a Worker from within your Pages Function. Binding a Pages Function to a Worker allows you to send HTTP requests to the Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 - Configure service bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#service-bindings) the same way they are configured with Cloudflare Workers.
 - Interact with your [service bindings](/pages/functions/bindings/#service-bindings).

@@ -4,9 +4,13 @@ title: Sessions and Tracks
 weight: 3
 ---
 
-# Understanding Sessions and Tracks in Cloudflare Calls
+# Understanding Sessions and Tracks
 
-Cloudflare Calls offers a simple yet powerful framework for building real-time experiences. At the core of this system are two key concepts: **Sessions** and **Tracks**. Familiarizing yourself with these concepts is crucial for using Calls.
+Cloudflare Calls offers a simple yet powerful framework for building real-time experiences. At the core of this system are three key concepts: **Applications**,  **Sessions** and **Tracks**. Familiarizing yourself with these concepts is crucial for using Calls.
+
+## Application
+A Calls Application is an environment within different Sessions and Tracks can interact. Examples of this could be production, staging or different environments where you'd want separation between Sessions and Tracks. Cloudflare Calls usage can be queried at Application, Session or Track level.
+
 
 ## Sessions
 
