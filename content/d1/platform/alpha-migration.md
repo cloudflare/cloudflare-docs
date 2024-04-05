@@ -10,7 +10,7 @@ weight: 2
 
 D1 alpha databases will stop accepting live SQL queries on July 1, 2024.
 
-{{</Aside}}
+{{</Aside>}}
 
 D1's open beta launched in October 2023, and newly created databases use a different underlying architecture that is significantly more reliable and performant, with increased database sizes, improved query throughput, and reduced latency.
 
