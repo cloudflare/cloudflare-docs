@@ -481,7 +481,7 @@ A [Vectorize index](/vectorize/) allows you to insert and query vector embedding
 
 ### Service bindings
 
-A service binding allows you to call a Worker from within your Pages Function. Binding a Pages Function to a Worker allows you to send HTTP requests to the Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
+A service binding allows you to call a Worker from within your Pages Function. Binding a Pages Function to a Worker allows you to send HTTP requests to the Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 - Configure service bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#service-bindings) the same way they are configured with Cloudflare Workers.
 - Interact with your [service bindings](/pages/functions/bindings/#service-bindings).

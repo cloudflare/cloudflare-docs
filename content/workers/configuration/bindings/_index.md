@@ -24,7 +24,7 @@ Bindings can be configured in one of two ways:
 
 Service bindings allow for communication with another Worker.
 
-* Learn more about [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+* Learn more about [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 * Configure Service bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#service-bindings).
 
 ### KV namespace bindings
@@ -38,7 +38,7 @@ KV namespace bindings allow for communication between a Worker and a KV namespac
 
 Durable Object bindings for communication between a Worker and a Durable Object.
 
-* Learn more about [Durable Object bindings](/durable-objects/configuration/access-durable-object-from-a-worker/).
+* Learn more about [Durable Object bindings](/durable-objects/best-practices/access-durable-objects-from-a-worker/).
 * Configure Durable Object bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects).
 
 ### R2 bucket bindings

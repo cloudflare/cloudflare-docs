@@ -159,7 +159,7 @@ When you create a new gradual deployment for a Durable Object Worker, each Durab
 
 ### Example
 
-This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/configuration/access-durable-object-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
+This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/best-practices/access-durable-objects-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
 
 Your Worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
 
@@ -232,6 +232,7 @@ You can only create a new deployment with the last 10 uploaded versions of your 
 These Workers features will be supported in the near future.
 
 - Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
-- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding.
-- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled.
+- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding. 
+- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled. 
 - Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
+
