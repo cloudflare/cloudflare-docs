@@ -8,13 +8,11 @@ meta:
 
 # JavaScript and web standards
 
-The Workers runtime provides the following standardized APIs for use by Workers running on Cloudflare's global network.
-
 ---
 
 ## JavaScript standards
 
-Cloudflare Workers uses the V8 JavaScript engine from Google Chrome. The Workers runtime is updated at least once a week, to at least the version that is currently used by Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
+The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAssembly engine](/workers/reference/how-workers-works/). The Workers runtime is updated at least once a week, to at least the version of V8 that is currently used by Google Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
 
 All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) supported by the current Google Chrome stable release are supported, with a few notable exceptions:
 
@@ -24,7 +22,7 @@ All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/
 
 ---
 
-## Web global APIs
+## Web standards and global APIs
 
 The following methods are available per the [Worker Global Scope](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope):
 

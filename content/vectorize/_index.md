@@ -17,7 +17,7 @@ Build full-stack AI applications with Vectorize, Cloudflare's powerful vector da
 
 {{</description>}}
 
-{{<plan type="workers_paid">}}
+{{<plan type="workers-paid">}}
 
 Vectorize is a globally distributed vector database that enables you to build full-stack, AI-powered applications with [Cloudflare Workers](/workers/). Vectorize makes querying embeddings — representations of values or objects like text, images, audio that are designed to be consumed by machine learning models and semantic search algorithms — faster, easier and more affordable.
 

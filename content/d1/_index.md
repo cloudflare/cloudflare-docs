@@ -17,7 +17,7 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 {{</description>}}
 
-{{<plan type="workers_all">}}
+{{<plan type="workers-all">}}
 
 D1 is Cloudflare’s native serverless database. D1 allows you to build applications that handle large amounts of users at no extra cost. With D1, you can restore your database to any minute within the last 30 days.
 

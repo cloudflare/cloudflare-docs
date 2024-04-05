@@ -7,7 +7,7 @@ title: Fetch Handler
 
 ## Background
 
-Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [request](/workers/runtime-apis/request/) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
+Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [`Request`](/workers/runtime-apis/request/) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
 
 ```ts
 export default {
@@ -27,64 +27,14 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - The [bindings](/workers/configuration/environment-variables/) assigned to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) is passed to all requests.
+  - The [bindings](/workers/configuration/environment-variables/) available to the Worker. As long as the [environment](/workers/wrangler/environments/) has not changed, the same object (equal by identity) may be passed to multiple requests.
 
-- {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}ctx.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](#contextwaituntil).
+  - Refer to [`waitUntil`](/workers/runtime-apis/context/#waituntil).
 
-- {{<code>}}context.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
+- {{<code>}}ctx.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`passThroughOnException`](#contextpassthroughonexception).
+  - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passThroughOnException).
 
 {{</definitions>}}
-
----
-
-## Lifecycle methods
-
-When responding to a HTTP request, the `fetch` handler may use any of the following methods to augment or control how the request is handled.
-
-### `context.waitUntil()`
-
-The `waitUntil()` method extends the lifetime of the `fetch` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
-
-You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
-
-```js
-export default {
-  async fetch(request, env, context) {
-    // Forward / Proxy original request
-    let res = await fetch(request);
-
-    // Add custom header(s)
-    res = new Response(res.body, res);
-    res.headers.set('x-foo', 'bar');
-
-    // Cache the response
-    // NOTE: Does NOT block / wait
-    context.waitUntil(caches.default.put(request, res.clone()));
-
-    // Done
-    return res;
-  },
-};
-```
-
-### `context.passThroughOnException()`
-
-The `passThroughOnException` method allows a Worker to [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), and pass a request through to an origin server when a Worker throws an unhandled exception. This can be useful when using Workers as a layer in front of an existing service, allowing the service behind the Worker to handle any unexpected error cases that arise in your Worker.
-
-```js
-export default {
-  async fetch(request, env, context) {
-    // Proxy to origin on unhandled/uncaught exceptions
-    context.passThroughOnException();
-    throw new Error('Oops');
-  },
-};
-```
-
-## Related resources
-
-* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
