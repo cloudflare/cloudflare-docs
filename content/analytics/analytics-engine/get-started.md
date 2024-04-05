@@ -48,7 +48,7 @@ A data point is a structured event that consists of:
 
 In the example above, suppose you are collecting air quality samples. Each data point written represents a reading from your weather sensor. The blobs define city, state, and sensor model — the dimensions you want to be able to filter queries on later. The doubles define the numeric temperature and air pressure readings. And the index is the ID of your customer. You may want to include [context about the incoming request](/workers/runtime-apis/request/), such as geolocation, to add additional data to your datapoint.
 
-Currently, the `writeDataPoint()` API accepts ordered arrays of values. This means that you must provide fields in a consistent order.
+Currently, the `writeDataPoint()` API accepts ordered arrays of values. This means that you must provide fields in a consistent order. Note that while the `indexes` field accepts an array, you currently must only provide a single index. If you attempt to provide multiple indexes, your data point will not be recorded. 
 
 ## 3. Query data using the SQL API
 
