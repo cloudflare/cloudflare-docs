@@ -20,6 +20,6 @@ Additionally, you can control context analysis for scans within files. When file
 
 {{<heading-pill style="beta" heading="h2">}}Optical Character Recognition (OCR){{</heading-pill>}}
 
-Optical Character Recognition (OCR) analyzes and interprets text within image files. When used with DLP profiles, you can detect sensitive data within images your users upload.
+Optical Character Recognition (OCR) analyzes and interprets text within image files. When used with DLP profiles, OCR can detect sensitive data within images your users upload.
 
-OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is produced in UTF-8 format, including support for non-Latin characters.
+OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is encoded in UTF-8 format, including support for non-Latin characters.
