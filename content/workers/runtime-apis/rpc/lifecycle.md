@@ -178,5 +178,3 @@ stub[Symbol.dispose]();  // disposes the original stub
 // obj's disposer will be called when the other two stubs
 // are disposed remotely.
 ```
-
-## Descructuring
