@@ -15,7 +15,7 @@ entries:
 
 - term: backup codes
   general_definition: |-
-    backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/account-and-billing/account-security/2fa/). A backup code becomes invalid after use.
+    backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/setup/account/account-security/2fa/). A backup code becomes invalid after use.
 
 - term: CIDR
   general_definition: |-
@@ -53,6 +53,7 @@ entries:
     a DDoS attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
   associated_products:
     - DDoS Protection
+    - Magic Network Monitoring
 
 - term: domain
   general_definition: |-
@@ -69,6 +70,8 @@ entries:
 - term: HTTP request
   general_definition: |-
     an HTTP request is the way Internet communications platforms such as web browsers ask for the information they need to load a website.
+  associated_products:
+     - Logs
 
 - term: IP address
   general_definition: |-
@@ -129,3 +132,9 @@ entries:
 - term: zone
   general_definition: |-
     a zone is a portion of DNS namespace that is managed by a specific organization or administrator.
+
+- term: request
+  general_definition: |-
+    a request is a message that is sent between a client, or web browser, to a server. Each request that has been processed through the Cloudflare network generates a record.
+  associated_products:
+    - Logs

@@ -19,4 +19,4 @@ Configure your Worker to run on a schedule with [Cron Triggers](/workers/configu
 
 ### Deployments
 
-Review your deployments and rollback to a previous version of your Worker with [Deployments](/workers/configuration/deployments/).
+Review your deployments and rollback to a previous version of your Worker with [Deployments](/workers/configuration/versions-and-deployments/).

@@ -3,7 +3,7 @@ title: Operators and grouping symbols
 pcx_content_type: reference
 type: overview
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Rule operators and grouping symbols
 ---

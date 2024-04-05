@@ -1,15 +1,16 @@
 ---
 title: Phish submissions
 pcx_content_type: concept
-layout: single
 weight: 6
 ---
 
 # Phish submissions
 
-As part of your email configuration, administrators and email recipients can submit missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses/) so Cloudflare can process them and take necessary action.
+As part of your continuous email security posture, administrators and security analysts need to submit missed {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses/) so Cloudflare can process them and take necessary action.
 
 Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a detection. These include preemptively crawling the web to identify campaigns, machine learning, custom signatures, among others. In order for Area 1 to identify why phish was missed, we need to run the original samples through our module and identify why some of our modules did not score the sample high enough to elevate it to malicious.
+
+Submitting missed phish samples to Cloudflare is of paramount importance and necessary for continuous protection. Submitting missed phish samples helps Cloudflare improve our machine learning (ML) models, and alerts us of new attack vectors before they become prevalent.
 
 ## How to submit phish
 
@@ -61,8 +62,9 @@ If you find emails in your Area 1 account that are actually false positives, you
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
-3. Search for the message that you want to report as a false positive, and select **Report as false positive**.
-4. (Optional) You can also select emails in bulk to report as false positives. Select all emails that apply > **Report as False Positive**.
+3. Search for one or more messages that you want to report as a false positive, and select **Report as false positive**.
+4. In the next screen, choose a disposition from the list to clarify the nature of the false positive. The options are _Bulk_, _Malicious_, _None_, _Spam_, _Spoof_ and _Suspicious_.
+5. Select **Report False Positive**.
 
 ## False negatives
 
@@ -70,9 +72,7 @@ If you find emails in your Area 1 account that are actually false positives, you
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
-3. Search for the message that you want to report as a false negative, and select **Report as False Negative**.
+3. Search for one or more messages that you want to report as a false negative, and select **Report as False Negative**.
   ![The link to submit false negatives, in the search results](/images/email-security/phish-submissions/false-negative.png)
-
-4. (Optional) You can also select emails in bulk to report as false negatives. Select all emails that apply > **Report as False Negative**.
-5. In the next screen, choose a disposition from the list to clarify the nature of the false negative. The options are _Bulk_, _Malicious_, _Spam_, _Suspicious_ and _Spoof_.
-6. Select **Report False Negative**.
+4. In the next screen, choose a disposition from the list to clarify the nature of the false negative. The options are _Bulk_, _Malicious_, _Spam_, _Suspicious_ and _Spoof_.
+5. Select **Report False Negative**.

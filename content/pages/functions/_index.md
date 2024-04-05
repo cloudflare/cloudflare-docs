@@ -1,11 +1,10 @@
 ---
 pcx_content_type: navigation
-title: Functions 
-layout: single
+title: Functions
 weight: 6
 ---
 
-# Functions 
+# Functions
 
 Pages Functions allows you to build full-stack applications by executing code on the Cloudflare network with [Cloudflare Workers](/workers/). With Functions, you can introduce application aspects such as authenticating, handling form submissions, or working with middleware. Use Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
 

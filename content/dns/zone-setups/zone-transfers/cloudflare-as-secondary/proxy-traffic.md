@@ -10,7 +10,7 @@ meta:
 
 When you set up [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) on a secondary zone, you cannot enable the proxy on any transferred DNS records by default.
 
-With Secondary DNS override, you can use Cloudflare as your secondary DNS provider but still get the [performance and security benefits](/fundamentals/concepts/how-cloudflare-works/#benefits) of Cloudflare's proxy. Additionally it lets you override any `A` and `AAAA` records on your zone apex with a `CNAME` record.
+With Secondary DNS override, you can use Cloudflare as your secondary DNS provider but still get the [performance and security benefits](/learning-paths/get-started/concepts/how-cloudflare-works/#benefits) of Cloudflare's proxy. Additionally it lets you override any `A` and `AAAA` records on your zone apex with a `CNAME` record.
 
 {{<Aside type="note">}}
 
@@ -30,13 +30,19 @@ Before you set up Secondary DNS override, make sure that you have:
 
 After proxying (orange clouding) a Secondary DNS record, any additional records under that hostname transferred from the primary DNS provider are automatically proxied. This applies to all `A` and `AAAA` records under that domain.
 
-### Using the dashboard
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) the **Proxy status** for these records to be **Proxied**.
 
-### Using the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, send a [POST](/api/operations/dns-records-for-a-zone-create-dns-record) request with the `proxied` status as `true`. Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.
+
+{{</tab>}}
+{{</tabs>}}
 
 ## `CNAME` record on the zone apex
 

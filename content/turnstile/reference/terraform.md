@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Terraform
-weight: 11
+weight: 5
 ---
 
 # Manage Turnstile with Terraform

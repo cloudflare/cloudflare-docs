@@ -289,12 +289,14 @@ export function zarazTrackDocEvents() {
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
-        if (link.hostname !== "developers.cloudflare.com") {
-          if (link.href.includes("workers.cloudflare.com/playground")) {
+        const linkURL = new URL(link)
+        const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`)
+        if (linkURL.hostname !== "developers.cloudflare.com") {
+          if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('playground link click', link);
             });
-          } else if (link.hostname.includes("cloudflare.com")) {
+          } else if (cfSubdomainRegex.test(linkURL.hostname)) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('Cross Domain Click', link);
             });
@@ -347,6 +349,7 @@ function $zarazGlossaryTooltipEvent(term: string) {
 
 export function zarazTrackHomepageLinks() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
+  const playgroundLinks = document.getElementsByClassName("playground-link")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
@@ -354,6 +357,13 @@ export function zarazTrackHomepageLinks() {
           zaraz.track('homepage link click', {href: link.href})
         });
       } 
+    }
+    if (playgroundLinks.length > 0) {
+      for (const playgroundLink of playgroundLinks as any) { 
+        playgroundLink.addEventListener("click", () => {
+          $zarazLinkEvent('playground link click', playgroundLink);
+        });
+    }
     }
   });
 }

@@ -3150,8 +3150,16 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-  max-width: 692px;
+  max-width: 100%;
   margin-bottom: 1em;
+}
+
+.DocsMarkdown .small-img.centered,
+.DocsMarkdown .medium-img.centered,
+.DocsMarkdown .large-img.centered,
+.DocsMarkdown .full-img.centered {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .DocsMarkdown--link {
@@ -3300,6 +3308,11 @@ a > code {
 
 .DocsMarkdown figure {
   margin-top: 2em;
+}
+
+figcaption {
+  font-style: italic;
+  font-size: .9em;
 }
 
 .DocsMarkdown li figure,
@@ -3881,6 +3894,16 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsMarkdown details summary + div.NoPadding {
   padding: 0 0.6em;
+}
+
+.DocsMarkdown details summary + div.code-container {
+  padding: 0;
+  border-radius: 0;
+}
+
+.DocsMarkdown details summary + div.code-container .CodeBlock {
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .DocsMarkdown details[open] {
@@ -5840,47 +5863,4 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   -webkit-transition: all 0.1s ease 0.1s;
   transition: all 0.1s ease 0.1s;
   visibility: visible;
-}
-
-.playground-link {
-  position: absolute;
-  top: 0.5em;
-  right: 3em;
-  height: 2rem;
-  padding: 0.5rem;
-  background: #d9d9d9;
-  color: #1e1e1e;
-  border: none;
-  font-size: 1rem;
-  border-radius: 3px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--sans-serif-font-family);
-  z-index: 100;
-}
-
-[theme="dark"] .playground-link {
-  background: #313131;
-
-  color: var(--gray-7);
-  border: none;
-
-  border-radius: 3px;
-}
-
-.playground-link:hover,
-.playground-link:focus {
-  cursor: pointer;
-  background-color: #b6b6b6;
-}
-
-[theme="dark"] .playground-link:hover,
-[theme="dark"] .playground-link:focus {
-  background-color: #3d3d3d;
-}
-
-.playground-link svg {
-  width: 16px;
-  margin-right: 8px;
 }

@@ -20,6 +20,14 @@ To install Wrangler within your Worker project, run:
 
 {{<render file="_install_wrangler.md" >}}
 
+Since Cloudflare recommends installing Wrangler locally in your project (rather than globally), the way to run Wrangler will depend on your specific setup and package manager. Refer to [How to run Wrangler commands](/workers/wrangler/commands/#how-to-run-wrangler-commands) for more information.
+
+{{<Aside type="warning">}}
+
+If Wrangler is not installed, running `npx wrangler` will use the latest version of Wrangler.
+
+{{</Aside>}}
+
 ## Check your Wrangler version
 
 To check your Wrangler version, run:
@@ -39,12 +47,6 @@ To update the version of Wrangler used in your project, run:
 ```sh
 $ npm install wrangler@latest
 ```
-
-{{<Aside type="warning">}}
-
-Running `npx wrangler` will use the latest version of Wrangler except when there is already a Wrangler version installed in the current folder. In this case, it will use the locally installed version instead.
-
-{{</Aside>}}
 
 ## Related resources
 

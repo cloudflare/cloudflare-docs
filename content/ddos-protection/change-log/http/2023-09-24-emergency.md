@@ -2,7 +2,7 @@
 title: 2023-09-24 - Emergency
 pcx_content_type: changelog
 weight: 27858
-layout: list
+layout: wide
 ---
 
 # 2023-09-24 - Emergency

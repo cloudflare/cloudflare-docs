@@ -2,7 +2,6 @@
 title: Legacy features
 pcx_content_type: navigation
 weight: 5
-layout: single
 meta:
   description: Documentation for deprecated WAF features.
 ---

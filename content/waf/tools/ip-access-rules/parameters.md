@@ -2,7 +2,7 @@
 title: Parameters
 pcx_content_type: reference
 weight: 3
-layout: list
+layout: wide
 meta:
   title: IP Access rule parameters
 ---

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Local Development 
-weight: 6
+weight: 19
 ---
 
 # Develop locally
@@ -25,7 +25,7 @@ $ wrangler --version
 ⛅️ wrangler 3.1.0
 
 # Start a local dev session:
-$ wrangler dev
+$ npx wrangler dev
 
 # Outputs:
 ------------------

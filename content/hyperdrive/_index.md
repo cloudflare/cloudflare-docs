@@ -9,7 +9,7 @@ meta:
   title: Hyperdrive
 ---
 
-{{<heading-pill style="beta" heading="h1">}}Hyperdrive{{</heading-pill>}}
+# Hyperdrive
 
 {{<description>}}
 
@@ -33,13 +33,13 @@ Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) th
 
 {{</feature>}}
 
-{{<feature header="PostgreSQL support" href="/hyperdrive/learning/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
+{{<feature header="PostgreSQL support" href="/hyperdrive/configuration/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
 
 Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
 
 {{</feature>}}
 
-{{<feature header="Query Caching" href="/hyperdrive/learning/query-caching/" cta="Learn about Query Caching">}}
+{{<feature header="Query Caching" href="/hyperdrive/configuration/query-caching/" cta="Learn about Query Caching">}}
 
 Use Hyperdrive to cache the most popular queries executed against your database.
 

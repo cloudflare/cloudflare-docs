@@ -14,7 +14,7 @@ weight: 4
 
 To use a custom origin server, you need to meet the following requirements:
 
-- Your fallback proxy zone has an entitlement for Custom Origin Servers.
+- You have purchased the [Cloudflare for SaaS Enterprise plan](/cloudflare-for-platforms/cloudflare-for-saas/plans/) and the feature is properly entitled to your account.
 - Each custom origin needs to be a valid hostname with a proxied (orange-clouded) A, AAAA, or CNAME record in your account's DNS. You cannot use an IP address.
 - The DNS record for the custom origin server does not currently support wildcard values. 
 
@@ -34,11 +34,11 @@ To solve this problem, you can contact your account team to request an entitleme
 
 Choose how your custom hostname populates the SNI value with SNI rewrites:
 
-- **Origin server name** (default): Sets SNI to the custom origin
+- **Origin server name** (default): Set SNI to the custom origin
 
   - If custom origin is `custom-origin.com`, then the SNI is `custom-origin.com`.
 
-- **Host header**: Sets SNI to the host header (or a host header override)
+- **Host header**: Set SNI to the host header (or a host header override)
 
   - If wildcards are not enabled and the hostname is `example.com`, then the SNI is `example.com`.
   - If wildcards are enabled, the hostname is `example.com`, and a request comes to `www.example.com`, then the SNI is `www.example.com`.
@@ -51,7 +51,9 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
 
 * Currently, SNI Rewrite is not supported for wildcard custom hostnames. Subdomains covered by a wildcard custom hostname send the custom origin server name as the SNI value.
 
-* SNI overrides defined using an Origin Rule will take precedence over SNI rewrites.
+* SNI overrides defined in an [Origin Rule](/rules/origin-rules/) will take precedence over SNI rewrites.
+
+* SNI Rewrite usage is subject to the [Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-application-services/#ssl-for-saas-terms).
 
 {{</Aside>}}
 

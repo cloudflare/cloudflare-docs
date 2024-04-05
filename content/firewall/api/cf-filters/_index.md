@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Cloudflare Filters API
 weight: 2
-layout: single
 ---
 
 # Cloudflare Filters API

@@ -2,7 +2,6 @@
 title: Google Workspace - Area 1 as MX Record
 pcx_content_type: integration-guide
 weight: 2
-layout: single
 meta:
    title: Deploy and configure Google Workspace with Area 1 as MX Record
 updated: 2022-09-30

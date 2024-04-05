@@ -4,7 +4,6 @@ pcx_content_type: reference
 weight: 2
 meta:
   title: Rule expressions
-layout: single
 ---
 
 # Rule expressions

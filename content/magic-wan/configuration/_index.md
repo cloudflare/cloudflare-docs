@@ -2,11 +2,10 @@
 title: Configuration
 pcx_content_type: navigation
 weight: 4
-layout: single
 ---
 
 # Configuration
 
-Review this section to learn how to configure Magic WAN through Magic WAN Connector, or manually.
+Review this section to learn how to configure Magic WAN through Magic WAN Connector (the preferred option), or manually through a third-party device.
 
 {{<directory-listing>}}

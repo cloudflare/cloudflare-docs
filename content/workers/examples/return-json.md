@@ -16,26 +16,13 @@ updated: 2024-01-11
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 
-```js
----
-playground: true
----
-export default {
-  async fetch(request) {
-    const data = {
-      hello: "world",
-    };
-
-    return Response.json(data);
-  },
-};
-```
+{{<render file="_return-json-example-js.md">}}
 
 {{</tab>}}
 {{<tab label="ts">}}
 
 ```ts
-export default <ExportedHandler>{
+export default {
   async fetch(request: Request) {
     const data = {
       hello: "world",
@@ -43,7 +30,7 @@ export default <ExportedHandler>{
 
     return Response.json(data);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

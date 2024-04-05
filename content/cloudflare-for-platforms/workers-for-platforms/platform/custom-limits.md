@@ -25,7 +25,7 @@ export default {
        workerName,
        {},
        {// set limits
-         limits: {cpuMs: 10, subrequests: 5}
+         limits: {cpuMs: 10, subRequests: 5}
        }
      );
      return await userWorker.fetch(request);

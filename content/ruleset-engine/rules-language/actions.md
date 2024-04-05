@@ -3,7 +3,7 @@ title: Actions
 pcx_content_type: reference
 type: overview
 weight: 5
-layout: list
+layout: wide
 meta:
   title: Actions reference
 ---

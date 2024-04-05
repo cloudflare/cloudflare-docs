@@ -2,7 +2,7 @@
 title: 2022-11-02 - Emergency
 pcx_content_type: changelog
 weight: 28184
-layout: list
+layout: wide
 ---
 
 # 2022-11-02 - Emergency

@@ -2,7 +2,6 @@
 title: Cisco - Area 1 as MX Record
 pcx_content_type: integration-guide
 weight: 3
-layout: single
 meta:
    title: Deploy and configure Cisco IronPort with Area 1 as MX Record
 updated: 2022-09-30

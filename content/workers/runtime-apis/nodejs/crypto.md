@@ -9,7 +9,7 @@ title: Crypto
 
 The `node:crypto` module provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign, and verify functions.
 
-A subset of the the `node:crypto` module is available in Workers. All APIs in the tables below with a ✅ are supported, and unless otherwise noted, work the same way as the implementations in Node.js.
+A subset of the `node:crypto` module is available in Workers. All APIs in the tables below with a ✅ are supported, and unless otherwise noted, work the same way as the implementations in Node.js.
 
 The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within Cloudflare Workers.
 

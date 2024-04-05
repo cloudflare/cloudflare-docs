@@ -1,19 +1,18 @@
 ---
-title: Connect your private network to Cloudflare
+title: Connect your private network
 pcx_content_type: overview
 weight: 4
 layout: learning-module
 ---
 
-# Connect your private network to Cloudflare
+# Connect your private network
 
-Cloudflare Tunnel connects applications and services to Cloudflare’s network. Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network.
-
+This module covers how to connect your private network services and applications to Cloudflare. In many ways, this connection will replace the concept of a traditional VPN concentrator or headend device.
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Create a Cloudflare Tunnel
-- Understand private network routes for your Tunnel
-- Deploy your first Zero Trust policies to secure access to your internal network
+- Create a Cloudflare Tunnel.
+- Configure private network routes for your tunnel.
+- Understand how to size and scale your tunnel.

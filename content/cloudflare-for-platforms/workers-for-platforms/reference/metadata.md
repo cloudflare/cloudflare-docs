@@ -5,7 +5,7 @@ title: User Worker metadata
 
 # User Worker metadata
 
-You define the Worker's metadata as part of the [multipart upload of user Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-upload-user-workers-to-a-namespace). This metadata defines the Workers'configuration analogue to the [wrangler.toml file](/workers/wrangler/configuration/) for regular Workers.
+You define the Worker's metadata as part of the [multipart upload of user Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#3-upload-a-user-worker-to-the-dispatch-namespace). This metadata defines the Workers'configuration analogue to the [wrangler.toml file](/workers/wrangler/configuration/) for regular Workers.
 
 ## Sample metadata.json
 
@@ -62,7 +62,10 @@ filename: metadata.json
       "name": "<VAR_NAME>",
       "text": "<VAR_VALUE>"
     }
-  ]
+  ],
+    {
+      "tags": "[tag1, tag2, tag3]"
+    },
 }
 ```
 
@@ -91,9 +94,3 @@ At a minimum, the `main_module` key is required to publish a user Worker.
 ## Bindings
 
 Analogue to regular Workers, user Workers can also interact with other Cloudflare resources using Bindings. Refer to [metadata.json example](#sample-metadatajson) and the [Wrangler configuration documentation](/workers/wrangler/configuration/#bindings) for more information.
-
-
-
-
-
-

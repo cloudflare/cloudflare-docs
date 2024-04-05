@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
 title: Zone status
-layout: list
+layout: wide
 ---
 
 # Zone status
 
-Review information on the different statuses that your [zone](/dns/concepts/#zone) can have after you [add your website or application](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
+Review information on the different statuses that your [zone](/dns/concepts/#zone) can have after you [add your website or application](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
 
 If your zone status changes, you will receive an email at the address associated with your account.
 
@@ -79,7 +79,7 @@ If you have an active paid subscription and no longer wish to use Cloudflare, ma
 
 ## Deleted
 
-Your zone has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/setup/account-setup/add-site/).
+Your zone has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/setup/manage-domains/add-site/).
 
 After being deleted for seven days, zones are automatically [purged](#purged).
 

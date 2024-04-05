@@ -30,7 +30,7 @@ On the other hand, if you pick a good index that aligns with how you read the da
 
 {{<faq-answer>}}
 
-It is possible to concatenate multiple values in your index field. So if you want to index on user ID and hostname, you can write, for example `“$userID:$hostname”` into your index field.
+It is possible to concatenate multiple values in your index field. So if you want to index on user ID and hostname, you can write, for example `"$userID:$hostname"` into your index field.
 
 Note that, based on your query pattern, it may make sense to write the same dataset with different indices. It is a common misconception that one should avoid "double-writing" data.
 

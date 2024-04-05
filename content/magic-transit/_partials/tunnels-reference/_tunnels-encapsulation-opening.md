@@ -98,9 +98,11 @@ In summary, an IKE SA is created that uses certain cryptographic transforms. Tha
 
 ### Supported configuration parameters
 
+Below is a list of the configuration parameters supported by Magic WAN. Choose which ones to use based on what your appliance supports.
+
 #### IKE SA
 
-This is sometimes referred to as Phase 1 as per IKEv1 language.
+IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 
 - **Encryption**
   - AES-GCM-16 with 128-bit or 256-bit key length
@@ -110,7 +112,9 @@ This is sometimes referred to as Phase 1 as per IKEv1 language.
   - SHA2-256
 
 - **Diffie-Hellman group**:
-  - DH group 20 (384-bit random)
+<br>
+Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
+  - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
@@ -133,6 +137,9 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
   {{<Aside type="note">}}When using AES-GCM-16, an integrity algorithm is not required because AES GCM includes integrity checking (since it is an AEAD algorithm). Even when using an AEAD algorithm, however, some routers still require an integrity algorithm to be selected.{{</Aside>}}
 
 - **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
+<br>
+Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. However, Cloudflare recommends that you use only one DH group when configuring your device, specifically DH group 14.
+  - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 

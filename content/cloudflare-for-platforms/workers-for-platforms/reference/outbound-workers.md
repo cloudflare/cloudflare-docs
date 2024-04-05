@@ -22,7 +22,7 @@ Outbound Workers can be used to:
 To use Outbound Workers:
 
 1. Create a Worker intended to serve as your Outbound Worker.
-2. Outbound Worker can be specified as an optional parameter in the [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) binding in a project's [wrangler.toml](/workers/wrangler/configuration/). Optionally, to pass data from your dynamic dispatch Worker to the Outbound Worker, the variable names can be specified under **parameters**.  
+2. Outbound Worker can be specified as an optional parameter in the [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) binding in a project's [wrangler.toml](/workers/wrangler/configuration/). Optionally, to pass data from your dynamic dispatch Worker to the Outbound Worker, the variable names can be specified under **parameters**.
 
 Make sure that you have `wrangler@3.3.0` or later [installed](/workers/wrangler/install-and-update/).
 
@@ -51,7 +51,7 @@ export default {
 			'customer_name': workerName,
 			'url': request.url,
 		  }
-		
+
 		let userWorker = env.dispatcher.get(
 		  workerName,
 		  {},
@@ -74,7 +74,7 @@ export default {
 ```
 4. The Outbound Worker will now be invoked on any `fetch()` requests from a user Worker. The user Worker will trigger a [FetchEvent](/workers/runtime-apis/handlers/fetch/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
 
-The following is an example of an Outbound Worker that logs the fetch request from user Worker and creates a JWT if the fetch request matches `api.example.com`. 
+The following is an example of an Outbound Worker that logs the fetch request from user Worker and creates a JWT if the fetch request matches `api.example.com`.
 
 ```js
 ---
@@ -120,6 +120,6 @@ export default {
 
 {{<Aside type ="note">}}
 
-Outbound Workers do not intercept fetch requests made from [Durable Objects](/durable-objects/) or [mTLS certificate bindings](/workers/runtime-apis/mtls/). 
+Outbound Workers do not intercept fetch requests made from [Durable Objects](/durable-objects/) or [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).
 
 {{</Aside>}}

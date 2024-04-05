@@ -3,7 +3,7 @@ pcx_content_type: concept
 type: overview
 title: API Discovery
 weight: 1
-layout: list
+layout: wide
 ---
 
 # API Discovery

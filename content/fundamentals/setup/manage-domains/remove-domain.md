@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Remove a domain
-weight: 3
 meta:
     title: Remove a domain from Cloudflare
 ---
@@ -14,7 +13,7 @@ Consider the following sections on how you can remove domains from Cloudflare.
 
 If you experience website issues, we recommend [temporarily pausing Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) to evaluate your website's performance.
 
-If you have an Enterprise plan, you need to [change the zone plan](/fundamentals/account-and-billing/account-billing/change-plan/#change-plan-type) to **Free**.
+If you have an Enterprise plan, you need to [change the zone plan](/fundamentals/subscriptions-and-billing/change-plan/#change-plan-type) to **Free**.
 
 If you need to re-add the domain in a different account, make sure the current settings have been saved. For example, you may [Import and export DNS records](/dns/manage-dns-records/how-to/import-and-export/).
 
@@ -28,7 +27,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
 ### Actions within Cloudflare
 
-* [Cancel active add-on subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/).
+* [Cancel active add-on subscriptions](/fundamentals/subscriptions-and-billing/cancel-subscription/).
 
 * [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#optional---delete-a-job)
 
@@ -46,7 +45,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
     ![Remove site from Cloudflare is an option under Advanced Actions](/images/fundamentals/get-started/remove-domain.png)
 
-    {{<Aside type="note">}}If you are using an Enterprise domain, [change your domain plan](/fundamentals/account-and-billing/account-billing/change-plan/#change-plan-type) to **Free**, which will give you access to **Remove Site from Cloudflare**.<br/><br/>If this does not work, contact your Customer Success Manager.
+    {{<Aside type="note">}}If you are using an Enterprise domain, [change your domain plan](/fundamentals/subscriptions-and-billing/change-plan/#change-plan-type) to **Free**, which will give you access to **Remove Site from Cloudflare**.<br/><br/>If this does not work, contact your Customer Success Manager.
     {{</Aside>}}
 
 3. Select **Confirm**.

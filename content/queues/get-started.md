@@ -14,7 +14,7 @@ Cloudflare Queues is a flexible messaging queue that allows you to queue message
 
 To use Queues, you will need:
 
-1. A [Cloudflare account](/fundamentals/setup/account-setup/), if you do not have one already.
+1. A [Cloudflare account](/fundamentals/setup/account/), if you do not have one already.
 
 2. C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues. To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.17.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
@@ -63,7 +63,7 @@ $ yarn create cloudflare
 In your terminal, you will be asked a series of questions related to your project. 
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `yes` to using TypeScript.
 4. Answer `no` to using Git.
 5. Answer `no` to deploying your Worker.
@@ -77,7 +77,7 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-$ wrangler queues create <MY_FIRST_QUEUE>
+$ npx wrangler queues create <MY_FIRST_QUEUE>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
@@ -175,6 +175,12 @@ A consumer Worker receives messages from your queue. When the consumer Worker re
 
 In this guide, you will create a consumer Worker and use it to log and inspect the messages with [`wrangler tail`](/workers/wrangler/commands/#tail). You will create your consumer Worker in the same Worker project that you created your producer Worker.
 
+{{<Aside type="note">}}
+
+Queues also supports [pull-based consumers](/queues/reference/pull-consumers/), which allows any HTTP-based client to consume messages from a queue. This guide creates a push-based consumer using Cloudflare Workers.
+
+{{</Aside>}}
+
 To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 
 ```ts
@@ -192,7 +198,7 @@ export default {
     await env.<MY_QUEUE>.send(log);
     return new Response('Success!');
   },
-  async queue(batch: MessageBatch<any>, env: Env): Promise<void> {
+  async queue(batch: MessageBatch, env: Env): Promise<void> {
     let messages = JSON.stringify(batch.messages);
     console.log(`consumed from our queue: ${messages}`);
   },
@@ -250,7 +256,7 @@ After you set up consumer Worker, you can read messages from the queue.
 Run `wrangler tail` to start waiting for our consumer to log the messages it receives:
 
 ```sh
-$ wrangler tail
+$ npx wrangler tail
 ```
 
 With `wrangler tail` running, open the Worker URL you opened in [step 4](/queues/get-started/#4-set-up-your-producer-worker). 

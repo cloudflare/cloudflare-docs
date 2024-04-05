@@ -1,12 +1,39 @@
 ---
-link: "/vectorize/changelog/"
+link: "/vectorize/platform/changelog/"
 productName: Vectorize
 entries:
+  - publish_date: "2024-01-17"
+    title: HTTP API query vectors request and response format change
+    description: |-
+      Vectorize `/query` HTTP endpoint has the following changes:
+      - `returnVectors` request body property is deprecated in favor of `returnValues` and `returnMetadata` properties.
+      - Response format has changed to the below format to match [Workers API change]:(/workers/configuration/compatibility-dates/#vectorize-query-with-metadata-optionally-returned)
+
+      ```json
+      {
+        "result": {
+          "count": 1,
+          "matches": [
+            {
+              "id": "4",
+              "score": 0.789848214,
+              "values": [ 75.0999984741211, 67.0999984741211, 29.899999618530273],
+              "metadata": {
+                "url": "/products/sku/418313",
+                "streaming_platform": "netflix"
+              }
+            }
+          ]
+        },
+        "errors": [],
+        "messages": [],
+        "success": true
+      }
+      ```
   - publish_date: "2023-12-06"
     title: Metadata filtering
     description: |-
-      Vectorize now supports [metadata filtering](/vectorize/learning/metadata-filtering) with equals (`$eq`) and not equals (`$neq`) operators. Metadata filtering limits `query()` results to only vectors that fulfill new `filter` property.
-
+      Vectorize now supports [metadata filtering](/vectorize/reference/metadata-filtering) with equals (`$eq`) and not equals (`$neq`) operators. Metadata filtering limits `query()` results to only vectors that fulfill new `filter` property.
       ```ts
       let metadataMatches = await env.YOUR_INDEX.query(queryVector, { topK: 3, filter: { streaming_platform: "netflix" }, returnValues: true, returnMetadata: true } )
       ```

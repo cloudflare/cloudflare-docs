@@ -31,7 +31,7 @@
     },
     "zone_holds": {
       "title": "Zone holds",
-      "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
+      "link": "/fundamentals/setup/account/account-security/zone-holds/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -465,7 +465,7 @@
     "link": "/fundamentals/global-configurations/",
     "custom_pages": {
       "title": "Custom error/challenge pages",
-      "link": "https://support.cloudflare.com/hc/articles/200172706",
+      "link": "/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1675,7 +1675,7 @@
           "pro": 0,
           "biz": 0,
           "ent": 0,
-          "ent_plus": 3
+          "ent_plus": 5
         },
         "l_logpush_jobs": {
           "title": "Number of Logpush jobs",
@@ -1853,14 +1853,14 @@
           "lite": "No",
           "pro": "Paid add-on",
           "biz": "Paid add-on",
-          "ent": "Paid add-on"
+          "ent": "Yes"
         },
         "tcp": {
           "title": "TCP",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Paid add-on"
         },
         "udp": {
           "title": "UDP",
@@ -1868,7 +1868,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Paid add-on"
         },
         "v_minecraft": {
           "title": "Minecraft (one app allowed)",
@@ -2046,8 +2046,8 @@
       }
     },
     "image_resizing": {
-      "title": "Image Resizing",
-      "link": "/images/image-resizing/",
+      "title": "Image Optimization",
+      "link": "/images/",
       "paid_add_on": true,
       "paid_add_on_plans": ["pro", "biz", "ent"],
       "properties": {
@@ -2114,20 +2114,6 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
-        }
-      }
-    },
-    "railgun": {
-      "title": "Railgun (deprecated)",
-      "link": "/railgun/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Business and above",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
           "ent": "Yes"
         }
       }

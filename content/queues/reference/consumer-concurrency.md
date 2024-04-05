@@ -1,10 +1,10 @@
 ---
 title: Consumer concurrency
 pcx_content_type: concept
-weight: 4
+weight: 9
 ---
 
-# Consumer concurrency 
+# Consumer concurrency
 
 Consumer concurrency allows a [consumer Worker](/queues/reference/how-queues-works/#consumers) processing messages from a queue to automatically scale out horizontally to keep up with the rate that messages are being written to a queue.
 
@@ -14,21 +14,21 @@ Note that queue producers are always scalable, up to the [maximum supported mess
 
 ## Enable concurrency
 
-By default, all queues have concurrency enabled. Queue consumers will automatically scale up [to the maximum concurrent invocations](/queues/platform/limits/) as needed to manage a queue's backlog and/or error rates. 
+By default, all queues have concurrency enabled. Queue consumers will automatically scale up [to the maximum concurrent invocations](/queues/platform/limits/) as needed to manage a queue's backlog and/or error rates.
 
-## How concurrency works 
+## How concurrency works
 
 The number of consumers concurrently invoked for a queue will autoscale based on several factors, including:
 
 * The number of messages in the queue (backlog) and its rate of growth.
-* The ratio of failed (versus successful) invocations.
+* The ratio of failed (versus successful) invocations. A failed invocation is when your `queue()` handler returns an uncaught exception instead of `void` (nothing).
 * The value of `max_concurrency` set for that consumer.
 
 Where possible, Queues will optimize for keeping your backlog from growing exponentially, in order to minimize scenarios where the backlog of messages in a queue grows to the point that they would reach the [message retention limit](/queues/platform/limits/) before being processed.
 
-{{<Aside type="warning" header="Consumer concurrency and retried messages">}}
+{{<Aside type="note" header="Consumer concurrency and retried messages">}}
 
-Retrying messages with `retry()` or calling `retryAll()` on a batch will count as a failed invocation and cause the consumer to cease any increase in autoscaling. Continued `retry()` / `retryAll()` invocations will cause the consumers autoscale down. If your consumer concurrency remains at 1 but your consumer's `max_concurrency` is higher, it is usually due to messages being retried, preventing your consumer from scaling up.
+[Retrying messages with `retry()`](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
 
 {{</Aside>}}
 
@@ -64,7 +64,7 @@ Note that if you are writing messages to a queue faster than you can process the
 
 {{<Aside type="note">}}
 
-Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is only supported in wrangler [`2.13.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%402.13.0) or greater. 
+Ensure you are using the latest version of [wrangler](/workers/wrangler/install-and-update/). Support for configuring the maximum concurrency of a queue consumer is only supported in wrangler [`2.13.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%402.13.0) or greater.
 
 {{</Aside>}}
 
@@ -79,9 +79,9 @@ filename: wrangler.toml
   max_concurrency = 1
 ```
 
-To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update. 
+To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update.
 
-<!-- Not yet available but will be very soon 
+<!-- Not yet available but will be very soon
 ### wrangler CLI
 
 ```sh
@@ -98,13 +98,13 @@ $ wrangler queues consumer update <script-name>
 -->
 ## Billing
 
-When multiple consumer Workers are invoked, each Worker invocation incurs [duration costs](/workers/platform/pricing/#workers).
+When multiple consumer Workers are invoked, each Worker invocation incurs [CPU time costs](/workers/platform/pricing/#workers).
 
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
 
-Billing for consumers follows the [Workers unbound usage model](/workers/platform/pricing/#example-pricing-unbound-usage-model) meaning a developer is billed for the request and the duration of the request. 
+Billing for consumers follows the [Workers standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model) meaning a developer is billed for the request and for CPU time used in the request.
 
 ### Example
 
-A consumer Worker that takes 2 seconds ([0.256 GB-seconds](/queues/reference/consumer-concurrency/#example-1)) to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).
+A consumer Worker that takes 2 seconds to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).

@@ -1,14 +1,13 @@
 ---
 pcx_content_type: concept
 title: WebAssembly (Wasm)
-layout: single
 meta:
   description: Execute code written in a language other than JavaScript or write an entire Cloudflare Worker in Rust.
 ---
 
 # WebAssembly (Wasm)
 
-[WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
+[WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like [Rust](/workers/languages/rust/), Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
 
 On Workers and in [Cloudflare Pages Functions](https://blog.cloudflare.com/pages-functions-with-webassembly/), you can use WebAssembly to:
 - Execute code written in a language other than JavaScript, via `WebAssembly.instantiate()`.
@@ -38,4 +37,9 @@ Compiling to WebAssembly often requires including additional runtime dependencie
 
 The [WebAssembly System Interface](https://wasi.dev/) (abbreviated WASI) is a modular system interface for WebAssembly that standardizes a set of underlying system calls for networking, file system access, and more. Applications can depend on the WebAssembly System Interface to behave identically across host environments and operating systems.
 
-WASI is an earlier and more rapidly evolving set of standards than Wasm. WASI support is experimental on Cloudflare Workers, with only some syscalls implemented. Refer to our [open source implementation of WASI](https://github.com/cloudflare/workers-wasi), and [blog post about WASI on Workers](https://blog.cloudflare.com/announcing-wasi-on-workers/) demonstrating its use. 
+WASI is an earlier and more rapidly evolving set of standards than Wasm. WASI support is experimental on Cloudflare Workers, with only some syscalls implemented. Refer to our [open source implementation of WASI](https://github.com/cloudflare/workers-wasi), and [blog post about WASI on Workers](https://blog.cloudflare.com/announcing-wasi-on-workers/) demonstrating its use.
+
+### Resources on WebAssembly
+
+- [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
+- [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)

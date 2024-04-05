@@ -46,7 +46,7 @@ You can adjust the scope of Security Events to one of the listed source values b
 
 {{<Aside type="note">}}
 
-A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
+A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/).
 
 {{</Aside>}}
 

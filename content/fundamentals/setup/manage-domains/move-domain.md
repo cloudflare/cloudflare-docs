@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Move a domain between Cloudflare accounts
-weight: 2
 ---
 
 # Move a domain between Cloudflare accounts
@@ -18,7 +17,7 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 {{<Aside type="note">}}
 
-If you have [two-factor authentication (2FA)](/fundamentals/account-and-billing/account-security/2fa/) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
+If you have [two-factor authentication (2FA)](/fundamentals/setup/account/account-security/2fa/) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
 
 {{</Aside>}}
 
@@ -33,7 +32,7 @@ To transfer a domain from one Cloudflare account to another, you will need:
 
 {{<Aside type="warning">}}
 
-Before transferring an active Cloudflare domain to another Cloudflare account, you must remove any [DNSSEC configurations](/dns/dnssec/) and [add-ons or subscriptions](/fundamentals/account-and-billing/account-billing/cancel-subscription/).
+Before transferring an active Cloudflare domain to another Cloudflare account, you must remove any [DNSSEC configurations](/dns/dnssec/) and [add-ons or subscriptions](/fundamentals/subscriptions-and-billing/cancel-subscription/).
 
 We also recommend [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) the DNS records of your zone while it is in the previous account. Then, you can [import](/dns/manage-dns-records/how-to/import-and-export/#import-records) the correct DNS records into the new account.
 If you miss this step, Cloudflare will import your proxied dns records, which might cause your domain to experience a [1000 error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/). 
@@ -46,9 +45,9 @@ If you lose access to the email address associated with your Cloudflare account 
 
 The domain transfer process depends on your DNS settings. If Cloudflare is your authoritative DNS provider (that is, your domain nameservers point to Cloudflare), you must:
 
-1. [Create a new Cloudflare account](/fundamentals/setup/account-setup/create-account/) or log in to an existing Cloudflare account.
+1. [Create a new Cloudflare account](/fundamentals/setup/account/create-account/) or log in to an existing Cloudflare account.
 
-2. [Add the domain](/fundamentals/setup/account-setup/add-site/) to the account (as if you were adding it for the first time).
+2. [Add the domain](/fundamentals/setup/manage-domains/add-site/) to the account (as if you were adding it for the first time).
 
 3. Log in to your domain registrar account and [update the nameservers](/dns/zone-setups/full-setup/setup/) to the provided Cloudflare nameservers.
 

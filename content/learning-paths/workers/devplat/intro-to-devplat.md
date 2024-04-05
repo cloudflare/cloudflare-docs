@@ -7,7 +7,7 @@ layout: learning-unit
 
 ## Cloudflare Developer Platform
 
-The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) consists of compute, storage and application development products that allow you to build fullstack applications on Cloudflare's global network.
+The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) consists of compute, storage and application development products that allow you to build full-stack applications on Cloudflare's global network.
 
 It is important to note that the developer platform product offering is growing with new releases and features updates. To review a list of product documentation related to Cloudflare Developer Platform:
 
@@ -44,7 +44,7 @@ Some Cloudflare Developer storage products include:
 * [Durable Objects](/durable-objects/): Globally distributed coordination API with strongly consistent storage.
 * [D1](/d1/): Cloudflare’s native serverless database.
 
-To understand which storage option is right for you, refer to the [Storage options guide](/workers/platform/storage-options/).
+To understand which storage option is right for you, refer to the [Choose a data or storage product](/workers/platform/storage-options/).
 
 To explore possible database integrations, refer to [Databases](/workers/databases/) in the Workers documentation.
 
@@ -60,4 +60,4 @@ If your learning journey was hindered by inaccurate or missing documentation, [f
 
 ### Community
 
-Connect with the [Cloudflare Developer Platform community on Discord](https://discord.gg/cloudflaredev) to ask questions, share what you are building, and discuss the platform with other developers.
+Connect with the [Cloudflare Developer Platform community on Discord](https://discord.cloudflare.com) to ask questions, share what you are building, and discuss the platform with other developers.

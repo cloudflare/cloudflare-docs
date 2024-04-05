@@ -1,7 +1,6 @@
 ---
 title: How to
 pcx_content_type: how-to
-layout: single
 meta:
   title: View Reports
   description: NEL reports show you why a request failed, the country a request failed from, and last mile network a request failed from, and the likely intended Cloudflare data center.

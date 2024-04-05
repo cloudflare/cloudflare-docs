@@ -101,7 +101,7 @@ The XML response contains a `NextContinuationToken` and `IsTruncated` elements a
 ### Conditional operations in `CopyObject` for the destination object
 
 {{<Aside type="note">}}
-This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
+This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
 {{</Aside>}}
 
 `CopyObject` already supports conditions that relate to the source object through the `x-amz-copy-source-if-...` headers as part of our compliance with the S3 API. In addition to this, R2 supports an R2 specific set of headers that allow the `CopyObject` operation to be conditional on the target object:
@@ -115,5 +115,5 @@ These headers work akin to the similarly named conditional headers supported on 
 
 #### Non-atomicity relative to `x-amz-copy-source-if`
 
-The the `x-amz-copy-source-if-...` headers are guaranteed to be checked when the source object for the copy operation is selected, and the `cf-copy-destination-if-...` headers are guaranteed to be checked when the object is committed to the bucket state.
+The `x-amz-copy-source-if-...` headers are guaranteed to be checked when the source object for the copy operation is selected, and the `cf-copy-destination-if-...` headers are guaranteed to be checked when the object is committed to the bucket state.
 However, the time at which the source object is selected for copying, and the point in time when the destination object is committed to the bucket state are not necessarily the same. This means that the `cf-copy-destination-if-...` headers are not atomic in relation to the `x-amz-copy-source-if...` headers.

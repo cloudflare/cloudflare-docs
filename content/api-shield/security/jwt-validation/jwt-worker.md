@@ -2,7 +2,7 @@
 title: Configure the Worker
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure the Worker for JWT Validation
 ---
@@ -13,7 +13,7 @@ Use a Worker to automatically keep your identity provider’s latest public key 
 
 ## Prerequisites
 
-- Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/). 
+- Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/).
 - Find your identity provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
 - Create a [Token Validation Configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
 - [Create a new API token](https://dash.cloudflare.com/profile/api-tokens) with the API Gateway `Write` permission.
@@ -27,7 +27,7 @@ Use a Worker to automatically keep your identity provider’s latest public key 
 
 ## Manually query the JWKs endpoint
 
-Find your Identity Provider’s URL and fetch the keys using `curl` and `jq`. Your URL may return more than just the issuer’s keys, so Cloudflare recommends using `jq` to filter the response to only return the keys. You must update the provided Worker sample code if your JWKs do not have a `keys` object. 
+Find your Identity Provider’s URL and fetch the keys using `curl` and `jq`. Your URL may return more than just the issuer’s keys, so Cloudflare recommends using `jq` to filter the response to only return the keys. You must update the provided Worker sample code if your JWKs do not have a `keys` object.
 
 {{<Aside type="note">}}
 The keys listed below are for example purposes only and must not be used in your production environment, as they will never match the keys used by your identity provider to sign JWTs.
@@ -105,12 +105,12 @@ header: JavaScript example code
  *
  * Learn more about Workers at https://developers.cloudflare.com/workers/
  */
- 
+
 var zone_id = "760549bc17c54280d6e6ae256c3dd6ae";
 var token_config_id = "91007e72-8f17-46b7-a223-5e57bd333b78";
 var url = "https://cfdata.cloudflareaccess.com/cdn-cgi/access/certs" // JWKs
- 
- 
+
+
 /**
  * fetchCredentials fetches new Token Configuration credentials using the URL defined above.
  * This returns a JSON string with the credentials.
@@ -127,8 +127,8 @@ async function fetchCredentials() {
     const keys = await fetch(url, requestOptions).then((e) => e.json()).then((e) => e.keys);
     return JSON.stringify({ keys: keys })
 }
- 
- 
+
+
 /**
  * updateCredentials updates Token Configuration credentials using the Cloudflare API.
  * Credentials are fetched using fetchCredentials, which also does any required processing.
@@ -150,12 +150,12 @@ async function updateCredentials(bearer) {
     const response = await fetch(url, init);
     return response.text();
 }
- 
- 
+
+
 // Export a default object containing event handlers
 export default {
     /**
-     * fetch handles requests made direclty to the Worker.
+     * fetch handles requests made directly to the Worker.
      *
      */
     async fetch(request, env, ctx) {
@@ -167,7 +167,7 @@ export default {
         }
         return new Response(responseBody, { headers: { "content-type": "application/json;charset=UTF-8" } });
     },
- 
+
     /**
      * scheduled is the handler for cron triggers.
      *

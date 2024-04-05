@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: HTTP Strict Transport Security (HSTS)
 weight: 4
-layout: list
+layout: wide
 ---
 
 # HTTP Strict Transport Security (HSTS)

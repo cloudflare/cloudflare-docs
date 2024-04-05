@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Enable Cloudflare R2
 weight: 40
-layout: single
 ---
 
 # Enable Logpush to Cloudflare R2

@@ -2,7 +2,6 @@
 title: Lists
 pcx_content_type: overview
 weight: 1
-layout: single
 ---
 
 # Lists

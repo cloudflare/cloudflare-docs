@@ -2,7 +2,6 @@
 title: Get started
 pcx_content_type: get-started
 weight: 2
-layout: single
 ---
 
 # Get started
@@ -18,6 +17,10 @@ To start using the Turnstile widget, you will need to obtain a {{<glossary-toolt
 The sitekey is public and used to invoke the Turnstile widget on your site.
 
 The sitekey and secret key are generated upon the creation of a widget, allowing communication between your site and Cloudflare to verify responses for a solved challenge from Turnstile. Make sure you keep the secret key safe for security reasons.
+
+{{<Aside type= "note">}}
+You can find special sitekeys to be used for testing in the [testing](/turnstile/reference/testing/) section.
+{{</Aside>}}
 
 ### New sites
 

@@ -15,4 +15,4 @@ Audit logs for Email Routing are available in the [Cloudflare dashboard](https:/
 - Address change status
 - Enable/disable/unlock zone
 
-Refer to [Review audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/) for more information.
+Refer to [Review audit logs](/fundamentals/setup/account/account-security/review-audit-logs/) for more information.

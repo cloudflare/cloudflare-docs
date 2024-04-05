@@ -1,7 +1,6 @@
 ---
 title: API
 pcx_content_type: concept
-layout: single
 weight: 2
 meta:
    title: API deployment

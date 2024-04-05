@@ -462,11 +462,11 @@
           "title": "Automatic Platform Optimization for WordPress"
         },
         {
-          "url_path": "/images/image-resizing/",
-          "title": "Image resizing"
+          "url_path": "/images/transform-images/",
+          "title": "Transform images"
         },
         {
-          "url_path": "/images/cloudflare-images/",
+          "url_path": "/images/",
           "title": "Cloudflare Images"
         },
         {

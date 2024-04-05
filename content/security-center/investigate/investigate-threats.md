@@ -6,77 +6,56 @@ weight: 3
 
 # Investigate threats
 
-Users can search based on the IP address, domain name, URL or AS number.
+Customers have the ability to investigate the details of an IP address, domain name, URL, Autonomous System Number (ASN), or JavaScript file. The Investigate feature can be found in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan). 
 
-The search results will display the following information:
+You can search with Investigate by [IP address](/security-center/investigate/investigate-threats/#ip-address), [domain](/security-center/investigate/investigate-threats/#domain), [URL](/security-center/investigate/investigate-threats/#url) and [AS number](/security-center/investigate/investigate-threats/#as-number). 
 
-## Domain / URL search
+{{<Aside>}}
 
-### Overview
+Search methods are also available through the [API](/security-center/intel-apis/).
 
-+ [Categorization](https://developers.cloudflare.com/cloudflare-one/policies/gateway/domain-categories/): A domain can have multiple categories. Cloudflare displays both the parent category and the detailed child category.
+{{</Aside>}}
 
-    You can view and [request categorization](/security-center/investigate/change-categorization/) for a domain. Uncategorized domains can also request to have a category added. This request goes through an approval process through the Cloudflare team.
+## IP Address
 
-+ IP resolution (current)
-+ API curl
+An [IP address](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/) is a unique address that identifies a server. It stands for [Internet Protocol](https://www.cloudflare.com/learning/network-layer/internet-protocol/), which is the set of rules that allows servers to communicate with each other. 
 
-### WHOIS
+IP address search allows you to search both [IPv4 and IPv6](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/) addresses and retrieve relevant information such as their pointer records, AS numbers and passive DNS records.
 
-+ Creation date of the domain
-+ Most recent update
-+ Registrant (if available)
-+ Registrar
-+ Nameservers (if available)
-+ API curl
+## Domain
 
-### Domain history
+A [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is a string of text that maps to an IP address. Domain names are used to help people remember where websites are hosted. Domain names are purchased through [registrars](/registrar/) and can be acquired easily by anyone. 
 
-+ Category
-+ Changed On
-+ API curl
+When you search for a domain name, Cloudflare will provide an overview of the domain's category and IP addresses it currently resolves to.
 
-## IP Address search
+{{<Aside>}}
 
-### Overview
+A domain can have multiple categories. Cloudflare displays both the parent category and the detailed child category. You can [request category changes](/security-center/investigate/change-categorization/) for a domain. Miscategorized domains can also request to have a category added. This request goes through an approval process with the Cloudflare team.
 
-+ Type (IPv4 / IPv6)
-+ ASN Info
+{{</Aside>}}
 
-### Passive DNS Records
+As part of the domain search results, Cloudflare show the WHOIS details and a history of its category changes over time. 
 
-+ Hostname
-+ First seen timestamp
-+ Last seen timestamp
+## AS Number
 
-## AS Number search
+An [AS number](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) is a group of IP addresses belonging to and controlled by a single organization. The entire group of networks have a single unified routing policy. The [Internet Assigned Numbers Authority](https://www.iana.org/) (IANA) is the organization responsible for managing the assignment and distribution of AS numbers. The AS number's routing policies are used by [BGP](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) which is how Cloudflare's [anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works. 
 
-### Overview
+When you search for an AS number, Cloudflare will return registration data such as its country, description and type. It will also display data such as domain count, top 10 domains and subnets. 
 
-+ Country, description and Type
-+ Domain count and Top 10 domains (if count >10)
-+ Subnets
-+ API curls (for AS Number overview and for Subnets)
+With sufficient data, AS number search results will also return the geographical distribution of traffic in its network, application level attacks and network level attacks, each broken down by Cloudflare mitigation techniques and network protocols, respectively. 
 
-### Geographical distribution
+## URL
 
-+ Percent of traffic distribution
-+ API curl
+When you search for a URL, Cloudflare will provide a list of recent scan reports for that specific URL, limited to the past 30 days. You can view previously generated reports or scan again to generate a new report.
 
-### Application Level Attacks
+Different Cloudflare plans will have different [scan limitations](/security-center/investigate/scan-limits/).
 
-+ Distribution of Layer 7 attacks by mitigation techniques deployed to block them
-+ Layer 7 attack volume since last scan
+### Visibility
 
-### Network Level Attacks
+When generating a new scan report, the default visibility is set to `Unlisted`, but you have the option to set it to `Public`. By choosing `Public`, the generated scan will be available to all Cloudflare dashboard and Cloudflare Radar users alike, which will increase awareness of potentially malicious websites for others.
 
-+ Distribution of Layer 3/4 attacks by protocol deployed to block them
-+ Layer 3/4 attack volume since last scan
+We recommend choosing `Unlisted` if you are scanning infrastructure that is not intended to be shared with the wider Cloudflare community.
 
-## Analyze
+### Filters
 
-You can upload a JavaScript file to scan for malicious content using the **Analyze** feature.
-
-The scanner provides a percentage of integrity, a general measurement of safety, for the file. You can decide what percentage of integrity is safe to use.
-
-Contact your account team if you are interested in enabling this feature.
+While viewing the most recent scans, you can use the filtering options. Selecting `All account scans` will display both `Unlisted` or `Public` scans initiated from your Cloudflare account. However, by selecting `All global scans`, only `Public` scans are displayed.

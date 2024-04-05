@@ -1,8 +1,7 @@
 ---
 title: Testing
 pcx_content_type: reference
-weight: 13
-layout: single
+weight: 4
 ---
 
 # Testing
@@ -10,6 +9,12 @@ layout: single
 ## Dummy sitekeys and secret keys
 
 The following {{<glossary-tooltip term_id="sitekey">}}sitekeys{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="secret key">}}secret keys{{</glossary-tooltip>}} are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
+
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/reference/domain-management/).
+
+Dummy sitekeys can be used from any domain, including on `localhost`.
+
+Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
 
 | Sitekey | Description | Visibility |
 | --- | --- | --- |
@@ -24,8 +29,3 @@ The following {{<glossary-tooltip term_id="sitekey">}}sitekeys{{</glossary-toolt
 | `1x0000000000000000000000000000000AA` | Always passes |
 | `2x0000000000000000000000000000000AA` | Always fails | 
 | `3x0000000000000000000000000000000AA` | Yields a "token already spent" error | 
-
-
-## Testing locally
-
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain whitelist](/turnstile/reference/domain-management/).

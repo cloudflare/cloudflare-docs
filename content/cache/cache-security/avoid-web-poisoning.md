@@ -42,4 +42,4 @@ To keep informed about Internet security threats, Cloudflare recommends that you
 
 - [Drupal Security Advisories](https://www.drupal.org/security)
 - [Symfony Security Advisories](https://symfony.com/blog/category/security-advisories)
-- [Zend Security Advisories](https://framework.zend.com/security/advisories)
+- [Laminas Security Advisories](https://getlaminas.org/security/advisories)

@@ -2,7 +2,6 @@
 title: Inline
 pcx_content_type: concept
 weight: 1
-layout: single
 meta:
    title: Inline deployment
 ---

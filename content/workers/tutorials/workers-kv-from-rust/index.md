@@ -4,7 +4,6 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use Workers KV directly from Rust
-layout: single
 ---
 
 # Use Workers KV directly from Rust

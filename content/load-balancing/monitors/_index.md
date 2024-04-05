@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Monitors
 weight: 5
-layout: single
 ---
 
 # Monitors
@@ -73,6 +72,6 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
 
 ## Supported protocols
 
-Cloudflare Load Balancing supports public monitoring for HTTP, HTTPS, TCP, UDP, ICMP, ICMP ping, and SMTP. 
+Cloudflare Load Balancing supports public monitoring for HTTP, HTTPS, TCP, UDP, ICMP, ICMP ping, and SMTP.
 
 Load Balancing also supports private monitoring for HTTP, HTTPS, and TCP.

@@ -24,6 +24,10 @@ meta:
 
 {{<render file="_bots-heuristics.md">}}
 
+#### Account takeover detections
+
+{{<render file="_account-takeover-detections.md">}}
+
 ### Machine learning
 
 {{<render file="_bots-ml.md">}}
@@ -39,6 +43,8 @@ JSD is completely optional. To adjust your settings, configure Super Bot Fight M
 ### Notes on detection
 
 {{<render file="_bots-cookie.md">}}
+
+{{<render file="_disable-cf-bm-cookie.md">}}
 
 ## Considerations
 

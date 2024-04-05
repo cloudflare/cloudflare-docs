@@ -19,6 +19,8 @@ Before you can protect your API or web application with mTLS rules, you need to:
 - [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) to use your Cloudflare-issued client certificate.
 - [Enable mutual Transport Layer Security (mTLS) for a host](/ssl/client-certificates/enable-mtls/) in your zone.
 
+{{<render file="_mtls-api-shield-support.md">}}
+
 {{<render file="_cloudflare-managed-client-cert.md" productFolder="ssl" >}}
 
 ## Create an mTLS rule

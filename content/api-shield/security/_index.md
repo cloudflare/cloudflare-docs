@@ -3,7 +3,7 @@ pcx_content_type: navigation
 type: overview
 title: Security
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Security

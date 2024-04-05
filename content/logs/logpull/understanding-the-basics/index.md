@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Understanding the basics
 weight: 12
-layout: single
 ---
 
 # Understand the basics

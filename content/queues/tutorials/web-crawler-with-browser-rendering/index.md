@@ -1,20 +1,22 @@
 ---
-title: Build a web crawler with Queues and Browser Rendering 
+updated: 2023-07-17
+difficulty: Beginner
+title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
-pcx_content_type: tutorial 
+content_type:  📝 Tutorial
+pcx_content_type: tutorial
 weight: 1002
 meta:
-  title: Cloudflare Queues - Queues & Browser Rendering 
-layout: single 
+  title: Cloudflare Queues - Queues & Browser Rendering
 ---
 
-# Build a web crawler with Queues and Browser Rendering 
+# Build a web crawler with Queues and Browser Rendering
 
-This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer. 
+This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer.
 
 Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to Cloudflare.com and take a screenshot of the site, saving results to KV.
 
-You can use Puppeteer to request all images on a page, save the colors used on a site, and more. 
+You can use Puppeteer to request all images on a page, save the colors used on a site, and more.
 
 ## Prerequisites
 To continue, you will need:
@@ -33,7 +35,7 @@ You will first need to create KV namespaces and queue required for the crawler b
 
 To set up KV namespaces:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers & Pages** > **KV**. 
+2. Go to **Workers & Pages** > **KV**.
 3. Select **Create a namespace**, enter `crawler_links`, and select **Add**. Repeat to create another KV namespace called `crawler_screenshots`.
 
 ![Creating a KV namespace named crawler_links](/queues/tutorials/web-crawler-with-browser-rendering/create-kv-namespaces.png)
@@ -41,13 +43,13 @@ To set up KV namespaces:
 ### Set up a Queue
 To set up a Queue:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers & Pages** > **Queues**. 
+2. Go to **Workers & Pages** > **Queues**.
 3. Select **Create queue**.
 4. Enter a queue name and select **Create queue**.
 
 ![Creating a queue named queues-web-crawler](/queues/tutorials/web-crawler-with-browser-rendering/create-queue.png)
 
-## 2. Create a Worker 
+## 2. Create a Worker
 
 Create a new Worker with the C3 (`create-cloudflare-cli`) CLI, a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
@@ -61,7 +63,7 @@ $ npm create cloudflare@latest # or yarn create cloudflare
 C3 will then prompt you for some information on your Worker.
 
 1. Provide a name for your Worker. This is also the name of the new directory where the Worker will be created.
-2. For the question `What type of application do you want to create?`, select `"Hello World" script`.
+2. For the question `What type of application do you want to create?`, select `"Hello World" Worker`.
 3. For the question `Would you like to use TypeScript? (y/n)`, select `y`.
 4. For the question `Do you want to deploy your application?`, select `n`.
 
@@ -69,7 +71,7 @@ This will create the crawler Worker.
 
 ## 3. Configure your Worker
 
-In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and queue you created previously, which will allow you to access KV and the queue from the Worker. 
+In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and queue you created previously, which will allow you to access KV and the queue from the Worker.
 
 ```toml
 ---
@@ -80,7 +82,6 @@ name = "queues-web-crawler"
 main = "src/index.ts"
 compatibility_date = "2023-06-09"
 node_compat = true
-usage_model = "unbound"
 
 browser = { binding = "CRAWLER_BROWSER", type = "browser" }
 
@@ -91,7 +92,7 @@ kv_namespaces = [
 
 [[queues.consumers]]
   queue = "<queue name here>"
-  max_batch_timeout = 60 
+  max_batch_timeout = 60
 
 [[queues.producers]]
  queue = "<queue name here>"
@@ -104,7 +105,7 @@ To find the KV namespace IDs in the [Cloudflare dashboard](https://dash.cloudfla
 
 Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
-Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits. 
+Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits.
 
 Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more about usage models.
 
@@ -114,7 +115,7 @@ Add the bindings to the environment interface in `src/index.ts`, so TypeScript c
 
 ```ts
 ---
-filename: src/index.ts 
+filename: src/index.ts
 ---
 import { BrowserWorker } from "@cloudflare/puppeteer";
 
@@ -132,7 +133,7 @@ Add a `fetch()` handler to the Worker to submit links to crawl.
 
 ```ts
 ---
-filename: src/index.ts 
+filename: src/index.ts
 ---
 type Message = {
   url: string;
@@ -308,7 +309,7 @@ try {
 
 This snippet saves the results from `crawlPage` into the appropriate KV namespaces. If an unexpected error occurred, the URL will be retried and resent to the queue again.
 
-Saving the timestamp of the crawl in KV helps you avoid crawling too frequently. 
+Saving the timestamp of the crawl in KV helps you avoid crawling too frequently.
 
 Add a snippet before checking `robots.txt` to check KV for a crawl within the last hour. This lists all KV keys beginning with the same URL (crawls of the same page), and check if any crawls have been done within the last hour. If any crawls have been done within the last hour, the message is `ack`'ed and not retried.
 
@@ -327,7 +328,7 @@ for (const message of batch.messages) {
   const sameUrlCrawls = await env.CRAWLER_LINKS_KV.list({
     prefix: `${encodeURIComponent(url)}`,
   });
- 
+
   let shouldSkip = false;
   for (const key of sameUrlCrawls.keys) {
     if (timestamp - (key.metadata as KeyMetadata)?.date < 60 * 60 * 1000) {
@@ -340,12 +341,12 @@ for (const message of batch.messages) {
   if (shouldSkip) {
     continue;
   }
-  
+
   let isAllowed = true;
   // ...
 ```
 
-## 7. Deploy your Worker 
+## 7. Deploy your Worker
 
 To deploy your Worker, run the following command:
 

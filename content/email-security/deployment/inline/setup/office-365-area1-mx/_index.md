@@ -2,7 +2,6 @@
 title: Office 365 - Area 1 as MX Record
 pcx_content_type: integration-guide
 weight: 1
-layout: single
 meta:
    title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
 updated: 2023-01-12
@@ -284,7 +283,7 @@ The following steps are only required if you have not previously customized your
 
 1. Run PowerShell as administrator, and execute the following command. Reply `Yes` when prompted:
 
-```txt
+```powershell
 PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 ```
 
@@ -294,19 +293,19 @@ PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 
 2. Run the following commands to execute the policy change and connect to the Office 365 instance:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> set-executionpolicy remotesigned
     ```
 
     Confirm that you want to execute the policy change, and then run the following command:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> Import-Module ExchangeOnlineManagement
     ```
 
     Finally, run the following to authenticate against your Office 365 instance:
 
-    ```txt
+    ```powershell
     PS C:\Windows\system32> Connect-ExchangeOnline
     ```
 
@@ -318,7 +317,7 @@ PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
 
 4. You can verify that the `OrganizationCustomization` is enabled by running the command:
 
-```txt
+```powershell
 PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
 ```
 
@@ -326,7 +325,7 @@ PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
 
 If the result is `false`, `OrganizationCustomization` is already enabled and no further actions are required. If it is true, you need to enable it:
 
-```txt
+```powershell
 PS C:\> Enable-OrganizationCustomization
 ```
 

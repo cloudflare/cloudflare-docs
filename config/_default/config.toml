@@ -1,4 +1,4 @@
-baseURL = "https://developers.cloudflare.com"
+baseURL = "https://developers.cloudflare.com/"
 
 title = "Cloudflare Docs"
 languageCode = "en"
@@ -7,7 +7,7 @@ disableHugoGeneratorInject = true
 enableRobotsTXT = false
 summaryLength = 30
 disableAliases = true
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy", "term"]
 timeout = "120s"
 
 enableEmoji = true
@@ -16,7 +16,7 @@ enableGitInfo = true
 paginate = 12 # default 10
 paginatePath = "page" # default
 
-# Coveo is a search solution - the following read-only token is used from the frontend to execute search queries
+# Coveo is a search solution - the following read-only token is used from the frontend to execute search queries
 [params.coveo]
 org = "cloudflareproduction7iy98g48"
 token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"

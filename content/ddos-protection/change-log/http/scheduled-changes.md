@@ -2,7 +2,7 @@
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
+layout: wide
 meta:
     title: Scheduled changes — HTTP DDoS
 ---
@@ -24,13 +24,13 @@ meta:
   </thead>
   <tbody>
     <tr>
-      <td>2024-01-15</td>
-      <td>2024-01-23</td>
-      <td>...2de94fb2</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #3).</td>
-      <td>block</td>
-      <td>ddos_dynamic</td>
-      <td>Expand the rule to look at more requests</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

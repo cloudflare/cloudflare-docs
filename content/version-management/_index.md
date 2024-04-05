@@ -23,11 +23,9 @@ By using Version Management, you can:
 
 For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
 
-{{<Aside type="warning" header="Warning">}}
+## Limitations
 
 {{<render file="_product-limitations.md">}}
-
-{{</Aside>}}
 
 ## Requirements
 

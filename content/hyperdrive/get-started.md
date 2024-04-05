@@ -1,5 +1,5 @@
 ---
-weight: 1
+weight: 2
 title: Get started
 pcx_content_type: get-started
 ---
@@ -60,7 +60,7 @@ $ npm create cloudflare@latest
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
 - Name your directory `hyperdrive-tutorial`.
-- Choose `"Hello World" script` for the type of application.
+- Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using Git.
 - Select `no` to deploying.
@@ -145,7 +145,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -214,7 +214,13 @@ export default {
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+		const client = new Client({
+      host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			port: Number(env.HYPERDRIVE.port),
+			database: env.HYPERDRIVE.database
+		})
 
 		try {
 			// Connect to your database
@@ -257,8 +263,8 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 ## Next steps
 
-- Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/).
-- How to [configure query caching](/hyperdrive/learning/query-caching/).
-- [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
+- Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+- How to [configure query caching](/hyperdrive/configuration/query-caching/).
+- [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

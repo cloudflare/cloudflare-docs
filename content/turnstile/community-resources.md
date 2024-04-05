@@ -1,8 +1,7 @@
 ---
 title: Community resources
 pcx_content_type: reference
-weight: 13
-layout: list
+weight: 12
 structured_data: true
 ---
 
@@ -46,7 +45,7 @@ Libraries that only support the server-side validation of Turnstile:
 
 - [fastify-cloudflare-turnstile](https://www.npmjs.com/package/fastify-cloudflare-turnstile)
 
-## Fullstack libraries
+## Full-stack libraries
 
 Libraries that both support the both client-side rendering and server-side validation of Turnstile:
 
@@ -68,4 +67,6 @@ Turnstile integrations for popular content management systems:
 
 Other resources related to integrating Turnstile:
 
-- [TypeScript definitions](https://www.npmjs.com/package/turnstile-types)
+- TypeScript definitions
+  - [turnstile-types](https://www.npmjs.com/package/turnstile-types)
+  - [@types/cloudflare-turnstile](https://www.npmjs.com/package/@types/cloudflare-turnstile)

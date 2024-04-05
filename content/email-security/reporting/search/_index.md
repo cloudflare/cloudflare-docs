@@ -1,7 +1,6 @@
 ---
 title: Search
 pcx_content_type: concept
-layout: single
 weight: 1
 meta:
     description: Search for messages with a detection disposition or that have been processeded by Area 1.

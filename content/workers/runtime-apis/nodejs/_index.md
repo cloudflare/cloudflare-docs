@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Node.js compatibility
-layout: single
 meta:
   description: Implemented Node.js runtime APIs and enablement instructions for your Worker project.
 ---
@@ -56,6 +55,17 @@ To enable Node.js for your Pages Function from the Cloudflare dashboard:
 2. Select **Workers & Pages** and in **Overview**, select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+
+### Enable only AsyncLocalStorage
+
+To enable the Node.js `AsyncLocalStorage` API only, use the `nodejs_als` compatibility flag.
+
+```toml
+---
+header:wrangler.toml
+---
+compatibility_flags = [ "nodejs_als" ]
+```
 
 ## Related resources
 

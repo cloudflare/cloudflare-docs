@@ -13,7 +13,7 @@ You can start the update process for a zone in the Cloudflare dashboard or via A
 Once the migration finishes, the **Managed rules** tab in the Cloudflare dashboard (available in **Security** > **WAF** > **Managed rules**) will display a new interface, and the WAF managed rules APIs will stop working.
 
 {{<Aside type="warning" header="Deprecation notice">}}
-**The previous version of WAF managed rules is now deprecated.** The [APIs for managing the previous version of WAF managed rules](#api-changes) will stop working on 2024-05-01. The same applies to [Terraform resources](#terraform-changes) related to the previous version of WAF managed rules. You must migrate before this date to avoid any issues.
+**The previous version of WAF managed rules is now deprecated.** The [APIs for managing the previous version of WAF managed rules](#api-changes) will stop working on 2024-07-01. The same applies to [Terraform resources](#terraform-changes) related to the previous version of WAF managed rules. You must migrate before this date to avoid any issues.
 
 Refer to [Possible migration errors](#possible-migration-errors) if you are having issues migrating.
 {{</Aside>}}
@@ -54,9 +54,11 @@ The update process will create an equivalent configuration for the following set
 
 ### Configurations that will be lost in the update process
 
-The update process will not migrate any settings of the OWASP ModSecurity Core Rule Set, available in the previous version of WAF managed rules.
+The update process will not migrate most settings of the OWASP ModSecurity Core Rule Set available in the previous version of WAF managed rules, including the sensitivity and any group/rule overrides. The OWASP versions in the two WAF implementations (old and new) are quite different, and there is no direct equivalence between rules in the two versions.
 
-The OWASP version in the two WAF implementations (old and new) are quite different, and there is no direct equivalence between rules in the two versions. You will need to configure the Cloudflare OWASP Core Ruleset in WAF Managed Rules again according to your needs. For more information on configuring this Managed Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
+The only setting that will be migrated is the configured action, which has a direct mapping to the OWASP action in the new WAF Managed Rules implementation (the _Simulate_ action is migrated as _Log_).
+
+Since most settings will not be migrated, you will need to configure the Cloudflare OWASP Core Ruleset in WAF Managed Rules again according to your needs, namely the score threshold, the paranoia level, and any tag/rule overrides. For more information on configuring this managed ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
 
 ### Configurations that will prevent you from updating
 
@@ -158,7 +160,7 @@ You can start the WAF update in the Cloudflare dashboard or via API.
 
 3. In the update banner, select **Review configuration**. This banner is only displayed in eligible zones.
 
-4. Review the proposed WAF configuration rules. You can make adjustments to the proposed configuration, like [editing the WAF Managed Rules configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or creating [WAF exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of rulesets or specific rules.
+4. Review the proposed WAF configuration rules. You can make adjustments to the proposed configuration, like [editing the WAF Managed Rules configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or creating [exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of rulesets or specific rules.
 
 5. When you are done reviewing, select **Deploy** to deploy the new WAF Managed Rules configuration.
 
@@ -263,6 +265,7 @@ The returned configuration in the example above, which would match the existing 
     curl --request PUT \
     "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=validation&phase_two=1" \
     --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "default",
       "rules": [
@@ -297,6 +300,7 @@ The returned configuration in the example above, which would match the existing 
     curl --request PUT \
     "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=pending&phase_two=1" \
     --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "default",
       "rules": [
@@ -519,4 +523,4 @@ ___
 
 The concept of paranoia level did not exist in the OWASP version (2.x) used in WAF managed rules. Based on the OWASP guide recommendations, the WAF migration process will set the paranoia level of the Cloudflare OWASP Core Ruleset to _PL2_.
 
-You cannot disable the new version of WAF Managed Rules using [Page Rules](/rules/page-rules/), since the _Web Application Firewall: Off_ setting in Page Rules only applies to the previous version of WAF managed rules. To disable the new WAF Managed Rules you must [configure WAF exceptions](/waf/managed-rules/waf-exceptions/) (also known as skip rules).
+You cannot disable the new version of WAF Managed Rules using [Page Rules](/rules/page-rules/), since the _Web Application Firewall: Off_ setting in Page Rules only applies to the previous version of WAF managed rules. To disable the new WAF Managed Rules you must configure [exceptions](/waf/managed-rules/waf-exceptions/) (also known as skip rules).

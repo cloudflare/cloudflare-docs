@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Downloads
 weight: 2
-layout: single
 ---
 
 # Downloads

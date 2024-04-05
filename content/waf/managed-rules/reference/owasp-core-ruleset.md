@@ -150,6 +150,7 @@ highlight: 9-20
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "action": "execute",
   "action_parameters": {
@@ -182,7 +183,7 @@ For more information on creating overrides, refer to [Override a managed ruleset
 To define the score threshold value, or to specify the action to perform when the threat score is greater than the threshold, create a rule override for the last rule in the managed ruleset that:
 
 * Specifies the action to take in the `action` property.
-* Defines the desired threat score threshold (an integer value) in the `score_threshold` property.
+* Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.
 
 #### Example
 
@@ -338,11 +339,12 @@ highlight: 12,14-16
 
 ```bash
 ---
-highlight: 9-17
+highlight: 10-18
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "action": "execute",
   "action_parameters": {

@@ -84,12 +84,12 @@ You can associate videos with a single creator by setting a default creator ID v
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/live_inputs"
-–header ‘X-Auth-Email: --’
-–header ‘X-Auth-Key: --’
-–data ‘{“DefaultCreator”:“1234”}’
+–header 'X-Auth-Email: --'
+–header 'X-Auth-Key: --'
+–data '{"DefaultCreator":"1234"}'
 ```
 
-If you have multiple creators who start live streams, [create a live input](/stream/get-started/#step-1-create-a-live-input) for each creator who will live stream and then set a `DefaultCreator` value per input. Setting the default creator ID for each input ensures that any recorded videos streamed from the creator's input will inherit the `DefaultCreator` value. 
+If you have multiple creators who start live streams, [create a live input](/stream/get-started/#step-1-create-a-live-input) for each creator who will live stream and then set a `DefaultCreator` value per input. Setting the default creator ID for each input ensures that any recorded videos streamed from the creator's input will inherit the `DefaultCreator` value.
 
 At this time, you can only manage the default creator ID values via the API.
 
@@ -100,7 +100,7 @@ To update the creator property in existing videos, make a POST request to the vi
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" \
   -H "Authorization: Bearer <AUTH_TOKEN>" \
-  -d '{"creator":"test123"}'  
+  -d '{"creator":"test123"}'
 ```
 
 ## Direct creator upload

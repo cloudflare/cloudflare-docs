@@ -1,60 +1,62 @@
 ---
-title: Workers - Wrangler
+title: Deploy a Workers AI project
 pcx_content_type: get-started
-weight: 2
+weight: 1
+meta:
+  description: Deploy your first Workers AI project using Cloudflare Workers.
 ---
 
-# Get started - Workers AI local dev
+# Get started with Workers
 
-In this guide, you will get started with Workers AI, experiment with a large language model (LLM), and deploy your first AI powered app on the Workers platform.
+This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
-## Before you begin
+{{<render file="/_workers-learning-path.md" productFolder="/workers/" >}}
 
-[Setup your local development environment](/workers-ai/get-started/local-dev-setup/), if this is your first time developing with Wrangler.
+{{<render file="_prereqs.md" productFolder="/workers/" >}}
 
-## 1. Create a Workers project
+## Get started in the dashboard
+
+This guide uses the command line. To instead create your Workers AI application using the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers & Pages** > **Create application**.
+3. Under **Create using a template**, select **LLM App**. After you select your template, an AI binding will be created for you in the dashboard.
+4. Review the pregenerated code and select **Deploy**.
+5. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
+
+## 1. Create a Worker project
+
+You will create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
 Create a new project named `hello-ai` by running:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
 
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
+Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI. 
 
 When setting up your `hello-ai` Worker, answer the setup questions as follows:
 
-* Enter `hello-ai` for the directory to create in
-* Choose `"Hello World" script` for the type of application
-* Select `yes` to using TypeScript
-* Select `yes` to using Git
-* Select `no` to deploying
+* Enter `hello-ai` for the directory to create in.
+* Choose `"Hello World" Worker` for the type of application.
+* Select `yes` to using TypeScript.
+* Select `yes` to using Git.
+* Select `no` to deploying.
 
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
-* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`
+* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
-Navigate to your app directory:
+
+Go to your application directory:
+
 ```sh
 $ cd hello-ai
 ```
 
 ## 2. Connect your Worker to Workers AI
 
-You must create a binding for your Worker to connect to Workers AI. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources or services, like Workers AI, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -64,13 +66,17 @@ filename: wrangler.toml
 ---
 
 [ai]
-binding = "AI" # i.e. available in your Worker on env.AI
+binding = "AI"
 ```
+
+Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
 <!-- TODO update this once we know if we'll have it -->
 You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#workers-ai).
 
-## 3. Install the Workers AI client library
+## 3. Install the Workers AI SDK
+
+The Workers AI SDK makes Workers AI APIs available for use in your code. To import the Workers AI SDK, run the following command in your application directory:
 
 {{<tabs labels="npm | yarn">}}
 {{<tab label="npm" default="true">}}
@@ -93,9 +99,9 @@ $ yarn add --dev @cloudflare/ai
 
 ## 4. Run an inference task in your Worker
 
-Now we are ready to run an inference task in our Worker. In this case, we will use an LLM, like Llama 2, to answer a question.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/), to answer a question.
 
-Go to your `hello-ai` and update the `index.ts` with the following code:
+Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
 ```typescript
 ---
@@ -123,21 +129,19 @@ export default {
 };
 ```
 
-After configuring your Worker, you can test your project locally before you deploy globally.
+Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 2 model. You can now test your project locally before you deploy globally.
 
 ## 5. Develop locally with Wrangler
 
-While in your project directory, test Workers AI locally by running. Note, you will be prompted to login at this time:
+While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-$ npx wrangler dev --remote
+$ npx wrangler dev
 ```
 
-{{<Aside type="warning">}}
-Be sure to include the `--remote`. This proxies Workers AI requests to the Cloudflare network as the dev environment is not currently capable of running them locally.
-{{</Aside>}}
+{{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
-When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message:
+You will be prompted to log in after you run the `wrangler dev`. When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you go to the URL Wrangler provides, a message will render that resembles the following example:
 
 ```json
 {
@@ -146,7 +150,6 @@ When you run `npx wrangler dev`, Wrangler will give you a URL (most likely `loca
   }
 }
 ```
-
 
 ## 6. Deploy your AI Worker
 
@@ -165,10 +168,11 @@ $ npx wrangler deploy
 # Outputs: https://hello-ai.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
-You can now visit the URL to run your AI Worker.
+Your Worker will be deployed to your custom [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain. You can now visit the URL to run your AI Worker.
 
-By finishing this tutorial, you have created a Worker, connected it to Workers AI, and ran an inference tasks from your model.
+By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from the Llama 2 model.
 
-## Next steps
+## Related resources
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+- [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
+- [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
