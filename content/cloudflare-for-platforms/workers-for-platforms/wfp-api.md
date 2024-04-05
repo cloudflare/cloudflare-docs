@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: WFP HTTP API
+title: WFP REST API
 external_link: /api/operations/namespace-worker-list
 weight: 20
 _build:

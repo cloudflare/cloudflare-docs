@@ -21,7 +21,7 @@ Workers for Platforms will be available as new pay-as-you-go offering on April 1
 {{</Aside>}}
 
 
-Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your user's code, create custom logic, and use additional APIs such as [script tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) for bulk operations.
+Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your users' code, create custom logic, and use additional APIs such as [script tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) for bulk operations.
 
 Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
 
