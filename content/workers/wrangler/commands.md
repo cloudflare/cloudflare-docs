@@ -875,7 +875,7 @@ None of the options for this command are required. Also, many can be set in your
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 - `--dispatch-namespace` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) to upload this Worker to.
+  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 
 {{</definitions>}}
 
@@ -2198,7 +2198,7 @@ wrangler whoami
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option. 
+The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2288,7 +2288,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option. 
+The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2296,7 +2296,7 @@ The minimum required wrangler version to use these commands is 3.40.0.
 
 ### `deploy`
 
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload). 
+Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
 
 
 ```txt
@@ -2365,14 +2365,14 @@ wrangler deployments list [OPTIONS]
 
 {{<Aside type="note">}}
 
-The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option. 
+The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0. 
+The minimum required wrangler version to use these commands is 3.40.0.
 {{</Aside>}}
 
 ### `list --experimental-versions`
- 
-Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment. 
+
+Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
 wrangler deployments list [OPTIONS] --experimental-versions
@@ -2390,7 +2390,7 @@ wrangler deployments list [OPTIONS] --experimental-versions
 
 ### `status`
 
-Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment. 
+Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
 wrangler deployments status --experimental-versions
@@ -2450,7 +2450,7 @@ wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for version commands. Can be replaced with `--x-versions`.
 - `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version. 
+  - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

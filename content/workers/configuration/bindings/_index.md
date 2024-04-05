@@ -81,7 +81,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-- Create your first [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#3-create-a-dynamic-dispatch-worker).
+- Create your first [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-create-a-dispatch-worker).
 
 ### mTLS certificate bindings
 
