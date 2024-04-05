@@ -10,9 +10,9 @@ A Durable Object stub is a client Object used to send requests to a remote Durab
 
 `OBJECT_NAMESPACE.get(id)` creates a Durable Object.
 
-Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. 
+Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier.
 
-However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/reference/troubleshooting/). 
+However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/reference/troubleshooting/).
 
 To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Durable Object stub. There are no ordering guarantees between requests to the new stub compared to the old one. If ordering is not a concern, you can create a new Durable Object for every request.
 
@@ -53,7 +53,7 @@ You can call a Durable Object by:
 
 ### Call RPC methods
 
-To use RPC, a Durable Objects class must extend the built-in type `DurableObject`. Then, public methods on a Durable Objects class are exposed as [RPC methods](/workers/runtime-apis/rpc/), which you can call from a Durable Object stub in a Worker. All RPC calls are [asynchronous](/workers/runtime-apis/rpc/lifecycle), accept and return [serializable types](/workers/runtime-apis/rpc/supported-types), and [propagate exceptions](/workers/runtime-apis/rpc/error-handling) to the caller without a stack trace. Refer to [Workers RPC](/workers/runtime-apis/rpc/supported-types) for complete details.
+To use RPC, a Durable Objects class must extend the built-in type `DurableObject`. Then, public methods on a Durable Objects class are exposed as [RPC methods](/workers/runtime-apis/rpc/), which you can call from a Durable Object stub in a Worker. All RPC calls are [asynchronous](/workers/runtime-apis/rpc/lifecycle/), accept and return [serializable types](/workers/runtime-apis/rpc/supported-types/), and [propagate exceptions](/workers/runtime-apis/rpc/error-handling/) to the caller without a stack trace. Refer to [Workers RPC](/workers/runtime-apis/rpc/supported-types/) for complete details.
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
