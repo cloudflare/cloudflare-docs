@@ -15,7 +15,7 @@ You can use Service bindings to create your own internal APIs that your Worker m
 The [RPC system in Workers](/workers/runtime-apis/rpc) is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
 {{<Aside type="note">}}
-You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs/#rpc-methods).
+You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#rpc-methods).
 {{</Aside>}}
 
 ## Example
@@ -66,7 +66,7 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default class extends WorkerEntrypoint {
   fetch() { return new Response("Hello from my-worker"); }
-  
+
   async greet(name) {
     return this.env.GREETING + name;
   }
@@ -86,7 +86,7 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default class extends WorkerEntrypoint {
   fetch() { return new Response("Hello from my-worker"); }
-  
+
   async signup(email, name) {
     // sendEvent() will continue running, even after this method returns a value to the caller
     this.ctx.waitUntil(this.#sendEvent("signup", email))
