@@ -2,16 +2,16 @@
 pcx_content_type: configuration
 title: Gradual deployments
 meta:
-  description: Incrementally deploy code changes to your Workers with gradual deployments. 
+  description: Incrementally deploy code changes to your Workers with gradual deployments.
 ---
 
 {{<heading-pill style="beta">}}Gradual deployments{{</heading-pill>}}
 
-Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions. 
+Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions.
 
 ![Gradual Deployments](/images/workers/platform/versions-and-deployments/gradual-deployments.png)
 
-Using gradual deployments, you can: 
+Using gradual deployments, you can:
 
 - Gradually shift traffic to a newer version of your Worker.
 - Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability--logs-analytics-metrics) tooling.
@@ -32,13 +32,13 @@ The following section guides you through an example usage of gradual deployments
 - Create a new Worker.
 - Publish a new version of that Worker without deploying it.
 - Create a gradual deployment between the two versions.
-- Progress the deployment of the new version to 100% of traffic. 
+- Progress the deployment of the new version to 100% of traffic.
 
 ### Via Wrangler
 
 {{<Aside type="note">}}
 
-Minimum required wrangler version: 3.40.0. 
+Minimum required wrangler version: 3.40.0.
 
 {{</Aside>}}
 
@@ -61,11 +61,11 @@ To create a new version of the Worker, edit the Worker code by changing the `Res
 $ npx wrangler versions upload --experimental-versions
 ```
 
-This will create a new version of the Worker that is not automatically deployed. 
+This will create a new version of the Worker that is not automatically deployed.
 
 #### 3. Create a new deployment
 
-Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) command to 
+Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) command to
 create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
 ```sh
@@ -82,11 +82,11 @@ do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
 done
 ```
-You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](/workers/configuration/versions-and-deployments/gradual-deployments/#3-create-a-new-deployment). 
+You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](/workers/configuration/versions-and-deployments/gradual-deployments/#3-create-a-new-deployment).
 
 #### 5. Set your new version to 100% deployment
 
-Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment. 
+Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment.
 
 ```sh
 $ npx wrangler versions deploy --experimental-versions
@@ -96,11 +96,11 @@ $ npx wrangler versions deploy --experimental-versions
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your account.
 2. Go to **Workers & Pages**.
-3. Select **Create application** > **Hello World** template > deploy your Worker. 
-4. Once the Worker is deployed, go to the online code editor through **Edit code**. Edit the Worker code (change the `Response` content) and upload the Worker. 
+3. Select **Create application** > **Hello World** template > deploy your Worker.
+4. Once the Worker is deployed, go to the online code editor through **Edit code**. Edit the Worker code (change the `Response` content) and upload the Worker.
 5. To save changes, select the **down arrow** next to **Deploy** > **Save**. This will create a new version of your Worker.
-6. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**. 
-7. cURL your Worker to test the split deployment. 
+6. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
+7. cURL your Worker to test the split deployment.
 
 ```sh
 for j in {0..10}
@@ -108,13 +108,13 @@ do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
 done
 ```
-You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in step #6. 
+You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in step #6.
 
 ## Version affinity
 
-By default, the percentages configured when using gradual deployments operate on a per-request basis — a request has a X% probability of invoking one of two versions of the Worker in the [deployment](/workers/configuration/versions-and-deployments/#deployments). 
+By default, the percentages configured when using gradual deployments operate on a per-request basis — a request has a X% probability of invoking one of two versions of the Worker in the [deployment](/workers/configuration/versions-and-deployments/#deployments).
 
-You may want requests associated with a particular identifier (such as user, session, or any unique ID) to be handled by a consistent version of your Worker to prevent version skew. Version skew occurs when there are multiple versions of an application deployed that are not forwards/backwards compatible. You can configure version affinity to prevent the Worker's version from changing back and forth on a per-request basis. 
+You may want requests associated with a particular identifier (such as user, session, or any unique ID) to be handled by a consistent version of your Worker to prevent version skew. Version skew occurs when there are multiple versions of an application deployed that are not forwards/backwards compatible. You can configure version affinity to prevent the Worker's version from changing back and forth on a per-request basis.
 
 You can do this by setting the `Cloudflare-Workers-Version-Key` header on the incoming request to your Worker. For example:
 
@@ -159,7 +159,7 @@ When you create a new gradual deployment for a Durable Object Worker, each Durab
 
 ### Example
 
-This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/configuration/access-durable-object-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
+This example assumes that you have previously created 3 Durable Objects and [derived their IDs from the names](/durable-objects/best-practices/access-durable-objects-from-a-worker/#derive-ids-from-names) "foo", "bar" and "baz".
 
 Your Worker is currently on a version that we will call version "A" and you want to gradually deploy a new version "B" of your Worker.
 
@@ -192,7 +192,7 @@ When using gradual deployments, you may want to attribute Workers invocations to
 
 ### Logpush
 
-A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logging/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call: 
+A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logging/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call:
 
 ```sh
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
@@ -223,15 +223,15 @@ Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metada
 
 ## Limits
 
-### Deployments limit 
+### Deployments limit
 
-You can only create a new deployment with the last 10 uploaded versions of your Worker. 
+You can only create a new deployment with the last 10 uploaded versions of your Worker.
 
 ### Unsupported features
 
-These Workers features will be supported in the near future. 
+These Workers features will be supported in the near future.
 
 - Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
-- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding. 
-- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled. 
-- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/). 
+- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding.
+- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled.
+- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
