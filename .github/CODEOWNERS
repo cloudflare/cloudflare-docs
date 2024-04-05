@@ -74,6 +74,7 @@
 /content/hyperdrive/ @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/hyperdrive.yaml @elithrar @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/durable-objects.yaml @elithrar @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/images/ @dcpena @cloudflare/pcx-technical-writing @renandincer
 /content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
