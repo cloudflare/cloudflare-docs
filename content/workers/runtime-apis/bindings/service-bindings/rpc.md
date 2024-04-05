@@ -102,9 +102,9 @@ export default class extends WorkerEntrypoint {
 
 ## Named entrypoints
 
-Additionally, it is also possible to export any number of named `WorkerEntrypoint` classes from within a single Worker, in addition to the default export. These can also be bound directly to with a Service binding.
+You can also export any number of named `WorkerEntrypoint` classes from within a single Worker, in addition to the default export. You can then declare a Service binding to a specific named entrypoint.
 
-This can be useful if you have multiple pieces of compute that are grouped together in some respect. For example, you might create different `WorkerEntrypoint`s containing a set of operations available for each permission role in your application.
+You can use this to group multiple pieces of compute together. For example, you might create a distinct `WorkerEntrypoint` for each permission role in your application, and use these to provide role-specific RPC methods:
 
 ```toml
 ---
@@ -183,9 +183,9 @@ export default {
 };
 ```
 
-More information about configuring [D1](/workers/wrangler/configuration/#d1-databases) and [Service bindings](/workers/wrangler/configuration/#service-bindings) can be found in the Wrangler documentation.
+You can learn more about how to configure D1 [here](/d1/get-started/#4-bind-your-worker-to-your-d1-database)
 
-Additionally, a complete example of this to do app, as well as another example of a Discord bot built with named entrypoints, can be found in our [js-rpc-and-entrypoints-demo repository on GitHub](https://github.com/cloudflare/js-rpc-and-entrypoints-demo).
+You can try out a complete example of this to do app, as well as a Discord bot built with named entrypoints, by cloning the [cloudflare/js-rpc-and-entrypoints-demo repository](https://github.com/cloudflare/js-rpc-and-entrypoints-demo) from Github.
 
 ## Further reading
 

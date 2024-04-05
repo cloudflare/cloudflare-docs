@@ -891,7 +891,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `entrypoint` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the entrypoint to bind to, if not the default export.
+  - The name of the [entrypoint](content/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to. If you do not provide a value, the default export of the Worker will be used.
 
 {{</definitions>}}
 
