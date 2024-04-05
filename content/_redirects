@@ -311,9 +311,11 @@
 /durable-objects/learning/durable-objects-migrations/ /durable-objects/reference/durable-objects-migrations/ 301
 /durable-objects/learning/websockets/ /durable-objects/reference/websockets/ 301
 /durable-objects/examples/durable-object-location-example/ /durable-objects/examples/durable-object-in-memory-state/ 301
-/durable-objects/how-to/ /durable-objects/configuration/ 301
-/durable-objects/how-to/access-durable-object-from-a-worker/ /durable-objects/configuration/access-durable-object-from-a-worker/ 301
-/durable-objects/how-to/create-durable-object-stubs/ /durable-objects/configuration/create-durable-object-stubs/ 301
+/durable-objects/how-to/ /durable-objects/best-practices/ 301
+/durable-objects/how-to/access-durable-object-from-a-worker/ /durable-objects/best-practices/access-durable-objects-from-a-worker/ 301
+/durable-objects/how-to/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
+/durable-objects/configuration/access-durable-object-from-a-worker/ /durable-objects/best-practices/access-durable-objects-from-a-worker/ 301
+/durable-objects/configuration/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
