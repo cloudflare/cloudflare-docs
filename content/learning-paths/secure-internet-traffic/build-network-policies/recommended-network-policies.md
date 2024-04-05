@@ -9,7 +9,7 @@ We recommend you add the following network policies to build an Internet and Saa
 
 {{<details header="Quarantined-Users-NET-Restricted-Access" open="true">}}
 
-Restrict access for users included in a {{<glossary-tooltip term_id="identity provider">}}identity provider (IdP){{</glossary-tooltip>}} user group for risky users. This policy ensures your security team can restrict traffic for users of whom malicious or suspicious activity was detected.
+{{<render file="zero-trust/_blocklist-restricted-users.md">}}
 
 | Selector         | Operator    | Value                               | Logic | Action |
 | ---------------- | ----------- | ----------------------------------- | ----- | ------ |

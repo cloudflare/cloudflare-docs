@@ -77,6 +77,17 @@ Security teams often need to perform threat analysis or malware testing could tr
 
 {{</details>}}
 
+{{<details header="Quarantined-Users-HTTP-Restricted-Access" open="true">}}
+
+{{<render file="zero-trust/_blocklist-restricted-users.md">}}
+
+| Selector         | Operator    | Value                           | Logic | Action |
+| ---------------- | ----------- | ------------------------------- | ----- | ------ |
+| Destination IP   | not in list | _Quarantined-Users-IPAllowlist_ | And   | Block  |
+| User Group Names | in          | _Quarantined Users_             |       |        |
+
+{{</details>}}
+
 {{<details header="All-HTTP-Domain-Isolate" open="true">}}
 
 Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection. Ideally, your incident response teams can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
