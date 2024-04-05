@@ -1852,7 +1852,6 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Run on your local machine.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
-  - The location of the single Worker file if not using functions.
 - `--binding` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

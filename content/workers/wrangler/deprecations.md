@@ -47,9 +47,9 @@ Use [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pa
 
 `wrangler dev` automatically persists data by default so this option is no longer necessary.
 
-#### `-- <command>`, `--proxy` and `--script-path` in `wrangler pages dev`
+#### `-- <command>`, `--proxy`, and `--script-path` in `wrangler pages dev`
 
-These options prevent `wrangler pages dev` from being able to accurately emulate production's behavior for serving static assets and have therefore been deprecated. Instead of relying on Wrangler to proxy through to some other upstream dev server, more accurate behavior can be emulated by building your static assets to a directory and pointing Wrangler to that with `wrangler pages dev <directory>`.
+These options prevent `wrangler pages dev` from being able to accurately emulate production's behavior for serving static assets and have therefore been deprecated. Instead of relying on Wrangler to proxy through to some other upstream dev server, you can emulate a more accurate behavior by building your static assets to a directory and pointing Wrangler to that directory with `wrangler pages dev <directory>`.
 
 ## Wrangler v2
 
