@@ -27,7 +27,7 @@ Calls TURN service is in open beta, rolling out between April 4 and 24, 2024 in 
 
 Calls TURN service is available in every Cloudflare datacenter. 
 
-When a client tries to connect to stun.cloudflare.com, it *automatically* connects to the Cloudflare location closest to them. We acheive this using Anycast. 
+When a client tries to connect to turn.cloudflare.com, it *automatically* connects to the Cloudflare location closest to them. We acheive this using Anycast. 
 
 To learn more about the architecture that makes this possible, read this [technical deep-dive about Calls](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
 
