@@ -1,6 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Error handling
+weight: 5
 meta:
   title: Workers RPC — Error Handling
   description: How exceptions, stack traces, and logging works with the Workers RPC system.
