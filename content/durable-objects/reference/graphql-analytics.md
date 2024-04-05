@@ -1,7 +1,7 @@
 ---
 title: Metrics and GraphQL analytics
 pcx_content_type: concept
-weight: 16
+weight: 6
 ---
 
 # Metrics and analytics

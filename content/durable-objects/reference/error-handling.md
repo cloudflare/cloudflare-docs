@@ -1,6 +1,7 @@
 ---
 title: Error handling
 pcx_content_type: concept
+weight: 4
 ---
 
 # Error handling
