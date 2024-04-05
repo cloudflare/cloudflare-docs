@@ -219,7 +219,7 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
   - The name of the new D1 database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
-  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
+  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
 
 ### `info`
