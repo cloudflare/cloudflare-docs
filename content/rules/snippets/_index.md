@@ -11,7 +11,7 @@ meta:
 Cloudflare Snippets (alpha) provide a flexible way to customize the behavior of your website or application using short pieces of JavaScript code. Use snippets to customize HTTP response headers, implement {{<glossary-tooltip term_id="JSON web token (JWT)" prepend="JSON web token (JWT) is ">}}JWT{{</glossary-tooltip>}} validation, define complex {{<glossary-tooltip term_id="redirect">}}redirect{{</glossary-tooltip>}} functionality, and more.
 
 {{<Aside type="note">}}
-[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets.
+We are [gradually rolling out](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans#we-are-rolling-out-access-to-cloudflare-snippets) access to Cloudflare Snippets. Keep your eyes out for the new Snippets tab in the dashboard's Rules section as we expand access throughout 2024!
 {{</Aside>}}
 
 ## Snippet elements
@@ -45,7 +45,7 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 ## Availability
 
-[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets (alpha).
+Cloudflare Snippets are [being rolled out](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans#we-are-rolling-out-access-to-cloudflare-snippets) gradually. Users will begin to notice Snippets appearing under the Rules tab of the zone-level menu on their dashboard throughout 2024.
 
 {{<feature-table id="rules.snippets">}}
 
