@@ -119,7 +119,7 @@ CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:
 
 ```sh
-$ wrangler d1 execute d1-example --remote --file schemas/schema.sql
+$ wrangler d1 execute d1-example --file schemas/schema.sql
 ```
 
 ## 5. Execute SQL
