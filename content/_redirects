@@ -316,6 +316,7 @@
 /durable-objects/how-to/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
 /durable-objects/configuration/access-durable-object-from-a-worker/ /durable-objects/best-practices/access-durable-objects-from-a-worker/ 301
 /durable-objects/configuration/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
+/durable-objects/configuration/durable-object-gradual-deployments/ /durable-objects/reference/durable-object-gradual-deployments/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
