@@ -232,9 +232,7 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
 | `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
 
-## React Native application support
-
-An HTML page rendered in a [WebView](https://github.com/react-native-webview/react-native-webview) can use Turnstile. The page must be loaded from a domain allowed to use the [sitekey](/turnstile/reference/domain-management/), either using `uri` or by specifying the `html` and `baseUrl` options.
+## Native mobile application support
 
 {{<Aside type="warning">}}
 Turnstile does not currently support native mobile applications, including those utilizing web views or embedded browsers. This applies to all mobile development frameworks and platforms, such as React Native, Swift for iOS, and Kotlin for Android, among others.

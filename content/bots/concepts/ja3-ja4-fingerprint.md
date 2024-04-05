@@ -1,19 +1,21 @@
 ---
 pcx_content_type: concept
-title: JA3 Fingerprint
+title: JA3/JA4 Fingerprint
 ---
 
-# JA3 Fingerprint
+# JA3/JA4 Fingerprint
 
-{{<render file="_ja3-fingerprint.md">}}
+{{<render file="_ja3-fingerprint.md">}} <br />
+
+{{<render file="_ja4-fingerprint.md">}}
 
 {{<Aside type="note">}}
-JA3 Fingerprints are only available to Enterprise customers who have purchased Bot Management.
+JA3 and JA4 fingerprints are only available to Enterprise customers who have purchased Bot Management.
 {{</Aside>}}
 
 ## Analytics
 
-To get more information about potential bot requests, use these JA3 Fingerprints in:
+To get more information about potential bot requests, use these JA3 and JA4 fingerprints in:
 
 - [Bot Analytics](/bots/bot-analytics/bm-subscription/)
 - [Security Events](/waf/analytics/security-events/) and [Security Analytics](/waf/analytics/security-analytics/)
@@ -32,7 +34,7 @@ To adjust how your application responds to specific fingerprints, use them with:
 
 ### Block or allow certain traffic
 
-A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [custom rule](/waf/custom-rules/) that blocks/challenges the JA3 used for the attack.
+A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [custom rule](/waf/custom-rules/) that blocks or challenges the JA3 used for the attack.
 
 Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [custom rule](/waf/custom-rules/) with the _Skip_ action allowing the JA3 seen across good requests.
 

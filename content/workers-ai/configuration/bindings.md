@@ -1,6 +1,7 @@
 ---
 pcx_content_type: configuration
-title: Bindings
+weight: 1
+title: Workers Bindings
 meta:
     description:
 ---

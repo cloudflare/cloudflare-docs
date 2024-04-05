@@ -29,6 +29,16 @@
   {{ end -}}
 {{- end -}}
 
+{{if eq $params.model.task.name "Text Generation" }}
+## Use the Playground
+
+Try out this model with Workers AI Model Playground. It does not require any setup or authentication and an instant way to preview and test a model directly in the browser.
+
+<a class="Button Button-is-docs-primary DocsMarkdown--link-content" href="https://playground.ai.cloudflare.com/?model={{$params.model.name}}" target="_blank">
+  Launch the Model Playground
+</a>
+{{end}}
+
 {{ .Scratch.Set "conditional-name" "code-examples" }}
 {{ partial "models/conditionally.md" . | markdownify}}
 

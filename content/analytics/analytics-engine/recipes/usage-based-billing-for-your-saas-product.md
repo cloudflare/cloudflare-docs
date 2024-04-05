@@ -1,9 +1,10 @@
 ---
-title: Usage-based billing for your SaaS product
+title: Usage-based billing
 pcx_content_type: how-to
 weight: 1
 meta:
-  title: Usage-based billing for your SaaS product
+  title: Usage-based billing
+  description: How to use Workers Analytics Engine to build usage-based billing into your SaaS product
 ---
 
 # Usage-based billing for your Software-as-a-Service product
