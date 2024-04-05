@@ -6,7 +6,15 @@ weight: 2
 
 # Alpha database migration guide
 
-D1 alpha databases will stop accepting live SQL queries on July 1, 2024. Since D1's open beta launched in October 2023, newly created databases use a different underlying architecture that is more reliable and performant. Users should follow the below migration guide to recreate alpha D1 databases on our production ready system.
+{{<Aside type="warning">}}
+
+D1 alpha databases will stop accepting live SQL queries on July 1, 2024.
+
+{{</Aside}}
+
+D1's open beta launched in October 2023, and newly created databases use a different underlying architecture that is significantly more reliable and performant, with increased database sizes, improved query throughput, and reduced latency.
+
+Users should follow the below migration guide to recreate alpha D1 databases on our production ready system.
 
 ### 1. Verify that the database is alpha
 ```sh
