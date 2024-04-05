@@ -891,7 +891,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `entrypoint` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the [entrypoint](content/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to. If you do not specify an entrypoint, the default export of the Worker will be used.
+  - The name of the [entrypoint](/content/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to. If you do not specify an entrypoint, the default export of the Worker will be used.
 
 {{</definitions>}}
 
@@ -1163,7 +1163,7 @@ Example:
 ---
 header: wrangler.toml
 ---
-upload_source_maps = true 
+upload_source_maps = true
 
 ```
 

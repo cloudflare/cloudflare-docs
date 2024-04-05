@@ -236,7 +236,7 @@ Here, three different workers are involved:
 2. `COUNTER_SERVICE`
 3. `ANOTHER_SERVICE`
 
-When `ANOTHER_SERVICE` calls a method on the `counter` that is passed to it, this call will automatically be proxied through the introducer and on to the [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) class implemented by `COUNTER_SERVICE`.
+When `ANOTHER_SERVICE` calls a method on the `counter` that is passed to it, this call will automatically be proxied through the introducer and on to the [`RpcTarget`](/workers/runtime-apis/rpc/) class implemented by `COUNTER_SERVICE`.
 
 In this way, the introducer Worker can connect two Workers that did not otherwise have any ability to form direct connections to each other.
 

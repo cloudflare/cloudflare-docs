@@ -128,7 +128,7 @@ If you decide you want to keep a returned stub beyond the scope of the `using` d
 
 ## Disposers and `RpcTarget` classes
 
-A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/compatible-types) can optionally implement a disposer:
+A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/) can optionally implement a disposer:
 
 ```js
 class Foo extends RpcTarget {
@@ -158,7 +158,7 @@ await func(stub);
 
 You can think of `dup()` like the [Unix system call of the same name](https://man7.org/linux/man-pages/man2/dup.2.html): it creates a new handle pointing at the same target, which must be independently closed (disposed).
 
-If the instance of the [`RpcTarget` class](/workers/runtime-apis/rpc/compatible-types) that the stubs point to has a disposer, the disposer will only be invoked when all duplicates have been disposed. However, this only applies to duplicates that originate from the same stub. If the same instance of `RpcTarget` is passed over RPC multiple times, a new stub is created each time, and these are not considered duplicates of each other. Thus, the disposer will be invoked once for each time the `RpcTarget` was sent.
+If the instance of the [`RpcTarget` class](/workers/runtime-apis/rpc/) that the stubs point to has a disposer, the disposer will only be invoked when all duplicates have been disposed. However, this only applies to duplicates that originate from the same stub. If the same instance of `RpcTarget` is passed over RPC multiple times, a new stub is created each time, and these are not considered duplicates of each other. Thus, the disposer will be invoked once for each time the `RpcTarget` was sent.
 
 In order to avoid this situation, you can manually create a stub locally, and then pass the stub across RPC multiple times. When passing a stub over RPC, ownership of the stub transfers to the recipient, so you must make a `dup()` for each time you send it:\
 
