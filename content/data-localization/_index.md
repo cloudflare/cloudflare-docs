@@ -52,7 +52,7 @@ Cloudflare's global DNS platform provides speed and resilience. DNS customers al
 
 {{<resource-group>}}
 
-{{<resource header="Resource hub" href="https://www.cloudflare.com/resource-hub/?topic=Privacy " icon="documentation-clipboard">}}Refer to our latest resources to learn more about privacy.{{</resource>}}
+{{<resource header="Resource hub" href="https://www.cloudflare.com/resource-hub/?topic=Privacy" icon="documentation-clipboard">}}Refer to our latest resources to learn more about privacy.{{</resource>}}
 
 {{<resource header="Cloudflare blog" href="https://blog.cloudflare.com/tag/data-localization-suite" icon="learning-center-book">}}
 Read articles about the latest updates to the Data Localization Suite.
