@@ -36,18 +36,19 @@ Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted l
 
 | Product                                   | Local Dev Supported | Remote Dev Supported |
 | ----------------------------------------- | ------------------- | -------------------- |
-| R2                                        | ✅                  | ✅                   |
-| KV                                        | ✅                  | ✅                   |
+| AI                                        | ✅[^1]              | ✅                   |
+| Analytics Engine                          | ❌                  | ✅                   |
+| Browser Rendering                         | ❌                  | ✅                   |
 | D1                                        | ✅                  | ✅                   |
 | Durable Objects                           | ✅                  | ✅                   |
-| Queues                                    | ✅                  | ❌                   |
-| Service Bindings (multiple workers)       | ✅                  | ✅                   |
-| AI                                        | ✅[^1]              | ✅                   |
+| Email Bindings                            | ❌                  | ✅                   |
 | Hyperdrive                                | ✅                  | ✅                   |
-| Rate Limiting                             | ✅                  | ✅                   |
+| KV                                        | ✅                  | ✅                   |
 | mTLS                                      | ❌                  | ✅                   |
-| Browser Rendering                         | ❌                  | ✅                   |
-| Analytics Engine                          | ❌                  | ✅                   |
+| Queues                                    | ✅                  | ❌                   |
+| R2                                        | ✅                  | ✅                   |
+| Rate Limiting                             | ✅                  | ✅                   |
+| Service Bindings (multiple workers)       | ✅                  | ✅                   |
 | Vectorize                                 | ❌                  | ✅                   |
 
 With any bindings that are not supported locally, you will need to use the `--remote` command in wrangler, such as `wrangler dev --remote`.
