@@ -68,7 +68,7 @@ If you do not perform the HuggingFace setup you can still download your files fr
 
 Follow the instructions [in the notebook](https://colab.research.google.com/github/huggingface/autotrain-advanced/blob/main/colabs/AutoTrain_LLM.ipynb) to create an account and token if necessary.
 
-### Secction: Hyperparameters
+### Section: Hyperparameters
 
 We only need to change a few of these fields to ensure things work on Cloudflare Workers AI.
 
