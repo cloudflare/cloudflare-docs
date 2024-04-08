@@ -20,7 +20,7 @@ The following limits apply to Hyperdrive configuration, connections, and queries
 | Maximum origin database connections per region | 10-20                                                                                |
 | Maximum potential origin connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>3</sup> |
 
-<sup>1</sup> This can be increased on-asking for Enterprise customers. Refer to the limit increase form on this page.
+<sup>1</sup> Enterprise customers can request an increase. Submit a [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform) and we will contact you with the next steps.
 
 <sup>2</sup> This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
 
