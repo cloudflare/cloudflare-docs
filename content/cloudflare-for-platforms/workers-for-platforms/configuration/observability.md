@@ -22,7 +22,15 @@ Logpush can be enabled for an entire dispatch namespace or a single user Worker.
 
 Enabling logging on your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, skip step 1 and complete step 2 on your user Worker.
 
-All logs will get forwarded to the Logpush job that you have setup for your account. Logpush filters can be used on the `Outcome` or `Script Name` field to include or exclude specific values or send logs to different destinations. 
+All logs are forwarded to the Logpush job that you have setup for your account. Logpush filters can be used on the `Outcome` or `Script Name` field to include or exclude specific values or send logs to different destinations.
+
+### Tail Workers
+
+A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
+
+Use [Tail Workers](/workers/observability/logging/tail-workers/) instead of Logpush if you want granular control over formatting before logs are sent to their destination to receive [diagnostics channel events](/workers/runtime-apis/nodejs/diagnostics-channel), or if you want logs delivered in real-time.
+
+Adding a Tail Worker to  your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, add the [Tail Worker configuration](/workers/observability/logging/tail-workers/#configure-tail-workers) directly to the user Worker. 
 
 ## Analytics
 

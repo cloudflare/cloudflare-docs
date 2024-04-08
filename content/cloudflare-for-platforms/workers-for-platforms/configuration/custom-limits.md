@@ -6,7 +6,7 @@ weight: 2
 
 # Custom limits
 
-Custom limits allow you to programmatically set limits on your customer’s Worker to set caps on usage. We support custom limits for CPU time and a number of subrequests. 
+Custom limits allow you to programmatically enforce limits on your customers' Workers' resource usage. You can set limits for the maximum CPU time and number of subrequests per invocation. If a user Worker hits either of these limits, the user Worker will immediately throw an exception. 
 
 ## Set Custom limits
 
@@ -39,8 +39,4 @@ export default {
  },
 };
 ```
-{{<Aside type="note">}}
 
-If a user Worker hits either of these limits, the user Worker will immediately throw an exception. 
-
-{{</Aside>}}
