@@ -2,7 +2,7 @@
 link: "/hyperdrive/platform/changelog/"
 productName: Hyperdrive
 entries:
-  - publish_date: "2024-04-04"
+  - publish_date: "2024-04-10"
     title: Increased configuration limits
     description: |-
       You can now create up to 25 Hyperdrive configurations per account, up from the previous maximum of 10. 
