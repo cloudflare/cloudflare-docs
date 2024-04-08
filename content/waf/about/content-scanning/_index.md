@@ -50,7 +50,7 @@ Content scanning can check the following content objects for malicious content:
 
 All content objects in an incoming request will be scanned, namely for requests with multiple uploaded files (for example, a submitted HTML form with several file inputs).
 
-Currently, the content scanner will fully check content objects with a size up to 1 MB. For larger content objects, the scanner will analyze the first megabyte and provide scan results based on that portion of the object.
+The content scanner will fully check content objects with a size up to 15 MB. For larger content objects, the scanner will analyze the first megabyte and provide scan results based on that portion of the object.
 
 ## Custom scan expressions
 
