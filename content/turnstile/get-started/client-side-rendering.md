@@ -170,7 +170,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 
 To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
 
-## Refreshing an expired token
+## Refresh an expired token
 
 A few seconds before a token expires, the `expired-callback` is invoked.
 
@@ -182,11 +182,11 @@ The visitor can also be instructed to manually obtain a new token by setting the
 
 Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
 
-# Refreshing a timed out widget
+# Refresh a timed-out widget
 
-When the managed mode is chosen Turnstile may at times present the visitor with an interactive challenge. If this interactive challenge is presented but was not not solved within a given time (e.g. because they visitor was otherwise occupied) period it will time out and Turnstile's challenge process need to be restarted.
+When managed mode is chosen, Turnstile may present the visitor with an interactive challenge at times. If this interactive challenge is presented but was not solved within a given time period, it will time out and Turnstile's challenge process will need to be restarted.
 
-The `refresh-timeout` or `data-refresh-timeout` parameter defines the behaviour when the interactive challenge encountered a timeout. By default the widget automatically refreshes (`auto`). However, the widget can also be configured such that the visitor needs to manually refresh a timed-out widget (`manual`), or the widget can only refreshed externally (`refresh-timeout="never"`) by the application (e.g. by calling Turnstile's `reset()` function).
+The `refresh-timeout` or `data-refresh-timeout` parameter defines the behaviour when the interactive challenge encounters a timeout. By default, the widget automatically refreshes (`auto`). However, the widget can also be configured such that the visitor needs to manually refresh a timed-out widget (`manual`), or the widget can only refreshed externally (`refresh-timeout="never"`) by the application (e.g. by calling Turnstile's `reset()` function).
 
 When a widget is encountering the interactivity timeout the `timeout-callback` is invoked.
 
