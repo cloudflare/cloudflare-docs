@@ -49,7 +49,7 @@ For example in the WordPress admin UI, you might notice any of the following beh
 -   Inability to drag any widget to a sidebar in **Appearance** \> **Widgets**
 -   Inability to edit menus in **Appearance** \> **Menus**
 
-To understand why this happens, note that WordPress [concatenates JavaScript files](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
+To understand why this happens, note that WordPress [concatenates JavaScript files](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of `load[]` parameters in the query string, where the order of those parameters is crucial.
 
 {{<Aside type="note">}}
 
