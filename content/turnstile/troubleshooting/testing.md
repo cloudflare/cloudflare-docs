@@ -10,7 +10,7 @@ weight: 1
 
 The following {{<glossary-tooltip term_id="sitekey">}}sitekeys{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="secret key">}}secret keys{{</glossary-tooltip>}} are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/reference/domain-management/).
+To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/concepts/domain-management/).
 
 Dummy sitekeys can be used from any domain, including on `localhost`.
 

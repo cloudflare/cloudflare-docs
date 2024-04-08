@@ -6,7 +6,7 @@ weight: 3
 
 # Turnstile client-side error codes
 
-There are instances where Turnstile may encounter problems, invoking `error-callback`. Refer to the list of [common error codes](/turnstile/reference/client-side-errors/#error-codes) below for troubleshooting steps to address them. 
+There are instances where Turnstile may encounter problems, invoking `error-callback`. Refer to the list of [common error codes](#error-codes) below for troubleshooting steps to address them. 
 
 ## Error handling
 
@@ -66,4 +66,4 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `200010` | Invalid Caching: Some portion of Turnstile was accidentally cached. | No | Encourage the visitor to clear their cache. | 
 | `200100` | Time Problem: The visitor's clock is incorrect. | No | Encourage the visitor to set their clock to the correct time. | 
 | `300***` | Generic Client Execution Error. An unspecified error occurred in the visitor while they were solving a challenge. | Yes | Potentially Automated Visitor. Retry the challenge. Upon multiple subsequent failures, verify the visitor otherwise. |
-| `600***` | Error Family Challenge Execution Failure: A visitor failed to solve a Turnstile Challenge. Also used by [failing testing sitekey](/turnstile/reference/testing/). | Yes | Potentially Automated Visitor. Retry the challenge. Upon multiple subsequent failures, verify the visitor otherwise. |
+| `600***` | Error Family Challenge Execution Failure: A visitor failed to solve a Turnstile Challenge. Also used by [failing testing sitekey](/turnstile/troubleshooting/testing/). | Yes | Potentially Automated Visitor. Retry the challenge. Upon multiple subsequent failures, verify the visitor otherwise. |

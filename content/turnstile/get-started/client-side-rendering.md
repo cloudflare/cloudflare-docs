@@ -214,7 +214,7 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/reference/client-side-errors). |
+| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/troubleshooting/client-side-errors/). |
 | `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback invoked when the token expires and does not reset the widget. |
 | `before-interactive-callback` | `data-before-interactive-callback` | A JavaScript callback invoked before the challenge enters interactive mode. |

@@ -23,6 +23,6 @@ You cannot set your own CSP and/or Referer-Policy via meta tags or [Transform ru
 
 ## Pre-Clearance support
 
-If you are using [Turnstile in pre-clearance mode](/turnstile/get-started/pre-clearance-support/), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endpoint in [`/cdn-cgi/`](/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
+If you are using [Turnstile in pre-clearance mode](/turnstile/concepts/pre-clearance-support/), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endpoint in [`/cdn-cgi/`](/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
 
 For this request to succeed, your `connect-src` directive must include `'self'`.

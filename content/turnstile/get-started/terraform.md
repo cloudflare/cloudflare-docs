@@ -221,7 +221,7 @@ Before you can import the Turnstile widget in Terraform, you must:
 
 - [Install the `cf-terraforming` tool](/terraform/advanced-topics/import-cloudflare-resources/#cf-terraforming).
 - [Create a Cloudflare API token](/fundamentals/api/get-started/create-token/).
-- [Initialize Terraform and the Cloudflare provider](/turnstile/reference/terraform/#initialize-terraform-and-the-cloudflare-provider).
+- [Initialize Terraform and the Cloudflare provider](#initialize-terraform-and-the-cloudflare-provider).
 
 ### Import Turnstile widgets in Terraform
 
