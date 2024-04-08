@@ -103,7 +103,7 @@ After running the command, you can access the bindings in your `loader` or `acti
 
 To bind resources in production you need to configure the bindings in the Cloudflare dashboard. Refer to the [Bindings](/pages/functions/bindings/) documentation to learn more.
 
-Once you have configured the bindings in the Cloudflare dashboard, the proxies are then available within `context.cloudflare.env` in your `loader` or `action` functions as shown [above](/pages/framework-guides/deploy-a-remix-site/#binding-resources-in-local-development).
+Once you have configured the bindings in the Cloudflare dashboard, the proxies are then available within `context.cloudflare.env` in your `loader` or `action` functions as shown [above](#binding-resources-in-local-development).
 
 ## Example: Accessing your D1 database in a Remix application
 
