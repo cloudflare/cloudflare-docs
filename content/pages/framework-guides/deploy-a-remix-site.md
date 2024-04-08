@@ -91,7 +91,7 @@ export const loader = ({ context }: LoaderFunctionArgs) => {
 };
 ```
 
-{{<Aside type="warning" header="Correcting the env type">}}
+{{<Aside header="Correcting the env type">}}
 You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in `wrangler.toml`.
 
 To fix this, run `npm run typegen` to generate the missing types. This will update the `Env` interface defined in `worker-configuration.d.ts`.
