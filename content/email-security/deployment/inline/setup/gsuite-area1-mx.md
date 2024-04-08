@@ -147,7 +147,21 @@ When you are finished entering these details, select **SAVE**.
 Google handles Groups (that is, distributions lists) differently from user mail accounts. The compliance filters actions are limited to the **Users** account type. If you heavily use Google Groups (that is, distribution lists), quarantining malicious messages using the Area 1 quarantine is the recommended method to ensure full protection.
 {{</Aside>}}
 
-## 3. Update your domain MX records
+## 3. Add your domain to Area 1
+
+To avoid emails loop errors, add your domain to your Area 1 dashboard.
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/home).
+2. Go to **Settings** (the gear icon).
+3. In **Email Configuration** > **Domains**, select **New Domain**.
+4. Enter the following settings:
+    1. **Domain**: Enter the domain you want Area 1 to protect.
+    2. **Configured as**: Select **MX Records**.
+    3. **Forwarding to**: Add `google.com`.
+    4. **Quarantine policy**: Select **Malicious** and **Spam**.
+5. Select **Publish domain**.
+
+## 4. Update your domain MX records
 
 Instructions to update your MX records will depend on the DNS provider you are using. You need to replace the existing Google MX records with the Area 1 hosts. For example:
 
@@ -156,7 +170,7 @@ Instructions to update your MX records will depend on the DNS provider you are u
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
-## 4. Secure your email flow
+## 5. Secure your email flow
 
 After 36 hours, the MX record DNS update will have sufficiently propagated across the Internet. It is now safe to secure your email flow. This will ensure that Google only accepts messages that are first received by Area 1. This step is highly recommended to prevent threat actors from using cached MX entries to bypass Area 1 by injecting messages directly into Gmail.
 
@@ -170,7 +184,7 @@ After 36 hours, the MX record DNS update will have sufficiently propagated acros
 
 5. Select **Save** once more to commit and activate the configuration change in the Gmail advanced configuration console.
 
-## 5. Send Area 1 spam to user spam folder (optional)
+## 6. Send Area 1 spam to user spam folder (optional)
 
 Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where the message can be sent to an administrative quarantine, this optional step can be configured to send messages that are identified as spam by Area 1 to the user’s spam folder.
 
