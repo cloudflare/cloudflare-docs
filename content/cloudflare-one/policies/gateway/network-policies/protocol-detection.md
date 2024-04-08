@@ -6,7 +6,7 @@ weight: 2
 
 # Protocol detection
 
-{{<Aside>}}Only available on Enterprise plans{{</Aside>}}
+{{<Aside>}}Only available on Enterprise plans.{{</Aside>}}
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
