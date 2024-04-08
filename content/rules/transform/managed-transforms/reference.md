@@ -25,7 +25,7 @@ Adds HTTP headers with bot-related values to the request sent to the origin serv
 - `cf-bot-score`: Contains the {{<glossary-tooltip term_id="bot score" link="/bots/concepts/bot-score/">}}bot score{{</glossary-tooltip>}} (for example, `30`).
 - `cf-verified-bot`: Contains `true` if the request comes from a {{<glossary-tooltip term_id="verified bot" link="/bots/concepts/bot/#verified-bots">}}verified bot{{</glossary-tooltip>}}, or `false` otherwise.
 - `cf-threat-score`: Contains the {{<glossary-tooltip term_id="threat score" link="/waf/tools/security-level/#threat-score">}}threat score{{</glossary-tooltip>}} (for example, `10`).
-- `cf-ja3-hash`: Contains the {{<glossary-tooltip term_id="JA3 fingerprint" link="/bots/concepts/ja3-fingerprint/">}}JA3 fingerprint{{</glossary-tooltip>}}.
+- `cf-ja3-hash`: Contains the {{<glossary-tooltip term_id="JA3 fingerprint" link="/bots/concepts/ja3-ja4-fingerprint/">}}JA3 fingerprint{{</glossary-tooltip>}}.
 
 ### Add TLS client auth headers
 

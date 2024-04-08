@@ -11,10 +11,10 @@ model:
   tags:
     - "text-generation"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/openchat/openchat-3.5-0106"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/openchat/openchat-3.5-0106"
 task_type: "text-generation"
 model_display_name: "openchat-3.5-0106"
 layout: "model"

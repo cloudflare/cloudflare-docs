@@ -47,11 +47,11 @@ You can configure SSH servers that do not require SSH keys and instead rely excl
 
 Now that the SSH key pair has been created, you can create a VM instance.
 
-1. In your [Google Cloud Console](https://console.cloud.google.com/), [create a new project](https://developers.google.com/workspace/guides/create-project).  
+1. In your [Google Cloud Console](https://console.cloud.google.com/), [create a new project](https://developers.google.com/workspace/guides/create-project).
 2. Go to **Compute Engine** > **VM instances**.
 3. Select **Create instance**.
 4. Name your VM instance, for example `ssh-server`.
-5. Scroll down to **Advanced options** > **Security** > **Manage Access**.  
+5. Scroll down to **Advanced options** > **Security** > **Manage Access**.
 6. Under **Add manually generated SSH keys**, select **Add item** and paste the public key that you have created.
 7. Select **Create**.
 8. Once your VM instance is running, open the dropdown next to **SSH** and select _Open in browser window_.
@@ -135,4 +135,4 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 
 End users can connect to the SSH server without any configuration by using Cloudflare’s browser-based terminal. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser.
 
-To enable, follow the instructions for [Browser-rendered terminal](/cloudflare-one/applications/non-http/#rendering-in-the-browser).
+To enable, refer to [Enable browser rendering](/cloudflare-one/applications/non-http/#enable-browser-rendering).

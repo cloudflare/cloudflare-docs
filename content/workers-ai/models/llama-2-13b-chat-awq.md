@@ -12,10 +12,10 @@ model:
     - "meta"
     - "text-generation"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ"
 task_type: "text-generation"
 model_display_name: "llama-2-13b-chat-awq"
 layout: "model"

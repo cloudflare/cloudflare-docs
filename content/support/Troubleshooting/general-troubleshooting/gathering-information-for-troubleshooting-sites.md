@@ -394,6 +394,11 @@ MTR works by discovering the network path in a similar manner to traceroute, and
 
 Like traceroute, MTR can use ICMP or UDP for outgoing packets but relies on ICMP for return (Type 11: Time Exceeded) packets.
 
+{{<Aside type="note">}}
+For MacOS users, MTR can be installed through [homebrew](https://formulae.brew.sh/formula/mtr).
+For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases).
+{{</Aside>}}
+
 ### How do I use MTR to generate network path report?
 
 **Using MTR on \*NIX based machines**

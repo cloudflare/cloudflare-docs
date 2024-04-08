@@ -25,7 +25,7 @@ meta:
 
 {{</details>}}
 
-Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
+Cloudflare WARP Connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
@@ -229,7 +229,6 @@ Run the following commands on the machine where you installed WARP Connector. Yo
     </div>
     </details>
 
-
 {{<Aside type="note" header="IP forwarding on VPC">}}
 If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
@@ -245,9 +244,9 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
     <summary>Save configuration to persist after reboot</summary>
     <div>
 
-    1. Create a bash script containing the `iptable` commands:
+    1. Create a bash script that writes the `iptable` rules to a file:
 
-      ```bash
+      ```sh
       $ echo '#!/bin/bash
       # Define your rules
       RULES=(
@@ -265,9 +264,16 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
       ' | sudo tee /usr/local/bin/apply_iptables_rules.sh
       ```
 
-    2. Create a systemd service to load the script at startup:
+    2. Run the script:
 
-    ```bash
+    ```sh
+    $ sudo chmod +x /usr/local/bin/apply_iptables_rules.sh
+    $ sudo /usr/local/bin/apply_iptables_rules.sh
+    ```
+
+    3. Create a systemd service to restore the rules at startup:
+
+    ```sh
     $ echo '[Unit]
     Description=Load iptables rules at startup
 
@@ -279,6 +285,7 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
     WantedBy=multi-user.target
     ' | sudo tee /etc/systemd/system/iptables-persistent.service
     ```
+
     </div>
     </details>
 

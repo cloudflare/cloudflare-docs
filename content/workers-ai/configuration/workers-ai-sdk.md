@@ -1,6 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Workers AI SDK
+weight: 2
 meta:
     description: An SDK that provides an interface between a [Worker](/workers/) or [Pages Function](/pages/functions/).
 ---

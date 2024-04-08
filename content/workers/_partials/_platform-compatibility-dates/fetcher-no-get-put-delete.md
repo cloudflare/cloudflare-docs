@@ -11,7 +11,7 @@ enable_flag: "fetcher_no_get_put_delete"
 disable_flag: "fetcher_has_get_put_delete"
 ---
 
-[Durable Object](/durable-objects/) stubs and [Service Bindings](/workers/configuration/bindings/about-service-bindings/) both implement a `fetch()` method which behaves similarly to the global `fetch()` method, but requests are instead sent to the destination represented by the object, rather than being routed based on the URL.
+[Durable Object](/durable-objects/) stubs and [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) both implement a `fetch()` method which behaves similarly to the global `fetch()` method, but requests are instead sent to the destination represented by the object, rather than being routed based on the URL.
 
 Historically, API objects that had such a `fetch()` method also had methods `get()`, `put()`, and `delete()`. These methods were thin wrappers around `fetch()` which would perform the corresponding HTTP method and automatically handle writing/reading the request/response bodies as needed.
 
