@@ -2,12 +2,28 @@
 link: "/zaraz/changelog/"
 productName: Zaraz
 entries:
+- publish_date: '2024-04-08'
+  title:
+  description: |-
+    * **NEW**: Add consent object to `context.system` for finer control over consent preferences
+    * **NEW**: Add support for IAB-compliant consent mode
+    * **NEW**: Use only 2 cookies to store all cookies for one MC
+    * **NEW**: Enable client parameter for embed MCs
+    * **Google Ads MC & Google Analytics 4 MC**: Add support for google consent mode with "zarazConsentChoicesUpdated" event
+    * **Google Ads MC & Google Analytics 4 MC**: Automatically generate the gcd param and send it to GAds and GA4 when "google_consent_update" key is set
+    * **Twitter MC**: Enable tweet embeds
+    * **Bing MC**: Can now run without setting cookies
+    * **Consent Modal**: Respect system dark mode prefs when present
+    * **Bugfix**: `client.get` for custom MCs fixed
+    * **Bugfix**: Prevent duplicate pageviews after consent granting
+    * **Bugfix**: Prevent custom MC routes from blocking origin routes unintentionally
+    * **Bugfix**: Prevent JSONata Object proto vulnerability
 - publish_date: '2024-02-15'
   title:
   description: |-
-    * **NEW**: add `manager.route` support for Managed Components
-    * **NEW**: introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
-    * **NEW**: add support for client-evaluated triggers (UI update following shortly)
+    * **NEW**: Add `manager.route` support for Managed Components
+    * **NEW**: Introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
+    * **NEW**: Add support for client-evaluated triggers (UI update following shortly)
     * **Pinterest MC**: Add ecommerce support
     * **Google Ads MC**: Append url and rnd params to pagead/landing endpoint
     * **Bugfix**: Add noindex robots headers for Zaraz GET endpoint responses
