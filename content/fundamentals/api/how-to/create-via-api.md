@@ -21,6 +21,15 @@ Cloudflare highly recommends that you do not grant other permissions to the toke
 
 {{</Aside>}}
 
+{{
+
+}}
+The intial token secret is **only shown once**. Do not store the secret in plaintext where others can access it. Anyone with this token can perform the authorized actions against the resources that the token has access to.
+
+{{
+
+}}
+
 Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 
 ## Creating API tokens with the API
