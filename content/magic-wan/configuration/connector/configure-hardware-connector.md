@@ -89,9 +89,9 @@ To set up a high availability configuration:
 6. From the list, choose your second Connector > **Add Connector**.
 7. Select **Next** to [Create a WAN](#2-create-a-wan). If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
 8. To create a LAN, follow the steps mentioned above in [Create a LAN](#3-create-a-lan) up until step 4.
-9. In **Static address**, enter the prefix for the primary node in your site. For example, `192.168.10.1/24`.
-10. In **Secondary static address**, enter the prefix for the secondary node in your site. For example, `192.168.10.2/24`.
-11. In **Virtual static address**, enter the prefix that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
+9. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
+10. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.
+11. In **Virtual static address**, enter the IP that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
 12. Select **Save**.
 13.  From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node’s health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node’s probing link should be connected over a switch, and cannot be a direct connection.
 15. Follow the instructions in [Set up your Magic WAN Connector](#set-up-your-magic-wan-connector) and [Activate connector](#activate-connector) to finish setting up your Connectors.
