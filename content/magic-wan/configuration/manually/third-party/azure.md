@@ -9,11 +9,11 @@ This tutorial provides information on how to connect Cloudflare Magic WAN to you
 
 ## Prerequisites
 
-You will need to have an existing Resource group, Virtual Network and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
+You will need to have an existing Resource group, Virtual Network, and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
 
 ## Configure Azure
 
-### 1. Create a Gateway Subnet
+### 1. Create a Gateway subnet
 
 You should already have a virtual network created with a subnet assigned to it. The next step is to create a Gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway.
 
@@ -46,7 +46,7 @@ The local network gateway typically refers to your on-premises location. In this
 Choose the following settings when creating your VPN connection:
 
 1. **Virtual network gateway**: Select the VNG you have created in step 2.
-2. **Local network gateway**: Select the Local network gateway created in step 3.
+2. **Local network gateway**: Select the local network gateway created in step 3.
 3. **Use Azure Private IP Address**: **Disabled**
 4. **BGP**: **Disabled**
 5. **IPsec / IKE policy**: **Custom**
@@ -64,14 +64,15 @@ Choose the following settings when creating your VPN connection:
     6. **DPD timeout in seconds**: `45`
     7. **Connection mode**: **Default**
     8. **Use custom traffic selectors**: **Disabled**
-6. After the connection is created, select **Settings** > **Authentication**, and input your PSK (this will need to match PSK used by the Magic WAN configuration).
+6. After the connection is created, select **Settings** > **Authentication**, and input your PSK (this will need to match the PSK used by the Magic WAN configuration).
 
-### 5. Configure Route table
+### 5. Configure route table
 
-The route table for your virtual network needs to be updated with routes for the destination subnets that are reachable via Magic wan.
+The route table for your virtual network needs to be updated with routes for the destination subnets that are reachable via Magic WAN.
 
 1. Navigate to the route table associated with the subnet bound to your virtual network.
-2. Add routes for the destination prefix’s of the networks behind Magic WAN. For example, `192.168.1.0/24`. 3. Set **Next hop** to **Virtual Network gateway**.
+2. Add routes for the destination prefix’s of the networks behind Magic WAN. For example, `192.168.1.0/24`.
+3. Set **Next hop** to **Virtual Network gateway**.
 4. If you want all traffic to be sent to Magic WAN via VNG, you can replace step 2 with a **Default route** instead `0.0.0.0/0`.
 
 ### 6. (Optional) Route Internet traffic to Magic WAN
@@ -91,12 +92,13 @@ PS C:\homeuser_name> $VirtualGateway = Get-AzVirtualNetworkGateway -Name "Your_V
 ```powershell
 PS C:\home\user_name> Set-AzVirtualNetworkGatewayDefaultSite -GatewayDefaultSite $LocalGateway -VirtualNetworkGateway $VirtualGateway
 ```
+
 ## Configure Magic WAN
 
 1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
 2. For each tunnel, make sure that you have the following settings:
-    1. **Interface address**: A 31-bit (recommended) or 30-bit subnet (/31 or /30 in CIDR notation) supporting two hosts, one for each side of the tunnel. Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels) for more details.
-    2. **Customer endpoint**: The Public IP associated with your azure VNG. For example, `40.xxx.xxx.xxx`.
+    1. **Interface address**: A 31-bit (recommended) or 30-bit subnet (`/31` or `/30` in CIDR notation) supporting two hosts, one for each side of the tunnel. Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels) for more details.
+    2. **Customer endpoint**: The Public IP associated with your Azure VNG. For example, `40.xxx.xxx.xxx`.
     3. **Health check direction**: Leave default option.
     4. **Cloudflare endpoint**: Use the Cloudflare Anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
     5. **Add pre-shared key later**: Select this option to create a PSK that will be used later in Azure.
