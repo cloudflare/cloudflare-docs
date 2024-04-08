@@ -14,12 +14,11 @@ Hyperdrive currently exports the below metrics as part of the `hyperdriveQueries
 
 | Metric                  | GraphQL Field Name         | Description                                                   |
 | ----------------------- | -------------------------- | ------------------------------------------------------------- |
-| Queries (qps)           | `count`                    | The number of queries issued against your Hyperdrive.         |
-| Cache Status            | `cacheStatus`              | Whether the query was cached or not. Can be one of `disabled`, `hit`, `miss`, or `uncacheable`. |
+| Queries                 | `count`                    | The number of queries issued against your Hyperdrive in the given time period.         |
+| Cache Status            | `cacheStatus`              | Whether the query was cached or not. Can be one of `disabled`, `hit`, `miss`, `uncacheable`, `multiplestatements`, `notaquery`, `oversizedquery`, `oversizedresult`, `parseerror`, `transaction`, and `volatile`.
 | Query Bytes             | `queryBytes`               | The size of your queries, in bytes. |
 | Result Bytes            | `resultBytes`              | The size of your query _results_, in bytes. |
 | Connection Latency      | `connectionLatency`        | The time (in milliseconds) required to establish new connections from Hyperdrive to your database. |
-| Query Latency           | `queryLatency`             | The time (in milliseconds) required to query (and receive results) from your database. |
 | Query Latency           | `queryLatency`             | The time (in milliseconds) required to query (and receive results) from your database. |
 | Event Status            | `eventStatus`              | Whether a query responded successfully (`complete`) or failed (`error`). |
 
