@@ -158,6 +158,14 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 
 Pull consumers follow a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
 
+{{<Aside type="note">}}
+
+The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API docs. 
+
+The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
+
+{{</Aside>}}
+
 Each message object has five fields:
 
 1. `body` - this may be base64 encoded based on the [content-type the message was published as](#content-types).
