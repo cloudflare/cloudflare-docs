@@ -1,18 +1,46 @@
 ---
 pcx_content_type: concept
-title: Metrics 
+title: Metrics and analytics
 weight: 20
 ---
 
-# Metrics
+# Metrics and analytics
 
-You can view the metrics for a Hyperdrive on your account via the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Workers** > **Hyperdrive** > **your Hyperdrive config** under the **Metrics** tab.
+Hyperdrive exposes analytics that allow you to inspect query volume, query latency and cache ratios size across all and/or each Hyperdrive configuration in your account.
 
-The metrics displayed in the Cloudflare dashboard charts are all pulled from Cloudflare's GraphQL Analytics API. You can access the metrics programmatically.
+## Metrics
 
-The Hyperdrive metrics are available in the `hyperdriveQueriesAdaptiveGroups` node under `viewer` > `accounts`. Refer to [Explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/) to learn how to navigate a GraphQL schema and discover which data are available.
+Hyperdrive currently exports the below metrics as part of the `hyperdriveQueriesAdaptiveGroups` GraphQL dataset:
 
-To learn more about the GraphQL Analytics API, refer to [GraphQL Analytics API](/analytics/graphql-api/).
+| Metric                  | GraphQL Field Name         | Description                                                   |
+| ----------------------- | -------------------------- | ------------------------------------------------------------- |
+| Queries (qps)           | `count`                    | The number of queries issued against your Hyperdrive.         |
+| Cache Status            | `cacheStatus`              | Whether the query was cached or not. Can be one of `disabled`, `hit`, `miss`, or `uncacheable`. |
+| Query Bytes             | `queryBytes`               | The size of your queries, in bytes. |
+| Result Bytes            | `resultBytes`              | The size of your query _results_, in bytes. |
+| Connection Latency      | `connectionLatency`        | The time (in milliseconds) required to establish new connections from Hyperdrive to your database. |
+| Query Latency           | `queryLatency`             | The time (in milliseconds) required to query (and receive results) from your database. |
+| Query Latency           | `queryLatency`             | The time (in milliseconds) required to query (and receive results) from your database. |
+| Event Status            | `eventStatus`              | Whether a query responded successfully (`complete`) or failed (`error`). |
+
+Metrics can be queried (and are retained) for the past 31 days.
+
+## View metrics in the dashboard
+
+Per-database analytics for Hyperdrive are available in the Cloudflare dashboard. To view current and historical metrics for a Hyperdrive configuration:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Workers & Pages** > **Hyperdrive**](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive).
+3. Select an existing Hyperdrive configuration.
+4. Select the **Metrics** tab.
+
+You can optionally select a time window to query. This defaults to the last 24 hours.
+
+## Query via the GraphQL API
+
+You can programmatically query analytics for your Hyperdrive configurations via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+
+Hyperdrives's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID. Hyperdrive exposes the `hyperdriveQueriesAdaptiveGroups` dataset.
 
 ## Write GraphQL queries
 
