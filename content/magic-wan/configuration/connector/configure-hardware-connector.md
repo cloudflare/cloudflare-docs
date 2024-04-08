@@ -22,7 +22,7 @@ In this type of high availability (HA) configuration, you will choose a reliable
 
 If you need a high availability configuration for your premises, refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 
-If you do not need a high availability configuration for you premises, jump to [Configure Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
+If you do not need a high availability configuration for you premises, proceed to [Configure Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
 
 ---
 
@@ -71,13 +71,13 @@ Because Connectors in high availability configurations share a single site, you 
 
 - **Static address**: The prefix for the primary node in your site.
 - **Secondary static address**: The prefix for the secondary node in your site.
-- **Virtual static address**: The prefix that the LAN south of the Connector will forward traffic to, which is the LANs gateway IP.
+- **Virtual static address**: The prefix that the LAN south of the Connector will forward traffic to, which is the LAN's gateway IP.
 
 Make sure all prefixes are part of the same subnet.
 
 ### ​​Create a high availability configuration
 
-You cannot enable high availability for an existing site. If you decide to enable high availability for an existing site in the Cloudflare dashboard, you need to delete it and start again.
+You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
 
 To set up a high availability configuration:
 
@@ -89,7 +89,7 @@ To set up a high availability configuration:
 6. From the list, choose your second Connector > **Add Connector**.
 7. Select **Next** to [Create a WAN](#2-create-a-wan).
 8. To create a LAN, follow the steps mentioned above in [Create a LAN](#3-create-a-lan) up until step 4.
-9. In **Static address**, enter the prefix for the primary node in your site. For example `192.168.10.1/24`.
+9. In **Static address**, enter the prefix for the primary node in your site. For example, `192.168.10.1/24`.
 10. In **Secondary static address**, enter the prefix for the secondary node in your site. For example, `192.168.10.2/24`.
 11. In **Virtual static address**, enter the prefix that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
 12. Select **Save**.
