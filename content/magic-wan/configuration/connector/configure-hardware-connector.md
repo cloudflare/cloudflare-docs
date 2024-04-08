@@ -69,11 +69,11 @@ When you set up a site in high availability, the WANs and LANs in your Connector
 
 Because Connectors in high availability configurations share a single site, you need to set up:
 
-- **Static address**: The prefix for the primary node in your site.
-- **Secondary static address**: The prefix for the secondary node in your site.
-- **Virtual static address**: The prefix that the LAN south of the Connector will forward traffic to, which is the LAN's gateway IP.
+- **Static address**: The IP for the primary node in your site.
+- **Secondary static address**: The IP for the secondary node in your site.
+- **Virtual static address**: The IP that the LAN south of the Connector will forward traffic to, which is the LAN's gateway IP.
 
-Make sure all prefixes are part of the same subnet.
+Make sure all IPs are part of the same subnet.
 
 ### ​​Create a high availability configuration
 
@@ -87,14 +87,13 @@ To set up a high availability configuration:
 4. From the list, choose your first Connector > **Add Connector**.
 5. Back on the previous screen, select **Add secondary Connector**.
 6. From the list, choose your second Connector > **Add Connector**.
-7. Select **Next** to [Create a WAN](#2-create-a-wan).
+7. Select **Next** to [Create a WAN](#2-create-a-wan). If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
 8. To create a LAN, follow the steps mentioned above in [Create a LAN](#3-create-a-lan) up until step 4.
 9. In **Static address**, enter the prefix for the primary node in your site. For example, `192.168.10.1/24`.
 10. In **Secondary static address**, enter the prefix for the secondary node in your site. For example, `192.168.10.2/24`.
 11. In **Virtual static address**, enter the prefix that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
 12. Select **Save**.
-13. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the traffic's health. Cloudflare recommends that you choose a port connected to a reliable interface, like one that connects directly to a router instead of going through a switch first.
-14. Select **Save and exit** to finish your configuration.
+13.  From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node’s health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node’s probing link should be connected over a switch, and cannot be a direct connection.
 15. Follow the instructions in [Set up your Magic WAN Connector](#set-up-your-magic-wan-connector) and [Activate connector](#activate-connector) to finish setting up your Connectors.
 
 ---
