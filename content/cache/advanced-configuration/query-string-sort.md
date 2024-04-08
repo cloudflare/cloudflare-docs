@@ -51,6 +51,12 @@ For example in the WordPress admin UI, you might notice any of the following beh
 
 To understand why this happens, note that WordPress [concatenates JavaScript files](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
 
+{{<Aside type="note">}}
+
+Note that more recent versions of WordPress may not experience this issue, as a patch has been implemented in WordPress since 2019. The patch can be found at [WordPress Core Trac Changeset 45456](https://core.trac.wordpress.org/changeset/45456).
+
+{{</Aside>}}
+
 ### Identify the problem
 
 The screenshot below shows an example where resources in the Media Library are not rendered correctly and the browser debugging console reveals that the page is throwing an error:
