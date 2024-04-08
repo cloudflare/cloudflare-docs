@@ -47,9 +47,9 @@
 <div id="changelogContent">
 {{- range $changelogRendered -}}
 
-<div class="data-row" data-product="{{.product | lower}}" data-changelog="{{- print .link "index.xml" -}}">
-  <h3>{{ print .product " - " .publish_date}}</h3>
-  <p>{{ .title | $.Page.RenderString }}</td>
+<div class="data-row" data-product="{{.product | lower}}" data-changelog="{{- print .link "index.xml" -}}" data-date="{{ .publish_date | time.Format "January 2, 2006" }}">
+  <h3>{{- .product -}}</h3>
+  <p><strong>{{ .title | $.Page.RenderString }}</strong></td>
   <p>{{ .description | $.Page.RenderString }}</td>
 </div>
 {{- end -}}
@@ -72,6 +72,30 @@
   let descriptionText = document.getElementById("description");
 
   let MAX_VISIBLE_ROWS = 20;
+
+  // add date headers
+
+  // Initialize variable to store last date
+  let lastDate = null;
+  const entriesContainer = document.getElementById('changelogContent');
+
+  // Loop through each entry
+  dataRows.forEach(entry => {
+    // Get date from data attribute
+    const date = entry.getAttribute('data-date');
+
+    // Check if date has changed
+    if (date !== lastDate) {
+      // Create and append sticky date header
+      const stickyHeader = document.createElement('div');
+      stickyHeader.classList.add('sticky-date-header');
+      stickyHeader.textContent = date;
+      entriesContainer.insertBefore(stickyHeader, entry);
+
+      // Update last date
+      lastDate = date;
+    }
+  });
 
   // Function to update URL parameters
   function updateURLParams() {
@@ -138,6 +162,7 @@
     } else {
       showAllButton.style.display = "none";
     }
+    updateStickyHeaderVisibility();
   }
 
   function showAllEntries() {
@@ -156,6 +181,29 @@
     }
   }
 
+  function updateStickyHeaderVisibility() {
+    const stickyHeaders = document.querySelectorAll('.sticky-date-header');
+
+    stickyHeaders.forEach((stickyHeader, index) => {
+        // Get the next sticky header or the end of the entries container
+        const nextStickyHeader = stickyHeaders[index + 1] || entriesContainer.lastElementChild;
+
+        // Get all entries between this sticky header and the next one
+        const entriesBetween = [];
+        let nextElement = stickyHeader.nextElementSibling;
+        while (nextElement !== nextStickyHeader) {
+            entriesBetween.push(nextElement);
+            nextElement = nextElement.nextElementSibling;
+        }
+
+        // Check if all entries between this sticky header and the next one are hidden
+        const allHidden = entriesBetween.every(entry => entry.style.display === 'none');
+
+        // Update the visibility of the sticky header
+        stickyHeader.style.display = allHidden ? 'none' : '';
+    });
+}
+
   // Initial table update
   updateTable();
 
@@ -171,5 +219,19 @@
     #changelogContent {
       max-width: 80%;
   }
+    .sticky-date-header {
+      top: 55px !important;
+    }
 }
+.sticky-date-header {
+    position: sticky;
+    top: 45px;
+    padding: 10px;
+    padding-left: 1px;
+    border-bottom: 1px solid #ccc;
+    z-index: 1000;
+    background: var(--background-color);
+    font-weight: 400;
+    font-size: 1.4em;
+  }
 </style>
