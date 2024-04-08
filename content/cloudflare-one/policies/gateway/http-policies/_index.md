@@ -175,11 +175,11 @@ Use this selector to match against a domain and all subdomains — for example,
 
 {{<Aside type="warning" header="Deprecated selectors">}}
 
-The **Download File Type** and **Upload File Type** selectors are deprecated. The **Download File Types** and **Upload File Types** succeed the **Download File Type** and **Upload File Type** selectors respectively.
+The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will migrate any policies with the previous selectors to the new corresponding selectors.
 
 {{</Aside>}}
 
-These selectors will scan file signatures in the HTTP body. This selector provides a categorized list of files, enabling you to apply policies based on a file's category.
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, including executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files.
 
 | UI name             | API example                                         |
 | ------------------- | --------------------------------------------------- |
