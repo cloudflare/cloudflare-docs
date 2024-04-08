@@ -175,7 +175,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 {{<Aside type="warning" header="Deprecated selectors">}}
 
-The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway policies with the previous selectors will still work. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
+The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 
 {{</Aside>}}
 
