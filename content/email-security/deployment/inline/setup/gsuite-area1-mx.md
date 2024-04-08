@@ -149,7 +149,7 @@ Google handles Groups (that is, distributions lists) differently from user mail 
 
 ## 3. Add your domain to Area 1
 
-To avoid emails loop errors, add your domain to your Area 1 dashboard.
+To avoid email loop errors, add your domain to your Area 1 dashboard.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/home).
 2. Go to **Settings** (the gear icon).
