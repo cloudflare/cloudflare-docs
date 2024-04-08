@@ -134,7 +134,7 @@ Like `query_string` or `header`, `cookie` controls which cookies appear in the C
 
 You cannot include cookies specific to Cloudflare. Cloudflare cookies are prefixed with `__cf`, for example, `__cflb`
 
-#### User features
+### User features
 
 User feature fields add features about the end-user (client) into the Cache Key.
 
