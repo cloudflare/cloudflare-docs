@@ -4,9 +4,20 @@
 {{- range $index, $product := $changelogData -}} 
 {{- $products = $products | append $product.productName -}}
 {{- range $index2, $item := $product.entries -}} 
-{{- $placeholderDict := (dict "product" $product.productName "url" $product.link) -}}
+{{- $placeholderDict := (dict "product" $product.productName "link" $product.link) -}}
 {{- with $product.topLevelLink -}}
-{{- $placeholderDict = merge $placeholderDict (dict "topLevelLink" .) -}}
+{{- $placeholderDict = (dict "product" $product.productName "link" $product.topLevelLink) -}}
+{{- end -}}
+{{- with $item.individual_page -}}
+{{- $title := "" -}}
+{{- with $.Site.GetPage (replaceRE `\/$` "" $item.link) -}}
+{{- $title = .Title -}}
+{{- if eq $product.productName "DDoS protection" -}}
+{{- $title = printf "%s ruleset - %s" (delimit (findRE `^.*?\s` (index .Ancestors 0).Title) "") .Title -}}
+{{- end -}}
+{{- end -}}
+{{ $description := printf "For more details, refer to the dedicated page for [%s](%s)." $title $item.link -}}
+{{- $placeholderDict = merge $placeholderDict (dict "title" $title "description" $description) -}}
 {{- end -}}
 {{- $changelogRendered = $changelogRendered 
   | append (merge $item $placeholderDict) -}} 
@@ -33,69 +44,16 @@
   </div>
 </div>
 
-<div class="DocsMarkdown--table-wrap">
-  <div class="DocsMarkdown--table-wrap-inner">
-    <table>
-      <thead>
-        <tr>
-          <td>
-            <strong>Product</strong>
-          </td>
-          <td>
-            <strong>Title</strong>
-          </td>
-          <td>
-            <strong>Date</strong>
-          </td>
-          <td class="changelogColumn">
-            <strong>Description</strong>
-          </td>
-        </tr>
-      </thead>
-      <tbody id="tableBody">
-        {{- range $changelogRendered -}} 
-        {{- $entry := . -}}
-        {{- $product := .product -}}
-        {{- $link := "" -}} 
-        {{- $rellink := .url -}} 
-        {{- $title := "" -}} 
-        {{- $description := .description -}}
-        {{- with .topLevelLink -}}
-        {{- $rellink = . -}}
-        {{- end -}}
-        {{- with .title -}} 
-        {{- $title = . -}}
-        {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}} 
-        {{ else }} 
-        {{- $title = printf "%s - %s" $product .publish_date -}} 
-        {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}} 
-        {{- end -}}
-        {{- with .link -}}
-        {{- if ne $product "Wrangler" -}}
-        {{ $link = . }}
-        {{- end -}}
-        {{- end -}}
-        <!-- Custom logic for products with separate pages -->
-        {{- with .individual_page -}}
-        {{- with $.Site.GetPage (replaceRE `\/$` "" $link) -}}
-        {{- $title = .Title -}}
-        {{- if eq $product "DDoS protection" -}}
-        {{- $title = printf "%s ruleset - %s" (delimit (findRE `^.*?\s` (index .Ancestors 0).Title) "") .Title -}}
-        {{- end -}}
-        {{- end -}}
-        {{ $description = printf "For more details, refer to the dedicated page for [%s](%s)." $title $link -}}
-        {{- end -}}
-        <tr class="data-row" data-product="{{$product | lower}}" data-changelog="{{- print $rellink "index.xml" -}}">
-          <td>{{ $product }}</td>
-          <td>{{ printf "[%s](%s)" $title $link | $.Page.RenderString }}</td>
-          <td class="changelogDate">{{ .publish_date }}</td>
-          <td class="changelogColumn">{{ $description | $.Page.RenderString }}</td>
-        </tr>
-        {{- end -}}
-      </tbody>
-    </table>
-  </div>
+<div id="changelogContent">
+{{- range $changelogRendered -}}
+
+<div class="data-row" data-product="{{.product | lower}}" data-changelog="{{- print .link "index.xml" -}}">
+  <h3>{{ print .product " - " .publish_date}}</h3>
+  <p>{{ .title | $.Page.RenderString }}</td>
+  <p>{{ .description | $.Page.RenderString }}</td>
 </div>
+{{- end -}}
+
 <div class="viewMoreContainer">
   <button
     id="showAllButton"
@@ -135,7 +93,7 @@
         productName = dropdown.label;
         while (changelogLink === "/changelog/index.xml") {
           dataRows.forEach((row) => {
-            if (row.cells[0].innerText === productName) {
+            if (row.getAttribute("data-product") === productName.toLowerCase()) {
               changelogLink = row.getAttribute("data-changelog");
               }
           });
@@ -209,7 +167,9 @@
 
 
 <style>
-  .changelogColumn {
-    word-break:break-all !important; /* Adjust this value to the maximum width you want */
+  @media (min-width: 972px) {
+    #changelogContent {
+      max-width: 80%;
   }
-  </style>
+}
+</style>
