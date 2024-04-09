@@ -176,13 +176,13 @@ Specifically:
 
 ### Install a database driver
 
-To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [node-postgres](https://node-postgres.com/), one of the most widely used PostgreSQL drivers.
+To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [Postgres.js](https://github.com/porsager/postgres), one of the most widely used PostgreSQL drivers.
 
-To install `node-postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
+To install `postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
 ```sh
-# For existing projects, use pg v8.11.0 or greater
-$ npm i pg
+$ npm i postgres
+# This should install v3.4.5 or later.
 ```
 
 With the driver installed, you can now create a Worker script that queries your database.
@@ -199,7 +199,8 @@ Populate your `index.ts` file with the following code:
 ---
 filename: src/index.ts
 ---
-import { Client } from 'pg';
+// Postgres.js 3.4.5 or later is recommended
+import postgres from 'postgres'
 
 export interface Env {
 	// If you set another name in wrangler.toml as the value for 'binding',
@@ -210,27 +211,19 @@ export interface Env {
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		console.log(JSON.stringify(env))
-		// Create a database client that connects to your database via Hyperdrive
+		// Create a database client that connects to your database via Hyperdrive.
+ 		//
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({
-      host: env.HYPERDRIVE.host,
-			user: env.HYPERDRIVE.user,
-			password: env.HYPERDRIVE.password,
-			port: Number(env.HYPERDRIVE.port),
-			database: env.HYPERDRIVE.database
-		})
+		const sql = postgres(env.HYPERDRIVE.connectionString)
 
 		try {
-			// Connect to your database
-			await client.connect();
-
 			// Test query
-			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const results = await sql`SELECT * FROM pg_tables`
 
 			// Return result rows as JSON
-			return Response.json({ result: result });
+			return Response.json(results);
 		} catch (e) {
 			console.log(e);
 			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
@@ -241,9 +234,8 @@ export default {
 
 In the code above, you have:
 
-1. Created a new database `Client` configured to connect to your database via Hyperdrive.
-2. Connected to the database via `await client.connect()`.
-3. Initiated a query via `await client.query()` that outputs all tables (user and system created) in the database.
+1. Created a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
+3. Initiated a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
 4. Returned the response as JSON to the client.
 
 ## 6. Deploy your database
