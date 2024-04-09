@@ -122,6 +122,14 @@ $ pnpm wrangler pages download config <PROJECT_NAME>
 
 Review your generated `wrangler.toml` file. To start using `wrangler.toml` for your Pages project's configuration, create a new deployment, via [Git integration](/pages/get-started/git-integration/) or [Direct Upload](/pages/get-started/direct-upload/).
 
+### Handling compatibility dates set to "Latest"
+
+In the Cloudflare dashboard, you can set compatibility dates for preview deployments and production to "Latest". This will ensure your project is always using the latest compatibility date without the need to explicitly set it yourself.
+
+If you download a `wrangler.toml` from a project configured with "Latest" using the `wrangler pages download` command, your `wrangler.toml` will have the latest compatibility date available at the time you downloaded the configuration file. Wrangler does not support the "Latest" functionality like the dashboard. Compatibility dates must be explicitly set when using `wrangler.toml`.
+
+Refer to [this guide](https://developers.cloudflare.com/workers/configuration/compatibility-dates/) for more information on what compatibility dates are and how they work.
+
 ## Differences using `wrangler.toml` for Pages Functions and Workers
 
 If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages Functions project:
@@ -129,7 +137,7 @@ If you have used [Workers](/workers), you may already be familiar with [`wrangle
 - The configuration fields **do not match exactly** between Pages Functions `wrangler.toml` file and the Workers equivalent. For example, configuration keys like `main`, which are Workers specific, do not apply to a Pages Function's `wrangler.toml`.
 - The Pages `wrangler.toml` introduces a new key, `pages_build_output_dir`, which is only used for Pages projects.
 - The concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers.
-- this file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
+- This file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
 
 ## Configure environments
 
@@ -298,7 +306,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
 - `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
+  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/). 
 
 - `compatibility_flags` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
