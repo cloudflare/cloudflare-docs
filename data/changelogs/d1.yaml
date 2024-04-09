@@ -2,7 +2,7 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
-  - publish_date: "2024-04-15"
+  - publish_date: "2024-04-12"
     title: HTTP API now returns a HTTP 400 error for invalid queries
     description: |-
       Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
