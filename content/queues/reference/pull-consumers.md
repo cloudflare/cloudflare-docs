@@ -110,7 +110,7 @@ You will need to note the token down: it will only be displayed once.
 
 ## 3. Pull messages
 
-To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-create-queue-consumer) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
+To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-v2-messages-pull) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
@@ -158,6 +158,14 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 
 Pull consumers follow a "short polling" approach: if there are messages available to be delivered, Queues will return a response immediately with messages up to the configured `batch_size`. If there are no messages to deliver, Queues will return an empty response. Queues does not hold an open connection (often referred to as "long polling") if there are no messages to deliver.
 
+{{<Aside type="note">}}
+
+The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation. 
+
+The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
+
+{{</Aside>}}
+
 Each message object has five fields:
 
 1. `body` - this may be base64 encoded based on the [content-type the message was published as](#content-types).
@@ -183,7 +191,9 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 ## 4. Acknowledge messages
 
-Messages pulled by a consumer need to be either acknowledged or marked for retry. To acknowledge and/or mark messages to be retried:
+Messages pulled by a consumer need to be either acknowledged or marked for retry.
+
+To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
@@ -196,7 +206,7 @@ let resp = await fetch(
       authorization: `Bearer ${QUEUES_API_TOKEN}`,
     },
     // If you have no messages to retry, you can specify an empty array - retries: []
-    body: JSON.stringify({ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4" }]}),
+    body: JSON.stringify({ acks: [{ lease_id: "lease_id1" }, { lease_id: "lease_id2" }, { lease_id: "etc" }], retries: [{ lease_id: "lease_id4" }]}),
   }
 );
 ```
@@ -204,7 +214,10 @@ let resp = await fetch(
 You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, delay_seconds: number }` object in the `retries` array:
 
 ```json
-{ acks: ["lease_id1", "lease_id2", "etc"], retries: [{ lease_id: "lease_id4", delay_seconds: 600}] }
+{
+  acks: [{ lease_id: "lease_id1" }, { lease_id: "lease_id2" }, { lease_id: "lease_id3" }],
+  retries: [{ lease_id: "lease_id4", delay_seconds: 600}]
+}
 ```
 
 Additionally:

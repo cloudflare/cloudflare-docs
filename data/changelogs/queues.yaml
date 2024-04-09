@@ -12,7 +12,7 @@ entries:
   title: Support for pull-based consumers
   description: |-
     Queues now supports [pull-based consumers](/queues/reference/pull-consumers/). A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
-  
+
     Review the [documentation on pull-based consumers](/queues/reference/pull-consumers/) to configure HTTP-based pull.
 - publish_date: '2024-03-18'
   title: Default content type now set to JSON
@@ -25,7 +25,7 @@ entries:
   description: |-
     Calling `retry()` or `retryAll()` on a message or message batch will no longer have an impact on how Queues scales [consumer concurrency](/queues/reference/consumer-concurrency/).
 
-    Previously, using [explicit retries](/queues/reference/batching-retries/#retries) via `retry()` or `retryAll()` would count as an error and could result in Queues scaling down the number of concurrent consumers.
+    Previously, using [explicit retries](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries) via `retry()` or `retryAll()` would count as an error and could result in Queues scaling down the number of concurrent consumers.
 - publish_date: '2023-10-07'
   title: More queues per account - up to 10,000
   description: |-
@@ -57,7 +57,7 @@ entries:
 - publish_date: '2023-03-02'
   title: Explicit acknowledgement (new feature)
   description: |-
-    You can now [acknowledge individual messages with a batch](/queues/reference/batching-retries/#explicit-acknowledgement) by calling `.ack()` on a message.
+    You can now [acknowledge individual messages with a batch](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries) by calling `.ack()` on a message.
 
     This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being redelivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages within a batch.
 - publish_date: '2023-03-01'

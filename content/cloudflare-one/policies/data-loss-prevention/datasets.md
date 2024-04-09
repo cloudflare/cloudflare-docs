@@ -28,7 +28,7 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Cells must be at least six characters long. Title cells may result in false positives and should not be included. Accepted file formats include `.csv` and `.txt`.
 
-For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention).
+For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention-dlp).
 
 ### Upload a new dataset
 

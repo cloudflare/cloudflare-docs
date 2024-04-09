@@ -2,6 +2,9 @@
 link: "/turnstile/changelog/"
 productName: Turnstile
 entries:
+- publish_date: '2024-04-10'
+  description: |-
+    - Added [`[refresh-timeout]`](/turnstile/get-started/client-side-rendering/#refreshing-a-timed-out-widget) and document new automatic interactive timeout-refresh.
 - publish_date: '2024-03-25'
   description: |-
     - Added more [supported languages](/turnstile/reference/supported-languages).

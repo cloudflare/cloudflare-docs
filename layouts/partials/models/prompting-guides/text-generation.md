@@ -1,9 +1,20 @@
+{{- $loraFlag := false }}
+{{- range .Params.model.properties }}
+{{- if and (eq .property_id "lora") (eq .value "true") }}
+{{- $loraFlag = true }}
+{{- end }}
+{{- end }}
 
 ## Prompting
 
 Part of getting good results from text generation models is asking questions correctly. LLMs are usually trained with specific predefined templates, which should then be used with the model's tokenizer for better results when doing inference tasks.
 
+{{ if $loraFlag }}
+We recommend using unscoped prompts for inference with LoRA.
+{{ else }}
 There are two ways to prompt text generation models with Workers AI:
+{{ end }}
+{{ if not $loraFlag }}
 
 ### Scoped prompts
 
@@ -13,9 +24,9 @@ Scoped prompts are a list of messages. Each message defines two keys: the role a
 
 Typically, the role can be one of three options:
 
-* **system** - System messages define the AI's personality. You can use them to set rules and how you expect the AI to behave.
-* **user** - User messages are where you actually query the AI by providing a question or a conversation.
-* **assistant** - Assistant messages hint to the AI about the desired output format. Not all models support this role.
+- **system** - System messages define the AI's personality. You can use them to set rules and how you expect the AI to behave.
+- **user** - User messages are where you actually query the AI by providing a question or a conversation.
+- **assistant** - Assistant messages hint to the AI about the desired output format. Not all models support this role.
 
 OpenAI has a [good explanation](https://docs.airops.com/docs/llm-step#openai-chat-model-specifications) of how they use these roles with their GPT models. Even though chat templates are flexible, other text generation models tend to follow the same conventions.
 
@@ -47,17 +58,19 @@ Here's a better example of a chat session using multiple iterations between the 
 
 Note that different LLMs are trained with different templates for different use cases. While Workers AI tries its best to abstract the specifics of each LLM template from the developer through a unified API, you should always refer to the model documentation for details (we provide links in the table above.) For example, instruct models like Codellama are fine-tuned to respond to a user-provided instruction, while chat models expect fragments of dialogs as input.
 
+{{ end }}
+
 ### Unscoped prompts
 
 You can use unscoped prompts to send a single question to the model without worrying about providing any context. Workers AI will automatically convert your { prompt: } input to a reasonable default scoped prompt internally so that you get the best possible prediction.
 
 ```javascript
 {
-  prompt: "tell me a joke about cloudflare"
-};
+  prompt: "tell me a joke about cloudflare";
+}
 ```
 
-You can also use unscoped prompts to construct the model chat template manually. In this case, you can use the raw parameter. Here's an input example of a [Mistral](https://docs.mistral.ai/llm/mistral-instruct-v0.1#chat-template) chat template prompt:
+You can also use unscoped prompts to construct the model chat template manually. In this case, you can use the raw parameter. Here's an input example of a [Mistral](https://docs.mistral.ai/models/#chat-template) chat template prompt:
 
 ```javascript
 {
