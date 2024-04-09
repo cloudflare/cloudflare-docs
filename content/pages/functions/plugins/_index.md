@@ -68,10 +68,10 @@ filename: package.json
 
 The `npx wrangler pages functions build` command supports a number of arguments, including:
 
-- `--plugin` which tells the command to build a Pages Plugin, (rather than Pages Functions as part of a Pages project),
-- `--outdir` which allows you to specify where to output the built Plugin,
-- `--external` which can be used to avoid bundling external modules in the Plugin, and,
-- `--watch` argument tells the command to watch for changes to the source files and rebuild the Plugin automatically.
+- `--plugin` which tells the command to build a Pages Plugin, (rather than Pages Functions as part of a Pages project)
+- `--outdir` which allows you to specify where to output the built Plugin
+- `--external` which can be used to avoid bundling external modules in the Plugin
+- `--watch` argument tells the command to watch for changes to the source files and rebuild the Plugin automatically
 
 For more information about the available arguments, run `npx wrangler pages functions build --help`.
 
