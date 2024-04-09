@@ -160,7 +160,7 @@ Pull consumers follow a "short polling" approach: if there are messages availabl
 
 {{<Aside type="note">}}
 
-The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API docs. 
+The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation. 
 
 The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
 
