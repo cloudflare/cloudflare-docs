@@ -27,8 +27,8 @@ To add a site:
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Interface name**, enter a descriptive name for your WAN.
-3. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
-4. **Physical interface** $1
+3. **Physical interface** $1
+4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
