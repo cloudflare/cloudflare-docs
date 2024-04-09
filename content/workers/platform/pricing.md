@@ -50,7 +50,42 @@ Workers Enterprise accounts are billed based on the usage model specified in the
 
 ### Example pricing: Standard Usage Model
 
-A Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+#### Example 1 
+
+A Worker that serves 15 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $1.50             | (15,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
+| **CPU time**       |  $1.50             | ((7 ms of CPU time per request * 15,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $8.00             |                                                                                                          |
+
+{{</table-wrap>}}
+
+#### Example 2 
+
+A Worker that runs on a [cron trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report. 
+- 720 requests/month
+- 3 minutes (180,000ms) of CPU time per request
+
+In this scenario, the estimated monthly cost would be calculated as:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $0.00             | -                                |
+| **CPU time**       |  $1.99             | ((180,000 ms of CPU time per request * 720 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $6.99            |                                                                                                          |
+{{</table-wrap>}}
+
+#### Example 3 
+
+A high traffic Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
 
 {{<table-wrap>}}
 
@@ -58,8 +93,8 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | **Subscription**   |  $5.00              |                                                                                                          |
 | **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
-| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
-| **Total**          |  $45.40             |                                                                                                          |
+| **CPU time**       |  $13.40             | ((7 ms of CPU time per request * 100,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $45.40  
 
 {{</table-wrap>}}
 
@@ -88,42 +123,11 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 
 <sup>3</sup>  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
 
-#### Example pricing: Bundled Usage Model
+### How to switch usage models
 
-A Worker that serves 100 million requests per month would have the following estimated costs:
-
-{{<table-wrap>}}
-
-|                    |  Monthly Costs      |  Formula                                                                      |
-| ------------------ | ------------------- | ----------------------------------------------------------------------------- |
-| **Workers Paid Plan**   |  $5                 |                                                                               |
-| **Requests**       |  $45                | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.50     |
-| **Total**          |  $50                |                                                                                |
-
-{{</table-wrap>}}
-
-#### Example pricing: Unbound Usage Model
-
-Consider a Worker that serves 100 million requests per month, with an average duration (wall-clock time) of 200 milliseconds per request. This translates to the following duration (wall-clock time) metrics:
-
-- 0.2 seconds per request (200 milliseconds / 1000)
-- 0.025 gigabyte seconds (GB-s) per request (0.2 seconds * 128 MB / 1024 MB)
-- 2,500,000 gigabyte seconds (GB-s) per month (0.025 GB-s per request * 100,000,000 requests)
-
-Resulting in the following estimated costs:
-
-{{<table-wrap>}}
-
-|                    |  Monthly Costs      |  Formula                                                                  |
-| ------------------ | ------------------- | ------------------------------------------------------------------------- |
-| **Workers Paid Plan**   |  $5.00              |                                                                           |
-| **Requests**       |  $14.85             | (100,000,000 requests - 1,000,000 included requests) / 1,000,000 * $0.15  |
-| **Duration**       |  $26.25             | (2,500,000 GB-s per month - 400,000 included GB-s) / 1,000,000 * $12.50   |
-| **Total**          |  $46.10             |                                                                           |
-
-{{</table-wrap>}}
-
-### How to switch the usage model
+{{<Aside type="note">}}
+Only some Workers Enterprise customers maintain the ability to change usage models.
+{{</Aside>}}
 
 Usage models can be changed at the individual Worker level: 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
