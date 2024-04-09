@@ -11,6 +11,6 @@ Each health monitor has the HTTP user-agent of `"Mozilla/5.0 (compatible; Cloudf
 
 {{<Aside type="warning">}}
 
-If you know that your endpoint is healthy but Load Balancing is reporting it as unhealthy, refer to our [Monitor troubleshooting guide](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
+If you know that your endpoint is healthy but Load Balancing is reporting it as unhealthy, refer to our [Monitor troubleshooting guide](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-endpoint-or-pool-considered-unhealthy).
 
 {{</Aside>}}
