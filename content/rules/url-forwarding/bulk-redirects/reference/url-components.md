@@ -19,15 +19,15 @@ https://user:password@www.example.com:443/search?q=term#results
 
 {{<table-wrap>}}
 
-| URL component                                           | Supported in source URL [^1]               | Supported in target URL |
-| ------------------------------------------------------- | ------------------------------------------ | ----------------------- |
-| **Scheme**<br/>For example:<br>`https`                   | Yes, `http` or `https` only<br/>(optional) | Yes                     |
-| **User information**<br/>For example:<br>`user:password` | No                                         | Yes (optional)          |
-| **Host**<br/>For example:<br>`www.example.com`           | Yes                                        | Yes (optional)          |
-| **Port**<br/>For example:<br>`443`                       | No                                         | Yes (optional)          |
-| **Path**<br/>For example:<br>`/search`                   | Yes                                        | Yes                     |
-| **Query string**<br/>For example:<br>`q=term`            | No                                         | Yes, if [**Preserve query string**](/rules/url-forwarding/bulk-redirects/reference/parameters/#preserve-query-string) is false (optional)<br><br>You can only add a query string to the target URL if you do not keep the original query string (that is, if **Preserve query string** is false). If you set **Preserve query string** to true, the query string of the request will be passed along [when there is a match for the source URL](/rules/url-forwarding/bulk-redirects/how-it-works/#matching-the-source-url-of-redirects). |
-| **Fragment**<br/>For example:<br>`results`               | No                                         | Yes (optional)          |
+| URL component                                             | Supported in source URL [^1]               | Supported in target URL |
+| --------------------------------------------------------- | ------------------------------------------ | ----------------------- |
+| **Scheme**<br/>For example:<br/>`https`                   | Yes, `http` or `https` only<br/>(optional) | Yes                     |
+| **User information**<br/>For example:<br/>`user:password` | No                                         | Yes (optional)          |
+| **Host**<br/>For example:<br/>`www.example.com`           | Yes                                        | Yes (optional)          |
+| **Port**<br/>For example:<br/>`443`                       | No                                         | Yes (optional)          |
+| **Path**<br/>For example:<br/>`/search`                   | Yes                                        | Yes                     |
+| **Query string**<br/>For example:<br/>`q=term`            | No                                         | Yes, if [**Preserve query string**](/rules/url-forwarding/bulk-redirects/reference/parameters/#preserve-query-string) is false (optional)<br/><br/>You can only add a query string to the target URL if you do not keep the original query string (that is, if **Preserve query string** is false). If you set **Preserve query string** to true, the query string of the request will be passed along [when there is a match for the source URL](/rules/url-forwarding/bulk-redirects/how-it-works/#matching-the-source-url-of-redirects). |
+| **Fragment**<br/>For example:<br/>`results`               | No                                         | Yes (optional)          |
 
 [^1]: **Supported in source URL** = **No** means that you cannot include the component in the source URL to match against the URL of incoming requests.
 
@@ -38,7 +38,6 @@ Bulk Redirects also support target URLs without an authority component {{<fnref 
 ```txt
 magnet:?xt=urn:btih:2bd9d334e8d1e5bd7768755173222db5c6dea13b&dn=archlinux-2021.07.01-x86_64.iso
 ```
-
 
 {{<fnsection>}}
 {{<fnentry num="2">}}The URL authority is the combination of user information, host, and port components.{{</fnentry>}}
