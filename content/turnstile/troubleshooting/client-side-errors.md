@@ -46,7 +46,7 @@ An error callback will retrieve an error code as its first parameter. Error code
 When an error code is marked with `***`, it means that the remaining numbers can be ignored and are for internal use.
 {{</Aside>}}
 
-| Error Code | Description | Retry | Troubleshooting |
+|  <div style="width:130px">Error code</div> | Description | Retry | Troubleshooting |
 | --- | --- | --- | --- |
 | `crashed` | A browser process crashed while trying to solve the challenge. | Yes | The challenge should be retried. |
 | `undefined_error` | An unspecific error error occurred with no specific error code associated. | Yes | The challenge should be retried. |
