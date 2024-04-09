@@ -4,6 +4,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as codeOwnersUtils from "codeowners-utils";
+import { EXCLUSIONS } from "../exclusions";
 
 type Octokit = ReturnType<typeof github.getOctokit>;
 
@@ -46,6 +47,7 @@ async function list(
   try {
     let cwd = process.cwd();
     let codeowners = await codeOwnersUtils.loadOwners(cwd);
+    console.log(codeowners)
     const token = core.getInput("GITHUB_TOKEN", { required: true });
 
     const payload = github.context.payload;
