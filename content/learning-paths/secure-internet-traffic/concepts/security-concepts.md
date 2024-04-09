@@ -7,12 +7,6 @@ layout: learning-unit
 
 Review concepts related to Cloudflare Internet traffic and SaaS app security.
 
-## What is recursive DNS?
-
-Recursive DNS refers to when one DNS server checks other DNS servers to resolve a query.
-
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/dns/what-is-recursive-dns/).
-
 ## What is 1.1.1.1?
 
 1.1.1.1 is Cloudflare's free, fast, and secure public DNS resolver.
@@ -29,9 +23,9 @@ For more information, refer to the [Learning Center](https://www.cloudflare.com/
 
 ## What is HTTPS inspection?
 
-HTTPS inspection (also known as TLS decryption) is the process of filtering traffic by decrypting incoming traffic, inspecting it, then re-encrypting the traffic as it egresses.
+HTTPS inspection (also known as TLS decryption) is the process of filtering traffic by decrypting traffic sent to or from your organization, inspecting it and applying policies, then re-encrypting the traffic as it ingresses or egresses.
 
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/security/what-is-https-inspection/).
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/security/what-is-https-inspection/) and [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 ## What is data loss prevention (DLP)?
 
