@@ -6,7 +6,7 @@ weight: 51
 
 # Manage DNS records
 
-{{<render file="tunnel/_dns-record.md" productFolder="cloudflare-one">}}
+{{<render file="tunnel/_dns-record.md" productFolder="cloudflare-one" withParameters="an origin target;;a DNS record">}}
 
 ## Create a DNS record for the tunnel
 

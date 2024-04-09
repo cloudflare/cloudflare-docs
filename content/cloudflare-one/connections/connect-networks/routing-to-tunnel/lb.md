@@ -6,14 +6,14 @@ weight: 51
 
 # Load balancers
 
-{{<render file="tunnel/_dns-record.md" productFolder="cloudflare-one">}}
+{{<render file="tunnel/_dns-record.md" productFolder="cloudflare-one" withParameters="a [Load Balancing endpoint](/load-balancing/understand-basics/load-balancing-components/);;a load balancer pool">}}
 
 ## Add a tunnel to a load balancer pool
 
 {{<tabs labels="Dashboard | CLI">}}
 {{<tab label="dashboard" no-code="true">}}
 
-To create a load balancer, refer to the [Load Balancing documentation](/load-balancing/load-balancers/create-load-balancer/). The origin server address is the subdomain of your tunnel, `<UUID>.cfargotunnel.com`.
+To create a load balancer, refer to the [Load Balancing documentation](/load-balancing/load-balancers/create-load-balancer/). The endpoint address is the subdomain of your tunnel, `<UUID>.cfargotunnel.com`.
 
 If you want to add a [monitor](/load-balancing/monitors/) to your load balancer pool, you will need to add a host header to **Advanced health check settings**. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The monitor will not work without the host header if you are using a config file that defines the `ingress` field, as shown in [this example](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90).
 
@@ -55,11 +55,11 @@ Instead, set up a health check endpoint in `cloudflared` — for example, an [in
 
 ### Session affinity and replicas
 
-The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single origin server. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
+The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single endpoint. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
 
 ### Local connection preference
 
-If you notice traffic imbalances across origin servers in different locations, you may have to adjust your load balancer setup.
+If you notice traffic imbalances across endpoints in different locations, you may have to adjust your load balancer setup.
 
 `cloudflared` connections give preference to tunnels that terminate in the same Cloudflare data center. This behavior can impact how connections are weighted and traffic is distributed.
 
