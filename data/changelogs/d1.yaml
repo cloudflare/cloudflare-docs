@@ -2,6 +2,11 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-04-15"
+    title: Invalid SQL queries return 400 error with HTTP API
+    description: |-
+      Previously, invalid SQL queries returned HTTP `500 Internal Server` errors. Invalid SQL queries now correctly return `400 Bad Request` errors.
+
   - publish_date: "2024-04-05"
     title: D1 alpha databases will stop accepting live SQL queries on July 1, 2024
     description: |-
