@@ -27,7 +27,7 @@ Inside of your site dashboard, select **Settings**.
 
 ![Selecting Site Settings in site dashboard](/images/pages/migrations/vercel-deploy-2.png)
 
-Find the **Build & Development settings** panel, which will have the **Build Command** and **Output Directory** fields. If you are using a framework, these values may not be filled in, but will show the defaults used by the framework. Save these for deploying to Cloudflare Pages. In the below image, the **Build Command** is `npm run build`, and the **Output Directory** is `build`.
+Select **General**, then scroll down to the **Build & Development settings** panel, which will have the **Build Command** and **Output Directory** fields. If you are using a framework, these values may not be filled in, but will show the defaults used by the framework. Save these for deploying to Cloudflare Pages. In the below image, the **Build Command** is `npm run build`, and the **Output Directory** is `build`.
 
 ![Finding the Build Command and Output Directory fields](/images/pages/migrations/vercel-deploy-3.png)
 
