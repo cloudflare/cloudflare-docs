@@ -1,6 +1,6 @@
 ---
 title: Mobile implementation
-pcx_content_type: get-started
+pcx_content_type: concept
 weight: 5
 ---
 
