@@ -49,7 +49,9 @@
 
 <div class="data-row" data-product="{{.product | lower}}" data-changelog="{{- print .link "index.xml" -}}" data-date="{{ .publish_date | time.Format "January 2, 2006" }}">
   <h3>{{- .product -}}</h3>
-  <p><strong>{{ .title | $.Page.RenderString }}</strong></td>
+  {{- with .title -}}
+  <p><strong>{{ . | $.Page.RenderString }}</strong></td>
+  {{- end -}}
   <p>{{ .description | $.Page.RenderString }}</td>
 </div>
 {{- end -}}
@@ -201,6 +203,9 @@
 
         // Update the visibility of the sticky header
         stickyHeader.style.display = allHidden ? 'none' : '';
+        if (index === (stickyHeaders.length - 1)) {
+          stickyHeader.style.display = 'none';
+        }
     });
 }
 
