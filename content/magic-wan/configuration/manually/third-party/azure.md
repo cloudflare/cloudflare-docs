@@ -322,19 +322,19 @@ Magic WAN uses tunnel health checks to ensure the tunnel is up and running and r
 
 1. Assign `172.64.240.248/29` as the **address space** within your virtual network configuration. Note that Cloudflare only uses `172.64.240.252/30` for health checks, but due to Azure’s requirements for VNET address space being `/29` or larger (as Azure will reserve some addresses for Azure services) we must specify a `/29`.
 
-2. As part of your virtual network, configure `172.64.240.248/29` as a **subnet**.
+2. As part of your virtual network, configure `172.64.240.248/29` as a **subnet**:
     - **Subnet address range**: `172.64.240.248/29`
     - **Route table**: Select the route table that references your virtual network gateway (health checks must be routed through the virtual network gateway to Magic WAN)
 
-3. Create a virtual machine (VM) with a network interface referencing the subnet created in step 2. Since this VM will only need to respond to ICMP health checks, a smaller VM size can be used like Standard B1s (1 vCPU, 1 GiB memory). The dynamic IPv4 address assigned to the NIC should be `172.64.240.252` which is part of the dedicated health check range.
+3. Create a virtual machine (VM) with a network interface referencing the subnet created in step 2. Since this VM will only need to respond to ICMP health checks, you can use a smaller VM size like **Standard B1s** (1 vCPU, 1 GiB memory). The dynamic IPv4 address assigned to the NIC should be `172.64.240.252` which is part of the dedicated health check range.
 
 4. Next, update the security rules. If you are using a custom security group, you will need to configure rules to allow the inbound ICMP requests.
 Health checks will be sourced from the Cloudflare public IP ranges, and the destination will be your configured health checks target that is within `172.64.240.252/30` (for example, `172.64.240.252`).
 
 ### Cloudflare configuration
-1. Edit the IPsec tunnel you have created in your Magic WAN dashboard.
+1. Edit the [IPsec tunnel](#configure-magic-wan) you have created in your Magic WAN dashboard.
 2. Set the following new parameters for your IPsec tunnel:
     - **Health check type**: _Request_
     - **Health check direction**: _Unidirectional_
     - **Health check target**: _Custom_
-    - **Target address**: _172.64.240.252_
+    - **Target address**: `172.64.240.252`
