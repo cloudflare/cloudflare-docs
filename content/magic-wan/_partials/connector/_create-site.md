@@ -26,9 +26,9 @@ To add a site:
 ### 2. Create a WAN
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
-2. In **Network name**, enter a descriptive name for your WAN.
-3. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
-4. **Physical port** $1
+2. In **Interface name**, enter a descriptive name for your WAN.
+3. **Physical interface** $1
+4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
@@ -43,7 +43,7 @@ To add a site:
 ### 3. Create a LAN
 
 1. In **LAN configuration**, select **Create**.
-2. Enter a descriptive name for your LAN in **Network name**.
+2. Enter a descriptive name for your LAN in **Interface name**.
 3. **Physical interface** $2
 4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
 5. In **Static addressing** > **Static address** give your Connector's LAN interface its IP address. You can also enable the following options if they suit your use case:

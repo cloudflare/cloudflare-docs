@@ -170,11 +170,11 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 
 To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
 
-## Refresh a widget
+## Refresh an expired token
 
 A few seconds before a token expires, the `expired-callback` is invoked.
 
-The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired. 
+The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired.
 
 By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token by rerunning the challenge. After the challenge is solved again, the `callback`, if specified, is invoked with the new token.
 
@@ -182,18 +182,26 @@ The visitor can also be instructed to manually obtain a new token by setting the
 
 Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
 
+# Refresh a timed-out widget
+
+When managed mode is chosen, Turnstile may present the visitor with an interactive challenge at times. If this interactive challenge is presented but was not solved within a given time period, it will time out and Turnstile's challenge process will need to be restarted.
+
+The `refresh-timeout` or `data-refresh-timeout` parameter defines the behaviour when the interactive challenge encounters a timeout. By default, the widget automatically refreshes (`auto`). However, the widget can also be configured such that the visitor needs to manually refresh a timed-out widget (`manual`), or the widget can only refreshed externally (`refresh-timeout="never"`) by the application (e.g. by calling Turnstile's `reset()` function).
+
+When a widget is encountering the interactivity timeout the `timeout-callback` is invoked.
+
 ## Execution modes
 
 By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some scenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a challenge runs and a token is being generated.
 
-There are two options: 
-- The challenge runs automatically after calling the `render()` function. 
+There are two options:
+- The challenge runs automatically after calling the `render()` function.
 - The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
 This detaches the appearance and rendering of a widget from its execution.
 
 ## Appearance modes
 
-If a widget is visible, its appearance can be controlled via the `appearance` parameter. 
+If a widget is visible, its appearance can be controlled via the `appearance` parameter.
 
 By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
 
