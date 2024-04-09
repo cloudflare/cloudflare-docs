@@ -24,7 +24,7 @@ You should already have a virtual network created with a subnet assigned to it. 
 
 ### 2. Create a Virtual Network Gateway
 
-The VNG gateway is used to form the tunnel to the devices on your premises.
+The Virtual Network Gateway gateway (VNG) is used to form the tunnel to the devices on your premises.
 
 1. Create a Virtual Network Gateway (VNG).
 2. Create a new public IP address or use an existing IP. Take note of the public IP address assigned to the VNG as this will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
