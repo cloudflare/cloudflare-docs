@@ -45,8 +45,8 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
 | -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
-| Postgres.js          | https://github.com/porsager/postgres | `postgres@3.4.5` | `3.4.5` and later correctly support caching with Hyperdrive. |
-| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this.   |
+| Postgres.js (**recommended**)        | https://github.com/porsager/postgres | `postgres@3.4.5` | `3.4.5` and later correctly support caching with Hyperdrive. Supported in both Workers & Pages. |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages.  |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
 
