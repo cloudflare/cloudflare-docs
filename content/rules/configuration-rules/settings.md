@@ -79,7 +79,7 @@ header: API configuration example
 
 ## Disable Apps
 
-Disable all active [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started) [^4] for matching requests.
+Disable all active [Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/) [^4] (deprecated) for matching requests.
 
 {{<details header="API information">}}
 
@@ -97,10 +97,6 @@ header: API configuration example
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
 {{</details>}}
-
-{{<Aside type="warning">}}
-This setting will not disable [Apps with Workers](https://cloudflareapps.com/apps/developer/docs/workers). These apps request permission to add a Worker when you are installing them.
-{{</Aside>}}
 
 ## Disable Zaraz
 
@@ -345,7 +341,7 @@ header: API configuration example
 
 [^3]: Browser Integrity Check blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
-[^4]: Cloudflare Apps is a platform for sharing high-quality apps that anyone with a website can use.
+[^4]: Cloudflare Apps, now deprecated, is a platform for sharing high-quality apps that anyone with a website can use.
 
 [^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 
