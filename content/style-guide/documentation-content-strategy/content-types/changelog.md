@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Changelog
-
 ---
 
 # Changelog
@@ -170,6 +169,7 @@ entries:
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
+  scheduled_date: '2023-09-25`
 - publish_date: '2023-09-18'
   individual_page: true
   link: '/waf/change-log/2023-09-18/'
@@ -193,7 +193,17 @@ entries:
 
    - Should be included for scheduled pages. Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
 
+- `scheduled_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+   - Should be included for scheduled pages. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
+
 {{</definitions>}}
+
+{{<Aside type="warning">}}
+
+If there are no currently scheduled changes, remove the entry marked as scheduled. Otherwise, customers will still see an entry for scheduled changes and might get confused.
+
+{{</Aside>}}
 
 ## Examples
 
