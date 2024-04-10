@@ -1,7 +1,7 @@
 ---
 title: Test a policy
 pcx_content_type: learning-unit
-weight: 6
+weight: 5
 layout: learning-unit
 ---
 
@@ -14,7 +14,9 @@ It is common for a misconfigured Gateway policy to accidentally block traffic to
 3. Turn on any existing security policies or create a policy to block all security categories:
     {{<render file="gateway/policies/_block-security-categories.md" productFolder="cloudflare-one">}}
 4. Ensure that your browser is not configured to use an alternate DNS resolver. For example, Chrome has a **Use secure DNS** setting that will cause the browser to send requests to 1.1.1.1 and bypass your DNS policies.
-5. In the browser, go to `malware.testcategory.com`. You should see a generic Gateway block page.
+5. In the browser, go to `malware.testcategory.com`. Your browser will display:
+   - The Gateway block page, if your device is connected via the WARP client in Gateway with WARP mode.
+   - A generic error page, if your device is connected via another method, such as Gateway with DoH mode.
 
 {{<Aside type="note">}}
 

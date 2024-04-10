@@ -1,7 +1,7 @@
 ---
 title: Recommended DNS policies
 pcx_content_type: learning-unit
-weight: 4
+weight: 3
 layout: learning-unit
 ---
 

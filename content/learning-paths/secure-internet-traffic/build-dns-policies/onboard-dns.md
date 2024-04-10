@@ -1,7 +1,7 @@
 ---
 title: Onboard DNS for a network
 pcx_content_type: learning-unit
-weight: 5
+weight: 4
 layout: learning-unit
 ---
 
