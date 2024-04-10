@@ -17,11 +17,10 @@ Learn how and when to use PAC files instead of (or complementary to) endpoint ag
 
 A {{<glossary-tooltip term_id="PAC file">}}PAC file{{</glossary-tooltip>}}, or proxy auto-configuration file, is like a tiny map that guides your web browser to websites. Instead of going straight to a website, a PAC file can forward your traffic through a proxy server first, protecting your device and filtering unwanted URL access. Cloudflare users use PAC files to filter Internet traffic when they do not want to install agents on devices or where agent installations are not supported.
 
-Here's a quick rundown on PAC files:
+Here is a quick overview of PAC files:
 
 - **What they do**: PAC files contain JavaScript code that decides whether or not your browser should use a proxy. The code determines this for each website you visit.
 - **How they work**: PAC files tell your browser to run a `FindProxyForURL()` function with the website address. This function analyzes the address and decides whether to send it directly to the browser or through a specified proxy server.
-  - Admins usually push PAC files to devices via Group Policy Objects (GPOs).
 - **Why use them**: PAC files are handy for organizations or networks that want to control access to the Internet. PAC files can allow access to some websites directly while routing others through the proxy for filtering or security.
 - **Benefits**: Managing a single PAC file saves time and effort compared to manually configuring proxy settings for each device. It also allows for flexible rules based on websites, time and date, and other factors.
 
@@ -37,7 +36,7 @@ Think of PAC files like a GPS: you are driving to a friend's house, but there is
 
 ## Where are PAC files hosted?
 
-PAC files are usually hosted in a centralized location where all of the devices in your organization can reach and download the file. You can configure browsers with a PAC URL to retrieve the PAC file from the address. This typically occurs when your users open the browser.
+PAC files are usually hosted in a centralized location where all of the devices in your organization can reach and download the file. You can configure browsers with a PAC URL to retrieve the PAC file from the address. This typically occurs when your users open the browser. Many admins push PAC files to devices via deployment methods such as Group Policy Objects (GPOs).
 
 ## Create a PAC file
 
