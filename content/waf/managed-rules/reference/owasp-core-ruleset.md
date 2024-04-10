@@ -34,41 +34,46 @@ When you set the ruleset paranoia level, the WAF enables the corresponding rules
 
 ## Example
 
-The following example calculates the request threat score for an incoming request, based on example OWASP rules associated with different paranoia levels:
+The following example calculates the OWASP request threat score for an incoming request:
 
 {{<example>}}
 
 **OWASP managed ruleset configuration**
 
-* OWASP Anomaly Score Threshold: _Medium - 40 and higher_
-* OWASP Paranoia Level: _PL2_
-* OWASP Action: _Block_ (default)
+* OWASP Anomaly Score Threshold: _High - 25 and higher_
+* OWASP Paranoia Level: _PL3_
+* OWASP Action: _Managed Challenge_
 
 Evaluated rules:
 
-Rule     | Paranoia level | Rule matched?   | Rule score | Cumulative threat score
----------|----------------|-----------------|-----------:|-----------------------:
-–        | –              | –               | –          | 0
-Rule #1  | PL1            | Yes             | +5         | 5
-Rule #2  | PL1            | Yes             | +5         | 10
-Rule #3  | PL1            | Yes             | +3         | 13
-Rule #4  | PL1            | Yes             | +5         | 18
-Rule #5  | PL1            | Yes             | +5         | 23
-Rule #6  | PL1            | Yes             | +5         | 28
-Rule #7  | PL2            | Yes             | +5         | 33
-Rule #8  | PL2            | No              | –          | 33
-Rule #9  | PL2            | Yes             | +5         | 38
-Rule #10 | PL2            | Yes             | +5         | 43
-Rule #11 | PL3            | (not evaluated) | –          | 43
-Rule #12 | PL4            | (not evaluated) | –          | 43
+Rule ID       | Paranoia level | Rule matched?   | Rule score | Cumulative threat score
+--------------|----------------|-----------------|-----------:|-----------------------:
+–             | –              | –               | –          | 0
+`...48b74690` | PL1            | Yes             | +5         | 5
+`...317f28e1` | PL1            | No              |  –         | 5
+`...96bfe867` | PL2            | Yes             | +5         | 10
+`...3297003f` | PL2            | Yes             | +3         | 13
+`...682bb405` | PL2            | Yes             | +5         | 18
+`...56bb8946` | PL2            | No              | –          | 18
+`...1813a269` | PL3            | Yes             | +5         | 23
+`...e5f94216` | PL3            | Yes             | +3         | 26
+`...ccc02be6` | PL3            | No              | –          | 26
+(...)         | (...)          | (...)           | (...)      | (...)
+`...317f28e1` | PL4            | (not evaluated) | –          | 26
 
-Final request threat score: `43`
+Final request threat score: `26`
 
-Since `43` >= `40`, that is, the threat score is greater than the configured score threshold, the WAF will apply the configured action (_Block_).
+Since `26` >= `25` — that is, the threat score is greater than the configured score threshold — the WAF will apply the configured action (_Managed Challenge_). If you had configured a score threshold of _Medium - 40 and higher_, the WAF would not apply the configured action, since the request threat score would be lower than the score threshold (`26` < `40`).
 
-If you had configured a score threshold of _Low - 60 and higher_, the WAF would not apply the configured action, since the request threat score would be lower than the score threshold (`43` < `60`).
+The [**Activity log** in Security Events](/waf/analytics/security-events/paid-plans/#activity-log) would display the following details for the incoming request handled by the OWASP Core Ruleset:
+
+![Event log for example incoming request mitigated by the WAF's OWASP Core Ruleset](/images/waf/owasp-example-event-log.png)
+
+In the activity log, the rule associated with all requests mitigated by the Cloudflare OWASP Core Ruleset is the last rule in the ruleset: `949110: Inbound Anomaly Score Exceeded`, with rule ID `6179ae15870a4bb7b2d480d4843b323c`. To get the scores of individual rules contributing to the final request threat score, expand **Additional logs** in the event details.
 
 {{</example>}}
+
+---
 
 ## Configure in the dashboard
 
