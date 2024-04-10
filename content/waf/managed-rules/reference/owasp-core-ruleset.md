@@ -73,9 +73,9 @@ In the activity log, the rule associated with requests mitigated by the Cloudfla
 
 You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
 
-* **Set the paranoia level.** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
-* **Define the score threshold.** The available thresholds are: *Low - 60 and higher*, *Medium - 40 and higher* (default), or *High - 25 and higher*.
-* **Set the action to perform.** The action is executed when the calculated request threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
+* **Set the [paranoia level](#paranoia-level).** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
+* **Set the [score threshold](#score-threshold).** The available thresholds are: *Low - 60 and higher*, *Medium - 40 and higher* (default), or *High - 25 and higher*.
+* **Set the [action](/ruleset-engine/rules-language/actions/) to perform.** The action is executed when the calculated request threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
 * **Disable specific rules or rules with specific tags.**
 * **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
 * **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
@@ -96,7 +96,16 @@ You can also disable specific rules in the managed ruleset using [rule overrides
 
 ### Set the paranoia level
 
-To enable all the rules up to a specific paranoia level, create tag overrides that disable all the rules associated with higher paranoia levels. For example, to enable all the rules associated with Paranoia Level 2 (PL2), disable the rules associated with tags `paranoia-level-3` and `paranoia-level-4`. All rules associated with paranoia levels up to the desired paranoia level will be enabled (in this example, all the rules associated with PL1 and PL2).
+To enable all the rules up to a specific [paranoia level](#paranoia-level), create [tag overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/#working-with-overrides) that disable all the rules associated with higher paranoia levels.
+
+The tags associated with the different paranoia levels are the following:
+
+* `paranoia-level-1`
+* `paranoia-level-2`
+* `paranoia-level-3`
+* `paranoia-level-4`
+
+For example, to enable all the rules associated with Paranoia Level 2 (PL2), disable the rules associated with tags `paranoia-level-3` and `paranoia-level-4`. All rules associated with paranoia levels up to the desired paranoia level will be enabled (in this example, all the rules associated with PL1 and PL2).
 
 #### Example
 
@@ -235,9 +244,9 @@ For more information on creating overrides, refer to [Override a managed ruleset
 
 ### Configure the score threshold and the action
 
-To define the score threshold value, or to specify the action to perform when the threat score is greater than the threshold, create a rule override for the last rule in the managed ruleset that:
+To define the [score threshold](#score-threshold), or to specify the [action](/ruleset-engine/rules-language/actions/) to perform when the threat score is greater than the threshold, create a [rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/#working-with-overrides) for the last rule in the managed ruleset that:
 
-* Specifies the action to take in the `action` property.
+* Specifies the action to take in the `action` property. The available actions are: `block` (default), `managed_challenge`, `js_challenge`, `log`, and `challenge`.
 * Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.
 
 #### Example
