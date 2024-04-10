@@ -2,6 +2,10 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-09'
+  description: |-
+    - v8 updated to version <x>
+    - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
 - publish_date: '2024-04-05'
   description: |-
     - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
