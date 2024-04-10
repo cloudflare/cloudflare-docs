@@ -61,11 +61,13 @@ You will need to [connect a custom domain](/r2/buckets/public-buckets/#connect-a
 
 Once your domain is connected and active (typically within a few minutes), you can then test your Access policy.
 
-## 4. Test access
+## 4. Test your Access policy
 
 Visit the custom domain you connected to your R2 bucket, which should present a Cloudflare Access authentication page with your selected identity provider(s) and/or authentication methods.
 
 For example, if you connected Google and/or GitHub identity providers, you can log in with those providers. If the login is successful and your account is a member of the [Access group](/cloudflare-one/identity/users/groups/#access-groups) you associated with the Access application you created in this guide, you will be able to access (read/download) objects within the R2 bucket.
+
+If you cannot authenticate or receive a block page after authenticating, check that you have an [Access policy](/cloudflare-one/applications/configure-apps/self-hosted-apps/#2-add-an-access-policy) configured within your Access application that explicitly allows the group your user account is associated with.
 
 ## Next steps
 
