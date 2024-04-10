@@ -3,6 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: zeroTrustUseCase;;modeSwitchUseCase
 ---
 
 {{<render file="warp/_device-profiles-intro.md" productFolder="cloudflare-one">}}
@@ -18,12 +19,12 @@ To customize the default settings:
 
 1. Go to **Settings** > **WARP Client**.
 2. Under **Device settings**, select the default profile and select **Configure**.
-3. Many customers running Cloudflare Zero Trust as a VPN replacement have a default profile that resembles the following. Refer to [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) for a description of each setting.
+3. Many users running Cloudflare Zero Trust $1 have a default profile that resembles the following. Refer to [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) for a description of each setting.
 {{<table-wrap style="font-size: 92%">}}
 | Setting                              | State                   | Notes                                                                                                                                                                                                                                                                                          |
 | ------------------------------------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Captive portal detection             | Enabled                 |                                                                                                                                                                                                                                                                                                |
-| Mode switch                          | Disabled                | Usually disabled for a VPN replacement use case. If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network.                                                                                                                              |
+| Mode switch                          | Disabled                | If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network. $2                                                                                                                                                                            |
 | Lock WARP switch                     | Enabled                 | Should be enabled unless users have an explicit reason to disable WARP, such as a conflicting VPN client on the device or other extenuating circumstances. If disabled for concerns about user experience, **Auto Connect** should be enabled and set on a short interval, like 10-15 minutes. |
 | Allow device to leave organization   | Disabled                |                                                                                                                                                                                                                                                                                                |
 | Allow updates                        | Disabled                | Usually disabled on managed devices. If enabled, users who are local administrators on their device can update the WARP client on their own — this can introduce version consistency control issues if WARP versions are centrally managed by IT.                                              |

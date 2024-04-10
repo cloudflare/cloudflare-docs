@@ -5,4 +5,4 @@ weight: 2
 layout: learning-unit
 ---
 
-{{<render file="zero-trust/_device-profiles.md">}}
+{{<render file="zero-trust/_device-profiles.md" withParameters="to secure their organization;; ">}}

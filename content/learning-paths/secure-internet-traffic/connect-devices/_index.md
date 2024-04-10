@@ -11,7 +11,7 @@ After setting up your Cloudflare account and Zero Trust organization, you can be
 
 {{<Aside type="note">}}
 
-The following steps are identical to [Connect user devices](/learning-paths/replace-vpn/connect-devices/) in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to [Determine when to use PAC files](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/).
+The following steps are identical to [Connect user devices](/learning-paths/replace-vpn/connect-devices/) in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to [Connect networks to Cloudflare](/learning-paths/secure-internet-traffic/connect-networks/).
 
 {{</Aside>}}
 
