@@ -199,6 +199,12 @@ entries:
 
 {{</definitions>}}
 
+{{<Aside type="note">}}
+
+If the scheduled date gets pushed for a change, update the `publish_date` and `scheduled_date` fields of the changelog entry. This process makes sure customers will receive notifications via their RSS feeds.
+
+{{</Aside>}}
+
 ## Examples
 
 - [Stream Changelog](/stream/changelog/)
