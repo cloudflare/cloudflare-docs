@@ -69,7 +69,7 @@ The [**Activity log** in Security Events](/waf/analytics/security-events/paid-pl
 
 ![Event log for example incoming request mitigated by the WAF's OWASP Core Ruleset](/images/waf/owasp-example-event-log.png)
 
-In the activity log, the rule associated with all requests mitigated by the Cloudflare OWASP Core Ruleset is the last rule in the ruleset: `949110: Inbound Anomaly Score Exceeded`, with rule ID `6179ae15870a4bb7b2d480d4843b323c`. To get the scores of individual rules contributing to the final request threat score, expand **Additional logs** in the event details.
+In the activity log, the rule associated with requests mitigated by the Cloudflare OWASP Core Ruleset is the last rule in this managed ruleset: `949110: Inbound Anomaly Score Exceeded`, with rule ID `6179ae15870a4bb7b2d480d4843b323c`. To get the scores of individual rules contributing to the final request threat score, expand **Additional logs** in the event details.
 
 {{</example>}}
 
