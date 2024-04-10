@@ -1,14 +1,9 @@
+---
+title: Magic WAN network analytics
+pcx_content_type: how-to
+weight: 2
+---
 
-
-
-
-
-# GRE and IPsec tunnel analytics
-
-## Query analytics with GraphQL
-
-You can query Magic WAN analytics using GraphQL. Review the topics below to learn more:
-
-{{<directory-listing>}}
+# Magic WAN network analytics
 
 {{<render file="_network-analytics.md" withParameters="Magic WAN">}}

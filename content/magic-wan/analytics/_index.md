@@ -22,11 +22,11 @@ Magic WAN site analytics provides an overview of the connectivity status and tra
 
 Refer to [Magic WAN site analytics](#) to learn more.
 
-## Network Analytics
+## Magic WAN network Analytics
 
 Network Analytics provides detailed analytics on Magic WAN traffic over time. Customers can filter data on specific traffic characteristics and view traffic analytics over time.
 
-Refer to [Network Analytics for Magic WAN](#) to learn more.
+Refer to [Magic WAN network Analytics](#) to learn more.
 
 ## Traceroutes
 
