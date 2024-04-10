@@ -3,6 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: WARPsuccess
 ---
 Most admins test by manually downloading the WARP client and enrolling in your organization's Cloudflare Zero Trust instance.
 
@@ -29,4 +30,4 @@ For more information, refer to [WARP with firewall](/cloudflare-one/connections/
 
 {{</details>}}
 
-The WARP client should show as **Connected**. The device can now access private network resources that you have made available via Cloudflare Tunnel.
+The WARP client should show as **Connected**. $1
