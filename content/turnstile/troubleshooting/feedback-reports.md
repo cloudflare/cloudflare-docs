@@ -1,7 +1,7 @@
 ---
 title: Feedback reports
 pcx_content_type: reference
-weight: 8
+weight: 4
 ---
 
 # Feedback reports

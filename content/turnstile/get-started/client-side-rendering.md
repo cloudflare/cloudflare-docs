@@ -222,7 +222,7 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/reference/client-side-errors). |
+| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/troubleshooting/client-side-errors/). |
 | `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback invoked when the token expires and does not reset the widget. |
 | `before-interactive-callback` | `data-before-interactive-callback` | A JavaScript callback invoked before the challenge enters interactive mode. |
@@ -238,11 +238,5 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry upon failure. |
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
-| `refresh-timeout` | `data-refresh-timeout` | Controls whether the widget should automatically refresh upon entering an interactive challenge and observing a timeout. Can take `auto` (automatically refreshes upon encountering an interactive timeout), `manual` (prompts the visitor to manually refresh) or `never` (will show a timeout), defaults to `auto`.  Only applies to widgets of mode managed.|
-| `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
-
-## Native mobile application support
-
-{{<Aside type="warning">}}
-Turnstile does not currently support native mobile applications, including those utilizing web views or embedded browsers. This applies to all mobile development frameworks and platforms, such as React Native, Swift for iOS, and Kotlin for Android, among others.
-{{</Aside>}}
+| `refresh-timeout` | `data-refresh-timeout` | Controls whether the widget should automatically refresh upon entering an interactive challenge and observing a timeout. Can take `auto` (automatically refreshes upon encountering an interactive timeout), `manual` (prompts the visitor to manually refresh) or `never` (will show a timeout), defaults to `auto`.  Only applies to widgets of mode managed.|
+| `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
