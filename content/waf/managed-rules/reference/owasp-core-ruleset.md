@@ -34,17 +34,13 @@ When you set the ruleset paranoia level, the WAF enables the corresponding rules
 
 ## Example
 
-The following example calculates the OWASP request threat score for an incoming request:
-
-{{<example>}}
-
-**OWASP managed ruleset configuration**
+The following example calculates the OWASP request threat score for an incoming request. The OWASP managed ruleset configuration is the following:
 
 * OWASP Anomaly Score Threshold: _High - 25 and higher_
 * OWASP Paranoia Level: _PL3_
 * OWASP Action: _Managed Challenge_
 
-Partial list of evaluated rules:
+This table shows the progress of the OWASP ruleset evaluation:
 
 Rule ID       | Paranoia level | Rule matched?   | Rule score | Cumulative<br>threat score
 --------------|----------------|-----------------|-----------:|-----------------------:
@@ -65,13 +61,11 @@ Final request threat score: `26`
 
 Since `26` >= `25` — that is, the threat score is greater than the configured score threshold — the WAF will apply the configured action (_Managed Challenge_). If you had configured a score threshold of _Medium - 40 and higher_, the WAF would not apply the action, since the request threat score would be lower than the score threshold (`26` < `40`).
 
-The [**Activity log** in Security Events](/waf/analytics/security-events/paid-plans/#activity-log) would display the following details for the incoming request handled by the OWASP Core Ruleset:
+The [**Activity log** in Security Events](/waf/analytics/security-events/paid-plans/#activity-log) would display the following details for the example incoming request handled by the OWASP Core Ruleset:
 
 ![Event log for example incoming request mitigated by the WAF's OWASP Core Ruleset](/images/waf/owasp-example-event-log.png)
 
 In the activity log, the rule associated with requests mitigated by the Cloudflare OWASP Core Ruleset is the last rule in this managed ruleset: `949110: Inbound Anomaly Score Exceeded`, with rule ID `6179ae15870a4bb7b2d480d4843b323c`. To get the scores of individual rules contributing to the final request threat score, expand **Additional logs** in the event details.
-
-{{</example>}}
 
 ---
 
