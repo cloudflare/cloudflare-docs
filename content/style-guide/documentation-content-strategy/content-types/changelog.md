@@ -199,12 +199,6 @@ entries:
 
 {{</definitions>}}
 
-{{<Aside type="warning">}}
-
-If there are no currently scheduled changes, remove the entry marked as scheduled. Otherwise, customers will still see an entry for scheduled changes and might get confused.
-
-{{</Aside>}}
-
 ## Examples
 
 - [Stream Changelog](/stream/changelog/)
