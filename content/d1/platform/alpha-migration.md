@@ -41,7 +41,7 @@ $ sqlite3 db_dump.sqlite3 .dump > db.sql
 Once you have run the above command, you will need to edit the output SQL file to be compatible with D1:
 
 1. Remove `BEGIN TRANSACTION` and `COMMIT;` from the file
-2. Remove the following table creation statement (if present):
+2. Remove the following table creation statement:
    ```sql
    CREATE TABLE _cf_KV (
 		key TEXT PRIMARY KEY,
