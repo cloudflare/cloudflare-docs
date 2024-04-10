@@ -1045,14 +1045,14 @@
 /turnstile/reference/pre-clearance-support/ /turnstile/get-started/pre-clearance-support/ 301
 /turnstile/reference/turnstile-analytics/ /turnstile/turnstile-analytics/ 301
 /turnstile/reference/tooltips/ /turnstile/turnstile-analytics/ 301
-/turnstile/reference/domain-management/	/turnstile/concepts/domain-management/ 301
-/turnstile/get-started/pre-clearance-support/	/turnstile/concepts/pre-clearance-support/ 301
-/turnstile/reference/widget-types/	/turnstile/concepts/widget-types/ 301
-/turnstile/reference/terraform/	/turnstile/get-started/terraform/ 301
-/turnstile/reference/client-side-errors/	/turnstile/troubleshooting/client-side-errors/ 301
-/turnstile/reference/feedback-reports/	/turnstile/troubleshooting/feedback-reports/ 301
-/turnstile/reference/rotate-secret-key/	/turnstile/troubleshooting/rotate-secret-key/ 301
-/turnstile/reference/testing/	/turnstile/troubleshooting/testing/ 301
+/turnstile/reference/domain-management/ /turnstile/concepts/domain-management/ 301
+/turnstile/get-started/pre-clearance-support/ /turnstile/concepts/pre-clearance-support/ 301
+/turnstile/reference/widget-types/ /turnstile/concepts/widget-types/ 301
+/turnstile/reference/terraform/ /turnstile/get-started/terraform/ 301
+/turnstile/reference/client-side-errors/ /turnstile/troubleshooting/client-side-errors/ 301
+/turnstile/reference/feedback-reports/ /turnstile/troubleshooting/feedback-reports/ 301
+/turnstile/reference/rotate-secret-key/ /turnstile/troubleshooting/rotate-secret-key/ 301
+/turnstile/reference/testing/ /turnstile/troubleshooting/testing/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301

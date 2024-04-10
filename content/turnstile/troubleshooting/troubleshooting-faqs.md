@@ -63,7 +63,6 @@ If you encounter an endless challenge loop, try disabling your browser extension
 {{</faq-answer>}}
 {{</faq-item>}}
 
-
 {{<faq-item>}}
 {{<faq-question level=2 text="Can I use Turnstile on URI schemes such as `file://`?" >}}
 {{<faq-answer>}}

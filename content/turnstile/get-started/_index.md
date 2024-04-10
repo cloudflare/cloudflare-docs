@@ -36,10 +36,8 @@ You can find special sitekeys to be used for testing in the [testing](/turnstile
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account.
 2. Go to **Turnstile**.
 3. In the widget overview, select **Settings**.
-4. Fill out the site name and your website's hostname or select from your existing websites on Cloudflare.
-5. Select the widget mode.
-6. (Optional) Opt in for [pre-clearance support](/turnstile/concepts/pre-clearance-support/).
-7. Copy your sitekey and secret key.
+4. (Optional) Opt in for [pre-clearance support](/turnstile/concepts/pre-clearance-support/).
+5. Copy your sitekey and secret key.
 
 ## Add the Turnstile widget to your site
 
