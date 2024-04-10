@@ -9,7 +9,7 @@ Similar to the network onboarding practices in the [Replace your VPN](/learning-
 
 ## Available on-ramps
 
-The primary ways to source multi-device or network traffic to the Cloudflare network are via the [WARP Connector](#warp-connector) as an all-ports traffix proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations). Alternatively, Enterprise users can add [Magic WAN](#magic-wan) to their plan and configure Magic WAN Connector or a dedicated third-party device.
+The primary ways to source multi-device or network traffic to the Cloudflare network are via the [WARP Connector](#warp-connector) as an all-ports traffic proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations). Alternatively, Enterprise users can add [Magic WAN](#magic-wan) to their plan and configure Magic WAN Connector or a dedicated third-party device.
 
 {{<heading-pill style="beta" heading="h3">}}WARP Connector{{</heading-pill>}}
 
