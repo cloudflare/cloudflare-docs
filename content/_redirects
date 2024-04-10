@@ -1346,6 +1346,9 @@
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
 
+# version management
+/version-management/reference/available-settings/ /version-management/reference/available-configurations/ 301
+
 # hyperdrive
 
 /hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/configuration/how-hyperdrive-works/ 301

@@ -28,8 +28,8 @@ To create a new version:
 
 ## Change configurations in a version
 
-Your zone configurations are split up into two areas: **Global Configurations** and different versions.
--   Global Configurations control the configurations of a zone that is not available for versioning and, when changed, automatically apply to all versions of your zone.
+Your zone configurations are split up into two areas: **Global Configuration** and different versions.
+-   Global Configuration controls the configurations of a zone that is not available for versioning and, when changed, automatically apply to all versions of your zone.
 - Version configurations update configurations of a zone that is available for versioning and are:
     - Editable when not applied to a [read-only environment](/version-management/reference/read-only-environments/).
     - Applied when [associated with an environment](/version-management/how-to/environments/#change-environment-version).
