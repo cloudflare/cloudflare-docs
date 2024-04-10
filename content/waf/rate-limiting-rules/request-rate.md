@@ -127,7 +127,7 @@ When you configure a complexity-based rate limiting rule, the origin server must
 Complexity-based rate limiting rules must contain the following properties:
 
 * **Score** (API field: `score_per_period`): Maximum score per period. When this value is exceeded, the rule action will execute.
-* **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 500.
+* **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 1,000,000.
 
 Cloudflare keeps counters with the total score of all requests with the same values for the rule characteristics that match the rule expression. The score increases by the value provided by the origin in the response when there is a match for the counting expression (by default, it is the same as the rule expression). When the total score is larger than the configured maximum score per period, the rule action is applied.
 

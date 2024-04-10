@@ -2,6 +2,9 @@
 pcx_content_type: how-to
 title: Always Use HTTPS
 weight: 15
+learning_center:
+    title: What is HTTPS?
+    link: https://www.cloudflare.com/learning/ssl/what-is-https/
 ---
 
 # Always Use HTTPS

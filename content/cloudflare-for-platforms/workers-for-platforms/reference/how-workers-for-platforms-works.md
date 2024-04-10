@@ -66,3 +66,8 @@ In the Workers for Platforms model, a dynamic dispatch Worker can be used to cal
 
 Service bindings and Workers for Platforms can be used simultaneously when building applications. 
 
+## [Cache API](/workers/runtime-apis/cache/)
+
+Workers for Platforms user Workers have access to the [cache API](/workers/runtime-apis/cache/). The cache, both default and namespaced,  is isolated across user Workers.
+
+To learn more about the cache, refer to [How the cache Works](/workers/reference/how-the-cache-works/).

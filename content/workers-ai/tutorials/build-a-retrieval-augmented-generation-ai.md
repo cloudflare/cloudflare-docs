@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
+weight: 2
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
@@ -38,7 +39,7 @@ This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/
 For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `no` to using TypeScript.
 
 You will be asked if you would like to deploy the project to Cloudflare.
@@ -166,7 +167,7 @@ Create a new D1 database using `wrangler`:
 $ npx wrangler d1 create database
 ```
 
-Then, add the configuration details for your new D1 database to `wrangler.toml`:
+Then, paste the configuration details output from the previous command into `wrangler.toml`:
 
 ```toml
 # ... existing wrangler configuration
@@ -174,7 +175,7 @@ Then, add the configuration details for your new D1 database to `wrangler.toml`:
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
 database_name = "database"
-database_id = "abc-def-geh"
+database_id = "abc-def-geh" # replace this with a real database_id (UUID)
 ```
 
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:

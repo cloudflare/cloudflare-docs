@@ -2,6 +2,9 @@
 pcx_content_type: how-to
 title: Record and replay live streams
 weight: 4
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Record and replay live streams

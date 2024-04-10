@@ -1,9 +1,10 @@
 ---
 pcx_content_type: how-to
 title: DocuSign
+weight: 5
 ---
 
-# Protecting DocuSign with Access for SaaS
+# Connect to DocuSign through Access
 
 This guide covers how to protect your DocuSign account with Access for SaaS.
 

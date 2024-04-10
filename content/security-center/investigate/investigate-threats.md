@@ -26,7 +26,7 @@ IP address search allows you to search both [IPv4 and IPv6](https://www.cloudfla
 
 A [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is a string of text that maps to an IP address. Domain names are used to help people remember where websites are hosted. Domain names are purchased through [registrars](/registrar/) and can be acquired easily by anyone. 
 
-When you search for a domain name, Cloudlare will provide an overview of the domain's category and IP addresses it currently resolves to.
+When you search for a domain name, Cloudflare will provide an overview of the domain's category and IP addresses it currently resolves to.
 
 {{<Aside>}}
 

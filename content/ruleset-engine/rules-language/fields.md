@@ -677,7 +677,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
           </p>
-          <p>For more details, refer to <a href="/bots/concepts/ja3-fingerprint/">JA3 Fingerprints</a>.
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3 Fingerprints</a>.
           </p>
         </td>
     </tr>
@@ -917,6 +917,34 @@ The Cloudflare Rules language supports these dynamic fields:
       </p>
       <p>Example:<br/>
       <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_extensions_sha1">
+      <td><code>cf.tls_client_extensions_sha1</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+      </p>
+      <p>Example:<br/>
+      <code>"OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_hello_length">
+      <td><code>cf.tls_client_hello_length</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+      <p>The length of the client hello message sent in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>. Specifically, the length of the bytestring of the client hello.
+      </p>
+      <p>Example:<br/>
+      <code>508</code>
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_random">
+      <td><code>cf.tls_client_random</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The value of the 32-byte random value provided by the client in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>, encoded in Base64. Refer to <a href="https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2">RFC 8446</a> for more details.
+      </p>
+      <p>Example:<br/>
+      <code>"YWJjZA=="</code>
       </p></td>
     </tr>
     <tr id="field-cf-tls_version">

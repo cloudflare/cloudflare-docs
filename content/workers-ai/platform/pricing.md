@@ -96,13 +96,14 @@ Cloudflare uses Neurons to measure and bill for inference on Workers AI. This ma
 {{</table-wrap>}}
 
 ### Text Generation
+On April 2, 2024, we updated pricing for our `mistral-7b-instruct` models to be 17x cheaper and `llama-2-7b-chat-int8` to be 7x cheaper. The pricing table below reflects the new pricing, but you can take a look at the [archived pricing](/workers-ai/platform/pricing/#archived-pricing) to see how pricing has changed.
 
 {{<table-wrap>}}
 | Model | Price per 1M <br> input tokens | Price per 1M <br> output tokens |
 | -------------------- | ------------------------------ | ------------------------------- |
 | llama-2-7b-chat-fp16 | $0.56 | $6.66 |
-| llama-2-7b-chat-int8 | $0.28 | $1.72 |
-| mistral-7b-instruct | $0.28 | $3.33 |
+| llama-2-7b-chat-int8 | $0.16 | $0.24 |
+| mistral-7b-instruct | $0.11 | $0.19 |
 {{</table-wrap>}}
 
 ### Translation
@@ -120,3 +121,14 @@ All users receive free allocation of 10k Neurons a day (totaling to 300k Neurons
 If a user uses 50k Neurons per day, every day of the month, the Workers AI usage charge will be $13.20.
 
 `(50k Neurons - 10k included daily Neurons) * 30 days * $0.011 / 1k Neurons = $13.20`
+
+## Archived Pricing
+As we find optimizations for our inference platform, we pass on these optimizations to our customers. You can refer to the archived pricing below to see how pricing has changed.
+
+Before April 2, 2024:
+{{<table-wrap>}}
+| Model | Price per 1M <br> input tokens | Price per 1M <br> output tokens |
+| -------------------- | ------------------------------ | ------------------------------- |
+| llama-2-7b-chat-int8 | $0.28 | $1.72 |
+| mistral-7b-instruct | $0.28 | $3.33 |
+{{</table-wrap>}}

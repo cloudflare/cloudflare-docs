@@ -26,7 +26,7 @@ D1 currently exports the below metrics:
 
 Metrics can be queried (and are retained) for the past 31 days.
 
-## Row counts
+### Row counts
 
 D1 returns the number of rows read, rows written (or both) in response to each individual query via [the client API](/d1/build-with-d1/d1-client-api/#return-object).
 
@@ -35,14 +35,14 @@ Inspect row counts to understand the performance and cost of a given query, incl
 
 Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on how rows are counted.
 
-## View via the dashboard
+## View metrics in the dashboard
 
 Per-database analytics for D1 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
 
-2. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-3. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
-4. Select an existing database.
-5. Select the **Metrics** tab.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
+3. Select an existing database.
+4. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
@@ -50,7 +50,11 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 You can programmatically query analytics for your D1 databases via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
 
-D1's GraphQL datasets include `d1AnalyticsAdaptiveGroups`, `d1StorageAdaptiveGroups`, and `d1QueriesAdaptiveGroups` and require an `accountTag` filter with your Cloudflare account ID.
+D1's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID and include:
+
+- `d1AnalyticsAdaptiveGroups`
+- `d1StorageAdaptiveGroups`
+- `d1QueriesAdaptiveGroups`
 
 ### Examples
 
@@ -133,4 +137,30 @@ query {
 		}
 	}
 }
+```
+
+## Query insights
+D1 exposes metrics that let you understand and debug query performance. These metrics can be accessed via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights`command.
+
+- Query strings are captured to make it easier to analyze metrics across query executions. Bound [parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
+- Experimental wrangler command options and output can change. Run `wrangler d1 insights --help` to view the current command.
+
+### Examples
+
+To find top 10 queries by execution count:
+
+```sh
+$ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --count=10
+```
+
+To find top 10 queries by average execution time:
+
+```sh
+$ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --count=10
+```
+
+To find top 10 queries by rows written in last 7 days:
+
+```sh
+$ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --count=10 --timePeriod=7d
 ```

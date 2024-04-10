@@ -403,7 +403,7 @@ highlight: 12,14-16
 
 ```bash
 ---
-highlight: 9-17
+highlight: 10-18
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules/{execute_rule_id}" \

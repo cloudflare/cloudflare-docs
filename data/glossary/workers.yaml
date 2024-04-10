@@ -1,9 +1,10 @@
 ---
 productName: Workers
 entries:
+
 - term: Auxiliary Worker
   general_definition: |-
-    A Worker created locally via the Workers Vitest integration that runs in a separate isolate to the test runner, with a different global scope.
+    A Worker created locally via the [Workers Vitest integration](/workers/testing/vitest-integration/) that runs in a separate isolate to the test runner, with a different global scope.
 
 - term: binding
   general_definition: |-
@@ -81,7 +82,7 @@ entries:
 
 - term: rollback
   general_definition: |-
-    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network.
+    [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) are a way to deploy an older deployment to the Cloudflare global network.
 
 - term: R2
   general_definition: |-
@@ -99,7 +100,7 @@ entries:
 
 - term: subrequest
   general_definition: |-
-    A subrequest is an additional HTTP requests from the Worker to another resource or another Worker.
+    A subrequest is any request that a Worker makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
 - term: Tail Worker
   general_definition: |-
