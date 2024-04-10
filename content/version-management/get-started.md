@@ -24,7 +24,7 @@ These environments each serve a specific purpose and are accessed differently:
 
 For more details, refer to [Create environment](/version-management/how-to/environments/#create-environment).
 
-## Step 3 - Update settings
+## Step 3 - Update configurations
 
 {{<render file="_edit-version.md">}}
 <br/>

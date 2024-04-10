@@ -8,7 +8,7 @@ _build:
 Version Management does not currently support or have limited support for the following products or features: 
 
 {{<details header="API Shield">}}
-- Some [API Shield](/api-shield/) settings are not cloned when a new zone version is created.
+- Some [API Shield](/api-shield/) configurations are not cloned when a new zone version is created.
 - Customers are allowed to opt-in to remove the UI block that prevents enabling Version Management.
 {{</details>}}
 
@@ -18,7 +18,7 @@ Version Management does not currently support or have limited support for the fo
 {{</details>}}
 
 {{<details header="Cache">}}
-- [Cache](/workers/runtime-apis/cache/) settings are versioned, but cache keys are not.
+- [Cache](/workers/runtime-apis/cache/) configurations are versioned, but cache keys are not.
 - Caching a new URL on staging would cache it for production as well.
 - Purging cache on staging would purge it on production too.
 - Promoting a new version to production would wipe all exiting cache.
@@ -50,7 +50,7 @@ Version Management does not currently support or have limited support for the fo
 {{</details>}}
 
 {{<details header="Network Error Logging">}}
-- [Network Error Logging](/network-error-logging/) settings are not cloned when a new version is created.
+- [Network Error Logging](/network-error-logging/) configurations are not cloned when a new version is created.
 {{</details>}}
 
 {{<details header="Security Insights">}}
@@ -63,7 +63,7 @@ Version Management does not currently support or have limited support for the fo
 {{</details>}}
 
 {{<details header="WAF Attack Score">}}
-- [WAF Attack Score](/waf/about/waf-attack-score/) settings are not cloned when a new zone version is created.
+- [WAF Attack Score](/waf/about/waf-attack-score/) configurations are not cloned when a new zone version is created.
 {{</details>}}
 
 {{<details header="Waiting Room">}}
