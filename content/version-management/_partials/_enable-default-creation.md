@@ -12,7 +12,7 @@ Once you [enable](/version-management/how-to/enable/) Version Management, Cloudf
 
 {{<Aside type="warning" header="Important">}}
 
-Any changes made to **Global Configuration** will immediately apply to your zone and all versions of your zone, affecting live traffic.
+Any changes made to the **Global Configuration** will immediately apply to your zone and all versions of your zone, affecting live traffic.
 
 {{</Aside>}}
 
