@@ -33,10 +33,21 @@ $ npx wrangler d1 backup download <database_name> <backup_id> # See available ba
 ```
 
 ### 4. Convert the manual backup into SQL statements
-The command below will convert the manual backup of the alpha database from the downloaded `.sqlite3` file into SQL statements which can then be imported into the new database. After running the command below, you will need to edit the output SQL file to be compatible with D1. See [convert SQLite database files](/d1/build-with-d1/import-data/#convert-sqlite-database-files) for specifics.
+The command below will convert the manual backup of the alpha database from the downloaded `.sqlite3` file into SQL statements which can then be imported into the new database:
 ```sh
 $ sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
+
+Once you have run the above command, you will need to edit the output SQL file to be compatible with D1:
+
+1. Remove `BEGIN TRANSACTION` and `COMMIT;` from the file
+2. Remove the following table creation statement:
+   ```sql
+   CREATE TABLE _cf_KV (
+		key TEXT PRIMARY KEY,
+		value BLOB
+   ) WITHOUT ROWID;
+   ```
 
 ### 5. Create a new D1 database
 All new D1 databases use the updated architecture by default.
