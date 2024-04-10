@@ -217,6 +217,39 @@ If you use both the `wrangler` CLI and `wrangler.toml` to change the settings as
 
 Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
 
+## Apply a backoff algorithm
+
+You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message.
+
+Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made.
+
+For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you: 
+
+```ts
+const calculateExponentialBackoff = (attempts: number, baseDelaySeconds: number) => { return baseDelaySeconds**attempts }
+```
+
+In your consumer, you then pass the value of `msg.attempts` and your desired delay factor as the argument to `delaySeconds` when calling `retry()` on an individual message:
+
+```ts
+---
+header: index.ts
+---
+
+const BASE_DELAY_SECONDS = 30;
+
+export default {
+  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+    for (const msg of batch.messages) {
+      // Mark for retry and delay a singular message
+      // by 3600 seconds (1 hour)
+      msg.retry({delaySeconds: calculateExponentialBackoff(msg.attempts, BASE_DELAY_SECONDS)})
+
+    }
+  },
+};
+```
+
 ## Related
 
 * Review the [JavaScript API](/queues/reference/javascript-apis/) documentation for Queues.
