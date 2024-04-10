@@ -20,7 +20,3 @@ To change your Split Tunnels mode:
 ## Add a route
 
 {{<render file="warp/_add-split-tunnels-route.md" productFolder="cloudflare-one">}}
-
-## Configure Split Tunnels for private network access
-
-{{<render file="tunnel/_warp-to-tunnel-route-ips.md" productFolder="cloudflare-one">}}
