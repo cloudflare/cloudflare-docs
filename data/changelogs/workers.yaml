@@ -2,10 +2,6 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
-- publish_date: '2024-04-09'
-  description: |-
-    - v8 updated to version <x>
-    - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
 - publish_date: '2024-04-05'
   description: |-
     - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
@@ -34,6 +30,10 @@ entries:
   description: |-
     - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
     - [Durable Object alarm handlers](/durable-objects/api/alarms/#alarm) now impose a maximum wall time of 15 minutes.
+- publish_date: '2024-02-24'
+  description: |-
+    - v8 updated to version 12.2
+    - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
 - publish_date: '2023-12-04'
   description: |-
     - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
