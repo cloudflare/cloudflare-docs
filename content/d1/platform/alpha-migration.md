@@ -33,7 +33,7 @@ $ npx wrangler d1 backup download <database_name> <backup_id> # See available ba
 ```
 
 ### 4. Convert the manual backup into SQL statements
-The command below will convert the manual backup of the alpha database from the downloaded `.sqlite3` file into SQL statements which can then be imported into the new database. 
+The command below will convert the manual backup of the alpha database from the downloaded `.sqlite3` file into SQL statements which can then be imported into the new database:
 ```sh
 $ sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
