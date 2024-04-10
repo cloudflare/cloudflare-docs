@@ -199,7 +199,11 @@ Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-co
 
 ## Apply a backoff algorithm
 
-You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message. For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you: 
+You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message.
+
+Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made.
+
+For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you: 
 
 ```ts
 const calculateExponentialBackoff = (attempts: number, baseDelaySeconds: number) => { return baseDelaySeconds**attempts }
