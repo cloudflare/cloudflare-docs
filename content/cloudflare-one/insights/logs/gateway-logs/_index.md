@@ -108,18 +108,16 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| **Value**                | **Description**                                             |
-| ------------------------ | ----------------------------------------------------------- |
-| `allowedByQueryName`     | Domain or hostname in the query matched an Allow policy.    |
-| `blockedByQueryName`     | Domain or hostname in the query matched a Block policy.     |
-| `allowedRule`            | IP address in the response matched an Allow policy.         |
-| `blockedRule`            | IP address in the response matched a Block policy.          |
-| `blockedByCategory`      | Domain or hostname matched a category in a Block policy.    |
-| `blockedAlwaysCategory`  | Domain or hostname is always blocked by Cloudflare.         |
-| `allowedOnNoLocation`    | Allowed because query did not match a Gateway DNS location. |
-| `allowedOnNoPolicyMatch` | Allowed because query did not match a policy.               |
-| `overrideForSafeSearch`  | Response was overridden by a Safe Search policy.            |
-| `overrideApplied`        | Response was overridden by an Override policy.              |
+| Name                     | Value | Description                                                 |
+|--------------------------|-------|-------------------------------------------------------------|
+| `allowedRule`            | `10`  | IP address in the response matched an Allow policy.         |
+| `blockedRule`            | `9`   | IP address in the response matched a Block policy.          |
+| `blockedByCategory`      | `3`   | Domain or hostname matched a category in a Block policy.    |
+| `blockedAlwaysCategory`  | `6`   | Domain or hostname is always blocked by Cloudflare.         |
+| `allowedOnNoLocation`    | `4`   | Allowed because query did not match a Gateway DNS location. |
+| `allowedOnNoPolicyMatch` | `5`   | Allowed because query did not match a policy.               |
+| `overrideForSafeSearch`  | `7`   | Response was overridden by a Safe Search policy.            |
+| `overrideApplied`        | `8`   | Response was overridden by an Override policy.              |
 
 {{</table-wrap>}}
 
