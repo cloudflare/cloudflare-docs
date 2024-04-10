@@ -52,4 +52,4 @@ The following is a sample log with default fields:
 
 ## Data retention period
 
-You can query for logs starting from 1 minute in the past (relative to the actual time that you make the query) and go back at least 3 days and up to 7 days.
+You can query for logs starting from 1 minute in the past (relative to the actual time that you make the query) and go back at least 3 days and up to 7 days. For longer terms we recommend [Logpush](/logs/about/).
