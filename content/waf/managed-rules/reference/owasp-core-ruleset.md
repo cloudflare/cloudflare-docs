@@ -44,26 +44,26 @@ The following example calculates the OWASP request threat score for an incoming 
 * OWASP Paranoia Level: _PL3_
 * OWASP Action: _Managed Challenge_
 
-Evaluated rules:
+Partial list of evaluated rules:
 
-Rule ID       | Paranoia level | Rule matched?   | Rule score | Cumulative threat score
+Rule ID       | Paranoia level | Rule matched?   | Rule score | Cumulative<br>threat score
 --------------|----------------|-----------------|-----------:|-----------------------:
 –             | –              | –               | –          | 0
-`...48b74690` | PL1            | Yes             | +5         | 5
-`...317f28e1` | PL1            | No              |  –         | 5
+`...1813a269` | PL3            | Yes             | +5         | 5
+`...ccc02be6` | PL3            | No              | –          | 5
 `...96bfe867` | PL2            | Yes             | +5         | 10
-`...3297003f` | PL2            | Yes             | +3         | 13
-`...682bb405` | PL2            | Yes             | +5         | 18
-`...56bb8946` | PL2            | No              | –          | 18
-`...1813a269` | PL3            | Yes             | +5         | 23
+`...48b74690` | PL1            | Yes             | +5         | 15
+`...3297003f` | PL2            | Yes             | +3         | 18
+`...317f28e1` | PL1            | No              | –          | 18
+`...682bb405` | PL2            | Yes             | +5         | 23
+`...56bb8946` | PL2            | No              | –          | 23
 `...e5f94216` | PL3            | Yes             | +3         | 26
-`...ccc02be6` | PL3            | No              | –          | 26
 (...)         | (...)          | (...)           | (...)      | (...)
-`...317f28e1` | PL4            | (not evaluated) | –          | 26
+`...f3b37cb1` | PL4            | (not evaluated) | –          | 26
 
 Final request threat score: `26`
 
-Since `26` >= `25` — that is, the threat score is greater than the configured score threshold — the WAF will apply the configured action (_Managed Challenge_). If you had configured a score threshold of _Medium - 40 and higher_, the WAF would not apply the configured action, since the request threat score would be lower than the score threshold (`26` < `40`).
+Since `26` >= `25` — that is, the threat score is greater than the configured score threshold — the WAF will apply the configured action (_Managed Challenge_). If you had configured a score threshold of _Medium - 40 and higher_, the WAF would not apply the action, since the request threat score would be lower than the score threshold (`26` < `40`).
 
 The [**Activity log** in Security Events](/waf/analytics/security-events/paid-plans/#activity-log) would display the following details for the incoming request handled by the OWASP Core Ruleset:
 
