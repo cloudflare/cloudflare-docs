@@ -28,9 +28,9 @@ We recommend building baseline egress policies that can cover a majority of your
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-| Selector   | Operator | Value           | Egress method                       |
-| ---------- | -------- | --------------- | ----------------------------------- |
-| User Email | in       | _Finance Users_ | Use dedicated Cloudflare egress IPs |
+| Selector         | Operator | Value           | Egress method                       |
+| ---------------- | -------- | --------------- | ----------------------------------- |
+| User Group Email | in       | _Finance Users_ | Use dedicated Cloudflare egress IPs |
 
 | Primary IPv4 address | IPv6 address    |
 | -------------------- | --------------- |
