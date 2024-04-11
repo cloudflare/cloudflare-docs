@@ -14,28 +14,10 @@ meta:
 
 Quickstarts are GitHub repositories that are designed to be a starting point for building a new Cloudflare Workers project. To start any of the projects below, run:
 
-{{<tabs labels="npx | yarn | pnpm | bun">}}
-{{<tab label="npm" default="true">}}
 ```sh
-$ npx create-cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
+$ npm create cloudflare@latest <NEW_PROJECT_NAME> -- --template [<GITHUB_REPO_URL>]
 ```
-{{</tab>}}
-{{<tab label="yarn">}}
-```sh
-$ yarn create cloudflare <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
-```
-{{</tab>}}
-{{<tab label="pnpm">}}
-```sh
-$ pnpm create cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
-```
-{{</tab>}}
-{{<tab label="bun">}}
-```sh
-$ bun create cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
-```
-{{</tab>}}
-{{</tabs>}}
+
 
 {{<definitions>}}
 
@@ -43,8 +25,8 @@ $ bun create cloudflare@latest <NEW_PROJECT_NAME> --template [<GITHUB_REPO_URL>]
 
   - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/wrangler/configuration/).
 
-- `github-repo-url`
-  - This is the URL of the GitHub repo starter, as below.
+- `template`
+  - This is the URL of the GitHub repo starter, as below. Refer to the [create-cloudflare documentation](/pages/get-started/c3/) for a full list of possible values.
 
 {{</definitions>}}
 
