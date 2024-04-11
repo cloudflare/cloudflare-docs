@@ -66,7 +66,7 @@ This would return a set of matches resembling the following, based on a `cosine`
 }
 ```
 
-Refer to the [Workers Client API documentation](/vectorize/reference/client-api/) for additional examples.
+Refer to [Vectorize API](/vectorize/reference/client-api/) for additional examples.
 
 ## Workers AI
 
