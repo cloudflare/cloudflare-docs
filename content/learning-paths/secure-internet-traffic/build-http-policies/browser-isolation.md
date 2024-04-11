@@ -17,7 +17,7 @@ If your organization is interested in implementing Browser Isolation, there are 
 
 ### Block copy, paste, and upload/download for shadow IT
 
-As you have begun deploying Cloudflare Zero Trust, you may have started to visualize user traffic patterns using [Shadow IT Discovery](/cloudflare-one/insights/analytics/access/). This feature gives you visibility into detected SaaS applications that your users use. Administrators can categorize applications and services on the basis of proper organizational use. If you do not use Shadow IT Discovery and instead maintain a similar list manually or with other tools, you can port that data into a Zero Trust list, update it via the API, and achieve the same outcomes.
+As you have begun deploying Cloudflare Zero Trust, you may have started to visualize user traffic patterns using [Shadow IT Discovery](/cloudflare-one/insights/analytics/access/). This feature gives you visibility into detected SaaS applications that your users use. Administrators can categorize applications and services on the basis of proper organizational use. If you do not use Shadow IT Discovery and instead maintain a similar list manually or with other tools, you can port that data into a [Zero Trust list](/learning-paths/secure-internet-traffic/understand-policies/create-list/), update it via the API, and achieve the same outcomes.
 
 You can control potential risk and shape user behavior without applying heavy-handed block policies by applying policies to isolate user traffic to applications that match your defined categories. You can then set additional parameters in the policy, such as the ability to restrict copy/paste and upload/download. Users can still access information in the tools -- if not use the tools to a lesser extent -- while you minimize the risk of data loss.
 
@@ -212,16 +212,16 @@ flowchart TB
     accDescr: Flowchart describing the order of operations for user traffic for in-line Browser Isolation.
 
     %% User traffic
-    user(["User connects to </br>risky.example.com"])<--"Connects to"-->cloud[Third-party SWG cloud]
+    user(["User goes to </br>risky.example.com"])--"Connects to"-->cloud[Third-party SWG cloud]
 
     %% Third-party SWG
-    cloud<-->warning[Third-party interstitial block or warning page]
+    cloud-->warning[Third-party interstitial block or warning page]
     warning--"Appends Cloudflare subdomain"-->biso
     
     %% Browser Isolation
     subgraph cf [Cloudflare global network]
-    biso[[Cloudflare Agentless Browser Isolation]]
+    biso[[Cloudflare Clientless Web Isolation]]
     inline(["Isolated browser"])
-    biso--"User browser goes to </br>customer.cloudflareaccess.com/browser/risky.example.com"-->inline
+    biso--"User's browser goes to </br>customer.cloudflareaccess.com/browser/risky.example.com"-->inline
     end
 ```

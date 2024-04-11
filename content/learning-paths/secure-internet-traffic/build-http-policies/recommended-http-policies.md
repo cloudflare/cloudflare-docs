@@ -67,9 +67,9 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 
 {{<details header="PrivilegedUsers-HTTP-Any-Isolate" open="true">}}
 
-Isolate traffic for priledged users who regularly access critical systems or execute actions such as threat analysis and malware testing.
+Isolate traffic for privileged users who regularly access critical systems or execute actions such as threat analysis and malware testing.
 
-Security teams often need to perform threat analysis or malware testing could trigger malware detection. Likewise, privileged users could be the target of attackers trying to gain access to critical systems.
+Security teams often need to perform threat analysis or malware testing that could trigger malware detection. Likewise, privileged users could be the target of attackers trying to gain access to critical systems.
 
 | Selector         | Operator | Value              | Action  |
 | ---------------- | -------- | ------------------ | ------- |
