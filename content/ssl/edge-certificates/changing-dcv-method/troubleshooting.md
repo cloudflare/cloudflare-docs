@@ -28,7 +28,6 @@ If you have issues while HTTP DCV is in place, review the following settings:
 {{<render file="_dcv-path-security.md">}}
 {{</Aside>}}
 
-
 ## DNS settings and records
 
 The errors below refer to situations that have to be addressed at the authoritative DNS provider:
@@ -47,3 +46,9 @@ Consider the following when troubleshooting:
 ### Rate limiting
 
 {{<render file="_error-rate-limiting.md">}}
+
+### Internal errors
+
+When, during the CA check portion of the [DCV flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), the certificate authority finds an issue, you may see a `Internal error with Certificate Authority` message. In this case, either wait or try a different certificate authority.
+
+When the error states that the `certificate authority will not issue for this domain`, you can try a different certificate authority or contact the CA directly.
