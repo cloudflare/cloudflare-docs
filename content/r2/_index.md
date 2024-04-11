@@ -16,7 +16,7 @@ Object storage for all your data.
 
 {{</description>}}
 
-{{<plan type="workers_paid">}}
+{{<plan type="workers-paid">}}
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 

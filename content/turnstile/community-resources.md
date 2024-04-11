@@ -1,7 +1,7 @@
 ---
 title: Community resources
 pcx_content_type: reference
-weight: 12
+weight: 10
 structured_data: true
 ---
 
@@ -67,4 +67,6 @@ Turnstile integrations for popular content management systems:
 
 Other resources related to integrating Turnstile:
 
-- [TypeScript definitions](https://www.npmjs.com/package/turnstile-types)
+- TypeScript definitions
+  - [turnstile-types](https://www.npmjs.com/package/turnstile-types)
+  - [@types/cloudflare-turnstile](https://www.npmjs.com/package/@types/cloudflare-turnstile)

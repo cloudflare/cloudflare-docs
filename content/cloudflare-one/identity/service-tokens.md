@@ -27,17 +27,41 @@ This section covers how to create, renew, and revoke a service token.
    {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
    {{</Aside>}}
 
-You can now use the service token in your [Access policies](/cloudflare-one/policies/access/) and [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/). When creating these policies, select the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
+You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/policies/access/#service-auth); otherwise, Access will prompt for an identity provider login.
 
 ## Connect your service to Access
 
+### Initial request
+
 To authenticate to an Access application using your service token, add the following to the headers of any HTTP request:
 
-`CF-Access-Client-Id: <Client ID>`
+`CF-Access-Client-Id: <CLIENT_ID>`
 
-`CF-Access-Client-Secret: <Client Secret>`
+`CF-Access-Client-Secret: <CLIENT_SECRET>`
 
-If the service token is valid, Access generates a JWT scoped to the application. All subsequent requests with that JWT will succeed until the expiration of that JWT.
+For example,
+
+```sh
+$ curl -H "CF-Access-Client-Id: <CLIENT_ID>" -H "CF-Access-Client-Secret: <CLIENT_SECRET>" https://app.example.com
+```
+
+If the service token is valid, Access generates a JWT scoped to the application in the form of a [`CF_Authorization` cookie](/cloudflare-one/identity/authorization-cookie/). You can use this cookie to authenticate [subsequent requests](#subsequent-requests) to the application.
+
+### Subsequent requests
+
+After you have [authenticated to the application](#initial-request) using the service token, add the resulting `CF_Authorization` cookie to the headers of all subsequent requests:
+
+```sh
+$ curl -H "cookie: CF_Authorization=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
+```
+
+If you prefer to use a raw header, send the value as `cf-access-token`:
+
+```sh
+$ curl -H "cf-access-token=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
+```
+
+All requests with this cookie will succeed until the JWT expires.
 
 ## Renew service tokens
 

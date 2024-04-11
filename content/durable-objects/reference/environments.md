@@ -1,7 +1,7 @@
 ---
 title: Environments
 pcx_content_type: concept
-weight: 16
+weight: 9
 ---
 
 # Environments

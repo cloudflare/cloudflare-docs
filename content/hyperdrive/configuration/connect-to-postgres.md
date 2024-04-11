@@ -45,7 +45,7 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
 | -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
-| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              |                           |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this.   |
 | Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` | Must pass `prepare: false` when creating the client. |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
@@ -74,22 +74,31 @@ Hyperdrive does not currently support uploading client CA certificates. In the f
 
 ## Driver examples
 
-### node-postgres / pg
-
-The following Workers code shows an example for `node-postgres`:
-
-```sh
----
-header: node-postgres
----
-$ npm install pg
-```
-
-The following Workers examples show you how to:
+The following examples show you how to:
 
 1. Create a database client with a database driver.
 2. Pass the Hyperdrive connection string and connect to the database.
-3. Write a query.
+3. Query your database via Hyperdrive.
+
+### node-postgres / pg
+
+Install the `node-postgres` driver:
+
+```sh
+$ npm install pg
+```
+
+Ensure you have `node_compat = true` set in your `wrangler.toml` configuration file:
+
+```toml
+---
+filename: wrangler.toml
+---
+# other fields elided
+node_compat = true # require for node-postgres to work
+```
+
+Create a new `Client` instance and pass the Hyperdrive parameters:
 
 {{<tabs labels="node-postgres">}}
 {{<tab label="node-postgres" default="true">}}
@@ -112,7 +121,13 @@ export default {
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+		const client = new Client({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			port: Number(env.HYPERDRIVE.port),
+			database: env.HYPERDRIVE.database
+		})
 
 		try {
 			// Connect to your database
@@ -136,20 +151,15 @@ export default {
 
 ### Postgres.js
 
-The following Workers code shows an example for [Postgres.js](https://github.com/porsager/postgres):
+The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
+
+Install the Postgres.js driver:
 
 ```sh
----
-header: postgres.js
----
 $ npm install postgres
 ```
 
-The following Workers examples show you how to:
-
-1. Create a database client with a database driver.
-2. Pass the Hyperdrive connection string and connect to the database.
-3. Write a query.
+Create a new `sql` instance and pass the Hyperdrive parameters:
 
 {{<tabs labels="postgres-js">}}
 {{<tab label="postgres-js" default="true">}}

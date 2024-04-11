@@ -7,7 +7,7 @@ meta:
 weight: 4
 ---
 
-# Rust
+{{<heading-pill style="beta">}}Rust{{</heading-pill>}}
 
 Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/configuration/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 

@@ -684,7 +684,7 @@ header: wrangler.toml
 ---
 kv_namespaces = [
   { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
-  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
+  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>" }
 ]
 
 # or
@@ -713,7 +713,7 @@ To bind Queues to your producer Worker, assign an array of the below object to t
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
- 
+
 - `delivery_delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The number of seconds to [delay messages sent to a queue](/queues/reference/batching-retries/#delay-messages) for by default. This can be overridden on a per-message or per-batch basis.
@@ -762,7 +762,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
   - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
- 
+
 - `retry_delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The number of seconds to [delay retried messages](/queues/reference/batching-retries/#delay-messages) for by default, before they are re-delivered to the consumer. This can be overridden on a per-message or per-batch basis [when retrying messages](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries).
@@ -875,7 +875,7 @@ index_name = "<INDEX_NAME>"
 ```
 ### Service bindings
 
-A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
+A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 To bind other Workers to your Worker, assign an array of the below object to the `services` key.
 
@@ -889,6 +889,10 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
   - The name of the Worker.
 
+- `entrypoint` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of the [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to. If you do not specify an entrypoint, the default export of the Worker will be used.
+
 {{</definitions>}}
 
 Example:
@@ -898,7 +902,7 @@ Example:
 header: wrangler.toml
 ---
 services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", entrypoint = "<ENTRYPOINT_NAME>" }
 ]
 
 # or
@@ -906,6 +910,7 @@ services = [
 [[services]]
 binding = "<BINDING_NAME>"
 service = "<WORKER_NAME>"
+entrypoint = "<ENTRYPOINT_NAME>"
 ```
 
 ### Analytics Engine Datasets
@@ -1138,6 +1143,29 @@ node_compat = true
 It is not possible to polyfill all Node APIs or behaviors, but it is possible to polyfill some of them.
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
+
+## Source maps
+
+[Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
+
+
+{{<definitions>}}
+
+- `upload_source_maps` {{<type>}}boolean{{</type>}}
+
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2).
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+upload_source_maps = true
+
+```
 
 ## Workers Sites
 

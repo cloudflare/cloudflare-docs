@@ -4,16 +4,16 @@ pcx_content_type: how-to
 weight: 2
 ---
 
-{{<heading-pill style="early-access">}}Protocol detection{{</heading-pill>}}
+# Protocol detection
 
-{{<Aside type="note" header="Availability">}}Protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
+{{<Aside>}}Only available on Enterprise plans.{{</Aside>}}
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
-## Enable protocol detection
+## Turn on protocol detection
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Firewall**.
-2. Enable **Protocol Detection**.
+2. Turn on **Protocol Detection**.
 
 You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudflare-one/policies/gateway/network-policies/#detected-protocol).
 

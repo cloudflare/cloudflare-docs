@@ -35,8 +35,6 @@ Import the library in your code:
 import { Ai } from "@cloudflare/ai";
 ```
 
-{{<render file="_npm-update.md">}}
-
 ## Constructor
 
 ### new `Ai()`
@@ -82,8 +80,7 @@ export default {
 ```javascript
 import { Ai } from '@cloudflare/ai'
 
-// sessionOptions are optional
-const ai = new Ai(env.AI, { sessionOptions: { ctx }});
+const ai = new Ai(env.AI);
 
 const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
     prompt: "What is the origin of the phrase 'Hello, World'"
@@ -97,9 +94,6 @@ const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
 - `model` {{<type-link href="/workers-ai/models/">}}string{{</type-link>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The model to run.
 
-- `options` {{<type>}}object{{</type>}} {{<prop-meta>}}depends on the model{{</prop-meta>}}
-  - Depends on the model type.
-
   **Supported options**
 
   - `stream` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -108,13 +102,10 @@ const answer = ai.run('@cf/meta/llama-2-7b-chat-int8', {
 {{</definitions>}}
 
 
-Optionally, you can pass a `stream` property to the `options` object. This will return a stream of results as they are available.
-
 ```javascript
 import { Ai } from '@cloudflare/ai'
 
-// sessionOptions are optional
-const ai = new Ai(env.AI, { sessionOptions: { ctx }});
+const ai = new Ai(env.AI);
 
 const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
     prompt: "What is the origin of the phrase 'Hello, World'",

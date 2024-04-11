@@ -167,7 +167,7 @@ Create a new D1 database using `wrangler`:
 $ npx wrangler d1 create database
 ```
 
-Then, add the configuration details for your new D1 database to `wrangler.toml`:
+Then, paste the configuration details output from the previous command into `wrangler.toml`:
 
 ```toml
 # ... existing wrangler configuration
@@ -175,7 +175,7 @@ Then, add the configuration details for your new D1 database to `wrangler.toml`:
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
 database_name = "database"
-database_id = "abc-def-geh"
+database_id = "abc-def-geh" # replace this with a real database_id (UUID)
 ```
 
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
