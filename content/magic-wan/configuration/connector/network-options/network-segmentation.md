@@ -13,6 +13,9 @@ The following guide assumes you have already created a site and configured your 
 
 ## Create a policy
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 Follow the steps below to create a new LAN policy to segment your network. Only the fields marked **required** are mandatory.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
@@ -28,9 +31,107 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 11. (Optional) Select the type of traffic you want to keep local. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
 12. Select **Create policy**.
 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+
+Create a `POST` request [using the API](/api/operations/magic-site-acls-create-site-acl) to create a network policy.
+
+Example:
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+  "acl": {
+    "description": "Allows local traffic between PIN pads and cash register.",
+    "forward_locally": true,
+    "lan_1": {
+      "lan_id": "string",
+      "lan_name": "string",
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "lan_2": {
+      "lan_id": "string",
+      "lan_name": "string",
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "name": "PIN Pad - Cash Register",
+    "protocols": [
+      "tcp"
+    ]
+  }
+}'
+```
+
+If successfull, you will receive a response like the following:
+
+```bash
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "acls": [
+      {
+        "description": "Allows local traffic between PIN pads and cash register.",
+        "forward_locally": true,
+        "id": "023e105f4ecef8ad9ca31a8372d0c353",
+        "lan_1": {
+          "lan_id": "string",
+          "lan_name": "string",
+          "ports": [
+            1
+          ],
+          "subnets": [
+            "192.0.2.1"
+          ]
+        },
+        "lan_2": {
+          "lan_id": "string",
+          "lan_name": "string",
+          "ports": [
+            1
+          ],
+          "subnets": [
+            "192.0.2.1"
+          ]
+        },
+        "name": "PIN Pad - Cash Register",
+        "protocols": [
+          "tcp"
+        ]
+      }
+    ]
+  },
+  "success": true
+}
+```
+
+Take note of the `id` parameter, as you will need it to edit or delete network policies.
+
+{{</tab>}}
+{{</tabs>}}
+
 The new policy will ensure that traffic between the specified LANs flows locally, bypassing Cloudflare.
 
 ## Edit a policy
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Sites**.
@@ -40,7 +141,60 @@ The new policy will ensure that traffic between the specified LANs flows locally
 6. Select the policy you need to edit > **Edit**.
 7. Make your changes, and select **Update policy**.
 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+
+Create a `PUT` request [using the API](/api/operations/magic-site-acls-update-acl) to edit a network policy.
+
+Example:
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/acl_identifier \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+  "acl": {
+    "description": "Allows local traffic between PIN pads and cash register.",
+    "forward_locally": true,
+    "lan_1": {
+      "lan_id": "string",
+      "lan_name": "string",
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "lan_2": {
+      "lan_id": "string",
+      "lan_name": "string",
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "name": "PIN Pad - Cash Register",
+    "protocols": [
+      "tcp"
+    ]
+  }
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ## Delete a policy
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Sites**.
@@ -50,3 +204,23 @@ The new policy will ensure that traffic between the specified LANs flows locally
 6. Select the policy you need to edit > **Edit**.
 7. Select **Delete**.
 8. Select **I understand that deleting a policy is permanent** in the dialog box > **Delete**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+
+Create a `DELETE` request [using the API](/api/operations/magic-site-acls-delete-acl) to delete a network policy.
+
+Example:
+
+```bash
+curl --request DELETE \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+```
+
+{{</tab>}}
+{{</tabs>}}
