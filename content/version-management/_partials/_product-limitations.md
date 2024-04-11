@@ -49,6 +49,10 @@ Version Management does not currently support or have limited support for the fo
 - Once a new version is created, these roles do not copy over and they lose access to versions.
 {{</details>}}
 
+{{<details header="Image Transformations">}}
+- Changes made to [Image Transformations](/images/transform-images/#transform-images) are not cloned when a new zone version is created.
+{{</details>}}
+
 {{<details header="Network Error Logging">}}
 - [Network Error Logging](/network-error-logging/) configurations are not cloned when a new version is created.
 {{</details>}}
