@@ -1,12 +1,12 @@
 ---
-title: Multi-cloud setup
+title: Egress-free object storage in multi-cloud setups
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
-  title: "Reference Architecture Diagram: R2 multi-cloud setup"
+  title: "Reference Architecture Diagram: Egress-free object storage in multi-cloud setups"
 ---
 
-# Multi-cloud setup
+# Egress-free object storage in multi-cloud setups
 
 ## Introduction
 
@@ -16,7 +16,7 @@ Oftentimes organizations leverage multiple cloud providers to distribute their w
 
 Egress fees are charges incurred when data is transferred out of a cloud provider's network, either to another cloud provider, on-premises infrastructure, or external services. These fees can vary depending on factors such as the volume of data transferred, the destination of the data, and the network bandwidth utilized.
 
-[R2](/r2/) offers an enticing value proposition by not charging the costly egress bandwidth fees associated with typical cloud storage services. This can be very advantageous in the context of multi-cloud environments
+[R2](/r2/) offers an enticing value proposition by not charging the costly egress bandwidth fees associated with typical cloud storage services. This can be very advantageous in the context of multi-cloud environments, when you want to run compute-intensive workloads such as AI model training, query engines and other data science tools.
 
 ## R2 multi-cloud setup
 

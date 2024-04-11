@@ -1,5 +1,5 @@
 ---
-title: R2
+title: Storage
 pcx_content_type: navigation
 weight: 2
 ---
