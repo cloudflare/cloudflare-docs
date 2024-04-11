@@ -124,11 +124,11 @@ Review your generated `wrangler.toml` file. To start using `wrangler.toml` for y
 
 ### Handling compatibility dates set to "Latest"
 
-In the Cloudflare dashboard, you can set compatibility dates for preview deployments and production to "Latest". This will ensure your project is always using the latest compatibility date without the need to explicitly set it yourself.
+In the Cloudflare dashboard, you can set compatibility dates for preview deployments to "Latest". This will ensure your project is always using the latest compatibility date without the need to explicitly set it yourself.
 
 If you download a `wrangler.toml` from a project configured with "Latest" using the `wrangler pages download` command, your `wrangler.toml` will have the latest compatibility date available at the time you downloaded the configuration file. Wrangler does not support the "Latest" functionality like the dashboard. Compatibility dates must be explicitly set when using `wrangler.toml`.
 
-Refer to [this guide](https://developers.cloudflare.com/workers/configuration/compatibility-dates/) for more information on what compatibility dates are and how they work.
+Refer to [this guide](/workers/configuration/compatibility-dates/) for more information on what compatibility dates are and how they work.
 
 ## Differences using `wrangler.toml` for Pages Functions and Workers
 
@@ -306,7 +306,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
 - `compatibility_date` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/). 
+  - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `compatibility_flags` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
