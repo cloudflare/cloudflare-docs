@@ -5,11 +5,15 @@ pcx_content_type: configuration
 
 # Protect an R2 bucket with Cloudflare Access
 
-You can secure access to R2 buckets using [Cloudflare Access](/cloudflare-one/applications/configure-apps/), which allows you to only allow specific users, groups or applications within your organization to access objects within a bucket,
+You can secure access to R2 buckets using [Cloudflare Access](/cloudflare-one/applications/configure-apps/). 
+
+Access allows you to only allow specific users, groups or applications within your organization to access objects within a bucket, or specific sub-paths, based on policies you define.
 
 {{<Aside type="note">}}
 
-For providing secure access to bucket objects for anonymous users, we recommend using [pre-signed URLs](/r2/api/s3/presigned-urls/) instead. Pre-signed URLs do not require users to be a member of your organization and enable programmatic application directly.
+For providing secure access to bucket objects for anonymous users, we recommend using [pre-signed URLs](/r2/api/s3/presigned-urls/) instead. 
+
+Pre-signed URLs do not require users to be a member of your organization and enable programmatic application directly.
 
 {{</Aside>}}
 
