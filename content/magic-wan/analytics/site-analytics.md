@@ -1,22 +1,22 @@
 ---
-title: Site analytics
+title: Site Analytics
 pcx_content_type: how-to
 weight: 1
 meta:
-  title: Magic WAN site analytics
+  title: Magic WAN Site Analytics
 ---
 
-# Magic WAN site analytics
+# Magic WAN Site Analytics
 
-Magic WAN site analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. Magic WAN Site Analytics is a great place to start if you receive a Magic WAN alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.
+Magic WAN Site Analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. Magic WAN Site Analytics is a great place to start if you receive a Magic WAN alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.
 
-To start using Magic WAN site analytics:
+To start using Magic WAN Site Analytics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Select **Magic WAN** > **Overview**.
 3. You will have access to an overview map with all your active sites, and any alerts for sites that are unhealthy or have no status available to them.
 
-## Configure Magic WAN site analytics
+## Configure Magic WAN Site Analytics
 
 ### Set geographic coordinates
 
