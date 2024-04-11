@@ -45,5 +45,5 @@ Examples of ETL pipelines in action include scenarios like extracting sales data
 ## Related resources
 
 - [Workers: Get started](/workers/get-started/)
-- [Queues: Get started](queues/get-started/)
+- [Queues: Get started](/queues/get-started/)
 - [R2: Get started](/r2/get-started/)
