@@ -22,6 +22,6 @@ If you are on a product that is not available for versioning, you will not be ab
 
 The Domain Summary is accessible from all pages and allows you to quickly switch between versions and domains
 
-![Select a version from the Versions page or the sidebar dropdown](/images/version-management/change-version.png)
+![Switch between versions of your configuration](/images/version-management/configurable-versions.png)
 
 From within a version, you can update configurations just as you would with your normal zone configurations. Any changes are saved automatically.
