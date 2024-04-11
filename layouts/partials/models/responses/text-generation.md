@@ -23,7 +23,7 @@ To enable, set the `stream` parameter to true.
 Using the Workers API:
 
 ```javascript
-const stream = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
+const stream = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
   stream: true
   messages,
 });
