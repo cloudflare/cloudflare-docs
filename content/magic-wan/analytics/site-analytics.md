@@ -10,6 +10,22 @@ meta:
 
 Magic WAN Site Analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. Magic WAN Site Analytics is a great place to start if you receive a Magic WAN alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.
 
+Magic WAN Site Analytics has the following data types available:
+- Geographic Map Summary
+    - Aggregate Magic WAN Site Health
+    - MWAN Site Geographic Location
+- Magic WAN Site Data Table
+    - Site Name
+    - Site Health
+    - Site Tunnel Names
+    - Site Tunnel Statuses
+    - Site Traffic Sent
+    - Site Traffic Received
+- Magic WAN Site Data
+    - Traffic Sent by Tunnel
+    - Traffic Received by Tunnel
+
+
 To start using Magic WAN Site Analytics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
