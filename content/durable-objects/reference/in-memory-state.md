@@ -62,4 +62,4 @@ If the callback throws an exception, the object will be terminated and reset. Th
 
 To simulate eviction, use `state.blockConcurrencyWhile()`. Inside the callback, throw an exception. Throwing an exception causes the system to recreate the in-memory object, without affecting the durable storage. Uncaught exceptions inside the `state.blockConcurrencyWhile()` will break the actor.
 
-To help prevent deadlocks in your critical section, there is a 30s timeout on the callback passed into `state.blockConcurrencyWhile`. When this timeout is exceeded, your durable object will be reset. It is generally good practice to have your critical section in blockConcurrencyWhile be as brief as possible.
+To help prevent deadlocks in your critical section, there is a 30s timeout on the callback passed into `state.blockConcurrencyWhile`. When this timeout is exceeded, your Durable Object will be reset. It is generally good practice to have your critical section in `blockConcurrencyWhile()` be as brief as possible.
