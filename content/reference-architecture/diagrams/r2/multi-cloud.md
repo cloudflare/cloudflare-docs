@@ -1,12 +1,12 @@
 ---
-title: R2 multi-cloud setup
+title: Multi-cloud setup
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: R2 multi-cloud setup"
 ---
 
-# Content-based asset creation
+# Multi-cloud setup
 
 ## Introduction
 
@@ -16,7 +16,7 @@ Oftentimes organizations leverage multiple cloud providers to distribute their w
 
 Egress fees are charges incurred when data is transferred out of a cloud provider's network, either to another cloud provider, on-premises infrastructure, or external services. These fees can vary depending on factors such as the volume of data transferred, the destination of the data, and the network bandwidth utilized.
 
-[R2](https://developers.cloudflare.com/r2/) offers an enticing value proposition by not charging the costly egress bandwidth fees associated with typical cloud storage services. This can be very advantageous in the context of multi-cloud environments
+[R2](/r2/) offers an enticing value proposition by not charging the costly egress bandwidth fees associated with typical cloud storage services. This can be very advantageous in the context of multi-cloud environments
 
 ## R2 multi-cloud setup
 
