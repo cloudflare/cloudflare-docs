@@ -31,7 +31,7 @@ To add a site:
 
 You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
 
-Create a POST request [using the API](/api/operations/magic-sites-create-site) to create a site. The `name` and `connector_id` parameters are required to create a site.
+Create a `POST` request [using the API](/api/operations/magic-sites-create-site) to create a site. The `name` and `connector_id` parameters are required to create a site.
 
 The parameter `"ha_mode": true` enables [high availability](#about-high-availability-configurations). You cannot enable high availability for a site after it has been created. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
 
@@ -112,7 +112,7 @@ Take note of the site `id` as you will need it to create WANs and LANs.
 
 You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
 
-Create a POST request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
+Create a `POST` request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
 
 Example:
 
@@ -168,7 +168,7 @@ curl --request POST \
 
 You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
 
-Create a POST request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
+Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
 
 Example:
 
@@ -176,7 +176,8 @@ Example:
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
   --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: ' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "lan": {
     "description": "string",
@@ -220,8 +221,6 @@ curl --request POST \
 
 {{</tab>}}
 {{</tabs>}}
-
-
 
 #### Network segmentation
 
