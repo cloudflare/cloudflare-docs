@@ -12,7 +12,7 @@ To run a traceroute from a specific Cloudflare colo to your network:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Tunnel Health**.
-3. Expand a Magic Tunnel, and find the Cloudflare colo where the traceroute will be run from.
+3. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
 4. Select **Traceroute for details**.
 
 You can access detailed data from the traceroute, including:
