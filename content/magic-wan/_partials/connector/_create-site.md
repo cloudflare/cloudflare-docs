@@ -14,6 +14,9 @@ You need to create a site and set up all the settings associated with it before 
 
 To add a site:
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
 3. Select **Create** to create a new site and start the configuration wizard.
@@ -22,6 +25,38 @@ To add a site:
 6. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
 7. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 8. Select **Next** to proceed to creating your WAN and LAN networks.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Create a POST request [using the API](/api/operations/magic-sites-create-site) to create a site. You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+
+*****************what else is needed here???*****************
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+  "site": {
+    "connector_id": "ac60d3d0435248289d446cedd870bcf4",
+    "description": "string",
+    "ha_mode": true,
+    "location": {
+      "lat": 37.6192,
+      "lon": 122.3816
+    },
+    "name": "site_1",
+    "secondary_connector_id": "8d67040d3835dbcf46ce29da440dc482"
+  }
+}'
+```
+{{</tab>}}
+{{</tabs>}}
+
+
 
 ### 2. Create a WAN
 
