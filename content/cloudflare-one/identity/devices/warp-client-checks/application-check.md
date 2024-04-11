@@ -23,11 +23,11 @@ The Application Check device posture attribute checks that a specific applicatio
 4. You will be prompted for the following information:
     1. **Name**: Enter a unique name for this device posture check.
     2. **Operating system**: Select your operating system.
-    3. **Application path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
+    3. **Application path**: Enter the file path for the executable that will be running (for example, `C:\Program Files\myfolder\myfile.exe`).
     {{<Aside type="note">}}
 
 - Be sure to enter the binary file path, not the application launch path. When checking for an application on macOS, a common mistake is to enter `/Applications/ApplicationName.app`. This will not work as `ApplicationName.app` is a folder. The executable file that will be running is located within the folder, for example `ApplicationName.app/Contents/MacOS/ApplicationName`.
-- Some applications change their file path after an update. Ensure that the application is always in a stable location or use [Recognized environment variables on Windows](https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-recognized-environment-variables) or other OSes that should refer to the single path to identify folders that can be different on different computers when possible.
+- Some applications change their file path after an update. Ensure that the application is always in a stable location, or use an environment variable to identify a specific folder. For example, Windows provides [recognized environment variables](https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-recognized-environment-variables) that you can reference in your file path (`%PROGRAMFILES%\myfolder\myfile.exe`).
 
 {{</Aside>}}
     4. **Signing certificate thumbprint (recommended)**: Enter the [thumbprint of the publishing certificate](#determine-the-signing-thumbprint) used to sign the binary. Adding this information will enable the check to ensure that the application was signed by the expected software developer.
