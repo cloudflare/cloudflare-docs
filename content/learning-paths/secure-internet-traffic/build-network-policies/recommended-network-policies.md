@@ -7,6 +7,8 @@ layout: learning-unit
 
 We recommend you add the following network policies to build an Internet and SaaS app security strategy for your organization.
 
+For more information on building network policies, refer to [Network policies](/cloudflare-one/policies/gateway/network-policies/).
+
 {{<details header="Quarantined-Users-NET-Restricted-Access" open="true">}}
 
 {{<render file="zero-trust/_blocklist-restricted-users.md">}}
@@ -20,7 +22,7 @@ We recommend you add the following network policies to build an Internet and Saa
 
 {{</details>}}
 
-{{<details header="Posture-Fail-NET-Restricted-Access" open="true">}}
+Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
 
 Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically block access for devices that do not meet predetermined security requirements.
 
@@ -58,9 +60,7 @@ Block traffic to destination IPs, {{<glossary-tooltip term_id="Server Name Indic
 | SNI            | in list  | _Host Blocklist_   | Or    |        |
 | Domain SNI     | in list  | _Domain Blocklist_ |       |        |
 
-{{</details>}}
-
-{{<Aside type="note">}}The Detected Protocol selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).{{</Aside>}}
+{{<Aside type="note">}}The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).{{</Aside>}}
 
 {{<details header="All-NET-SSH-Internet-Allowlist" open="true">}}
 
