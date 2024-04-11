@@ -6,4 +6,5 @@ entries:
   title: Add AI native binding
   description: |-
     * Added new AI native binding, you can now run models with `const resp = await env.AI.run(modelName, inputs)`
-    * Deprecated `@cloudflare/ai` npm package, customers can continue using it, but its recommended that they change to the new native binding
+    * Deprecated `@cloudflare/ai` npm package. While existing solutions using the @cloudflare/ai package will continue to work, no new Workers AI features will be supported.
+      Moving to native AI bindings is highly recommended
