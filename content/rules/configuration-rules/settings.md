@@ -12,7 +12,9 @@ You can change the configuration settings described below in a configuration rul
 
 ## Automatic HTTPS Rewrites
 
-Enable or disable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) [^1] for matching requests.
+[Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) prevents end users from seeing `Mixed content` errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
+
+Use this setting to enable or disable Automatic HTTPS Rewrites for matching requests.
 
 {{<details header="API information">}}
 
@@ -33,7 +35,16 @@ header: API configuration example
 
 ## Auto Minify
 
-Select which file extensions to minify automatically using [Auto Minify](/speed/optimization/content/auto-minify/) [^2].
+[Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
+
+Use this setting to configure which file extensions you want to minify automatically:
+- HTML
+- CSS
+- JS
+
+{{<Aside type="note" header="Note">}}
+Before using this setting, turn off Auto Minify globally for your zone (in **Speed** > **Optimization** > **Content Optimization**) and then turn it on for specific requests and file extensions in a configuration rule.
+{{</Aside>}}
 
 {{<details header="API information">}}
 
@@ -58,7 +69,9 @@ header: API configuration example
 
 ## Browser Integrity Check
 
-Enable or disable [Browser Integrity Check](/waf/tools/browser-integrity-check/) [^3] for matching requests.
+[Browser Integrity Check](/waf/tools/browser-integrity-check/) blocks access to pages based on specific HTTP headers commonly abused by spammers.
+
+Use this setting to enable or disable Browser Integrity Check for matching requests.
 
 {{<details header="API information">}}
 
@@ -79,7 +92,9 @@ header: API configuration example
 
 ## Disable Apps
 
-Disable all active [Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/) [^4] (deprecated) for matching requests.
+[Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/), now deprecated, is a platform for sharing high-quality apps that anyone with a website can use.
+
+Use this setting to disable all active Cloudflare Apps for matching requests.
 
 {{<details header="API information">}}
 
@@ -100,7 +115,9 @@ header: API configuration example
 
 ## Disable Zaraz
 
-Disable [Cloudflare Zaraz](/zaraz/) [^6] for matching requests.
+[Cloudflare Zaraz](/zaraz/) gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
+
+Use this setting to disable Zaraz for matching requests.
 
 {{<details header="API information">}}
 
@@ -121,7 +138,9 @@ header: API configuration example
 
 ## Hotlink Protection
 
-Enable or disable [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) [^7] for matching requests.
+[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
+
+Use this setting to enable or disable Hotlink Protection for matching requests.
 
 {{<details header="API information">}}
 
@@ -142,7 +161,9 @@ header: API configuration example
 
 ## Email Obfuscation
 
-Enable or disable [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) [^8] for matching requests.
+[Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
+
+Use this setting to enable or disable Email Obfuscation for matching requests.
 
 {{<details header="API information">}}
 
@@ -163,7 +184,9 @@ header: API configuration example
 
 ## Mirage
 
-Enable or disable [Mirage](/speed/optimization/images/mirage/) [^9] for matching requests.
+[Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.
+
+Use this setting to enable or disable Mirage for matching requests.
 
 {{<details header="API information">}}
 
@@ -184,7 +207,9 @@ header: API configuration example
 
 ## Opportunistic Encryption
 
-Enable or disable [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) [^10] for matching requests.
+[Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) allows browsers to access HTTP URIs over an encrypted TLS channel.
+
+Use this setting to enable or disable Opportunistic Encryption for matching requests.
 
 {{<details header="API information">}}
 
@@ -205,7 +230,14 @@ header: API configuration example
 
 ## Polish
 
-Set [Polish](/images/polish/) [^11] compression options for matching requests.
+[Cloudflare Polish](/images/polish/) is a one-click image optimization product that automatically optimizes images in your site.
+
+Use this setting to configure Polish for matching requests:
+- Off
+- Lossless
+- Lossy
+
+Refer to [Compression options](/images/polish/compression/#compression-options) for more information on these values.
 
 {{<details header="API information">}}
 
@@ -228,7 +260,9 @@ header: API configuration example
 
 ## Rocket Loader
 
-Enable or disable [Rocket Loader](/speed/optimization/content/rocket-loader/) [^12] for matching requests.
+[Rocket Loader](/speed/optimization/content/rocket-loader/) prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
+
+Use this setting to enable or disable Rocket Loader for matching requests.
 
 {{<details header="API information">}}
 
@@ -249,7 +283,18 @@ header: API configuration example
 
 ## Security Level
 
-Select the [Security Level](/waf/tools/security-level/) [^13] for matching requests.
+[Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
+
+Use this setting to select the security level for matching requests:
+
+- Off
+- Essentially Off
+- Low
+- Medium
+- High
+- I'm Under Attack
+
+Refer to [Security levels](/waf/tools/security-level/#security-levels) for more information on these values.
 
 {{<details header="API information">}}
 
@@ -272,7 +317,9 @@ header: API configuration example
 
 ## Server Side Excludes
 
-Enable or disable [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) [^14] for matching requests.
+[Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
+
+Use this setting to enable or disable Server Side Excludes for matching requests.
 
 {{<details header="API information">}}
 
@@ -293,7 +340,17 @@ header: API configuration example
 
 ## SSL
 
-Select the [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) [^15] for matching requests.
+[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
+
+Use this setting to configure the SSL/TLS encryption mode for matching requests:
+
+- Off
+- Flexible
+- Full
+- Strict
+- Origin Pull
+
+Refer to [Available encryption modes](/ssl/origin-configuration/ssl-modes/#available-encryption-modes) for more information on these values.
 
 {{<details header="API information">}}
 
@@ -316,7 +373,9 @@ header: API configuration example
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) [^16] for matching requests.
+[Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
+
+Use this setting to enable or disable signed exchanges for matching requests.
 
 {{<details header="API information">}}
 
@@ -334,33 +393,3 @@ header: API configuration example
 {{<render file="_configuration-rule-link-to-examples.md">}}
 
 {{</details>}}
-
-[^1]: Automatic HTTPS Rewrites prevents end users from seeing “mixed content” errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
-
-[^2]: Auto Minify can remove all unnecessary characters from HTML, JavaScript, and CSS files.
-
-[^3]: Browser Integrity Check blocks access to pages based on specific HTTP headers commonly abused by spammers.
-
-[^4]: Cloudflare Apps, now deprecated, is a platform for sharing high-quality apps that anyone with a website can use.
-
-[^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
-
-[^7]: Hotlink Protection prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
-
-[^8]: Email Obfuscation helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
-
-[^9]: Mirage accelerates image delivery for your visitors based on their device.
-
-[^10]: Opportunistic Encryption allows browsers to access HTTP URIs over an encrypted TLS channel.
-
-[^11]: Cloudflare Polish is a one-click image optimization product that automatically optimizes images in your site.
-
-[^12]: Rocket Loader prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
-
-[^13]: The Security Level controls Managed Challenges for requests from low reputation IP addresses.
-
-[^14]: Server Side Excludes allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
-
-[^15]: Encryption modes control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
-
-[^16]: Signed exchanges (SXG) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
