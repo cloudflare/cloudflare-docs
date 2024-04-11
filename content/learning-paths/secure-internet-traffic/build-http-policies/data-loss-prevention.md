@@ -21,7 +21,7 @@ You may either use DLP profiles predefined by Cloudflare, or create your own cus
 
 ## Build effective DLP profiles
 
-For many Cloudflare users, Cloudflare Zero Trust is often one of the only measures in tackling preventing the loss of sensitive data. For other users, Zero Trust may be the one of the early in-line measures of a complex orchestration of an Internet and SaaS app security strategy. No matter which journey you most resemble, developing effective and appropriate DLP policies and practices starts with first-principles definitions.
+For many Cloudflare users, Cloudflare Zero Trust is often one of the only measures for preventing the loss of sensitive data. For other users, Zero Trust may be the one of the early in-line measures of a complex orchestration of an Internet and SaaS app security strategy. No matter which journey you most resemble, developing effective and appropriate DLP policies and practices starts with first-principles definitions.
 
 ### Define your sensitive data
 
@@ -74,7 +74,7 @@ Cloudflare implements regular expressions with Rust. Make sure you account for t
 To validate your regex, use [Rustexp](https://rustexp.lpil.uk/).
 {{</Aside>}}
 
-For example, you can use a custom expression to when your users share product SKUs in the format `CF1234-56789`:
+For example, you can use a custom expression to detect when your users share product SKUs in the format `CF1234-56789`:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -131,7 +131,7 @@ If your data is a distinct [dataset](/cloudflare-one/policies/data-loss-preventi
 
 We recommend using Exact Data Match for highly sensitive datasets and Custom Wordlists for lists of keywords.
 
-As your datasets change and grow, we recommend building a pipeline to update the data source in the Zero Trust dashboard. For more information, contact your account team.
+As your datasets change and grow, we recommend building a pipeline to update the data source in Cloudflare Zero Trust. For more information, contact your account team.
 
 #### Microsoft Information Protection (MIP) labels
 
@@ -182,4 +182,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 {{</tab>}}
 {{</tabs>}}
 
-Once you have analyzed the flow and magnitude of data from the known sources, you can begin focusing on more specialized or explicit datasets for more generalized sources. This might look like inspecting for multiple matching data loss deterministic attributes to all external sources. You may want to except sources that are known internal locations where sensitive data is intentionally transferred. After developing a level of confidence from reviewing the logs and evaluating a rate of false positives for both types of policies, you can feel more confident in experimenting more broadly with data loss prevention policies.
+Once you have analyzed the flow and magnitude of data from the known sources, you can begin focusing on more specialized or explicit datasets for more generalized sources. You may want to allow sources that are known internal locations where sensitive data is intentionally transferred. After developing a level of confidence from reviewing the logs and evaluating a rate of false positives for both types of policies, you can feel more confident in experimenting more broadly with data loss prevention policies.
