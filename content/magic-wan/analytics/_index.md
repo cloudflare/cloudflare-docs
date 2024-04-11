@@ -10,11 +10,11 @@ meta:
 
 Magic WAN customers can follow the troubleshooting steps listed below to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
 
-- Overview in [Magic WAN Site Analytics](/magic-wan/analytics/site-analytics/)
-- Analyze network traffic data overtime in [Magic WAN Network Analytics](/magic-wan/analytics/network-analytics/)
+- Overview in [Magic WAN Site Analytics](#magic-wan-site-analytics)
+- Analyze network traffic data overtime in [Magic WAN Network Analytics](#magic-wan-network-analytics)
 - Perform more detailed troubleshooting with:
-    - Traceroutes
-    - [Packet captures](/magic-firewall/packet-captures/)
+    - [Traceroutes](#traceroutes)
+    - [Packet captures](#packet-captures)
 
 ## Magic WAN Site Analytics
 
@@ -32,7 +32,7 @@ Refer to [Magic WAN Network Analytics](/magic-wan/analytics/network-analytics/) 
 
 Traceroutes provide a hop by hop breakdown of the Internet path network traffic follows as it traverses from Cloudflare’s network to a customer’s network.
 
-Refer to [traceroutes](#) to learn more.
+Refer to [traceroutes](/magic-wan/analytics/traceroutes/) to learn more.
 
 ## Packet captures
 
