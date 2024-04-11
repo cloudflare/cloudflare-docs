@@ -166,10 +166,10 @@ link: "/waf/change-log/"
 productName: WAF
 entries:
 - publish_date: '2023-09-18'
+  scheduled_date: '2023-09-25'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
-  scheduled_date: '2023-09-25`
 - publish_date: '2023-09-18'
   individual_page: true
   link: '/waf/change-log/2023-09-18/'
