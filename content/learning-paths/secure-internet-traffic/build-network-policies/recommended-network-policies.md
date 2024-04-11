@@ -22,9 +22,9 @@ For more information on building network policies, refer to [Network policies](/
 
 {{</details>}}
 
-Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
+{{<details header="Posture-Fail-NET-Restricted-Access" open="true">}}
 
-Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically block access for devices that do not meet predetermined security requirements.
+Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
 
 | Selector                     | Operator    | Value                               | Logic | Action |
 | ---------------------------- | ----------- | ----------------------------------- | ----- | ------ |
@@ -61,6 +61,8 @@ Block traffic to destination IPs, {{<glossary-tooltip term_id="Server Name Indic
 | Domain SNI     | in list  | _Domain Blocklist_ |       |        |
 
 {{<Aside type="note">}}The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).{{</Aside>}}
+
+{{</details>}}
 
 {{<details header="All-NET-SSH-Internet-Allowlist" open="true">}}
 
