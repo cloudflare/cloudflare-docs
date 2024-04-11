@@ -30,4 +30,4 @@ Egress fees are charges incurred when data is transferred out of a cloud provide
 - [R2: Get started](/r2/get-started)
 - [R2: S3 API](/r2/api/s3/)
 - [R2: Workers API](/r2/api/workers/)
-- [R2L Worker]
+- [R2: Configure aws4fetch for R2](/r2/examples/aws/aws4fetch/)
