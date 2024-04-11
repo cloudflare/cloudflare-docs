@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-Now that you've considered which devices and applications TLS inspection should and should not apply to, it's time to create your first HTTP policy.
+Now that you have considered which devices and applications TLS inspection should and should not apply to, it is time to create your first HTTP policy.
 
 ## Create your first policy
 
@@ -31,10 +31,10 @@ In most scenarios, Gateway evaluates HTTP policies in [top-down order](/learning
 
 Once the Do Not Inspect policies are ordered correctly, Allow policies should follow, and the Allow policy descriptions should include any special considerations for Allow actions (such as header IDs, certificate mismatch handling, and non-isolate traffic).
 
-Next, list your isolate and block policies. There may be scenarios in which you want to intermingle your block policies within your other policy outcomes. That's an acceptable approach, but you'll need to ensure that you don't have overly permissive allows or overly restrictive block policies within your greater structure that will cause unintended effects.
+Next, list your isolate and block policies. There may be scenarios in which you want to intermingle your block policies within your other policy outcomes. That is an acceptable approach, but you will need to ensure that you do not have overly permissive allows or overly restrictive block policies that will cause unintended effects.
 
 ## Test your policies
 
 Before instituting blocks or other actions that would impact your users, first measure impact by setting the policy as an Allow action. Monitor your users' actions and look in your logs, sorting by that explicit policy, to see what traffic actions matched against it. If the activity is exactly what you would expect for the policy, you are probably safe to implement it as its intended action.
 
-If unexpected traffic flows matched against it (like user or device groups) or traffic destinations that are unexpected, review the design of your policy to ensure it's not overly permissive or restrictive. If the policy design looks correct, determine whether other policies that should fire before the TLS inspection policy may be impacting its ability to operate correctly, and review the order of operations for Gateway policies to ensure everything is firing as designed.
+If your policy matches unexpected traffic flows or destinations (such as unintended users or device groups), review your policy to ensure it is not overly permissive or restrictive. If the policy design looks correct, determine whether other policies are matching before the intended policy. You can review the [order of enforcement](/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/) for Gateway policies to ensure all of your policies are working together as intended.
