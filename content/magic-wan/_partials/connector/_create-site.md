@@ -29,9 +29,13 @@ To add a site:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Create a POST request [using the API](/api/operations/magic-sites-create-site) to create a site. You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
 
-*****************what else is needed here???*****************
+Create a POST request [using the API](/api/operations/magic-sites-create-site) to create a site. The `name` and `connector_id` parameters are required to create a site.
+
+The parameter `"ha_mode": true` enables [high availability](#about-high-availability-configurations). You cannot enable high availability for a site after it has been created. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
+
+Example:
 
 ```bash
 curl --request POST \
@@ -41,24 +45,52 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "site": {
-    "connector_id": "ac60d3d0435248289d446cedd870bcf4",
-    "description": "string",
+    "connector_id": "<ID_FOR_YOUR_PRIMARY_CONNECTOR>",
+    "description": "This is your site description",
     "ha_mode": true,
     "location": {
       "lat": 37.6192,
       "lon": 122.3816
     },
-    "name": "site_1",
-    "secondary_connector_id": "8d67040d3835dbcf46ce29da440dc482"
+    "name": "<SITE_NAME>",
+    "secondary_connector_id": "<ID_FOR_YOUR_SECONDARY_CONNECTOR>"
   }
 }'
 ```
+
+If you create you site successfully, you should receive a message similar to the following.
+
+```bash
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "site": {
+      "connector_id": "ac60d3d0435248289d446cedd870bcf4",
+      "description": "string",
+      "ha_mode": true,
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "location": {
+        "lat": 37.6192,
+        "lon": 122.3816
+      },
+      "name": "site_1",
+      "secondary_connector_id": "8d67040d3835dbcf46ce29da440dc482"
+    }
+  },
+  "success": true
+}
+```
+
+Take note of the site `id` as you will need it to create WANs and LANs.
+
 {{</tab>}}
 {{</tabs>}}
 
-
-
 ### 2. Create a WAN
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
 2. In **Interface name**, enter a descriptive name for your WAN.
@@ -75,7 +107,43 @@ curl --request POST \
 
 7. Select **Save** when you are finished.
 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+
+Create a POST request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
+
+Example:
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/wans \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+  "wan": {
+    "description": "<WAN_DESCRIPTION>",
+    "physport": 1,
+    "priority": 0,
+    "static_addressing": {
+      "address": "192.0.2.0/24",
+      "gateway_address": "192.0.2.1",
+      "secondary_address": "192.0.2.0/24"
+    },
+    "vlan_tag": 0
+  }
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ### 3. Create a LAN
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. In **LAN configuration**, select **Create**.
 2. Enter a descriptive name for your LAN in **Interface name**.
@@ -94,6 +162,66 @@ curl --request POST \
 
 8. Select **Save**.
 9. Select **Save and exit** to finish your configuration. Tunnels and {{<glossary-tooltip term_id="static route">}}static routes{{</glossary-tooltip>}} will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+
+Create a POST request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
+
+Example:
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: ' \
+  --data '{
+  "lan": {
+    "description": "string",
+    "ha_link": true,
+    "nat": {
+      "static_prefix": "192.0.2.0/24"
+    },
+    "physport": 1,
+    "routed_subnets": [
+      {
+        "nat": {
+          "static_prefix": "192.0.2.0/24"
+        },
+        "next_hop": "192.0.2.1",
+        "prefix": "192.0.2.0/24"
+      }
+    ],
+    "static_addressing": {
+      "address": "192.0.2.0/24",
+      "dhcp_relay": {
+        "server_addresses": [
+          "192.0.2.1"
+        ]
+      },
+      "dhcp_server": {
+        "dhcp_pool_end": "192.0.2.1",
+        "dhcp_pool_start": "192.0.2.1",
+        "dns_server": "192.0.2.1",
+        "reservations": {
+          "00:11:22:33:44:55": "192.0.2.100",
+          "AA:BB:CC:DD:EE:FF": "192.168.1.101"
+        }
+      },
+      "secondary_address": "192.0.2.0/24",
+      "virtual_address": "192.0.2.0/24"
+    },
+    "vlan_tag": 0
+  }
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+
 
 #### Network segmentation
 
