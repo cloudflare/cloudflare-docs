@@ -24,7 +24,7 @@ Using the Workers API:
 
 ```javascript
 const stream = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
-  stream: true
+  stream: true,
   messages,
 });
 
