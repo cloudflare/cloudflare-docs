@@ -46,7 +46,7 @@ Customers can filter the data in Network Analytics on different packet character
 
     This lets you examine traffic from specific Source tunnels and/or Destination tunnels.
 
-## Feature Notes:
+## Feature notes
 
 - For Magic Transit customers, `Non-tunnel traffic` will often represent traffic from the public Internet or traffic via [CNIs](/network-interconnect/).
 - For Magic WAN customers, `Non-tunnel traffic` refers to traffic outside of GRE or IPsec tunnels. This can include traffic from:
