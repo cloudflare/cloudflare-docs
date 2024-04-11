@@ -195,7 +195,7 @@ entries:
 
 - `scheduled_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-   - Should be included for scheduled pages. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
+   - Should be included for pages with scheduled changes. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
 
 {{</definitions>}}
 
