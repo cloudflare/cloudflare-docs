@@ -578,6 +578,22 @@
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
 /learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
+## dns-filtering / secure-internet-traffic
+/learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
+/learning-paths/dns-filtering/create-policy/order-of-enforcement/ /learning-paths/secure-internet-traffic/build-dns-policies/order-of-precedence/ 301
+/learning-paths/dns-filtering/connect-devices/ /learning-paths/secure-internet-traffic/connect-devices/ 301
+/learning-paths/dns-filtering/connect-devices/change-dns-resolver/ /learning-paths/secure-internet-traffic/build-dns-policies/onboard-dns/ 301
+/learning-paths/dns-filtering/connect-devices/install-agent/ /learning-paths/secure-internet-traffic/connect-devices/install-agent/ 301
+/learning-paths/dns-filtering/connect-devices/verify-connectivity/ /learning-paths/secure-internet-traffic/connect-devices/validate-traffic-in-gateway/ 301
+/learning-paths/dns-filtering/connect-devices/test-policy/ /learning-paths/secure-internet-traffic/build-dns-policies/test-policy/ 301
+/learning-paths/dns-filtering/plan-deployment/ /learning-paths/secure-internet-traffic/configure-device-agent/ 301
+/learning-paths/dns-filtering/plan-deployment/device-settings/ /learning-paths/secure-internet-traffic/configure-device-agent/device-profiles/ 301
+/learning-paths/dns-filtering/plan-deployment/mdm/ /learning-paths/secure-internet-traffic/connect-devices/mdm/ 301
+/learning-paths/dns-filtering/plan-deployment/user-authentication/ /learning-paths/secure-internet-traffic/initial-setup/configure-idp/ 301
+/learning-paths/dns-filtering/deploy/ /learning-paths/secure-internet-traffic/connect-devices/ 301
+/learning-paths/dns-filtering/deploy/phased-rollout/ /learning-paths/secure-internet-traffic/connect-devices/ 301
+/learning-paths/dns-filtering/deploy/policy-migration/ /learning-paths/secure-internet-traffic/understand-policies/create-list/ 301
+/learning-paths/dns-filtering/deploy/next-steps/ /learning-paths/secure-internet-traffic/build-network-policies/ 301
 
 # more redirects in the /dynamic/ section
 
@@ -1537,6 +1553,21 @@
 /fundamentals/speed/speed-test/* /speed/speed-test/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
+/railgun/* / 301
+/rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
+/rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
+/ssl/ssl-tls/* /ssl/reference/:splat 301
+/support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
+/tenant/tutorial/* /tenant/get-started/ 301
+/waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
+/workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
+/waf/custom-rulesets/* /waf/custom-rules/custom-rulesets/:splat 301
+/waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
+/waf/security-events/* /waf/analytics/security-events/:splat 301
+/web3/polygon-gateway/* /web3/ 301
+
+# Learning paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301
 /learning-paths/modules/cybersafe/cybersafe-area1-onboarding/* /learning-paths/cybersafe/area1-onboarding/:splat 301
 /learning-paths/modules/cybersafe/cybersafe-concepts/* /learning-paths/cybersafe/concepts/:splat 301
@@ -1557,19 +1588,9 @@
 /learning-paths/modules/security/dns-filtering-connect-devices/* /learning-paths/dns-filtering/connect-devices/:splat 301
 /learning-paths/modules/security/dns-filtering-create-policy/* /learning-paths/dns-filtering/create-policy/:splat 301
 /learning-paths/modules/security/dns-filtering-deploy/* /learning-paths/dns-filtering/deploy/:splat 301
-/railgun/* / 301
-/rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
-/rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
-/ssl/ssl-tls/* /ssl/reference/:splat 301
-/support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
-/tenant/tutorial/* /tenant/get-started/ 301
-/waf/managed-rulesets/* /waf/managed-rules/:splat 301
-/firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
-/workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
-/waf/custom-rulesets/* /waf/custom-rules/custom-rulesets/:splat 301
-/waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
-/waf/security-events/* /waf/analytics/security-events/:splat 301
-/web3/polygon-gateway/* /web3/ 301
+## DNS filtering --> Secure your Internet traffic and SaaS apps
+/learning-paths/dns-filtering/account/* /learning-paths/secure-internet-traffic/initial-setup/:splat 301
+/learning-paths/dns-filtering/create-policy/* /learning-paths/secure-internet-traffic/build-dns-policies/:splat 301
 
 # Old WAF changelog entries
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301
