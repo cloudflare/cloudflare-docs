@@ -94,7 +94,7 @@ header: API configuration example
 
 [Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/), now deprecated, is a platform for sharing high-quality apps that anyone with a website can use.
 
-Use this setting to disable all active Cloudflare Apps for matching requests.
+Use this setting to turn off all active Cloudflare Apps for matching requests.
 
 {{<details header="API information">}}
 
@@ -117,7 +117,7 @@ header: API configuration example
 
 [Cloudflare Zaraz](/zaraz/) gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 
-Use this setting to disable Zaraz for matching requests.
+Use this setting to turn off Zaraz for matching requests.
 
 {{<details header="API information">}}
 
