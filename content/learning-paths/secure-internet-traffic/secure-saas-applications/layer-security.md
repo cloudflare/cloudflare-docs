@@ -5,19 +5,29 @@ weight: 3
 layout: learning-unit
 ---
 
-Once you have decided on a model (or mixture of models) to secure front door access to your SaaS applications, you can deliver a number of Cloudflare controls that address other common SaaS security areas of concern:
+Once you have decided on a model (or mixture of models) to secure front door access to your SaaS applications, you can address other common SaaS security areas of concern by layering multiple Cloudflare controls.
 
-- Device posture controls via either Access for SaaS or via controls related to WARP enrollment. Device posture can determine what constitutes a managed endpoint accessing a SaaS application using provisioning or access to a dedicated egress IP address.
-  - You can also define what constitutes a healthy or semi-healthy managed endpoint and invoke step-up security policies based on potential security concerns. These controls are separate from the controls enacted for unmanaged endpoints.
-- For unmanaged endpoints, you can deliver selective inline security like upload/download controls, HTTP filtering, and data loss detection/prevention policies in SaaS applications without the need to install agents.
-  - You can be deliver this method through Browser Isolation, but it requires a [front door control](/learning-paths/secure-internet-traffic/secure-saas-applications/sso-front-door/) (such as Access for SaaS, dedicated egress IP for SSO, or Okta second factor) in order to be applied consistently.
+## Device posture controls for managed endpoints
+
+You can control endpoint access to your SaaS applications with device posture controls via either [Access for SaaS](/learning-paths/secure-internet-traffic/secure-saas-applications/sso-front-door/) or [WARP enrollment settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) in Zero Trust. Device posture can determine what constitutes a managed endpoint accessing a SaaS application.
+
+You can also define what constitutes a healthy or semi-healthy managed endpoint and invoke step-up security policies based on potential security concerns. These controls are separate from the controls enacted for unmanaged endpoints.
+
+## Inline security for unmanaged endpoints
+
+For unmanaged endpoints, you can deliver selective inline security like upload/download controls, HTTP filtering, and data loss detection/prevention policies in SaaS applications without the need to install agents.
+You can deliver inline security through Browser Isolation, but it requires a [front door control](/learning-paths/secure-internet-traffic/secure-saas-applications/sso-front-door/) (such as Access for SaaS) in order to be applied consistently.
 
 ## Browser Isolation
 
-Cloudflare can deliver Browser Isolation in three different ways:
+Cloudflare can deliver isolate SaaS apps in via either the WARP client or static links with Clientless Web Isolation.
 
-1. Via Cloudflare's endpoint agent (WARP), where it appears transparent. In this case, a user's browser will display `example.com`, but Cloudflare will isolate the traffic.
-2. Clientless Web Isolation via static links, where Cloudflare appends to the web address. In this case, a user's browser will display `example.cloudflareaccess.com/browser/organization.application.com`.
-3. Clientless Web Isolation via Access applications, where it appears transparent. In this case, the Cloudflare public hostname will be in the Access policy for `access.example.com`, and Cloudflare isolates the traffic.
+### WARP client
 
-When Cloudflare isolates traffic, Cloudflare can apply the security stack of TLS decryption, HTTP inspection, network inspection, DNS filtering, and DLP policy evaluation to the traffic in the request body. This provides a solution for securing unmanaged endpoint access to sensitive systems and can potentially upgrade traffic from users or services that may have otherwise been deemed as risky. Any method for Browser Isolation attaches the user to your dedicated egress IP addresses so you can apply policies across each method of access consistently.
+When your users' devices are enrolled with the WARP client, Cloudflare will transparently isolate browser sessions. In other words, a user's browser will display `example.com`, but Cloudflare will isolate the traffic by rendering it in an isolated browser.
+
+### Clientless Web Isolation
+
+With [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/), Cloudflare will append a static link to the web address. For example, a user's browser going to `example.com` in an isolated session will display `<your-team-name>.cloudflareaccess.com/browser/https://www.example.com`.
+
+When Browser Isolation isolates traffic, Cloudflare can apply the security stack of TLS decryption, HTTP inspection, network inspection, DNS filtering, and DLP policy evaluation to the traffic in the request body. This provides a solution for securing unmanaged endpoint access to sensitive systems and can potentially upgrade traffic from users or services that may have otherwise been deemed as risky. Any method for Browser Isolation attaches the user to your dedicated egress IP addresses so you can apply policies across each method of access consistently.
