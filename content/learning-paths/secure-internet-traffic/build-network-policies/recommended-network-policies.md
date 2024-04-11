@@ -92,7 +92,7 @@ Block all non-web traffic towards the Internet. By using the **Detected Protocol
 
 {{<details header="All-NET-InternalNetwork-ImplicitDeny" open="true">}}
 
-Implicitly deny all of your internal IP ranges included in a list. We recommend you place this policy at the [bottom of your policy list](/learning-paths/secure-internet-traffic/build-dns-policies/order-of-precedence/) to ensure you explicitly approve traffic defined in the above policies.
+Implicitly deny all of your internal IP ranges included in a list. We recommend you place this policy at the [bottom of your policy list](/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/#order-of-precedence) to ensure you explicitly approve traffic defined in the above policies.
 
 | Selector       | Operator | Value                  | Action |
 | -------------- | -------- | ---------------------- | ------ |

@@ -25,7 +25,7 @@ For more information, refer to the [Learning Center](https://www.cloudflare.com/
 
 HTTPS inspection (also known as TLS decryption) is the process of filtering traffic by decrypting traffic sent to or from your organization, inspecting it and applying policies, then re-encrypting the traffic as it ingresses or egresses.
 
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/security/what-is-https-inspection/) and [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/security/what-is-https-inspection/) and [TLS decryption documentation](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 ## What is data loss prevention (DLP)?
 

@@ -5,9 +5,11 @@ weight: 1
 layout: learning-unit
 ---
 
-TLS inspection allows Cloudflare Gateway to perform deeper traffic analysis and take actions like scanning request bodies for sensitive data, upgrading to a remote browser isolation session, and taking actions based on the complete URL and path of requests. This is desirable for security policy with users accessing sensitive systems, but there can be challenges. Without TLS inspection turned on, policies can still use user identity, device posture, IP, resolved domain, SNI, and a number of other attributes that support a Zero Trust security implementation.
+TLS inspection (also known as TLS decryption or HTTPS inspection) allows Cloudflare Gateway to perform deeper traffic analysis and take actions like scanning request bodies for sensitive data, upgrading to a remote browser isolation session, and redirecting based on the complete URL and path of requests.
 
-Businesses are often hesitant to adopt TLS decryption practices due to concerns about interoperability with existing systems, maybe due to past experiences with legacy systems that conceptually worked in the same way. Cloudflare's approach to TLS decryption is capable, performant, modern, and above all, flexible. We understand that it is never possible to inspect absolutely all traffic — something will always break. Our recommendations keep this practical reality in mind.
+TLS inspection is desirable for security policy involving users accessing sensitive systems, but it can also present challenges. Without TLS inspection turned on, policies can still use user identity, device posture, IP address, resolved domain, SNI, and a number of other attributes that support a Zero Trust security implementation.
+
+Organizations are often hesitant to adopt TLS inspection practices due to concerns about interoperability with existing systems due to past experiences with legacy systems that conceptually worked in the same way. However, Cloudflare's approach to TLS inspection is capable, performant, modern, and above all, flexible. We understand that it is never possible to inspect absolutely all traffic — something will always break. Our recommendations keep this practical reality in mind.
 
 ## Get started
 
@@ -15,14 +17,16 @@ To decide why and how you should turn on TLS inspection, we recommend you start 
 
 ### 1. Identify your goals
 
-TLS inspection is requisite for most advanced security and {{<glossary-tooltip term_id="Cloudflare Data Loss Prevention (DLP)" link="/cloudflare-one/policies/data-loss-prevention/">}}data loss prevention (DLP){{</glossary-tooltip>}} capabilities in the Cloudflare Zero Trust suite. Some security organizations choose to avoid TLS decryption due to concerns about user privacy and acceptable use. This is an important and sometimes complicated organization decision, but it can be simplified by establishing goals related to your security practice. Questions to consider:
+Cloudflare Zero Trust requires TLS inspection for most advanced security and {{<glossary-tooltip term_id="Cloudflare Data Loss Prevention (DLP)" link="/cloudflare-one/policies/data-loss-prevention/">}}data loss prevention (DLP){{</glossary-tooltip>}} features.
 
-- Is your organizational use of TLS decryption designed to protect from the "known" (sensitive data in corporate-sanctioned SaaS applications, etc.) or the "unknown" (users downloading or uploading files to brand-new blob storage buckets, etc.)?
-- Do you intend to primarily block by domain/hostname or by building policies for complete URLs?
+Some security organizations choose to avoid TLS inspection due to concerns about user privacy and acceptable use. This is an important and sometimes complicated organization decision, but you can simplify it by establishing goals related to your security practices. Questions to consider:
+
+- Is your organizational use of TLS inspection designed to protect from the "known" (such as sensitive data in corporate-sanctioned SaaS applications) or the "unknown" (such as users downloading or uploading files to brand-new blob storage buckets)?
+- Do you intend to primarily block by domain or hostname or by building policies for complete URLs?
 - Do you plan to scan the body of requests or files against DLP profiles or scan downloaded files with an antivirus or anti-malware engine?
 - Do you intend to use inline {{<glossary-tooltip term_id="Cloudflare Browser Isolation" link="/cloudflare-one/policies/browser-isolation/">}}Remote Browser Isolation{{</glossary-tooltip>}} to take advantage of data security capabilities like copy/paste blocking, keyboard blocking, and print blocking?
 
-If the answer to a majority of these questions is no and your organization relies mostly on hostname or DNS-based security controls, then you may not need to inspect TLS (or may not need to inspect most/all of your users' TLS traffic). Because Cloudflare operates both as a secure web gateway and as a secure DNS resolver for your connected users, you can apply policy control that may increase your security posture without the need to broadly inspect TLS.
+If the answer to a majority of these questions is no and your organization relies mostly on hostname or DNS-based security controls, then you may not need to inspect most, if not all TLS traffic. Because Cloudflare operates both as a secure web gateway and as a secure DNS resolver for your connected users, you can apply policy control that may increase your security posture without the need to broadly inspect TLS traffic.
 
 ### 2. Turn on TLS inspection
 
@@ -32,25 +36,24 @@ To turn on TLS inspection for your Zero Trust organization:
 
 ### 3. Determine the certificate used for inspection
 
-TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. To accomplish this, it is important to determine which certificate you plan to use. The [default Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices.
+TLS inspection requires a trusted private root certificate to be able to inspect and filter encrypted traffic. The [default Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is a simple and common solution that is usually appropriate for testing or proof-of-concept conditions when deployed to your devices.
 
-If you already have a source-of-truth certificate that you use for other inspection or trust purposes, we recommend [using your own root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). A few reasons for this:
+Alternatively, if you already have a root CA that you use for other inspection or trust applications, we recommend [using your own certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). A few reasons for this include:
 
 - Assuming the root certificate is already deployed on the relevant fleet of devices, using a single certificate streamlines your IT management.
-- When using Cloudflare Zero Trust as a [comprehensive VPN replacement](/learning-paths/replace-vpn/), your users  may be required to establish a TLS connection with origin servers using certificates not signed by a public CA. To filter this traffic, you will have the option to "pass through" to these origins while maintaining your security posture.
 - If external services like Git workflows or CLI tools rely on an existing certificate store, presenting the same certificate in inspection is far less likely to interrupt their traffic flow, although these are things that you may wish to exempt from inspection.
-- If you are using [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel to on-ramp traffic to Cloudflare, devices behind those tunnels will not be able to leverage HTTP policies that require decrypting TLS unless they have a certificate that matches either your uploaded certificate or the Cloudflare root certificate. It is more likely that your network infrastructure already has your own device certificates deployed, so using your own existing PKI infrastructure for inspection will reduce the steps necessary to protect these services.
+- If you are using [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) or a [Magic WAN](/magic-wan/) IPsec/GRE tunnel to on-ramp traffic to Cloudflare, devices behind those tunnels will not be able to use HTTP policies that require TLS inspection unless they have a certificate that matches your organization's certificate of choice. Your network infrastructure most likely already has your own device certificates deployed, so using your own existing public key infrastructure for inspection will simplify protection.
 
 ### 4. Build a baseline Do Not Inspect policy
 
-Do you want to inspect by default, or do you only want to inspect explicit destinations? We recommend that you build a Gateway list of applications and endpoints to exclude from inspection and add the list as an OR operator in addition to our existing Do Not Inspect application group. For example:
+Do you want to inspect all traffic by default, or do you only want to inspect explicit destinations? We recommend that you build a Gateway list of applications and endpoints to exclude from inspection and add the list as an OR operator in addition to our existing Do Not Inspect application group. For example:
 
 | Selector    | Operator | Value               | Logic | Action         |
 | ----------- | -------- | ------------------- | ----- | -------------- |
 | Application | in       | _Do Not Inspect_    | Or    | Do Not Inspect |
 | Host        | in list  | _Trusted Hostnames_ |       |                |
 
-If your organization is newly adopting the security framework that requires TLS decryption, we recommend starting minimally. In fact, it may even be appropriate to choose to only explicitly inspect a predetermined list of hostnames, IPs, or specific user groups or device types and forego inspection for everything else during the initial deployment stage. Cloudflare has a unique and flexible approach to where and when you can deploy inspection, meaning it can be as limited and granular as your organization needs without impacting device routing tables or other memory-sensitive local constructs.
+If your organization is newly adopting the security framework that requires TLS inspection, we recommend starting minimally. In fact, it may even be appropriate to choose to only explicitly inspect a predetermined list of hostnames, IPs, or specific user groups or device types and forego inspection for everything else during the initial deployment stage. Cloudflare has a unique and flexible approach to where and when you can deploy inspection, meaning it can be as limited and granular as your organization needs without impacting device routing tables or other memory-sensitive local constructs.
 
 ### 5. Build the necessary pass-through rules
 
@@ -126,7 +129,7 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 {{</tab>}}
 {{</tabs>}}
 
-If you filter your network-connected devices with Magic WAN tunnels, the WARP Connector, or other devices that do not have the Cloudflare certificate installed, you will need to accommodate by creating pass-through policies. For these devices, you should explicitly exempt TLS decryption for the source network IP range from which that traffic will be originating. For example:
+If you filter your network-connected devices with Magic WAN tunnels, the WARP Connector, or other devices that do not have the Cloudflare certificate installed, you will need to accommodate by creating pass-through policies. For these devices, you should explicitly exempt TLS inspection for the source network IP range from which that traffic will be originating. For example:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

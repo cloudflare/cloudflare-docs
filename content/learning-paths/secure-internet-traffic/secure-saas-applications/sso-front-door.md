@@ -7,7 +7,7 @@ layout: learning-unit
 
 [Access for SaaS](/cloudflare-one/applications/configure-apps/saas-apps/) functions as an identity proxy to add an additional authentication layer to your SaaS apps.
 
-Access for SaaS integrates directly with your SaaS app using standard protocols (such as SAML) to become the primary enforcement point for user access. Access calls your {{<glossary-tooltip term_id="identity provider">}}identity provider (IdP){{</glossary-tooltip>}} of choice and uses additional security signals about your users and devices to make policy decisions. Benefits of Access for SaaS include:
+Access for SaaS integrates directly with your SaaS app using standard protocols (such as SAML) to become the primary enforcement point for user access. Access calls your identity provider (IdP) of choice and uses additional security signals about your users and devices to make policy decisions. Benefits of Access for SaaS include:
 
 - A streamlined experience for users on both managed and unmanaged devices.
 - Application of baseline policies requiring specific concepts such as device posture and endpoint control.

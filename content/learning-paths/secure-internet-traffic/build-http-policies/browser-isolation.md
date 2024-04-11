@@ -203,7 +203,9 @@ curl --request POST \
 
 ### Vendor-chain using link-based isolation
 
-Many vendors that may exist within your security framework can support URL manipulation. URL manipulation can become an on-ramp for Browser Isolation to add additional security controls. For example, vendors like Zscaler and Proofpoint allow you to prepend links to URLs in a static or dynamic format -- some Cloudflare users have seen success by prepending the clientless isolation link generated for your Cloudflare account to derive additional security benefits for potentially risky clicks. This means that if you have traffic not sent through Cloudflare today (such as through another proxy), you can potentially prepend specific filtered requests with a link to automatically send the traffic to a Cloudflare isolated browser session without an endpoint agent installed.
+Many vendors that may exist within your security framework support URL manipulation. You can use URL manipulation as an on-ramp for Browser Isolation to add additional security controls.
+
+For example, vendors like Zscaler and Proofpoint allow you to prepend links to URLs in a static or dynamic format. You can prepend the clientless isolation link generated for your Cloudflare account to derive additional security benefits for potentially risky clicks. This means that if you have traffic not sent through Cloudflare today (such as through another proxy), you can potentially prepend specific filtered requests with a link to automatically send the traffic to a Cloudflare isolated browser session without an endpoint agent installed.
 
 ```mermaid
 flowchart TB
