@@ -3,7 +3,7 @@ link: "/waf/change-log/"
 productName: WAF
 entries:
 - publish_date: '2024-04-08'
-  scheduled_date: '2024-04-15'
+  scheduled_date: '2024-04-08'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'

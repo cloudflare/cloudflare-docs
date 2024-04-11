@@ -179,7 +179,7 @@ entries:
 {{<definitions>}}
 - `publish_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Date of scheduled change, formatted as `YYYY-MM-DD`.
+    - Date when the page was published, formatted as `YYYY-MM-DD`. For pages with scheduled changes, you should update this field when adding/updating entries, so that the changelog item gets placed at the top of the changelog list (and feed). You should _not_ update this date when clearing all scheduled changes due to a release, since this change is not as relevant.
 
 - `individual_page` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
