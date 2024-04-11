@@ -14,7 +14,7 @@ You can change the configuration settings described below in a configuration rul
 
 [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) prevents end users from seeing `Mixed content` errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
 
-Use this setting to enable or disable Automatic HTTPS Rewrites for matching requests.
+Use this setting to turn on or off Automatic HTTPS Rewrites for matching requests.
 
 {{<details header="API information">}}
 
@@ -71,7 +71,7 @@ header: API configuration example
 
 [Browser Integrity Check](/waf/tools/browser-integrity-check/) blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
-Use this setting to enable or disable Browser Integrity Check for matching requests.
+Use this setting to turn on or off Browser Integrity Check for matching requests.
 
 {{<details header="API information">}}
 
@@ -140,7 +140,7 @@ header: API configuration example
 
 [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
 
-Use this setting to enable or disable Hotlink Protection for matching requests.
+Use this setting to turn on or off Hotlink Protection for matching requests.
 
 {{<details header="API information">}}
 
@@ -163,7 +163,7 @@ header: API configuration example
 
 [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
 
-Use this setting to enable or disable Email Obfuscation for matching requests.
+Use this setting to turn on or off Email Obfuscation for matching requests.
 
 {{<details header="API information">}}
 
@@ -186,7 +186,7 @@ header: API configuration example
 
 [Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.
 
-Use this setting to enable or disable Mirage for matching requests.
+Use this setting to turn on or off Mirage for matching requests.
 
 {{<details header="API information">}}
 
@@ -209,7 +209,7 @@ header: API configuration example
 
 [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) allows browsers to access HTTP URIs over an encrypted TLS channel.
 
-Use this setting to enable or disable Opportunistic Encryption for matching requests.
+Use this setting to turn on or off Opportunistic Encryption for matching requests.
 
 {{<details header="API information">}}
 
@@ -262,7 +262,7 @@ header: API configuration example
 
 [Rocket Loader](/speed/optimization/content/rocket-loader/) prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
 
-Use this setting to enable or disable Rocket Loader for matching requests.
+Use this setting to turn on or off Rocket Loader for matching requests.
 
 {{<details header="API information">}}
 
@@ -319,7 +319,7 @@ header: API configuration example
 
 [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 
-Use this setting to enable or disable Server Side Excludes for matching requests.
+Use this setting to turn on or off Server Side Excludes for matching requests.
 
 {{<details header="API information">}}
 
@@ -375,7 +375,7 @@ header: API configuration example
 
 [Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
 
-Use this setting to enable or disable signed exchanges for matching requests.
+Use this setting to turn on or off signed exchanges for matching requests.
 
 {{<details header="API information">}}
 
