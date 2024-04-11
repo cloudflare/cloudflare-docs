@@ -10,6 +10,8 @@ meta:
 
 Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
 
+While [blocked validation URLs](#blocked-validation-url) or [misconfigured DNS settings](#dns-settings-and-records) interfere with the {{<glossary-tooltip term_id="Certificate Authority (CA)">}}certificate authority (CA){{</glossary-tooltip>}} ability to finish the validation process and may have to be addressed by you in Cloudflare or at your authoritative DNS provider, there can also be [errors on the CA side](#ca-errors).
+
 {{<Aside type="note">}}
 If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
 {{</Aside>}}
@@ -29,12 +31,19 @@ If you have issues while HTTP DCV is in place, review the following settings:
 
 ## DNS settings and records
 
-Check your settings at your authoritative DNS provider to make sure that:
+The errors below refer to situations that have to be addressed at the authoritative DNS provider:
 
-- [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) is configured correctly.
-- Your [CAA records](/ssl/edge-certificates/caa-records/) allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
+* `the Certificate Authority had trouble performing a DNS lookup: dns problem: looking up caa for nsheiapp.codeacloud.com: dnssec: bogus`
+* `Certificate authority encountered a SERVFAIL during DNS lookup, please check your DNS reachability.`
+
+Consider the following when troubleshooting:
+
+- [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) must be configured correctly. You can use [DNSViz](https://dnsviz.net/) to understand and troubleshoot the deployment of DNSSEC.
+- Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
 - The HTTP verification process is done preferably over **IPv6**, so if any `AAAA` record exists and does not point to the same dual-stack location as the `A` record, the validation will fail.
 
-## Rate limiting
+## CA errors
+
+### Rate limiting
 
 {{<render file="_error-rate-limiting.md">}}
