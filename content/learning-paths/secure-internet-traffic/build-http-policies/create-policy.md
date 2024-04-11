@@ -27,7 +27,7 @@ For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/
 
 ## Order your policies
 
-In most scenarios, Gateway evaluates HTTP policies in [top-down order](/learning-paths/secure-internet-traffic/build-dns-policies/order-of-precedence/) (like DNS policies). Because Do Not Inspect action policies are terminal actions, we recommend grouping them in logical order above all of your other policies because they will always functionally fire first regardless of where they are placed.
+In most scenarios, Gateway evaluates HTTP policies in [top-down order](/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/) (like DNS policies). Because Do Not Inspect action policies are terminal actions, we recommend grouping them in logical order above all of your other policies because they will always functionally fire first regardless of where they are placed.
 
 Once the Do Not Inspect policies are ordered correctly, Allow policies should follow, and the Allow policy descriptions should include any special considerations for Allow actions (such as header IDs, certificate mismatch handling, and non-isolate traffic).
 
