@@ -127,9 +127,7 @@ This journey to a SASE architecture starts with an organization needing to provi
 [Zero Trust Network Access](https://www.cloudflare.com/learning/access-management/what-is-ztna/) (ZTNA) is a SASE service that secures access to self-hosted applications and services. ZTNA functionality can be divided broadly into two categories: 1) establishing connectivity between Cloudflare's network and the environments where the applications are running, and 2) setting policies to define how users are able to access these applications. In this section, we first examine the former — how to connect apps to Cloudflare.
 
 Connectivity to self-hosted applications is facilitated through tunnels that are created and maintained by a software connector,
-[`cloudflared`](/cloudflare-one/connections/connect-networks/get-started/).
-
-{{<render file="_description-of-cloudflared.md" productFolder="reference-architecture">}}
+[`cloudflared`](/cloudflare-one/connections/connect-networks/get-started/). {{<render file="_description-of-cloudflared.md" productFolder="reference-architecture">}}
 
 #### SaaS applications
 
