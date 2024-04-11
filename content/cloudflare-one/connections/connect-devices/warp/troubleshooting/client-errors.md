@@ -78,10 +78,29 @@ WARP was unable to resolve hostnames via its [local DNS proxy](/cloudflare-one/c
 
 A third-party process (usually a third-party DNS software) is bound to port 53, which is used by WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) to perform DNS resolution. The name of third-party process will appear in the GUI error message.
 
+On macOS, you may see `mDNSResponder` instead of the specific application name -- mDNSResponder is a macOS system process that handles DNS requests for Docker, certain virtual machine (VM) software, and other services.
+
 ### Resolution
 
 1. Remove or disable DNS interception in the third-party process.
+
+{{<details header="mDNSResponder" open="false">}}
+
+The following third-party software are known to bind to port 53 via mDNSResponder. Rather than try to kill mDNSResponder, you will need to disable or configure the third-party software so that they no longer use port 53.
+
+- **Docker**: [Turn off kernel networking for UDP](https://github.com/docker/for-mac/issues/7008#issuecomment-1746653802) in Docker.
+- **Internet Sharing feature**: To disable Internet Sharing:
+  1. On macOS, go to **System Settings** > **General** > **Sharing**.
+  2. Turn off **Internet Sharing**.
+- **Certain VM software (such as VMWare and Parallel)**: The presence of VM software does not guarantee that it is the offending program, since compatibility with WARP is highly dependent on the VM's configuration. To work around the issue, relaunch the VM while WARP is connected:
+  1. Stop/quit all VMs.
+  2. Connect to WARP.
+  3. Start the VMs again.
+
+{{</details>}}
+
 2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
+
 
 ## CF_FAILED_TO_SET_MTLS
 
