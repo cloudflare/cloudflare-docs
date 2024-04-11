@@ -85,7 +85,7 @@ In your project directory, C3 has generated the following:
 
 ### Create a new Worker Project from an external source
 
-In addition to creating new projects from its own templates, C3 also supports creating new projects from git repositories. In order to do that, you can open your terminal window and run:
+In addition to creating new projects from C3 templates, C3 also supports creating new projects from Git repositories. To create a new project from a Git repository, open your terminal and run:
 
 {{<tabs labels="npx | yarn | pnpm | bun">}}
 {{<tab label="npm" default="true">}}
