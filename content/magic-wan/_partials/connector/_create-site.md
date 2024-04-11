@@ -114,6 +114,8 @@ You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) 
 
 Create a `POST` request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
 
+The `static_addressing` object is optional, unless you created your site in high availability (HA) mode. When setting a WAN with HA, you also have to add the `secondary_address` parameter. If you are not using HA and choose to omit `static_addressing`, your configuration will use DHCP.
+
 Example:
 
 ```bash
@@ -169,6 +171,12 @@ curl --request POST \
 You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
 
 Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
+
+The following parameters are optional:
+- [`nat`](/magic-wan/configuration/connector/network-options/nat-subnet/)
+- [`routed_subnets`](/magic-wan/configuration/connector/network-options/routed-subnets/)
+- [`dhcp_server`](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/)
+- [`dhcp_relay`](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/)
 
 Example:
 
