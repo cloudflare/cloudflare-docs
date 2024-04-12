@@ -34,13 +34,11 @@ The following device details are always visible on Windows, macOS, and Linux dev
 
 The following information may be visible to your company depending on what security policies they have configured.
 
-For example, your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is encrypted and only visible to your company's IT department. Cloudflare cannot decrypt this data. For more information on how your company handles sensitive data, refer to your company's Employee Privacy Policy.
-
 | Data | Notes |
 | ---- | ----- |
 | Browsing history | Can see the IP address, domain, and URL of visited websites. Examples of URLs that may be visible: <li> Google search results </br> `https://www.google.com/search?q=I+am+searching+for+this` </li>  <li> Google Maps search results </br> `https://www.google.com/maps/place/Anaheim,+CA/@33.833881,-118.0103029,11z`</li> <li> Youtube videos </br> `https://www.youtube.com/watch?v=xyz123` </li>  |
-| Financial information | Subject to Data Loss Prevention policies. Examples of data that may be visible: <li> Credit card numbers when making an online purchase. </li> <li> Bank account numbers when you visit your bank's website. </li> |
-| Social security numbers and national IDs| Subject to Data Loss Prevention policies.  |
+| Financial information | Subject to [Data Loss Prevention](#data-loss-prevention) policies. |
+| Social security numbers and national IDs| Subject to [Data Loss Prevention](#data-loss-prevention) policies.  |
 | Emails | Can inspect email text for sensitive data. |
 | Contents of files transferred over the Internet | Can inspect uploaded/downloaded files and files stored on cloud services. |
 | Wi-Fi network | Only visible if you send logs to your IT admin. |
@@ -52,6 +50,12 @@ For example, your company may have Data Loss Prevention (DLP) policies in place 
 If you have a work profile on an Android mobile device, Cloudflare Zero Trust only sees Internet traffic from your work profile. If you do not have a work profile configured, all traffic is visible.
 
 {{</Aside>}}
+
+### Data Loss Prevention
+
+Your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is encrypted and only visible to your company's IT department. Cloudflare cannot decrypt this data.
+
+Cloudflare currently redacts sensitive numerical data (such as credit card numbers, bank account numbers, and Social Security numbers) -- your company will see these numbers as `XXXXXXXXX`. Cloudflare does not redact any text (such as first name, last name, address, and email address) -- this information may be visible to your company. For more information on how your company handles personally identifiable information (PII), refer to your company's Employee Privacy Policy.
 
 ## Never visible
 
