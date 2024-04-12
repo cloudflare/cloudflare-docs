@@ -5864,3 +5864,20 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   transition: all 0.1s ease 0.1s;
   visibility: visible;
 }
+
+span.ruleID {
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+span.ruleID:hover {
+  background: rgba(var(--orange-rgb), .2)
+}
+
+
+
+span.ruleID:active {
+background: orange;
+color: white;
+}

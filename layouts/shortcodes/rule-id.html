@@ -1,0 +1,8 @@
+{{- $ruleId := .Inner -}}
+{{- $shortenedRuleId := print "..." (substr $ruleId -8) }}
+
+<span class="ruleID" 
+        title="Click to copy full rule ID"
+        onclick="navigator.clipboard.writeText({{$ruleId}})">
+{{- $shortenedRuleId -}}
+</span> 
