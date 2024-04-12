@@ -77,9 +77,9 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 
 ### Binding resources in local development
 
-Remix uses uses wrangler's [`getPlatformProxy`](/workers/wrangler/api/#getplatformproxy) to simulate the Cloudflare environment locally. This is configured via the [`cloudflareDevProxyVitePlugin`](https://remix.run/docs/en/main/future/vite#cloudflare-proxy) in `vite.config.ts`.
+Remix uses Wrangler's [`getPlatformProxy`](/workers/wrangler/api/#getplatformproxy) to simulate the Cloudflare environment locally. You configure `getPlatformProxy` in your project's `vite.config.ts` file via [`cloudflareDevProxyVitePlugin`](https://remix.run/docs/en/main/future/vite#cloudflare-proxy).
 
-To bind resources in local development, you need to configure the bindings in the `wrangler.toml` file. Refer to [wrangler bindings](/workers/wrangler/configuration/#bindings) to learn more.
+To bind resources in local development, you need to configure the bindings in the `wrangler.toml` file. Refer to [Bindings](/workers/wrangler/configuration/#bindings) to learn more.
 
 Once you have configured the bindings in the `wrangler.toml` file, the proxies are then available within `context.cloudflare` in your `loader` or `action` functions:
 
@@ -101,13 +101,13 @@ After running the command, you can access the bindings in your `loader` or `acti
 
 ### Binding resources in production
 
-To bind resources in production you need to configure the bindings in the Cloudflare dashboard. Refer to the [Bindings](/pages/functions/bindings/) documentation to learn more.
+To bind resources in production, you need to configure the bindings in the Cloudflare dashboard. Refer to the [Bindings](/pages/functions/bindings/) documentation to learn more.
 
 Once you have configured the bindings in the Cloudflare dashboard, the proxies are then available within `context.cloudflare.env` in your `loader` or `action` functions as shown [above](#binding-resources-in-local-development).
 
-## Example: Accessing your D1 database in a Remix application
+## Example: Access your D1 database in a Remix application
 
-Let's put the steps above into practice by binding and querying a D1 database in a Remix application.
+As an example, you will bind and query a D1 database in a Remix application.
 
 1. Create a D1 database. Refer to the [D1 documentation](/d1/) to learn more.
 2. Configure bindings for your D1 database in the `wrangler.toml` file:
@@ -115,10 +115,10 @@ Let's put the steps above into practice by binding and querying a D1 database in
 ```toml
 [[ d1_databases ]]
 binding = "DB"
-database_name = "<your-db-name>"
-database_id = "<your-db-id>"
+database_name = "<YOUR_DATABASE_NAME>"
+database_id = "<YOUR_DATABASE_ID>"
 ```
-3. Run `npm run typegen` to generate Typescript types for your bindings.
+3. Run `npm run typegen` to generate TypeScript types for your bindings.
 
 ```sh
 $ npm run typegen
