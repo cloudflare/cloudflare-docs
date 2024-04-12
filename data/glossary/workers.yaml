@@ -22,6 +22,10 @@ entries:
   general_definition: |-
     [CPU time](/workers/platform/limits/#cpu-time) is the amount of time the central processing unit (CPU) actually spends doing work, during a given request.
 
+- term: deployment
+  general_definition: |-
+    [Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
+
 - term: Durable Objects
   general_definition: |-
     [Durable Objects](/durable-objects/) is a globally distributed coordination API with strongly consistent storage.
@@ -105,6 +109,10 @@ entries:
 - term: Tail Worker
   general_definition: |-
     A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
+
+- term: version
+  general_definition: |-
+    A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file.
 
 - term: V8
   general_definition: |-
