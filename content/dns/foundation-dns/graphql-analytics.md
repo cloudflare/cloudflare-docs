@@ -17,7 +17,7 @@ Once you [enable advanced nameservers](/dns/foundation-dns/setup/), [update your
 
 ## Explore with the API
 
-Refer to the GraphQL Analytics API documentation for a guidance on how to [get started](/analytics/graphql-api/getting-started/).
+Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
 
 The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/querying-basics/):
 
