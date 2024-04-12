@@ -17,6 +17,11 @@
 {{- end -}}
 {{- end -}}
 {{ $description := printf "For more details, refer to the dedicated page for [%s](%s)." $title $item.link -}}
+{{- with $item.scheduled -}}
+{{- with $item.scheduled_date -}}
+{{- $title = (printf "%s for %s" $title $item.scheduled_date) -}}
+{{- end -}}
+{{- end -}}
 {{- $placeholderDict = merge $placeholderDict (dict "title" $title "description" $description) -}}
 {{- end -}}
 {{- $changelogRendered = $changelogRendered 

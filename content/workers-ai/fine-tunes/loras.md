@@ -178,7 +178,7 @@ To make inference requests and apply the LoRA adapter, you will need your model 
 ---
 highlight: [5-6]
 ---
-const response = await ai.run(
+const response = await env.AI.run(
   "@cf/mistralai/mistral-7b-instruct-v0.2-lora", //the model supporting LoRAs
   {
       messages: [{"role": "user", "content": "Hello world"],
