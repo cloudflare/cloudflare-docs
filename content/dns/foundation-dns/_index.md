@@ -25,5 +25,5 @@ Advanced nameservers are an opt-in configuration. Refer to [set up advanced name
 
 ## Related resources
 
-* Blog (TBD)
-* Marketing page (TBD)
+* [Release blog post](https://blog.cloudflare.com/foundation-dns-launch)
+* [Product page](https://www.cloudflare.com/dns/foundation-dns/)
