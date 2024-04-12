@@ -5866,18 +5866,17 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 }
 
 span.ruleID {
-  display: inline-block;
   white-space: nowrap;
   cursor: pointer;
+  display: inline-flex;
 }
 
 span.ruleID:hover {
   background: rgba(var(--orange-rgb), .3)
 }
 
-
-
 span.ruleID:active {
 background: orange;
 color: white;
 }
+
