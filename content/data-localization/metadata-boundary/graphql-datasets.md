@@ -33,11 +33,11 @@ The table below shows a non-exhaustive list of GraphQL Analytics API fields that
 | | Page Shield | US and EU <br> [`pageShieldReportsAdaptiveGroups`](/page-shield/policies/violations/#get-policy-violations-via-graphql-api) |
 | | SSL | US and EU <br> Only the fields `clientSSLProtocol` and `ja3Hash` part of `httpRequestsAdaptive` and `httpRequestsAdaptiveGroups` |  |
 | | SSL 4 SaaS | US and EU <br> [clientRequestHTTPHost](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/#explore-customer-usage) <br> Refer to [GraphQL Tutorial on querying HTTP events by hostname](/analytics/graphql-api/tutorials/end-customer-analytics/) |
-| | Turnstile | US and EU <br> [`turnstileAdaptiveGroups`](/turnstile/reference/turnstile-analytics/#graphql) |
+| | Turnstile | US and EU <br> [`turnstileAdaptiveGroups`](/turnstile/turnstile-analytics/#graphql) |
 | | WAF/L7 Firewall | US and EU <br> [`firewallEventsAdaptive`](/analytics/graphql-api/tutorials/querying-firewall-events/) <br> [`firewallEventsAdaptiveGroups`](https://blog.cloudflare.com/how-we-used-our-new-graphql-api-to-build-firewall-analytics/) <br> [`firewallEventsAdaptiveByTimeGroups`](/logs/reference/change-notices/2023-02-01-security-fields-updates/) |
 | Developer Platform | Cloudflare Images | US only <br> `imagesRequestsAdaptiveGroups` |
 | | Cloudflare Pages | US only <br> `pagesFunctionsInvocationsAdaptiveGroups` <br> | 
-| | Durable Objects | US only <br> [`durableObjectsInvocationsAdaptiveGroups`](/durable-objects/platform/graphql-analytics/) <br> [`durableObjectsPeriodicGroups`](/durable-objects/platform/graphql-analytics/) <br> [`durableObjectsStorageGroups`](/durable-objects/platform/graphql-analytics/) <br> [`durableObjectsSubrequestsAdaptiveGroups`](/durable-objects/platform/graphql-analytics/) |
+| | Durable Objects | US only <br> [`durableObjectsInvocationsAdaptiveGroups`](/durable-objects/reference/graphql-analytics/) <br> [`durableObjectsPeriodicGroups`](/durable-objects/reference/graphql-analytics/) <br> [`durableObjectsStorageGroups`](/durable-objects/reference/graphql-analytics/) <br> [`durableObjectsSubrequestsAdaptiveGroups`](/durable-objects/reference/graphql-analytics/) |
 | | Email Routing | US and EU <br> `emailRoutingAdaptive` <br> `emailRoutingAdaptiveGroups` | | 
 | | R2 | US and EU <br> `r2OperationsAdaptiveGroups` <br> `r2StorageAdaptiveGroups` | | 
 | | Stream | US only <br> [`streamMinutesViewedAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) <br> [`videoPlaybackEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) <br> [`videoBufferEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) <br> [`videoQualityEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) |
