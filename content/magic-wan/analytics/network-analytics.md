@@ -25,7 +25,7 @@ Customers can filter the data in Network Analytics on different packet character
 - Source and destination IP address
 - Source and destination IP prefix
 - Source and destination port
-- Magic Tunnel (IPsec or GRE)
+- Magic Tunnel ({{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}})
 - ASN
 - Protocol
 - Cloudflare mitigation system applied
