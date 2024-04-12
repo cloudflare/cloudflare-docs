@@ -110,9 +110,9 @@ entries:
   general_definition: |-
     A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
 
-- term: Version
+- term: version
   general_definition: |-
-    A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file
+    A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file.
 
 - term: V8
   general_definition: |-
