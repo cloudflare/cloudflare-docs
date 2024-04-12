@@ -96,7 +96,7 @@ filename: index.js
 ---
 async fetch(request, env, ctx) {
   const openai = new OpenAI({
-    apiKey: env.OPENAI_API_KEY
+    apiKey: env.OPENAI_API_KEY,
   });
 
   // Handle incoming requests
@@ -172,17 +172,17 @@ export default {
 
 Review the arguments you are passing to OpenAI:
 
-- **model**: This is the model you want OpenAI to use for your request. In this case, you're using 'gpt-3.5-turbo-1106'.
+- **model**: This is the model you want OpenAI to use for your request. In this case, you are using 'gpt-3.5-turbo-1106'.
 - **messages**: This is an array containing all messages that are part of the conversation. Initially you provide a message from the user, and we later add the response from the model. The content of the user message is either the `message` query parameter from the request URL or the default "What's in the news today?".
 - **tools**: An array containing the actions available to the AI model. In this example you only have one tool, `read_website_content`, which reads the content on a given website.
   - **name**: The name of your function. In this case, it is `read_website_content`.
   - **description**: A short description that lets the model know the purpose of the function. This is optional but helps the model know when to select the tool.
   - **parameters**: A JSON Schema object which describes the function. In this case we request a response containing an object with the required property `url`.
-- **tool_choice**: This argument is technchinally optional as `auto` is the default. This argument indicates that either a function call or a normal message response can be returned by OpenAI.
+- **tool_choice**: This argument is technically optional as `auto` is the default. This argument indicates that either a function call or a normal message response can be returned by OpenAI.
 
 ## 3. Building your `read_website_content()` function
 
-Next, define the `read_website_content` function, which is referenced in the `tools` array. This function fetches the content of a given URL and extracts the text from `<p>` tags using the `cheerio` library:
+You will now need to define the `read_website_content` function, which is referenced in the `tools` array. The `read_website_content` function fetches the content of a given URL and extracts the text from `<p>` tags using the `cheerio` library:
 
 Add this code above the `export default` block in your `index.js` file:
 
