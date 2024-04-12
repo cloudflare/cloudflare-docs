@@ -64,7 +64,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`) and dashes (`-`) only. Do not use underscores (`_`).
+  - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`, etc.) and dashes (`-`) only. Do not use underscores (`_`).
 
 - `main` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
