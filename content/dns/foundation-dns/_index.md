@@ -22,3 +22,8 @@ With Foundation DNS, you get access to increased reliability, security, and insi
 Foundation DNS is only available to Enterprise plans.
 
 Advanced nameservers are an opt-in configuration. Refer to [set up advanced nameservers](/dns/foundation-dns/setup/).
+
+## Related resources
+
+* [Release blog post](https://blog.cloudflare.com/foundation-dns-launch)
+* [Product page](https://www.cloudflare.com/dns/foundation-dns/)

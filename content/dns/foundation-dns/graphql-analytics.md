@@ -17,7 +17,7 @@ Once you [enable advanced nameservers](/dns/foundation-dns/setup/), [update your
 
 ## Explore with the API
 
-Refer to the GraphQL Analytics API documentation for a guidance on how to [get started](/analytics/graphql-api/getting-started/).
+Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
 
 The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/querying-basics/):
 
@@ -26,4 +26,4 @@ The DNS analytics has two [schemas](/analytics/graphql-api/getting-started/query
 
 ## Time limits
 
-You can configure a maximum time frame over which analytics can be queried of up to 32 days. Also, available analytics data can be up to 93 days old.
+You can configure a maximum time frame over which analytics can be queried of up to 31 days.
