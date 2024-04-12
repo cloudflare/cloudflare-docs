@@ -21,7 +21,7 @@ You can query Magic Transit analytics using GraphQL. Review the topics below to 
 Source / destination tunnel data in Network Analytics includes:
 
 - A list of your top tunnels by traffic volume.
-- Source and destination IP addresses, ports, and protocols of tunnel traffic.
+- Source and destination {{<glossary-tooltip term_id="IP address">}}IP addresses{{</glossary-tooltip>}}, ports, and protocols of tunnel traffic.
 - Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare’s network.
 - Mitigations applied (DDoS, Magic Firewall, etc.) to traffic entering Cloudflare.
 
