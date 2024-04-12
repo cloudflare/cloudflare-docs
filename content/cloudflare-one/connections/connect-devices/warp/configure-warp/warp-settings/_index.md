@@ -25,7 +25,7 @@ In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch)
 
 When `Enabled`, end users can turn off the WARP client using an override code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
 
-You can set a **Timeout** to define how long a user can toggle on or off the WARP switch. The timer starts when the user first enters their code into the WARP client. The code remains valid during this time period, so if **Timeout** is 24 hours, the user has the ability to turn off WARP for up to 48 hours total.
+You can set a **Timeout** to define how long a user can toggle on or off the WARP switch. The timer starts when the user first enters their code into the WARP client. The code remains valid and can be reused anytime during this time period. For example, if **Timeout** is 24 hours, the user can re-enter the code at 23:59:00 and continue to turn off WARP until 47:59:00 (up to 48 hours total).
 
 #### Retrieve the override code
 
