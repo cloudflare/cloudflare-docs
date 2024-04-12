@@ -23,7 +23,7 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>{{<rule-id>}}s63e03eecddfc4b3fb0cad587d32b798c{{</rule-id>}}</td>
+      <td>N/A</td>
       <td>N/A</td>
       <td>N/A</td>
       <td>N/A</td>
