@@ -18,7 +18,7 @@ You can query Magic Transit analytics using GraphQL. Review the topics below to 
 
 [Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare’s network through {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. Start by inspecting information from the source and destination tunnel panels in Network Analytics to learn more about your data.
 
-Source / destination tunnel data in Network Analytics includes:
+Source/destination tunnel data in Network Analytics includes:
 
 - A list of your top tunnels by traffic volume.
 - Source and destination {{<glossary-tooltip term_id="IP address">}}IP addresses{{</glossary-tooltip>}}, ports, and protocols of tunnel traffic.
