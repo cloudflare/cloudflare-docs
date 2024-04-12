@@ -10,7 +10,7 @@ meta:
 
 Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
 
-While [blocked validation URLs](#blocked-validation-url) or [misconfigured DNS settings](#dns-settings-and-records) interfere with the {{<glossary-tooltip term_id="Certificate Authority (CA)">}}certificate authority (CA){{</glossary-tooltip>}} ability to finish the validation process and may have to be addressed by you in Cloudflare or at your authoritative DNS provider, there can also be [errors on the CA side](#ca-errors).
+[Blocked validation URLs](#blocked-validation-url) or [misconfigured DNS settings](#dns-settings-and-records) might interfere with the {{<glossary-tooltip term_id="Certificate Authority (CA)">}}certificate authority's{{</glossary-tooltip>}} ability to finish the validation process. In these situations, you may need to update your configuration at Cloudflare or at your authoritative DNS provider. Additionally, there can also be [errors on the CA side](#ca-errors).
 
 {{<Aside type="note">}}
 If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
@@ -49,6 +49,6 @@ Consider the following when troubleshooting:
 
 ### Internal errors
 
-When, during the CA check portion of the [DCV flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), the certificate authority finds an issue, you may see a `Internal error with Certificate Authority` message. In this case, either wait or try a different certificate authority.
+When the certificate authority finds an issue during the CA check portion of the [DCV flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), you may see a `Internal error with Certificate Authority` message. In this case, either wait or try a different certificate authority.
 
 When the error states that the `certificate authority will not issue for this domain`, you can try a different certificate authority or contact the CA directly.
