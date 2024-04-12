@@ -20,9 +20,13 @@ ETL pipelines play a pivotal role in data-driven decision-making processes acros
 
 Examples of ETL pipelines in action include scenarios like extracting sales data from multiple retail stores, transforming it to a standardized format, and loading it into a centralized data warehouse for analysis and reporting purposes. Similarly, ETL pipelines are utilized in data migration projects, where legacy data needs to be migrated to modern systems while ensuring data integrity and consistency throughout the process.
 
+Cloudflare allows for the deployment of fully serverless ETL pipelines, which can reduce complexity, time to production and overall cost. The following diagrams demonstrate different methods of how Cloudflare can be used in common ETL pipeline deployments.
+
 ## ETL pipeline with HTTP-based ingest
 
 ![Figure 1: Serverless: HTTP-based ingest](/images/reference-architecture/serverless-etl/serverless-etl-http-based.svg "Figure 1: ETL pipeline with HTTP-based ingest")
+
+This architecture shows a fully serverless ETL pipeline with an API endpoint as ingest. Clients send data via HTTP request to be processed. Common examples include click-stream data or analytics.
 
 1. **Client request**: Send POST request with data to be ingested. Examples would include click-stream data, analytics endpoints.
 2. **Input processing**: Process incoming request using [Workers](/workers/) and send messages to [Queues](/queues/) to add to processing backlog.
@@ -34,6 +38,8 @@ Examples of ETL pipelines in action include scenarios like extracting sales data
 ## ETL pipeline with object storage ingest
 
 ![Figure 2: Serverless: Object storage ingest](/images/reference-architecture/serverless-etl/serverless-etl-object-storage.svg "Figure 2: ETL pipeline with object storage ingest")
+
+This architecture shows a fully serverless ETL pipeline with object storage as ingest. Common examples include log and unstructured document processing.
 
 1. **Client request**: Upload raw data to R2 via S3-compatible API. Common examples include log and analytics data.
 2. **Input processing**: Send messages to [Queues](/queues/) using [R2 event notifications](/r2/buckets/event-notifications/) upon object upload.
