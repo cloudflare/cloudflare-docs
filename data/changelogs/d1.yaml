@@ -2,6 +2,20 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-04-12"
+    title: HTTP API now returns a HTTP 400 error for invalid queries
+    description: |-
+      Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
+      
+      D1's [Workers API](/d1/build-with-d1/d1-client-api/) is unaffected by this change. 
+
+  - publish_date: "2024-04-05"
+    title: D1 alpha databases will stop accepting live SQL queries on July 1, 2024
+    description: |-
+      Now that D1 is generally available and production ready, alpha D1 databases are deprecated and need to be migrated by July 1, 2024 to accept new queries. 
+
+      Refer to [alpha database migration guide](/d1/platform/alpha-migration/) to migrate to the new, generally available, database architecture.
+
   - publish_date: "2024-04-01"
     title: D1 is generally available
     description: |-

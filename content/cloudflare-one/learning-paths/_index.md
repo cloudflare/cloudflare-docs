@@ -1,11 +1,11 @@
 ---
 pcx_content_type: navigation
-title: Learning paths
+title: Implementation guides
 weight: 3
 meta:
-    description: View learning paths for Cloudflare Zero Trust.
+    description: View implementation guides for Cloudflare Zero Trust.
 ---
 
-# Learning paths
+# Implementation guides
 
 {{<directory-listing>}}

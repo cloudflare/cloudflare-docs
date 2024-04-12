@@ -5,21 +5,18 @@
   <summary>Workers - TypeScript</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
 
 export default {
   async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
 
     const inputs = {
       prompt: "cyberpunk cat",
     };
 
-    const response = await ai.run(
+    const response = await env.AI.run(
       "{{ .Page.Params.model.name }}",
       inputs
     );

@@ -28,7 +28,6 @@ For product-specific caveats, refer to [Cloudflare product compatibility](/data-
 
 The following features and protocols are not supported by Regional Services and might not work on regionalized hostnames:
 
-- Unencrypted HTTP (plain text) requests
 - [ICMP](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/)
 - [Encrypted Client Hello (ECH)](/ssl/edge-certificates/ech/)
 - [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/)

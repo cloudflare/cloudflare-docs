@@ -12,6 +12,10 @@ When you use Cloudflare DNS, you can access data about DNS queries through a var
 
 DNS analytics allow you to evaluate aggregate data about DNS queries to your zone.
 
+{{<Aside type="note">}}
+If you have [Foundation DNS](/dns/foundation-dns/) and advanced nameservers are enabled, analytics for your zone are available in **DNS** > **Analytics**. Refer to [GraphQL DNS analytics](/dns/foundation-dns/graphql-analytics/) for details.
+{{</Aside>}}
+
 For a quick summary, view your DNS analytics in the dashboard:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.

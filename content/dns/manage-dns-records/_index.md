@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: DNS records
-weight: 4
+weight: 5
 ---
 
 # DNS records

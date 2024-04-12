@@ -10,7 +10,7 @@ inputParameters: productName;;workflow
 
 $1 customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful {{<glossary-tooltip term_id="tunnel health-check">}}health checks{{</glossary-tooltip>}} for a Magic Tunnel drops below the selected [service-level objective (SLO)](https://en.wikipedia.org/wiki/Service-level_objective).
 
-Magic Tunnel health alerts will monitor the health check success rate of each Magic Tunnel included in the alert that has actively transferred traffic over the past six hours. Customers can define an SLO threshold for the percentage of health checks that must be successful for each Magic Tunnel. If the number of successful health checks for the Magic Tunnel(s) included in the alert drops below the SLO threshold, then an alert will fire.
+Magic Tunnel health alerts will monitor the health check success rate of each Magic Tunnel included in the alert that has actively transferred customer traffic (excluding health check traffic) over the past six hours. Customers can define an SLO threshold for the percentage of health checks that must be successful for each Magic Tunnel. If the number of successful health checks for the Magic Tunnel(s) included in the alert drops below the SLO threshold, then an alert will fire.
 
 ## Alert data
 
