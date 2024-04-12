@@ -5872,7 +5872,7 @@ span.ruleID {
 }
 
 span.ruleID:hover {
-  background: rgba(var(--orange-rgb), .2)
+  background: rgba(var(--orange-rgb), .3)
 }
 
 
