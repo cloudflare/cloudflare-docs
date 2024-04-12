@@ -20,17 +20,9 @@ Cloudflare does not operate on a major-release upgrade cycle; all releases for t
 
 Cloudflare publishes release notes for WARP in the official [download repositories](/cloudflare-one/connections/connect-devices/warp/download-warp/). You can look at the release notes to determine whether there is an explicit reason for updating to the latest release.
 
-## Test before updates
+### Support lifecycle
 
-Most issues that occur after an update are due to compatibility issues between WARP and third party security software. Before rolling out an update to your organization, be sure to test the new WARP release alongside your other software.
-
-To deploy an update incrementally:
-
-1. Install the latest version of WARP on a single device.
-2. Verify connectivity in your Gateway logs, and verify that your third party software still works as expected.
-3. Deploy the update to a few more devices that represent a broad set of configurations within your organization. For example, you could include devices from a variety of departments such as Engineering, Human Resources, and IT.
-4. Verify connectivity for these devices.
-5. Once everything is working, deploy the update to the rest of your organization.
+Cloudflare supports WARP client versions for at least one year from release. After one year, WARP clients could potentially be unable to connect. Cloudflare will make every effort to communicate in advance through emails and in dash notifications if such a breaking change will occur.
 
 ## How to update WARP
 
@@ -47,3 +39,15 @@ If your users have local administration rights on their device, you can allow th
 ### iOS, Android, and ChromeOS
 
 The iOS App Store and Google Play store can automatically push automatic updates to devices which have auto update enabled. We recommend using this method to keep the Cloudflare One Agent up-to-date on your mobile devices (managed or unmanaged).
+
+## Test before updates
+
+Most issues that occur after an update are due to compatibility issues between WARP and third party security software. Before rolling out an update to your organization, be sure to test the new WARP release alongside your other software.
+
+To deploy an update incrementally:
+
+1. Install the latest version of WARP on a single device.
+2. Verify connectivity in your Gateway logs, and verify that your third party software still works as expected.
+3. Deploy the update to a few more devices that represent a broad set of configurations within your organization. For example, you could include devices from a variety of departments such as Engineering, Human Resources, and IT.
+4. Verify connectivity for these devices.
+5. Once everything is working, deploy the update to the rest of your organization.
