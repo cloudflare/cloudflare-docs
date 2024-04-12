@@ -51,7 +51,7 @@ The table below shows a non-exhaustive list of GraphQL Analytics API fields that
 | Platform | GraphQL Analytics API | [All GraphQL Analytics API datasets](/analytics/graphql-api/features/discovery/introspection/) | 
 | | Logpush | US only <br> [`logpushHealthAdaptiveGroups`](/logs/get-started/alerts-and-analytics/#enable-logpush-health-analytics) <br> |
 | Zero Trust | Access | US and EU <br> [`accessLoginRequestsAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-access-login-events/) | |
-| | Browser Isolation | US and EU <br> Only the field `isIsolated` part of `GatewayL7RequestsAdaptiveGroups` dataset |
+| | Browser Isolation | US and EU <br> Only the field `isIsolated` part of `GatewayL7RequestsAdaptiveGroups`  |
 | | DLP | Part of Gateway HTTP / Gateway L7 |
 | | Gateway | US and EU <br> `gatewayL7RequestsAdaptiveGroups` <br> `gatewayL4SessionsAdaptiveGroups` <br> `gatewayResolverQueriesAdaptiveGroups` <br> `gatewayResolverByCategoryAdaptiveGroups` <br> `gatewayResolverByRuleExecutionPerformanceAdaptiveGroups` <br> US only <br> `gatewayL4DownstreamSessionsAdaptiveGroups` <br> `gatewayL4UpstreamSessionsAdaptiveGroups` |
 | | WARP | US and EU <br> `warpDeviceAdaptiveGroups` | |
