@@ -5871,11 +5871,11 @@ span.ruleID {
   display: inline-flex;
 }
 
-span.ruleID:hover {
+code.ruleID:hover {
   background: rgba(var(--orange-rgb), .3)
 }
 
-span.ruleID:active {
+code.ruleID:active {
 background: orange;
 color: white;
 }
