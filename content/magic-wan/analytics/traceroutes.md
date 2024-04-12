@@ -8,7 +8,7 @@ weight: 3
 
 Magic WAN customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare’s network to their own network.
 
-To run a traceroute from a specific Cloudflare colo to your network:
+To run a traceroute from a specific Cloudflare data center to your network:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Tunnel Health**.

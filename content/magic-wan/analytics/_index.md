@@ -42,7 +42,7 @@ Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
 
 ## Query Analytics with GraphQL
 
-GraphQL Analytics provides customers with a GraphQL API that they can query to receive raw JSON data of their Magic WAN traffic analytics. This data can be ingested into a SIEM or other tool and analyzed further
+GraphQL Analytics provides customers with a GraphQL API that they can query to receive raw JSON data of their Magic WAN traffic analytics. This data can be ingested into a SIEM or other tool and analyzed further.
 
 - [Querying Magic WAN tunnel bandwidth analytics with GraphQL](/magic-wan/analytics/query-bandwidth/)
 - [Querying Magic WAN tunnel health check results with GraphQL](/magic-wan/analytics/query-tunnel-health/)
