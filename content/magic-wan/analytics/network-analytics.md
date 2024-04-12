@@ -8,7 +8,7 @@ meta:
 
 # Magic WAN Network Analytics
 
-Magic WAN customers can view their real-time and historical network data in Network Analytics. Customers can see their network data in a time series that shows Magic WAN traffic (in packets or bytes) over time, and can filter the time series data by different types of packet characteristics.
+Magic WAN customers can view their real-time and historical network data in Network Analytics. Customers can see their network data in a time series that shows Magic WAN traffic (in {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} or bytes) over time, and can filter the time series data by different types of packet characteristics.
 
 To start using Network Analytics:
 
@@ -22,14 +22,14 @@ Refer to [Network Analytics](/analytics/network-analytics/) to learn more.
 
 Customers can filter the data in Network Analytics on different packet characteristics including:
 
-- Source and destination IP address
-- Source and destination IP prefix
+- Source and destination {{<glossary-tooltip term_id="IP address">}}IP address{{</glossary-tooltip>}}
+- Source and destination IP {{<glossary-tooltip term_id="prefix">}}prefix{{</glossary-tooltip>}}
 - Source and destination port
 - Magic Tunnel ({{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}})
-- ASN
+- {{<glossary-tooltip term_id="autonomous system numbers (ASNs)">}}ASN{{</glossary-tooltip>}}
 - Protocol
 - Cloudflare mitigation system applied
-- TTL
+- {{<glossary-tooltip term_id="time-to-live (TTL)">}}TTL{{</glossary-tooltip>}}
 - TCP Flags
 
 ## Magic Tunnel traffic analytics
