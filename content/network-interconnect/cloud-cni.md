@@ -24,4 +24,4 @@ Azure ExpressRoute support is coming soon.
 
 ## Cloud CNI Setup
 
-Enterprise customers using Magic WAN and/or Magic Transit can get started with Cloud CNI by contacting their account team.
+Enterprise customers using Magic WAN or Magic Transit can get started with Cloud CNI by contacting their account team.
