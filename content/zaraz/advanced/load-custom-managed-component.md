@@ -47,7 +47,7 @@ export default async function (manager) {
 ## Deploy a Managed Component to Cloudflare
 
 1. Open a terminal in your Managed Component’s root directory.
-2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialized Cloudflare Worker. Change the path to your `index.js`. You can also rename the Component if you choose.
+2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialized Cloudflare Worker. Change the path to your `index.js`. You can also rename the Component.
 3. Your Managed Component should now be [visible on your account](https://dash.cloudflare.com/redirect?account=/workers-and-pages) as a Cloudflare Worker prefixed with `custom-mc-`.
 
 ## Configure a Managed Component in Cloudflare
