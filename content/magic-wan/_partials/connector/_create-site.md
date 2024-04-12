@@ -115,7 +115,7 @@ You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) 
 
 Create a `POST` request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
 
-The `static_addressing` object is optional, unless you created your site in high availability (HA) mode. When setting a WAN with HA, you also have to add the `secondary_address` parameter. If you are not using HA and choose to omit `static_addressing`, your configuration will use DHCP.
+The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode.
 
 Example:
 
