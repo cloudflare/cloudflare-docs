@@ -92,4 +92,5 @@ Also, the following products will not appear in trace results:
 
 * [Firewall rules](/firewall/)
 * [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
+* [Cloudflare Workers](/workers/)
 * [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
