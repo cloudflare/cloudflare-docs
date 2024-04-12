@@ -1,5 +1,5 @@
 {{- $ruleId := .Inner -}}
-{{- $shortenedRuleId := print "..." (substr $ruleId -8) }}
+{{- $shortenedRuleId := print "..." (substr (trim $ruleId " ") -8) }}
 
 <code>
 <span class="ruleID" 
