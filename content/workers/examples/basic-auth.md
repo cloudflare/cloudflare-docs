@@ -177,7 +177,7 @@ function timingSafeEqual(a: string, b: string) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request: Request, env: { PASSWORD: string }) {
     const BASIC_USER = "admin";
 
     // You will need an admin password. This should be
@@ -250,7 +250,7 @@ export default {
 
     return new Response("Not Found.", { status: 404 });
   },
-} satisfies ExportedHandler<{ PASSWORD: string }>;
+};
 ```
 
 {{</tab>}}

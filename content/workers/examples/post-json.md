@@ -112,7 +112,7 @@ export default {
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

@@ -110,7 +110,7 @@ export default {
     }
     return response;
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

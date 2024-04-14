@@ -76,7 +76,7 @@ export default {
 			.transform(res);
 		return newRes
 	}
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

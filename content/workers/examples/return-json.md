@@ -30,7 +30,7 @@ export default {
 
     return Response.json(data);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

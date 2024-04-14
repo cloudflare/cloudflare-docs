@@ -57,7 +57,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
     const cacheUrl = new URL(request.url);
 
     // Construct the cache key from the cache URL
@@ -90,7 +90,7 @@ export default {
     }
     return response;
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

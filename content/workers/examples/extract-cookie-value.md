@@ -35,7 +35,7 @@ export default {
 ```ts
 import { parse } from "cookie";
 export default {
-  async fetch(request) {
+  async fetch(request: Request) {
     // The name of the cookie
     const COOKIE_NAME = "__uid";
     const cookie = parse(request.headers.get("Cookie") || "");
@@ -45,7 +45,7 @@ export default {
     }
     return new Response("No cookie with name: " + COOKIE_NAME);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

@@ -64,7 +64,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
     async function sha256(message) {
       // encode as UTF-8
       const msgBuffer = await new TextEncoder().encode(message);
@@ -104,7 +104,7 @@ export default {
       return new Response("Error thrown " + e.message);
     }
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

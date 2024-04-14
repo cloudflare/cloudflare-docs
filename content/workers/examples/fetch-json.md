@@ -57,7 +57,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
     /**
      * Example someHost is set up to take in a JSON request
      * Replace url with the host you wish to send requests to
@@ -91,7 +91,7 @@ export default {
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

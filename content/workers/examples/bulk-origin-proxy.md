@@ -66,7 +66,7 @@ export default {
     // Otherwise, process request as normal
     return fetch(request);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

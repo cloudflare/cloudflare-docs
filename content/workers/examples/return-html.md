@@ -34,7 +34,7 @@ export default {
       },
     });
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

@@ -65,7 +65,7 @@ export default {
   async fetch(req) {
     // Fetch from origin
     const res = await fetch(req);
-    
+
     // We need to read the body twice so we `tee` it (get two instances)
     const [bodyOne, bodyTwo] = res.body.tee();
     // Make a new response so we can set the headers (responses from `fetch` are immutable)
@@ -88,11 +88,11 @@ export default {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-const handler: ExportedHandler = {
-  async fetch(req) {
+export default {
+  async fetch(req: Request) {
     // Fetch from origin
     const res = await fetch(req);
-    
+
     // We need to read the body twice so we `tee` it (get two instances)
     const [bodyOne, bodyTwo] = res.body.tee();
     // Make a new response so we can set the headers (responses from `fetch` are immutable)
@@ -111,7 +111,6 @@ const handler: ExportedHandler = {
     return newRes;
   }
 }
-export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}
@@ -261,7 +260,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
     - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
 
   - {{<code>}}data{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}}
-  
+
   {{</definitions>}}
 
 ### generateKey
@@ -330,7 +329,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
     - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax)
-  
+
   {{</definitions>}}
 
 ### deriveBits
@@ -356,7 +355,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}length{{</code>}}{{<param-type>}}int{{</param-type>}}
 
     - Length of the bit string to derive.
-  
+
   {{</definitions>}}
 
 ### importKey
@@ -438,7 +437,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}wrapAlgo{{</code>}}{{<param-type>}}object{{</param-type>}}
 
     - Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
-  
+
   {{</definitions>}}
 
 ### unwrapKey
@@ -476,7 +475,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}keyUsages{{</code>}}{{<param-type>}}Array{{</param-type>}}
 
     - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
-  
+
   {{</definitions>}}
 
 ### timingSafeEqual

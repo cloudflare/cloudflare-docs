@@ -148,7 +148,7 @@ const encoder = new TextEncoder();
 const EXPIRY = 60;
 
 export default {
-  async fetch(request, env) {
+  async fetch(request: Request, env: { SECRET_DATA: string }) {
     // You will need some secret data to use as a symmetric key. This should be
     // attached to your Worker as an encrypted secret.
     // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
@@ -235,7 +235,7 @@ export default {
 
     return fetch(new URL(url.pathname, "https://example.com"), request);
   },
-} satisfies ExportedHandler<{ SECRET_DATA: string }>;
+};
 ```
 
 {{</tab>}}

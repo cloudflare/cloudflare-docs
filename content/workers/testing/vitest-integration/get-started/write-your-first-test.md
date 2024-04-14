@@ -142,10 +142,10 @@ export default {
 filename: src/index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		return new Response("Hello World!");
 	},
-} satisfies ExportedHandler<Env>;
+};
 ```
 {{</tab>}}
 {{</tabs>}}
@@ -232,7 +232,7 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {
@@ -241,7 +241,7 @@ export default {
 
 		return new Response("Hello World!");
 	}
-} satisfies ExportedHandler<Env>;
+};
 ```
 {{</tab>}}
 {{</tabs>}}

@@ -89,7 +89,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request: Request) {
     const DEBUG = true;
     const SOME_HOOK_SERVER = "https://webhook.flow-wolf.io/hook";
 
@@ -155,7 +155,7 @@ export default {
     }
     return new Response(text, response);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

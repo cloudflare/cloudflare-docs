@@ -40,9 +40,9 @@ export default {
 
 ```ts
 export default {
-  async scheduled(event, env, ctx) {
+  async scheduled(controller: ScheduledController, env: unknown, ctx: ExecutionContext) {
     // Write code for updating your API
-    switch (event.cron) {
+    switch (controller.cron) {
       case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
@@ -58,7 +58,7 @@ export default {
     }
     console.log("cron processed");
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

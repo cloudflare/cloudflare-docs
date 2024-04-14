@@ -216,14 +216,14 @@ export interface Env {
 }
 
 export default {
-    async fetch(request, env): Promise<Response> {
+    async fetch(request: Request, env: Env): Promise<Response> {
         if (env.router === undefined) {
             env.router = buildRouter(env);
         }
 
         return env.router.handle(request);
     },
-} satisfies ExportedHandler<Env>;
+};
 
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();

@@ -106,7 +106,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request: Request) {
     const DEFAULT_SECURITY_HEADERS = {
       /*
     Secure your application with Content-Security-Policy headers.
@@ -187,7 +187,7 @@ export default {
       });
     }
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

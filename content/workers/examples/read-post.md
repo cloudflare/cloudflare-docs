@@ -130,7 +130,7 @@ export default {
       return new Response("The request was a GET");
     }
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

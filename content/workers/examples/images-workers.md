@@ -52,7 +52,7 @@ export default {
 
     return fetch(`https://imagedelivery.net/${accountHash}${pathname}`);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

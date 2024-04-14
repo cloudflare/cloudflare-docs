@@ -60,7 +60,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request: Request) {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
     const tags =
@@ -97,7 +97,7 @@ export default {
         return new Response(JSON.stringify(errorObject), { status: 500 });
       });
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}
