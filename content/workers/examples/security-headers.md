@@ -106,7 +106,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     const DEFAULT_SECURITY_HEADERS = {
       /*
     Secure your application with Content-Security-Policy headers.

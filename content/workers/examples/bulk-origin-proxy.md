@@ -44,7 +44,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     /**
      * An object with different URLs to fetch
      * @param {Object} ORIGINS

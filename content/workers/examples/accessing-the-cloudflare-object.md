@@ -39,7 +39,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(req: Request) {
+  async fetch(req: Request): Promise<Response> {
     const data =
       req.cf !== undefined
         ? req.cf

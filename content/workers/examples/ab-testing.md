@@ -59,7 +59,7 @@ export default {
 const NAME = "myExampleWorkersABTest";
 
 export default {
-  async fetch(req: Request) {
+  async fetch(req: Request): Promise<Response> {
     const url = new URL(req.url);
     // Enable Passthrough to allow direct access to control and test routes.
     if (url.pathname.startsWith("/control") || url.pathname.startsWith("/test"))

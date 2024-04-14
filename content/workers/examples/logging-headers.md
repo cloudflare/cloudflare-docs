@@ -29,7 +29,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     console.log(new Map(request.headers));
     return new Response("Hello world");
   },

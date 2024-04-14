@@ -57,7 +57,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
+  async fetch(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response> {
     /**
      * Example someHost is set up to take in a JSON request
      * Replace url with the host you wish to send requests to

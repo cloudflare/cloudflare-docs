@@ -61,7 +61,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
+  async fetch(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response> {
     // Service configured to receive logs
     const LOG_URL = "https://log-service.example.com/";
 

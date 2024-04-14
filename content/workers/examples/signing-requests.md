@@ -148,7 +148,7 @@ const encoder = new TextEncoder();
 const EXPIRY = 60;
 
 export default {
-  async fetch(request: Request, env: { SECRET_DATA: string }) {
+  async fetch(request: Request, env: { SECRET_DATA: string }): Promise<Response> {
     // You will need some secret data to use as a symmetric key. This should be
     // attached to your Worker as an encrypted secret.
     // Refer to https://developers.cloudflare.com/workers/configuration/secrets/

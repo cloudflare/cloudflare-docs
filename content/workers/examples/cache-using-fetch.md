@@ -130,7 +130,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     let url = new URL(request.url);
 
     if (Math.random() < 0.5) {

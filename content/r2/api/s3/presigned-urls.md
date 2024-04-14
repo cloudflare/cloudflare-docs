@@ -87,7 +87,7 @@ const r2 = new AwsClient({
 });
 
 export default {
-  async fetch(req: Request) {
+  async fetch(req: Request): Promise<Response> {
     // This is just an example to demonstrating using aws4fetch to generate a presigned URL.
     // This Worker should not be used as-is as it does not authenticate the request, meaning
     // that anyone can upload to your bucket.

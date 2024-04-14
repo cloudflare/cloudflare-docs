@@ -22,7 +22,7 @@ interface Env {
 }
 
 export default {
-  async fetch(req: Request, env: Env, ctx: ExecutionContext) {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const result = await env.SUM_SERVICE.sum(1, 2);
     return new Response(result.toString());
   }

@@ -89,7 +89,7 @@ export default {
 {{<tab label="ts">}}
 ```ts
 export default {
-  async fetch(req: Request) {
+  async fetch(req: Request): Promise<Response> {
     // Fetch from origin
     const res = await fetch(req);
 

@@ -49,7 +49,7 @@ export default {
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
 

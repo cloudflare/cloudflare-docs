@@ -232,7 +232,7 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {

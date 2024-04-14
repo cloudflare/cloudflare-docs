@@ -60,7 +60,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     const base = "https://example.com";
     const statusCode = 301;
 

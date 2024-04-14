@@ -23,7 +23,7 @@ updated: 2024-01-11
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     const data = {
       hello: "world",
     };

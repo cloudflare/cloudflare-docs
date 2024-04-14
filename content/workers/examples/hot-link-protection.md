@@ -47,7 +47,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/";
     const PROTECTED_TYPE = "image/";
 

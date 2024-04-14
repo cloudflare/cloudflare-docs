@@ -48,7 +48,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     /**
      * A map of the URLs to redirect to
      * @param {Object} countryMap

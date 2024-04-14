@@ -128,7 +128,7 @@ Now, add a new code path that handles a `PUT` HTTP request. This new code will c
 filename: worker.ts
 ---
 export default {
-  async fetch(request: Request, env: unknown) {
+  async fetch(request: Request, env: unknown): Promise<Response> {
     if (request.method === 'PUT') {
       // Note that you could require authentication for all requests
       // by moving this code to the top of the fetch function.

@@ -177,7 +177,7 @@ function timingSafeEqual(a: string, b: string) {
 }
 
 export default {
-  async fetch(request: Request, env: { PASSWORD: string }) {
+  async fetch(request: Request, env: { PASSWORD: string }): Promise<Response> {
     const BASIC_USER = "admin";
 
     // You will need an admin password. This should be

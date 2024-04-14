@@ -186,7 +186,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request: Request): Promise<Response> {
     let grads = [
       [
         { color: "00000c", position: 0 },
