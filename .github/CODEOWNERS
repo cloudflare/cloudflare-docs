@@ -17,12 +17,12 @@
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
-/content/ai-gateway/ @bjesus @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/ @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @G4brym @mchenco @cloudflare/pcx-technical-writing
+/content/workers-ai/ @rita3ko @pdwittig @deadlypants1973 @craigsdennis @markdembo @mchenco @cloudflare/pcx-technical-writing
 /content/workers-ai/tutorials @craigsdennis @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/workers-ai/static @craigsdennis @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers-ai/static @mchenco @craigsdennis @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @vy-ton @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/data/changelogs/ai-gateway.yaml @bjesus @mchenco @cloudflare/pcx-technical-writing
+/data/changelogs/ai-gateway.yaml @G4brym @mchenco @cloudflare/pcx-technical-writing
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
