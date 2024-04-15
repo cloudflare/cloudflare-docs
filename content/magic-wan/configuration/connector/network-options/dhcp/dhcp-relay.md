@@ -36,14 +36,15 @@ Example:
 
 ```bash
 curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}
+ \
   --header 'Content-Type: application/json' \
   --header 'X-Auth-Email: <EMAIL>' \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
     "lan": {
     "description": "lan-teste1",
-    "physport": 1,
+    "physport": 2,
     "static_addressing": {
       "address": "172.16.14.0/24",
       "dhcp_relay": {
@@ -58,6 +59,3 @@ curl --request POST \
 
 {{</tab>}}
 {{</tabs>}}
-
-
-
