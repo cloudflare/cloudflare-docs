@@ -92,7 +92,7 @@ The following third-party software are known to bind to port 53 via mDNSResponde
 - **Internet Sharing feature**: To disable Internet Sharing:
   1. On macOS, go to **System Settings** > **General** > **Sharing**.
   2. Turn off **Internet Sharing**.
-- **Certain VM software (such as VMWare and Parallel)**: The presence of VM software does not guarantee that it is the offending program, since compatibility with WARP is highly dependent on the VM's configuration. To work around the issue, relaunch the VM while WARP is connected:
+- **Certain VM software (such as VMware Workstation or Parallels)**: The presence of VM software does not guarantee that it is the offending program, since compatibility with WARP is highly dependent on the VM's configuration. To work around the issue, connect to WARP _before_ running any VMs:
   1. Stop/quit all VMs.
   2. Connect to WARP.
   3. Start the VMs again.
