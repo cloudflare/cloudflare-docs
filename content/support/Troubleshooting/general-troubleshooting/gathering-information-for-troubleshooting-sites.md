@@ -23,7 +23,6 @@ ___
 
 A HTTP Archive (HAR) records all web browser requests including the request and response headers, the body content, and the page load time.
 
-
 {{<Aside type="warning">}}
 A HAR file can include sensitive details such as passwords, payment
 information, and private keys.
