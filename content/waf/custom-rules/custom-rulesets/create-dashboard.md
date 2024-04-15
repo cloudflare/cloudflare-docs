@@ -7,13 +7,13 @@ weight: 2
 
 # Work with custom rulesets in the dashboard
 
-Create custom rulesets in Account Home > **WAF** > **Custom rulesets**. After creating a custom ruleset, you must deploy it to your account to apply its rules.
+Create and deploy custom rulesets in Account Home > **WAF** > **Custom rulesets**.
 
 {{<Aside type="note">}}
 Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 {{</Aside>}}
 
-## Create a custom ruleset
+## Create and deploy a custom ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
