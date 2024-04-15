@@ -41,12 +41,11 @@ Create a `POST` request [using the API](/api/operations/magic-site-acls-create-s
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
   "acl": {
     "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
@@ -152,11 +151,11 @@ Example:
 
 ```bash
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/acl_identifier \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
+--url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
   "acl": {
     "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
@@ -216,10 +215,10 @@ Example:
 
 ```bash
 curl --request DELETE \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
+--url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
 ```
 
 {{</tab>}}
