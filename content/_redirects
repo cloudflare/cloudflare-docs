@@ -304,8 +304,8 @@
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
 /durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
-/durable-objects/platform/graphql-analytics/ /durable-objects/reference/graphql-analytics/ 301
-/durable-objects/platform/troubleshooting/ /durable-objects/reference/troubleshooting/ 301
+/durable-objects/platform/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
+/durable-objects/platform/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/learning/ /durable-objects/reference/ 301
 /durable-objects/learning/in-memory-state/ /durable-objects/reference/in-memory-state/ 301
 /durable-objects/learning/durable-objects-migrations/ /durable-objects/reference/durable-objects-migrations/ 301
