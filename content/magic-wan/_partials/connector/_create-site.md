@@ -39,12 +39,11 @@ The parameter `"ha_mode": true` enables [high availability](#about-high-availabi
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
   "site": {
     "description": "<SITE_DESCRIPTION>",
     "name": "<SITE_NAME>"
@@ -109,12 +108,11 @@ The `static_addressing` object is optional. Omit it if you are using DHCP. If yo
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/wans \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/wans \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
   "wan": {
     "description": "<YOUR_WAN_NAME>",
     "physport": 1,
@@ -160,20 +158,19 @@ Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lan
 Example:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
-    "lan": {
-    "description": "<YOUR_LAN_NAME>",
-    "physport": 2,
-    "static_addressing": {
-      "address": "172.16.14.0/24"
-    },
-    "vlan_tag": 0
-  }
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
+--header 'Content-Type: application/json' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--data '{
+  "lan": {
+  "description": "<YOUR_LAN_NAME>",
+  "physport": 2,
+  "static_addressing": {
+    "address": "172.16.14.0/24"
+  },
+  "vlan_tag": 0
+}
 }'
 ```
 
