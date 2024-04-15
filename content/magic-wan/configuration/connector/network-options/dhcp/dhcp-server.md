@@ -7,6 +7,9 @@ title: DHCP server
 
 When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
 3. Select your site > **Edit**.
@@ -25,3 +28,34 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
     ![An example of how to configure you Magic WAN Connector LAN](/images/magic-wan/connector/lan-static.png)
 
     </div>
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+1. Create a `GET` request [using the API](/api/operations/magic-wan-connectors-lans-list-lans) to list your existing LANs.
+
+2. Create a [`PUT` request](/api/operations/magic-wan-connectors-lans-update-lan) to update the LAN where you want to enable DHCP server:
+
+Example:
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+  "lan": {
+    "static_addressing": {
+      "dhcp_server": {
+        "dhcp_pool_end": "<IP_ADDRESS>",
+        "dhcp_pool_start": "<IP_ADDRESS>",
+        "dns_server": "<IP_ADDRESS>"
+      }
+    }
+  }
+}'
+```
+
+{{</tab>}}
+{{</tabs>}}
