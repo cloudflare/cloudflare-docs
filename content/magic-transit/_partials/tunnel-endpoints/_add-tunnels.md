@@ -67,7 +67,7 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Be sure to have your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin. You need them to use the API.
+{{<render file="connector/_account-id-api-key" productFolder="magic-wan" >}}
 
 {{<details header="GRE tunnel">}}
 
