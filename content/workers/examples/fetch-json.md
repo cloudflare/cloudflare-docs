@@ -16,38 +16,23 @@ layout: example
 ```js
 export default {
   async fetch(request, env, ctx) {
-    /**
-     * Example someHost is set up to take in a JSON request
-     * Replace url with the host you wish to send requests to
-     * @param {string} someHost the host to send the request to
-     * @param {string} url the URL to send the request to
-     */
-    const someHost = "https://examples.cloudflareworkers.com/demos";
-    const url = someHost + "/static/json";
+    const url = "https://jsonplaceholder.typicode.com/todos/1";
 
-    /**
-     * gatherResponse awaits and returns a response body as a string.
-     * Use await gatherResponse(..) in an async function to get the response body
-     * @param {Response} response
-     */
+    // gatherResponse returns both content-type & response body as a string
     async function gatherResponse(response) {
       const { headers } = response;
       const contentType = headers.get("content-type") || "";
       if (contentType.includes("application/json")) {
-        return JSON.stringify(await response.json());
+        return { contentType, result: JSON.stringify(await response.json()) };
       }
-      return response.text();
+      return { contentType, result: response.text() };
     }
 
-    const init = {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    };
+    const response = await fetch(url);
+    const { contentType, result } = await gatherResponse(response);
 
-    const response = await fetch(url, init);
-    const results = await gatherResponse(response);
-    return new Response(results, init);
+    const options = { headers: { "content-type": contentType } };
+    return new Response(result, options);
   },
 };
 ```
@@ -58,38 +43,23 @@ export default {
 ```ts
 export default {
   async fetch(request, env, ctx) {
-    /**
-     * Example someHost is set up to take in a JSON request
-     * Replace url with the host you wish to send requests to
-     * @param {string} someHost the host to send the request to
-     * @param {string} url the URL to send the request to
-     */
-    const someHost = "https://examples.cloudflareworkers.com/demos";
-    const url = someHost + "/static/json";
+    const url = "https://jsonplaceholder.typicode.com/todos/1";
 
-    /**
-     * gatherResponse awaits and returns a response body as a string.
-     * Use await gatherResponse(..) in an async function to get the response body
-     * @param {Response} response
-     */
+    // gatherResponse returns both content-type & response body as a string
     async function gatherResponse(response) {
       const { headers } = response;
       const contentType = headers.get("content-type") || "";
       if (contentType.includes("application/json")) {
-        return JSON.stringify(await response.json());
+        return { contentType, result: JSON.stringify(await response.json()) };
       }
-      return response.text();
+      return { contentType, result: response.text() };
     }
 
-    const init = {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    };
+    const response = await fetch(url);
+    const { contentType, result } = await gatherResponse(response);
 
-    const response = await fetch(url, init);
-    const results = await gatherResponse(response);
-    return new Response(results, init);
+    const options = { headers: { "content-type": contentType } };
+    return new Response(result, options);
   },
 } satisfies ExportedHandler;
 ```
