@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-{{<Aside type="note">}}You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.{{</Aside>}}
+{{<Aside type="note">}}You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) to use the API.{{</Aside>}}
