@@ -18,10 +18,9 @@ To configure DHCP relay:
 4. Select **Network**.
 5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
 6. Select **Edit**.
-7. In **Addressing**, make sure you choose **Static** and enter a static IP address for your Connector.
-8. Select **This is a DHCP Relay**.
-9. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
-10. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
+7. Select **This is a DHCP Relay**.
+8. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
+9. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
