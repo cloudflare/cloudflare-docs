@@ -92,7 +92,7 @@ header: cURL
   ## Input: user-defined name of fine tune
   ## Output: unique finetune_id
 
-  curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
+  curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes \
       -H "Authorization: Bearer {API_TOKEN}" \
       -H 'Content-Type: application/json' \
       -d '{
@@ -114,7 +114,7 @@ header: cURL
 ## Input: finetune_id, adapter_model.safetensors, then adapter_config.json
 ## Output: success true/false
 
-curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/{FINETUNE_ID}/finetune-assets/ \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/{FINETUNE_ID}/finetune-assets \
     -H 'Authorization: Bearer {API_TOKEN}' \
     -H 'Content-Type: multipart/form-data' \
     -F 'file_name=adapter_model.safetensors' \
@@ -134,7 +134,7 @@ header: cURL
 ## Input: n/a
 ## Output: success true/false
 
-curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
+curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes \
     -H 'Authorization: Bearer {API_TOKEN}' \
 ```
 {{</tab>}}
