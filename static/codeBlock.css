@@ -182,7 +182,7 @@
 .CodeBlock-with-rows .CodeBlock--row-content {
   display: block;
   white-space: pre-wrap;
-  padding: 0 3em 0 1.25em;
+  padding: 0 var(--padding-horizontal);
 }
 
 .CodeBlock-with-rows.CodeBlock-scrolls-horizontally .CodeBlock--row-content {
