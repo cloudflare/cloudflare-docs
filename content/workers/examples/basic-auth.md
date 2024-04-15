@@ -176,8 +176,11 @@ function timingSafeEqual(a: string, b: string) {
   return crypto.subtle.timingSafeEqual(aBytes, bBytes);
 }
 
+interface Env {
+  PASSWORD: string;
+}
 export default {
-  async fetch(request: Request, env: { PASSWORD: string }): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     const BASIC_USER = "admin";
 
     // You will need an admin password. This should be

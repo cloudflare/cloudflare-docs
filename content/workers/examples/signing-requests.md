@@ -147,8 +147,11 @@ const encoder = new TextEncoder();
 // How long an HMAC token should be valid for, in seconds
 const EXPIRY = 60;
 
+interface Env {
+  SECRET_DATA: string;
+}
 export default {
-  async fetch(request: Request, env: { SECRET_DATA: string }): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     // You will need some secret data to use as a symmetric key. This should be
     // attached to your Worker as an encrypted secret.
     // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
