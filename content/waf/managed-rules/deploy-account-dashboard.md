@@ -8,7 +8,7 @@ meta:
 
 # Deploy a managed ruleset in the dashboard for an account
 
-You can enable and configure managed rulesets for an account in Account Home > **WAF** > **Managed rulesets**.
+You can deploy managed rulesets for an account in Account Home > **WAF** > **Managed rulesets**.
 
 {{<Aside type="note">}}
 Account-level WAF configuration requires an Enterprise plan with a paid add-on.
@@ -26,9 +26,9 @@ To deploy a managed ruleset for a single zone, refer to [Deploy a managed rulese
 
 3. Next to **Deployed managed rulesets**, select **Deploy** > **Deploy managed ruleset**.
 
-4. Select the managed ruleset you wish to deploy.
+4. Next to the managed ruleset you wish to deploy, select **Select ruleset**.
 
-5. In the **Deploy managed ruleset** page, give a name to the rule deploying the ruleset in **Execution name**.
+5. In the **Configure deployment** page, give a name to the rule deploying the ruleset in **Execution name**.
 
 6. Under **Execution scope**, review the scope of the deployed managed ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
@@ -36,9 +36,11 @@ To deploy a managed ruleset for a single zone, refer to [Deploy a managed rulese
 Deployed rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
     {{</Aside>}}
 
-7. (Optional) Specify overrides for [all the rules in the managed ruleset](#configure-field-values-for-all-the-rules). You can also create overrides for [specific rules or tags](#configure-rules-in-bulk-in-a-managed-ruleset).
+7. (Optional) Under **&lt;RULESET_NAME> configuration**, specify overrides for [all the rules in the managed ruleset](#configure-field-values-for-all-the-rules).
 
-8. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
+    To view and override specific rules, select **Browse rules** and refer to [Configure rules in bulk in a managed ruleset](#configure-rules-in-bulk-in-a-managed-ruleset) for additional instructions.
+
+8. To deploy the managed ruleset immediately, select **Deploy**. If you are not ready to deploy, select **Save as draft**.
 
 The **Deployed managed rulesets** list will show an _Execute_ rule for each deployed managed ruleset.
 
@@ -67,7 +69,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
 2. Go to Account Home > **WAF** > **Managed rulesets**.
 
-3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the managed ruleset you want to configure, select **Edit**.
+3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the managed ruleset you want to configure, select the three dots > **Edit**.
 
 4. In the ruleset configuration section, set one or more rule fields from the available values in the drop-down lists.
 
@@ -89,7 +91,7 @@ To view the rules of a managed ruleset:
 
 2. Go to Account Home > **WAF** > **Managed rulesets**.
 
-3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the managed ruleset you want to browse, select **Edit**.
+3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the managed ruleset you want to browse, select the three dots > **Edit**.
 
 4. Select **Browse rules**.
 
@@ -107,5 +109,4 @@ To view the rules of a managed ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to Account Home > **WAF** > **Managed rulesets**.
-3. Under **Deployed managed rulesets** and next to the rule you want to delete, select **Edit**.
-4. Select **Delete deployment** (or **Delete exception**) and confirm the operation.
+3. Under **Deployed managed rulesets** and next to the rule you want to delete, select the three dots > **Delete** and confirm the operation.
