@@ -5,7 +5,7 @@ weight: 6
 layout: learning-unit
 ---
 
-Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests. 
+Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests. In addition, you can increase your security posture by including security headers to the browser or augmenting request headers with security intelligence. Cloudflare offers many ways to manipulate your traffic: 
 
 1. [**Transform Rules**](/rules/transform/) enable the modification of the URI path, query string, and HTTP headers for both requests and responses on its global network. This feature provides extensive control over HTTP traffic, allowing users to rewrite URLs, modify request and response headers, and apply common adjustments easily.
 

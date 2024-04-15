@@ -1,11 +1,11 @@
 ---
-title: Out of the box security
+title: Default security
 pcx_content_type: overview
 weight: 3
 layout: learning-module
 ---
 
-# Out of the box security
+# Default security
 
 As soon as you onboard your domain to Cloudflare, you are automatically protected. This module reviews what those protections are and why they are critical. 
 

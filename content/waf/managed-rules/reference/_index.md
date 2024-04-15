@@ -6,4 +6,4 @@ weight: 14
 
 # Managed rulesets reference
 
-{{<directory-listing>}}
+{{<render file="_waf-rulesets.md" productFolder="waf">}}
