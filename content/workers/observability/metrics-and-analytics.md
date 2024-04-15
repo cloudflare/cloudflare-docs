@@ -43,7 +43,7 @@ Subrequests are requests triggered by calling `fetch` from within a Worker. A su
 
 ### Wall time per execution
 
-{{<glossary-tooltip term_id="wall-clock time">}}Wall time{{</glossary-tooltip>}} represents the elapsed time in milliseconds between the start of a Worker invocation, and when the Workers runtime determines that no more JavaScript needs to run. Specifically, wall time per execution chart measures the wall time that the JavaScript context remained open — including time spent waiting on I/O, and time spent executing in your Worker's [`waitUntil()`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) handler. Wall time is not the same as the time it takes your Worker to send the final byte of a response back to the client - wall time can be higher, if tasks within `waitUntil()` are still running after the response has been sent, or it can be lower. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JavaScript context before all the bytes have passed through and been sent.
+{{<glossary-tooltip term_id="wall-clock time">}}Wall time{{</glossary-tooltip>}} represents the elapsed time in milliseconds between the start of a Worker invocation, and when the Workers runtime determines that no more JavaScript needs to run. Specifically, wall time per execution chart measures the wall time that the JavaScript context remained open — including time spent waiting on I/O, and time spent executing in your Worker's [`waitUntil()`](/workers/runtime-apis/context/#waituntil) handler. Wall time is not the same as the time it takes your Worker to send the final byte of a response back to the client - wall time can be higher, if tasks within `waitUntil()` are still running after the response has been sent, or it can be lower. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JavaScript context before all the bytes have passed through and been sent.
 
 The Wall Time per execution chart shows historical wall time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
 
@@ -87,7 +87,7 @@ To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/comma
 
 ### Request duration
 
-The request duration chart shows how long it took your Worker to respond to requests, including execution duration and network latency. The request duration chart is currently only available when your Worker has [Smart Placement](/workers/configuration/smart-placement) enabled. 
+The request duration chart shows how long it took your Worker to respond to requests, including execution duration and network latency. The request duration chart is currently only available when your Worker has [Smart Placement](/workers/configuration/smart-placement) enabled.
 
 In contrast to [execution duration](/workers/observability/metrics-and-analytics/#execution-duration-gb-seconds), which measures only the time a Worker is active, request duration measures from the time a request comes into a data center until a request is delivered.
 

@@ -182,7 +182,7 @@ The visitor can also be instructed to manually obtain a new token by setting the
 
 Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
 
-# Refresh a timed-out widget
+## Refresh a timed-out widget
 
 When managed mode is chosen, Turnstile may present the visitor with an interactive challenge at times. If this interactive challenge is presented but was not solved within a given time period, it will time out and Turnstile's challenge process will need to be restarted.
 

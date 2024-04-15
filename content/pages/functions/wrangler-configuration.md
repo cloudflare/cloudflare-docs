@@ -320,7 +320,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
-- `placement` {{<type-link href="#placement">}}Placement{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `placement` {{<type>}}Placement{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/smart-placement/).
 
