@@ -38,12 +38,10 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 ## Content categories
 
-{{<table-wrap>}}
-
 | Category               | Definition                                                                                                                                                                        |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes.                                                                                 |
-| Business & Economy     | Sites that are related to business, economy, finance, education, science and technology.                                                                                          |
+| Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes. |
+| Business & Economy     | Sites that are related to business, economy, finance, education, science and technology. |
 | Child Abuse            | Sites hosting child abuse content.                                                                                                                                                |
 | CIPA                   | Sites related to aiding schools and organizations in abiding by CIPA requirements.                                                                                                |
 | Education              | Sites hosting educational content that are not included in other categories like Science, Technology or Educational institutions.                                                 |
@@ -68,8 +66,6 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Vehicles               | Sites related vehicles, automobiles, including news, reviews, and other hobbyist information.                                                                                     |
 | Violence               | Sites hosting and/or promoting violent content.                                                                                                                                   |
 | Weather                | Sites related to weather.                                                                                                                                                         |
-
-{{</table-wrap>}}
 
 ### Miscellaneous subcategories
 
