@@ -20,11 +20,13 @@ It might seem simpler to implement a global rate limiter, `const id = env.RATE_L
 * This would require all requests globally to make a sub-request to a single Durable Object.
 * Implementing a global rate limiter would add additional latency for requests not colocated with the Durable Object, and global throughput would be capped to the throughput of a single Durable Object.
 * A single Durable Object that all requests rely on is typically considered an anti-pattern. Durable Objects work best when they are scoped to a user, room, service and/or the specific subset of your application that requires global co-ordination.
+
 {{<Aside type="note">}}
 
 If you do not need unique or custom rate-limiting capabilities, refer to [Rate limiting rules](/waf/rate-limiting-rules/) that are part of Cloudflare's Web Application Firewall (WAF) product. 
 
 {{</Aside>}}
+
 The Durable Object uses a token bucket algorithm to implement rate limiting. The naive idea is that each request requires a token to complete, and the tokens are replenished according to the reciprocal of the desired number of requests per second. As an example, a 1000 requests per second rate limit will have a token replenished every millisecond (as specified by milliseconds_per_request) up to a given capacity limit.
 
 This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future. 
@@ -41,8 +43,9 @@ The first implementation of a rate limiter is below:
 ---
 filename: index.js
 ---
-// Worker
+import { DurableObject } from "cloudflare:workers";
 
+// Worker
 export default {
   async fetch(request, env, _ctx) {
     // Determine the IP address of the client
@@ -56,8 +59,7 @@ export default {
 
     try {
       const stub = env.RATE_LIMITER.get(id);
-      const response = await stub.fetch(request);
-      const { milliseconds_to_next_request } = await response.json();
+      const milliseconds_to_next_request = await stub.getMillisecondsToNextRequest();
       if (milliseconds_to_next_request > 0) {
         // Alternatively one could sleep for the necessary length of time
         return new Response("Rate limit exceeded", { status: 429 });
@@ -72,33 +74,32 @@ export default {
 };
 
 // Durable Object
-
-export class RateLimiter {
+export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;
   static milliseconds_for_updates = 5000;
   static capacity = 10000;
 
-  constructor(state, _env) {
-    this.state = state;
+  constructor(ctx, env) {
+    super(ctx, env);
     this.tokens = RateLimiter.capacity;
   }
 
-  async fetch(_request) {
+  async getMillisecondsToNextRequest() {
     this.checkAndSetAlarm()
 
-    let response = { milliseconds_to_next_request: RateLimiter.milliseconds_per_request };
+    let milliseconds_to_next_request = RateLimiter.milliseconds_per_request;
     if (this.tokens > 0) {
       this.tokens -= 1;
-      response.milliseconds_to_next_request = 0;
+      milliseconds_to_next_request = 0;
     }
 
-    return new Response(JSON.stringify(response));
+    return milliseconds_to_next_request;
   }
 
   async checkAndSetAlarm() {
-    let currentAlarm = await this.state.storage.getAlarm();
+    let currentAlarm = await this.ctx.storage.getAlarm();
     if (currentAlarm == null) {
-      this.state.storage.setAlarm(Date.now() + 
+      this.ctx.storage.setAlarm(Date.now() + 
         RateLimiter.milliseconds_for_updates * RateLimiter.milliseconds_per_request);
     }
   }
@@ -120,16 +121,13 @@ export class RateLimiter {
 ---
 filename: index.ts
 ---
-export interface Env {
-  RATE_LIMITER: DurableObjectNamespace;
-}
+import { DurableObject } from "cloudflare:workers";
 
-interface RateLimiterResponse {
-  milliseconds_to_next_request: number
+export interface Env {
+  RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
 }
 
 // Worker
-
 export default {
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
     // Determine the IP address of the client
@@ -143,8 +141,7 @@ export default {
 
     try {
       const stub = env.RATE_LIMITER.get(id);
-      const response = await stub.fetch(request);
-      const { milliseconds_to_next_request } = await response.json() as RateLimiterResponse;
+      const milliseconds_to_next_request = await stub.getMillisecondsToNextRequest();
       if (milliseconds_to_next_request > 0) {
         // Alternatively one could sleep for the necessary length of time
         return new Response("Rate limit exceeded", { status: 429 });
@@ -159,36 +156,34 @@ export default {
 };
 
 // Durable Object
-
-export class RateLimiter implements DurableObject {
+export class RateLimiter extends DurableObject {
   static readonly milliseconds_per_request = 1;
   static readonly milliseconds_for_updates = 5000;
   static readonly capacity = 10000;
 
-  state: DurableObjectState;
   tokens: number;
 
-  constructor(state: DurableObjectState, _env: Env) {
-    this.state = state;
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
     this.tokens = RateLimiter.capacity;
   }
 
-  async fetch(_request: Request): Promise<Response> {
+  async getMillisecondsToNextRequest(): Promise<number> {
     this.checkAndSetAlarm()
 
-    let response = { milliseconds_to_next_request: RateLimiter.milliseconds_per_request };
+    let milliseconds_to_next_request = RateLimiter.milliseconds_per_request;
     if (this.tokens > 0) {
       this.tokens -= 1;
-      response.milliseconds_to_next_request = 0;
+      milliseconds_to_next_request = 0;
     }
 
-    return new Response(JSON.stringify(response));
+    return milliseconds_to_next_request;
   }
 
-  async checkAndSetAlarm() {
-    let currentAlarm = await this.state.storage.getAlarm();
+  private async checkAndSetAlarm() {
+    let currentAlarm = await this.ctx.storage.getAlarm();
     if (currentAlarm == null) {
-      this.state.storage.setAlarm(Date.now() + 
+      this.ctx.storage.setAlarm(Date.now() + 
         RateLimiter.milliseconds_for_updates * RateLimiter.milliseconds_per_request);
     }
   }
@@ -217,16 +212,16 @@ filename: index.js
 ---
 
 // Durable Object
-
-export class RateLimiter {
+export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;
   static milliseconds_for_grace_period = 5000;
 
-  constructor(_state, _env) {
+  constructor(ctx, env) {
+    super(ctx, env);
     this.nextAllowedTime = 0;
   }
 
-  async fetch(request) {
+  async getMillisecondsToNextRequest() {
     const now = Date.now();
 
     this.nextAllowedTime = Math.max(now, this.nextAllowedTime);
@@ -234,7 +229,7 @@ export class RateLimiter {
 
     const value = Math.max(0,
       this.nextAllowedTime - now - RateLimiter.milliseconds_for_grace_period);
-    return new Response(JSON.stringify({ milliseconds_to_next_request: value }));
+    return value;
   }
 }
 
@@ -247,18 +242,18 @@ filename: index.ts
 ---
 
 // Durable Object
-
-export class RateLimiter implements DurableObject {
-  static readonly milliseconds_per_request = 1;
-  static readonly milliseconds_for_grace_period = 5000;
+export class RateLimiter extends DurableObject {
+  static milliseconds_per_request = 1;
+  static milliseconds_for_grace_period = 5000;
 
   nextAllowedTime: number;
 
-  constructor(_state: DurableObjectState, _env: Env) {
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
     this.nextAllowedTime = 0;
   }
 
-  async fetch(request: Request): Promise<Response> {
+  async getMillisecondsToNextRequest(): Promise<number> {
     const now = Date.now();
 
     this.nextAllowedTime = Math.max(now, this.nextAllowedTime);
@@ -266,7 +261,7 @@ export class RateLimiter implements DurableObject {
 
     const value = Math.max(0,
       this.nextAllowedTime - now - RateLimiter.milliseconds_for_grace_period);
-    return new Response(JSON.stringify({ milliseconds_to_next_request: value }));
+    return value;
   }
 }
 
