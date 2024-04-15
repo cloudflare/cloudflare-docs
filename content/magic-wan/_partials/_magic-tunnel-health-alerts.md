@@ -40,10 +40,10 @@ $2
 6. Choose the tunnels you want to receive alerts for.
 7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_.
 8. Select **Create** when you are done.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 An example of the API configuration for Magic Tunnel health alerts is provided below:
 
 ```bash
@@ -51,24 +51,24 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/poli
 --header 'Authorization: Bearer <API_TOKEN>' \
 --header 'Content-Type: application/json' \
 --data '{
-    "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
-    "alert_type": "magic_tunnel_health_check_event",
-    "description": "<DESCRIPTION_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
-    "enabled": true,
-    "filters": {
-        "slo": [ "99.0" ],
-        "tunnel_name": [ "Name(s) of the tunnels monitored in the alert" ]
-    },
-    "mechanisms": {
-        "email": [ { "id": "test@example.com" } ],
-        "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
-        "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
-    }
+  "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
+  "alert_type": "magic_tunnel_health_check_event",
+  "description": "<DESCRIPTION_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
+  "enabled": true,
+  "filters": {
+      "slo": [ "99.0" ],
+      "tunnel_name": [ "Name(s) of the tunnels monitored in the alert" ]
+  },
+  "mechanisms": {
+      "email": [ { "id": "test@example.com" } ],
+      "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
+      "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
+  }
 }'
 ```
 
 Refer to the [API documentation](/api/operations/notification-policies-list-notification-policies) for more details.
- 
+
 {{</tab>}}
 {{</tabs>}}
 
