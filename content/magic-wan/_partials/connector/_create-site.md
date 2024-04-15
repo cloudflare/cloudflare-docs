@@ -46,15 +46,8 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "site": {
-    "connector_id": "<ID_FOR_YOUR_PRIMARY_CONNECTOR>",
-    "description": "This is your site description",
-    "ha_mode": true,
-    "location": {
-      "lat": 37.6192,
-      "lon": 122.3816
-    },
-    "name": "<SITE_NAME>",
-    "secondary_connector_id": "<ID_FOR_YOUR_SECONDARY_CONNECTOR>"
+    "description": "My test site",
+    "name": "marcio"
   }
 }'
 ```
@@ -127,14 +120,9 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "wan": {
-    "description": "<WAN_DESCRIPTION>",
+    "description": "<YOUR_WAN_NAME>",
     "physport": 1,
     "priority": 0,
-    "static_addressing": {
-      "address": "192.0.2.0/24",
-      "gateway_address": "192.0.2.1",
-      "secondary_address": "192.0.2.0/24"
-    },
     "vlan_tag": 0
   }
 }'
@@ -183,8 +171,8 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
     "lan": {
-    "description": "lan-teste1",
-    "physport": 1,
+    "description": "<YOUR_LAN_NAME>",
+    "physport": 2,
     "static_addressing": {
       "address": "172.16.14.0/24"
     },
