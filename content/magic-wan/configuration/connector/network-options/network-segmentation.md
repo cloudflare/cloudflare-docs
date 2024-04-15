@@ -48,11 +48,11 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "acl": {
-    "description": "Allows local traffic between PIN pads and cash register.",
+    "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
     "lan_1": {
-      "lan_id": "string",
-      "lan_name": "string",
+      "lan_id": "<LAN_ID>",
+      "lan_name": "<LAN_NAME>",
       "ports": [
         1
       ],
@@ -61,8 +61,8 @@ curl --request POST \
       ]
     },
     "lan_2": {
-      "lan_id": "string",
-      "lan_name": "string",
+      "lan_id": "<LAN_ID>",
+      "lan_name": "<LAN_NAME",
       "ports": [
         1
       ],
@@ -70,7 +70,7 @@ curl --request POST \
         "192.0.2.1"
       ]
     },
-    "name": "PIN Pad - Cash Register",
+    "name": "<POLICY_NAME>",
     "protocols": [
       "tcp"
     ]
@@ -78,7 +78,7 @@ curl --request POST \
 }'
 ```
 
-If successfull, you will receive a response like the following:
+If successful, you will receive a response like the following:
 
 ```bash
 {
@@ -87,12 +87,12 @@ If successfull, you will receive a response like the following:
   "result": {
     "acls": [
       {
-        "description": "Allows local traffic between PIN pads and cash register.",
+        "description": "<POLICY_DESCRIPTION>",
         "forward_locally": true,
         "id": "023e105f4ecef8ad9ca31a8372d0c353",
         "lan_1": {
-          "lan_id": "string",
-          "lan_name": "string",
+          "lan_id": "<LAN_ID>",
+          "lan_name": "<LAN_NAME>",
           "ports": [
             1
           ],
@@ -101,8 +101,8 @@ If successfull, you will receive a response like the following:
           ]
         },
         "lan_2": {
-          "lan_id": "string",
-          "lan_name": "string",
+          "lan_id": "<LAN_ID>",
+          "lan_name": "<LAN_NAME>",
           "ports": [
             1
           ],
@@ -110,7 +110,7 @@ If successfull, you will receive a response like the following:
             "192.0.2.1"
           ]
         },
-        "name": "PIN Pad - Cash Register",
+        "name": "<POLICY_NAME>",
         "protocols": [
           "tcp"
         ]
@@ -158,11 +158,11 @@ curl --request PUT \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "acl": {
-    "description": "Allows local traffic between PIN pads and cash register.",
+    "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
     "lan_1": {
-      "lan_id": "string",
-      "lan_name": "string",
+      "lan_id": "<LAN_ID>",
+      "lan_name": "<LAN_NAME>",
       "ports": [
         1
       ],
@@ -171,8 +171,8 @@ curl --request PUT \
       ]
     },
     "lan_2": {
-      "lan_id": "string",
-      "lan_name": "string",
+      "lan_id": "<LAN_ID>",
+      "lan_name": "<LAN_NAME>",
       "ports": [
         1
       ],
@@ -180,7 +180,7 @@ curl --request PUT \
         "192.0.2.1"
       ]
     },
-    "name": "PIN Pad - Cash Register",
+    "name": "<POLICY_NAME>",
     "protocols": [
       "tcp"
     ]
