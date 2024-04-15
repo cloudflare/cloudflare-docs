@@ -48,7 +48,7 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 You can call a Durable Object by:
 
 - [Sending HTTP requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#send-http-requests) to a Durable Object's `fetch()` handler.
-- Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#remote-procedure-call-rpc)).
+- Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc)).
 - Using the [WebSocket API](/durable-objects/reference/websockets/).
 
 ### Call RPC methods
@@ -77,7 +77,7 @@ let response = await durableObjectStub.increment();
 
 {{<Aside type="note">}}
 
-When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#remote-procedure-call-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
+When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
 
 With RPC, the `DurableObject` superclass defines `ctx` and `env` as class properties. What was previously called `state` is now called `ctx` when you extend the `DurableObject` class.
 

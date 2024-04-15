@@ -275,7 +275,7 @@ const platform = await getPlatformProxy(options);
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
           Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
-          
+
           **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: "./my-directory/v3"`.
 
 {{</definitions>}}
@@ -297,7 +297,7 @@ const platform = await getPlatformProxy(options);
 
 *   `ctx` {{<type>}}object{{</type>}}
 
-    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) functions that do nothing.
+    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception) functions that do nothing.
 
 *   `caches` {{<type>}}object{{</type>}}
 
