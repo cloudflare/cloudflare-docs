@@ -63,8 +63,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     async function sha256(message) {
       // encode as UTF-8
       const msgBuffer = await new TextEncoder().encode(message);

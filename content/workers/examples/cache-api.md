@@ -56,8 +56,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const cacheUrl = new URL(request.url);
 
     // Construct the cache key from the cache URL

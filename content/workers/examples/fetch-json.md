@@ -56,8 +56,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     /**
      * Example someHost is set up to take in a JSON request
      * Replace url with the host you wish to send requests to

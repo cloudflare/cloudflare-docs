@@ -87,8 +87,11 @@ To fetch files from the R2 bucket, use the `BINDING.get` function. In the below 
 ---
 filename: worker.ts
 ---
+interface Env {
+  MY_BUCKET: R2Bucket;
+}
 export default {
-  async fetch(request: Request, env: unknown) {
+  async fetch(request: Request, env: Env) {
     // For example, the request URL my-worker.account.workers.dev/image.png
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
@@ -127,8 +130,12 @@ Now, add a new code path that handles a `PUT` HTTP request. This new code will c
 ---
 filename: worker.ts
 ---
+interface Env {
+  MY_BUCKET: R2Bucket;
+  AUTH_SECRET: string;
+}
 export default {
-  async fetch(request: Request, env: unknown): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     if (request.method === 'PUT') {
       // Note that you could require authentication for all requests
       // by moving this code to the top of the fetch function.

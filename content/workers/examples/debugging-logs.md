@@ -60,8 +60,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     // Service configured to receive logs
     const LOG_URL = "https://log-service.example.com/";
 

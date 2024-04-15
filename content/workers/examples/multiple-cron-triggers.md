@@ -39,8 +39,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async scheduled(controller: ScheduledController, env: unknown, ctx: ExecutionContext) {
+  async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {
     // Write code for updating your API
     switch (controller.cron) {
       case "*/3 * * * *":
