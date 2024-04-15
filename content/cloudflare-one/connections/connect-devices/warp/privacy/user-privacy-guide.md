@@ -53,7 +53,7 @@ If you have a work profile on an Android mobile device, Cloudflare Zero Trust on
 
 ### Data Loss Prevention
 
-Your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is encrypted and only visible to your company's IT department. Cloudflare cannot decrypt this data.
+Your company may have Data Loss Prevention (DLP) policies in place which scan your Internet traffic (including emails, Google drive, and more) for certain phrases or proprietary information. If a match is triggered, the matching content is encrypted and only visible to designated administrators at your company. Cloudflare cannot decrypt this data.
 
 Cloudflare currently redacts sensitive numerical data (such as credit card numbers, bank account numbers, and Social Security numbers) -- your company will see these numbers as `XXXXXXXXX`. Cloudflare does not redact any text (such as first name, last name, address, and email address) -- this information may be visible to your company. For more information on how your company handles personally identifiable information (PII), refer to your company's Employee Privacy Policy.
 
