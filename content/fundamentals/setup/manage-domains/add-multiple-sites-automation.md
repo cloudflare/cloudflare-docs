@@ -63,12 +63,7 @@ ___
   done
 ```
 
-3. Add executable commands to the script:
-```js
-  chmod +x add-multiple-zones.sh
-```
-
-4. Open the command line and run:
+3. Open the command line and run:
 ```js
   bash add-multiple-zones.sh
 ```
