@@ -12,7 +12,7 @@ A Durable Object stub is a client Object used to send requests to a remote Durab
 
 Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier.
 
-However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/reference/troubleshooting/).
+However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/).
 
 To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Durable Object stub. There are no ordering guarantees between requests to the new stub compared to the old one. If ordering is not a concern, you can create a new Durable Object for every request.
 
@@ -114,7 +114,7 @@ let resp = await durableObjectStub.fetch(`http://do/write?userId=${userId}`)
 
 {{<Aside type="note">}}
 
-To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/reference/error-handling/) documentation.
+To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/best-practices/error-handling/) documentation.
 
 {{</Aside>}}
 
