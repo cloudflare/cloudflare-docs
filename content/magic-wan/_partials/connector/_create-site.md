@@ -32,9 +32,9 @@ To add a site:
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-sites-create-site) to create a site. The `name` and `connector_id` parameters are required to create a site.
+Create a `POST` request [using the API](/api/operations/magic-sites-create-site) to create a site.
 
-The parameter `"ha_mode": true` enables [high availability](#about-high-availability-configurations). You cannot enable high availability for a site after it has been created. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
+The parameter `"ha_mode": true` enables [high availability](#about-high-availability-configurations). You cannot enable high availability for a site after it has been created. To add high availability to an existing site, you need to delete the site and start again.
 
 Example:
 
@@ -46,37 +46,33 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
   "site": {
-    "description": "My test site",
-    "name": "marcio"
+    "description": "<SITE_DESCRIPTION>",
+    "name": "<SITE_NAME>"
   }
 }'
 ```
 
-If you create you site successfully, you should receive a message similar to the following.
+If you created your site successfully, you should receive a message similar to the following.
 
 ```bash
 {
-  "errors": [],
-  "messages": [],
   "result": {
     "site": {
-      "connector_id": "ac60d3d0435248289d446cedd870bcf4",
-      "description": "string",
-      "ha_mode": true,
-      "id": "023e105f4ecef8ad9ca31a8372d0c353",
-      "location": {
-        "lat": 37.6192,
-        "lon": 122.3816
-      },
-      "name": "site_1",
-      "secondary_connector_id": "8d67040d3835dbcf46ce29da440dc482"
+      "id": "<SITE_ID>",
+      "name": "<SITE_NAME>",
+      "description": "<SITE_DESCRIPTION>",
+      "connector_id": null,
+      "secondary_connector_id": null,
+      "ha_mode": false
     }
   },
-  "success": true
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-Take note of the site `id` as you will need it to create WANs and LANs.
+Take note of the site `id` parameter, as you will need it to create WANs and LANs.
 
 {{</tab>}}
 {{</tabs>}}
