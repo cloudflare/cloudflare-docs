@@ -34,7 +34,7 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+{{<render file="connector/_account-id-api-key" >}}
 
 Create a `POST` request [using the API](/api/operations/magic-site-acls-create-site-acl) to create a network policy.
 
@@ -144,7 +144,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+{{<render file="connector/_account-id-api-key" >}}
 
 Create a `PUT` request [using the API](/api/operations/magic-site-acls-update-acl) to edit a network policy.
 
@@ -208,7 +208,7 @@ curl --request PUT \
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+{{<render file="connector/_account-id-api-key" >}}
 
 Create a `DELETE` request [using the API](/api/operations/magic-site-acls-delete-acl) to delete a network policy.
 

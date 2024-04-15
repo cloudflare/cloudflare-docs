@@ -30,7 +30,7 @@ To add a site:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+{{<render file="connector/_account-id-api-key" >}}
 
 Create a `POST` request [using the API](/api/operations/magic-sites-create-site) to create a site. The `name` and `connector_id` parameters are required to create a site.
 
@@ -111,7 +111,7 @@ Take note of the site `id` as you will need it to create WANs and LANs.
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+{{<render file="connector/_account-id-api-key" >}}
 
 Create a `POST` request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
 
@@ -169,7 +169,7 @@ curl --request POST \
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-You will need your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) for this operation.
+{{<render file="connector/_account-id-api-key" >}}
 
 Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
 
