@@ -64,7 +64,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of your Worker. Alphanumeric and dashes only.
+  - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`, etc.) and dashes (`-`) only. Do not use underscores (`_`).
 
 - `main` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -684,7 +684,7 @@ header: wrangler.toml
 ---
 kv_namespaces = [
   { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
-  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
+  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>" }
 ]
 
 # or

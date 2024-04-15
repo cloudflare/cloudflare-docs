@@ -64,7 +64,20 @@ filename: package.json
 }
 ```
 
-`dist/index.js` will be the entrypoint to your Plugin. This is a generated file built by Wrangler with the `npm run build` command. Add the `dist/` directory to your `.gitignore`.
+{{<Aside type="note">}}
+
+The `npx wrangler pages functions build` command supports a number of arguments, including:
+
+- `--plugin` which tells the command to build a Pages Plugin, (rather than Pages Functions as part of a Pages project)
+- `--outdir` which allows you to specify where to output the built Plugin
+- `--external` which can be used to avoid bundling external modules in the Plugin
+- `--watch` argument tells the command to watch for changes to the source files and rebuild the Plugin automatically
+
+For more information about the available arguments, run `npx wrangler pages functions build --help`.
+
+{{</Aside>}}
+
+In our example, `dist/index.js` will be the entrypoint to your Plugin. This is a generated file built by Wrangler with the `npm run build` command. Add the `dist/` directory to your `.gitignore`.
 
 Next, create a `functions` directory and start coding your Plugin. The `functions` folder will be mounted at some route by the developer, so consider how you want to structure your files. Generally:
 

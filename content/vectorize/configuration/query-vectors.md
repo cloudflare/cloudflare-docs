@@ -66,11 +66,11 @@ This would return a set of matches resembling the following, based on a `cosine`
 }
 ```
 
-Refer to the [Workers Client API documentation](/vectorize/reference/client-api/) for additional examples.
+Refer to [Vectorize API](/vectorize/reference/client-api/) for additional examples.
 
 ## Workers AI
 
-If you are generating embeddings from a [Workers AI](/workers-ai/models/#text-embeddings) text embedding model, the response type from `ai.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
+If you are generating embeddings from a [Workers AI](/workers-ai/models/#text-embeddings) text embedding model, the response type from `env.AI.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
 
 ```ts
 interface EmbeddingResponse {
@@ -79,7 +79,7 @@ interface EmbeddingResponse {
 }
 
 let userQuery = "a query from a user or service";
-const queryVector: EmbeddingResponse = await ai.run(
+const queryVector: EmbeddingResponse = await env.AI.run(
   "@cf/baai/bge-base-en-v1.5",
   {
     text: [userQuery],

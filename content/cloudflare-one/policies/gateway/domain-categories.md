@@ -207,7 +207,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 29          | Violence               | 165            | Violence                                   |
 | 29          | Violence               | 166            | Weapons                                    |
 | 30          | Weather                | 167            | Weather                                    |
-| 31          | Blocked                | 170            | Child Abuse                                |
+| 31          | Blocked by default     | 170            | Child Abuse                                |
 | 32          | Security Risks         | 128            | Parked & For Sale Domains                  |
 | 32          | Security Risks         | 169            | New Domains                                |
 | 32          | Security Risks         | 177            | Newly Seen Domains                         |
@@ -218,3 +218,21 @@ Subdomains that have not been assigned a category will inherit the category of t
 ## Filter by resolved IP category
 
 When creating a DNS block policy for security or content categories, you can optionally enable **Filter traffic by resolved IP category** in the policy settings. When enabled, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
+
+## Categorization Process
+
+Our domain categorization process consists of a robust data-driven approach that combines Cloudflare's proprietary data and third-party intelligence (encompassing both open-source and commercial feeds), with machine learning models and insights from our community feedback. This multifaceted strategy ensures the most accurate, timely, and comprehensive domain categorization available.
+
+First, the categorization engine begins with a vast array of data sources. This includes: 
+
+1. Cloudflare’s proprietary data leveraging Cloudflare’s extensive network data.
+
+2. Third-party intelligence feeds. We incorporate data from over 30 open-source intelligence feeds and premium commercial feeds, including industry leaders like Avira, Zvelo and others. This aggregation enriches our categorization with diverse insights and global threat intelligence.
+
+Then, the initial categorization is refined and continuously improved through: 
+
+3. Machine learning models. Our advanced algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
+
+4. Community feedback. Direct input from our customers plays a critical role in refining and verifying our categorizations. Through a review process, feedback is assessed by both our internal models and threat analysts, ensuring that our categorizations reflect the most current and accurate threat intelligence.
+
+This approach outlines how each component of our process contributes to the creation of a secure and accurately categorized Internet environment. By leveraging both data-driven insights and machine learning, complemented by the critical eye of our community, our categories are not just comprehensive, but also dynamically attuned to the evolving digital landscape.

@@ -23,7 +23,7 @@ In your Vercel Dashboard, find the project that you want to deploy. It should be
 
 ![Selecting a site in the Vercel Dashboard](/images/pages/migrations/vercel-deploy-1.png)
 
-Inside of your site dashboard, select **Settings**.
+Inside of your site dashboard, select **Settings**, then **General**.
 
 ![Selecting Site Settings in site dashboard](/images/pages/migrations/vercel-deploy-2.png)
 

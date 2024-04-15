@@ -127,4 +127,4 @@ Refer to the [bindings documentation](/workers/wrangler/configuration/#vectorize
 
 New Workers projects created via `npm create cloudflare` or `wrangler init` automatically include the relevant TypeScript types for Vectorize.
 
-Older projects, or non-Workers projects looking to use Vectorize's [HTTP API](https://developers.cloudflare.com/api/operations/vectorize-list-vectorize-indexes) in a TypeScript project, should ensure `@cloudflare/workers-types` version `4.20230922.0` or later is installed.
+Older projects, or non-Workers projects looking to use Vectorize's [REST API](https://developers.cloudflare.com/api/operations/vectorize-list-vectorize-indexes) in a TypeScript project, should ensure `@cloudflare/workers-types` version `4.20230922.0` or later is installed.

@@ -18,17 +18,18 @@ To add a site:
 2. Go to **Magic WAN** > **Sites**.
 3. Select **Create** to create a new site and start the configuration wizard.
 4. Add a name and description for your new site.
-5. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. $3
-6. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
-7. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
-8. Select **Next** to proceed to creating your WAN and LAN networks.
+5. (Optional) In **Site location**, you can add the geographical coordinates for your site. If you add geographical coordinates, your site will show up in the [Site Analytics overview map](/magic-wan/analytics/site-analytics/).
+6. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. $3
+7. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
+8. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+9. Select **Next** to proceed to creating your WAN and LAN networks.
 
 ### 2. Create a WAN
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. This allows the Connector to failover between circuits according to their {{<glossary-tooltip term_id="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">}}health{{</glossary-tooltip>}}.
-2. In **Network name**, enter a descriptive name for your WAN.
-3. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
-4. **Physical port** $1
+2. In **Interface name**, enter a descriptive name for your WAN.
+3. **Physical interface** $1
+4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to {{<glossary-tooltip term_id="traffic steering" link="/magic-wan/reference/traffic-steering/">}}Traffic steering{{</glossary-tooltip>}} to learn more about how Cloudflare calculates priorities.
 6. **Addressing**: Specify whether the WAN IP is fetched from a DHCP server or if it is a static IP. If you choose a static IP, you also need to specify the static IP and gateway addresses.
 
@@ -43,7 +44,7 @@ To add a site:
 ### 3. Create a LAN
 
 1. In **LAN configuration**, select **Create**.
-2. Enter a descriptive name for your LAN in **Network name**.
+2. Enter a descriptive name for your LAN in **Interface name**.
 3. **Physical interface** $2
 4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
 5. In **Static addressing** > **Static address** give your Connector's LAN interface its IP address. You can also enable the following options if they suit your use case:

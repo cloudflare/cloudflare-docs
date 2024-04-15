@@ -5,6 +5,4 @@ weight: 4
 layout: learning-unit
 ---
 
-To set up a Zero Trust organization:
-
-{{<render file=_choose-team-name.md productFolder="cloudflare-one">}}
+{{<render file="zero-trust/_create-zero-trust-org.md">}}

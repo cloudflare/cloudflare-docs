@@ -7,13 +7,16 @@ layout: learning-module
 
 # Configure the device agent
 
-The Cloudflare WARP client (known as the Cloudflare One Agent in mobile app stores) encrypts designated traffic from a user's device to Cloudflare's global network. In this learning path, we will first define all of your parameters and deployment rules, and then we will install and connect the client. If you prefer to start the client download now, refer to [Download WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/).
+{{<render file="zero-trust/_configure-device-agent-description.md">}}
+
+{{<Aside type="note">}}
+
+The following steps are identical to [Configure the device agent](/learning-paths/secure-internet-traffic/configure-device-agent/) in the Secure your Internet traffic and SaaS apps implementation guide. If you have already completed Secure your Internet traffic and SaaS apps, you can skip ahead to [Connect user devices](/learning-paths/replace-vpn/connect-devices/).
+
+{{</Aside>}}
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Define which users can connect devices to your Zero Trust instance.
-- Configure global and device-specific settings for the WARP client.
-- Route user traffic through Cloudflare Gateway.
-- Route domains to a private DNS server, if required.
+{{<render file="zero-trust/_configure-device-agent-objectives.md">}}

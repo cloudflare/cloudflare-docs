@@ -56,7 +56,7 @@ If your domain is on the Free plan, it will be deleted automatically if it is no
 
 ### Causes
 
-- [Full setup](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated by Cloudflare.
+- [Full setup](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.
 - [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
 
 ### Limitations
@@ -65,7 +65,7 @@ If your domain is on the Free plan, it will be deleted automatically if it is no
 
 ## Active
 
-Cloudflare has authenticated your [nameserver changes](/dns/zone-setups/full-setup/setup/#update-your-nameservers) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
+Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-nameservers/) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
 
 ## Moved
 
