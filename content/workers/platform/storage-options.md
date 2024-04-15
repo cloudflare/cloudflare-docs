@@ -25,25 +25,14 @@ Available storage and persistency products include:
 - [D1](#d1) as a relational, SQL-based database.
 - [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
 - [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
+- [Analytics Engine](/analytics/analytics-engine/) for storing and querying (using SQL) time-series data and product metrics at scale.
 - [Vectorize](/vectorize/) for vector search and storing embeddings from [Workers AI](/workers-ai/).
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
-## Choosing a storage product
+## Choose a storage product
 
-{{<table-wrap>}}
-
-| Use-case                        | Product                              | Ideal for                                                                                                              |
-| ------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| Key-value storage               | [Workers KV](/kv/)                   | Configuration data, service routing metadata, personalization (A/B testing)                                            |
-| Object storage                  | [R2](/r2/)                           | User-facing web assets, images, machine learning and training datasets, analytics datasets, log and event data.        |
-| SQL database                    | [D1](/d1/)                           | Relational data, including user profiles, product listings and orders, and/or customer data.                           |
-| Global co-ordination            | [Durable Objects](/durable-objects/) | Building collaborative applications; global co-ordination across clients; strongly consistent, transactional storage.  |
-| Vector search (database)        | [Vectorize](/vectorize/)             | Storing [embeddings](/workers-ai/models/#text-embeddings) from AI models for semantic search and classification tasks. |
-| Task processing & batching      | [Queues](/queues/)                   | Background job processing (emails, notifications, APIs) and log processing/batching.                                   |
-| Connect to an existing database | [Hyperdrive](/hyperdrive/)           | Connecting to an existing database in a cloud or on-prem.                                                              |
-
-{{</table-wrap>}}
+{{<render file="/_storage-products-table.md" productFolder="/workers/">}}
 
 ## Performance and consistency
 
@@ -135,9 +124,10 @@ D1 is ideal for:
 
 To get started with D1:
 
-- Read [the documentation](/d1)
-- Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
-- Review the [D1 client API](/d1/build-databases/query-databases/).
+* Read [the documentation](/d1)
+* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
+* Review the [D1 client API](/d1/build-with-d1/d1-client-api/).
+
 
 ## Queues
 
@@ -168,6 +158,26 @@ To get started with Hyperdrive:
 
 - [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
 - Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/configuration/how-hyperdrive-works/).
+
+## Analytics Engine
+
+Analytics Engine is Cloudflare's time-series and metrics database that allows you to write unlimited-cardinality analytics at scale using a built-in API to write data points from Workers and query that data using SQL directly.
+
+Analytics Engine allows you to:
+
+- Expose custom analytics to your own customers
+- Build usage-based billing systems
+- Understand the health of your service on a per-customer or per-user basis
+- Add instrumentation to frequently called code paths, without impacting performance or overwhelming external analytics systems with events
+
+Cloudflare uses Analytics Engine internally to store and product per-product metrics for products like D1 and R2 at scale.
+
+To get started with Analytics Engine:
+
+- Learn how to [get started with Analytics Engine](/analytics/analytics-engine/get-started/)
+- See [an example of writing time-series data to Analytics Engine](/analytics/analytics-engine/recipes/usage-based-billing-for-your-saas-product/)
+- Understand the [SQL API](/analytics/analytics-engine/sql-api/) for reading data from your Analytics Engine datasets
+
 
 ## Vectorize
 

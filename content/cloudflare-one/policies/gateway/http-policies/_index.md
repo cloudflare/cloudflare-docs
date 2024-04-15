@@ -125,7 +125,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 {{<Aside type="warning" header="Multiple API selectors required for Terraform">}}
 
-When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.support_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.support_ids[*] in {1245})`.
+When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
 
 {{</Aside>}}
 
@@ -171,17 +171,23 @@ Use this selector to match against a domain and all subdomains — for example,
 | ------- | ----------------------------------------------- |
 | Domain  | `any(http.request.domains[*] == "example.com")` |
 
-### Download and Upload File Type
+### Download and Upload File Types
 
-These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office/Microsoft 365 documents, PDF files, and ZIP files.
+{{<Aside type="warning" header="Deprecated selectors">}}
 
-| UI name            | API example                                             |
-| ------------------ | ------------------------------------------------------- |
-| Download File Type | `http.download.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 
-| UI name          | API example                                           |
-| ---------------- | ----------------------------------------------------- |
-| Upload File Type | `http.upload.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+{{</Aside>}}
+
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, including executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files.
+
+| UI name             | API example                                         |
+| ------------------- | --------------------------------------------------- |
+| Download File Types | `any(http.download.file.types[*] in {"docx" "7z"})` |
+
+| UI name           | API example                                        |
+| ----------------- | -------------------------------------------------- |
+| Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
 
 ### Download and Upload Mime Type
 

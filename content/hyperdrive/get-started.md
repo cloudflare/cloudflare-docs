@@ -60,7 +60,7 @@ $ npm create cloudflare@latest
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
 - Name your directory `hyperdrive-tutorial`.
-- Choose `"Hello World" script` for the type of application.
+- Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using Git.
 - Select `no` to deploying.
@@ -214,7 +214,13 @@ export default {
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+		const client = new Client({
+      host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			port: Number(env.HYPERDRIVE.port),
+			database: env.HYPERDRIVE.database
+		})
 
 		try {
 			// Connect to your database

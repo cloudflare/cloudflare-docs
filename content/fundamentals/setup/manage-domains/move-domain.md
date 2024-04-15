@@ -25,7 +25,7 @@ If you have [two-factor authentication (2FA)](/fundamentals/setup/account/accoun
 
 To transfer a domain from one Cloudflare account to another, you will need:
 
-* Access to your domain registrar. If your domain is using Cloudflare Registrar, you will need to transfer your domain [to another registrar](/registrar/account-options/transfer-out-from-cloudflare/).
+* Access to your domain registrar. If your domain is using Cloudflare Registrar, you will need to transfer your domain [to another registrar](/registrar/account-options/transfer-out-from-cloudflare/) because we not currently support transferring Cloudflare Registrar domains between Cloudflare accounts. We are looking to add this in the future, refer to this [feature request](https://community.cloudflare.com/t/feature-request-registrar-transfer-between-cloudflare-accounts/540582).
 * At least one Cloudflare account associated with the domain.
 
 ## Transfer your domain

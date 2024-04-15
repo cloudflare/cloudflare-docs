@@ -6,12 +6,6 @@ weight: 2
 
 ## Database support
 
-{{<Aside type="note" header="Open beta">}}
-
-Hyperdrive supports any PostgreSQL and/or PostgreSQL wire protocol compatible database directly. Support for more database engines, including MySQL, is on the roadmap.
-
-{{</Aside>}}
-
 Details on which database engines and/or specific database providers are supported are detailed in the following table.
 
 | Database Engine | Supported                | Known supported versions | Details                                                                                              |

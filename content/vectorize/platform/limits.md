@@ -6,7 +6,7 @@ weight: 2
 
 {{<Aside type="note" heading="Vectorize public beta limits">}}
 
-Many of these limits will increase during Vectorize's [public beta](/workers/platform/betas/). Visit the [changelog](/vectorize/platform/changelog/) or join the [`#vectorize-beta`](https://discord.cloudflare.com/) channel in the Cloudflare Developer Discord to keep up to date with changes.
+Many of these limits will increase during Vectorize's [public beta](/workers/platform/betas/). Refer to the [changelog](/vectorize/platform/changelog/) or join the [`#vectorize-beta`](https://discord.cloudflare.com/) channel in the Cloudflare Developer Discord to keep up to date with changes.
 
 {{</Aside>}}
 # Limits

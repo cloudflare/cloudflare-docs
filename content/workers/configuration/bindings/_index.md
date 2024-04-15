@@ -24,7 +24,7 @@ Bindings can be configured in one of two ways:
 
 Service bindings allow for communication with another Worker.
 
-* Learn more about [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+* Learn more about [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 * Configure Service bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#service-bindings).
 
 ### KV namespace bindings
@@ -38,7 +38,7 @@ KV namespace bindings allow for communication between a Worker and a KV namespac
 
 Durable Object bindings for communication between a Worker and a Durable Object.
 
-* Learn more about [Durable Object bindings](/durable-objects/configuration/access-durable-object-from-a-worker/).
+* Learn more about [Durable Object bindings](/durable-objects/best-practices/access-durable-objects-from-a-worker/).
 * Configure Durable Object bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects).
 
 ### R2 bucket bindings
@@ -60,7 +60,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 - Create your first [D1 binding](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
 - Configure a D1 bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#d1-databases).
-- Learn more about how to query a D1 database using the [client API](/d1/build-databases/query-databases/).
+- Learn more about how to query a D1 database using the [client API](/d1/build-with-d1/d1-client-api/).
 
 ### Vectorize database bindings
 
@@ -81,7 +81,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-- Create your first [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#3-create-a-dynamic-dispatch-worker).
+- Create your first [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-create-a-dispatch-worker).
 
 ### mTLS certificate bindings
 
@@ -103,4 +103,13 @@ Email bindings allow you to send emails from your Worker. This is useful for whe
 
 - Learn more about [Workers AI bindings](/workers-ai/).
 - Create your first [AI binding](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai).
-- Configure Workers AI bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#ai).
+- Configure Workers AI bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#workers-ai).
+
+### Browser bindings
+
+The [Workers Browser Rendering API](/browser-rendering/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
+
+A browser binding will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+
+- Create your first [browser binding](/browser-rendering/get-started/screenshots/#4-configure-wranglertoml).
+- Configure browser bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#browser-rendering).

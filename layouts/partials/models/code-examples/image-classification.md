@@ -5,8 +5,6 @@
   <summary>Worker - TypeScript</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
@@ -16,12 +14,11 @@ export default {
     const res: any = await fetch("https://cataas.com/cat");
     const blob = await res.arrayBuffer();
 
-    const ai = new Ai(env.AI);
     const inputs = {
       image: [...new Uint8Array(blob)],
     };
 
-    const response = await ai.run<"{{ .Page.Params.model.name }}">(
+    const response = await env.AI.run(
       "{{ .Page.Params.model.name }}",
       inputs
     );

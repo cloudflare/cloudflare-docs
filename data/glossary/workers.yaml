@@ -1,6 +1,11 @@
 ---
 productName: Workers
 entries:
+
+- term: Auxiliary Worker
+  general_definition: |-
+    A Worker created locally via the [Workers Vitest integration](/workers/testing/vitest-integration/) that runs in a separate isolate to the test runner, with a different global scope.
+
 - term: binding
   general_definition: |-
     [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
@@ -16,6 +21,10 @@ entries:
 - term: CPU time
   general_definition: |-
     [CPU time](/workers/platform/limits/#cpu-time) is the amount of time the central processing unit (CPU) actually spends doing work, during a given request.
+
+- term: deployment
+  general_definition: |-
+    [Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
 - term: Durable Objects
   general_definition: |-
@@ -39,7 +48,7 @@ entries:
 
 - term: environment variable
   general_definition: |-
-    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker. 
+    [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
 
 - term: handler
   general_definition: |-
@@ -71,13 +80,13 @@ entries:
 
 - term: Queues
   general_definition: |-
-    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery. 
+    [Queues](/queues/) integrates with Cloudflare Workers and enables you to build applications that can guarantee delivery.
   associated_products:
     - Queues
 
 - term: rollback
   general_definition: |-
-    [Rollbacks](/workers/configuration/deployments/#rollbacks) are a way to deploy an older deployment to the Cloudflare global network. 
+    [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) are a way to deploy an older deployment to the Cloudflare global network.
 
 - term: R2
   general_definition: |-
@@ -95,11 +104,15 @@ entries:
 
 - term: subrequest
   general_definition: |-
-    A subrequest is an additional HTTP requests from the Worker to another resource or another Worker.
+    A subrequest is any request that a Worker makes to either Internet resources using the [Fetch API](/workers/runtime-apis/fetch/) or requests to other Cloudflare services like [R2](/r2/), [KV](/kv/), or [D1](/d1/).
 
 - term: Tail Worker
   general_definition: |-
-    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. 
+    A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
+
+- term: version
+  general_definition: |-
+    A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file.
 
 - term: V8
   general_definition: |-
@@ -120,3 +133,9 @@ entries:
 - term: wrangler.toml
   general_definition: |-
     The [configuration](/workers/wrangler/configuration/) file used to customize the development and deployment setup for a Worker or a Pages Function.
+---
+productName: Workers
+entries:
+- term: auxiliary Worker
+  general_definition: |-
+    a Worker created locally via the Workers Vitest integration that runs in a separate isolate to the test runner, with a different global scope.

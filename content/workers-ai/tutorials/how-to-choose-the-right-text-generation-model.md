@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Choose the Right Text Generation Model
+weight: 1
 ---
 
 # Choose the Right Text Generation Model
@@ -22,7 +23,7 @@ You can [download the Workers AI Text Generation Exploration notebook](/workers-
 
 Models come in different shapes and sizes, and choosing the right one for the task, can cause analysis paralysis.
 
-The good news is that on the [Workers AI Text Generation](/workers-ai/models/#text-generation#prompting) interface is always the same, no matter which model you choose.
+The good news is that on the [Workers AI Text Generation](/workers-ai/models/#text-generation) interface is always the same, no matter which model you choose.
 
 In an effort to aid you in your journey of finding the right model, this notebook will help you get to know your options in a speed dating type of scenario.
 
@@ -114,7 +115,7 @@ def speed_date(models, questions):
 
 Who better to tell you about the specific models than themselves?!
 
-The timing here is specific to the entire completion, but remember all Text Generation models on [Workers AI support streaming](/workers-ai/models/#text-generation#using-streaming).
+The timing here is specific to the entire completion, but remember all Text Generation models on [Workers AI support streaming](/workers-ai/models/#text-generation).
 
 ```python
 models = [

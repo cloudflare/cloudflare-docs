@@ -3896,6 +3896,16 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   padding: 0 0.6em;
 }
 
+.DocsMarkdown details summary + div.code-container {
+  padding: 0;
+  border-radius: 0;
+}
+
+.DocsMarkdown details summary + div.code-container .CodeBlock {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
 .DocsMarkdown details[open] {
   margin-bottom: 1.5em;
 }
@@ -5854,3 +5864,19 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   transition: all 0.1s ease 0.1s;
   visibility: visible;
 }
+
+span.ruleID {
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+code.ruleID:hover {
+  background: rgba(var(--orange-rgb), .3)
+}
+
+code.ruleID:active {
+background: orange;
+color: white;
+}
+

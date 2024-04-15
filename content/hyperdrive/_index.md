@@ -9,7 +9,7 @@ meta:
   title: Hyperdrive
 ---
 
-{{<heading-pill style="beta" heading="h1">}}Hyperdrive{{</heading-pill>}}
+# Hyperdrive
 
 {{<description>}}
 
@@ -17,7 +17,7 @@ Turn your existing regional database into a globally distributed database.
 
 {{</description>}}
 
-{{<plan type="workers_paid">}}
+{{<plan type="workers-paid">}}
 
 Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location. Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon.
 

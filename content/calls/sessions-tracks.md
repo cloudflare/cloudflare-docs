@@ -4,9 +4,13 @@ title: Sessions and Tracks
 weight: 3
 ---
 
-# Understanding Sessions and Tracks in Cloudflare Calls
+# Understanding Sessions and Tracks
 
-Cloudflare Calls offers a simple yet powerful framework for building real-time experiences. At the core of this system are two key concepts: **Sessions** and **Tracks**. Familiarizing yourself with these concepts is crucial for using Calls.
+Cloudflare Calls offers a simple yet powerful framework for building real-time experiences. At the core of this system are three key concepts: **Applications**,  **Sessions** and **Tracks**. Familiarizing yourself with these concepts is crucial for using Calls.
+
+## Application
+A Calls Application is an environment within different Sessions and Tracks can interact. Examples of this could be production, staging or different environments where you'd want separation between Sessions and Tracks. Cloudflare Calls usage can be queried at Application, Session or Track level.
+
 
 ## Sessions
 
@@ -28,7 +32,7 @@ Within a Session, there can be one or more **Tracks**.
 
 The analogy of a switchboard is apt for understanding Calls. Historically, switchboard operators connected calls by manually plugging in jacks. Similarly, Calls allows for the dynamic routing of media streams, acting as a programmable switchboard for modern real-time communication.
 
-## Beyond "Rooms", "Users", "Participants"
+## Beyond "Rooms", "Users", and "Participants"
 
 While many SFUs utilize concepts like "rooms" to manage media streams among users, this approach has scalability and flexibility limitations. Cloudflare Calls opts for a more granular and flexible model with Sessions and Tracks, enabling a wide range of use cases:
 

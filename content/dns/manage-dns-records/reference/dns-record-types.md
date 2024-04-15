@@ -308,7 +308,7 @@ header: Response
 
 Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
 
-If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your Internet property.
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 
@@ -334,7 +334,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/additional-options/custom-nameservers/) or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
+You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 {{<render file="_api-field-definitions.md">}}
 

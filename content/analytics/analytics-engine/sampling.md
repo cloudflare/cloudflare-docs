@@ -4,6 +4,7 @@ pcx_content_type: reference
 weight: 8
 meta:
   title: Sampling with Workers Analytics Engine
+  description: How data written to Workers Analytics Engine is automatically sampled at scale
 ---
 
 # Sampling with Workers Analytics Engine
@@ -51,7 +52,7 @@ The table below highlights the similarities between the how a mapping services h
 {{</table-wrap>}}
 
 ## How to read sampled data
- 
+
 To effectively write queries and analyze the data, it is helpful to first learn how sampled data is read in Workers Analytics Engine.
 
 In Workers Analytics Engine, every event is recorded with the `_sample_interval` field. The sample interval is the inverse of the sample rate. For example, if a one percent (1%) sample rate is applied, the `sample_interval` will be set to `100`.
@@ -127,7 +128,7 @@ Some limitations and trade-offs to consider are:
     - For example, if you index on `hostname`, you may not be able to count the number of unique URLs.
 - You may not be able to observe very rare values of fields not in the index.
     - For example, a particular URL for a hostname, if you index on host and have millions of unique URLs.
-- You may not be able to run accurate queries across multiple indices at once.  
+- You may not be able to run accurate queries across multiple indices at once.
     - For example, you may only be able to query for one host at a time (or all of them) and expect accurate results.
 - There is no guarantee you can retrieve any one individual record.
 - You cannot necessarily reconstruct exact sequences of events.
