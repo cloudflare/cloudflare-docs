@@ -43,10 +43,7 @@ curl --request POST \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
     "lan": {
-    "description": "lan-teste1",
-    "physport": 2,
     "static_addressing": {
-      "address": "172.16.14.0/24",
       "dhcp_relay": {
         "server_addresses": [
           "192.0.2.1"
