@@ -9,4 +9,5 @@ _build:
 Network Analytics requires the following:
 * A Cloudflare Enterprise plan.
 * Cloudflare Magic Transit or Spectrum.
+* Cloudflare Magic WAN.
 {{</Aside>}}

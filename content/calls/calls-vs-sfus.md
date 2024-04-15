@@ -42,4 +42,4 @@ Cloudflare Calls delegates the responsibility of state management and participan
 
 ## Getting Started with Cloudflare Calls
 
-Integrating Cloudflare Calls into your application promises a straightforward and efficient process, removing the hurdles of regional scalability and server managementso you can focus on creating engaging real-time experiences for users worldwide.
+Integrating Cloudflare Calls into your application promises a straightforward and efficient process, removing the hurdles of regional scalability and server management so you can focus on creating engaging real-time experiences for users worldwide.

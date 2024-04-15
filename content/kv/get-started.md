@@ -142,9 +142,9 @@ KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. 
 
 You can interact with your KV namespace via [Wrangler](/workers/wrangler/install-and-update/) or directly from your [Workers](/workers/) application.
 
-### Interact with your KV namespace via Wrangler
+### Write a value via Wrangler
 
-To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively.  `<KEY>`and `<VALUE>` are values of your choice.
+To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively.  `<KEY>` and `<VALUE>` are values of your choice.
 
 ```sh
 $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
@@ -158,27 +158,35 @@ $ wrangler kv:key put --namespace-id=e29b263ab50e42ce9b637fa8370175e8 "<KEY>" "<
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
-A KV namespace can be specified in two ways:
+To create a key and a value in local mode, use the `--local` flag:
 
-1.  With a `--binding`:
+```sh
+$ wrangler kv:key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --local
+```
 
-    ```sh
-    $ wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
-    ```
-
-  This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
-
-2.  With a `--namespace-id`:
-
-    ```sh
-    $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
-    ```
+### Get a value via Wrangler
 
 To access the value using Wrangler, run the `wrangler kv:key get` subcommand in your terminal, and input your key value:
 
 ```sh
-wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
+$ wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
 ```
+
+A KV namespace can be specified in two ways:
+
+-  With a `--binding`:
+
+  ```sh
+  $ wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
+  ```
+
+This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
+
+-  With a `--namespace-id`:
+
+  ```sh
+  $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
+  ```
 
 {{<Aside type="warning">}}
 Exactly one of `--binding` or `--namespace-id` is required.
@@ -188,7 +196,7 @@ Refer to the [`kv:bulk` documentation](/kv/reference/kv-commands/#kvbulk) to wri
 
 ### Interact with your KV namespace via a Worker
 
-You can access the binding from within your Worker 
+You can access the binding from within your Worker. 
 
 In your Worker script, add your KV namespace in the `Env` interface:
 
@@ -243,9 +251,9 @@ export default {
 
 The code above:
 
-* Writes a key to `YOUR_KV_NAMESPACE` using KV's `put()` method.
-* Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
-* Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
+1. Writes a key to `YOUR_KV_NAMESPACE` using KV's `put()` method.
+2. Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
+3. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
 ## 5. Develop locally with Wrangler
 

@@ -2,6 +2,11 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-11'
+  description: |-
+    - Improve Streams API spec compliance by exposing `desiredSize` and other properties on stream class prototypes
+    - The new `URL.parse(...)` method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.
+    - R2 bindings objects now have a `storageClass` option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.
 - publish_date: '2024-04-05'
   description: |-
     - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
