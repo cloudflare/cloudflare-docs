@@ -12,10 +12,10 @@ model:
     - "mistral"
     - "text-generation"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ"
 task_type: "text-generation"
 model_display_name: "mistral-7b-instruct-v0.1-awq"
 layout: "model"

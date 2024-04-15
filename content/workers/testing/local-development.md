@@ -28,22 +28,30 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more. 
+`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
 
 Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data. Wrangler will automatically create local versions of bindings found in `wrangler.toml`. These will not have data in them initially, so you will need to add data manually.
 
-### Supported resource bindings in local development
+### Supported resource bindings in different environments
 
-| Product                                   | Supported |
-| ----------------------------------------- | --------- |
-| R2                                        | ✅        |
-| KV                                        | ✅        |
-| D1                                        | ✅        |
-| Durable Objects                           | ✅        |
-| Queues                                    | ✅        |
-| Service Bindings (multiple workers)       | ✅        |
-| AI                                        | ✅[^1]    |
-| Hyperdrive                                | ✅        |
+| Product                                   | Local Dev Supported | Remote Dev Supported |
+| ----------------------------------------- | ------------------- | -------------------- |
+| AI                                        | ✅[^1]              | ✅                   |
+| Analytics Engine                          | ❌                  | ✅                   |
+| Browser Rendering                         | ❌                  | ✅                   |
+| D1                                        | ✅                  | ✅                   |
+| Durable Objects                           | ✅                  | ✅                   |
+| Email Bindings                            | ❌                  | ✅                   |
+| Hyperdrive                                | ✅                  | ✅                   |
+| KV                                        | ✅                  | ✅                   |
+| mTLS                                      | ❌                  | ✅                   |
+| Queues                                    | ✅                  | ❌                   |
+| R2                                        | ✅                  | ✅                   |
+| Rate Limiting                             | ✅                  | ✅                   |
+| Service Bindings (multiple workers)       | ✅                  | ✅                   |
+| Vectorize                                 | ❌                  | ✅                   |
+
+With any bindings that are not supported locally, you will need to use the `--remote` command in wrangler, such as `wrangler dev --remote`.
 
 [^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
 

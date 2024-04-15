@@ -11,10 +11,10 @@ model:
   tags:
     - "text-generation"
   properties:
-    - property_id: "info"
-      value: "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0"
     - property_id: "beta"
       value: "true"
+    - property_id: "info"
+      value: "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 task_type: "text-generation"
 model_display_name: "tinyllama-1.1b-chat-v1.0"
 layout: "model"

@@ -1,10 +1,10 @@
 ---
-title: Batching and Retries
+title: Batching, Retries and Delays
 pcx_content_type: concept
 weight: 4
 ---
 
-# Batching and Retries
+# Batching, Retries and Delays
 
 ## Batching
 
@@ -42,7 +42,7 @@ The following batch-level settings can be configured to adjust how Queues delive
 
 ## Explicit acknowledgement and retries
 
-You can acknowledge individual messages with a batch by explicitly acknowledging each message as it is processed. Messages that are explicitly acknowledged will not be re-delivered, even if your queue consumer fails on a subsequent message and/or fails to return successfully when processing a batch.
+You can acknowledge individual messages within a batch by explicitly acknowledging each message as it is processed. Messages that are explicitly acknowledged will not be re-delivered, even if your queue consumer fails on a subsequent message and/or fails to return successfully when processing a batch.
 
 * Each message can be acknowledged as you process it within a batch, and avoids the entire batch from being re-delivered if your consumer throws an error during batch processing.
 * Acknowledging individual messages is useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent (state changing) actions on individual messages.
@@ -183,7 +183,9 @@ export default {
 };
 ```
 
-You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers:
+You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers.
+
+Delays can be configured via the `wrangler` CLI:
 
 ```sh
 # Push-based consumers
@@ -195,7 +197,58 @@ $ npx wrangler@latest queues consumer worker add $QUEUE_NAME $WORKER_SCRIPT_NAME
 $ npx wrangler@latest queues consumer http add $QUEUE_NAME --retry-delay-secs=60
 ```
 
+Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
+
+```toml
+---
+header: wrangler.toml
+---
+[[queues.producers]]
+  binding = "<BINDING_NAME>"
+  queue = "<QUEUE_NAME>"
+  delivery_delay = 60 # delay every message delivery by 1 minute
+
+[[queues.consumers]]
+  queue = "my-queue"
+  retry_delay = 300 # delay any retried message by 5 minutes before re-attempting delivery
+```
+
+If you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
+
 Refer to the [Queues REST API documentation](/api/operations/queue-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
+
+## Apply a backoff algorithm
+
+You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message.
+
+Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made.
+
+For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you: 
+
+```ts
+const calculateExponentialBackoff = (attempts: number, baseDelaySeconds: number) => { return baseDelaySeconds**attempts }
+```
+
+In your consumer, you then pass the value of `msg.attempts` and your desired delay factor as the argument to `delaySeconds` when calling `retry()` on an individual message:
+
+```ts
+---
+header: index.ts
+---
+
+const BASE_DELAY_SECONDS = 30;
+
+export default {
+  async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
+    for (const msg of batch.messages) {
+      // Mark for retry and delay a singular message
+      // by 3600 seconds (1 hour)
+      msg.retry({delaySeconds: calculateExponentialBackoff(msg.attempts, BASE_DELAY_SECONDS)})
+
+    }
+  },
+};
+```
 
 ## Related
 

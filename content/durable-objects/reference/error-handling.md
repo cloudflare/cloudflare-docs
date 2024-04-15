@@ -1,6 +1,7 @@
 ---
 title: Error handling
 pcx_content_type: concept
+weight: 4
 ---
 
 # Error handling
@@ -19,7 +20,7 @@ Refer to [Troubleshooting](/durable-objects/reference/troubleshooting/) to revie
 
 ## Understanding stubs
 
-A Durable Object stub is a client Object used to send requests to a remote Durable Object. To learn more about how to make requests to a Durable Object, refer to [Create Durable Objects stubs](/durable-objects/configuration/create-durable-object-stubs/) and [Access a Durable Objects from a Worker](/durable-objects/configuration/access-durable-object-from-a-worker/).
+A Durable Object stub is a client Object used to send requests to a remote Durable Object. To learn more about how to make requests to a Durable Object, refer to [Create Durable Objects stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) and [Access a Durable Objects from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/).
 
 ## Example
 

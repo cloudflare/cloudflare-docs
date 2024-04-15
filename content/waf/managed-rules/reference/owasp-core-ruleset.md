@@ -10,17 +10,72 @@ The Cloudflare OWASP Core Ruleset is Cloudflare's implementation of the [OWASP M
 
 The Cloudflare OWASP Core Ruleset is designed to work as a single entity to calculate a threat score and execute an action based on that score. When a rule in the ruleset matches a request, the threat score increases according to the rule score. If the final threat score is greater than the configured score threshold, Cloudflare executes the action configured in the last rule of the ruleset.
 
-Configuring a *Low* threshold means having a high threshold value (60 or higher). This means that, when using a *Low* threshold, more rules have to match the current request for the managed ruleset to perform the configured action (the request threat score is the sum of the individual scores of rules that match).
+## Concepts
 
-Each rule in the managed ruleset is associated with a certain paranoia level (PL). Paranoia levels vary from PL1 to PL4. Higher paranoia levels provide increased protection, but can cause more legitimate traffic to get blocked due to false positives. If you use the highest paranoia level (PL4) you will probably need to disable some of its rules for applications that need to receive complex input patterns.
+### Paranoia level
+
+The paranoia level (PL) classifies OWASP rules according to their agressiveness. Paranoia levels vary from PL1 to PL4, where PL4 is the most strict level.
+
+Each rule in the OWASP managed ruleset is associated with a paranoia level. Rules associated with higher paranoia levels are considered more agressive and provide increased protection. However, they might cause more legitimate traffic to get blocked due to false positives.
+
+When you configure the paranoia level of the OWASP ruleset you are enabling all the rules belonging to all paranoia levels up to the level you select. For example, if you configure the ruleset paranoia level to PL3, you are enabling rules belonging to paranoia levels PL1, PL2, and PL3.
+
+When you set the ruleset paranoia level, the WAF enables the corresponding rules in bulk. You then can disable specific rules individually or by tag, if needed. If you use the highest paranoia level (PL4) you will probably need to disable some of its rules for applications that need to receive complex input patterns.
+
+### Request threat score
+
+Each OWASP rule that matches the current request has an associated score. The request threat score is the sum of the individual scores of all OWASP rules that matched the request.
+
+### Score threshold
+
+The score threshold (or anomaly threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for the WAF to apply the configured OWASP ruleset action.
+
+Each threshold (_Low_, _Medium_, and _High_) has an associated value (_60_, _40_, and _25_, respectively). Configuring a _Low_ threshold means that more rules will have to match the current request for the WAF to apply the configured ruleset action.
+
+## Example
+
+The following example calculates the OWASP request threat score for an incoming request. The OWASP managed ruleset configuration is the following:
+
+* OWASP Anomaly Score Threshold: _High - 25 and higher_
+* OWASP Paranoia Level: _PL3_
+* OWASP Action: _Managed Challenge_
+
+This table shows the progress of the OWASP ruleset evaluation:
+
+Rule ID       | Paranoia level | Rule matched?   | Rule score | Cumulative<br>threat score
+--------------|----------------|-----------------|-----------:|-----------------------:
+–             | –              | –               | –          | 0
+`...1813a269` | PL3            | Yes             | +5         | 5
+`...ccc02be6` | PL3            | No              | –          | 5
+`...96bfe867` | PL2            | Yes             | +5         | 10
+`...48b74690` | PL1            | Yes             | +5         | 15
+`...3297003f` | PL2            | Yes             | +3         | 18
+`...317f28e1` | PL1            | No              | –          | 18
+`...682bb405` | PL2            | Yes             | +5         | 23
+`...56bb8946` | PL2            | No              | –          | 23
+`...e5f94216` | PL3            | Yes             | +3         | 26
+(...)         | (...)          | (...)           | (...)      | (...)
+`...f3b37cb1` | PL4            | (not evaluated) | –          | 26
+
+Final request threat score: `26`
+
+Since `26` >= `25` — that is, the threat score is greater than the configured score threshold — the WAF will apply the configured action (_Managed Challenge_). If you had configured a score threshold of _Medium - 40 and higher_, the WAF would not apply the action, since the request threat score would be lower than the score threshold (`26` < `40`).
+
+The [**Activity log** in Security Events](/waf/analytics/security-events/paid-plans/#activity-log) would display the following details for the example incoming request handled by the OWASP Core Ruleset:
+
+![Event log for example incoming request mitigated by the WAF's OWASP Core Ruleset](/images/waf/owasp-example-event-log.png)
+
+In the activity log, the rule associated with requests mitigated by the Cloudflare OWASP Core Ruleset is the last rule in this managed ruleset: `949110: Inbound Anomaly Score Exceeded`, with rule ID `6179ae15870a4bb7b2d480d4843b323c`. To get the scores of individual rules contributing to the final request threat score, expand **Additional logs** in the event details.
+
+---
 
 ## Configure in the dashboard
 
 You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
 
-* **Set the paranoia level.** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
-* **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
-* **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
+* **Set the [paranoia level](#paranoia-level).** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
+* **Set the [score threshold](#score-threshold).** The available thresholds are: *Low - 60 and higher*, *Medium - 40 and higher* (default), or *High - 25 and higher*.
+* **Set the [action](/ruleset-engine/rules-language/actions/) to perform.** The action is executed when the calculated request threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
 * **Disable specific rules or rules with specific tags.**
 * **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
 * **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
@@ -33,15 +88,24 @@ To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a r
 
 To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 
-* [Set the paranoia level](#setting-the-paranoia-level).
-* [Configure the score threshold](#configuring-the-score-threshold-and-the-action).
-* [Specify the action to perform](#configuring-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
+* [Set the paranoia level](#set-the-paranoia-level).
+* [Configure the score threshold](#configure-the-score-threshold-and-the-action).
+* [Specify the action to perform](#configure-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
 
 You can also disable specific rules in the managed ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
-### Setting the paranoia level
+### Set the paranoia level
 
-To enable all the rules up to a specific paranoia level, create tag overrides that disable all the rules associated with higher paranoia levels. For example, to enable all the rules associated with Paranoia Level 2 (PL2), disable the rules associated with tags `paranoia-level-3` and `paranoia-level-4`. All rules associated with paranoia levels up to the desired paranoia level will be enabled (in this example, all the rules associated with PL1 and PL2).
+To enable all the rules up to a specific [paranoia level](#paranoia-level), create [tag overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/#working-with-overrides) that disable all the rules associated with higher paranoia levels.
+
+The tags associated with the different paranoia levels are the following:
+
+* `paranoia-level-1`
+* `paranoia-level-2`
+* `paranoia-level-3`
+* `paranoia-level-4`
+
+For example, to enable all the rules associated with Paranoia Level 2 (PL2), disable the rules associated with tags `paranoia-level-3` and `paranoia-level-4`. All rules associated with paranoia levels up to the desired paranoia level will be enabled (in this example, all the rules associated with PL1 and PL2).
 
 #### Example
 
@@ -178,11 +242,11 @@ curl --request PATCH \
 
 For more information on creating overrides, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
-### Configuring the score threshold and the action
+### Configure the score threshold and the action
 
-To define the score threshold value, or to specify the action to perform when the threat score is greater than the threshold, create a rule override for the last rule in the managed ruleset that:
+To define the [score threshold](#score-threshold), or to specify the [action](/ruleset-engine/rules-language/actions/) to perform when the threat score is greater than the threshold, create a [rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/#working-with-overrides) for the last rule in the managed ruleset that:
 
-* Specifies the action to take in the `action` property.
+* Specifies the action to take in the `action` property. The available actions are: `block` (default), `managed_challenge`, `js_challenge`, `log`, and `challenge`.
 * Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.
 
 #### Example

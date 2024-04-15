@@ -1,6 +1,15 @@
 
 ## Responses
 
+{{- $loraFlag := false }}
+{{- range .Params.model.properties }}
+{{- if and (eq .property_id "lora") (eq .value "true") }}
+{{- $loraFlag = true }}
+{{- end }}
+{{- end }}
+
+{{ if not $loraFlag }}
+
 ### Using streaming
 
 The recommended method to handle text generation responses is streaming.
@@ -14,8 +23,8 @@ To enable, set the `stream` parameter to true.
 Using the Workers API:
 
 ```javascript
-const stream = await ai.run('@cf/meta/llama-2-7b-chat-int8', {
-  stream: true
+const stream = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+  stream: true,
   messages,
 });
 
@@ -74,16 +83,17 @@ source.onmessage = (event) => {
   }
   const data = JSON.parse(event.data);
   el.innerHTML += data.response;
-}
+};
 ```
 
 ### Non-streaming response
 
 Non-streaming responses may be helpful in some contexts, and they are possible; however, be aware that we limit the maximum number of output sequence tokens to avoid timeouts. Whenever possible, use streaming.
 
+{{ end }}
+
 ```json
 {
-  "response":
-    "The origin of the phrase \"Hello, World\" is not well-documented, but it is believed to have originated in the early days of computing. In the 1970s, when personal computers were first becoming popular, many programming languages, including C, had a simple \"Hello, World\" program that was used to demonstrate the basics of programming.\nThe idea behind the program was to print the words \"Hello, World\" on the screen, and it was often used as a first program for beginners to learn the basics of programming. Over time, the phrase \"Hello, World\" became a common greeting among programmers and computer enthusiasts, and it is now widely recognized as a symbol of the computing industry.\nIt's worth noting that the phrase \"Hello, World\" is not a specific phrase that was coined by any one person or organization, but rather a catchphrase that evolved over time as a result of its widespread use in the computing industry."
+  "response": "The origin of the phrase \"Hello, World\" is not well-documented, but it is believed to have originated in the early days of computing. In the 1970s, when personal computers were first becoming popular, many programming languages, including C, had a simple \"Hello, World\" program that was used to demonstrate the basics of programming.\nThe idea behind the program was to print the words \"Hello, World\" on the screen, and it was often used as a first program for beginners to learn the basics of programming. Over time, the phrase \"Hello, World\" became a common greeting among programmers and computer enthusiasts, and it is now widely recognized as a symbol of the computing industry.\nIt's worth noting that the phrase \"Hello, World\" is not a specific phrase that was coined by any one person or organization, but rather a catchphrase that evolved over time as a result of its widespread use in the computing industry."
 }
 ```

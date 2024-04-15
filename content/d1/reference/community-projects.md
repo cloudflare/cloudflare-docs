@@ -1,7 +1,7 @@
 ---
-title: Community projects 
+title: Community projects
 pcx_content_type: concept
-weight: 7
+weight: 3
 ---
 
 # Community projects
@@ -22,6 +22,14 @@ Two community tools are available for creating backups/exports of D1 databases a
 
 * [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](https://developers.cloudflare.com/api/operations/cloudflare-d1-query-database) (slower but simpler.)
 * [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](https://developers.cloudflare.com/workers/configuration/bindings/) (faster but more complex.)
+
+### Prisma ORM
+
+[Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
+
+* [Tutorial](/d1/tutorials/d1-and-prisma-orm/)
+* [Docs](https://www.prisma.io/docs/orm/prisma-client/deployment/edge/deploy-to-cloudflare#d1)
+
 
 ### D1 adapter for Kysely ORM
 
@@ -55,11 +63,11 @@ Object Relational Mapping (ORM) is a technique to query and manipulate data by u
 ### workers-qb
 
 `workers-qb` is a zero-dependency query builder that provides a simple standardized interface while keeping the benefits and speed of using raw queries over a traditional ORM. While not intended to provide ORM-like functionality, `workers-qb` makes it easier to interact with your database from code for direct SQL access.
- 
+
 * [GitHub](https://github.com/G4brym/workers-qb)
 * [Documentation](https://workers-qb.massadas.com/)
 
-### d1-console 
+### d1-console
 
 Instead of running the `wrangler d1 execute` command in your terminal every time you want to interact with your database, you can interact with D1 from within the `d1-console`. Created by a Discord Community Champion, this gives the benefit of executing multi-line queries, obtaining command history, and viewing a cleanly formatted table output.
 
@@ -79,6 +87,16 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 * [GitHub](https://github.com/lauragift21/staff-directory)
 * [D1 functionality](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts)
 
+### NuxtHub
+
+`NuxtHub` is a Nuxt module that brings Cloudflare Worker bindings into your Nuxt application with no configuration. It leverages the [Wrangler Platform Proxy](/workers/wrangler/api/#getplatformproxy) in development and direct binding in production to interact with [D1](/d1/), [KV](/kv/) and [R2](/r2/) with server composables (`hubDatabase()`, `hubKV()` and `hubBlob()`).
+
+`NuxtHub` also provides a way to use your remote D1 database in development using the `npx nuxt dev --remote` command.
+
+* [GitHub](https://github.com/nuxt-hub/core)
+* [Documentation](https://hub.nuxt.com)
+* [Example](https://github.com/Atinux/nuxt-todos-edge)
+
 ## Feedback
 
-To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 
+To report a bug or file feature requests for these community projects, create an issue directly on the project's repository.

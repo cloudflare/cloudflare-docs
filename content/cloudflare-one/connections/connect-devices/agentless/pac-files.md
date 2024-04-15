@@ -44,7 +44,7 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 
    {{<Aside type="note">}}
 
-   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/109` for IPv6 networks.
+   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
 
    {{</Aside>}}
 
@@ -72,11 +72,11 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example:
 
    - **IPv4**: `192.0.2.0/8`
-   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
+   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/32`
 
    {{<Aside type="note">}}
 
-   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/109` for IPv6 networks.
+   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
 
    {{</Aside>}}
 
@@ -94,7 +94,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
        "created_at": "2022-03-02T10:57:18.094789Z",
        "updated_at": "2022-03-02T10:57:18.094789Z",
        "ips": [
-       "90.90.241.229/32"
+       "90.90.241.229/8"
        ],
        "subdomain": "3ele0ss56t"
    },
@@ -130,7 +130,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
    ```
 
-If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that `curl` is not using IPv6 (use the `-4` option to force IPv4).
 
 ## 3. Create a PAC file
 
