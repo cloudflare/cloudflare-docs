@@ -173,12 +173,6 @@ curl --request POST \
 
 Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
 
-The following parameters are optional:
-- [`nat`](/magic-wan/configuration/connector/network-options/nat-subnet/)
-- [`routed_subnets`](/magic-wan/configuration/connector/network-options/routed-subnets/)
-- [`dhcp_server`](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/)
-- [`dhcp_relay`](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/)
-
 Example:
 
 ```bash
@@ -188,40 +182,11 @@ curl --request POST \
   --header 'X-Auth-Email: <EMAIL>' \
   --header 'X-Auth-Key: <API_KEY>' \
   --data '{
-  "lan": {
-    "description": "string",
-    "ha_link": true,
-    "nat": {
-      "static_prefix": "192.0.2.0/24"
-    },
+    "lan": {
+    "description": "lan-teste1",
     "physport": 1,
-    "routed_subnets": [
-      {
-        "nat": {
-          "static_prefix": "192.0.2.0/24"
-        },
-        "next_hop": "192.0.2.1",
-        "prefix": "192.0.2.0/24"
-      }
-    ],
     "static_addressing": {
-      "address": "192.0.2.0/24",
-      "dhcp_relay": {
-        "server_addresses": [
-          "192.0.2.1"
-        ]
-      },
-      "dhcp_server": {
-        "dhcp_pool_end": "192.0.2.1",
-        "dhcp_pool_start": "192.0.2.1",
-        "dns_server": "192.0.2.1",
-        "reservations": {
-          "00:11:22:33:44:55": "192.0.2.100",
-          "AA:BB:CC:DD:EE:FF": "192.168.1.101"
-        }
-      },
-      "secondary_address": "192.0.2.0/24",
-      "virtual_address": "192.0.2.0/24"
+      "address": "172.16.14.0/24"
     },
     "vlan_tag": 0
   }
