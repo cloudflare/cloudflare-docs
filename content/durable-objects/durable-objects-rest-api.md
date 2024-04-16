@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 weight: 10
-title: HTTP API Reference
+title: Durable Objects REST API
 external_link: /api/operations/durable-objects-namespace-list-namespaces
 _build:
   publishResources: false

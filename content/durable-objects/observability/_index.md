@@ -1,9 +1,9 @@
 ---
-title: Best practices
 pcx_content_type: navigation
-weight: 3
+title: Observability
+weight: 5
 ---
 
-# Best Practices
+# Observability
 
 {{<directory-listing>}}
