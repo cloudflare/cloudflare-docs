@@ -22,8 +22,6 @@ To minimize impact, besides communicating the changes and providing recommendati
 
 The expiration of the cross-signed chain will primarily affect older devices (e.g. Android 7.0 and earlier) and systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their [trust store](/ssl/concepts/#trust-store).
 
-This change only affects RSA certificates. ECDSA certificates should maintain their current level of compatibility.
-
 ## Important dates
 
 - **June 2024**: Cloudflare will start automatically changing the CA for managed certificates where you had not opted to use Let's Encrypt.
