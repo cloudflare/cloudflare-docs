@@ -6,7 +6,7 @@ weight: 1
 
 # Access Durable Objects from a Worker
 
-To access a Durable Object from a Worker, you must first create a [Durable Object binding](/workers/configuration/bindings/#durable-object-bindings) in your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular class and controls access to instances of that class.
+To access a Durable Object from a Worker, you must first create a [Durable Object binding](/workers/runtime-apis/bindings/) in your Worker project's [`wrangler.toml`](/workers/wrangler/configuration/#durable-objects) file. The binding is configured to use a particular class and controls access to instances of that class.
 
 Durable Object bindings allow for communication between a Worker and a Durable Object.
 
@@ -22,7 +22,7 @@ To create a Durable Object ID, you can choose to:
 - Derive IDs from names (these names are string data types).
 - Parse previously-created IDs from strings.
 
-All three methods will allow you to create Durable Object IDs.  
+All three methods will allow you to create Durable Object IDs.
 
 ### Generate IDs randomly
 
@@ -51,7 +51,7 @@ When you construct a new unique ID, the system knows that the same ID will not b
 
 ### Derive IDs from names
 
-The following code allows you to use a name (which is a `String`) to extract the ID of your Durable Object. 
+The following code allows you to use a name (which is a `String`) to extract the ID of your Durable Object.
 
 ```js
 let id = OBJECT_NAMESPACE.idFromName(name);
@@ -95,7 +95,7 @@ This method parses an ID that was previously stringified. This is useful with ID
 
 This method will throw an exception if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw an exception if the ID was originally created for a different Durable Object namespace.
 
-## 2. Construct the stub using the ID 
+## 2. Construct the stub using the ID
 
 Construct the stub for the Durable Object using the ID. A stub is a client Durable Object used to send messages to the Durable Object.
 

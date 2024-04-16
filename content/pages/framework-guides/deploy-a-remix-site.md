@@ -22,9 +22,9 @@ $ npm create cloudflare@latest my-remix-app -- --framework=remix
 `create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
 
 {{<Aside type="warning" header="Before you deploy">}}
-Your Remix Project will generate a `functions/[[path]].js` file the first time you run `remix dev` or `remix build`. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/functions/routing/#dynamic-routes) to learn more.
+Your Remix project will include a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/functions/routing/#dynamic-routes) to learn more.
 
-The `functions/[[path]].js` will not function as expected if you attempt to deploy your site before running `remix dev` or `remix build`.
+The `functions/[[path]].ts` will not function as expected if you attempt to deploy your site before running `remix vite:build`.
 {{</Aside>}}
 
 After setting up your project, change the directory and render your project by running the following command:
@@ -62,79 +62,106 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
+### Deploy via the Wrangler CLI
+
+If you use [`create-cloudflare`(C3)](https://www.npmjs.com/package/create-cloudflare) to create your new Remix project, C3 will automatically scaffold your project with [`wrangler`](/workers/wrangler/). To deploy your project, run the following command:
+
+```sh
+$ npm run deploy
+```
+
 ## Create and add a binding to your Remix application
 
 To add a binding to your Remix application, refer to [Bindings](/pages/functions/bindings/).
 A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
-### Binding resources to your Remix application
+### Binding resources in local development
 
-To access bound resources within a Remix application, you need to configure a [Remix `loader` function](https://remix.run/docs/en/main/route/loader).
+Remix uses Wrangler's [`getPlatformProxy`](/workers/wrangler/api/#getplatformproxy) to simulate the Cloudflare environment locally. You configure `getPlatformProxy` in your project's `vite.config.ts` file via [`cloudflareDevProxyVitePlugin`](https://remix.run/docs/en/main/future/vite#cloudflare-proxy).
 
-The following example uses a KV namespace called `PRODUCTS_KV` [bound to a Pages Function](/pages/functions/bindings/#kv-namespaces). The `PRODUCTS_KV` binding is accessible on the `context` parameter passed to a `LoaderFunction` as `context.env.<BINDING_NAME>`.
+To bind resources in local development, you need to configure the bindings in the `wrangler.toml` file. Refer to [Bindings](/workers/wrangler/configuration/#bindings) to learn more.
 
-The following example shows a Remix `LoaderFunction` accessing a KV namespace in Remix:
+Once you have configured the bindings in the `wrangler.toml` file, the proxies are then available within `context.cloudflare` in your `loader` or `action` functions:
+
+```typescript
+export const loader = ({ context }: LoaderFunctionArgs) => {
+  const { env, cf, ctx } = context.cloudflare;
+  env.MY_BINDING // Access bound resources here
+  // ... more loader code here...
+};
+```
+
+{{<Aside header="Correcting the env type">}}
+You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in `wrangler.toml`.
+
+To fix this, run `npm run typegen` to generate the missing types. This will update the `Env` interface defined in `worker-configuration.d.ts`.
+After running the command, you can access the bindings in your `loader` or `action` using `context.cloudflare.env` as shown above.
+{{</Aside>}}
+
+
+### Binding resources in production
+
+To bind resources in production, you need to configure the bindings in the Cloudflare dashboard. Refer to the [Bindings](/pages/functions/bindings/) documentation to learn more.
+
+Once you have configured the bindings in the Cloudflare dashboard, the proxies are then available within `context.cloudflare.env` in your `loader` or `action` functions as shown [above](#binding-resources-in-local-development).
+
+## Example: Access your D1 database in a Remix application
+
+As an example, you will bind and query a D1 database in a Remix application.
+
+1. Create a D1 database. Refer to the [D1 documentation](/d1/) to learn more.
+2. Configure bindings for your D1 database in the `wrangler.toml` file:
+
+```toml
+[[ d1_databases ]]
+binding = "DB"
+database_name = "<YOUR_DATABASE_NAME>"
+database_id = "<YOUR_DATABASE_ID>"
+```
+3. Run `npm run typegen` to generate TypeScript types for your bindings.
+
+```sh
+$ npm run typegen
+> typegen
+> wrangler types
+
+ ⛅️ wrangler 3.48.0
+-------------------
+interface Env {
+	DB: D1Database;
+}
+```
+
+4. Access the D1 database in your `loader` function:
 
 ```typescript
 ---
 filename: app/routes/products/$productId.tsx
-highlight: 9-13,17,24
 ---
-import type { LoaderArgs } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-// Define the bindings associated with our Function
-// so that they are typed
-interface Env {
-  PRODUCTS_KV: KVNamespace;
-}
-
-export const loader: LoaderFunction = async ({
-  context,
-  params,
-}) => {
-  // Bindings are accessible on context.env
-  let env = context.env as Env
-  return json(
-    await env.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
-      type: "json",
-    })
-  );
+export const loader = ({ context, params }: LoaderFunctionArgs) => {
+  const { env, cf, ctx } = context.cloudflare;
+  let { results } = await env.DB.prepare(
+    "SELECT * FROM products where id = ?1"
+  ).bind(params.productId).all();
+  return json(results);
 };
 
-export default function Product() {
-  const product = useLoaderData<typeof loader>();
-
-  if (!product) throw new Response(null, { status: 404 })
-
+export default function Index() {
+  const results = useLoaderData<typeof loader>();
   return (
     <div>
-      <p>Product</p>
-      {product.name}
-      <p>Products</p>
-      {/* ... */}
+      <h1>Welcome to Remix</h1>
+      <div>
+        A value from D1:
+        <pre>{JSON.stringify(results)}</pre>
+      </div>
     </div>
   );
 }
 ```
-
-Refer to the [Remix documentation](https://remix.run/docs/en/main/guides/data-loading) to learn more about data loading within a Remix application.
-
-#### Durable Objects
-
-Accessing Durable Objects bindings from within Cloudflare Pages requires a separate Worker function to define the [Durable Objects class](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
-
-```ts
-export const loader = async ({ context, params }: LoaderArgs) => {
-  const id = context.PRODUCTS_DO.idFromName(params.productId);
-  const stub = context.PRODUCTS_DO.get(id);
-  const response = await stub.fetch(request);
-  const data = (await response.json()) as { name: string };
-  return json(data);
-};
-```
-
-Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/durable-objects/).
 
 {{<render file="/_framework-guides/_learn-more.md" withParameters="Remix">}}

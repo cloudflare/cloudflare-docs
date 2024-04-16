@@ -12,7 +12,7 @@ layout: example
 
 ## Redirect all requests to one URL
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 {{<render file="_redirect-example-js.md">}}
@@ -31,11 +31,23 @@ export default {
 ```
 
 {{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response
+
+def on_fetch(request):
+    destinationURL = "https://example.com"
+    statusCode = 301
+    return Response.redirect(destinationURL, statusCode)
+```
+
+{{</tab>}}
 {{</tabs>}}
 
 ## Redirect requests from one domain to another
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -73,6 +85,24 @@ export default {
     return Response.redirect(destinationURL, statusCode);
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, URL
+
+async def on_fetch(request):
+    base = "https://example.com"
+    statusCode = 301
+
+    url = URL.new(request.url)
+
+    destinationURL = f'{base}{url.pathname}{url.search}'
+    print(destinationURL)
+
+    return Response.redirect(destinationURL, statusCode)
 ```
 
 {{</tab>}}

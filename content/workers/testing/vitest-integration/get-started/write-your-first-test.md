@@ -38,7 +38,7 @@ Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vites
 ## Define Vitest configuration
 
 If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
-You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/configuration/bindings/).
+You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/runtime-apis/bindings/).
 
 ```js
 ---

@@ -70,7 +70,7 @@ The command above:
 1. Creates a new directory called `prisma` that contains your [Prisma schema](https://www.prisma.io/docs/orm/prisma-schema/overview) file.
 2. Creates a `.env` file used to configure environment variables that will be read by the Prisma CLI.
 
-In this tutorial, you will not need the `.env` file since the connection between Prisma ORM and D1 will happen through a [binding](/workers/configuration/bindings/). The next steps will instruct you through setting up this binding.
+In this tutorial, you will not need the `.env` file since the connection between Prisma ORM and D1 will happen through a [binding](/workers/runtime-apis/bindings/). The next steps will instruct you through setting up this binding.
 
 Since you will use the [driver adapter](https://www.prisma.io/docs/orm/overview/databases/database-drivers#driver-adapters) feature which is currently in Preview, you need to explicitly enable it via  the `previewFeatures` field on the `generator` block.
 

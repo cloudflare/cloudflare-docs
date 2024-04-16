@@ -23,9 +23,9 @@ In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch)
 
 {{</Aside>}}
 
-When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
+When `Enabled`, end users can turn off the WARP client using an override code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
 
-You can also set a **Timeout** to define how long the user is allowed to toggle on or off the WARP switch.
+You can set a **Timeout** to define how long a user can toggle on or off the WARP switch. The timer starts when the user first enters their code into the WARP client. The code remains valid and can be reused anytime during this time period. For example, if **Timeout** is 24 hours, the user can re-enter the code at 23:59:00 and continue to turn off WARP until 47:59:00 (up to 48 hours total).
 
 #### Retrieve the override code
 
@@ -37,16 +37,18 @@ To retrieve the one-time code for a user:
 4. Scroll down to **User details** and copy the 7-digit **Override code**.
 5. Share this code with the end user for them to enter on their device.
 
+The user will have an unlimited amount of time to activate their code.
+
 #### Enter the override code
 
 To turn off the WARP client on a user device:
 
 1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
 2. Select **Enter code**.
-3. Enter the override code in the pop-up window.
+3. Enter the override code. The WARP client will display a pop-up window showing when the override expires.
 4. Turn off the WARP switch.
 
-The WARP client will now show **Disabled by Admin Override** and the time when the override code expires. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until Admin override times out.
+The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until the override expires.
 
 ### Install CA to system certificate store
 

@@ -100,11 +100,11 @@ binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "embeddings-index"
 ```
 
-This will create a new vector database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+This will create a new vector database, and output the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
 
 To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -128,13 +128,7 @@ Specifically:
 
 Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
-From within the `embeddings-tutorial` directory, install the `Workers AI` package:
-
-```sh
-$ npm i @cloudflare/ai
-```
-
-Open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
+From within the `embeddings-tutorial` directory, open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
 
 ```toml
 ---
@@ -161,7 +155,6 @@ Clear the content of `index.ts`. Paste the following code snippet into your `ind
 ---
 filename: src/index.ts
 ---
-import { Ai } from '@cloudflare/ai';
 export interface Env {
 	VECTORIZE_INDEX: VectorizeIndex;
 	AI: any;
@@ -173,7 +166,6 @@ interface EmbeddingResponse {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const ai = new Ai(env.AI);
 		let path = new URL(request.url).pathname;
 		if (path.startsWith('/favicon')) {
 			return new Response('', { status: 404 });
@@ -185,7 +177,7 @@ export default {
 			// In a real-world application, you could read content from R2 or
 			// a SQL database (like D1) and pass it to Workers AI
 			const stories = ['This is a story about an orange cloud', 'This is a story about a llama', 'This is a story about a hugging emoji'];
-			const modelResp: EmbeddingResponse = await ai.run('@cf/baai/bge-base-en-v1.5', {
+			const modelResp: EmbeddingResponse = await env.AI.run('@cf/baai/bge-base-en-v1.5', {
 				text: stories,
 			});
 
@@ -206,7 +198,7 @@ export default {
 
 		// Your query: expect this to match vector ID. 1 in this example
 		let userQuery = 'orange cloud';
-		const queryVector: EmbeddingResponse = await ai.run('@cf/baai/bge-base-en-v1.5', {
+		const queryVector: EmbeddingResponse = await env.AI.run('@cf/baai/bge-base-en-v1.5', {
 			text: [userQuery],
 		});
 

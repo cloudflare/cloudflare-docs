@@ -16,7 +16,7 @@ To configure Customer Metadata Boundary in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
-3. In **Customer Metadata Boundary**, select the region you want to use.
+3. In **Customer Metadata Boundary**, select the region you want to use. You have the option to select `EU` or `US`. If you want to select both regions, select `Global` instead.
 
 ## Configure Customer Metadata Boundary via API
 

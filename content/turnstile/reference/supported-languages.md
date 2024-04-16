@@ -1,7 +1,7 @@
 ---
 title: Supported languages
 pcx_content_type: reference
-weight: 9
+weight: 2
 ---
 
 # Supported languages

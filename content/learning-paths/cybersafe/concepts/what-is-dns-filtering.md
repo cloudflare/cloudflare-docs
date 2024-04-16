@@ -46,6 +46,7 @@ A URL assumes the form: `protocol://subdomain.domain.tld:port/path?query`
 DNS filtering only applies to the hostname — `subdomain.domain.tld`. You cannot block specific protocols, ports, paths, or query types. Additionally, users can bypass DNS policies if they already know the IP address of the website, or by connecting through a Virtual Private Network (VPN) or proxy server.
 
 Secure Web Gateways (SWGs) offer a greater set of capabilities, including:
+
 - [URL filtering](https://www.cloudflare.com/learning/access-management/what-is-url-filtering/) to block specific paths and queries
 - L4 firewalls to block ports and protocols
 - Antivirus scanning
@@ -56,8 +57,8 @@ However, this can make SWGs more complex to deploy. Therefore, many organization
 
 ## Related resources
 
-- For more background information on DNS filtering, refer to our [Learning Center](
-https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/).
+- For more background information on DNS filtering, refer to our [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/).
 
 ## Next steps
+
 In the remaining modules, you will learn how to set up DNS filtering on your devices using Cloudflare Gateway.
