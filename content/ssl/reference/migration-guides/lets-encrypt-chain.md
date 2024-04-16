@@ -10,25 +10,69 @@ meta:
 
 Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust).
 
-As the IdenTrust cross-sign (DST Root CA X3) expires on **September 30, 2024**, the self-signed ISRG Root X1 will be the only chain used for RSA certificates issued through Let's Encrypt.
+As the IdenTrust cross-sign (DST Root CA X3) expires on **September 30, 2024**, the self-signed ISRG Root X1 will be the only chain used for RSA certificates issued through Let's Encrypt. Refer to [Background](#background) or our [blog](https://blog.cloudflare.com/shortening-lets-encrypt-change-of-trust-no-impact-to-cloudflare-customers) for details.
 
-This means that, if visitors to your website or application are using older devices (e.g. Android 7.0 and earlier), or if their systems rely solely on the cross-signed chain, they may see warning messages or fail to connect to your services.
+To minimize impact, besides communicating the changes and providing recommendations early, Cloudflare will proceed as follows:
+
+* Automatically switch to a different certificate authority all Cloudflare-managed certificates where you have not specifically chosen Let's Encrypt.
+* Notify you of Cloudflare-managed certificates that you specifically set to use Let's Encrypt, and whether hostnames covered by these certificates are receiving requests from the [impacted devices or systems](#impact).
+* Bundle Let’s Encrypt certificates uploaded to Cloudflare with the appropriate chains, as long as the [bundling method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) is set to compatible or modern.
+
+Refer to the sections below for more information on each of these actions and how they may reflect on the different certificate types.
+
+## Client impact
+
+The expiration of the cross-signed chain will primarily affect older devices, for example Android 7.0 and earlier. Systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their [trust store](/ssl/concepts/#trust-store), will also be affected.
 
 ## Important dates
 
-- **May 15, 2024**: Cloudflare will stop using the cross-signed chain, both in certificate issuance and in [certificate bundling](#changes-to-custom-certificates).
+- **June 2024**: Cloudflare will start automatically changing the CA for managed certificates where you had not opted to use Let's Encrypt.
+- **September 9, 2024**: Cloudflare will stop using the cross-signed chain, both in certificate issuance and in [certificate bundling](#changes-to-custom-certificates).
 - **September 30, 2024**: The cross-signed chain will expire.
 
-### Changes to custom certificates
+## How are your products affected
 
-[Custom certificates](/ssl/edge-certificates/custom-certificates/) uploaded to Cloudflare are [bundled](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) with the certificate chain that Cloudflare finds to be the most compatible and efficient.
+### Universal SSL
 
-After May 15, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain.
+[Universal](/ssl/edge-certificates/universal-ssl/) certificates will be automatically switched to a more compatible certificate authority (CA). You do not have to take any action to prepare for this change.
 
-Custom certificates uploaded before May 15 will continue to use the cross-signed chain until their expiry.
+### Advanced certificates
 
-As Cloudflare does not manage the [renewal of custom certificates](/ssl/edge-certificates/custom-certificates/renewing/), you will need to [update the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-an-existing-custom-certificate) before it expires.
-The new certificate that will be uploaded to extend the expiry will then be bundled with the new ISRG Root X1 chain.
+If you have specifically chosen Let's Encrypt to issue your [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare will check if your domain has been impacted and will reach out to you by email.
+
+The email will inform you which certificates are using Let's Encrypt as their CA and whether or not their hostnames are receiving requests from [clients impacted by the change](#client-impact).
+
+You can then [manage your advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) to use a different CA if you choose to do so.
+
+### Custom certificates
+
+#### Compatible or modern
+
+For [custom certificates](/ssl/edge-certificates/custom-certificates/) that use compatible or modern [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), and are uploaded before September 9, Cloudlfare will continue to use the cross-signed chain until their expiry.
+
+After September 9, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain.
+
+{{<Aside type="warning">}}
+As Cloudflare does not manage the [renewal of custom certificates](/ssl/edge-certificates/custom-certificates/renewing/), you will need to [update the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-an-existing-custom-certificate) before it expires. The new certificate that will be uploaded to extend the expiry will then be bundled with the new ISRG Root X1 chain.
+{{</Aside>}}
+
+#### User-defined
+
+For user-defined bundle method, Cloudflare always serve the chain that you upload.
+
+If you upload Let’s Encrypt certificates using this method, it is recommended that certificates uploaded after September 30, 2024, do not use the cross-signed chain.
+
+### Custom hostname
+
+[Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates that leave the CA choice up to Cloudflare will be automatically switched to a more compatible certificate authority.
+
+For custom hostname certificates that are specifically set to use Let's Encrypt, no change will happen automatically. Instead, Cloudflare will check the impact and reach out to you, as the SaaS provider, by email. The email will inform you which custom hostnames are receiving requests from [affected clients](#client-impact) so that you can take action as needed.
+
+## Further recommendations
+
+- **Monitor inquiries from your visitors**: Once Let's Encrypt change is rolled out, it is recommended that you monitor your support channels for any inquiries related to certificate warnings or access problems.
+
+- **Update trust store**: If you control the clients that are connecting to your website or application, it is recommended that you update their [trust store](/ssl/concepts/#trust-store) to include the self-signed ISRG Root X1 chain to prevent impact.
 
 ## Background
 
@@ -37,31 +81,6 @@ Let’s Encrypt has been issuing RSA certificates through two chains: the self-s
 As explained in the [Let's Encrypt announcement](https://letsencrypt.org/2023/07/10/cross-sign-expiration), the cross-signed chain has allowed their certificates to be widely trusted, while the self-signed chain gradually developed compatibility with various devices.
 
 As of late 2023, the number of Android devices trusting the self-signed ISRG Root X1 reached 93.9%, and Let's Encrypt has decided to drop the cross-signed chain.
-
-## Impact
-
-The expiration of the cross-signed chain will primarily affect:
-
-- older devices (e.g. Android 7.0 and earlier)
-- systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their [trust store](/ssl/concepts/#trust-store)
-
-{{<Aside type="note">}}
-This change only affects RSA certificates. ECDSA certificates should maintain their current level of compatibility.
-{{</Aside>}}
-
-## Recommendations
-
-### Monitor inquiries from your visitors
-
-Once the change is rolled out, it is recommended that you monitor your support channels for any inquiries related to certificate warnings or access problems.
-
-### Change certificate authority
-
-If visitors are interacting with your website or application via older devices, and you expect or notice their experience is impacted, you can consider using [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to choose a different certificate authority (CA), or you can [upload a certificate](/ssl/edge-certificates/custom-certificates/) from the CA of your choice.
-
-### Update trust store
-
-If you control the clients that are connecting to your website or application, it is recommended that you update their [trust store](/ssl/concepts/#trust-store) to include the self-signed ISRG Root X1 chain to prevent impact.
 
 ## Other resources
 

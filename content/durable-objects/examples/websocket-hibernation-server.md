@@ -25,27 +25,11 @@ WebSocket Hibernation is unavailable for outgoing WebSocket use cases. Hibernati
 ---
 filename: index.js
 ---
+import { DurableObject } from "cloudflare:workers";
+
 // Worker
 export default {
-  async fetch(request, env) {
-    // This example refers to the same Durable Object instance,
-    // since it hardcodes the name "foo".
-    let id = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
-    let stub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
-
-    // Forward the request to the Durable Object.
-    return await stub.fetch(request);
-  }
-};
-
-// Durable Object
-export class WebSocketHibernationServer {
-  constructor(state, env) {
-    this.state = state;
-  }
-
-  // Handle HTTP requests from clients.
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     if (request.url.endsWith("/websocket")) {
       // Expect to receive a WebSocket Upgrade request.
       // If there is one, accept the request and return a WebSocket Response.
@@ -54,55 +38,62 @@ export class WebSocketHibernationServer {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // Creates two ends of a WebSocket connection.
-      const webSocketPair = new WebSocketPair();
-      const [client, server] = Object.values(webSocketPair);
+      // This example will refer to the same Durable Object instance,
+      // since the name "foo" is hardcoded.
+      let id = env.WEBSOCKET_SERVER.idFromName("foo");
+      let stub = env.WEBSOCKET_SERVER.get(id);
 
-      // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
-      // request within the Durable Object. It has the effect of "accepting" the connection,
-      // and allowing the WebSocket to send and receive messages.
-      // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the WebSocket
-      // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
-      // the connection is open. During periods of inactivity, the Durable Object can be evicted
-      // from memory, but the WebSocket connection will remain open. If at some later point the
-      // WebSocket receives a message, the runtime will recreate the Durable Object
-      // (run the `constructor`) and deliver the message to the appropriate handler.
-      this.state.acceptWebSocket(server);
-
-      return new Response(null, {
-        status: 101,
-        webSocket: client,
-      });
-    } else if (request.url.endsWith("/getCurrentConnections")) {
-      // Retrieves all currently connected websockets accepted via `acceptWebSocket()`.
-      let numConnections = this.state.getWebSockets().length;
-      if (numConnections == 1) {
-        return new Response(`There is ${numConnections} WebSocket client connected to this Durable Object instance.`);
-      }
-      return new Response(`There are ${numConnections} WebSocket clients connected to this Durable Object instance.`);
+      return stub.fetch(request);
     }
 
-    // Unknown path, reply with usage info.
-    return new Response(`
-This Durable Object supports the following endpoints:
-  /websocket
-    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
-  /getCurrentConnections
-    - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
-`)
+    return new Response(null, {
+      status: 400,
+      statusText: 'Bad Request',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+  }
+};
+
+// Durable Object
+export class WebSocketServer extends DurableObject {
+
+  async fetch(request) {
+    // Creates two ends of a WebSocket connection.
+    const webSocketPair = new WebSocketPair();
+    const [client, server] = Object.values(webSocketPair);
+  
+    // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
+    // request within the Durable Object. It has the effect of "accepting" the connection,
+    // and allowing the WebSocket to send and receive messages.
+    // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the WebSocket
+    // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
+    // the connection is open. During periods of inactivity, the Durable Object can be evicted
+    // from memory, but the WebSocket connection will remain open. If at some later point the
+    // WebSocket receives a message, the runtime will recreate the Durable Object
+    // (run the `constructor`) and deliver the message to the appropriate handler.
+    this.ctx.acceptWebSocket(server);
+
+    return new Response(null, {
+      status: 101,
+      webSocket: client,
+    });
   }
 
   async webSocketMessage(ws, message) {
     // Upon receiving a message from the client, reply with the same message,
-    // but will prefix the message with "[Durable Object]: ".
-    ws.send(`[Durable Object]: ${message}`);
+    // but will prefix the message with "[Durable Object]: " and return the
+    // total number of connections.
+    ws.send(`[Durable Object] message: ${message}, connections: ${this.ctx.getWebSockets().length}`);
   }
 
   async webSocketClose(ws, code, reason, wasClean) {
-    // If the client closes the connection, we will close it too.
+    // If the client closes the connection, the runtime will invoke the webSocketClose() handler.
     ws.close(code, "Durable Object is closing WebSocket");
   }
 }
+
 ```
 
 {{</tab>}}
@@ -112,33 +103,15 @@ This Durable Object supports the following endpoints:
 ---
 filename: index.ts
 ---
+import { DurableObject } from "cloudflare:workers";
+
 export interface Env {
-  WEBSOCKET_HIBERNATION_SERVER: DurableObjectNamespace;
+  WEBSOCKET_SERVER: DurableObjectNamespace<WebSocketServer>;
 }
 
 // Worker
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // This example will always refer to the same Durable Object instance,
-    // since the name "foo" is hardcoded.
-    let id: DurableObjectId = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
-    let stub: DurableObjectStub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
-
-    // Forward the request to the Durable Object and wait for the Response.
-    return await stub.fetch(request);
-  }
-};
-
-// Durable Object
-export class WebSocketHibernationServer {
-  state: DurableObjectState;
-
-  constructor(state: DurableObjectState, env: Env) {
-    this.state = state;
-  }
-
-  // Handle HTTP requests from clients.
-  async fetch(request: Request): Promise<Response> {
     if (request.url.endsWith("/websocket")) {
       // Expect to receive a WebSocket Upgrade request.
       // If there is one, accept the request and return a WebSocket Response.
@@ -147,48 +120,53 @@ export class WebSocketHibernationServer {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // Creates two ends of a WebSocket connection.
-      const webSocketPair = new WebSocketPair();
-      const [client, server] = Object.values(webSocketPair);
+      // This example will refer to the same Durable Object instance,
+      // since the name "foo" is hardcoded.
+      let id = env.WEBSOCKET_SERVER.idFromName("foo");
+      let stub = env.WEBSOCKET_SERVER.get(id);
 
-      // Calling `acceptWebSocket()` tells the runtime that this WebSocket is to begin terminating
-      // request within the Durable Object. It has the effect of "accepting" the connection,
-      // and allowing the WebSocket to send and receive messages.
-      // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the WebSocket
-      // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
-      // the connection is open. During periods of inactivity, the Durable Object can be evicted
-      // from memory, but the WebSocket connection will remain open. If at some later point the
-      // WebSocket receives a message, the runtime will recreate the Durable Object
-      // (run the `constructor`) and deliver the message to the appropriate handler.
-      this.state.acceptWebSocket(server);
-
-      return new Response(null, {
-        status: 101,
-        webSocket: client,
-      });
-    } else if (request.url.endsWith("/getCurrentConnections")) {
-      // Retrieves all currently connected websockets accepted via `acceptWebSocket()`.
-      let numConnections: number = this.state.getWebSockets().length;
-      if (numConnections == 1) {
-        return new Response(`There is ${numConnections} WebSocket client connected to this Durable Object instance.`);
-      }
-      return new Response(`There are ${numConnections} WebSocket clients connected to this Durable Object instance.`);
+      return stub.fetch(request);
     }
 
-    // Unknown path, reply with usage info.
-    return new Response(`
-This Durable Object supports the following endpoints:
-  /websocket
-    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
-  /getCurrentConnections
-    - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
-`)
+    return new Response(null, {
+      status: 400,
+      statusText: 'Bad Request',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+  }
+};
+
+// Durable Object
+export class WebSocketServer extends DurableObject {
+
+  async fetch(request: Request): Promise<Response> {
+    // Creates two ends of a WebSocket connection.
+    const webSocketPair = new WebSocketPair();
+    const [client, server] = Object.values(webSocketPair);
+  
+    // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
+    // request within the Durable Object. It has the effect of "accepting" the connection,
+    // and allowing the WebSocket to send and receive messages.
+    // Unlike `ws.accept()`, `state.acceptWebSocket(ws)` informs the Workers Runtime that the WebSocket
+    // is "hibernatable", so the runtime does not need to pin this Durable Object to memory while
+    // the connection is open. During periods of inactivity, the Durable Object can be evicted
+    // from memory, but the WebSocket connection will remain open. If at some later point the
+    // WebSocket receives a message, the runtime will recreate the Durable Object
+    // (run the `constructor`) and deliver the message to the appropriate handler.
+    this.ctx.acceptWebSocket(server);
+
+    return new Response(null, {
+      status: 101,
+      webSocket: client,
+    });
   }
 
   async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
-    // Upon receiving a message from the client, reply with the same message,
-    // but will prefix the message with "[Durable Object]: ".
-    ws.send(`[Durable Object]: ${message}`);
+    // Upon receiving a message from the client, the server replies with the same message,
+    // and the total number of connections with the "[Durable Object]: " prefix
+    ws.send(`[Durable Object] message: ${message}, connections: ${this.ctx.getWebSockets().length}`);
   }
 
   async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {

@@ -11,12 +11,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  
+
   label_products:
     name: Label products
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/label-products
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,7 +26,7 @@ jobs:
     name: Label size
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/label-size
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

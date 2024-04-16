@@ -9,6 +9,9 @@ entries:
   scheduled: true
   individual_page: true
   link: '/ddos-protection/change-log/http/scheduled-changes/'
+- publish_date: '2024-04-16'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2024-04-16-emergency/'
 - publish_date: '2024-04-04'
   individual_page: true
   link: '/ddos-protection/change-log/http/2024-04-04-emergency/'

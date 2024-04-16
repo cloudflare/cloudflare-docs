@@ -11,7 +11,7 @@ layout: example
 updated: 2024-01-11
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 {{<render file="_fetch-html-example-js.md">}}
@@ -30,6 +30,18 @@ export default {
     return await fetch(remote, request);
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import fetch
+
+async def on_fetch(request):
+    # Replace `remote` with the host you wish to send requests to
+    remote = "https://example.com"
+    return await fetch(remote, request)
 ```
 
 {{</tab>}}
