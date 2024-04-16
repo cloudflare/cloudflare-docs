@@ -55,7 +55,7 @@ export default {
 
 ## Bindings
 
-[Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
 
 Workers using ES modules format do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
 

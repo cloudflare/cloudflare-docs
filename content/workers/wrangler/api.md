@@ -345,19 +345,19 @@ The bindings supported by `getPlatformProxy` are:
 
  * [Environment variables](/workers/configuration/environment-variables/)
 
- * [Service bindings](/workers/configuration/bindings/#service-bindings)
+ * [Service bindings](/workers/runtime-apis/bindings/service-bindings/)
 
- * [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
+ * [KV namespace bindings](/kv/api/)
 
- * [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
+ * [Durable Object bindings](/durable-objects/api/)
 
- * [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+ * [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 
- * [Queue bindings](/workers/configuration/bindings/#queue-bindings)
+ * [Queue bindings](/queues/reference/javascript-apis/)
 
- * [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
+ * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
 
- * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
+ * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
     * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
 

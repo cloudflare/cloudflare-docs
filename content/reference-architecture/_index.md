@@ -8,7 +8,7 @@ layout: overview
 # Cloudflare Technical Architecture Content
 
 {{<description>}}
-All the documents in this section are design to help you understand how Cloudflare and it's products are designed and architected. These documents help you understand how you can leverage our platform to create solutions based on your business needs.
+All the documents in this section are design to help you understand how Cloudflare and its products are designed and architected. These documents help you understand how you can leverage our platform to create solutions based on your business needs.
 {{</description>}}
 
 {{<render file="_description-of-ref-architectures.md" productFolder="reference-architecture">}}

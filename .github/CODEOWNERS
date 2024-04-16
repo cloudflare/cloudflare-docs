@@ -94,8 +94,8 @@
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/bindings/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/platform/ @irvinebroque @tanushreesharma-cf @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/workers/configuration/bindings/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
