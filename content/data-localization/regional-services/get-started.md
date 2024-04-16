@@ -11,7 +11,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Interested customers need to contact their account team to enable DNS Regionalisation. Note that only Super Administrators can view and edit the DNS Region used for Regional Services.
+Interested customers need to contact their account team to enable DNS Regionalisation.
 
 {{</Aside>}}
 

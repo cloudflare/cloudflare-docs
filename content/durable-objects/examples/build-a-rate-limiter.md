@@ -293,5 +293,5 @@ new_classes = ["RateLimiter"]
 ### Related resources
 
 - Learn more about Durable Object's [Alarms API](/durable-objects/api/alarms) and how to configure alarms.
-- [Understand how to troubleshoot](/durable-objects/reference/troubleshooting/) common errors related with Durable Objects.
+- [Understand how to troubleshoot](/durable-objects/observability/troubleshooting/) common errors related with Durable Objects.
 - Review how [Durable Objects are priced](/durable-objects/platform/pricing/), including pricing examples.

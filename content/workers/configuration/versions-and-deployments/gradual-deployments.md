@@ -176,7 +176,7 @@ This is only an example, so the versions assigned to your Durable Objects may be
 
 - For a given deployment, requests to each Durable Object will always use the same Worker version.
 - When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In this example, Durable Object "foo" would never revert from version "B" to version "A".
-- The Durable Object will only be [reset](/durable-objects/reference/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
+- The Durable Object will only be [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
 
 {{<Aside type="note">}}
 

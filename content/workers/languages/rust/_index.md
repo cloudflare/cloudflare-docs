@@ -118,7 +118,7 @@ Provides access to Worker [bindings](/workers/configuration/bindings/).
 
 3. **[`Context`](https://docs.rs/worker/latest/worker/struct.Context.html)**
 
-Provides access to [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) (deferred asynchronous tasks) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) (fail open) functionality.
+Provides access to [`waitUntil`](/workers/runtime-apis/context/#waituntil) (deferred asynchronous tasks) and [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception) (fail open) functionality.
 
 #### [`Response`](https://docs.rs/worker/latest/worker/struct.Response.html)
 

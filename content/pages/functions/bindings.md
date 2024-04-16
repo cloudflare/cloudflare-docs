@@ -287,42 +287,17 @@ To configure a Workers AI binding via the Cloudflare dashboard:
 5. Give your binding a name under **Variable name**.
 7. Redeploy your project for the binding to take effect.
 
-### Install the Workers AI SDK
-
-To use Workers AI in your Pages Function, you must first install the [Workers AI SDK](/workers-ai/configuration/workers-ai-sdk/) in your Pages project directory:
-
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm install --save-dev @cloudflare/ai
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn add --dev @cloudflare/ai
-```
-
-{{</tab>}}
-{{</tabs>}}
-
 ### Use Workers AI bindings
 
-After you have installed the Workers AI SDK, you can access your Workers AI binding in your Pages Function code. In the following example, your Workers AI binding is called `AI` and you can access the binding in your Pages Function code on `context.env`.
+To use Workers AI in your Pages Function, you can access your Workers AI binding in your Pages Function code. In the following example, your Workers AI binding is called `AI` and you can access the binding in your Pages Function code on `context.env`.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-import { Ai } from '@cloudflare/ai'
-
 export async function onRequest(context) {
-  const ai = new Ai(context.env.AI);
-
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input);
+  const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', input);
 
   return Response.json(answer);
 }
@@ -330,18 +305,14 @@ export async function onRequest(context) {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-import { Ai } from '@cloudflare/ai'
-
 interface Env {
   AI: any;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const ai = new Ai(context.env.AI);
-
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input)
+  const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', input)
 
   return Response.json(answer);
 }

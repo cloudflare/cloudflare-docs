@@ -32,7 +32,7 @@ Within a Session, there can be one or more **Tracks**.
 
 The analogy of a switchboard is apt for understanding Calls. Historically, switchboard operators connected calls by manually plugging in jacks. Similarly, Calls allows for the dynamic routing of media streams, acting as a programmable switchboard for modern real-time communication.
 
-## Beyond "Rooms", "Users", "Participants"
+## Beyond "Rooms", "Users", and "Participants"
 
 While many SFUs utilize concepts like "rooms" to manage media streams among users, this approach has scalability and flexibility limitations. Cloudflare Calls opts for a more granular and flexible model with Sessions and Tracks, enabling a wide range of use cases:
 
