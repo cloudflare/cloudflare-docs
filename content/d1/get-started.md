@@ -275,7 +275,7 @@ $ npx wrangler d1 delete prod-d1-tutorial
 If you want to delete your Worker, run:
 
 ```sh
-$ npx wrangler delete
+$ npx wrangler delete d1-tutorial
 ```
 
 By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally.
