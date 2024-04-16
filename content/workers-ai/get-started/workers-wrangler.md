@@ -56,7 +56,7 @@ $ cd hello-ai
 
 ## 2. Connect your Worker to Workers AI
 
-You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
+You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 

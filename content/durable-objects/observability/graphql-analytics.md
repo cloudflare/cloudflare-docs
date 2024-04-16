@@ -40,6 +40,7 @@ The datasets that include Durable Object metrics include:
 Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each datasets.
 
 ### WebSocket metrics
+
 Durable Objects using [WebSockets](/durable-objects/reference/websockets/) will see request metrics across several GraphQL datasets because WebSockets have different types of requests.
 
 - Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
