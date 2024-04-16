@@ -95,8 +95,8 @@ export default {
 const SECONDS = 1000;
 
 export class AlarmExample {
-  constructor(state, env) {
-    this.state = state;
+  constructor(ctx, env) {
+    this.ctx = ctx;
     this.storage = state.storage;
   }
   async fetch(request) {
