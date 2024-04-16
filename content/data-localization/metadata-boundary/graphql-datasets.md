@@ -43,15 +43,15 @@ The table below shows a non-exhaustive list of GraphQL Analytics API fields that
 | | Stream | US only <br> [`streamMinutesViewedAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) <br> [`videoPlaybackEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) <br> [`videoBufferEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) <br> [`videoQualityEventsAdaptiveGroups`](/stream/getting-analytics/fetching-bulk-analytics/) |
 | | Workers (deployed on a Zone) | US and EU <br> `workerPlacementAdaptiveGroups` <br> US only <br> `workersZoneInvocationsAdaptiveGroups` <br> `workersZoneSubrequestsAdaptiveGroups` <br> `workersOverviewRequestsAdaptiveGroups` <br> `workersOverviewDataAdaptiveGroups` <br> `workersAnalyticsEngineAdaptiveGroups` <br> [`workersInvocationsAdaptive`](/analytics/graphql-api/tutorials/querying-workers-metrics/) <br> `workersInvocationsScheduled` <br> `workersSubrequestsAdaptiveGroups` |
 | Network Services | Network Error Logging (NEL) / Edge Reachability / Last Mile Insights | US only <br> `nelReportsAdaptiveGroups` |
-| | Magic Firewall |  US only <br> [`magicFirewallSamplesAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/) <br> [`magicFirewallNetworkAnalyticsAdaptiveGroup`](/magic-firewall/tutorials/graphql-analytics/#example-queries-for-magic-firewall) | 
-| | Magic Network Monitoring | US and EU <br> [`mnmFlowDataAdaptiveGroups`](/magic-network-monitoring/tutorials/graphql-analytics/) |
+| | Magic Firewall |  US only <br> [`magicFirewallSamplesAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/) <br> [`magicFirewallNetworkAnalyticsAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/#example-queries-for-magic-firewall) | 
+| | Magic Network Monitoring | US only <br> [`mnmFlowDataAdaptiveGroups`](/magic-network-monitoring/tutorials/graphql-analytics/) |
 | | Magic Transit | US only <br> [`magicTransitNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) <br> [`flowtrackdNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) <br> [`magicTransitTunnelHealthChecksAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/) <br> [`magicTransitTunnelTrafficAdaptiveGroups`](/magic-transit/analytics/query-bandwidth/) | 
 | | Magic WAN | US and EU <br> `MagicWANConnectorMetricsAdaptiveGroups` |
 | | Spectrum | US only <br> [`spectrumNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) |
 | Platform | GraphQL Analytics API | [All GraphQL Analytics API datasets](/analytics/graphql-api/features/discovery/introspection/) | 
 | | Logpush | US only <br> [`logpushHealthAdaptiveGroups`](/logs/get-started/alerts-and-analytics/#enable-logpush-health-analytics) <br> |
 | Zero Trust | Access | US and EU <br> [`accessLoginRequestsAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-access-login-events/) | |
-| | Browser Isolation | US and EU <br> Only the field `isIsolated` part of `GatewayL7RequestsAdaptiveGroups`  |
+| | Browser Isolation | US and EU <br> Only the field `isIsolated` part of `gatewayL7RequestsAdaptiveGroups`  |
 | | DLP | Part of Gateway HTTP / Gateway L7 |
 | | Gateway | US and EU <br> `gatewayL7RequestsAdaptiveGroups` <br> `gatewayL4SessionsAdaptiveGroups` <br> `gatewayResolverQueriesAdaptiveGroups` <br> `gatewayResolverByCategoryAdaptiveGroups` <br> `gatewayResolverByRuleExecutionPerformanceAdaptiveGroups` <br> US only <br> `gatewayL4DownstreamSessionsAdaptiveGroups` <br> `gatewayL4UpstreamSessionsAdaptiveGroups` |
 | | WARP | US and EU <br> `warpDeviceAdaptiveGroups` | |
