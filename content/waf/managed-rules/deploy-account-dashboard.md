@@ -30,7 +30,7 @@ To deploy a managed ruleset for a single zone, refer to [Deploy a managed rulese
 
 5. Give a name to the rule deploying the ruleset in **Execution name**.
 
-6. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and configure the expression that will determine the scope of the current rule deploying the managed ruleset.
+6. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
 
     {{<Aside type="warning">}}
 Deployed rulesets will only apply to incoming traffic of Enterprise domains on your account. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
