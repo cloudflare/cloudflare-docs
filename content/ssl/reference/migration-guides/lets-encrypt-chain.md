@@ -10,7 +10,7 @@ meta:
 
 Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust).
 
-As the IdenTrust cross-sign (DST Root CA X3) expires on **September 30, 2024**, the self-signed ISRG Root X1 will be the only chain used for RSA certificates issued through Let's Encrypt. Refer to [background](#background) or our [blog](https://blog.cloudflare.com/shortening-lets-encrypt-change-of-trust-no-impact-to-cloudflare-customers) for details.
+As the IdenTrust cross-sign (DST Root CA X3) expires on **September 30, 2024**, the self-signed ISRG Root X1 will be the only chain used for RSA certificates issued through Let's Encrypt. Refer to [Background](#background) or our [blog](https://blog.cloudflare.com/shortening-lets-encrypt-change-of-trust-no-impact-to-cloudflare-customers) for details.
 
 To minimize impact, besides communicating the changes and providing recommendations early, Cloudflare will proceed as follows:
 
@@ -22,7 +22,7 @@ Refer to the sections below for more information on each of these actions and ho
 
 ## Client impact
 
-The expiration of the cross-signed chain will primarily affect older devices, for example Android 7.0 and earlier. And systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their [trust store](/ssl/concepts/#trust-store), will also be affected.
+The expiration of the cross-signed chain will primarily affect older devices, for example Android 7.0 and earlier. Systems that solely rely on the cross-signed chain, lacking the ISRG Root X1 chain in their [trust store](/ssl/concepts/#trust-store), will also be affected.
 
 ## Important dates
 
