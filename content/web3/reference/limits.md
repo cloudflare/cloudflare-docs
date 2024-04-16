@@ -9,11 +9,7 @@ weight: 4
 
 The following limits apply to users of the Cloudflare Web3 Gateways.
 
-{{<Aside type="note">}}
-
-For more pricing details, refer to the [Web3 product page](https://www.cloudflare.com/application-services/products/web3/).
-
-{{</Aside>}}
+{{<render file="_pricing-page-reference.md">}}
 
 ## IPFS Gateway
 

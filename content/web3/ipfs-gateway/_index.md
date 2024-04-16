@@ -15,8 +15,4 @@ Cloudflare's IPFS gateway provides a read-only, HTTP-accessible interface to the
 
 {{<feature-table id="web3.ipfs">}}
 
-{{<Aside type="note">}}
-
-For more pricing details, refer to the [Web3 product page](https://www.cloudflare.com/application-services/products/web3/).
-
-{{</Aside>}}
+{{<render file="_pricing-page-reference.md">}}

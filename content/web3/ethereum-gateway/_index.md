@@ -17,8 +17,4 @@ These interactions take place through the official [Ethereum JSON-RPC API](https
 
 {{<feature-table id="web3.ethereum">}}
 
-{{<Aside type="note">}}
-
-For more pricing details, refer to the [Web3 product page](https://www.cloudflare.com/application-services/products/web3/).
-
-{{</Aside>}}
+{{<render file="_pricing-page-reference.md">}}
