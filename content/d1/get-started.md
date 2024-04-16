@@ -264,6 +264,20 @@ You can now visit the URL for your newly created project to query your live data
 
 For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
 
+## 8. (Optional) Delete your database
+
+To delete your database, run:
+
+```sh
+$ npx wrangler d1 delete prod-d1-tutorial
+```
+
+If you want to delete your Worker, run:
+
+```sh
+$ npx wrangler delete
+```
+
 By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally.
 
 ## Next steps
