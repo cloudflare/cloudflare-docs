@@ -51,7 +51,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
 }'
 ```
 
-If you created your site successfully, you should receive a message similar to the following.
+If you created your site successfully, you should receive a message similar to the following:
 
 ```bash
 {
