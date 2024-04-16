@@ -411,7 +411,7 @@ A [binding](/pages/functions/bindings/) enables your Pages Functions to interact
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
 {{<Aside type="note">}}
 
