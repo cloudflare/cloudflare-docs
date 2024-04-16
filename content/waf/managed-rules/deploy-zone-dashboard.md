@@ -53,7 +53,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
 3. Next to the _Execute_ rule deploying the managed ruleset you want to configure, select the managed ruleset name.<br> If you have not deployed the managed ruleset yet, select the managed ruleset name under **Managed Rulesets**.
 
-4. (Optional) To apply the rules in the ruleset to a subset of incoming requests instead of all requests, select **Set scope** and [enter a custom filter expression](#specify-a-custom-expression-for-the-ruleset).
+4. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
 
 5. In the ruleset configuration section, define settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
 
@@ -74,26 +74,6 @@ To configure rule field values for all the rules in a managed ruleset:
 {{<render file="_managed-rules-browse-zone.md">}}
 
 {{<render file="_managed-ruleset-configure-single-rule.md">}}
-
-### Specify a custom expression for the ruleset
-
-To apply the rules in the ruleset to a subset of incoming requests, specify a custom filter expression for the rule that executes the managed ruleset.
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Managed rules**.
-
-3. If you have already deployed the managed ruleset you want to configure, select the managed ruleset name in the list of deployed managed rulesets. Alternatively, select the three dots > **Edit** next to the _Execute_ rule deploying the managed ruleset.
-
-    If you have not deployed the managed ruleset, select the ruleset name under **Managed Rulesets**.
-
-4. Select **Edit scope**.
-
-5. Under **Set Scope**, select **Custom filter expression**.
-
-6. Under **When incoming requests match**, define the scope for all the rules in the ruleset using a custom filter expression. Use the Expression Builder or the Expression Editor for defining the expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
-
-7. Select **Next**, and then select **Save**.
 
 ### Browse the rules of a managed ruleset
 
