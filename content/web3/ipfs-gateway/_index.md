@@ -14,3 +14,5 @@ Cloudflare's IPFS gateway provides a read-only, HTTP-accessible interface to the
 ## Availability
 
 {{<feature-table id="web3.ipfs">}}
+
+{{<render file="_pricing-page-reference.md">}}

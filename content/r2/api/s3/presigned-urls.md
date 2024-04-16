@@ -64,7 +64,7 @@ Generate a presigned URL by referring to the following examples:
 
 ## Presigned URL alternative with Workers
 
-A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/configuration/bindings/) that implements your security policy.
+A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/runtime-apis/bindings/) that implements your security policy.
 
 {{<Aside type="note" header="Bindings">}}
 

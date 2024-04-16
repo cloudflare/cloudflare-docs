@@ -9,7 +9,7 @@ jobs:
     name: Assignee
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/assign-issue
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

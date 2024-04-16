@@ -16,21 +16,21 @@ The following code snippet shows you how to store and retrieve data using the Tr
 
 ```js
 export class Counter {
-  constructor(state, env) {
-    this.state = state;
+  constructor(ctx, env) {
+    this.ctx = ctx;
   }
 
   async fetch(request) {
     let url = new URL(request.url);
 
     // retrieve data
-    let value = (await this.state.storage.get("value")) || 0; 
+    let value = (await this.ctx.storage.get("value")) || 0; 
 
     // increment counter and get a new value
     value += 1; 
 
     // store data
-    await this.state.storage.put("value", value); 
+    await this.ctx.storage.put("value", value); 
 
     return new Response(value);
   }

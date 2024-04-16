@@ -8,6 +8,23 @@ meta:
 
 # Troubleshooting custom certificates
 
+## Generic troubleshooting
+
+### Make sure your key and certificate match
+
+You can use an external tool such as the [SSLShopper Certificate Key Matcher](https://www.sslshopper.com/certificate-key-matcher.html) to check your certificate and make sure the key matches.
+
+### Check the certificate details
+
+You can use `openssl` to check all the details of your certificate:
+
+```bash
+$ openssl x509 -in certificate.crt -noout -text
+```
+
+Then, make sure all the information is correct before uploading.
+
+
 ## You have reached your quota for the requested resource. (Code: 2005)
 
 ### Problem description
