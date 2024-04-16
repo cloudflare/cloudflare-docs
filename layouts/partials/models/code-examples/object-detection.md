@@ -33,7 +33,7 @@ export default {
 <details>
   <summary>curl</summary>
 
-```sh
+```bash
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/detr-resnet-50 \
     -X POST \
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
