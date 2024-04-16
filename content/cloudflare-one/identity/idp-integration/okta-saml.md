@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Okta (SAML)
-weight: 13
+weight: 17
 ---
 
 # Okta (SAML)

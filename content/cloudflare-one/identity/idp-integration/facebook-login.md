@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Facebook
-weight: 13
+weight: 9
 ---
 
 # Facebook

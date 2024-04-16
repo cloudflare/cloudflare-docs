@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: PingOne®
-weight: 7
+weight: 21
 ---
 
 # PingOne®

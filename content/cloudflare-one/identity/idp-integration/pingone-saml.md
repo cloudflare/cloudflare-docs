@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: PingOne® (SAML)
-weight: 7
+weight: 22
 ---
 
 # PingOne®
