@@ -38,7 +38,7 @@ The local network gateway typically refers to your on-premises location. In this
 
 1. Create a new local network gateway.
 2. In **Endpoint**, select **IP address** and enter the Cloudflare endpoint address.
-3. In **Address space**, specify the address range of any subnets you wish to access remotely via the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenet, you would add `192.168.1.0/24` to the local network gateway address space.
+3. In **Address space**, specify the address range of any subnets you wish to access remotely via the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
 4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
 
 ### 4. Create an IPsec VPN connection
