@@ -9,7 +9,7 @@ _build:
 
 2. Go to Account Home > **WAF** > **Managed rulesets**.
 
-3. If you have already deployed the managed ruleset you want to configure, find a rule deploying that managed ruleset and select the rule description. Alternatively, select the three dots > **Edit** next to an _Execute_ rule deploying the managed ruleset.
+3. If you have already deployed the managed ruleset you want to configure, find the rule deploying that managed ruleset and select the rule description. Alternatively, select the three dots > **Edit** next to an _Execute_ rule deploying the managed ruleset.
 
     If you have not deployed the managed ruleset:
     1. Select **Deploy** > **Deploy managed ruleset**.

@@ -55,7 +55,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
 4. (Optional) To apply the rules in the ruleset to a subset of incoming requests instead of all requests, select **Set scope** and [enter a custom filter expression](#specify-a-custom-expression-for-the-ruleset).
 
-5. Under **Ruleset configuration**, configure settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
+5. In the ruleset configuration section, define settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
 
     For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
@@ -83,7 +83,9 @@ To apply the rules in the ruleset to a subset of incoming requests, specify a cu
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Next to the _Execute_ rule that deploys the managed ruleset, select the managed ruleset name.
+3. If you have already deployed the managed ruleset you want to configure, select the managed ruleset name in the list of deployed managed rulesets. Alternatively, select the three dots > **Edit** next to the _Execute_ rule deploying the managed ruleset.
+
+    If you have not deployed the managed ruleset, select the ruleset name under **Managed Rulesets**.
 
 4. Select **Edit scope**.
 
@@ -97,12 +99,10 @@ To apply the rules in the ruleset to a subset of incoming requests, specify a cu
 
 You can browse the available rules in a managed ruleset and search for individual rules or tags.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+{{<render file="_managed-rules-browse-zone.md">}}
 
+### Delete a managed ruleset deployment rule or an exception
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules**.
-
-3. Select the rule description of the _Execute_ rule that deploys the managed ruleset you want to browse. Alternatively, select the three dots > **Edit**.
-
-4. Select **Browse rules**.
-
-    ![The Cloudflare dashboard displaying the list of rules in the Cloudflare Managed Ruleset](/images/waf/waf-browse-rules.png)
+3. Next to the rule or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.

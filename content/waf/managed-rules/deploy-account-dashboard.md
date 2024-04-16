@@ -74,11 +74,11 @@ To configure an entire managed ruleset:
     1. Select **Deploy** > **Deploy managed ruleset**.
     2. Next to the managed ruleset you want to deploy and configure, select **Select ruleset**.
 
-4. In **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
+4. In the ruleset configuration section, set one or more rule fields from the available values in the drop-down lists. The exact options vary according to the managed ruleset you are configuring.
 
     For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
-    ![The Deploy Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](/images/waf/account/waf-configure-ruleset-account.png)
+    ![The Configure deployment page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](/images/waf/account/waf-configure-ruleset-account.png)
 
 5. If you are editing a deployed managed ruleset, select **Save**. If you have not deployed the managed ruleset yet, select **Deploy** to deploy the ruleset immediately, or **Save as Draft** to save your deployment settings for later.
 
