@@ -154,7 +154,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
   - Path to Wrangler configuration file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/configuration/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
 
-  - The environment option can be used to specify the [wrangler environment](/workers/wrangler/environments/) to pick up bindings and variables from.
+  - The environment option can be used to specify the [Wrangler environment](/workers/wrangler/environments/) to pick up bindings and variables from.
 
 {{</definitions>}}
 
