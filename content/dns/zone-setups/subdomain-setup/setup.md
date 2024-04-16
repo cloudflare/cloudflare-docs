@@ -10,7 +10,7 @@ meta:
 
 When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to create a child domain depend on the parent domain's setup and whether the child domain already exists.
 
-This setup is only available for Enterprise accounts.
+Subdomain setup is only available for Enterprise accounts.
 
 ```mermaid
     flowchart TD
