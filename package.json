@@ -22,7 +22,7 @@
     "algoliasearch": "^4.22.1",
     "fromnow": "3.0.1",
     "instantsearch.js": "^4.64.0",
-    "mermaid": "9.4.3",
+    "mermaid": "10.9.0",
     "node-html-parser": "6.1.6",
     "vue": "^3.2.45"
   },
