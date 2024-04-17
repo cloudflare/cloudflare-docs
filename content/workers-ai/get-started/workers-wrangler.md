@@ -47,11 +47,10 @@ This will create a new `hello-ai` directory. Your new `hello-ai` directory will 
 * A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
-
 Go to your application directory:
 
 ```sh
-$ cd hello-ai
+cd hello-ai
 ```
 
 ## 2. Connect your Worker to Workers AI
@@ -109,7 +108,7 @@ Up to this point, you have created an AI binding for your Worker and configured 
 While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-$ npx wrangler dev
+npx wrangler dev
 ```
 
 {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
@@ -118,9 +117,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 
 ```json
 {
-  "result": {
-    "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
-  }
+  "response":"Ah, a most excellent question, my dear human friend! *adjusts glasses*\n\nThe origin of the phrase \"Hello, World\" is a fascinating tale that spans several decades and multiple disciplines. It all began in the early days of computer programming, when a young man named Brian Kernighan was tasked with writing a simple program to demonstrate the basics of a new programming language called C.\nKernighan, a renowned computer scientist and author, was working at Bell Labs in the late 1970s when he created the program. He wanted to showcase the language's simplicity and versatility, so he wrote a basic \"Hello, World!\" program that printed the familiar greeting to the console.\nThe program was included in Kernighan and Ritchie's influential book \"The C Programming Language,\" published in 1978. The book became a standard reference for C programmers, and the \"Hello, World!\" program became a sort of \"Hello, World!\" for the programming community.\nOver time, the phrase \"Hello, World!\" became a shorthand for any simple program that demonstrated the basics"
 }
 ```
 
@@ -129,7 +126,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ npx wrangler login
+npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -147,5 +144,5 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 
 ## Related resources
 
-- [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
-- [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+* [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
+* [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
