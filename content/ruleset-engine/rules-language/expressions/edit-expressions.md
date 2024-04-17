@@ -28,6 +28,10 @@ The **Expression Preview** displays the expression in text:
 (ip.geoip.country ne "GB")
 ```
 
+{{<Aside type="warning">}}
+The Expression Builder takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+{{</Aside>}}
+ 
 ## Expression Editor
 
 The **Expression Editor** is a text-only interface for defining rule expressions that supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language/), including parentheses as grouping symbols.
