@@ -94,7 +94,7 @@ $ npx wrangler d1 create prod-d1-tutorial
 
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
-database_name = prod-d1-tutorial"
+database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
