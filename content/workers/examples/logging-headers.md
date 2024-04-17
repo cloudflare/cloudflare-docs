@@ -29,11 +29,11 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     console.log(new Map(request.headers));
     return new Response("Hello world");
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

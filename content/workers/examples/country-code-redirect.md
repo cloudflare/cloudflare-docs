@@ -48,7 +48,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     /**
      * A map of the URLs to redirect to
      * @param {Object} countryMap
@@ -69,7 +69,7 @@ export default {
       return fetch(request);
     }
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -87,7 +87,7 @@ const r2 = new AwsClient({
 });
 
 export default {
-  async fetch(req: Request): Promise<Response> {
+  async fetch(req): Promise<Response> {
     // This is just an example to demonstrating using aws4fetch to generate a presigned URL.
     // This Worker should not be used as-is as it does not authenticate the request, meaning
     // that anyone can upload to your bucket.
@@ -127,7 +127,7 @@ export default {
   },
 
   // ... handle other kinds of requests
-};
+} satisfies ExportedHandler;
 ```
 
 Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml` [binding](/r2/api//workers/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.

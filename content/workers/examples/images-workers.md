@@ -41,7 +41,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     // You can find this in the dashboard, it should look something like this: ZWd9g1K7eljCn_KDTu_MWA
     const accountHash = "";
 
@@ -52,7 +52,7 @@ export default {
 
     return fetch(`https://imagedelivery.net/${accountHash}${pathname}`);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

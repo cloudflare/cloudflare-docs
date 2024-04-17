@@ -67,7 +67,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     /**
      * @param {string} headerNameSrc Header to get the new value from
      * @param {string} headerNameDst Header to set based off of value in src
@@ -110,7 +110,7 @@ export default {
     }
     return response;
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

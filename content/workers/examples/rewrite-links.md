@@ -57,7 +57,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     const OLD_URL = "developer.mozilla.org";
     const NEW_URL = "mynewdomain.com";
 
@@ -91,7 +91,7 @@ export default {
       return res;
     }
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

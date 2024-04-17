@@ -25,7 +25,7 @@ The `connect()` function returns a TCP socket, with both a [readable](/workers/r
 import { connect } from 'cloudflare:sockets';
 
 export default {
-  async fetch(req: Request) {
+  async fetch(req): Promise<Response> {
     const gopherAddr = { hostname: "gopher.floodgap.com", port: 70 };
     const url = new URL(req.url);
 
@@ -42,7 +42,7 @@ export default {
       return new Response("Socket connection failed: " + error, { status: 500 });
     }
   }
-};
+} satisfies ExportedHandler;
 ```
 
 {{<definitions>}}

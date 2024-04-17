@@ -46,7 +46,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const url = new URL(request.url);
     // Only use the path for the cache key, removing query strings
     // and always store using HTTPS, for example, https://www.example.com/file-uri-here
@@ -67,7 +67,7 @@ export default {
     response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -130,7 +130,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     let url = new URL(request.url);
 
     if (Math.random() < 0.5) {
@@ -144,7 +144,7 @@ export default {
       cf: { cacheKey: request.url },
     });
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

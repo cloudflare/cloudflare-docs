@@ -44,7 +44,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     /**
      * An object with different URLs to fetch
      * @param {Object} ORIGINS
@@ -66,7 +66,7 @@ export default {
     // Otherwise, process request as normal
     return fetch(request);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -22,12 +22,12 @@ layout: example
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const destinationURL = "https://example.com";
     const statusCode = 301;
     return Response.redirect(destinationURL, statusCode);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -72,7 +72,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     const base = "https://example.com";
     const statusCode = 301;
 
@@ -84,7 +84,7 @@ export default {
 
     return Response.redirect(destinationURL, statusCode);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

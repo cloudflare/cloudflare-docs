@@ -21,7 +21,7 @@ layout: example
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     async function MethodNotAllowed(request) {
       return new Response(`Method ${request.method} not allowed.`, {
         status: 405,
@@ -34,7 +34,7 @@ export default {
     if (request.method !== "GET") return MethodNotAllowed(request);
     return fetch(`https://example.com`);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

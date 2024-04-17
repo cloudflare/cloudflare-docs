@@ -89,7 +89,7 @@ export default {
 {{<tab label="ts">}}
 ```ts
 export default {
-  async fetch(req: Request): Promise<Response> {
+  async fetch(req): Promise<Response> {
     // Fetch from origin
     const res = await fetch(req);
 
@@ -110,7 +110,7 @@ export default {
     newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
     return newRes;
   }
-}
+} satisfies ExportedHandler;
 ```
 {{</tab>}}
 {{</tabs>}}

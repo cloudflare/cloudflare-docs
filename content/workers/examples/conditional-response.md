@@ -65,7 +65,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     const BLOCKED_HOSTNAMES = ["nope.mywebsite.com", "bye.website.com"];
     // Return a new Response based on a URL's hostname
     const url = new URL(request.url);
@@ -107,7 +107,7 @@ export default {
     );
     return fetch(request);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

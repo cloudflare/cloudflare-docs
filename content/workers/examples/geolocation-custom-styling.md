@@ -186,7 +186,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     let grads = [
       [
         { color: "00000c", position: 0 },
@@ -349,7 +349,7 @@ export default {
       headers: { "content-type": "text/html;charset=UTF-8" },
     });
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

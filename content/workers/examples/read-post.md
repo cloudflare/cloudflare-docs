@@ -77,7 +77,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     /**
      * rawHtmlResponse returns HTML inputted directly
      * into the worker script
@@ -130,7 +130,7 @@ export default {
       return new Response("The request was a GET");
     }
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

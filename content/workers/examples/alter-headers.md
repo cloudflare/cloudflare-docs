@@ -48,7 +48,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     const response = await fetch(request);
 
     // Clone the response so that it's no longer immutable
@@ -68,7 +68,7 @@ export default {
     newResponse.headers.set("x-header-to-change", "NewValue");
     return newResponse;
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

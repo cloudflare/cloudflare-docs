@@ -21,7 +21,7 @@ updated: 2024-01-11
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request): Promise<Response> {
     const html = `<!DOCTYPE html>
 		<body>
 		  <h1>Hello World</h1>
@@ -34,7 +34,7 @@ export default {
       },
     });
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
