@@ -78,7 +78,7 @@ WARP was unable to resolve hostnames via its [local DNS proxy](/cloudflare-one/c
 
 A third-party process (usually a third-party DNS software) is bound to port `53`, which is used by WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) to perform DNS resolution. The name of third-party process will appear in the GUI error message.
 
-On macOS, you may see `mDNSResponder` instead of the specific application name -- mDNSResponder is a macOS system process that handles DNS requests on behalf of other processes. There is no known way to determine which process caused `mDNSResponder` to bind to port `53`, but the most common culprits are virtual machine software (for example, Docker and VMware Workstation) and the macOS Internet Sharing feature.
+On macOS, you may see `mDNSResponder` instead of the specific application name -- `mDNSResponder` is a macOS system process that handles DNS requests on behalf of other processes. There is no known way to determine which process caused `mDNSResponder` to bind to port `53`, but the most common culprits are virtual machine software (for example, Docker and VMware Workstation) and the macOS Internet Sharing feature.
 
 ### Resolution
 
