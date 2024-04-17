@@ -43,7 +43,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -51,7 +51,7 @@ export default {
     };
     await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 A queue can have multiple producer Workers. For example, you may have multiple producer Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue.
@@ -70,7 +70,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -84,7 +84,7 @@ export default {
       return Response.json({"msg": e}, { status: 500 })
     }
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 To only accept simple strings when writing to a queue, set `{ contentType: "text" }` instead:

@@ -132,7 +132,7 @@ Besides `puppeteer.sessions()`, we've added other methods to facilitate session 
 
 Run `npx wrangler dev --remote` to test your Worker locally before deploying to Cloudflare's global network.
 
-To test go to the following URL: 
+To test go to the following URL:
 
 `<LOCAL_HOST_URL>/?url=https://example.com`
 

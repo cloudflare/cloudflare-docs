@@ -165,7 +165,7 @@ interface EmbeddingResponse {
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith('/favicon')) {
 			return new Response('', { status: 404 });
@@ -211,7 +211,7 @@ export default {
 			matches: matches,
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ## 6. Deploy your Worker

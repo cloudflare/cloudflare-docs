@@ -151,7 +151,7 @@ interface Env {
   SECRET_DATA: string;
 }
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request, env): Promise<Response> {
     // You will need some secret data to use as a symmetric key. This should be
     // attached to your Worker as an encrypted secret.
     // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
@@ -238,7 +238,7 @@ export default {
 
     return fetch(new URL(url.pathname, "https://example.com"), request);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

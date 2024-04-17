@@ -10,7 +10,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const inputs = {
       prompt: "cyberpunk cat",
@@ -27,7 +27,7 @@ export default {
       },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>

@@ -91,7 +91,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
         prompt: "What is the origin of the phrase Hello, World"
       }
@@ -99,7 +99,7 @@ export default {
 
     return new Response(JSON.stringify(response));
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 2 model. You can now test your project locally before you deploy globally.

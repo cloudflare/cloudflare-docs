@@ -179,7 +179,7 @@ export default {
 filename: index.ts
 ---
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
     let stub = env.MY_DURABLE_OBJECT.get(id);
@@ -188,7 +188,7 @@ export default {
 
     return response;
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

@@ -180,7 +180,7 @@ interface Env {
   PASSWORD: string;
 }
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request, env): Promise<Response> {
     const BASIC_USER = "admin";
 
     // You will need an admin password. This should be
@@ -253,7 +253,7 @@ export default {
 
     return new Response("Not Found.", { status: 404 });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

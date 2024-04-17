@@ -119,7 +119,7 @@ filename: src/index.ts
 highlight: [8]
 ---
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     let log = {
       url: request.url,
       method: request.method,
@@ -128,7 +128,7 @@ export default {
     await env.<MY_QUEUE>.send(log);
     return new Response('Success!');
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
@@ -189,7 +189,7 @@ filename: src/index.ts
 highlight: [11]
 ---
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     let log = {
       url: request.url,
       method: request.method,
@@ -198,11 +198,11 @@ export default {
     await env.<MY_QUEUE>.send(log);
     return new Response('Success!');
   },
-  async queue(batch: MessageBatch, env: Env): Promise<void> {
+  async queue(batch, env): Promise<void> {
     let messages = JSON.stringify(batch.messages);
     console.log(`consumed from our queue: ${messages}`);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.

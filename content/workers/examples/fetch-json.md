@@ -43,7 +43,7 @@ export default {
 ```ts
 interface Env {}
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const url = "https://jsonplaceholder.typicode.com/todos/1";
 
     // gatherResponse returns both content-type & response body as a string
@@ -62,7 +62,7 @@ export default {
     const options = { headers: { "content-type": contentType } };
     return new Response(result, options);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}
