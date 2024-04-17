@@ -8,7 +8,7 @@ meta:
 
 # Limitations
 
-Trace results may not be accurate for:
+Trace currently does not support:
 
 * [Spectrum](/spectrum/) applications
 * Hostnames using [Data Localization Suite](/data-localization/)
