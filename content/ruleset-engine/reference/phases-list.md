@@ -6,6 +6,8 @@ weight: 1
 
 # Phases list
 
+The following tables list the [phases](/ruleset-engine/about/phases/) of Cloudflare products powered by the Ruleset Engine, in the order those phases are executed. Some products such as the Cloudflare Web Application Firewall have more than one associated phase.
+
 ## Network layer
 
 Network-layer phases apply to packets received on the Cloudflare global network.
