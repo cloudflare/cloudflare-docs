@@ -1,21 +1,13 @@
 ---
-title: Trace a request (beta)
-pcx_content_type: how-to
+pcx_content_type: reference
+title: How to
+weight: 2
 meta:
-  title: Trace a request with Cloudflare Trace (beta)
+  title: How to - Cloudflare Trace
+  description: Learn how to use Cloudflare Trace in the dashboard and with the API.
 ---
 
-{{<heading-pill style="beta">}} Cloudflare Trace {{</heading-pill>}}
-
-{{<plan type="all">}}
-
-Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your hostnames. If the hostname you are testing is not [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
-
-You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
-
-Cloudflare Trace is available to users with an Administrator or Super Administrator role.
-
----
+# Use Cloudflare Trace
 
 ## Use Trace in the dashboard
 
@@ -70,23 +62,6 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 
 ## Steps in trace results
 
-For matched configurations in trace results, each step corresponds to one of the following:
-
-* Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
+* Execution of one or more rules of Cloudflare products built on the [Ruleset Engine](/ruleset-engine/). Refer to the Ruleset Engine's [Phases list](/ruleset-engine/reference/phases-list/) for a list of such products.
 * [Page Rules](/rules/page-rules/) (execution of one or more rules)
 * [Workers](/workers/) (execution of one or more scripts)
-
----
-
-## Limitations
-
-Currently, you cannot perform traces for:
-
-* [Spectrum](/spectrum/) applications
-* Hostnames using [Data Localization Suite](/data-localization/)
-
-Also, the following products will not appear in trace results:
-
-* [Firewall rules](/firewall/)
-* [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
-* [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
