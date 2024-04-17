@@ -239,7 +239,40 @@ The available API values are: `10`, `60` (one minute), `120` (two minutes), `300
 
 Action to perform when the rate specified in the rule is reached.
 
-Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+Use one of the following values in the API: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+
+If you select the _Block_ action, you can define a custom response using the following parameters:
+
+- [**With response type**](#with-response-type)
+- [**With response code**](#with-response-code)
+- [**Response body**](#response-body)
+
+#### With response type (for _Block_ action) { #with-response-type }
+
+- Data type: `String`.
+- Field name in the API: `response` > `content_type` (optional).
+
+Defines the content type of a custom response when blocking a request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
+
+#### With response code (for _Block_ action)  { #with-response-code }
+
+- Data type: `Integer`.
+- Field name in the API: `response` > `status_code` (optional).
+
+Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
+
+#### Response body (for _Block_ action) { #response-body }
+
+- Data type: `String`.
+- Field name in the API: `response` > `content` (optional).
+
+Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+The maximum field size is 30 KB.
 
 ### For duration
 
@@ -281,33 +314,6 @@ The action behavior can be one of the following:
 - **Throttle requests over the maximum configured rate**: Applies the selected action to incoming requests over the configured limit, allowing other requests.<br>To configure this behavior via API, set `mitigation_timeout` to `0` (zero).
 
     ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
-
-### With response type
-
-- Data type: `String`.
-- Field name in the API: `response` > `content_type` (optional).
-
-Defines the content type of a custom response when blocking a request due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
-
-### With response code
-
-- Data type: `Integer`.
-- Field name in the API: `response` > `status_code` (optional).
-
-Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
-
-### Response body
-
-- Data type: `String`.
-- Field name in the API: `response` > `content` (optional).
-
-Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-The maximum field size is 30 KB.
 
 ## Notes about rate limiting characteristics
 
