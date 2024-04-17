@@ -17,3 +17,7 @@ Under **strict mode**, the router performs two checks on incoming packets to loo
 When uRPF is set to loose mode, the router performs a single check when it receives an IP packet to look for a source's matching entry in the routing table.
 
 If you are experiencing packet loss as a result of an upstream ISP implementing uRPF filtering, contact your ISP and request the link be set to **loose mode**.
+
+## Non-SNI support
+
+Currently, BYOIP cannot be used with [legacy custom certificates](/ssl/edge-certificates/custom-certificates/uploading/) to support {{<glossary-tooltip term_id="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">}}non-SNI{{</glossary-tooltip>}} requests.
