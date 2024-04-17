@@ -53,6 +53,11 @@
       "cytoscape": "3.28.1"
     }
   },
+  "pnpm": {
+    "overrides": {
+      "cytoscape": "3.28.1"
+    }
+  },
   "volta": {
     "node": "18.10.0"
   },
