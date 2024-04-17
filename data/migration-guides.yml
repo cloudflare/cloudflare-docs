@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Cloudflare Migration Guides
-  description: Review best practices and diagrams explaining how to address common Internet security and performance challenges using Cloudflare products. 
+  description: Content designed to help you migrate from another provider to Cloudflare.
   author: '@cloudflare'
 
 resources:
