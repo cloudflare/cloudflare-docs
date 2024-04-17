@@ -1365,6 +1365,8 @@
 /vectorize/learning/metadata-filtering/ /vectorize/reference/metadata-filtering/ 301
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
+/vectorize/configuration/ /vectorize/best-practices/ 301
+
 
 # hyperdrive
 
@@ -1572,6 +1574,7 @@
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /web3/polygon-gateway/* /web3/ 301
+/vectorize/configuration/* /vectorize/best-practices/:splat 301
 
 # Learning paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301

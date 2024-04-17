@@ -251,7 +251,7 @@ Extend this example by:
 
 - Adding more inputs and generating a larger set of vectors.
 - Accepting a custom query parameter passed in the URL, for example via `URL.searchParams`.
-- Creating a new index with a different [distance metric](/vectorize/configuration/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
+- Creating a new index with a different [distance metric](/vectorize/best-practices/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
 
 ## Next steps
 
