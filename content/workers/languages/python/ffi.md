@@ -9,7 +9,7 @@ meta:
 
 Via [Pyodide](https://pyodide.org/en/stable/), Python Workers provide a [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) to JavaScript. This allows you to:
 
-- Use [bindings](/workers/configuration/bindings/) to resources on Cloudflare, including [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
+- Use [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare, including [Workers AI](/workers-ai/), [Vectorize](/vectorize/), [R2](/r2/), [KV](/kv/), [D1](/d1/), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
 - Use JavaScript globals, like [`Request`](/workers/runtime-apis/request/), [`Response`](/workers/runtime-apis/response/), and [`fetch()`](/workers/runtime-apis/fetch/).
 - Use the full feature set of Cloudflare Workers — if an API is accessible in JavaScript, you can also access it in a Python Worker, writing exclusively Python code.
 

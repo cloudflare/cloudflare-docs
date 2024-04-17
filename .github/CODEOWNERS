@@ -37,7 +37,7 @@
 /content/version-management/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
-/content/browser-rendering/ @tanushreesharma-cf @mchenco @deadlypants1973 @cloudflare/pcx-technical-writing @celso @meddulla
+/content/browser-rendering/ @tanushree-sharma @mchenco @deadlypants1973 @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
 /content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @ranbel @cloudflare/pcx-technical-writing
@@ -94,8 +94,8 @@
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @tanushreesharma-cf @deadlypants1973 @cloudflare/pcx-technical-writing
-/content/workers/configuration/bindings/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/bindings/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushree-sharma @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/configuration/compatibility-dates/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @deadlypants1973 @cloudflare/pcx-technical-writing

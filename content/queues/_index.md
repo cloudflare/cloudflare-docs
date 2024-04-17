@@ -30,8 +30,21 @@ Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables yo
 
 ## Features
 
-{{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
+{{<feature header="Batching, Retries and Delays" href="/queues/reference/batching-retries/">}}
+
+Cloudflare Queues allows you to batch, retry and delay messages. 
+
+{{</feature>}}
+
+{{<feature header="Dead Letter Queues" href="/queues/reference/dead-letter-queues/">}}
+
+Redirect your messages when a delivery failure occurs.
+
+{{</feature>}}
+
+{{<feature header="Pull consumers" href="/queues/reference/pull-consumers/">}}
+
+Configure pull-based consumers to pull from a queue over HTTP from infrastructure outside of Cloudflare Workers.
 
 {{</feature>}}
 

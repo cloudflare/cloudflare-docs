@@ -320,7 +320,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
-- `placement` {{<type-link href="#placement">}}Placement{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `placement` {{<type>}}Placement{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/smart-placement/).
 
@@ -411,7 +411,7 @@ A [binding](/pages/functions/bindings/) enables your Pages Functions to interact
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
 {{<Aside type="note">}}
 

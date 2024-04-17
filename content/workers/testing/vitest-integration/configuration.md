@@ -37,7 +37,7 @@ Use [Vitest Workspaces](https://vitest.dev/guide/workspace) to only use the Work
 
 {{<Aside type="warning">}}
 
-Custom `environment`s or `runner`s are not supported when using the Workers Vitest integration.
+Custom Vitest `environment`s or `runner`s are not supported when using the Workers Vitest integration.
 
 {{</Aside>}}
 
@@ -140,7 +140,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 - {{<code>}}miniflare{{</code>}}: {{<type>}}SourcelessWorkerOptions & { workers?: WorkerOptions[]; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Use this to provide configuration information that is typically stored within the Wrangler configuration file, such as [bindings](/workers/configuration/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-dates/#compatibility-flags). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
+  - Use this to provide configuration information that is typically stored within the Wrangler configuration file, such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-dates/#compatibility-flags). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
 
   - If your project makes use of multiple Workers, you can configure auxiliary Workers that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
     - Cannot have TypeScript entrypoints. You must compile auxiliary Workers to JavaScript first. You can use the [`wrangler deploy --dry-run --outdir dist`](/workers/wrangler/commands/#deploy) command for this.
@@ -150,9 +150,11 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
     - Can be written with the [Service Worker syntax](/workers/reference/migrate-to-module-workers/#service-worker-syntax).
     - Are not affected by global mocks defined in your tests.
 
-- {{<code>}}wrangler{{</code>}}: {{<type>}}{ configPath?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}wrangler{{</code>}}: {{<type>}}{ configPath?: string; environment?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Path to Wrangler configuration file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/configuration/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
+  - Path to Wrangler configuration file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/runtime-apis/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
+
+  - The environment option can be used to specify the [Wrangler environment](/workers/wrangler/environments/) to pick up bindings and variables from.
 
 {{</definitions>}}
 

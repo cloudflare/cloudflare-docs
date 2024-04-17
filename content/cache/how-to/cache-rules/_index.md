@@ -14,3 +14,5 @@ Cache Rules can be created in the [dashboard](/cache/how-to/cache-rules/create-d
 The following table describes Cache Rules availability per plan.
 
 {{<feature-table id="cache.cache_rules">}}
+
+{{<render file="_troubleshoot-rules-with-trace.md" productFolder="rules" withParameters="cache rules">}}

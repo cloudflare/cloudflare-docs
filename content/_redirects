@@ -304,8 +304,8 @@
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
 /durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
-/durable-objects/platform/graphql-analytics/ /durable-objects/reference/graphql-analytics/ 301
-/durable-objects/platform/troubleshooting/ /durable-objects/reference/troubleshooting/ 301
+/durable-objects/platform/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
+/durable-objects/platform/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/learning/ /durable-objects/reference/ 301
 /durable-objects/learning/in-memory-state/ /durable-objects/reference/in-memory-state/ 301
 /durable-objects/learning/durable-objects-migrations/ /durable-objects/reference/durable-objects-migrations/ 301
@@ -316,6 +316,9 @@
 /durable-objects/how-to/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
 /durable-objects/configuration/access-durable-object-from-a-worker/ /durable-objects/best-practices/access-durable-objects-from-a-worker/ 301
 /durable-objects/configuration/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
+/durable-objects/reference/error-handling/ /durable-objects/best-practices/error-handling/ 301
+/durable-objects/reference/troubleshooting/ durable-objects/observability/troubleshooting/ 301
+/durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -1362,6 +1365,8 @@
 /vectorize/learning/metadata-filtering/ /vectorize/reference/metadata-filtering/ 301
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
+/vectorize/configuration/ /vectorize/best-practices/ 301
+
 
 # hyperdrive
 
@@ -1569,6 +1574,7 @@
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /web3/polygon-gateway/* /web3/ 301
+/vectorize/configuration/* /vectorize/best-practices/:splat 301
 
 # Learning paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301
