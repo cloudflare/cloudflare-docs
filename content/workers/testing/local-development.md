@@ -30,7 +30,7 @@ $ npx wrangler dev
 
 `wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
 
-Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data. Wrangler will automatically create local versions of bindings found in `wrangler.toml`. These will not have data in them initially, so you will need to add data manually.
+Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production. Wrangler will automatically create local versions of bindings found in `wrangler.toml`. These local versions of bindings will not have data in them initially, so you will need to add data manually. You can add data manually via your Worker as it is running in local development or via the [Miniflare API](https://miniflare.dev/storage). There is currently no way to seed production data in local development. Cloudflare is actively working on improving this.
 
 ### Supported resource bindings in different environments
 
