@@ -6,15 +6,15 @@ weight: 5
 
 # Query Vectors
 
-Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/configuration/create-indexes/#distance-metrics).
+Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/best-practices/create-indexes/#distance-metrics).
 
-Optionally, you can apply [metadata filters](/vectorize/reference/metadata-filtering/) or a [namespace](/vectorize/configuration/insert-vectors/#namespaces) to narrow the vector search space.
+Optionally, you can apply [metadata filters](/vectorize/reference/metadata-filtering/) or a [namespace](/vectorize/best-practices/insert-vectors/#namespaces) to narrow the vector search space.
 
 ## Example query
 
 To pass a vector as a query to an index, use the `query()` method on the index itself.
 
-A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/configuration/insert-vectors/), a query vector does not need an ID or metadata.
+A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/best-practices/insert-vectors/), a query vector does not need an ID or metadata.
 
 ```ts
 let queryVector = [54.8, 5.5, 3.1];

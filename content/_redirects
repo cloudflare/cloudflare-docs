@@ -1365,6 +1365,8 @@
 /vectorize/learning/metadata-filtering/ /vectorize/reference/metadata-filtering/ 301
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
+/vectorize/configuration/ /vectorize/best-practices/ 301
+
 
 # hyperdrive
 
