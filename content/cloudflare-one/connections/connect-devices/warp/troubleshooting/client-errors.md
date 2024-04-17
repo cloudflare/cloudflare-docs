@@ -101,7 +101,6 @@ Below is a non-exhaustive list of third-party software that are known to cause `
 
 2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
 
-
 ## CF_FAILED_TO_SET_MTLS
 
 ### Symptoms
