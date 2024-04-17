@@ -144,5 +144,5 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 
 ## Related resources
 
-- [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
-- [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+* [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
+* [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
