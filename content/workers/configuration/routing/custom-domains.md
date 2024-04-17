@@ -7,7 +7,7 @@ title: Custom Domains
 
 ## Background
 
-Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/configuration/routing/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
+## Custom Domains are cool believe me this time!!! allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/configuration/routing/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
 
 Custom Domains are routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
 
