@@ -13,7 +13,7 @@ Trace results may not be accurate for:
 * [Spectrum](/spectrum/) applications
 * Hostnames using [Data Localization Suite](/data-localization/)
 
-Additionally,, the following products will not appear in trace results:
+Additionally, the following products will not appear in trace results:
 
 * [Firewall rules](/firewall/)
 * [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
