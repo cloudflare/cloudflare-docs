@@ -28,11 +28,11 @@ You cannot add unapproved prefixes to Advanced TCP Protection. Contact your acco
 
 [Add prefixes to the allowlist](/ddos-protection/tcp-protection/how-to/add-prefix-allowlist/) if their traffic should bypass Advanced TCP Protection rules.
 
-The allowlist only applies to source IPs — it does not apply to your own IPs or prefixes. To exclude a subset of an onboarded prefix from Advanced TCP Protection, refer to [Exclude a prefix or a prefix subset](/ddos-protection/tcp-protection/how-to/exclude-prefix/).
+The {{<glossary-tooltip term_id="allowlist">}}allowlist{{</glossary-tooltip>}} only applies to source IPs — it does not apply to your own IPs or prefixes. To exclude a subset of an onboarded prefix from Advanced TCP Protection, refer to [Exclude a prefix or a prefix subset](/ddos-protection/tcp-protection/how-to/exclude-prefix/).
 
 ## 4. Create a global configuration
 
-[Create a rule](/ddos-protection/tcp-protection/how-to/create-rule/) for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received packets.
+[Create a rule](/ddos-protection/tcp-protection/how-to/create-rule/) for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}}.
 
 Optionally, you can create [filters](/ddos-protection/tcp-protection/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). {{<render file="_atp-filter-definition.md">}}
 

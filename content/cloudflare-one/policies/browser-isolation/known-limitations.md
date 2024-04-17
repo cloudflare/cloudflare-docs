@@ -23,6 +23,20 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 - Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
 - Internet Explorer 11 and below is unsupported.
 
+## Virtual machines
+
+Browser Isolation is not supported in virtualized environments (VMs).
+
+## Gateway selectors
+
+Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
+
+- [Destination Continent IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/policies/gateway/http-policies/#destination-country)
+- [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip)
+
+You cannot use these selectors to isolate traffic, and isolation matches for these selectors will not appear in your Gateway logs.
+
 ## File download size
 
 When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total size of files downloaded per session is shared with the amount of memory available to the remote browser. We recommend a maximum individual file size of 512MB.
@@ -31,7 +45,7 @@ When a user downloads a file within the remote browser, the file is held in memo
 
 [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/policies/browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/policies/access/isolate-application/).
 
-## Isolating SAML applications
+## SAML applications
 
 When Browser Isolation is [deployed in-line](/cloudflare-one/policies/browser-isolation/setup/) (for example, via WARP, Gateway proxy endpoint or Magic WAN) it is possible to configure a subset of traffic to be isolated. Browser Isolation segregates local and remote browsing contexts. Due to this, cross-domain interactions (such as single sign-on) may not function as expected.
 

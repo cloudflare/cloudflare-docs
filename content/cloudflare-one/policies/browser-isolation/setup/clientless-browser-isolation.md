@@ -10,7 +10,13 @@ Clientless Web Isolation allows users to securely browse high risk or sensitive 
 
 ## Set up Clientless Web Isolation
 
-{{<render file="/_clientless-browser-isolation.md">}} 3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+{{<render file="/_clientless-browser-isolation.md">}}
+
+3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+
+## Filter DNS queries
+
+Gateway filters and resolves DNS queries for isolated sessions via [DNS policies](/cloudflare-one/policies/gateway/dns-policies/). Enterprise users can resolve domains available only through private resolvers by creating [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
 
 ## Use the remote browser
 

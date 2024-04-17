@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Headers
+meta:
+  description: Access HTTP request and response headers.
 ---
 
 # Headers
@@ -53,3 +55,4 @@ For a list of documented Cloudflare request headers, refer to [HTTP request head
 ## Related resources
 
 * [Logging headers to console](/workers/examples/logging-headers/) - Review how to log headers in the console.
+* [HTTP request headers](/fundamentals/reference/http-request-headers/) - A list of specific headers Cloudflare adds.

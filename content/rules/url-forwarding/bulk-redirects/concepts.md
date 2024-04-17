@@ -87,7 +87,7 @@ The default expression of a Bulk Redirect Rule is the following:
 http.request.full_uri in $<LIST_NAME>
 ```
 
-This expression means that the request URL, after some basic normalization (if [URL normalization](/rules/normalization/) is enabled), should match the source URL of a URL redirect in the list `<LIST_NAME>` for the redirect to be applied.
+This expression means that the request URL, after some basic {{<glossary-tooltip term_id="URL normalization">}}normalization{{</glossary-tooltip>}} (if [URL normalization](/rules/normalization/) is enabled), should match the source URL of a URL redirect in the list `<LIST_NAME>` for the redirect to be applied.
 
 You can use an expression different from the default one to increase the specificity of URL redirect matches. For example, if you set the expression of a Bulk Redirect Rule to the following expression, there will only be a match for requests coming from the United Kingdom:
 

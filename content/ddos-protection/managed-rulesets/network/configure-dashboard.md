@@ -27,24 +27,24 @@ For more information on the available parameters and allowed values, refer to [R
 
     {{<details header="Configure all the rules in the ruleset (ruleset override)">}}
 
-    1. Select **Next**.
-    2. Enter a name for your override in **Execution name**.
-    3. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
-    4. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
+1. Select **Next**.
+2. Enter a name for your override in **Execution name**.
+3. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
+4. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 
     {{</details>}}
 
     {{<details header="Configure one or more rules">}}
 
-    1. Search for the rules you wish to override using the available filters. You can search for tags.
+1. Search for the rules you wish to override using the available filters. You can search for tags.
 
-    2. To override a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
+2. To override a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-        To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-    3. Select **Next**.
+3. Select **Next**.
 
-    4. Enter a name for your override in **Execution name**.
+4. Enter a name for your override in **Execution name**.
 
     {{</details>}}
 
@@ -52,6 +52,7 @@ For more information on the available parameters and allowed values, refer to [R
 
 * Tag and rule overrides have priority over ruleset overrides.
 * {{<render file="managed-rulesets/_read-only-rules-note.md">}}
+
     {{</Aside>}}
 
 8. To save and deploy the override, select **Deploy**. If you are not ready to deploy your override, select **Save as Draft**.

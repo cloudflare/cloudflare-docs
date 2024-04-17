@@ -3,9 +3,8 @@ pcx_content_type: how-to
 title: Send messages from the dashboard
 summary: Use the dashboard to send messages to a queue.
 weight: 1003
-layout: single
 meta:
-  title: Cloudflare Queues - Sending messages from the dashboard 
+  title: Cloudflare Queues - Sending messages from the dashboard
 ---
 
 # Send messages from the dashboard
@@ -22,6 +21,6 @@ To send messages from the dashboard:
 6. Enter your message. You can choose your message content type by selecting the **Text** or **JSON** tabs. Alternatively, select the **Upload a file** button or drag a file over the textbox to upload a file as a message.
 7. Select **Send message**.
 
-Your message will be sent to the queue. 
+Your message will be sent to the queue.
 
 Refer to the [Get Started guide](/queues/get-started/) to learn how to send messages to a queue from a Worker.

@@ -5,7 +5,7 @@ weight: 4
 layout: learning-unit
 ---
 
-Cloudflare provides analytics for [security events](/waf/security-events/), [traffic patterns](/analytics/account-and-zone-analytics/zone-analytics/), and more according to the level of your zone's plan.
+Cloudflare provides analytics for [security events](/waf/analytics/security-events/), [traffic patterns](/analytics/account-and-zone-analytics/zone-analytics/), and more according to the level of your zone's plan.
 
 To augment these default analytics and gather more information about potential DDoS attacks, explore the following options.
 

@@ -2,40 +2,51 @@
 link: "/waf/change-log/"
 productName: WAF
 entries:
-- publish_date: '2023-11-06'
-  individual_page: true
-  link: '/waf/change-log/2023-11-06---emergency-release/'
-- publish_date: '2023-10-30'
+- publish_date: '2024-04-02'
+  scheduled_date: '2024-04-08'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
-- publish_date: '2023-10-30'
+- publish_date: '2024-04-16'
   individual_page: true
-  link: '/waf/change-log/2023-10-30/'
-- publish_date: '2023-10-23'
+  link: '/waf/change-log/2024-04-16---emergency-release/'
+- publish_date: '2024-04-15'
   individual_page: true
-  link: '/waf/change-log/2023-10-23/'
-- publish_date: '2023-10-11'
+  link: '/waf/change-log/2024-04-15/'
+- publish_date: '2024-04-08'
   individual_page: true
-  link: '/waf/change-log/2023-10-11---emergency-release/'
-- publish_date: '2023-10-03'
+  link: '/waf/change-log/2024-04-08/'
+- publish_date: '2024-03-18'
   individual_page: true
-  link: '/waf/change-log/2023-10-04---emergency-release/'
-- publish_date: '2023-10-02'
+  link: '/waf/change-log/2024-03-18/'
+- publish_date: '2024-03-11'
   individual_page: true
-  link: '/waf/change-log/2023-10-02/'
-- publish_date: '2023-09-22'
+  link: '/waf/change-log/2024-03-11/'
+- publish_date: '2024-03-04'
   individual_page: true
-  link: '/waf/change-log/2023-09-22---emergency-release/'
-- publish_date: '2023-09-18'
+  link: '/waf/change-log/2024-03-04/'
+- publish_date: '2024-02-26'
   individual_page: true
-  link: '/waf/change-log/2023-09-18/'
-- publish_date: '2023-09-04'
+  link: '/waf/change-log/2024-02-26/'
+- publish_date: '2024-02-20'
   individual_page: true
-  link: '/waf/change-log/2023-09-04/'
-- publish_date: '2023-08-21'
-  link: '/waf/change-log/2023-08-21/'
+  link: '/waf/change-log/2024-02-20/'
+- publish_date: '2024-02-12'
   individual_page: true
-- publish_date: '2023-08-17'
-  link: '/waf/change-log/2023-08-17---emergency-release/'
+  link: '/waf/change-log/2024-02-12/'
+- publish_date: '2024-02-05'
   individual_page: true
+  scheduled: true
+  link: '/waf/change-log/2024-02-05/'
+- publish_date: '2024-01-22'
+  individual_page: true
+  link: '/waf/change-log/2024-01-22---emergency-release/'
+- publish_date: '2024-01-17'
+  individual_page: true
+  link: '/waf/change-log/2024-01-17---emergency-release/'
+- publish_date: '2024-01-16'
+  individual_page: true
+  link: '/waf/change-log/2024-01-16/'
+- publish_date: '2024-01-04'
+  individual_page: true
+  link: '/waf/change-log/2024-01-04/'

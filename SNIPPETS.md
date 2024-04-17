@@ -20,11 +20,12 @@ Prefixes | Description
 `glossarytooltip` | Adds a new glossary reference, displaying its (short) definition as a tooltip.
 `headerpartialfile` | Inserts a header for a partial Markdown file.
 `headerpartialfileparams` | Inserts a header for a partial Markdown file with input parameters.
+`headerexternallink` | Inserts a header for a page with no content that links to an external URL.
 `inlinepill` or `pillinline` | Inserts shortcode for an inline pill (appearing after a piece of text) stating the release status (for example, Beta).
 `partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
 `partialincludeparams` or `renderpartialparams` | Inserts a `render` shortcode to include content from a partial with input parameters in the current document.
 `twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
-`detailssection` or `collapsible` | Inserts a collapsible `<details>` HTML element.
+`detailssection` or `collapsible` | Inserts a collapsible details section.
 
 Triggering one of the available snippets will insert their body content at the current cursor position.
 

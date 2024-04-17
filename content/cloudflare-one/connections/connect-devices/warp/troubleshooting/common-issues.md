@@ -6,7 +6,7 @@ weight: 1
 
 # Common issues
 
-This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ## Unable to connect WARP
 
@@ -21,10 +21,13 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/), `daemon.log` will typically show one or more of the following errors:
 
 - Happy Eyeball checks failing:
+
   ```txt
   ERROR main_loop: warp::warp::happy_eyeballs: Happy eyeballs error Custom { kind: NotConnected, error: "All Happy Eyeballs checks failed" }
   ```
+
 - Many other checks timing out:
+
   ```txt
   ERROR warp::warp::connectivity_check: DNS check failed error=ResolveError { kind: Timeout }
   WARN warp::warp::connectivity_check: Tunnel trace failed request::Error { kind: Request, url: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("connectivity.cloudflareclient.com")), port: None, path: "/cdn-cgi/trace", query: None, fragment: None }, source: TimedOut }
@@ -174,4 +177,4 @@ Some applications require traffic to flow either all inside or all outside of th
 
 1. Determine the IP addresses and/or domains required for your application to function. Common Internet search terms include `<app-name> split tunnel list`, `<app-name> allow list`, or `<app-name> firewall ips`.
 2. In [Zero Trust](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
-3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-office-365-traffic) to exclude all Office 365 IPs.
+3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) to exclude all Microsoft 365 IPs.

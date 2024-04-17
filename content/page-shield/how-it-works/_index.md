@@ -2,7 +2,6 @@
 title: How it works
 pcx_content_type: concept
 weight: 3
-layout: single
 meta:
   title: How Page Shield works
   description: Page Shield tracks resources (such as scripts) loaded in your domain's pages and provides alerts when it detects new or malicious resources.

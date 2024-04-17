@@ -20,7 +20,7 @@ As you get started with Cloudflare, use the following resources.
 | Resource | Description |
 | --- | --- |
 | [Community](https://community.cloudflare.com) | Engage with other Cloudflare users and with Cloudflare staff. |
-| [Workers Community Discord](https://discord.gg/cloudflaredev) | Connect with other developers using Cloudflare products (Workers, Pages, Stream, etc.). | 
+| [Workers Community Discord](https://discord.cloudflare.com) | Connect with other developers using Cloudflare products (Workers, Pages, Stream, etc.). | 
 
 ### Philanthropy
 | Resource | Description |

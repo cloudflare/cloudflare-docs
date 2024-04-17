@@ -12,7 +12,7 @@ To help avoid [`ERR_SSL_VERSION_OR_CIPHER_MISMATCH`](/ssl/troubleshooting/versio
 
 ## Pending domains
 
-If you recently [added your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare - meaning that your zone is in a [pending state](/dns/zone-setups/reference/domain-status/) - you can often ignore this warning.
+If you recently [added your domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare - meaning that your zone is in a [pending state](/dns/zone-setups/reference/domain-status/) - you can often ignore this warning.
 
 Once most domains becomes **Active**, Cloudflare will automatically issue a Universal SSL certificate, which will provide SSL/TLS coverage and remove the warning message.
 

@@ -4,7 +4,6 @@ title: Common use cases
 weight: 5
 meta:
   title: Common use cases for WAF custom rules
-layout: single
 ---
 
 # Common use cases for custom rules

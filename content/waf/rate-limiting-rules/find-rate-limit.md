@@ -8,7 +8,7 @@ meta:
 
 # Find an appropriate rate limit
 
-The **Rate limit analysis** tab in [Security Analytics](/waf/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
+The **Rate limit analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
 
 {{<Aside type="note">}}
 The **Rate limit analysis** tab is only available to Enterprise customers.
@@ -23,7 +23,7 @@ The **Rate limit analysis** tab is available at the zone level in **Security** >
 The main chart displays the distribution of request rates for the top 50 unique clients observed during the selected time interval (for example, `1 minute`) in descending order. You can group the request rates by the following unique request properties:
 
 * **IP address**
-* [**JA3 fingerprint**](/bots/concepts/ja3-fingerprint/) (only available to customers with Bot Management)
+* [**JA3 fingerprint**](/bots/concepts/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
 * **IP address and JA3 fingerprint** (only available to customers with Bot Management)
 
 {{<Aside type="note">}}
@@ -39,7 +39,7 @@ For more information on how Cloudflare calculates the request rate of incoming t
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
 2. Go to **Security** > **Analytics**.
 
-3. In the **HTTP requests** tab, select a specific time period:
+3. In the **Traffic analysis** tab, select a specific time period:
 
     * To look at the regular rate distribution, specify a period with non-peak traffic.
     * To analyze the rate of offending visitors/bots, select a period corresponding to an attack.
@@ -68,7 +68,7 @@ Answering the following questions during your adjustments can help you with your
 
 1. Repeat the rate selection process described in the previous section, but selecting a portion of traffic where you know there was an attack or traffic peak. The rate you have chosen should block the outlier traffic during the attack and allow traffic during regular periods.
 
-2. (Optional) Check the [sampled logs](/waf/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
+2. (Optional) Check the [sampled logs](/waf/analytics/security-analytics/#sampled-logs) to verify the fingerprints and filters you selected.
 
 ### 4. Create a rate limiting rule
 

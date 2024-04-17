@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Isolate self-hosted application
 weight: 4
-layout: single
 ---
 
 # Isolate self-hosted application
@@ -15,21 +14,11 @@ With Access policies, you can require users to open self-hosted applications in 
 
 ## Prerequisites
 
-Your browser must [allow third-party cookies](/cloudflare-one/identity/authorization-cookie/#allow-third-party-cookies-in-the-browser) on the application domain.
+{{<render file="/access/_isolation-prereqs.md">}}
 
 ## Enable Browser Isolation
 
-{{<render file="/_clientless-browser-isolation.md">}}
-
-3. Next, go to **Access** > **Applications**.
-4. Choose a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) and select **Configure**.
-5. Choose an [Allow policy](/cloudflare-one/policies/access/) and select **Configure**.
-6. Under **Additional settings**, turn on **Isolate application**.
-7. Save the policy.
-
-Browser Isolation is now enabled for users who match this policy. After the user logs into Access, the application will launch in a remote browser.
-
-You can optionally add a second Allow policy for users on managed devices who do not require isolation.
+{{<render file="/access/_enable-isolation.md">}}
 
 ## Policies for isolated applications
 
@@ -48,4 +37,4 @@ For example, if your application is hosted on `internal.site.com`, the following
 
 ## Product compatibility
 
-Refer to [this page](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) for a list of products that are incompatible with the **Isolate application** feature.
+For a list of products that are incompatible with the **Isolate application** feature, refer to [Product Compatibility](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) .

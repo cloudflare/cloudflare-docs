@@ -1,15 +1,16 @@
 ---
-weight: 1
+weight: 2
 title: Get started
 pcx_content_type: get-started
 ---
 
 # Get started
 
-Hyperdrive dramatically speeds up access to your existing databases from Cloudflare Workers, making even single-region databases feel globally distributed.
+Hyperdrive accelerates access to your existing databases from Cloudflare Workers, making even single-region databases feel globally distributed.
 
-- By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive cuts out what can typically be seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x) and database authentication (3x).
-- On top of that, Hyperdrive understands the difference between read and write queries to your database, and can intelligently cache the most common read queries made: improving both query performance and reducing load on your origin database.
+By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive reduces seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x), and database authentication (3x).
+
+Hyperdrive understands the difference between read and write queries to your database, and can cache the most common read queries, improving performance and reducing load on your origin database.
 
 This guide will instruct you through:
 
@@ -21,7 +22,7 @@ This guide will instruct you through:
 
 {{<Aside type="note" header="Workers Paid plan required">}}
 
-Hyperdrive is available to all users on the [Workers paid plan](/workers/platform/pricing/#workers).
+Hyperdrive is available to all users on the [Workers Paid plan](/workers/platform/pricing/#workers).
 
 {{</Aside>}}
 
@@ -29,14 +30,24 @@ To continue, you will need:
 
 1. A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you do not have one already.
 2. [`npm`](https://docs.npmjs.com/getting-started) installed on your local machine.
-3. [`Node.js`](https://nodejs.org/en/) installed. Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
-4. **A publicly accessible PostgreSQL (or PostgreSQL compatible) database**. Cloudflare recommends [Neon](https://neon.tech/) if you do not have an existing database. Read the [Neon's documentation to create your first database](https://neon.tech/docs/introduction).
+3. [`Node.js`](https://nodejs.org/en/) installed. Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+4. **A publicly accessible PostgreSQL (or PostgreSQL compatible) database**. Cloudflare recommends [Neon](https://neon.tech/) if you do not have an existing database. Read the [Neon documentation to create your first database](https://neon.tech/docs/introduction).
 
-## 1. Create a Worker
+## 1. Log in
+
+Before creating your Hyperdrive binding, log in with your Cloudflare account by running:
+
+```sh
+$ npx wrangler login
+```
+
+You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+
+## 2. Create a Worker
 
 {{<Aside type="note" header="New to Workers?">}}
 
-Refer to [How Workers works](/workers/learning/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
+Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
 
 {{</Aside>}}
 
@@ -49,14 +60,14 @@ $ npm create cloudflare@latest
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
 - Name your directory `hyperdrive-tutorial`.
-- Choose `"Hello World" script` for the type of application.
+- Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using Git.
 - Select `no` to deploying.
 
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
-- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/worker.ts`
+- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
@@ -67,11 +78,11 @@ For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=si
 
 {{</Aside>}}
 
-## 2. Connect Hyperdrive to a database
+## 3. Connect Hyperdrive to a database
 
 {{<Aside type="note" heading="Supported database engines">}}
 
-Hyperdrive currently works with PostgreSQL and/or PostgreSQL compatible databases, including CockroackDB and Materialize.
+Hyperdrive currently works with PostgreSQL and/or PostgreSQL compatible databases, including CockroachDB and Materialize.
 
 Support for other database engines, including MySQL, is on the roadmap.
 
@@ -93,10 +104,10 @@ Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangle
 
 To create your first Hyperdrive, you will need:
 
-* The IP address (or hostname) and port of your database.
-* The database username (for example, `hyperdrive-demo`) you configured in a previous step.
-* The password associated with that username.
-* The name of the database you want Hyperdrive to connect to. For example, `postgres`.
+- The IP address (or hostname) and port of your database.
+- The database username (for example, `hyperdrive-demo`) you configured in a previous step.
+- The password associated with that username.
+- The name of the database you want Hyperdrive to connect to. For example, `postgres`.
 
 Hyperdrive accepts the combination of these parameters in the common connection string format used by database drivers:
 
@@ -109,13 +120,13 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
-$ wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+$ npx wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 If successful, the command will output your new Hyperdrive configuration:
 
 ```json
- {
+{
   "id": "<example id: 57b7076f58be42419276f058a8968187>",
   "name": "your-config-name",
   "origin": {
@@ -134,13 +145,13 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
-## 3. Bind your Worker to Hyperdrive
+## 4. Bind your Worker to Hyperdrive
 
-You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your Hyperdrive configuration to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -161,16 +172,16 @@ Specifically:
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "hyperdrive"` or `binding = "productionDB"` would both be valid names for the binding.
 - Your binding is available in your Worker at `env.<BINDING_NAME>`.
 
-## 4. Run a query against your database
+## 5. Run a query against your database
 
 ### Install a database driver
 
 To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [node-postgres](https://node-postgres.com/), one of the most widely used PostgreSQL drivers.
 
-To install `node-postgres`,  ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
+To install `node-postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
 ```sh
-# For existing projects, make sure you are using pg v8.11.0 or greater
+# For existing projects, use pg v8.11.0 or greater
 $ npm i pg
 ```
 
@@ -180,13 +191,13 @@ With the driver installed, you can now create a Worker script that queries your 
 
 After you have set up your database, you will run a SQL query from within your Worker.
 
-Go to your `hyperdrive-tutorial` Worker and open the `worker.ts` file. The `worker.ts` file is where you configure your Worker's interactions with D1.
+Go to your `hyperdrive-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 
-Populate your `worker.ts` file with the following code:
+Populate your `index.ts` file with the following code:
 
 ```typescript
 ---
-filename: "src/worker.ts"
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 
@@ -199,18 +210,24 @@ export interface Env {
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		console.log(JSON.stringify(env))
-		// Create a database client that connects to our database via Hyperdrive
+		// Create a database client that connects to your database via Hyperdrive
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+		const client = new Client({
+      host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			port: Number(env.HYPERDRIVE.port),
+			database: env.HYPERDRIVE.database
+		})
 
 		try {
-			// Connect to our database
+			// Connect to your database
 			await client.connect();
 
 			// Test query
-			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
@@ -229,15 +246,7 @@ In the code above, you have:
 3. Initiated a query via `await client.query()` that outputs all tables (user and system created) in the database.
 4. Returned the response as JSON to the client.
 
-## 5. Deploy your database
-
-Before deploying your Hyperdrive binding and Worker globally, log in with your Cloudflare account by running:
-
-```sh
-$ npx wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+## 6. Deploy your database
 
 You can now deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
@@ -254,8 +263,8 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 ## Next steps
 
-* Learn more about [how Hyperdrive works](/hyperdrive/learning/how-hyperdrive-works/)
-* How to [configure query caching](/hyperdrive/learning/query-caching/)
-* [Troubleshooting common issues](/hyperdrive/learning/troubleshooting/) when connecting a database to Hyperdrive.
+- Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+- How to [configure query caching](/hyperdrive/configuration/query-caching/).
+- [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

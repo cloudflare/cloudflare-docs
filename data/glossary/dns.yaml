@@ -14,14 +14,14 @@ entries:
 - term: DNS over HTTPS
   general_definition: |-
     DNS over HTTPS (DoH) is a standard for encrypting DNS traffic via the HTTPS protocol, preventing tracking and spoofing of DNS queries.
-  associated_products: 
+  associated_products:
     - 1.1.1.1
     - Cloudflare One
 
 - term: DNS over TLS
   general_definition: |-
     DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (`853`) and TLS encryption.
-  associated_products: 
+  associated_products:
     - 1.1.1.1
     - Cloudflare One
 
@@ -33,7 +33,7 @@ entries:
 - term: DNS server
   general_definition: |-
     DNS servers translate human-readable domain names into IP addresses, eliminating the need to remember complex IP addresses.
-  associated_products: 
+  associated_products:
    - Cloudflare One
 
 - term: DNS zone
@@ -44,12 +44,25 @@ entries:
   general_definition: |-
     the Domain Name System (DNS) is the phonebook of the Internet. DNS translates domain names to IP addresses.
 
+- term: EDNS Client Subnet (ECS)
+  general_definition: |-
+    ECS is a DNS extension that enables recursive DNS resolvers to include client IP address information in their DNS queries.
+
+    Not all resolvers use ECS but, if they do, usually a part of the IP address is omitted. Sending ECS headers is generally intended to reduce latency and speed up content delivery in connection to [CDNs](/glossary/?term=cdn) and [load balancers](https://www.cloudflare.com/learning/performance/what-is-load-balancing/). The ECS mechanism is specified in [RFC 7871](https://www.rfc-editor.org/rfc/inline-errata/rfc7871.html).
+  associated_products:
+    - Load Balancing
+    - Cloudflare One
+    - 1.1.1.1 (DNS Resolver)
+
 - term: hostname
   general_definition: |-
     the name given to a server or node on a network, often the public DNS name of a server.
-  associated_products: 
+  associated_products:
     - Cloudflare One
+    - DDoS Protection
 
 - term: nameserver
   general_definition: |-
     a nameserver is a dedicated server that translates human readable hostnames into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
+  associated_products:
+    - DDoS Protection

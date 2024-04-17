@@ -218,14 +218,14 @@ For example, you might want to perform rate limiting for clients sending more th
 
 ### When rate exceeds > Requests
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `requests_per_period`.
 
 The number of requests over the period of time that will trigger the rule.
 
 ### When rate exceeds > Period
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `period`.
 
 The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
@@ -243,19 +243,20 @@ Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_
 
 ### For duration
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `mitigation_timeout`.
 
 Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
 
-In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
+In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `0`, `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
 
-Configuring the rule in the Cloudflare dashboard with one of the challenge actions will enable request throttling. With this behavior, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+Customers on Free, Pro, and Business plans cannot select a duration when using a [challenge action](/waf/reference/cloudflare-challenges/#available-challenges) — their rate limiting rule will always perform request throttling for these actions. With request throttling, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
 
-When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`. This will enable request throttling.
+Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the challenge actions.
 
-{{<Aside type="note">}}
-Enterprise customers with a paid add-on can also [throttle requests](#with-the-following-behavior) with the _Block_ action.
+{{<Aside type="note" header="Notes for API users">}}
+* If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
+* Enterprise customers can use a `mitigation_timeout` value greater than or equal to `0` (zero), regardless of the rate limiting action they select.
 {{</Aside>}}
 
 ### With the following behavior
@@ -266,7 +267,7 @@ Enterprise customers with a paid add-on can also [throttle requests](#with-the-f
 Defines the exact behavior of the selected action.
 
 {{<Aside type="note">}}
-Only Enterprise customers with a paid add-on can throttle requests using the _Block_ action.
+Only Enterprise customers can throttle requests using the _Block_ action.
 
 Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details.
 {{</Aside>}}
@@ -355,4 +356,4 @@ If you use **Cookie value of** as a rate limiting rule characteristic, follow th
 
 * If the rule expression includes [IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.

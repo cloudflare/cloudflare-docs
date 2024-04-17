@@ -9,7 +9,7 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
+Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare’s reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your hostnames. If the hostname you are testing is not [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
 
 You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
 
@@ -28,7 +28,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to Account Home > **Trace**.
 
-2. Enter a URL to trace. The URL must include a hostname that is [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+2. Enter a URL to trace. The URL must include a hostname that belongs to your account.
 
 3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request body**.
 
@@ -41,7 +41,7 @@ Cloudflare Trace is available to users with an Administrator or Super Administra
     * [**Bot score**](/bots/concepts/bot-score/)
     * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score**{{</glossary-tooltip>}}
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
-    * **Skip challenge** (skips a Cloudflare-issued [challenge](/firewall/cf-firewall-rules/cloudflare-challenges/), if any, allowing the trace to continue)
+    * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
 5. Select **Send trace**.
 
@@ -73,10 +73,7 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 For matched configurations in trace results, each step corresponds to one of the following:
 
 * Execution of one or more rules of a Cloudflare product, in the context of a [phase](/ruleset-engine/about/phases/) (for products built on the [Ruleset Engine](/ruleset-engine/))
-* [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/) (execution of one or more rules)
-
-The following steps are planned for future additions:
-
+* [Page Rules](/rules/page-rules/) (execution of one or more rules)
 * [Workers](/workers/) (execution of one or more scripts)
 
 ---
@@ -85,9 +82,8 @@ The following steps are planned for future additions:
 
 Currently, you cannot perform traces for:
 
-* Domains or subdomains associated with [BYOIP](/byoip/) addresses
-* [Custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/)
 * [Spectrum](/spectrum/) applications
+* Hostnames using [Data Localization Suite](/data-localization/)
 
 Also, the following products will not appear in trace results:
 

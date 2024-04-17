@@ -19,7 +19,7 @@ With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-sec
 
 ### At your primary DNS provider
 
-Your primary DNS provider should allow traffic from the IP address and port specified in your [peer server configuration](#step-2---create-peer-server).
+Your primary DNS provider should allow traffic from the IP address and port specified in your [peer server configuration](#2-create-peer-server).
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) to prevent zone transfers from being blocked.
 
@@ -51,14 +51,14 @@ Get the following values from your Cloudflare account:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 {{<render file="_tsig-create-dash.md">}}
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 {{<render file="_tsig-create-api.md">}}
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -72,19 +72,19 @@ To create a peer server using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Click **DNS Zone Transfers**.
-4. For **Peer DNS servers**, click **Create**. 
+4. For **Peer DNS servers**, click **Create**.
 5. Enter the following information, paying particular attention to:
     - **IP**: Specifies where Cloudflare sends transfer requests to.
     - **Port**: Specifies the IP Port for the transfer IP.
     - **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
-    - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional). 
+    - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#1-create-tsig-optional).
 6. Click **Create**.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 To create a peer DNS server using the API, send a [POST request](/api/operations/secondary-dns-(-peer)-create-peer).
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -103,18 +103,18 @@ To create a secondary zone using the dashboard:
 6. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
     {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
     {{</Aside>}}
-7. Select the peer server you [previously created](#step-2---create-peer-server). If needed, you can link more than one peer server to a zone.
+7. Select the peer server you [previously created](#2-create-peer-server). If needed, you can link more than one peer server to a zone.
 8. Click **Continue**.
 9. Review the list of transferred records and click **Continue**.
     {{<Aside type="note">}} If no records appear, you may have misconfigured the TSIG or the IP address of the peer server or the [Access Control List](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) was improperly configured at your primary DNS provider.
     {{</Aside>}}
 10. Click **Initiate zone transfer**.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 To create a secondary zone using the API, send a [POST](/api/operations/secondary-dns-(-secondary-zone)-create-secondary-zone-configuration) request with the `type` parameter set to `"secondary"`.
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -126,7 +126,7 @@ When you have added them, go into your new secondary zone and click **Done, chec
 
 ## 5. Create notifications (optional)
 
-To increase the reliability of your incoming zone transfers, [set up notifications](/notifications/create-notifications/) to be notified when your primaries are failing, when records are updated, [and more](/notifications/notification-available/#dns).
+To increase the reliability of your incoming zone transfers, [set up notifications](/notifications/get-started/#create-a-notification) to be notified when your primaries are failing, when records are updated, [and more](/notifications/notification-available/#dns).
 
 ## 6. Proxy traffic through Cloudflare (optional)
 

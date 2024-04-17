@@ -5,9 +5,9 @@ _build:
   list: never
 ---
 
-{{<table-wrap>}}
-
 Workers KV is included in both the Free and Paid [Workers plans](/workers/platform/pricing/).
+
+{{<table-wrap>}}
 
 |                 | Free plan<sup>1</sup> | Paid plan                         |
 | --------------- | --------------------- | --------------------------------- |
@@ -19,4 +19,4 @@ Workers KV is included in both the Free and Paid [Workers plans](/workers/platfo
 
 {{</table-wrap>}}
 
-1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
+<sup>1</sup> The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.

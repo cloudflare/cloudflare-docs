@@ -16,7 +16,7 @@ The Cloudflare network uses [Border Gateway Protocol (BGP)](https://www.cloudfla
 
 Once packets hit Cloudflare’s network, traffic is inspected for attacks, filtered, {{<glossary-tooltip term_id="traffic steering">}}steered{{</glossary-tooltip>}}, accelerated, and sent onward to your origin. Magic Transit connects to your origin infrastructure using Anycast {{<glossary-tooltip term_id="GRE tunnel">}}Generic Routing Encapsulation (GRE){{</glossary-tooltip>}} tunnels over the Internet or, with [Cloudflare Network Interconnect (CNI)](/network-interconnect/), via physical or virtual interconnect.
 
-Magic Transit users have two options for their implementation: ingress traffic or ingress and egress traffic. Users with an egress implementation will need to set up {{<glossary-tooltip term_id="policy-based routing">}}policy-based routing (PBR){{</glossary-tooltip>}} or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
+Magic Transit users have two options for their implementation: ingress traffic or ingress and [egress traffic](/magic-transit/reference/egress/). Users with an egress implementation will need to set up {{<glossary-tooltip term_id="policy-based routing">}}policy-based routing (PBR){{</glossary-tooltip>}} or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
 
 ```mermaid
 flowchart LR
@@ -37,8 +37,8 @@ C-- Egress via <br> Direct Server <br> Return --> D
 D -- Ingress --> B
 
 style A stroke: red,fill: red,color: white
-style B stroke: orange,fill: orange
-style C stroke: #ADD8E6,fill: #ADD8E6
+style B stroke: orange,fill: orange,color: black
+style C stroke: #ADD8E6,fill: #ADD8E6,color: black
 style D stroke: blue,fill: blue,color: white
 linkStyle 0 stroke-width:3px,stroke:red
 linkStyle 1 stroke-width:2px,stroke:orange
@@ -53,4 +53,4 @@ Magic Transit is not yet supported on Cloudflare's China Network.
 
 {{</Aside>}}
 
-For detailed information on Magic Transit architecture, refer to [Magic Transit Use Cases and Reference Architecture](/reference-architecture/magic-transit-reference-architecture/).
+For detailed information on Magic Transit architecture, refer to the [Reference section](/magic-transit/reference/).

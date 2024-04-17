@@ -4,6 +4,8 @@ entries:
 - term: allowlist
   general_definition: |-
     an allowlist is a list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
+  associated_products:
+    - DDoS Protection
 
 - term: attack score
   general_definition: |-
@@ -30,10 +32,16 @@ entries:
 - term: firewall
   general_definition: |-
     a firewall is a security system that monitors and controls network traffic based on a set of security rules.
+  associated_products:
+    - Magic Firewall
 
 - term: mitigated request
   general_definition: |-
     a request to which Cloudflare applied a terminating action such as block or challenge.
+
+- term: paranoia level
+  general_definition: |-
+    classifies rules of the OWASP managed ruleset according to their agressiveness.
 
 - term: rate limiting
   general_definition: |-
@@ -44,6 +52,7 @@ entries:
     a Security Information and Event Management (SIEM) solution collects, analyzes, and correlates data to help manage security incidents, detect anomalies, and meet compliance requirements.
   associated_products:
     - Cloudflare One
+    - Area 1
 
 - term: threat score
   general_definition: |-

@@ -32,11 +32,11 @@ Block a section of a site without blocking the entire site. For example, you can
 | -------- | ------------- | ----------- | ------ |
 | URL      | matches regex | `/r/gaming` | Block  |
 
-{{<render file="gateway/_content-categories.md">}}
+{{<render file="gateway/policies/_content-categories.md">}}
 
-{{<render file="gateway/_block-applications.md">}}
+{{<render file="gateway/policies/_block-applications.md">}}
 
-{{<render file="gateway/_policies-optional.md">}}
+{{<render file="gateway/policies/_policies-optional.md">}}
 
 ## Skip inspection for groups of applications
 
@@ -52,13 +52,28 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
 {{</Aside>}}
 
-## Enforce device posture
+## Check device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
+
+### Enforce a minimum OS version
+
+Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
 
 | Selector                     | Operator | Value                | Action |
 | ---------------------------- | -------- | -------------------- | ------ |
 | Passed Device Posture Checks | in       | `Minimum OS version` | Allow  |
+
+### Check for a specific file
+
+Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their system.
+
+Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
+
+| Selector                     | Operator | Value              | Logic | Action |
+| ---------------------------- | -------- | ------------------ | ----- | ------ |
+| Passed Device Posture Checks | in       | `macOS File Check` | Or    | Allow  |
+| Passed Device Posture Checks | in       | `Linux File Check` |       |        |
 
 ## Enforce session duration
 
@@ -76,7 +91,7 @@ When accessing origin servers with certificates not signed by a public certifica
 | -------- | -------- | ------------------- | -------------- |
 | Domain   | in       | `internal.site.com` | Do Not Inspect |
 
-{{<render file="gateway/_block-file-types.md">}}
+{{<render file="gateway/policies/_block-file-types.md">}}
 
 ## Block Google services
 
@@ -108,3 +123,9 @@ Block file downloads from Gmail.
 | ---------------- | -------- | --------------------------------------- | ----- | ------ |
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
+
+## Isolate ChatGPT
+
+[Browser Isolation](/cloudflare-one/policies/browser-isolation/) users can isolate interactions with ChatGPT.
+
+{{<render file="gateway/policies/_isolate-chatgpt.md">}}

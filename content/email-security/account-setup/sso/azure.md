@@ -8,7 +8,7 @@ meta:
 
 # Azure integration guide
 
-This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a SAML SSO connection with Area 1.
+This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} SSO connection with Area 1.
 
 ## 1. Azure Active Directory configuration
 
@@ -124,4 +124,4 @@ If you have trouble connecting your Azure account to Area 1, make sure that:
 - The SAML SSO Domain is set correctly in the Area 1 dashboard (refer to step 6 in [Configure Area 1 to connect to Azure](#2-configure-area-1-to-connect-to-azure)).
 - The name ID identifier is set to **Email Address**.
 
-If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

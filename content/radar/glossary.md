@@ -10,17 +10,23 @@ This page provides a list of terms and concepts to help you understand Radar and
 
 ## Application-level Attacks
 
-Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. Selected location or ASN is the source of the mitigated requests.
+Layer 7 attack information based on mitigated requests, including the most frequent mitigation techniques as well as the trend of mitigated request volume over time. For the "Application layer attack volume" and "Mitigated traffic sources" graphs, the selected location or ASN is the source of the mitigated requests. For the "Application layer attack distribution" graph, the Origin Location graph shows where attacks targeting the selected location are coming from and the Target Location graph shows the target locations of attacks coming from the selected location. "Application layer attack distribution" insights are not available at an ASN level.
+
+## Authentication Methods
+
+[SPF](https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/#spf), [DKIM](https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/#dkim), and [DMARC](https://developers.cloudflare.com/dns/manage-dns-records/reference/dns-record-types/#dmarc) are policy-driven email authentication methods and when used together, they help prevent spammers, phishers, and other unauthorized parties from sending emails on behalf of a domain they do not own. PASS is the share of processed messages that pass the associated checks. FAIL is the share of processed messages that fail the associated checks. NONE is the share of processed messages for which no associated policy could be found. Data for these metrics comes from Cloudflare’s email routing service.
 
 ## Autonomous Systems
 
 The Internet is a network of networks, and autonomous systems are the networks that make up the Internet. More specifically, an autonomous system (AS) is a large network or group of networks that has a unified routing policy - the process by which a path through one or more networks is chosen.
 
-Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASes, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more [here](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
+Data packets hop from one AS to another until they reach their final destination. Every computer or device that connects to the Internet is connected to an AS. ISPs have one or more ASes, and each AS is assigned an official Autonomous System Number (ASN) for use in Border Gateway Protocol (BGP) routing. For example, Cloudflare's ASN is AS13335. Learn more in the [Cloudflare Learning Center](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
 
 ## BGP Announcements
 
-Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more [here](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-bgp/).
+Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more in the [Cloudflare Learning Center](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/).
+
+On Cloudflare Radar, we provide time series charts for both the volume of BGP messages announced by ASes and the total size of their announced IP address space. BGP message volume shows the level of overall routing activity for a given AS, while announced IP address space indicates the size of the networks a given AS operates over time. We represent the IP address space size with the number of minimum routable network prefix sizes, which are the number of /24 prefixes for IPv4 and /48s for IPv6. Correspondingly, a /24 prefix represents 256 IP addresses while a /48 represents 2^80 IP addresses.
 
 ## BGP Route Leaks
 
@@ -66,6 +72,9 @@ In Cloudflare Radar, you can view all certificates issued for a given domain by 
 
 You can review the certificates issued for your domain name to ensure that there have been no incorrect or fraudulent issuances of certificates associated with your domains. You can also sign up to receive alerts from our certificate transparency monitor in the [Cloudflare Dashboard](https://dash.cloudflare.com/).
 
+## Connection Characteristics
+Share of inbound connections to Cloudflare from mail transfer agents with the given characteristics. “IP Version” breaks down connections made over IPv4 and IPv6. “Encryption” breaks down connections made over an encrypted connection using TLS, and those made over an unencrypted connection, in the clear. Data for these metrics comes from Cloudflare’s email routing service.
+
 ## Connection Quality
 
 Connection quality metrics include download and upload speed, latency (round-trip time), and latency jitter (round-trip time stability), reflecting the best expected performance for specific countries or ASNs. These metrics are derived from speed tests initiated by end users on the [Cloudflare Speed Test website](https://speed.cloudflare.com/), aggregated over the previous 90 days. The underlying raw data is freely accessible for analysis through [Measurement Lab's BigQuery](https://blog.cloudflare.com/aim-database-for-internet-quality/).
@@ -107,7 +116,7 @@ IP address geolocation is the term used for the process of associating an IP add
 
 Note that a number of factors may affect the accuracy of the geolocation information, including mobile network architecture, the use of VPN services, and the use of privacy-protecting proxy services.
 
-Learn more [here](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
+Learn more from [MaxMind](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
 
 ## IPv6 adoption
 
@@ -125,6 +134,11 @@ The IQI methodology requires a minimum number of measurements to generate estima
 
 The Mobile Operating Systems graph shows the distribution of mobile device requests by operating system, representing trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network. "Mobile device" includes phones and tablets only, and does not include other types of devices, such as those classified as desktops/laptops, smart TVs, or gaming consoles.
 
+## Most Observed TLDs
+
+[Top-level domains, also known as TLDs](https://www.cloudflare.com/learning/dns/top-level-domain/), are found in the right-most portion of a hostname. As of February 2024, there are nearly 1600 Top Level Domains listed in the [IANA Root Zone Database](https://www.iana.org/domains/root/db). On Radar, we are sharing our own perspective on these TLDs, highlighting those with the largest shares of spam and malicious emails. The analysis is based on the sending domain’s TLD, found in the `From:` header of an email message. Data for this metric comes from Cloudflare’s cloud email security service.
+
+
 ## Network-level DDoS Attacks
 
 Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
@@ -139,7 +153,7 @@ A complete TCP connection consists of a 3-way handshake initiated by a client wi
 
 Timeouts can be triggered, for example, by shutting down applications or devices before they can close connections. Timeouts also can be caused by third-party applications or devices seeking to prevent or break the connection. The RST packet is reserved for use by an endpoint to signal a fatal error or failure of some kind, but it can also inappropriately be transmitted by middleboxes to force endpoints to close their connections (see RFC 3360).
 
-Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in “[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)”).
+Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in "[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)").
 
 On Cloudflare Radar's Security & Attacks page, you can view connection tampering statistics derived from a sample of connections to Cloudflare's servers. The plot lines are defined as follows:
 * **Mid-handshake (Post-SYN)**: Connections matching signatures for tampering after the receipt of only a single SYN packet, and before the handshake completes. Tampering at this stage is likely triggered by the destination IP address, as SYN packets typically do not contain application-layer data.
@@ -147,6 +161,14 @@ On Cloudflare Radar's Security & Attacks page, you can view connection tampering
 * **After first data packet (Post-PSH)**: Connections matching signatures for tampering after the receipt of a packet with PSH flag set, following connection establishment. PSH packets typically contain data such as the Server Name Indication (SNI) in TLS or the HTTP Host that could trigger middlebox tampering.
 * **After multiple data packets (Later in Flow)**: Connections matching signatures for tampering later in the connection, after the transfer of multiple data packets. Tampering in these cases could be triggered by keywords later in a cleartext HTTP session, or by commercial devices that have visibility into encrypted traffic
 * **None** Connections that do not match any tampering signatures.
+
+## Threat Categories
+
+Attackers use multiple types of techniques when carrying out email-based attacks, including links or attachments leading to malware; identity deception, where the message appears to be coming from a trusted contact; and brand impersonation, where the message appears to be coming from a trusted brand. Categories are assigned to the various types of threats found during the analysis of a malicious email message, and a single message can have multiple categories. These categories are aggregated into “Link”, “Attachment”, “Impersonation”, and “Other” groupings. “Link” groups individual threat types where the attacker is trying to get the user to click on something, “Attachment” groups individual threat types where  the attacker has attached a file to the email message, and “Impersonation” groups individual threat types where the attacker is impersonating a trusted brand or contact. The “Other” grouping includes other threat types not covered by the previous three. The percentages represent the share of malicious email messages where the given threat categories have been found. Data for this metric comes from Cloudflare’s cloud email security service.
+
+## Threat Classification
+
+Malicious email messages may be part of a phishing campaign, where recipients are tricked into sharing personal information like login details, or they are an attempt to spread malware through embedded images, links, or attachments. The percentage shown represents the share of processed messages that are classified as malicious. Data for this metric comes from Cloudflare’s cloud email security service.
 
 ## Traffic type filter
 

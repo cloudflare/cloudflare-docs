@@ -1,5 +1,5 @@
 ---
-title: Add records
+title: Records with the same name
 pcx_content_type: troubleshooting
 weight: 11
 meta:

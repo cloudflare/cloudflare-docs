@@ -2,10 +2,9 @@
 pcx_content_type: concept
 title: DLP datasets
 weight: 3
-layout: single
 ---
 
-{{<heading-pill style="beta">}}DLP datasets{{</heading-pill>}}
+# DLP datasets
 
 Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in a custom dataset. Sensitive data can be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
 
@@ -29,7 +28,7 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Cells must be at least six characters long. Title cells may result in false positives and should not be included. Accepted file formats include `.csv` and `.txt`.
 
-For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention).
+For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention-dlp).
 
 ### Upload a new dataset
 

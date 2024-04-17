@@ -51,7 +51,7 @@ Customize the cache properties of your HTTP requests.
 Understand the performance of your webpages as experienced by your site visitors.
 {{</related>}}
 
-{{<related header="Cloudflare Image Resizing" href="/images/image-resizing/" product="images">}}
+{{<related header="Cloudflare Image Resizing" href="/images/transform-images/" product="images">}}
 Transform images on Cloudflare’s edge platform: resize, adjust quality, and convert images to WebP or AVIF format on demand.
 {{</related>}}
 

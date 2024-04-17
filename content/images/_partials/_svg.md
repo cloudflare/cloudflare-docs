@@ -7,7 +7,7 @@ _build:
 
 ## SVG files
 
-Cloudflare Images and Image Resizing can deliver SVG files. However, as this is an [inherently scalable format](https://www.w3.org/TR/SVG2/), Cloudflare does not resize SVGs. 
+Cloudflare Images can deliver SVG files. However, as this is an [inherently scalable format](https://www.w3.org/TR/SVG2/), Cloudflare does not resize SVGs. 
 
 As such, Cloudflare Images variants cannot be used to resize SVG files. Variants, named or flexible, are intended to transform bitmap (raster) images into whatever size you want to serve them. 
 
@@ -19,7 +19,7 @@ https://imagedelivery.net/<ACCOUNT_HASH>/<SVG_ID>/public
 
 Cloudflare recommends you use named variants with SVG files. If you use flexible variants, all your parameters will be ignored. In either case, Cloudflare applies SVG sanitizing to your files.
 
-You can also use Image Resizing to sanitize SVG files stored in your origin. However, as stated above, Image Resizing will ignore all transform parameters, as Cloudflare does not resize SVGs.
+You can also use image transformations to sanitize SVG files stored in your origin. However, as stated above, transformations will ignore all transform parameters, as Cloudflare does not resize SVGs.
 
 ### Sanitized SVGs
 

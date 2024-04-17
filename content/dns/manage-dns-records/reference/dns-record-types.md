@@ -229,7 +229,9 @@ You could also use these to create email authentication records, but we recommen
 
 {{<Aside type="note">}}
 
-The **Content** for TXT records at Cloudflare must be 2048 characters or less.
+The **Content** for each TXT record must be 2,048 characters or less.
+
+If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8,192 or less.
 
 {{</Aside>}}
 
@@ -256,15 +258,13 @@ curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records"
 -H 'x-auth-key: <API_KEY>' \
 -H "Content-Type: application/json" \
 --data '{
-  "type":"SRV",
+  "type": "SRV",
+  "name": "_xmpp._tcp.example.com",
   "data": {
-    "service":"_xmpp",
-    "proto":"_tcp",
-    "name":"example.com",
-    "priority":10,
-    "weight":5,
-    "port":5223,
-    "target":"server.example.com"
+    "priority": 10,
+    "weight": 5,
+    "port": 5223,
+    "target": "server.example.com"
   }
 }'
 ```
@@ -278,20 +278,17 @@ header: Response
     "id": "<ID>",
     "zone_id": "<ZONE_ID>",
     "zone_name": "example.com",
-    "name": "xmpp.tcp.example.com",
+    "name": "_xmpp._tcp.example.com",
     "type": "SRV",
-    "content": "5\t5223\tserver.example.com",
+    "content": "5 5223 server.example.com",
     "priority": 10,
     "proxiable": false,
     "proxied": false,
     "ttl": 1,
     "locked": false,
     "data": {
-      "name": "example.com",
       "port": 5223,
       "priority": 10,
-      "proto": "_tcp",
-      "service": "_xmpp",
       "target": "server.example.com",
       "weight": 5
     },
@@ -316,7 +313,7 @@ header: Response
 
 Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
 
-If your domain has [HTTP/2 or HTTP/3 enabled](/support/network/understanding-cloudflare-http2-and-http3-support/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your Internet property.
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 
@@ -342,7 +339,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/additional-options/custom-nameservers/) or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
+You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 {{<render file="_api-field-definitions.md">}}
 

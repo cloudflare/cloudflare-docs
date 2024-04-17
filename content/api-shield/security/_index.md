@@ -3,7 +3,7 @@ pcx_content_type: navigation
 type: overview
 title: Security
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Security
@@ -21,7 +21,7 @@ The following table provides examples of how you might match Cloudflare products
 | OWASP issue | Example Cloudflare solution |
 | ----------- | ------------------- |
 | Broken Object Level Authorization | [Sequence Mitigation], [Schema Validation], [JWT Validation], [Rate Limiting] |
-| Broken Authentication | [mTLS](/api-shield/security/mtls/), [JWT Validation], [Leaked Credential Checks](/waf/exposed-credentials-check/), [Bot Management] |
+| Broken Authentication | [mTLS](/api-shield/security/mtls/), [JWT Validation], [Exposed Credential Checks](/waf/managed-rules/check-for-exposed-credentials/), [Bot Management] |
 | Broken Object Property Level Authorization | [Schema Validation], [JWT Validation] |
 | Unrestricted Resource Consumption | [Rate Limiting], [Sequence Mitigation], [Bot Management], [GraphQL Query Protection] |
 | Broken Function Level Authorization | [Schema Validation], [JWT Validation] |

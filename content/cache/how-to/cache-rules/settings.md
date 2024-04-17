@@ -67,16 +67,18 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with Image Resizing. Cache Rules will not be applied to Image Resizing requests. Page Rules are supported.
+Currently, Cache Rules are not compatible with image transformations . Cache Rules will not be applied to image transformation requests. Page Rules are supported.
 {{</Aside>}}
 
 #### Edge TTL 
 
-Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests.
+Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests. This setting has three primary options:
 
-You can choose to bypass cache if cache-control is not present, by selecting **Use cache control-header if present, bypass cache if not**. You can also select to **Use cache-control header if present, use default Cloudflare caching behavior if not**. Alternatively, select **Ignore cache-control header and use this TTL** and choose how long you want to cache resources from the available timing dropdown.
+- **Use cache control-header if present, bypass cache if not**: If a cache-control header is present on the response, follow its directives. If not, skip caching entirely.
+- **Use cache-control header if present, use default Cloudflare caching behavior if not**: If a cache-control header is present on the response, follow its directives. If not, cache in accordance with our [default cache settings](/cache/concepts/default-cache-behavior/).
+- **Ignore cache-control header and use this TTL**: Completely ignore any cache-control header on the response and instead cache the response for a duration specified in the timing dropdown.
 
-Additionally, in the **Edge Cache TTL** section, you can select how long you would like a particular matching status code’s content to be cached in Cloudflare’s global network. In **Status Code TTL** you can define the TTL duration for one or more response status codes received from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than or equal_ or _Less than or equal_ status code, or to a _Range_ of status codes. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
+Additionally, you can select how long you would like a particular matching status code’s content to be cached in Cloudflare’s global network. In **Status Code TTL** section you can define the TTL duration for one or more status codes of responses from the origin server. This setting can be applied to a _Single code_ status code, to a _Greater than or equal_ or _Less than or equal_ status code, or to a _Range_ of status codes. Status code TTLs are similar to **Ignore cache-control header and use this TTL** in that the cache-control header on the response will be ignored in favor of the TTL specified by the cache rule. For more information, refer to [Status code TTL](/cache/how-to/configure-cache-status-code/).
 
 {{<details header="API information">}}
 
@@ -314,7 +316,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Serve stale content while revalidating
 
-Defines if Cloudflare will serve stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
+Defines if Cloudflare will serve stale content while updating the latest content from the origin server. If serving stale content is disabled, Cloudflare will not serve stale content while getting the latest content from the origin.
 
 {{<details header="API information">}}
 

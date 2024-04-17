@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # PhishNet for Google Workspace
 
-PhishNet is an add-in button that helps users to submit directly to Area 1 phish samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
+PhishNet is an add-in button that helps users to submit directly to Area 1 {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
 
 ## Prerequisites
 

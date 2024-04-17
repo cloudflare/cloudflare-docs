@@ -1,7 +1,7 @@
 ---
 title: Deploy in the dashboard for an account
 pcx_content_type: how-to
-weight: 5
+weight: 2
 meta:
   title: Deploy a managed ruleset in the dashboard for an account
 ---
@@ -53,12 +53,10 @@ Configure a managed ruleset to:
 - Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare).
 - Disable one or more rules.
 
-To skip one or more rules, or entire WAF managed rulesets, [add a WAF exception](/waf/managed-rules/waf-exceptions/). WAF exceptions are shown as _Skip_ rules in the **Deployed managed rulesets** list.
+To skip one or more rules, or entire WAF managed rulesets, [add an exception](/waf/managed-rules/waf-exceptions/). Exceptions, also called skip rules, are shown as _Skip_ rules in the **Deployed managed rulesets** list.
 
 {{<Aside type="note">}}
-
 Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan.
-
 {{</Aside>}}
 
 ### Configure field values for all the rules
@@ -105,7 +103,7 @@ To view the rules of a managed ruleset:
 
 {{<render file="_managed-ruleset-configure-rules-in-bulk.md">}}
 
-### Delete a managed ruleset deployment rule or a WAF exception
+### Delete a managed ruleset deployment rule or an exception
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to Account Home > **WAF** > **Managed rulesets**.

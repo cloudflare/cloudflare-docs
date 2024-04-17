@@ -26,7 +26,7 @@ You cannot download the _exact_ input file that you uploaded. However, depending
 
 - By default, a video upload can be at most 30 GB.
 
-- By default, you can have up to 120 videos in the `inprogress`, `queued` or `downloading` state at the same time. Videos in the `error`, `ready` or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, please [contact Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
+- By default, you can have up to 120 videos in the `inprogress`, `queued` or `downloading` state at the same time. Videos in the `error`, `ready` or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, please [contact Cloudflare support](/support/contacting-cloudflare-support/) explaining your use case and why you would like the limit raised.
 
 {{<Aside type="note">}}
 
@@ -144,4 +144,12 @@ If you allow users to upload their own videos directly to Cloudflare Stream, add
 Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestream.com
 ```
 
-To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the Stream Dashboard [here](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
+To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
+
+### Why is PageSpeed Insights giving a bad score when using the Stream Player?
+
+If your website loads in a lot of player instances, PageSpeed Insights will penalize the JavaScript load for each player instance. Our testing shows that when actually loading the page, the script itself is only downloaded once with the local browser cache retrieving the script for the other player objects on the same page. Therefore, we believe that the PageSpeed Insights score is not matching real-world behavior in this situation.
+
+If you are using thumbnails, you can use [animated thumbnails](/stream/viewing-videos/displaying-thumbnails/#animated-gif-thumbnails) that link to the video pages.
+
+If multiple players are on the same page, you can lazy load any players that are not visible in the initial viewport. For more information about lazy loading, refer to [Mozilla's lazy loading documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#lazy).

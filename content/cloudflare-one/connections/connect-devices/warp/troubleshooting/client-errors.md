@@ -6,7 +6,7 @@ weight: 2
 
 # Client errors
 
-This page lists the error codes that can appear in the WARP client GUI. If you do not see your error below, refer to [common issues](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/) or [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+This page lists the error codes that can appear in the WARP client GUI. If you do not see your error below, refer to [common issues](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 <div class="medium-img">
 
@@ -110,7 +110,8 @@ A router, firewall, antivirus software, or other third-party security product is
 
 ### Resolution
 
-Configure the third-party security product to allow the [WARP ingress IPs and ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
+1. Configure the third-party security product to allow the [WARP ingress IPs and ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
+2. Ensure that your Internet router is working properly and try rebooting the router.
 
 ## CF_HOST_UNREACHABLE_CHECK
 
@@ -253,7 +254,7 @@ Configure the third-party application to exempt the [WARP DoH IPs](/cloudflare-o
 
 ### Cause
 
-A third-party security product on the device or network is performing TLS decryption on HTTPS traffic. For more information, refer to [this page](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#a-third-party-security-product-is-interfering-with-gateway).
+A third-party security product on the device or network is performing TLS decryption on HTTPS traffic. For more information, refer to the [Troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#a-third-party-security-product-is-interfering-with-gateway).
 
 ### Resolution
 

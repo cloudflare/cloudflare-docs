@@ -2,10 +2,47 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-11'
+  description: |-
+    - Improve Streams API spec compliance by exposing `desiredSize` and other properties on stream class prototypes
+    - The new `URL.parse(...)` method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.
+    - R2 bindings objects now have a `storageClass` option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.
+- publish_date: '2024-04-05'
+  description: |-
+    - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
+- publish_date: '2024-04-04'
+  description: |-
+    - There is no longer an explicit limit on the total amount of data which may be uploaded with Cache API [`put()`](/workers/runtime-apis/cache/#put) per request. Other [Cache API Limits](/workers/platform/limits/#cache-api-limits) continue to apply.
+    - The Web standard `ReadableStream.from()` API is now implemented. The API enables creating a `ReadableStream` from a either a sync or async iterable.
+- publish_date: '2024-04-03'
+  description: |-
+    - When the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+- publish_date: '2024-04-02'
+  description: |-
+    - You can now [write Workers in Python](/workers/languages/python)
+- publish_date: '2024-04-01'
+  description: |-
+    - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-dates/#support-for-accepting-custom-thenables-in-internal-apis) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
+    - TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.
+    - The [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) now includes an implementation of the [`MockTracker` API from `node:test`](https://nodejs.org/api/test.html#class-mocktracker). This is not an implementation of the full `node:test` module, and mock timers are currently not included.
+    - Exceptions reported to [Tail Workers](/workers/observability/logging/tail-workers/) now include a "stack" property containing the exception's stack trace, if available.
+- publish_date: '2024-03-11'
+  description: |-
+    - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
+    - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
+    - Updated v8 to version 12.3.
+- publish_date: '2024-02-23'
+  description: |-
+    - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
+    - [Durable Object alarm handlers](/durable-objects/api/alarms/#alarm) now impose a maximum wall time of 15 minutes.
+- publish_date: '2023-12-04'
+  description: |-
+    - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
+    - V8 updated to 12.0.
 - publish_date: '2023-10-30'
   description: |-
     - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
-    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model). 
+    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model).
     - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
 - publish_date: '2023-10-20'
   description: |-
@@ -61,9 +98,9 @@ entries:
     that hibernates will not incur billable Duration (GB-sec) charges.
 - publish_date: '2023-05-16'
   description: |-
-    - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/learning/protocols/).
+    - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/reference/protocols/).
     - We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
-    - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/hyperdrive/learning/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+    - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/hyperdrive/configuration/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
     - The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
 - publish_date: '2023-05-15'
   description: |-
@@ -77,7 +114,7 @@ entries:
     - The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now)
     and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin)
     APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security
-    reasons](/workers/learning/security-model/) time only advances after I/O.
+    reasons](/workers/reference/security-model/) time only advances after I/O.
 - publish_date: '2023-05-05'
   description: |-
     - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
@@ -95,7 +132,7 @@ entries:
     - The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
 - publish_date: '2023-03-24'
   description: |-
-    - Fixed a bug in Wrangler tail and and live logs on the dashboard that
+    - Fixed a bug in Wrangler tail and live logs on the dashboard that
     prevented the Administrator Read-Only and Workers Tail Read roles from successfully
     tailing Workers.
 - publish_date: '2023-03-09'
@@ -103,7 +140,7 @@ entries:
     - No externally-visible changes.
 - publish_date: '2023-03-06'
   description: |-
-    - [Workers Logpush](/workers/observability/logpush/#limits) now supports
+    - [Workers Logpush](/workers/observability/logging/logpush/#limits) now supports
     300 characters per log line. This is an increase from the previous limit of 150
     characters per line.
 - publish_date: '2023-02-06'

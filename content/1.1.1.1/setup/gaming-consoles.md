@@ -11,7 +11,7 @@ meta:
 ## PS4
 
 1. Go to **Settings** > **Network** > **Set Up Internet Connection**.
-2. Select **WiFi** or **LAN** depending on your Internet connection.
+2. Select **Wi-Fi** or **LAN** depending on your Internet connection.
 3. Select **Custom**.
 4. Set **IP Address Settings** to **Automatic**.
 5. Change **DHCP Host Name** to **Do Not Specify**.

@@ -15,7 +15,7 @@ Network-layer phases apply to packets received on the Cloudflare global network.
 Phase name       | Used in product/feature
 -----------------|-------------------------------------
 `ddos_l4`        | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/configure-api/)
-`magic_transit`  | [Magic Firewall](/magic-firewall/reference/examples/)
+`magic_transit`  | [Magic Firewall](/magic-firewall/how-to/add-rules/)
 `mt_managed`     | [Magic Firewall managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/)
 `mt_ids_managed` | [Magic Firewall Intrusion Detection System (IDS)](/magic-firewall/about/ids/)
 

@@ -99,9 +99,9 @@ highlight: [2, 4, 7]
 
  ```json
 {
-  "uid": "b236bde30eb07b9d01318940e5fc3eda",
+  "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
   "creator": null,
-  "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
+  "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
   "thumbnailTimestampPct": 0,
   "readyToStream": true,
   "status": {
@@ -120,7 +120,7 @@ highlight: [2, 4, 7]
   "created": "2022-06-30T17:53:12.512033Z",
   "modified": "2022-06-30T17:53:21.774299Z",
   "size": 383631,
-  "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+  "preview": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/watch",
   "allowedOrigins": [],
   "requireSignedURLs": false,
   "uploaded": "2022-06-30T17:53:12.511981Z",
@@ -133,8 +133,8 @@ highlight: [2, 4, 7]
     "height": 320
   },
   "playback": {
-    "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
-    "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
+    "hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
+    "dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
   },
   "watermark": null
 }

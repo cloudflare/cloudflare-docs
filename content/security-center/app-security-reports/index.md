@@ -18,7 +18,7 @@ These reports allow you to get insights and analyze trends for all the zones in 
 
 Cloudflare automatically generates a report every month, usually within the first five days of the month.
 
-To dive deeper into the mitigations performed by Cloudflare security products, use the [Security Analytics](/waf/security-analytics/) dashboard.
+To dive deeper into the mitigations performed by Cloudflare security products, use the [Security Analytics](/waf/analytics/security-analytics/) dashboard.
 
 ## Download a report
 

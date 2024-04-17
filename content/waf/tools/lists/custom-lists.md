@@ -9,17 +9,17 @@ weight: 2
 A custom list contains one or more items of the same type (for example, IP addresses, hostnames, or ASNs) that you can reference collectively, by name, in rule expressions.
 
 Cloudflare supports the following custom list types:
-* Lists with IP addresses (also known as IP lists)
-* Lists with hostnames
-* Lists with [autonomous system numbers](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) (ASNs)
+* [Lists with IP addresses](#ip-lists) (also known as IP lists)
+* [Lists with hostnames](#lists-with-hostnames)
+* [Lists with ASNs](#lists-with-asns) ([autonomous system](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) numbers)
 
 {{<Aside type="note">}}
-Currently, lists with hostnames and ASNs are only available to select Enterprise customers. To get access, contact your account team.
+Lists with hostnames and ASNs are only available to Enterprise customers. Refer to [Availability](/waf/tools/lists/#availability) for details.
 {{</Aside>}}
 
 Each type has its own properties and CSV file format. Refer to the following sections for details.
 
-For more information on lists managed by Cloudflare, like Managed IP Lists, refer to [Managed Lists](/waf/tools/lists/managed-lists/).
+For more information on lists managed by Cloudflare, such as Managed IP Lists, refer to [Managed Lists](/waf/tools/lists/managed-lists/).
 
 ## Create a custom list
 
@@ -45,9 +45,9 @@ For more information and examples, refer to [Use lists in expressions](/waf/tool
 
 ---
 
-## List item format
+## Custom list types
 
-### Lists with IP addresses (IP lists)
+### Lists with IP addresses (IP lists) { #ip-lists }
 
 List items in custom lists with IP addresses must be in one of the following formats:
 
@@ -72,10 +72,23 @@ The IPv6 address topology describes the last 64 bits as the host identifier. Mat
 
 You can use uppercase or lowercase characters for IPv6 addresses in lists. However, when you save the list, uppercase characters are converted to lowercase.
 
+{{<details header="CSV file format">}}
+
+When uploading items to a custom list with IP addresses via CSV file, use the following file format (enter one item per line):
+
+```txt
+<IP_ADDRESS_1>,<DESCRIPTION>
+<IP_ADDRESS_2>
+```
+
+The `<DESCRIPTION>` field is optional.
+
+{{</details>}}
+
 ### Lists with hostnames
 
 {{<Aside type="note">}}
-Currently available to select Enterprise customers. To get access, contact your account team.
+Available to Enterprise customers.
 {{</Aside>}}
 
 List items in custom lists with hostnames must be Fully Qualified Domain Names (FQDNs). An item may contain a `*` prefix/subdomain wildcard, which must be followed by a `.` (period). An item cannot include a scheme (for example, `https://`) or a URL path.
@@ -90,36 +103,7 @@ However, `example.com/path/subfolder` would not be a valid entry.
 
 You can add any valid hostname (a valid FQDN) to a custom list with hostnames. The hostnames do not need to belong to the current Cloudflare account.
 
-### Lists with ASNs
-
-{{<Aside type="note">}}
-Currently available to select Enterprise customers. To get access, contact your account team.
-{{</Aside>}}
-
-List items in custom lists with ASNs must be integer values.
-
-For example, the following entries would be valid for a list with ASNs:
-
-- `1`
-- `13335`
-- `64512`
-
-## CSV file format for bulk import operations
-
-The exact format of CSV file entries varies according to the type of list items you are importing.
-
-### Lists with IP addresses (IP lists)
-
-When uploading items to a custom list with IP addresses via CSV file, use the following file format (enter one item per line):
-
-```txt
-<IP_ADDRESS_1>,<DESCRIPTION>
-<IP_ADDRESS_2>
-```
-
-The `<DESCRIPTION>` field is optional.
-
-### Lists with hostnames
+{{<details header="CSV file format">}}
 
 When uploading items to a custom list with hostnames via CSV file, use the following file format:
 
@@ -130,7 +114,23 @@ When uploading items to a custom list with hostnames via CSV file, use the follo
 
 The `<DESCRIPTION>` field is optional.
 
+{{</details>}}
+
 ### Lists with ASNs
+
+{{<Aside type="note">}}
+Available to Enterprise customers.
+{{</Aside>}}
+
+List items in custom lists with autonomous system numbers (ASNs) must be integer values.
+
+For example, the following entries would be valid for a list with ASNs:
+
+- `1`
+- `13335`
+- `64512`
+
+{{<details header="CSV file format">}}
 
 When uploading items to a custom list with ASNs via CSV file, use the following file format:
 
@@ -140,3 +140,5 @@ When uploading items to a custom list with ASNs via CSV file, use the following 
 ```
 
 The `<DESCRIPTION>` field is optional.
+
+{{</details>}}

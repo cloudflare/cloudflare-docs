@@ -1,22 +1,26 @@
 ---
 pcx_content_type: how-to
-title: Bring your own CA for API Shield mTLS
+title: Bring your own CA for mTLS
 weight: 6
 meta:
-  description: API Shield mTLS now supports client certificates that have not been issued by Cloudflare CA. Learn how you can bring your own CA and use Cloudflare to protect your API.
+  description: Cloudflare mTLS now supports client certificates that have not been issued by Cloudflare CA. Learn how you can bring your own CA and use it with Cloudflare mTLS.
 ---
 
-# Bring your own CA for API Shield mTLS
+# Bring your own CA for mTLS
 
-This page explains how you can manage mTLS with [API Shield](/api-shield/) using client certificates that have not been issued by Cloudflare CA.
+This page explains how you can manage mTLS using client certificates that have not been issued by Cloudflare CA.
 
 This is especially useful if you already have mTLS implemented and client certificates issued by your chosen CA are already installed on devices.
 
 ## Availability
 
-* Currently, you can only upload your CA via API.
+* Currently, you can only manage your uploaded CA via API, and the hostname associations are **not** reflected on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
 * This process is only available on Enterprise accounts.
 * Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
+
+## CA certificate requirements
+
+{{<render file="_byo-ca-mtls-cert-requirements.md">}}<br />
 
 ## Set up mTLS with your CA
 
@@ -60,7 +64,9 @@ This is especially useful if you already have mTLS implemented and client certif
 
   {{</definitions>}}
 
-4. Create a custom rule to enforce client certificate validation.
+4. (Optional) Since this process is API-only, and hostnames that use your uploaded CA certificate **are not** listed on the dashboard, you can make a [GET request](/api/operations/client-certificate-for-a-zone-list-hostname-associations) with the `mtls_certificate_id` as a query parameter to confirm the hostname association.
+
+5. Create a custom rule to enforce client certificate validation.
 You can do this [via the dashboard](/api-shield/security/mtls/configure/) or [via API](/waf/custom-rules/create-api/).
 
 ```text

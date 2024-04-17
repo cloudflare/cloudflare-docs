@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SentinelOne
 weight: 4
-layout: single
 meta:
    title: SentinelOne - Posture checks
 ---

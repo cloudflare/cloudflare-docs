@@ -15,7 +15,7 @@ To enable Cloudflare for SaaS for your account:
 3. Go to **SSL/TLS** > **Custom Hostnames**.
 4. Select **Enable**.
 5. The next step depends on the zone's plan:
-    - **Enterprise**: Can preview this product as a [non-contract service](/fundamentals/account-and-billing/preview-services/), which provide full access, free of metered usage fees, limits, and certain other restrictions.
+    - **Enterprise**: Can preview this product as a [non-contract service](/fundamentals/subscriptions-and-billing/preview-services/), which provide full access, free of metered usage fees, limits, and certain other restrictions.
     - **Non-enterprise**: Will have to enter payment information.
 
 {{<Aside type="note">}}

@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: WP Engine
 meta:
     title: WP Engine | Provider guides
-    description: Learn how to configure your Enterprise zone with WP Engine.
+    description: Learn how to configure your zone with WP Engine.
 ---
 
 # WP Engine
@@ -20,13 +20,13 @@ For more details about how O2O is different than other Cloudflare setups, refer 
 
 ## Enable
 
-You can only enable O2O on the Cloudflare Enterprise plan.
+WP Engine customers can enable O2O on any Cloudflare zone plan.
 
-To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a `CNAME` DNS record.
+To enable O2O for a specific hostname within a Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with a target of one of the following WP Engine CNAMEs. Which WP Engine CNAME is used will depend on your current [WP Engine network type](https://wpengine.com/support/network/).
 
 | Type | Name | Target | Proxy status |
 | --- | --- | --- | --- |
-| `CNAME` | `<YOUR_HOSTNAME>` | `xx.wpewaf.com` (Global Edge Security)<br/>OR<br/>`xx.wpenginepowered.com` (Advanced Network) | Proxied |
+| `CNAME` | `<YOUR_HOSTNAME>` | `wp.wpewaf.com` (Global Edge Security)<br/>or<br/>`wp.wpenginepowered.com` (Advanced Network) | Proxied |
 
 {{<Aside type="note">}}
 
