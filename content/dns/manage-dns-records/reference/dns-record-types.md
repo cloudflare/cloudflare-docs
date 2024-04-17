@@ -28,7 +28,7 @@ These records include the following fields:
 {{<Aside type="note">}}
 Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an `AAAA` record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
 
-Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) is not supported for `A` records.
+Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for `A` records.
 {{</Aside>}}
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
@@ -256,7 +256,7 @@ curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records"
 -H 'x-auth-key: <API_KEY>' \
 -H "Content-Type: application/json" \
 --data '{
-  "type":"SRV", 
+  "type":"SRV",
   "data": {
     "service":"_xmpp",
     "proto":"_tcp",
@@ -288,18 +288,18 @@ header: Response
     "locked": false,
     "data": {
       "name": "example.com",
-      "port": 5223,       
-      "priority": 10,       
-      "proto": "_tcp",       
-      "service": "_xmpp",       
-      "target": "server.example.com",       
-      "weight": 5     
+      "port": 5223,
+      "priority": 10,
+      "proto": "_tcp",
+      "service": "_xmpp",
+      "target": "server.example.com",
+      "weight": 5
     },
-    "meta": {       
-      "auto_added": false,       
-      "managed_by_apps": false,       
-      "managed_by_argo_tunnel": false,       
-      "source": "primary"     
+    "meta": {
+      "auto_added": false,
+      "managed_by_apps": false,
+      "managed_by_argo_tunnel": false,
+      "source": "primary"
     },
     "comment": null,
     "tags": [],
