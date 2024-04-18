@@ -11,7 +11,7 @@ The information architecture (IA) of the Cloudflare developer documentation foll
 
 ## Developer Platform information architecture
 
-At launch, Cloudflare Developer Platform products are recommended to include the following high-level sections. The following is a recommended guideline based on standard user journey flow (Learn, Get started, Configure, Test, Deploy, Asses, Maintain, etc.) and is intended to serve as a helpful reference to the documentation writer. As products mature, the IA may grow out of this structure based on what you can do with the product. For an example of a more mature product that differs from this IA, refer to the [Cloudflare Stream documentation](/stream/).
+At launch, Cloudflare Developer Platform products are recommended to include the following high-level sections. The following is a recommended guideline based on standard user journey flow (Learn, Get started, Configure, Test, Deploy, Asses, Maintain, etc.) and is intended to serve as a helpful reference to the documentation writer and collaborators. Depending on the product and as products mature, the IA may grow out of this structure or differ from this structure based on what you can do with the product. For an example of a more mature product that differs from this IA, refer to the [Cloudflare Stream documentation](/stream/).
 
 * [Overview](/style-guide/documentation-content-strategy/content-types/overview/)
 * [Get started](/style-guide/documentation-content-strategy/content-types/get-started/)
