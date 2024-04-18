@@ -80,7 +80,7 @@ For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=si
 
 ### Enable Node.js compatibility
 
-To enable Node.js compatibility, add the `node_compat` key to your `wrangler.toml`:
+To enable Node.js compatibility, add the `node_compat` flag to your `wrangler.toml`:
 
 ```toml
 ---
