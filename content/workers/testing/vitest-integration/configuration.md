@@ -73,7 +73,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 - {{<code>}}isolatedStorage{{</code>}}: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this option is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Isolation and concurrency](/workers/testing/vitest-integration/isolation-and-concurrency/) page for more information on the isolation model.
+  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this option is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to [Isolation and concurrency](/workers/testing/vitest-integration/isolation-and-concurrency/) for more information on the isolation model.
 
   - Defaults to `true`.
 
