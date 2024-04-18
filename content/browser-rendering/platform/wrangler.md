@@ -43,3 +43,5 @@ After the binding is declared, access the DevTools endpoint using `env.MYBROWSER
 ```javascript
 const browser = await puppeteer.launch(env.MYBROWSER);
 ```
+
+To test locally use `npx wrangler dev --remote` (there's no full local support yet, so `--remote` is required) or, to deploy, use `npx wrangler deploy`.
