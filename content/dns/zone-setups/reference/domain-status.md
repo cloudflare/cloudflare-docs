@@ -52,7 +52,7 @@ If your zone is in **Setup** for over 28 days, it will be automatically [deleted
 
 Your zone status is presented as **Pending Nameserver Update** on the Cloudflare dashboard.
 
-Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs, but your zone is still not active and is subject to the limitations listed below.
+Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs, but your zone is still not active and cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
 
 If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
 
@@ -61,13 +61,9 @@ If your domain is on the Free plan, it will be deleted automatically if it is no
 - [Full setup](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.
 - [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
 
-### Limitations
-
-- Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
-
 ## Active
 
-Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-nameservers/) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare.
+Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-nameservers/) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare. For more details refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) and [Domain configurations](/fundamentals/setup/manage-domains/connect-your-domain/#domain-configurations).
 
 ## Moved
 
