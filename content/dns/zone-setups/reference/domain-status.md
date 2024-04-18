@@ -8,6 +8,8 @@ layout: wide
 
 Review information on the different statuses that your [zone](/dns/concepts/#zone) can have after you [add your website or application](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
 
+Zone status is also referred to as domain status. An **active** domain status is a requirement for your [application services configurations](/fundamentals/setup/manage-domains/connect-your-domain/#domain-configurations) to be applied. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
+
 If your zone status changes, you will receive an email at the address associated with your account.
 
 The following diagram gives you an overview of the different statuses applicable and how your zone may transition from one status to the other. For zones with an active paid subscription, the time to automatic deletion or purge may not correspond to this diagram. Refer to the sections below for details.
