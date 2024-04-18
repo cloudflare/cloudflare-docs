@@ -11,7 +11,7 @@ meta:
 
 Local traffic management (LTM) enables you to load balance traffic between servers within a data center ([origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/)) as well as between private applications. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud, benefiting from elastic scalability and reliability.
 
-In order to support not only public IPs but also virtual IPs and private IPs as origin values, Cloudflare LTM uses different on-ramps and off-ramps.
+In order to support not only public IPs but also virtual IPs and private IPs as origin values, Cloudflare LTM uses different off-ramps and on-ramps.
 
 {{<Aside type="note">}}
 This page assumes some familiarity with how the Cloudflare Load Balancing solution works. For an introductory overview refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
