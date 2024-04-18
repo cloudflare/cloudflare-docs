@@ -46,7 +46,7 @@ If your identity provider supports metadata file configuration, use the endpoint
 
 ## 3. Test the connection
 
-You can now [test the IdP integration](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
+You can now [test the IdP integration](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
 
 ## Optional configurations
 

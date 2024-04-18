@@ -34,7 +34,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 16. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 17. Select **Save**.
 
-You can now [test your connection](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.
+You can now [test your connection](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.
 
 ## Example API configuration
 

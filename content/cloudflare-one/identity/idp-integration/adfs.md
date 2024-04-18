@@ -6,7 +6,7 @@ weight: 3
 
 # Active Directory® (SAML)
 
-Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language ({{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}}).
+Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access using Security Assertion Markup Language ({{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}}).
 
 ## Before you start
 
