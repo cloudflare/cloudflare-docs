@@ -50,7 +50,7 @@ This will create a new `hello-ai` directory. Your new `hello-ai` directory will 
 Go to your application directory:
 
 ```sh
-cd hello-ai
+$ cd hello-ai
 ```
 
 ## 2. Connect your Worker to Workers AI
@@ -108,7 +108,7 @@ Up to this point, you have created an AI binding for your Worker and configured 
 While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-npx wrangler dev
+$ npx wrangler dev
 ```
 
 {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
@@ -126,7 +126,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-npx wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
