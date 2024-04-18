@@ -4,7 +4,7 @@ title: Local traffic management (LTM)
 weight: 6
 layout: single
 meta:
-    description: Local traffic management (LTM) enables you to load balance traffic between servers within a data center as well as between private applications. This helps you eliminate the need for hardware appliances and move your infrastructure to the cloud, benefiting from elastic scalability and reliability.
+    description: Use Cloudflare LTM to load balance traffic between servers within a data center or between private applications, and eliminate the need for hardware appliances.
 ---
 
 # Local traffic management (LTM)
