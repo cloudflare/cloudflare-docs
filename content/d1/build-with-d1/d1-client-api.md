@@ -6,7 +6,7 @@ weight: 1
 
 # D1 client API
 
-D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
+D1 uses SQLite as query engine. D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
 
 ## Prepared and static statements
 
