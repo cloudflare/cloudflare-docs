@@ -16,7 +16,7 @@ Origin configuration parameters determine how `cloudflared` proxies traffic to y
 | --- | ------------- |
 | `""`     | Origin Server Name |
 
-Hostname that `cloudflared` should expect from your origin server certificate.
+Hostname that `cloudflared` should expect from your origin server certificate. If null, the expected hostname is the service URL, for example `localhost` if the service is `https://localhost:443`.
 
 ### caPool
 

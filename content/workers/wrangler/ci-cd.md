@@ -7,9 +7,7 @@ meta:
 
 # Run Wrangler in CI/CD
 
-{{<render file="_wrangler_survey.md">}}
-
-Wrangler can be run in a [continuous integration/continuous deployment (CI/CD) environment](/workers/learning/continuous-integration/). It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment. Deploying Workers from within a CI/CD environment also makes it easier to control access to production credentials.
+Wrangler can be run in a [continuous integration/continuous deployment (CI/CD) environment](/workers/configuration/continuous-integration/). It is good practice to only deploy your Workers from within a CI/CD environment, rather than running adhoc deployments manually using `wrangler deploy`. Among other benefits, deploying Workers from within a CI/CD environment makes sure that your Worker is built and deployed within a consistent environment. Deploying Workers from within a CI/CD environment also makes it easier to control access to production credentials.
 
 ## 1. Authentication
 
@@ -59,19 +57,20 @@ filename: .github/workflows/push.yml
 name: Deploy Worker
 on:
   push:
-    main
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Build & Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
 
 ### GitLab Pipelines

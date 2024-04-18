@@ -8,6 +8,10 @@ meta:
 
 # Policy violations
 
+{{<Aside type="note">}}
+Only available to Enterprise customers with a paid add-on.
+{{</Aside>}}
+
 Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_).
 
 Information about policy violations is also available via [GraphQL API](/analytics/graphql-api/) and [Logpush](/logs/about/).
@@ -114,7 +118,7 @@ echo '{ "query":
 
 ## Get policy violations via Logpush
 
-[Cloudflare Logpush](/logs/about/) supports pushing logs to storage services, SIEMs, and log management providers.
+[Cloudflare Logpush](/logs/about/) supports pushing logs to storage services, {{<glossary-tooltip term_id="SIEM">}}SIEM systems{{</glossary-tooltip>}}, and log management providers.
 
 Information about Page Shield policy violations is available in the [`page_shield_events` dataset](/logs/reference/log-fields/zone/page_shield_events/).
 

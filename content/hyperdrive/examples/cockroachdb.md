@@ -1,11 +1,12 @@
 ---
 type: example
 summary: Connect Hyperdrive to a CockroachDB database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to CockroachDB
 weight: 9
-layout: example
 ---
+
+# Connect to CockroachDB
 
 This example shows you how to connect Hyperdrive to a [CockroachDB](https://www.cockroachlabs.com/) database cluster. CockroachDB is a PostgreSQL-compatible distributed SQL database with strong consistency guarantees.
 
@@ -32,12 +33,6 @@ To retrieve your database connection details:
 4. Select the database, for example `defaultdb`.
 5. Select **General connection string** as the option.
 6. In the text box below, select **Copy** to copy the connection string.
-
-{{<Aside type="note">}}
-
-During the beta release of Hyperdrive, you will need to remove the `?sslmode=verify-full` from the connection string. Hyperdrive requires TLS/SSL to connect to an upstream database, but does not yet support client CAs.
-
-{{</Aside>}}
 
 By default, the CockroachDB cloud enables connections from the public Internet (`0.0.0.0/0`). If you have changed these settings on an existing cluster, you will need to allow connections from the public Internet for Hyperdrive to connect.
 

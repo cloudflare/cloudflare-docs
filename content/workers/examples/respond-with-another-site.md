@@ -11,10 +11,15 @@ weight: 12
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
-```js
+{{<render file="_respond-another-site-example-js.md">}}
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
 export default {
   async fetch(request) {
     async function MethodNotAllowed(request) {
@@ -29,30 +34,26 @@ export default {
     if (request.method !== "GET") return MethodNotAllowed(request);
     return fetch(`https://example.com`);
   },
-};
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
-{{<tab label="ts">}}
+{{<tab label="py">}}
 
-```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
-    async function MethodNotAllowed(request) {
-      return new Response(`Method ${request.method} not allowed.`, {
-        status: 405,
-        headers: {
-          Allow: "GET",
-        },
-      });
-    }
-    // Only GET requests work with this proxy.
-    if (request.method !== "GET") return MethodNotAllowed(request);
-    return fetch(`https://example.com`);
-  },
-};
+```py
+from js import Response, fetch, Headers
 
-export default handler;
+def on_fetch(request):
+    def method_not_allowed(request):
+        msg = f'Method {request.method} not allowed.'
+        headers = Headers.new({"Allow": "GET"}.items)
+        return Response.new(msg, headers=headers, status=405)
+
+    # Only GET requests work with this proxy.
+    if request.method != "GET":
+        return method_not_allowed(request)
+
+    return fetch("https://example.com")
 ```
 
 {{</tab>}}

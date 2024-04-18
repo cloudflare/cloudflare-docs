@@ -19,7 +19,7 @@ You must deploy custom rules to the `http_request_firewall_custom` [phase entry 
 
 This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
 
-The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a threat score greater than `10`:
+The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a {{<glossary-tooltip term_id="threat score">}}threat score{{</glossary-tooltip>}} greater than `10`:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \

@@ -58,11 +58,13 @@ To configure LinkedIn as an IdP:
 
 21. In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and select the pencil icon to edit the settings.
 
-22. Enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+22. Enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 To test that your connection is working, in Zero Trust, go to **Authentication** > **Login methods** and select **Test** next to LinkedIn.
 

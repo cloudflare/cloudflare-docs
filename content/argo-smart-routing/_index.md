@@ -23,7 +23,7 @@ Argo Smart Routing detects real-time network issues and routes traffic across th
 
 ## Features
 
-{{<feature header="Analytics" href="/analytics/">}}
+{{<feature header="Analytics" href="/argo-smart-routing/analytics/">}}
 
 Argo Smart Routing includes comprehensive analytics to compare performance improvements with and without Argo enabled.
 

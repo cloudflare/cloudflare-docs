@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Response
+meta:
+  description: Interface that represents an HTTP response.
 ---
 
 # Response
@@ -55,7 +57,7 @@ Valid options for the `options` object include: {{<definitions>}}
 {{<definitions>}}
 
 - `response.body` {{<type-link href="/runtime-apis/streams">}}Readable Stream{{</type-link>}}
-  - A simple getter to get the body contents.
+  - A getter to get the body contents.
 - `response.bodyUsed` {{<type>}}boolean{{</type>}}
   - A boolean indicating if the body was used in the response.
 - `response.encodeBody` {{<type>}}string{{</type>}}
@@ -150,3 +152,4 @@ Using any other type of `ReadableStream` as the body of a response will result i
 - [Examples: Modify response](/workers/examples/modify-response/)
 - [Examples: Conditional response](/workers/examples/conditional-response/)
 - [Reference: `Request`](/workers/runtime-apis/request/)
+- Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

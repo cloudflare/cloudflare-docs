@@ -1,10 +1,8 @@
 ---
-title: Custom domain email addresses
-pcx_content_type: learning-unit
-weight: 4
+title: Set up email records
+pcx_content_type: overview
+weight: 5
 layout: learning-unit
 ---
 
-{{<render file="_email-routing-definition.md" productFolder="email-routing">}}
-
-For more details, refer to [enable Email Routing](/email-routing/get-started/).
+{{<render file="_add-mx-records.md" productFolder="DNS">}}

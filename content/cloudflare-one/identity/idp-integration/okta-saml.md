@@ -22,12 +22,13 @@ To set up SAML with Okta as your identity provider:
 
    ![Entering your Zero Trust callback URL into Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-1.png)
 
-5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter the following URL:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 6. In the **Attribute Statements** section, enter the following information:
 
    - **Name**: Enter `email`.

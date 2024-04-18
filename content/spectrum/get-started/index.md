@@ -1,15 +1,14 @@
 ---
 pcx_content_type: get-started
 title: Get started
-weight: 0
-layout: single
+weight: 4
 ---
 
 # Get started
 
 Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Configuration options](/spectrum/reference/configuration-options/) for more configuration details.
 
-To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via [API](/api/operations/spectrum-applications-list-spectrum-applications).
+To create a Spectrum application, you can either use an IP address, a CNAME Record or a load balancer. Independently of the method you use, you can create the application through the dashboard or via [API](/api/operations/spectrum-applications-list-spectrum-applications).
 
 ## Create a Spectrum application using an IP address
 
@@ -130,9 +129,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 {{</details>}}
 
-## Create a Spectrum application using a Load Balancer
+## Create a Spectrum application using a load balancer
 
-To create a Spectrum application using a Load Balancer, you will need to generate a Load Balancer from the dashboard or via the API. Refer to the [Create a load balancer](/load-balancing/load-balancers/create-load-balancer/) workflow for help.
+To create a Spectrum application using a load balancer, you will need to generate a load balancer from the dashboard or via the API. Refer to the [Load Balancing documentation](/load-balancing/additional-options/spectrum/#1-configure-your-load-balancer) for more details.
 
 {{<Aside>}}
 
@@ -142,51 +141,13 @@ To prevent issues with DNS resolution for a Spectrum application, do not use the
 
 {{<details header="Add your application via Dashboard">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Spectrum**.
-3. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
-4. Select your **Application Type**.
-5. Under **Domain**, enter the domain that will use Spectrum.
-6. Under **Edge Port**, enter the port Cloudflare should use for your application.
-7. Under **Origin**, select **Load Balancer**.
-8. Select the load balancer you want to use from the dropdown. Disabled load balancers will not show on the **Load Balancer** menu.
-9. Select **Add**.
+{{<render file="_spectrum-with-load-balancer-dash.md">}}
 
 {{</details>}}
 
 {{<details header="Add your application via API">}}
 
-Below is a curl example and the associated data being posted to the API.
-
-**API example:**
-
-```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
--H "Content-Type: application/json" \
--H "X-Auth-Email: email" \
--H "X-Auth-Key: key" \
---data '{"dns":{"type":"CNAME","name":"spectrum-cname.example.com"},"ip_firewall":false,"protocol":"tcp/22","proxy_protocol":false,"tls":"off","origin_dns": {"name": "cname-to-origin.example.com", "ttl": 1200}, "origin_port": 22}'
-```
-
-**Example data:**
-
-```json
-{
-  "dns": {
-    "type": "CNAME",
-    "name": "spectrum-cname.example.com"
-  },
-  "ip_firewall": false,
-  "protocol": "tcp/22",
-  "proxy_protocol": false,
-  "tls": "off",
-  "origin_dns": {
-    "name": "cname-to-origin.example.com",
-    "ttl": 1200
-  },
-  "origin_port": 22
-}
-```
+{{<render file="_spectrum-with-load-balancer-api.md">}}
 
 {{</details>}}
 

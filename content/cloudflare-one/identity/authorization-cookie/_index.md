@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Authorization cookie
 weight: 12
-layout: single
 ---
 
 # Cloudflare authorization cookie
@@ -85,6 +84,7 @@ Do not enable Binding Cookie if:
 
 - You are using the Access application for non-browser based tools (such as SSH or RDP).
 - You have enabled [incompatible Cloudflare products](/cloudflare-one/applications/configure-apps/self-hosted-apps/#product-compatibility) on the application domain.
+- You have turned on [WARP authentication identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/) for the application.
 
 ### Cookie Path Attribute
 

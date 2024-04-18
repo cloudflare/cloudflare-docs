@@ -28,7 +28,7 @@ To lower your data transfer costs from Azure and Cloudflare: 
 6.  Locate the endpoint values for **Internet Routing**.
 7.  Enter these endpoint values in your Cloudflare Dashboard.
 
-![Example of where to enter endpoint URLs from Microsoft Azure into your Cloudflare dashboard.](/images/support/Screen_Shot_2021-08-16_at_1.11.27_PM.png)
+![Example of where to enter endpoint URLs from Microsoft Azure into your Cloudflare dashboard.](/images/support/bandwidth-alliance.png)
 
 For additional details, refer to [Configure network routing preference for Azure Storage](https://docs.microsoft.com/en-us/azure/storage/common/configure-network-routing-preference?tabs=azure-portal) and [Microsoft Routing Preference](https://docs.microsoft.com/en-us/azure/storage/common/network-routing-preference).
 

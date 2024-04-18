@@ -6,7 +6,7 @@ weight: 1
 
 # Recommended rule configuration
 
-You can create [Magic Network Monitoring rules](/magic-network-monitoring/rules/) to monitor the traffic volume of your network, for a set of IP addresses and/or IP prefixes. The traffic volume threshold for these rules is also set by you. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
+You can create [Magic Network Monitoring rules](/magic-network-monitoring/rules/) to monitor the traffic volume of your network, for a set of IP addresses and/or IP {{<glossary-tooltip term_id="prefix">}}prefixes{{</glossary-tooltip>}}. The traffic volume threshold for these rules is also set by you. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
 
 Follow the guidelines outlined in this page to create appropriate Magic Network Monitoring rules and set accurate rule thresholds.
 

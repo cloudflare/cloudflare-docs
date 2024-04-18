@@ -30,4 +30,4 @@ Besides the actions you can select when configuring rules in Cloudflare security
 
 For details on these actions, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/#action).
 
-The [*Managed Challenge (Recommended)*](/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended) action that may appear in the **Activity Log** is available in the following security features and products: WAF custom rules, rate limiting rules, Bot Fight Mode, IP Access rules, User Agent Blocking rules, and firewall rules (deprecated).
+The [*Managed Challenge (Recommended)*](/waf/reference/cloudflare-challenges/#managed-challenge-recommended) action that may appear in the **Activity Log** is available in the following security features and products: WAF custom rules, rate limiting rules, Bot Fight Mode, IP Access rules, User Agent Blocking rules, and firewall rules (deprecated).

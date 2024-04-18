@@ -7,27 +7,19 @@ meta:
 
 # Deprecations
 
-{{<render file="_wrangler_survey.md">}}
-
 Review the difference between Wrangler versions, specifically deprecations and breaking changes.
 
 ## Wrangler v3
 
 ### Deprecated commands
 
-The following commands are deprecated in Wrangler as of Wrangler v3. These commands will be fully removed in v4.
+The following commands are deprecated in Wrangler as of Wrangler v3. These commands will be fully removed in a future version of Wrangler.
 
 #### `generate`
 
 The `wrangler generate` command is deprecated, but still active in v3. `wrangler generate` will be fully removed in v4.
 
 Use `npm create cloudflare@latest` for new Workers and Pages projects.
-
-#### `init`
-
-The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
-
-Use `npm create cloudflare@latest` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. `wrangler init --from-dash <WORKER_NAME>` will be replaced by another command in v4.
 
 #### `publish`
 
@@ -54,6 +46,10 @@ Use [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pa
 #### `--persist`
 
 `wrangler dev` automatically persists data by default so this option is no longer necessary.
+
+#### `-- <command>`, `--proxy`, and `--script-path` in `wrangler pages dev`
+
+These options prevent `wrangler pages dev` from being able to accurately emulate production's behavior for serving static assets and have therefore been deprecated. Instead of relying on Wrangler to proxy through to some other upstream dev server, you can emulate a more accurate behavior by building your static assets to a directory and pointing Wrangler to that directory with `wrangler pages dev <directory>`.
 
 ## Wrangler v2
 
@@ -266,7 +262,7 @@ Routes are specified in the `wrangler.toml` configuration file.
 
 #### Features
 
-| Feature    | v1  | v2  | Notes                                                                                                                                                                 |
-| ---------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.     |
-| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/miniflare). |
+| Feature    | v1  | v2  | Notes                                                                                                                                                                                                 |
+| ---------- | --- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.                                     |
+| Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare/). |

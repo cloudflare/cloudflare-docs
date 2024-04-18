@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Application paths
 weight: 5
-layout: single
 ---
 
 # Application paths
@@ -31,17 +30,11 @@ Using a wildcard in the **Subdomain** field does not cover the apex domain.
 
 #### Match all paths of an apex domain
 
-To protect an apex domain and all of the paths under it, leave the **Path** field empty.
+To protect an apex domain and all of the paths under it, leave the **Path** field empty. Alternatively, use a wildcard in the **Path** field.
 
 | Application        | Covers                   | Does not cover       |
 | ------------- | ------------------------------------------------------ | ------------------- |
-| `example.com` | `example.com` </br> `example.com/alpha` </br> `example.com/beta` | `alpha.example.com` |
-
-To protect all the paths under an apex domain, but not the apex domain itself, use a wildcard in the **Path** field.
-
-| Application            | Covers                                  | Does not cover |
-| --------------- | --------------------------------------- | ------------- |
-| `example.com/*` | `example.com/alpha` </br> `example.com/beta` | `example.com` |
+| `example.com` </br> or `example.com/*` | `example.com` </br> `example.com/alpha` </br> `example.com/beta` | `alpha.example.com` |
 
 #### Match multi-level subdomains
 

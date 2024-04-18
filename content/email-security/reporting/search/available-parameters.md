@@ -40,7 +40,7 @@ In addition to the message parameters above, you can use these additional detect
 - auto-retraction
 - browser_isolation_rewrite
 
-For disposition-specific submission searches, refer to [Service Addresses](https://horizon.area1security.com/support/service-addresses) in the Area 1 dashboard. 
+For {{<glossary-tooltip term_id="disposition">}}disposition{{</glossary-tooltip>}}-specific submission searches, refer to [Service Addresses](https://horizon.area1security.com/support/service-addresses) in the Area 1 dashboard. 
 
 ## Data retention
 

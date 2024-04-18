@@ -232,7 +232,7 @@ ___
 
 ### Export activity log data 
 
-You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a security information and event management system (SIEM).
+You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}}.
 
 To export log data, select **Export**.
 

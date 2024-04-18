@@ -16,4 +16,4 @@ Calling the `delete()` method will remove the key and value from your KV namespa
 
 This method returns a promise that you should `await` on to verify successful deletion.
 
-You can also [delete key-value pairs from the command line with Wrangler](/kv/platform/kv-commands/#delete) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).
+You can also [delete key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#delete) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).

@@ -7,11 +7,11 @@ title: Tail Handler
 
 ## Background
 
-The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/logging/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
 
 The `tail()` handler is called once each time the connected producer Worker is invoked.
 
-To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/tail-workers/).
+To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/logging/tail-workers/).
 
 ## Syntax
 
@@ -38,10 +38,10 @@ export default {
 
 - `env` {{<type>}}object{{</type>}}
 
-  - An object containing the bindings associated with your Worker using [ES modules format](/workers/learning/migrate-to-module-workers/), such as KV namespaces and Durable Objects.
+  - An object containing the bindings associated with your Worker using [ES modules format](/workers/reference/migrate-to-module-workers/), such as KV namespaces and Durable Objects.
 
 - `ctx` {{<type>}}object{{</type>}}
-  - An object containing the context associated with your Worker using [ES modules format](/workers/learning/migrate-to-module-workers/). Currently, this object just contains the `waitUntil` function.
+  - An object containing the context associated with your Worker using [ES modules format](/workers/reference/migrate-to-module-workers/). Currently, this object just contains the `waitUntil` function.
 
 
 {{</definitions>}}
@@ -60,7 +60,7 @@ export default {
 
 - {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil). Note that unlike fetch event handlers, tail handlers do not return a value, so this is the only way for trace Workers to do asynchronous work.
+  - Refer to [`waitUntil`](/workers/runtime-apis/context/#waituntil). Note that unlike fetch event handlers, tail handlers do not return a value, so this is the only way for trace Workers to do asynchronous work.
 
 {{</definitions>}}
 
@@ -223,4 +223,4 @@ Records an unhandled exception that occurred during the Worker invocation.
 
 ## Related resources
 
-* [Tail Workers](/workers/observability/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.
+* [Tail Workers](/workers/observability/logging/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.

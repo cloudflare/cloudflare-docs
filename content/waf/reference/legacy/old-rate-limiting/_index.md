@@ -3,7 +3,6 @@ pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configuring-Cloudflare-Rate-Limiting
 title: Rate Limiting (previous version)
 weight: 3
-layout: single
 ---
 
 # Cloudflare Rate Limiting (previous version)
@@ -132,7 +131,7 @@ Rate limit actions are based on the domain plan as mentioned in [Availability](#
 - **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 
-For more information on challenge actions, refer to [Cloudflare challenges](/firewall/cf-firewall-rules/cloudflare-challenges/).
+For more information on challenge actions, refer to [Cloudflare challenges](/waf/reference/cloudflare-challenges/).
 
 #### Ban duration
 
@@ -320,29 +319,16 @@ ___
 
 ## Order of rule execution
 
-**Use case 1**: If a request matches the following two rules:
+Rate limiting rules are evaluated from the most recently created rule to the oldest rule.
 
-- Rule 1: matching with `test.example.com`
-- Rule 2: matching with `*.example.com*`
+For example, if a request matches the following two rules:
 
-or
+- Rule #1: Matching with `test.example.com` (created on 2024-03-01)
+- Rule #2: Matching with `*.example.com*` (created on 2024-03-12)
 
-- Rule 1: matching with `*.example.com*`
-- Rule 2: matching with `test.example.com`
+Then rule #2 will trigger first because it was created last.
 
-Then rule 2 will always trigger first because it was created last.
-
-**Use case 2:** By removing the asterisk (`*`) at the end of the domain, rule execution will depend on which rule was created last.
-
-- Rule 1: matching with `test.example.com`
-- Rule 2: matching with `*.example.com`
-
-Rule 2 above triggers first if a request matches both rules.
-
-- Rule 1: matching with `*.example.com`
-- Rule 2: matching with `test.example.com`
-
-Rule 2 above triggers first if a request matches both rules.
+Additionally, when there is a match and the WAF applies a _Log_ action, it continues evaluating other rate limiting rules, since _Log_ is a non-terminating action. If the WAF applies any other action, no other rules will be evaluated.
 
 ---
 

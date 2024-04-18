@@ -47,6 +47,12 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 - 8880
 - 8443
 
+{{<Aside type="note">}}
+
+Enterprise customers that want to enable caching on these ports can do so by creating a [cache rule](/cache/how-to/cache-rules/settings/#caching-on-port-enterprise-only).
+
+{{</Aside>}}
+
 {{</details>}}
 
 ## How to enable Cloudflare's proxy for additional ports

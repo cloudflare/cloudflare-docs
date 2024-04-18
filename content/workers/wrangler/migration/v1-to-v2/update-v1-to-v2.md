@@ -6,7 +6,7 @@ weight: 3
 
 # Migrate from Wrangler v1 to Wrangler v2
 
-This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2. Before updating your Wrangler version, review and compelte [Migrate webpack projects from Wrangler version 1](/workers/wrangler/migration/v1-to-v2/eject-webpack/) if it applies to your project.
+This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2. Before updating your Wrangler version, review and complete [Migrate webpack projects from Wrangler version 1](/workers/wrangler/migration/v1-to-v2/eject-webpack/) if it applies to your project.
 
 Wrangler v2 ships with new features and improvements that may require some changes to your configuration.
 
@@ -47,7 +47,7 @@ $ npm install -g wrangler
 To check that you have installed the correct Wrangler version, run:
 
 ```sh
-$ wrangler --version
+$ npx wrangler --version
 ```
 
 ## Test Wrangler v2 on your previous projects
@@ -60,7 +60,7 @@ Run the `wrangler dev` command. This will show any warnings or errors that shoul
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
 
 ```sh
-$ wrangler dev
+$ npx wrangler dev
 ```
 
 - Errors need to be fixed before Wrangler can build your Worker.

@@ -8,7 +8,7 @@ meta:
 
 # Recommended sampling rate
 
-NetFlow or sFlow data is created by sampling the traffic that passes through your router. Lower sampling rates increase network flow data accuracy but require more router memory and CPU when the data is generated. Additionally, network flow data accuracy is maintained if customer select a higher sampling rate but also receive a larger amount of traffic.
+{{<glossary-tooltip term_id="NetFlow">}}NetFlow{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="sFlow">}}sFlow{{</glossary-tooltip>}} data is created by {{<glossary-tooltip term_id="sampling">}}sampling{{</glossary-tooltip>}} the traffic that passes through your router. Lower sampling rates increase network flow data accuracy but require more router memory and CPU when the data is generated. Additionally, network flow data accuracy is maintained if customer select a higher sampling rate but also receive a larger amount of traffic.
 
 The table below gives general recommendations for sampling rates depending on your traffic volume. Customers are encouraged to test different sampling rates to find the best option.
 

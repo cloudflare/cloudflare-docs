@@ -3,8 +3,8 @@ type: overview
 hideChildren: false
 pcx_content_type: navigation
 title: Examples
-weight: 10
-layout: list
+weight: 4
+layout: wide
 ---
 
 # Examples

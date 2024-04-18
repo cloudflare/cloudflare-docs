@@ -8,6 +8,10 @@ weight: 2
 
 Secure Web Gateway allows you to apply policies at the network level (Layers 3 and 4) to control which websites and non-HTTP applications users can access.
 
+{{<Aside type="note">}}
+For a more detailed guide to filtering network traffic and more for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/) implementation guide.
+{{</Aside>}}
+
 ## 1. Connect to Gateway
 
 ### Connect devices

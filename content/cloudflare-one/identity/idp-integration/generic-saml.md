@@ -23,10 +23,13 @@ Most identity providers allow users to create an **Application**. In this contex
 The typical setup requirements are:
 
 1. Create a new integration in the identity provider with the type set as **SAML**.
-2. Set the **Entity/Issuer ID** to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
-3. Set the **Single sign-on URL** (or similarly named) to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
-4. Set the **Name ID/Email format** to `emailAddress`.
-5. (Optional) Set the signature policy to _Always Sign_.
+2. Set both the **Entity/Issuer ID** and the **Single sign-on URL** to:
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    ``` 
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+3. Set the **Name ID/Email format** to `emailAddress`.
+4. (Optional) Set the signature policy to _Always Sign_.
 
 ### (Optional) Upload SAML metadata
 

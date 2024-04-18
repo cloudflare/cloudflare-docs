@@ -63,7 +63,7 @@ Add a [`CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) to 
 | Type | Name | Target | Proxy status |
 | --- | --- | --- | --- |
 | `CNAME` | `elb` | `<AWS_HOSTNAME>.<REGION>._elb.amazonaws.com` | Proxied |
-  
+
 ---
 
 ## Microsoft
@@ -81,6 +81,14 @@ Then, add Azure’s required records to [Cloudflare DNS](/dns/manage-dns-records
 ---
 
 ## Miscellaneous vendors
+
+### Discourse
+
+To use Discourse with Cloudflare, refer to [Using Discourse with Cloudflare: Best Practices](https://community.cloudflare.com/t/using-discourse-with-cloudflare-best-practices/602890).
+
+### Forward Email
+
+To use Cloudflare with Forward Email, refer to [Forward Email configuration with Cloudflare](https://forwardemail.net/guides/cloudflare).
 
 ### ClickFunnels
 
@@ -161,11 +169,11 @@ Then, set up your Squarespace DNS records:
 3. If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
 
 ![Screenshot of error warnings in squarespace](/images/support/hc-import-squarespace_dns_settings-test-2.png)
-  
+
 #### Pending domain owner verification
-  
+
 The `CNAME` record you added for `verify.squarespace.com` should be **DNS-only**.
-  
+
 If you proxy this record, Squarespace will not be able to verify your domain ownership and show you a `This website is pending domain owner verification` error. To fix the issue, [edit](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) the `CNAME` record and change the **Proxy status** to **DNS-only**.
 
 ### Tumblr custom domain
@@ -173,3 +181,15 @@ If you proxy this record, Squarespace will not be able to verify your domain own
 Refer to Tumblr's documentation to [get DNS record values](https://help.tumblr.com/hc/en-us/articles/231256548-Custom-Domains). Then, [add records to Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/).
 
 {{<render file="_third-party-caveat" withParameters="Tumblr">}}
+
+### Wix
+
+You can use Cloudflare with [Wix websites](https://www.wix.com/), though your setup needs to be different than with most website builders.
+
+This is because Wix [does not support](https://support.wix.com/en/article/request-cloudflare-support) using Cloudflare nameservers (which is the normal part of a [full setup](/dns/zone-setups/full-setup/) or with domains bought through [Cloudflare Registrar](/registrar/)).
+
+#### Using domain pointing
+
+If you want to manage your DNS through Cloudflare or you bought a domain through [Cloudflare Registrar](/registrar/), you can connect that domain to Wix through [domain pointing](https://support.wix.com/en/article/connecting-a-domain-to-wix-using-the-pointing-method).
+
+This method means your website is using Cloudflare for DNS only, so all your DNS records should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).

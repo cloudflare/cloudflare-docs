@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: OpenAI GPT function calling with JavaScript and Cloudflare Workers 
-layout: single
 ---
 
 # Use OpenAI GPT function calling with JavaScript and Cloudflare Workers 
@@ -36,7 +35,7 @@ $ npm create cloudflare@latest
 
 For setup, select the following options:
 * For `Where do you want to create your application?`, indicate `openai-function-calling-workers`.
-* For `What type of application do you want to create?`, choose `"Hello World" script`.
+* For `What type of application do you want to create?`, choose `"Hello World" Worker`.
 * For `Do you want to use TypeScript?`, choose `no`.
 * For `Do you want to deploy your application?`, choose `yes`.
 
@@ -46,7 +45,7 @@ Go to your new `openai-function-calling-workers` Worker project:
 $ cd openai-function-calling-workers
 ```
 
-Inside of your new `openai-function-calling-workers` directory, find the `src/worker.js` file. You will configure this file for most of the tutorial.
+Inside of your new `openai-function-calling-workers` directory, find the `src/index.js` file. You will configure this file for most of the tutorial.
 
 You will also need an OpenAI account and API key for this tutorial. If you do not have one, [create a new OpenAI account](https://platform.openai.com/signup) and [create an API key](https://platform.openai.com/account/api-keys) to continue with this tutorial. Make sure to store you API key somewhere safe so you can use it later.
 
@@ -58,10 +57,10 @@ $ npm install openai
 $ npm install @vespaiach/axios-fetch-adapter
 ```
 
-Initially, your generated `worker.js` file should look like this:
+Initially, your generated `index.js` file should look like this:
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 export default {
 	async fetch(request, env, ctx) {
@@ -73,7 +72,7 @@ export default {
 Above `export default`, add the imports for `openai` and `axios-fetch`:
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 import { Configuration, OpenAIApi } from "openai";
 import fetchAdapter from "@vespaiach/axios-fetch-adapter";
@@ -83,7 +82,7 @@ Within your `fetch` function, set up the configuration and instantiate your `Ope
 
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 async fetch(request, env, ctx) {
   const configuration = new Configuration({
@@ -111,7 +110,7 @@ OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 Now, make a request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with your functions argument to indicate that you are enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 try {
   const chatCompletion = await openai.createChatCompletion({
@@ -170,7 +169,7 @@ Function calling intelligently determines what content to pass in the argument. 
 Add the code to call your function when OpenAI determines you need to:
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
  let websiteContent;
 
@@ -186,10 +185,10 @@ The above function does not exist. You need to create it. Use a node library cal
 $ npm install cheerio
 ```
 
-With cheerio installed, import it at the top of your `worker.js` file and immediately create your `read_website_content` function:
+With cheerio installed, import it at the top of your `index.js` file and immediately create your `read_website_content` function:
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 import cheerio from "cheerio"; 
 
@@ -218,10 +217,10 @@ When you open a browser, you should see the log of the website content in your t
 
 ## 4. Send your function response back to OpenAI
 
-The last part of your application is returning the data you got back from your `worker.js` function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
+The last part of your application is returning the data you got back from your `index.js` function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
 ```js
 ---
-filename: worker.js
+filename: index.js
 ---
 const secondChatCompletion = await openai.createChatCompletion({
   model: "gpt-3.5-turbo-0613",
@@ -255,8 +254,8 @@ You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 
 ## 6. Next steps
 
-Reference the [finished code for this tutorial on GitHub](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/openai-function-calling).
+Reference the [finished code for this tutorial on GitHub](https://github.com/rickyrobinett/openai-function-calling-workers).
 
 To continue working with Workers and AI, refer to [the guide on using LangChaing and Cloudflare Workers together](https://blog.cloudflare.com/langchain-and-cloudflare/) or [how to build a ChatGPT plugin with Cloudflare Workers](https://blog.cloudflare.com/magic-in-minutes-how-to-build-a-chatgpt-plugin-with-cloudflare-workers/).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.

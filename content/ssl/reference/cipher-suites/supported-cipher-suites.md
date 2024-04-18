@@ -1,8 +1,8 @@
 ---
 title: Supported cipher suites
 pcx_content_type: reference
-layout: list
-weight: 1
+layout: wide
+weight: 3
 meta:
   title: Supported cipher suites
 ---
@@ -20,7 +20,7 @@ Cloudflare supports the following cipher suites by default. If needed, you can [
 | ECDHE-ECDSA-AES128-SHA256           | TLS 1.2 | Compatible | [0xc023] | TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 |
 | ECDHE-ECDSA-AES128-SHA              | TLS 1.0 | Legacy | [0xc009] | TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 | ECDHE-RSA-AES128-SHA256             | TLS 1.2 | Compatible | [0xc027] | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
-| ECDHE-RSA-AES128-SHA                | TLS 1.0 | Modern | [0xc013] | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA |
+| ECDHE-RSA-AES128-SHA                | TLS 1.0 | Legacy | [0xc013] | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA |
 | AES128-GCM-SHA256                   | TLS 1.2 | Legacy | [0x9c] | TLS_RSA_WITH_AES_128_GCM_SHA256 |
 | AES128-SHA256                       | TLS 1.2 | Legacy | [0x3c] | TLS_RSA_WITH_AES_128_CBC_SHA256 |
 | AES128-SHA                          | TLS 1.0 | Legacy | [0x2f] | TLS_RSA_WITH_AES_128_CBC_SHA |
@@ -32,7 +32,7 @@ Cloudflare supports the following cipher suites by default. If needed, you can [
 | AES256-GCM-SHA384                   | TLS 1.2 | Legacy | [0x9d] | TLS_RSA_WITH_AES_256_GCM_SHA384 |
 | AES256-SHA256                       | TLS 1.2 | Legacy | [0x3d] | TLS_RSA_WITH_AES_256_CBC_SHA256 |
 | AES256-SHA                          | TLS 1.0 | Legacy | [0x35] | TLS_RSA_WITH_AES_256_CBC_SHA |
-| DES-CBC3-SHA                        | TLS 1.0 | Legacy | [0x0701c0] | SSL_CK_DES_192_EDE3_CBC_WITH_SHA |
+| DES-CBC3-SHA                        | TLS 1.0 | Legacy | [0x0a] | TLS_RSA_WITH_3DES_EDE_CBC_SHA |
 | AEAD-AES128-GCM-SHA256 [^1]        | TLS 1.3 | Modern | {0x13,0x01} | TLS_AES_128_GCM_SHA256 |
 | AEAD-AES256-GCM-SHA384 [^1]        | TLS 1.3 | Modern | {0x13,0x02} | TLS_AES_256_GCM_SHA384 |
 | AEAD-CHACHA20-POLY1305-SHA256 [^1]  | TLS 1.3 | Modern | {0x13,0x03} | TLS_CHACHA20_POLY1305_SHA256 |

@@ -12,7 +12,11 @@ To create a client certificate in the Cloudflare dashboard:
 2.  Go to **SSL** > **Client Certificates**.
 3.  Select **Create Certificate**.
 
-    {{<render file="_cloudflare-managed-client-cert.md">}}
+    {{<Aside type="warning">}}
+By default, client certificates are issued by a Cloudflare Managed CA. Cloudflare generates a unique CA for each account.
+
+If you need to use certificates issued by another CA, use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca-api-shield/).
+{{</Aside>}}
 
 4.  For **Private key type**, select a value.
 
@@ -28,5 +32,5 @@ To create a client certificate in the Cloudflare dashboard:
 
 You can now use the client certificate for multiple things, including:
 
-- Adding an mTLS certificate binding to your [Worker](/workers/runtime-apis/mtls/).
+- Adding an mTLS certificate binding to your [Worker](/workers/runtime-apis/bindings/mtls/).
 - Embedding a certificate in your [mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/).

@@ -7,10 +7,10 @@ _build:
 
 To configure Hyperdrive, you will need:
 
-* The IP address (or hostname) and port of your database.
-* The database username (for example, `hyperdrive-demo`) you configured in a previous step.
-* The password associated with that username.
-* The name of the database you want Hyperdrive to connect to. For example, `postgres`.
+- The IP address (or hostname) and port of your database.
+- The database username (for example, `hyperdrive-demo`) you configured in a previous step.
+- The password associated with that username.
+- The name of the database you want Hyperdrive to connect to. For example, `postgres`.
 
 Hyperdrive accepts the combination of these parameters in the common connection string format used by database drivers:
 
@@ -23,12 +23,12 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive configuration with the [Wrangler CLI](/workers/wrangler/install-and-update/), open your terminal and run the following command, pasting the connection string provided from your database host, or replacing `user`, `password`, `HOSTNAME_OR_IP_ADDRESS`, `port`, and `database_name` placeholders with those specific to your database:
 
 ```sh
-$ wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+$ npx wrangler hyperdrive create $NAME --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/learning/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -39,7 +39,7 @@ This command outputs a binding for `wrangler.toml`:
 filename: wrangler.toml
 ---
 name = "hyperdrive-example"
-main = "src/worker.ts"
+main = "src/index.ts"
 compatibility_date = "2023-09-11"
 
 node_compat = true # required for database drivers to function
@@ -60,14 +60,14 @@ Copy the below Worker code, which passes the connection string generated from `e
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Client } from 'pg';
 
 export interface Env {
 	// If you set another name in wrangler.toml as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
-	HYPERDRIVE: any;
+	HYPERDRIVE: Hyperdrive;
 }
 
 export default {
@@ -84,7 +84,7 @@ export default {
 			await client.connect();
 
 			// Test query
-			let result = await client.query({ text: 'SELECT * FROM pg_tables' });
+			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
 
 			// Returns result rows as JSON
 			return Response.json({ result: result });
@@ -98,6 +98,6 @@ export default {
 
 ## Next steps
 
-* Learn more about [How Hyperdrive Works](/hyperdrive/learning/how-hyperdrive-works/).
-* Refer to the [troubleshooting guide](/hyperdrive/learning/troubleshooting/) to debug common issues.
-* Understand more about other [storage options](/workers/learning/storage-options/) available to Cloudflare Workers.
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Refer to the [troubleshooting guide](/hyperdrive/reference/troubleshooting/) to debug common issues.
+- Understand more about other [storage options](/workers/platform/storage-options/) available to Cloudflare Workers.

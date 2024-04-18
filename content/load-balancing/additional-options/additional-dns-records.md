@@ -13,7 +13,7 @@ In addition to load balancing between DNS records used for IP resolution — `A`
 
 To load balance between multiple mail servers:
 
-1.  Make sure you have the [required DNS records](/dns/manage-dns-records/how-to/email-records/#add-mx-records) for your mail servers.
+1.  Make sure you have the [required DNS records](/dns/manage-dns-records/how-to/email-records/#send-and-receive-email) for your mail servers.
 2.  [Create a monitor](/load-balancing/monitors/create-monitor/) with a **Type** of _SMTP_.
 3.  [Create a pool](/load-balancing/pools/create-pool/) with your mail servers and attach the newly created monitor.
 4.  [Create a load balancer](/load-balancing/load-balancers/create-load-balancer/) that includes your newly created pools. Since it will forward SMTP traffic, the load balancer should be [unproxied (DNS-only)](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing).

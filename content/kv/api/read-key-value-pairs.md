@@ -20,18 +20,24 @@ An example of reading a key from within a Worker:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const value = await env.NAMESPACE.get("first-key");
+    async fetch(request, env, ctx) {
+        try {
+            const value = await env.NAMESPACE.get("first-key");
 
-    if (value === null) {
-      return new Response("Value not found", { status: 404 });
-    }
-    return new Response(value);
-  },
+            if (value === null) {
+                return new Response("Value not found", {status: 404});
+            }
+            return new Response(value);
+        }
+        catch (e)
+        {
+            return new Response(e.message, {status: 500});
+        }
+    },
 };
 ```
 
-You can [read key-value pairs from the command line with Wrangler](/kv/platform/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#get) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
 
 #### Types
 
@@ -52,27 +58,27 @@ For simple values, use the default `text` type which provides you with your valu
 
 For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type` can be ordered from fastest to slowest as `stream`, `arrayBuffer`, `text`, and `json`.
 
-## CacheTTL parameter
+## CacheTtl parameter
 
-`cacheTTL` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. 
+`cacheTtl` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from. 
 
-Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTTL` is useful if your data is write-once or write-rarely. 
+Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTtl` is useful if your data is write-once or write-rarely. 
 
 {{<Aside type="note" header="Hot and cold read">}} 
 A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/). A cold read means that the data is not cached, therefore you have to fetch the data from the storage provider.
 {{</Aside>}}
 
-`cacheTTL` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
+`cacheTtl` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
 
-The `get()` options object also accepts a `cacheTTL` parameter:
+The `get()` options object also accepts a `cacheTtl` parameter:
 
 ```js
-env.NAMESPACE.get(key, { cacheTTL: 3600 });
+env.NAMESPACE.get(key, { cacheTtl: 3600 });
 ```
 
-The `cacheTTL` parameter must be an integer greater than or equal to `60`, which is the default. 
+The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default. 
 
-The effective `cacheTTL` of an already cached item can be reduced by getting it again with a lower `cacheTTL`. For example, if you did `NAMESPACE.get(key, {cacheTTL: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTTL: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTTL`, which defaults to 60 seconds.
+The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds.
 
 ## Metadata
 
@@ -86,4 +92,4 @@ const { value, metadata } = await env.NAMESPACE.getWithMetadata(key);
 
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
-You can pass an options object with `type` and/or `cacheTTL` parameters to the `getWithMetadata()` method, similar to `get()`.
+You can pass an options object with `type` and/or `cacheTtl` parameters to the `getWithMetadata()` method, similar to `get()`.

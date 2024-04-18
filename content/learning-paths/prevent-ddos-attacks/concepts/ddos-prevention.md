@@ -41,7 +41,7 @@ In the context of DDoS attacks, caching reduces the number of requests going to 
 A Web Application Firewall (WAF) creates a shield between a web app and the Internet. This shield checks incoming web requests and filters undesired traffic to help mitigate many common attacks.
 
 ```mermaid
-graph TD;
+flowchart TD;
     User-->|Sends Request|WAF;
     WAF-->|Filters Request|Application;
     Application-->|Sends Request|OriginServer;
@@ -60,13 +60,13 @@ sequenceDiagram
   participant Client
   participant DDoS_Protection_Service
   participant Origin_Server
-  
+
   Client->>+DDoS_Protection_Service: Request
   Note right of DDoS_Protection_Service: Filtered traffic
   DDoS_Protection_Service->>+Origin_Server: Request
   Origin_Server-->>-DDoS_Protection_Service: Response
   DDoS_Protection_Service-->>Client: Response
-  
+
   Client->>+Origin_Server: Direct connection
   Note over Origin_Server: Potential DDoS Attack
   Origin_Server-->>-Client: Error response

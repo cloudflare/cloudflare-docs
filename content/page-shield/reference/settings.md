@@ -8,7 +8,7 @@ weight: 1
 
 ## CSP reporting endpoint
 
-When enabled, Page Shield uses a Content Security Policy (CSP) [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
+When enabled, Page Shield uses a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
 
 By default, reports are sent to a Cloudflare-owned endpoint:
 

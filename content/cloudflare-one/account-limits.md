@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Account limits
-weight: 11
+weight: 12
 ---
 
 # Account limits
@@ -23,23 +23,26 @@ This page lists the default account limits for rules, applications, fields, and 
 | IdP count                   | 50    |
 | Rules count per application | 1,000 |
 | Rules count per group       | 1,000 |
+| Domains per application     | 5     |
 
 ## Gateway
 
 | Feature                                   | Limit |
 | ----------------------------------------- | ----- |
-| DNS Logpush jobs                          | 5     |
-| HTTP Logpush jobs                         | 5     |
-| Lists                                     | 100   |
-| DNS policies                              | 500   |
+| DNS policies per account                  | 500   |
+| Network policies per account              | 500   |
+| HTTP policies per account                 | 500   |
 | DNS locations                             | 250   |
 | Concurrent streams for HTTP/2 connections | 256   |
-| DNS policies per account                  | 500   |
-| HTTP policies per account                 | 500   |
-| Network policies per account              | 500   |
-| Source IP addresses per proxy endpoint    | 2,000 |
+| Proxy endpoints                           | 500   |
+| Source IP CIDRs per proxy endpoint        | 2,000 |
+| Lists                                     | 100   |
+| Entries per list (Standard users)         | 1,000 |
+| Entries per list (Enterprise users)       | 5,000 |
+| DNS Logpush jobs                          | 5     |
+| HTTP Logpush jobs                         | 5     |
 
-## Data Loss Prevention
+## Data Loss Prevention (DLP)
 
 | Feature                                  | Limit   |
 | ---------------------------------------- | ------- |

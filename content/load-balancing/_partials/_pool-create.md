@@ -23,6 +23,12 @@ You can create a pool within the [load balancer workflow](/load-balancing/load-b
     *   A [**Weight**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights)
     *   (Optional) A [hostname](/load-balancing/additional-options/override-http-host-headers/) by clicking **Add host header**
 
+{{<Aside type="note" header="Note">}}
+
+If your origin is pointing to [Cloudflare Pages](/pages/), you will need to fill in the host header field with the project domain for it to resolve correctly.
+
+{{</Aside>}}
+
 5.  Repeat this process for additional origins in the pool.
 
 6.  (Optional) Set up coordinates for [Proximity Steering](/load-balancing/understand-basics/traffic-steering/steering-policies/proximity-steering/) on the pool.

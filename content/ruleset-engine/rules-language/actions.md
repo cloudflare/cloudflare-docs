@@ -3,7 +3,7 @@ title: Actions
 pcx_content_type: reference
 type: overview
 weight: 5
-layout: list
+layout: wide
 meta:
   title: Actions reference
 ---
@@ -175,7 +175,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         <p>Only available in:</p>
         <ul>
           <li><a href="/rules/transform/">Transform Rules</a>, in phases <code>http_request_transform</code>, <code>http_request_late_transform</code>, and <code>http_response_headers_transform</code>. In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Transform Rule.</li>
-          <li>WAF custom rules checking for <a href="/waf/exposed-credentials-check/">exposed credentials</a>, in the <code>http_request_firewall_custom</code> phase at the account level. In the Cloudflare dashboard, this action is called <em>Exposed-Credential-Check Header</em>.</li>
+          <li>WAF custom rules checking for <a href="/waf/managed-rules/check-for-exposed-credentials/">exposed credentials</a>, in the <code>http_request_firewall_custom</code> phase at the account level. In the Cloudflare dashboard, this action is called <em>Exposed-Credential-Check Header</em>.</li>
         </ul>
       </td>
       <td>No</td>

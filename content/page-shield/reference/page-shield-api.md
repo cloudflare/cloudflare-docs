@@ -393,7 +393,7 @@ This `POST` request creates a Page Shield policy with _Log_ action, defining the
 
 All other scripts would trigger a policy violation, but those scripts would not be blocked.
 
-For more information on Content Security Policy directives and values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+For more information on {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} directives and values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 
 {{<Aside type="note">}}
 For a list of CSP directives and keywords supported by Page Shield policies, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).

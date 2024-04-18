@@ -3,7 +3,7 @@ title: Preview rules
 pcx_content_type: concept
 type: table
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Preview firewall rules
 ---
@@ -41,7 +41,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Security events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
-**You cannot test firewall rules that reference [IP lists](/waf/tools/lists/custom-lists/)**.
+**You cannot test firewall rules that reference [IP lists](/waf/tools/lists/custom-lists/#ip-lists)**.
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 

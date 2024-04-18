@@ -5,7 +5,7 @@ product:
   title: Vectorize
   url: /vectorize/
   group: Developer platform
-  additional_groups: [Storage]
+  additional_groups: [AI, Storage]
 
 meta:
   title: Vectorize

@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Bot Tags provide more detail about _why_ Cloudflare assigned a [bot score](/bots/concepts/bot-score/) to a request.
+{{<glossary-tooltip term_id="bot tags">}}Bot tags{{</glossary-tooltip>}} provide more detail about _why_ Cloudflare assigned a {{<glossary-tooltip term_id="bot score" link="/bots/concepts/bot-score/">}}bot score{{</glossary-tooltip>}} to a request.

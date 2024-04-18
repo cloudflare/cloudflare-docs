@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Device posture
 weight: 4
-layout: single
 ---
 
 # Enforce device posture
@@ -19,11 +18,20 @@ Setup instructions and requirements vary depending on the device posture attribu
 
 ## 2. Verify device posture checks
 
-Before integrating a device posture check in a Gateway or Access policy, go to **Logs** > **Posture** and verify that the Pass/Fail results match your expectations.
+Before integrating a device posture check in a Gateway or Access policy, verify that the Pass/Fail results match your expectations. To view the latest test results for a specific device:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
+2. Select the device.
+3. Select **View details**.
+4. Select the **Posture checks** tab.
 
 ## 3. Build a device posture policy
 
-You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/gateway/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/gateway/network-policies/#device-posture) selector.
+You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network](/cloudflare-one/policies/gateway/network-policies/common-policies/#enforce-device-posture) or [HTTP](/cloudflare-one/policies/gateway/http-policies/common-policies/#check-device-posture) policy. In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/gateway/network-policies/#device-posture) selector.
+
+{{<Aside type="warning" header="Gateway policy limitation">}}
+Gateway does not support device posture checks for the [Tanium Access integration](access-integrations/tanium/).
+{{</Aside>}}
 
 ## 4. Ensure traffic is going through WARP
 

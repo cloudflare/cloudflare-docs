@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 5
+weight: 6
 layout: changelog
 changelog_file_name: [ai-gateway]
 outputs:

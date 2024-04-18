@@ -47,7 +47,7 @@ $ npm install @cloudflare/puppeteer --save-dev
 
 Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/durable-objects/) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronous.
 
-For the purpose of this guide, you are going to use a [KV store](/kv/learning/kv-namespaces/) to cache your screenshots.
+For the purpose of this guide, you are going to use a [KV store](/kv/reference/kv-namespaces/) to cache your screenshots.
 
 Create two namespaces, one for production, and one for development.
 
@@ -60,7 +60,7 @@ Take note of the IDs for the next step.
 
 ## 4. Configure `wrangler.toml`
 
-Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/configuration/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
 Update your `wrangler.toml` configuration file with the Browser Rendering API binding and the KV namespaces you created:
 
@@ -69,7 +69,7 @@ Update your `wrangler.toml` configuration file with the Browser Rendering API bi
 filename: wrangler.toml
 ---
 name = "browser-worker"
-main = "src/worker.js"
+main = "src/index.js"
 compatibility_date = "2023-03-14"
 compatibility_flags = [ "nodejs_compat" ]
 
@@ -83,7 +83,7 @@ kv_namespaces = [
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
-Update `src/worker.js` with your Worker code:
+Update `src/index.js` with your Worker code:
 
 ```js
 import puppeteer from "@cloudflare/puppeteer";
@@ -175,7 +175,7 @@ If the same `"url"` is requested again, it will use the cached version in KV ins
 
 Run `npx wrangler dev --remote` to test your Worker locally before deploying to Cloudflare's global network.
 
-To test taking your first screenshot, go to the following URL: 
+To test taking your first screenshot, go to the following URL:
 
 `<LOCAL_HOST_URL>/?url=https://example.com`
 

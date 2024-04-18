@@ -45,7 +45,7 @@ The available skip options in custom rules are the following:
     | [Zone Lockdown](/waf/tools/zone-lockdown/)                                           | `zoneLockdown`  |
     | [User Agent Blocking](/waf/tools/user-agent-blocking/)                               | `uaBlock`       |
     | [Browser Integrity Check](/waf/tools/browser-integrity-check/)      | `bic`           |
-    | [Hotlink Protection](/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/)           | `hot`           |
+    | [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)           | `hot`           |
     | [Security Level](/waf/tools/security-level/)               | `securityLevel` |
     | [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)         | `rateLimit`     |
     | [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/) | `waf`           |
@@ -66,7 +66,7 @@ Currently, you cannot skip [Bot Fight Mode](/bots/get-started/free/), only Super
 
   - Dashboard option: **Log matching requests**.
   - API action parameter: `logging` > `enabled` (boolean, optional).
-  - When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Security Events](/waf/security-events/).
+  - When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Security Events](/waf/analytics/security-events/).
   - If you do not specify this option in the API, the default value is `true` for custom rules with the skip action (logs requests matching the skip rule).
 
 {{</definitions>}}

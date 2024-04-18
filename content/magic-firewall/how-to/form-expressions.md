@@ -8,7 +8,7 @@ meta:
 
 # Form an expression
 
-Rules are written as using the Cloudflare Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Rules language](/ruleset-engine/rules-language/) documentation.
+Rules are written as using the Cloudflare Rules language - a domain-specific language (DSL) intended to mimic Wireshark semantics. For more information, refer to the [Rules language](/ruleset-engine/rules-language/) documentation.
 
 To start with a simple case, review below how you would match a source IP:
 
@@ -24,7 +24,7 @@ ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)
 
 ## Capabilities
 
-You can use Magic Firewall to skip or block packets based on source or destination IP, source or destination port, protocol, packet length, or bit field match.
+You can use Magic Firewall to skip or block {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} based on source or destination IP, source or destination port, protocol, packet length, or {{<glossary-tooltip term_id="bit field matching">}}bit field match{{</glossary-tooltip>}}.
 
 ## Restrictions
 

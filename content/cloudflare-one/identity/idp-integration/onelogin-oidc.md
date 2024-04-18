@@ -18,11 +18,13 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 4. In **Display Name**, enter any name for your application. Select **Save**.
 
-5. Next, go to **Configuration**. In the **Redirect URI** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Next, go to **Configuration**. In the **Redirect URI** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+    
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 6. Select **Save**.
 

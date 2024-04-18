@@ -12,6 +12,7 @@ Cloudflare's IDS takes advantage of the threat intelligence powered by our globa
 
 You can enable IDS through the dashboard or via the API.
 
+{{<Aside type="note">}}This feature is available for Advanced Magic Firewall users. For access, contact your account team.{{</Aside>}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

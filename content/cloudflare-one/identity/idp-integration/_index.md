@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: SSO integration
 weight: 3
-layout: single
 ---
 
 # Integrate Single Sign-On (SSO)
@@ -19,7 +18,7 @@ Cloudflare Zero Trust supports social identity providers that do not require adm
 
 ## Set up IdPs in Zero Trust
 
-{{<render file="_idp-integration.md">}}
+{{<render file="access/_idp-integration.md">}}
 
 Your IdP will now be listed in the **Login methods** card.
 

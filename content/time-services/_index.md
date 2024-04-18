@@ -3,7 +3,7 @@ title: Overview
 pcx_content_type: overview
 type: overview
 weight: 1
-layout: list
+layout: wide
 meta:
   title: Cloudflare Time Services docs
 ---

@@ -5,15 +5,21 @@ _build:
   list: never
 ---
 
-{{<Aside type="note">}}
+## Receive email
 
-If you are using [Email Routing](/email-routing/), you cannot modify the MX records for your Cloudflare zone without [disabling Email Routing](/email-routing/setup/disable-email-routing/).
+If you only need to **receive** emails, Cloudflare offers [Email Routing](/email-routing/) for free email forwarding to custom email addresses.
 
-{{</Aside>}}
+## Send and receive email
 
-To route emails to your mail server, you need to [create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/) within Cloudflare:
+To **send and receive** emails from your domain, you need:
 
-1.  An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
+- An SMTP provider.
+- To create two DNS records within Cloudflare.
+
+To route emails through Cloudflare and to your mail server:
+
+1. Get the IP address and MX record details from your SMTP provider ([vendor-specific guidelines](/dns/manage-dns-records/reference/vendor-specific-records/)).
+2. [Add an `A` or `AAAA` record](/dns/manage-dns-records/how-to/create-dns-records/) for your mail subdomain that points to the IP address of your mail server.
 
      | **Type** | **Name** | **IPv4 address** | **Proxy status** |
      | -------- | -------- | ---------------- | ---------------- |
@@ -76,7 +82,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       </div>
       </details>
 
-2.  An **MX** record that points to that subdomain.
+3.  [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
 
       | **Type** | **Name** | **Mail server**    | **TTL** |
       | -------- | -------- | ------------------ | ------- |
@@ -138,3 +144,9 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
 
       </div>
       </details>
+
+{{<Aside type="note">}}
+
+If you encounter issues with your email setup, refer to our [troubleshooting guide](/dns/troubleshooting/email-issues/).
+
+{{</Aside>}}

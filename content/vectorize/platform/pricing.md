@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-weight: 10
+weight: 1
 title: Pricing
 ---
 
@@ -8,7 +8,7 @@ title: Pricing
 
 {{<Aside type="note">}}
 
-Vectorize is currently in public beta and is free to use on paid [Workers plans](/workers/platform/pricing/#workers).
+Vectorize is currently in public beta and is free to use on [Workers Paid plans](/workers/platform/pricing/#workers).
 
 {{</Aside>}}
 
@@ -59,7 +59,7 @@ You will be billed for the additional reads, writes and storage according to [Ve
 
 No.
 
-* Do queries I issue from the the HTTP API or the wrangler command-line count as billable usage?
+* Do queries I issue from the HTTP API or the wrangler command-line count as billable usage?
 
 Yes: any queries you issue against your index, including from the Workers API, HTTP API and CLI all count as usage.
 

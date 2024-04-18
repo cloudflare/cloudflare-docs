@@ -22,7 +22,7 @@ To check if you still have legacy tunnels:
 If nothing appears, this indicates there are no legacy tunnels associated with the zone. If legacy tunnels appear, follow the migration instructions below.
 
 {{<Aside type="note">}}
-Named tunnels will only appear in [Zero Trust](https://one.dash.cloudflare.com/) under **Access** > **Tunnels**.
+Named tunnels will only appear in [Zero Trust](https://one.dash.cloudflare.com/) under **Networks** > **Tunnels**.
 {{</Aside>}}
 
 ## Migrate legacy tunnels

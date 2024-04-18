@@ -31,7 +31,7 @@ To set up an integration with PlanetScale:
 
     ```sql
     INSERT INTO products (name, image_url, category_id)
-    VALUES  ('Ballpoint pen', 'https://example.com/500x500', '1');
+    VALUES ('Ballpoint pen', 'https://example.com/500x500', '1');
     ```
 
 4. Add the PlanetScale integration to your Worker:
@@ -59,9 +59,10 @@ To set up an integration with PlanetScale:
           host: env.DATABASE_HOST,
           username: env.DATABASE_USERNAME,
           password: env.DATABASE_PASSWORD,
-			      fetch: (url, init) => {
-				    delete (init)["cache"];
-				    return fetch(url, init);
+          // see https://github.com/cloudflare/workerd/issues/698
+          fetch: (url, init) => {
+            delete (init)["cache"];
+            return fetch(url, init);
           }
         }
         

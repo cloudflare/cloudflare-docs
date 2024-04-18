@@ -8,7 +8,7 @@ inputParameters: productName;;greURL;;staticRoutesURL;;ipsecURL
 
 # Traffic steering
 
-$1 uses a static configuration to route traffic through Anycast tunnels using the [Generic Routing Encapsulation (GRE)]($2) and [Internet Protocol Security (IPsec)]($4) protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
+$1 uses a static configuration to route traffic through {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels using the {{<glossary-tooltip term_id="GRE tunnel" link="$2">}}GRE{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="$4">}}Internet Protocol Security (IPsec){{</glossary-tooltip>}} protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
 
 $1 steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 
@@ -101,8 +101,8 @@ A((User)) --> Cloudflare --- E[Anycast IP]
 E[Anycast IP] --> F[/"Tunnel 1 / <br> priority 1 / <br> ~100% of flows"/]:::green --> I{{Customer <br> data center/ <br> network 1}}
 E[Anycast IP] --> G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center/ <br> network 2}}
 E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
-classDef red fill:#EE4B2B
-classDef green fill:#00FF00
+classDef red fill:#EE4B2B,color: black
+classDef green fill:#00FF00,color: black
 ```
 <br />
 
@@ -129,8 +129,8 @@ A((User)) --> Cloudflare --- E[Anycast IP]
 E[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x I{{Customer <br> data center/ <br> network 1}}
 E[Anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center/ <br> network 2}}
 E[Anycast IP] -->  H[/Tunnel 3 / <br> priority 2 / <br> 100% of flows/]:::green --> K{{Customer <br> data center/ <br> network 3}}
-classDef red fill:#EE4B2B
-classDef green fill:#00FF00
+classDef red fill:#EE4B2B,color: black
+classDef green fill:#00FF00,color: black
 ```
 <br />
 

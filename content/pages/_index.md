@@ -11,13 +11,12 @@ meta:
 # Cloudflare Pages
 
 {{<description>}}
-Deploy dynamic front-end applications in record time.
+Create full-stack applications that are instantly deployed to the Cloudflare global network.
 {{</description>}}
 
 {{<plan type="all">}}
 
-Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Uploads](/pages/platform/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
-
+Deploy your Pages project by connecting to [your Git provider](/pages/get-started/git-integration/), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [C3](/pages/get-started/c3/) from the command line.
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
@@ -25,19 +24,19 @@ Cloudflare Pages is super fast, always up to date. Deploy your project by connec
 
 ## Features
 
-{{<feature header="Pages Functions" href="/pages/platform/functions/">}}
+{{<feature header="Pages Functions" href="/pages/functions/">}}
 
 Use Pages Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
 
 {{</feature>}}
 
-{{<feature header="Rollbacks" href="/pages/platform/rollbacks/">}}
+{{<feature header="Rollbacks" href="/pages/configuration/rollbacks/">}}
 
 Rollbacks allow you to instantly revert your project to a previous production deployment.
 
 {{</feature>}}
 
-{{<feature header="Redirects" href="/pages/platform/redirects/">}}
+{{<feature header="Redirects" href="/pages/configuration/redirects/">}}
 
 Set up redirects for your Cloudflare Pages project.
 
@@ -65,6 +64,12 @@ D1 is Cloudflare’s native serverless database. Create a database by importing 
 
 {{</related>}}
 
+{{<related header="Zaraz" href="/zaraz/" product="zaraz">}}
+
+Offload third-party tools and services to the cloud and improve the speed and security of your website.
+
+{{</related>}}
+
 ---
 
 ## More resources
@@ -77,7 +82,7 @@ D1 is Cloudflare’s native serverless database. Create a database by importing 
 
 {{<resource header="Framework guides" href="/pages/framework-guides/" icon="learning-center-book">}}Deploy popular frameworks such as React, Hugo, and Next.js on Pages.{{</resource>}}
 
-{{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
+{{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 

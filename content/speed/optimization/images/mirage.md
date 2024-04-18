@@ -3,20 +3,28 @@ pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/219178057-Configuring-Cloudflare-Mirage
 title: Cloudflare Mirage
 weight: 3
+learning_center:
+    title: What is lazy loading?
+    link: https://www.cloudflare.com/learning/performance/what-is-lazy-loading/
 ---
 
 # Cloudflare Mirage
 
-Cloudflare Mirage accelerates image loading on your domain.
+Cloudflare Mirage reduces bandwidth used by images in mobile browsers. It can accelerate loading of image-heavy websites on very slow mobile connections and HTTP/1.
 
 It does this by:
 
--   Automatically resizing images using JavaScript (by analyzing visitor connection and device type).
--   Virtualizing images, so visitors on poor connections get a smaller version at a lower resolution until they can access a higher bandwidth connection.
--   Streamlining image requests, so visitors can see optimized images immediately.
--   Acting as a lazy loader, turning all images into load on demand.
+- Replacing images with low-resolution thumbnails, which are bundled together into one file.
+- Acting as a lazy loader, deferring loading of higher-resolution images until they become visible.
+
+JavaScript must be enabled for Mirage to work.
 
 ---
+
+## Comparison
+
+* [Polish](/images/polish/) seamlessly optimizes images for all browsers, not only mobile, and keeps images at full resolution.
+* [Image Resizing](/images/transform-images/) together with `loading="lazy"` and `srcset` HTML attributes can achieve similar results as Mirage, but requires markup changes to implement.
 
 ## Availability
 
@@ -39,7 +47,7 @@ ___
 ## Enable Mirage
 
 {{<Aside type="note">}}
-If you send a CSP (content security policy) header that restricts where scripts can be loaded, you will need to ensure `ajax.cloudflare.com` is enabled. For example, to allow scripts from your own domain and `ajax.cloudflare.com` enter the following:
+If you send a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} header that restricts where scripts can be loaded, you will need to ensure `ajax.cloudflare.com` is enabled. For example, to allow scripts from your own domain and `ajax.cloudflare.com` enter the following:
 `script-src 'self' ajax.cloudflare.com;`
 {{</Aside>}}
 

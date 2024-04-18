@@ -6,7 +6,7 @@ weight: 4
 
 # Health Checks regions
 
-Cloudflare has data centers in cities and countries throughout the world. Health checks do not run from every single of these data centers as this would result in numerous requests to your servers. Instead, you are able to choose between one and thirteen regions from which to run health checks. Cloudflare will run Health Checks from three data centers in each region that you select.
+Cloudflare has data centers in [hundreds of cities worldwide](https://www.cloudflare.com/network/). Health checks do not run from every single of these data centers as this would result in numerous requests to your servers. Instead, you are able to choose between one and thirteen regions from which to run health checks. Cloudflare will run Health Checks from three data centers in each region that you select.
 
 {{<Aside type="note">}}
 
@@ -16,4 +16,4 @@ The exact location of these data centers are subject to change at any moment.
 
 The Internet is not the same everywhere around the world and your users may not have the same experience on your application according to where they are. Running Health Checks from different regions lets you know the health of your application from the point of view of the Cloudflare network in each of these regions.
 
-If you select multiple regions or choose **All Regions** (Enterprise only), you may increase traffic to your servers. Each region sends individual health checks from three data centers.
+If you select multiple regions or choose **All Regions** (Business & Enterprise Only), you may increase traffic to your servers. Each region sends individual health checks from three data centers.

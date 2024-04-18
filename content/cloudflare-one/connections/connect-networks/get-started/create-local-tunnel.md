@@ -2,7 +2,6 @@
 title: Create a locally-managed tunnel (CLI)
 pcx_content_type: how-to
 weight: 2
-layout: single
 ---
 
 # Set up a tunnel locally
@@ -13,7 +12,7 @@ Follow this step-by-step guide to get your first tunnel up and running using the
 
 Before you start, make sure you:
 
-- [Add a website to Cloudflare](/fundamentals/setup/account-setup/add-site/).
+- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 - [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
 
 ## 1. Download and install `cloudflared`
@@ -27,21 +26,21 @@ Before you start, make sure you:
 
 3. In PowerShell, change directory to your Downloads folder and run `.\cloudflared.exe --version`. It should output the version of `cloudflared`. Note that `cloudflared.exe` could be `cloudflared-windows-amd64.exe` or `cloudflared-windows-386.exe` if you have not renamed it.
 
-```bash
+```powershell
 PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
 ```
 
 {{</tab>}}
 {{<tab label="macos" no-code="true">}}
- 
+
 To download and install `cloudflared`:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-one/connections/connect-networks/downloads/) directly.
- 
+
 {{</tab>}}
 {{<tab label="linux" no-code="true">}}
 
@@ -49,7 +48,7 @@ Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-on
 
 Use the apt package manager to install `cloudflared` on compatible machines.
 
-{{<render file="_cloudflared-debian-install.md">}}
+{{<render file="tunnel/_cloudflared-debian-install.md">}}
 
 **RHEL RPM**
 
@@ -200,7 +199,7 @@ $ cloudflared tunnel run <UUID or NAME>
 If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag and specify the path.
 
 ```sh
-$ cloudflared tunnel --config /path/your-config-file.yaml run <UUID or NAME>
+$ cloudflared tunnel --config /path/your-config-file.yml run <UUID or NAME>
 ```
 
 {{<Aside>}}

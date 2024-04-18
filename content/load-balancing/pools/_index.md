@@ -1,11 +1,10 @@
 ---
 pcx_content_type: concept
-title: Origin Pools
+title: Origin pools
 weight: 4
-layout: single
 ---
 
-# Origin Pools
+# Origin pools
 
 {{<glossary-definition term_id="origin pool">}}
 
@@ -42,7 +41,7 @@ The Cloudflare API supports the following commands for pools. Examples are given
 | Command | Method | Endpoint |
 | --- | --- | --- |
 |  [Create Pool](/api/operations/account-load-balancer-pools-create-pool) | `POST` | `accounts/:account_id/load_balancers/pools` |
-| [Delete Pool](/api/operations/account-load-balancer-pools-delete-pool) | `DELETE` | `accounts/:account_id/load_balancers/pools/:id` | 
+| [Delete Pool](/api/operations/account-load-balancer-pools-delete-pool) | `DELETE` | `accounts/:account_id/load_balancers/pools/:id` |
 | [List Pools](/api/operations/account-load-balancer-pools-list-pools) | `GET` | `accounts/:account_id/load_balancers/pools` |
 | [Pool Details](/api/operations/account-load-balancer-pools-pool-details) | `GET` | `accounts/:account_id/load_balancers/pools/:id` |
 | [Pool Health Details](/api/operations/account-load-balancer-pools-pool-health-details) | `GET` | `account/:account_id/load_balancers/pools/:id/health` |

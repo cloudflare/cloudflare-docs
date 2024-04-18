@@ -9,7 +9,7 @@ updated: 2023-01-04
 
 # GraphQL Analytics
 
-Use the GraphQL Analytics API to retrieve Magic Network Monitoring flow data.
+Use the GraphQL Analytics API to retrieve Magic Network Monitoring {{<glossary-tooltip term_id="flow data">}}flow data{{</glossary-tooltip>}}.
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 

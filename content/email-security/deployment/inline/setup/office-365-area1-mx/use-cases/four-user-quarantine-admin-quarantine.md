@@ -1,6 +1,6 @@
 ---
 title: 4 - User managed quarantine and administrative quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 4
 meta:
     title: User managed quarantine and administrative quarantine - Office 365
@@ -13,15 +13,15 @@ In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the u
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
+{{<render file="deployment/_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
 
 ## Create quarantine policies
 
-{{<render file="_o365-use-case-2-4-create-quarantine-policy.md">}}
+{{<render file="deployment/_o365-use-case-2-4-create-quarantine-policy.md">}}
 
 ## Configure quarantine notifications
 
-{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
+{{<render file="deployment/_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 
@@ -61,4 +61,4 @@ To configure anti-spam policies:
 
 ## Create transport rules
 
-{{<render file="_o365-use-case-transport-rules.md" withParameters="`Area 1 User Quarantine Message`;;`UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Area 1 User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}
+{{<render file="deployment/_o365-use-case-transport-rules.md" withParameters="`Area 1 User Quarantine Message`;;`UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Area 1 User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}

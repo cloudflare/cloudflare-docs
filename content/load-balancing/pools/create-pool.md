@@ -59,6 +59,14 @@ To update specific settings without having to resubmit the entire configuration,
 
 ## Delete a pool
 
+You cannot delete pools that are in use by load balancers. This includes [geo steering regions](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/#region-steering) pools as well as [fallback pools](/load-balancing/understand-basics/health-details/#fallback-pools).
+
+If you get an error when trying to delete a pool, consider the hostnames listed in the error and [edit the respective load balancers](/load-balancing/load-balancers/create-load-balancer/), making sure to remove all references to the pool.
+
+{{<Aside type="note">}}
+If the pool is referenced by geo steering, the configuration is **not** automatically removed when you change to a different **Traffic Steering** method. To make sure you remove it, select **Geo Steering**, remove the pool, and then apply and save any other necessary changes.
+{{</Aside>}}
+
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  

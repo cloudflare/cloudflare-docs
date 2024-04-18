@@ -33,7 +33,7 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Loop limit
 
-A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](/workers/observability/log-from-workers/#error-pages-generated-by-workers) error is returned.
+A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
 ## Runtime errors
 
@@ -117,7 +117,7 @@ function postLog(data) {
 
 ## Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -151,5 +151,5 @@ async function handleRequest(request) {
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/log-from-workers/) - Learn how to log your Workers.
-* [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
+* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.

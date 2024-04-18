@@ -35,7 +35,7 @@
       <thead>
         <tr>
           <td>
-            <strong class="termColumn">Word</strong>
+            <strong class="termColumn">Term</strong>
           </td>
           <td>
             <strong>Definition</strong>
@@ -69,12 +69,20 @@
     style="display: none"
     class="viewMoreButton"
   >
-    View more words
+    View more terms
   </button>
 </div>
 
 <script>
   const searchInput = document.getElementById("searchInput");
+  const urlParams = new URLSearchParams(window.location.search);
+  const termParam = urlParams.get("term");
+
+  // Update searchInput value if "term" parameter is present in the URL
+  if (termParam) {
+    searchInput.value = termParam;
+  }
+
   const dataRows = document.querySelectorAll(".data-row");
   const showAllButton = document.getElementById("showAllButton");
   let descriptionText = document.getElementById("description");
@@ -83,15 +91,25 @@
 
   // Function to filter and show/hide rows
   function updateTable() {
+    // Update "term" parameter in the URL as someone types
+    const currentTerm = searchInput.value.trim();
+    const newUrl = new URL(window.location.href);
+    if (currentTerm) {
+      newUrl.searchParams.set("term", currentTerm);
+    } else {
+      newUrl.searchParams.delete("term");
+    }
+    window.history.replaceState({}, "", newUrl);
+
     let visibleRowCount = 0;
 
     dataRows.forEach((row) => {
       const searchMatch =
-        searchInput.value.trim() === "" ||
+        currentTerm === "" ||
         Array.from(row.children).some((cell) =>
           cell.textContent
             .toLowerCase()
-            .includes(searchInput.value.trim().toLowerCase())
+            .includes(currentTerm.toLowerCase())
         );
       if (searchMatch) {
         row.style.display = "table-row";

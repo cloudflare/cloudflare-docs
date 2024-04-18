@@ -26,11 +26,13 @@ To set up Yandex for Cloudflare Access:
 
 7. Select **Platform** and select **Web Services.**
 
-8. In the **Callback URL #1** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+8. In the **Callback URL #1** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
     ![Yandex Platform interface with Web services checked and callback URI in open form field](/images/cloudflare-one/identity/yandex/yandex-3.png)
 

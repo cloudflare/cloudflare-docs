@@ -29,20 +29,21 @@ All included usage is on a monthly basis.
 
 ### Storage usage
 
-Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by recording total bytes stored for the duration of the month.
+Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by averaging the _peak_ storage per day over a billing period (30 days)
 
 For example:
 
-* Storing 1 GB for 30 days will be charged as 1 GB-month.
-* Storing 2 GB for 15 days will be charged as 1 GB-month.
+- Storing 1 GB constantly for 30 days will be charged as 1 GB-month.
+- Storing 3 GB constantly for 30 days will be charged as 3 GB-month.
+- Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1GB * 5/30 month + 3GB * 25/30 month = 2.66 GB-month`
 
 ### Class A operations
 
-Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `ListMultipartUploads`, `UploadPart`, `UploadPartCopy` and `PutBucketEncryption`.
+Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `ListMultipartUploads`, `UploadPart`, `UploadPartCopy`, `ListParts`, `PutBucketEncryption`, `PutBucketCors` and `PutBucketLifecycleConfiguration`.
 
 ### Class B operations
 
-Class B Operations include `HeadBucket`, `HeadObject`, `GetObject`, `UsageSummary`, `GetBucketEncryption` and `GetBucketLocation`.
+Class B Operations include `HeadBucket`, `HeadObject`, `GetObject`, `UsageSummary`, `GetBucketEncryption`, `GetBucketLocation`, `GetBucketCors` and `GetBucketLifecycleConfiguration`.
 
 ### Free operations
 
@@ -79,3 +80,15 @@ If a user writes 100,000 files with an average size of 100 KB object and reads 1
 | Storage            | (100,000 objects) * (100KB per object)              | 10 GB-months |       0 GB-months |       $0.00 |
 | **TOTAL**          |                                                     |              |                   | **$104.40** |
 {{</table-wrap>}}
+
+## Super Slurper pricing
+
+Super Slurper is free to use. You are only charged for the Class A operations that Super Slurper makes to your R2 bucket. Objects with sizes < 100MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Super Slurper copies objects over to R2.
+
+Once migration completes, you are charged for storage & Class A/B operations as described in previous sections.
+
+## Sippy pricing
+
+Sippy is free to use. You are only charged for the operations Sippy makes to your R2 bucket. If a requested object is not present in R2, Sippy will copy it over from your source bucket. Objects with sizes < 200MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates, and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Sippy copies objects over to R2.
+
+As objects are migrated to R2, they are served from R2, and you are charged for storage & Class A/B operations as described in previous sections.

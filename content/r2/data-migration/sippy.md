@@ -2,6 +2,9 @@
 title: Sippy (beta)
 pcx_content_type: how-to
 weight: 2
+learning_center:
+  title: What is data migration?
+  link: https://www.cloudflare.com/learning/cloud/what-is-data-migration/
 ---
 
 # Sippy
@@ -12,7 +15,7 @@ Sippy is a data migration service that allows you to copy data from other cloud 
 
 This feature is currently in beta. We do not recommend using Sippy for production traffic while in beta. 
 
-To report bugs or request features, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or fill out our [feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+To report bugs or request features, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or fill out our [feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
 
 {{</Aside>}}
 
@@ -38,44 +41,71 @@ If you are looking to migrate all of your data from an existing cloud provider t
 
 ## Get started with Sippy
 
-### Enable Sippy on your R2 bucket
+Before getting started, you will need:
 
-During the beta, Sippy can only be enabled on your R2 bucket by using the API. Before getting started, you’ll need:
+- An existing R2 bucket. If you don't already have one, refer to [Create buckets](/r2/buckets/create-buckets/).
+- [API credentials](/r2/data-migration/sippy/#create-credentials-for-storage-providers) for your source object storage bucket.
+- (Wrangler only) Cloudflare R2 Access Key ID and Secret Access Key with read and write permissions. For more information, refer to [Authentication](/r2/api/s3/tokens/).
 
-- An existing R2 bucket. If you don’t already have one, refer to [Create buckets](/r2/buckets/create-buckets/).
-- [AWS credentials](/r2/data-migration/sippy/#create-amazon-s3-credentials) in the form of Access Key ID and Secret Access Key with read and list permissions.
-- Cloudflare API token, R2 Access Key ID and Secret Access Key with read and write permissions. For more information, refer to [Authentication](/r2/api/s3/tokens/).
+### Enable Sippy via the Dashboard
 
-The example below shows how to enable Sippy for an R2 bucket with cURL. For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
+1. From the Cloudflare dashboard, select **R2** from the sidebar.
+2. Select the bucket you'd like to migrate objects to.
+3. Switch to the **Settings** tab, then scroll down to the **Incremental migration** card.
+4. Select **Enable** and enter details for the AWS / GCS bucket you'd like to migrate objects from. The credentials you enter must have permissions to read from this bucket. Cloudflare also recommends scoping your credentials to only allow reads from this bucket.
+5. Select **Enable**.
 
-```bash
-curl -X PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/r2/buckets/{bucket_name}/sippy \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{"provider": "AWS", "bucket": "<AWS_BUCKET_NAME>", "zone": "<AWS_REGION>","key_id": "<AWS_ACCESS_KEY_ID>", "access_key":"<AWS_SECRET_ACCESS_KEY>", "r2_key_id": "<R2_ACCESS_KEY_ID>", "r2_access_key": "<R2_SECRET_ACCESS_KEY>"}'
+### Enable Sippy via Wrangler
+
+#### Set up Wrangler
+
+To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+
+#### Enable Sippy on your R2 bucket
+
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then run the [`r2 bucket sippy enable` command](/workers/wrangler/commands/#sippy-enable):
+
+```sh
+$ npx wrangler r2 bucket sippy enable <BUCKET_NAME>
 ```
 
-#### Parameters
+This will prompt you to select between supported object storage providers and lead you through setup.
 
-- **provider** string - The provider of your source object storage bucket. Currently, `AWS` is the only supported option.
-- **bucket** string - The name of your AWS S3 bucket.
-- **zone** (optional) string - The AWS region where your S3 bucket is located. For example: `us-west-2`.
-- **key_id** string - Your AWS Access Key ID. Requires read and list access.
-- **access_key** string - Your AWS Secret Access Key. Requires read and list access.
-- **r2_key_id** string - Your R2 Access Key ID. Requires read and write access.
-- **r2_access_key** string - Your R2 Secret Access Key. Requires read and write access.
+### Enable Sippy via API
 
-### Disable Sippy on your R2 bucket
+For information on required parameters and examples of how to enable Sippy, refer to the [API documentation](/api/operations/r2-put-bucket-sippy-config). For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
-The example below shows how to disable Sippy for an R2 bucket with cURL.
+{{<Aside type="note">}}
 
-```bash
-curl -X DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/r2/buckets/{bucket_name}/sippy \
---header "Authorization: Bearer <API_TOKEN>"
+If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions), you will need to pass a `cf-r2-jurisdiction` request header with that jurisdiction. For example, `cf-r2-jurisdiction: eu`.
+
+{{</Aside>}}
+
+## Disable Sippy on your R2 bucket
+
+### Dashboard
+
+1. From the Cloudflare dashboard, select **R2** from the sidebar.
+2. Select the bucket you'd like to disable Sippy for.
+3. Switch to the **Settings** tab and scroll down to the **Incremental migration** card.
+5. Press **Disable**.
+
+### Wrangler
+
+To disable Sippy, run the [`r2 bucket sippy disable` command](/workers/wrangler/commands/#sippy-disable):
+
+```sh
+$ npx wrangler r2 bucket sippy disable <BUCKET_NAME>
 ```
+
+### API
+
+For more information on required parameters and examples of how to disable Sippy, refer to the [API documentation](/api/operations/r2-delete-bucket-sippy-config).
 
 ## Supported cloud storage providers
-We currently support copying data from the following cloud object storage providers to R2:
+Cloudflare currently supports copying data from the following cloud object storage providers to R2:
 - Amazon S3
+- Google Cloud Storage (GCS)
 
 ## R2 API interactions
 
@@ -136,7 +166,9 @@ When Sippy is enabled, it changes the behavior of certain actions on your R2 buc
 
 Actions not listed above have no change in behavior. For more information, refer to [Workers API reference](/r2/api/workers/workers-api-reference/) or [S3 API compatibility](/r2/api/s3/api/).
 
-## Create Amazon S3 credentials
+## Create credentials for storage providers
+
+### Amazon S3
 
 To copy objects from Amazon S3, Sippy requires access permissions to your bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions, Cloudflare recommends you create a user with a narrow set of permissions.
 
@@ -167,3 +199,22 @@ To create credentials with the correct permissions:
 3. Create a new user and attach the created policy to that user.
 
 You can now use both the Access Key ID and Secret Access Key when enabling Sippy.
+
+### Google Cloud Storage
+
+To copy objects from Google Cloud Storage (GCS), Sippy requires access permissions to your bucket. Cloudflare recommends using the Google Cloud predefined `Storage Object Viewer` role.
+
+To create credentials with the correct permissions:
+1. Log in to your Google Cloud console.
+2. Go to **IAM & Admin** > **Service Accounts**.
+3. Create a service account with the predefined `Storage Object Viewer` role.
+4. Go to the **Keys** tab of the service account you created.
+5. Select **Add Key** > **Create a new key** and download the JSON key file.
+
+You can now use this JSON key file when enabling Sippy via Wrangler or API.
+
+## Caveats
+
+### ETags
+
+{{<render file="_migrator-etag-caveat.md" withParameters="Sippy">}}

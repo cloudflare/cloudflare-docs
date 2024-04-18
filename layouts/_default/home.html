@@ -7,9 +7,7 @@
   {{- end -}}
   {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-  {{- if or (eq .Page.RelPermalink "/changelog/") (eq .Page.RelPermalink "/glossary/") -}}
-  <link rel="stylesheet preconnect" href="/changelog.css" />
-  {{- end -}}
+  <link rel="stylesheet preconnect" href="/codeBlock.css" />
 
   <link rel="stylesheet preconnect" href="/home.css" />
   {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
@@ -32,24 +30,10 @@
           </a>
         </div>
         {{- if eq .Page.RelPermalink "/search/" -}}
-        <div class="SiteHeader--search CoveoSearchInterface">
+        <!-- Empty div b/c we're generating a new searchbox using Algolia -->
+        <div class="SiteHeader--search">
           <div class="SiteSearch">
             <div class="SiteSearch--input-wrapper">
-              <input type="text" id="SiteSearch--input" class="SiteSearch--input ds-input CoveoCustomSearchBox"
-                spellcheck="false" autocomplete="off" placeholder="Search docs..." role="combobox"
-                aria-autocomplete="list" aria-expanded="false" aria-label="search input"
-                aria-owns="algolia-autocomplete-listbox-0" dir="auto" />
-              <pre aria-hidden="true"
-                style="position: absolute; visibility: hidden; white-space: pre; font-family: -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
-              <div class="SiteSearch--input-icon">
-                <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-6713060681049814"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <title id="title-6713060681049814">Search icon (depiction of a magnifying glass)</title>
-                  <path
-                    d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
-                  </path>
-                </svg>
-              </div>
             </div>
           </div>
         </div>
@@ -62,9 +46,12 @@
           <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
           <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
           <a class="SiteHeader--nav-link"
-            href="https://dash.cloudflare.com/?to=/:account/support"><span>Support</span></a>
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
         </div>
         <div class="SiteHeader--theme-toggle">
+          {{- if eq .Page.RelPermalink "/search/" -}}
+
+          {{- else -}}
           <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
             <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
               xmlns="http://www.w3.org/2000/svg">
@@ -74,6 +61,7 @@
               </path>
             </svg>
           </button>
+          {{- end -}}
 
           {{- partialCached "topbar.theme" . -}}
         </div>

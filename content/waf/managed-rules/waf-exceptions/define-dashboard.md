@@ -7,17 +7,17 @@ meta:
     description: Use the Cloudflare dashboard to create exceptions that skip the execution of WAF managed rulesets or specific ruleset rules.
 ---
 
-# Add a WAF exception in the dashboard
+# Add an exception in the dashboard
 
 ## 1. Go to the zone or account dashboard page
 
-To add a WAF exception at the zone level:
+To add an exception at the zone level:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules**.
 3. Select **Add exception**.
 
-To add a WAF exception at the account level (Enterprise plans only):
+To add an exception at the account level (Enterprise plans only):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
 2. Go to Account Home > **WAF** > **Managed rulesets**.
@@ -29,11 +29,11 @@ To add a WAF exception at the account level (Enterprise plans only):
 
     ![The Add exception page in the Cloudflare dashboard](/images/waf/waf-exception-create.png)
 
-2. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. When the expression matches, the WAF will evaluate the exception skipping one or more rules of WAF managed rulesets. The filter expression uses the [Rules language](/ruleset-engine/rules-language/).
+2. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the exception. When the expression matches, the WAF will evaluate the exception skipping one or more rules of WAF managed rulesets. The filter expression uses the [Rules language](/ruleset-engine/rules-language/).
 
 ## 3. Select the rules to skip
 
-1. In **Then**, select the [exception type](/waf/managed-rules/waf-exceptions/#types-of-waf-exceptions) that determines which rules to skip:
+1. In **Then**, select the [exception type](/waf/managed-rules/waf-exceptions/#types-of-exceptions) that determines which rules to skip:
 
     - **Skip all remaining rules**: Skips all remaining rules of WAF managed rulesets. If you select this option, proceed to [4. Create the exception](#4-create-the-exception).
     - **Skip specific rules from a Managed Ruleset**: Skips one or more rules of a managed ruleset.
@@ -60,10 +60,10 @@ To add a WAF exception at the account level (Enterprise plans only):
 
 ## 4. Create the exception
 
-1. (Optional) To disable logging for requests matching the WAF exception, disable **Log matching requests**.
+1. (Optional) To disable logging for requests matching the exception, disable **Log matching requests**.
 
 2. To save and deploy your exception, select **Deploy**. If you are not ready to deploy your exception, select **Save as Draft**.
 
 {{<Aside type="note">}}
-WAF exceptions only apply to rules executing a managed ruleset listed after them. For example, if you are skipping a rule belonging to the Cloudflare OWASP Core Ruleset, make sure the exception is listed in **Security** > **WAF** > **Managed rules** _before_ the execute rule deploying this managed ruleset.
+Exceptions only apply to rules executing a managed ruleset listed after them. For example, if you are skipping a rule belonging to the Cloudflare OWASP Core Ruleset, make sure the exception is listed in **Security** > **WAF** > **Managed rules** _before_ the execute rule deploying this managed ruleset.
 {{</Aside>}}

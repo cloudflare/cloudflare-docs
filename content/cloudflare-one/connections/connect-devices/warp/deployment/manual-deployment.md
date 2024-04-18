@@ -10,7 +10,7 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ## Prerequisites
 
-[Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
+- [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
 
 ## Windows, macOS, and Linux
 
@@ -34,7 +34,7 @@ To enroll your device using the terminal:
 
 4. In the browser window that opens, complete the authentication steps required by your organization.
 
-    Once authenticated, you will see a Success page and a dialog prompting you to open a link.
+    Once authenticated, you will see a success page and a dialog prompting you to open a link.
 
 5. Select **Open Link**.
 
@@ -48,7 +48,7 @@ To enroll your device using the terminal:
 
 The registration process may take a few minutes to complete. If the registration continues to be missing, then manually copy the authentication token from the browser to the WARP client:
 
-1. On the Success page, right-click and select **View Page Source**.
+1. On the success page, right-click and select **View Page Source**.
 2. Find the HTML metadata tag that contains the token. For example, `<meta http-equiv="refresh" content"=0;url=com.cloudflare.warp://acmecorp.cloudflareaccess.com/auth?token=yeooilknmasdlfnlnsadfojDSFJndf_kjnasdf..." />`
 3. Copy the URL field: `com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>`
 4. In the terminal, run the following command using the URL obtained in the previous step.
@@ -74,3 +74,7 @@ The device is now protected by your organization's Zero Trust policies. For more
 {{<render file="warp/_enroll-ios-android.md">}}
 
 The device is now protected by your organization's Zero Trust policies.
+
+## Virtual machines
+
+By default, virtual machines (VMs) are subject to the WARP client settings of the host. If you want to deploy a separate instance of WARP in a VM, you must configure the VM to operate in bridged networking mode.

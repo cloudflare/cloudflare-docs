@@ -16,7 +16,7 @@ To complete the steps in this guide, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
 - [Basic knowledge of Terraform](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
-- [A zone on Cloudflare](/fundamentals/setup/account-setup/add-site/).
+- [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 - [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
 
 ## 1. Install Ansible
@@ -119,16 +119,18 @@ The following configuration will modify settings in your Cloudflare account.
    ---
    filename: Cloudflare-config.tf
    ---
-   # Generates a 35-character secret for the tunnel.
-   resource "random_id" "tunnel_secret" {
-     byte_length = 35
+   # Generates a 64-character secret for the tunnel.
+   # Using `random_password` means the result is treated as sensitive and, thus,
+   # not displayed in console output. Refer to: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
+   resource "random_password" "tunnel_secret" {
+     length = 64
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
-   resource "cloudflare_argo_tunnel" "auto_tunnel" {
+   resource "cloudflare_tunnel" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Ansible GCP tunnel"
-     secret     = random_id.tunnel_secret.b64_std
+     secret     = base64sha256(random_password.tunnel_secret.result)
    }
 
    # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
@@ -328,7 +330,7 @@ Once you have created the configuration files, you can deploy them through Terra
    $ terraform apply
    ```
 
-It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in [Zero Trust](https://one.dash.cloudflare.com) under **Access** > **Tunnels**.
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in [Zero Trust](https://one.dash.cloudflare.com) under **Networks** > **Tunnels**.
 
 ## 7. Test the connection
 

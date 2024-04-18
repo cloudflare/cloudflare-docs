@@ -17,7 +17,7 @@ To update `cloudflared` for a tunnel [created through the dashboard](/cloudflare
 
 Run the following command:
 
-```bash
+```powershell
 PS C:\> cloudflared update
 ```
 
@@ -89,7 +89,7 @@ $ sudo systemctl restart cloudflared.service
 {{</tab>}}
 {{<tab label="docker" no-code="true">}}
 
-1. In Zero Trust, go to **Access** > **Tunnels**.
+1. In Zero Trust, go to **Networks** > **Tunnels**.
 2. Select your tunnel and select **Configure**.
 3. Select **Docker** and copy the installation command shown in the dashboard.
 4. Paste this command into a terminal window.
@@ -139,7 +139,7 @@ When the old replica is stopped, it will drop long-lived HTTP requests (for exam
 
 Windows systems require services to have a unique name and display name. You can run multiple instances of `cloudflared` by creating `cloudflared` services with unique names.
 
-1. Install and configure `cloudflared`. 
+1. Install and configure `cloudflared`.
 2. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
 
   ```bash

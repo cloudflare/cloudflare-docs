@@ -3,7 +3,7 @@ pcx_content_type: concept
 type: overview
 title: API Discovery
 weight: 1
-layout: list
+layout: wide
 ---
 
 # API Discovery
@@ -12,14 +12,14 @@ Most development teams struggle to keep track of their APIs. Cloudflare API Disc
 
 ## Process
 
-Cloudflare produces a simple, trustworthy map of API endpoints through a process of path normalization.
+Cloudflare produces a simple, trustworthy map of {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} through a process of path normalization.
 
 For example, you might have thousands of APIs, but a lot of the calls look similar, such as:
 
-- `api.example.com/login/238`
-- `api.example.com/login/392`
+- `api.example.com/profile/238`
+- `api.example.com/profile/392`
 
-Both paths serve a similar purpose — allowing users to log in to their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/login/*`.
+Both paths serve a similar purpose — allowing users to log in to their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/profile/*`.
 
 API Discovery runs this process across all your traffic, generating a simple map of endpoints that might look like:
 
@@ -55,7 +55,7 @@ Your API endpoints are discovered with both the Session Identifier-based Discove
 
 To access Machine Learning-based Discovery, log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. Go to **API Shield** > **Discovery**. You may filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method.
 
-If all of your zone’s API traffic contains the session identifier that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. We expect Machine Learning-based Discovery to excel in discovering API traffic regardless of whether your API uses a session identifier.
+If all of your zone’s API traffic contains the {{<glossary-tooltip term_id="session identifier">}}session identifier{{</glossary-tooltip>}} that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. We expect Machine Learning-based Discovery to excel in discovering API traffic regardless of whether your API uses a session identifier.
 
 If you feel that there is an error, direct the feedback to your account team.
 

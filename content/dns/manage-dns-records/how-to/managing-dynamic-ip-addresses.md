@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
-title: Use dynamic IP addresses
+title: Dynamically update DNS records
 weight: 6
 ---
 
-# Use dynamic IP addresses
+# Dynamically update DNS records
 
-Most Internet service providers and some hosting providers dynamically update their customer's IP addresses. These customers must then update the new origin server IPs in their Cloudflare DNS.
+Most Internet service providers and some hosting providers dynamically update their customer's IP addresses. If this situation applies to you, you need an automated solution to dynamically update your DNS records in Cloudflare.
 
 ## Cloudflare API
 

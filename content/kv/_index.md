@@ -12,7 +12,7 @@ pcx_content_type: overview
 Create a global, low-latency, key-value data storage. 
 {{</description>}}
 
-{{<plan type="workers_all">}}
+{{<plan type="workers-all">}}
 
 Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency. 
 
@@ -30,7 +30,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/kv/learning/kv-bindings/">}}
+{{<feature header="Bindings" href="/kv/reference/kv-bindings/">}}
 
 Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 

@@ -43,7 +43,7 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
+export default {
   async fetch(request: Request) {
     /**
      * An object with different URLs to fetch
@@ -66,9 +66,7 @@ const handler: ExportedHandler = {
     // Otherwise, process request as normal
     return fetch(request);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

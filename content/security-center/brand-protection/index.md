@@ -76,4 +76,5 @@ Manage your notifications in the **All notifications** tab. You can disable, edi
 
 ## Limitations
 
-While this product is in beta, all Cloudflare paid plans have access to the functionality with limits according to the plans. Professional and Business customers have access to a limited number of private scans and on-demand searches, while Enterprise customers and Cloudforce One subscribers will have higher limits and the ability to save queries and create notifications for when there are new domain matches.
+- While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise customers are entitled to one saved query per Enterprise zone on their account.
+- You may only use the Brand Protection search tools to search for domains that may be attempting to impersonate your brand or a brand that has authorized you to conduct such search on its behalf.

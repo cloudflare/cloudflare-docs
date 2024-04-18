@@ -6,4 +6,6 @@ weight: 2
 
 # Get started
 
-{{<directory-listing>}}
+Choose a setup method for your Pages project:
+
+{{<directory-listing showDescriptions="true">}}

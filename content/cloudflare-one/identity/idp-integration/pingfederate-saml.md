@@ -45,11 +45,13 @@ The PingFederate® offering from PingIdentity provides SSO identity management. 
 
 11. Select SAML.
 
-12. In the **IdP Entity ID** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. In the **IdP Entity ID** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 13. Fill the other fields with values from your Ping dashboard.
 

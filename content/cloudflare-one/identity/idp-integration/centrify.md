@@ -34,11 +34,13 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 11. Under **Authorized Redirect URIs**, select **Add**.
 
-12. Under **Authorized Redirect URIs** enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. Under **Authorized Redirect URIs**, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
     ![Centrify Trust Identity Provider Configuration with team domain and callback](/images/cloudflare-one/identity/centrify/centrify-6.png)
 

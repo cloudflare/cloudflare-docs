@@ -65,10 +65,27 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_promiscuous=YES
 > ```
 
+### Spectrum FTPS (ProFTPD) instructions
+
+To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, the following example configuration is recommended:
+
+- **Control Port**: Port 21
+- **Data Ports**: Port ranges 50000-50500
+
+On the ProFTPD server side use the following example configuration:
+
+- `MasqueradeAddress`: `www.example.com`
+- `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](https://developers.cloudflare.com/learning-paths/get-started/add-domain-to-cf/allow-cloudflare-ips/).
+- `PassivePorts`: `50000-50500`
+
+For more details, refer to the [ProFTPD documentation](http://www.proftpd.org/docs/modules/mod_core.html). 
+
 ## SFTP
 
 Unlike FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration. When setting up a Spectrum application for SSH, select port 22 and TCP.
 
-## Related
+## Microsoft Windows IIS FTP
 
-- [IIS configuration](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service)
+Refer to the [Microsoft Windows IIS documentation](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service) to configure a static data port range and external IP matching your Spectrum application.
+
+Additionally, IIS requires that the source IP for both, FTP control and data connections are the same. However, when using Spectrum, this requirement may not be met, as both connections often terminate on different servers with their own unique egress IPs. To ensure proper functionality, also set `dataChannelSecurity/matchClientAddressForPasv = false`. Refer to [Microsoft Windows IIS FTP Official Guide](https://learn.microsoft.com/en-us/iis/configuration/system.applicationhost/sites/site/ftpserver/security/datachannelsecurity) for further details.

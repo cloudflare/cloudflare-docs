@@ -53,11 +53,13 @@ To create a Relying Party Trust:
 
 13. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
 
-14. In the **Relying party SAML 2.0 SSO service URL** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+14. In the **Relying party SAML 2.0 SSO service URL** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 15. Select **Next**. The **Configure Identifiers** step displays.
 
@@ -177,7 +179,7 @@ To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD
 
     This is the default location. You can find your federation service identifier in ADFS.
 
-6. In the **IdP Entity ID or Issuer URL** field, enter your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}, and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+6. In the **IdP Entity ID or Issuer URL** field, enter your Zero Trust team domain and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -197,7 +199,7 @@ Some IdPs allow administrators to upload metadata files from their SP (service p
 
 To get your Cloudflare metadata file:
 
-1. Download your unique SAML metadata file at the following URL (replace `<your-team-name>` in this example with your own {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}):
+1. Download your unique SAML metadata file at the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata

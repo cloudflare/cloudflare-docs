@@ -2,14 +2,36 @@
 title: Modify response header
 pcx_content_type: concept
 weight: 3
-layout: single
 meta:
   title: HTTP response header modification rules
 ---
 
 # HTTP response header modification rules
 
-You can manipulate the headers included in the HTTP response through HTTP response header modification rules. Through these rules you can:
+Use HTTP response header modification rules to manipulate the headers of HTTP responses sent to website visitors.
+
+```mermaid
+flowchart LR
+accTitle: Header modifications diagram
+accDescr: Header modification rules can change the headers sent to your origin server (request header modifications) or sent your your website visitors (response header modifications).
+
+A[Visitor]
+B((Cloudflare))
+C[(Origin server)]
+
+A -.-> B -. "Includes request<br> header modifications" .-> C
+C -.-> B == "Includes response<br> header modifications" ==> A
+
+style A stroke-width: 2px
+style B stroke: orange,fill: orange,color: black
+linkStyle 0,1,2 stroke-width: 1px
+linkStyle 3 stroke-width: 3px
+```
+<br>
+
+To modify HTTP headers in the **request** sent to your origin server, refer to [HTTP request header modification rules](/rules/transform/request-header-modification/).
+
+Through HTTP response header modification rules you can:
 
 * Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response if it does not exist.
 * Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response if it does not exist.
@@ -17,8 +39,6 @@ You can manipulate the headers included in the HTTP response through HTTP respon
 * Remove an HTTP header from the response.
 
 You can create an HTTP response header modification rule [in the dashboard](/rules/transform/response-header-modification/create-dashboard/) or [via API](/rules/transform/response-header-modification/create-api/).
-
-To modify HTTP headers in the **request**, refer to [HTTP request header modification rules](/rules/transform/request-header-modification/).
 
 ## Important remarks
 
@@ -28,7 +48,7 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 
-* Currently you cannot reference [IP lists](/waf/tools/lists/custom-lists/) in expressions of HTTP response header modification rules.
+* Currently you cannot reference [IP lists](/waf/tools/lists/custom-lists/#ip-lists) in expressions of HTTP response header modification rules.
 
 * The HTTP response header removal operation will remove all response headers with the provided name.
 
@@ -36,4 +56,12 @@ To modify HTTP headers in the **request**, refer to [HTTP request header modific
 
 * Currently, there is a limited number of HTTP response headers that you cannot change. Cloudflare may remove restrictions for some of these HTTP response headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
 
-* Any response header modifications will also apply to Cloudflare error pages and [custom error pages](https://support.cloudflare.com/hc/articles/200172706).
+* Any response header modifications will also apply to Cloudflare error pages and [custom error pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).
+
+* Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
+
+* To add a `set-cookie` header to the response, make sure you use the _Add_ operation instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
+
+* Currently you can only use the _Add_ operation with a literal string value.
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="HTTP response header modification rules">}}

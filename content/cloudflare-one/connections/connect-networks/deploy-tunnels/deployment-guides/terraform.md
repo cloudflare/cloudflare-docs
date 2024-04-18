@@ -22,11 +22,11 @@ In this guide, you will use Terraform to deploy:
 To complete the following procedure, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
-- [A zone on Cloudflare](/fundamentals/setup/account-setup/add-site/)
+- [A zone on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 
 ## 1. Install Terraform
 
-Refer to the [Terraform installation guide](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) for your operating system.
+Refer to the [Terraform installation guide](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) for your operating system.
 
 ## 2. Install the gcloud CLI
 
@@ -50,19 +50,7 @@ Refer to the [Terraform installation guide](https://developer.hashicorp.com/terr
 
 ## 4. Create a configuration directory
 
-Terraform functions through a working directory that contains the configuration files. You can store your configuration in multiple files or just one — Terraform will evaluate all of the configuration files in the directory as if they were in a single document.
-
-1. Create a folder for your Terraform configuration:
-
-   ```sh
-   $ mkdir gcp-tunnel
-   ```
-
-2. Change into the directory:
-
-   ```sh
-   $ cd gcp-tunnel
-   ```
+{{<render file="terraform/_config-directory.md">}}
 
 ## 5. Create Terraform configuration files
 
@@ -133,16 +121,18 @@ The following configuration will modify settings in your Cloudflare account.
    ---
    filename: Cloudflare-config.tf
    ---
-   # Generates a 35-character secret for the tunnel.
-   resource "random_id" "tunnel_secret" {
-     byte_length = 35
+   # Generates a 64-character secret for the tunnel.
+   # Using `random_password` means the result is treated as sensitive and, thus,
+   # not displayed in console output. Refer to: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
+   resource "random_password" "tunnel_secret" {
+     length = 64
    }
 
    # Creates a new locally-managed tunnel for the GCP VM.
    resource "cloudflare_tunnel" "auto_tunnel" {
      account_id = var.cloudflare_account_id
      name       = "Terraform GCP tunnel"
-     secret     = random_id.tunnel_secret.b64_std
+     secret     = base64sha256(random_password.tunnel_secret.result)
    }
 
    # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
@@ -285,7 +275,7 @@ The following script will install `cloudflared`, create a permissions and config
         image: cloudflare/cloudflared:latest
         restart: always
         container_name: cloudflared
-        command: tunnel run --token ${tunnel_token} 
+        command: tunnel run --token ${tunnel_token}
     EOF
     cd /tmp
     sudo docker-compose up -d
@@ -293,29 +283,9 @@ The following script will install `cloudflared`, create a permissions and config
 
 ## 6. Deploy Terraform
 
-Once the configuration files are created, they can be deployed.
+{{<render file="terraform/_deploy-terraform.md">}}
 
-1. Initialize your configuration directory:
-
-   ```sh
-   $ terraform init
-   ```
-
-   This will set up the directory so that your infrastructure can be deployed.
-
-2. Before actually deploying your infrastructure, you can preview everything that will be created:
-
-   ```sh
-   $ terraform plan
-   ```
-
-3. Deploy the configuration:
-
-   ```sh
-   $ terraform apply
-   ```
-
-It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel, Access application, and Access policy in the **Access** section of [Zero Trust](https://one.dash.cloudflare.com). The new DNS records are available in the [Cloudflare dashboard](https://dash.cloudflare.com).
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel, Access application, and Access policy in [Zero Trust](https://one.dash.cloudflare.com). The new DNS records are available in the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 {{<Aside type="note">}}
 If you need to roll back the configuration, run `terraform destroy` to delete everything created through Terraform. Both `terraform apply` and `terraform destroy` prompt for user input before applying the changes. To run without requiring user input, you can add the `-auto-approve` flag to the command.
@@ -323,7 +293,7 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-1. In **Access** > **Tunnels**, verify that your tunnel is active.
+1. In **Networks** > **Tunnels**, verify that your tunnel is active.
 2. In **Access** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
 3. From any device, open a browser and go to `http_app.<cloudflare_zone>` (for example, `http_app.example.com`).
 

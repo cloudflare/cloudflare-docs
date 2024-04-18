@@ -10,7 +10,7 @@ meta:
 
 ## Prefixes
 
-Advanced TCP Protection protects the IP prefixes you select from sophisticated TCP attacks. A prefix can be an IP address or an IP range in CIDR format. You must add prefixes to Advanced TCP Protection so that Cloudflare can analyze incoming packets and offer protection against sophisticated TCP DDoS attacks.
+Advanced TCP Protection protects the IP prefixes you select from sophisticated TCP attacks. A prefix can be an IP address or an IP range in CIDR format. You must add prefixes to Advanced TCP Protection so that Cloudflare can analyze incoming {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} and offer protection against sophisticated TCP DDoS attacks.
 
 Prefixes added to Advanced TCP Protection must be one of the following:
 

@@ -2,6 +2,9 @@
 title: Data Migration
 pcx_content_type: navigation
 weight: 3
+learning_center:
+  title: What is data migration?
+  link: https://www.cloudflare.com/learning/cloud/what-is-data-migration/
 ---
 
 # Data Migration

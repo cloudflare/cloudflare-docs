@@ -1,9 +1,13 @@
 ---
 pcx_content_type: concept
 title: Key Management
-weight: 1
+weight: 4
 ---
 
 # Key Management
 
-Cloudflare offers [Keyless SSL](/ssl/keyless-ssl/) and [Geo Key Manager](/ssl/edge-certificates/custom-certificates#geo-key-manager-private-key-restriction), which ensures that private SSL/TLS key material stays in your intended region. Keyless SSL ensures that Cloudflare never has possession of the private key material at all; Geo Key Manager uses Keyless SSL to ensure the keys never leave the specified region.
+Cloudflare provides two key management solutions: [Geo Key Manager](/ssl/edge-certificates/geokey-manager/) and [Keyless SSL](/ssl/keyless-ssl/) to ensure that private SSL/TLS key material remains in designated regions.
+
+- [Geo Key Manager](/data-localization/key-management/geo-key-manager/): uses Keyless SSL to keep the keys within the specified region, ensuring compliance and data sovereignty.
+
+- [Keyless SSL](/data-localization/key-management/keyless-ssl/): guarantees that Cloudflare never possesses the private key material, enhancing security.

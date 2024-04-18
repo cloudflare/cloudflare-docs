@@ -1,14 +1,14 @@
 ---
 pcx_content_type: concept
 title: Handle false positives
-weight: 9
+weight: 4
 ---
 
 # Handle false positives
 
 If you encounter a false positive caused by a managed rule, do one of the following:
 
-- **Add a WAF exception**: [WAF exceptions](/waf/managed-rules/waf-exceptions/) allow you to skip the execution of WAF managed rulesets or some of their rules for certain requests.
+- **Add an exception**: [Exceptions](/waf/managed-rules/waf-exceptions/) allow you to skip the execution of WAF managed rulesets or some of their rules for certain requests.
 
 - **Adjust the OWASP managed ruleset**: A request blocked by rule with ID `...843b323c` and description `949110: Inbound Anomaly Score Exceeded` refers to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). To resolve the issue, [configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/#configure-in-the-dashboard).
 
@@ -22,6 +22,6 @@ If you contact Cloudflare Support to verify whether a WAF managed rule triggers 
 
 - If one specific rule causes false positives, disable that specific rule and not the entire ruleset.
 
-- For false positives with the administrator area of your website, add a WAF exception disabling a managed rule for the admin section of your site resources. You can use an expression similar to the following:
+- For false positives with the administrator area of your website, add an [exception](/waf/managed-rules/waf-exceptions/) disabling a managed rule for the admin section of your site resources. You can use an expression similar to the following:
 
     `http.host eq "example.com" and starts_with(http.request.uri.path, "/admin")`

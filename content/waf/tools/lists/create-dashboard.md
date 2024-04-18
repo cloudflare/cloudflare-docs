@@ -57,7 +57,7 @@ To add items to a list by uploading a CSV file:
 
 2. Browse to the location of the CSV file, select the file, and then select **Open**. The displayed items in the page will include the items loaded from the CSV file.
 
-    The exact CSV file format depends on the list type. Refer to [CSV file format for bulk import operations](/waf/tools/lists/custom-lists/#csv-file-format-for-bulk-import-operations) for details.
+    The exact CSV file format depends on the list type. Refer to [Custom list types](/waf/tools/lists/custom-lists/#custom-list-types) for details.
 
 3. You can continue to edit the items in the list before adding them:
 

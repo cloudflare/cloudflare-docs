@@ -44,7 +44,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 4. Save your public key
 
-1. Copy the public key generated from the dashboard in Step 2.
+1. Copy the public key generated from the dashboard in Step 3.
 
 {{<render file="ssh/_public-key.md">}}
 
@@ -80,8 +80,8 @@ Match host vm.example.com exec "/usr/local/bin/cloudflared access ssh-gen --host
 
 ### Connect through a browser-based terminal
 
-End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/cloudflare-one/applications/non-http/#rendering-in-the-browser).
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, refer to [Enable browser rendering](/cloudflare-one/applications/non-http/#enable-browser-rendering).
 
 ---
 
-Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/gateway/network-policies/ssh-logging).
+Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).

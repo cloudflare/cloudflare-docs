@@ -36,7 +36,7 @@ Now that you have created your API token, you can use it to push your project fr
 
 ### Get project account ID
 
-To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API\* on the right-side menu. If you have not added a zone, add one by selecting **Add site\*\*. You can purchase a domain from [Cloudflare's registrar](/registrar/)
+To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API** on the right-side menu. If you have not added a zone, add one by selecting **Add site**. You can purchase a domain from [Cloudflare's registrar](/registrar/).
 
 ## Use GitHub Actions
 
@@ -147,7 +147,7 @@ Your continuous integration workflow is broken down into jobs when using CircleC
 
 {{<Aside type="note" header="Note">}}
 
-If your project uses a Node version less than `16.13.0`, you will have to upgrade your Node version as Wrangler requires at least Node.js version `16.13.0`.
+Wrangler requires a Node version of at least `16.17.0`. You must upgrade your Node.js version if your version is lower than `16.17.0`.
 
 {{</Aside>}}
 
