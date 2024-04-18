@@ -28,7 +28,7 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
+`wrangler dev` will run the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
 
 ### Supported resource bindings in different environments
 
@@ -55,11 +55,11 @@ With any bindings that are not supported locally, you will need to use the `--re
 
 ## Work with local data
 
-When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data. Wrangler automatically creates local versions of bindings found in `wrangler.toml`. These will not have data in them initially, so you will need to add data manually.
+When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources. 
 
 ### Use bindings in `wrangler.toml`
 
-Wrangler will automatically create local versions of bindings found in `wrangler.toml`. These will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
+[Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the `wrangler.toml` [configuration file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
 
 When you run `wrangler dev` Wrangler creates local resources in a `.wrangler` folder like this:
 
