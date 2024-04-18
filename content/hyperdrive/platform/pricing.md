@@ -8,7 +8,7 @@ weight: 1
 
 **Hyperdrive is free and included in every [Workers Paid](/workers/platform/pricing/#workers) plan**.
 
-Hyperdrive is automatically enabled when subscribed to a Workers Paid plan, and does not require you to pay any additional fees to use. Hyperdrive's [connection pooling and query caching](/hyperdrive/configuration/how-hyperdrive-works/) do not incur any additional charges, and there are no hidden limits other than those [published](/hyperdrive/platform/limits/).
+Hyperdrive is automatically enabled when subscribed to a Workers Paid plan, and does not require you to pay any additional fees to use. Hyperdrive's [connection pooling and query caching](/hyperdrive/reference/how-hyperdrive-works/) do not incur any additional charges, and there are no hidden limits other than those [published](/hyperdrive/platform/limits/).
 
 ## Frequently Asked Questions
 

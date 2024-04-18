@@ -80,6 +80,6 @@ const noCachingClient = new Client({
 
 ## Next steps
 
-- Learn more about [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Learn more about [How Hyperdrive works](/hyperdrive/reference/how-hyperdrive-works/).
 - Learn how to [Connect to PostgreSQL](/hyperdrive/configuration/connect-to-postgres/) from Hyperdrive.
-- Review [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
+- Review [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.
