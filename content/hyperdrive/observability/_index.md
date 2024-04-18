@@ -1,9 +1,9 @@
 ---
-title: Configuration
 pcx_content_type: navigation
-weight: 3
+title: Observability
+weight: 4
 ---
 
-# Configuration
+# Observability
 
 {{<directory-listing>}}
