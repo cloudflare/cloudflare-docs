@@ -78,6 +78,17 @@ For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=si
 
 {{</Aside>}}
 
+### Enable Node.js compatibility
+
+To enable Node.js compatibility, add the `node_compat` flag to your `wrangler.toml`:
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
+
 ## 3. Connect Hyperdrive to a database
 
 {{<Aside type="note" heading="Supported database engines">}}
