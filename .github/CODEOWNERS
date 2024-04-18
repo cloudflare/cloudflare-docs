@@ -14,6 +14,7 @@
 /assets/json-collector.ts @GregBrimble @cloudflare/pcx-technical-writing
 /data/calculations/ @kristianfreeman @kodster28 @pedrosousa
 /layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa
+/layouts/partials/models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
