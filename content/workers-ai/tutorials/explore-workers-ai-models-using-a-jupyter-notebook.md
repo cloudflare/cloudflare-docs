@@ -12,13 +12,13 @@ A handy way to explore all of the models available on [Workers AI](/workers-ai) 
 
 You can [download the Workers AI notebook](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai.ipynb) or view the embedded notebook below.
 
-  <div style="position: relative; padding-top: 56.25%;">
+<div style="position: relative; padding-top: 56.25%;">
     <iframe
         src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/3c46281a9b2b84ee6776a53f87580c45/iframe?preload=true&"
         style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-        allowfullscreen="true"
-    ></iframe>
+        allowfullscreen="true">
+    </iframe>
 </div>
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai the <audio> tag is hard coded)
