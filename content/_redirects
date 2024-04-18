@@ -1379,7 +1379,7 @@
 /hyperdrive/learning/ /hyperdrive/configuration/ 301
 /hyperdrive/configuration/how-hyperdrive-works/ /hyperdrive/reference/how-hyperdrive-works/ 301
 /hyperdrive/reference/metrics/ /hyperdrive/observability/metrics/ 301
-/hyperdrive/reference/metrics/ /hyperdrive/observability/troubleshooting/ 301
+/hyperdrive/reference/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
 
 # zaraz
 
