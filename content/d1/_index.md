@@ -33,9 +33,9 @@ Create your first D1 database, establish a schema, import data and query D1 dire
 
 {{</feature>}}
 
-{{<feature header="SQLite" href="/d1/build-with-d1/d1-client-api/" cta="Learn how D1 uses SQLite">}}
+{{<feature header="SQLite" href="/d1/build-with-d1/d1-client-api/" cta="Execute SQL queries">}}
 
-Learn how D1 uses SQLite as query engine.
+Execute SQL with SQLite's SQL compatibility and D1 Client API.
 
 {{</feature>}}
 
