@@ -23,7 +23,7 @@ Note that, if you are using a third-party CDN in front of Cloudflare and Cloudfl
 
 ### Recommended DDoS configuration adjustments
 
-If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named **HTTP requests with unusual HTTP headers or URI path (signature #1)** with rule ID `0b1e17bd25c74e38834f19043486aee1`:
+If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named `HTTP requests with unusual HTTP headers or URI path (signature #1)` with rule ID {{<rule-id>}}0b1e17bd25c74e38834f19043486aee1{{</rule-id>}}:
 
 - Change the rule’s action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
 - Alternatively, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
