@@ -136,7 +136,7 @@ simple = { limit = 1500, period = 60 }
 
 The `key` passed to the `limit` function that determines what to rate-limit on should represent a unique characteristic of a user or class of user that you wish to rate limit.
 
-* Good choices include API keys in `Authorization` headers, URL paths or routes, specific query parameters used by your application, and/or user IDs and tenant IDs.
+* Good choices include API keys in `Authorization` HTTP headers, URL paths or routes, specific query parameters used by your application, and/or user IDs and tenant IDs. These are all stable identifiers and are unlikely to change from request-to-request.
 * It is not recommended to use IP addresses (since these can be shared by many users in many valid cases) or locations (the same), as you may find yourself unintentionally rate limiting a wider group of users than you intended.
 
 ```ts
