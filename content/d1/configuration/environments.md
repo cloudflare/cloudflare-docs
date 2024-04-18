@@ -6,7 +6,7 @@ weight: 9
 
 # Environments
 
-[Environments](/workers/wrangler/environments/) are different contexts that your code runs in. Cloudflare developer platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
+[Environments](/workers/wrangler/environments/) are different contexts that your code runs in. Cloudflare Developer Platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
 
 To specify different D1 databases for different environments, use the following syntax in your `wrangler.toml` file:
 
