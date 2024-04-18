@@ -14,7 +14,14 @@ A handy way to explore all of the models available on [Workers AI](/workers-ai) 
 
 You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/notebooks/deepseek-coder-exploration.ipynb) or view the embedded notebook below.
 
-{{<youtube id="SHIiB0CIADE">}}
+<div style="position: relative; padding-top: 56.25%;">
+    <iframe
+        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/97b46763341a395a4ce1c0a6f913662b/iframe?preload=true&"
+        style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen="true">
+    </iframe>
+</div>
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
 
