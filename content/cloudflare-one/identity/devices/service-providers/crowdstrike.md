@@ -76,4 +76,4 @@ Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs
 | Sensor config | Sensor signal score | `1` to `100` |
 | Version       | ZTA score version   | `2.1.0`      |
 | State         | Current online status of the device | _Online_, _Offline_, or _Unknown_ |
-| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | Number of minutes, days, or months |
+| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | Less than 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days|
