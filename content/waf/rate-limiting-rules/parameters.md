@@ -360,6 +360,6 @@ If you use **Cookie value of** as a rate limiting rule characteristic, follow th
 
 ## Configuration restrictions
 
-* If the rule expression includes [IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
 * The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.
