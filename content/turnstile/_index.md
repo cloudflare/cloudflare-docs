@@ -15,7 +15,7 @@ Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into a
 
 {{<render file="_challenge-behavior.md">}}
 
-Rather than try to unilaterally deprecate and replace CAPTCHA with a single alternative, we built a platform to test many alternatives and rotate new challenges in and out as they become more or less effective. 
+Rather than try to unilaterally deprecate and replace CAPTCHA with a single alternative, we built a platform to test many alternatives and rotate new challenges in and out as they become more or less effective.
 
 With Turnstile, we adapt the actual challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges gathering more signals about the visitor/browser environment. Those challenges include, proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid ever showing a visual puzzle to a user.
 
@@ -39,26 +39,30 @@ Turnstile [widget types](/turnstile/concepts/widget-types/) include:
 
 ## Accessibility
 
-Turnstile is WCAG 2.1 AA compliant. 
+Turnstile is WCAG 2.1 AA compliant.
 
 ---
 
 ## Features
- 
+
 {{<feature header="Turnstile analytics" href="/turnstile/turnstile-analytics/">}}
 Assess the number of challenges issued, evaluate the challenge solve rate, and view the metrics of issued challenges.
 {{</feature>}}
- 
+
 ---
 
 ## Related products
- 
+
 {{<related header="Bots" href="/bots/" product="bots">}}
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 {{</related>}}
 
 {{<related header="WAF" href="/waf/" product="waf">}}
 Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</related>}}
+
+{{<related header="Web Analytics" href="/analytics/web-analytics/" product="analytics">}}
+Get free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
 {{</related>}}
 
 ---
