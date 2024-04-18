@@ -39,13 +39,7 @@ Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traff
 
 ## On-ramps
 
-LTM on-ramps, on the other hand, refer to the path between the end-user request and the Cloudflare network.
-
-### WARP
-
-Using [Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/) as on-ramp allows you to control exactly what clients will be able to reach a load balancer pointing to a private application.
-
-Refer to [Reach private load balancers with WARP](/load-balancing/local-traffic-management/ltm-warp-setup/) for more guidance.
+LTM on-ramps, on the other hand, refer to secure paths between the end-user request and the Cloudflare network. Cloudflare Load Balancing already supports using [Spectrum](/spectrum/) as an on-ramp and will add [WARP](/cloudflare-one/connections/connect-devices/warp/) support in the future.
 
 ### Spectrum
 
