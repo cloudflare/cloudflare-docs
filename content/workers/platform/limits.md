@@ -20,10 +20,11 @@ meta:
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 400 ms    | 400 ms    |
-| [Number of Workers](#number-of-workers)                                         | 100       | 500       |
+| [Number of Workers](#number-of-workers)<sup>1</sup>                                         | 100       | 500       |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
+<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). 
 
 {{<render file="_limits_increase.md">}}
 
@@ -167,7 +168,7 @@ A subrequest is any request that a Worker makes to either Internet resources usi
 
 ### Worker-to-Worker subrequests
 
-To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/configuration/bindings/about-service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
+To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/runtime-apis/bindings/service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
 
 If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without service bindings, the request will fail.
 

@@ -5,35 +5,31 @@ entries:
 - publish_date: '2024-04-08'
   title:
   description: |-
-    * **NEW**: Add consent object to `context.system` for finer control over consent preferences
-    * **NEW**: Add support for IAB-compliant consent mode
-    * **NEW**: Use only 2 cookies to store all cookies for one MC
-    * **NEW**: Enable client parameter for embed MCs
-    * **Google Ads MC & Google Analytics 4 MC**: Add support for google consent mode with "zarazConsentChoicesUpdated" event
-    * **Google Ads MC & Google Analytics 4 MC**: Automatically generate the gcd param and send it to GAds and GA4 when "google_consent_update" key is set
-    * **Twitter MC**: Enable tweet embeds
-    * **Bing MC**: Can now run without setting cookies
-    * **Consent Modal**: Respect system dark mode prefs when present
-    * **Bugfix**: `client.get` for custom MCs fixed
-    * **Bugfix**: Prevent duplicate pageviews after consent granting
-    * **Bugfix**: Prevent custom MC routes from blocking origin routes unintentionally
-    * **Bugfix**: Prevent JSONata Object proto vulnerability
+    * **Consent Management**: Add `consent` object to `context.system` for finer control over consent preferences
+    * **Consent Management**: Add support for IAB-compliant consent mode
+    * **Consent Management**: Add "zarazConsentChoicesUpdated" event
+    * **Consent Management**: Modal now respects system dark mode prefs when present
+    * **Google Analytics 4 Managed Component**: Add support for Google Consent Mode v2
+    * **Google Ads Managed Component**: Add support for Google Consent Mode v2
+    * **Twitter Managed Component**: Enable tweet embeds
+    * **Bing Managed Component**: Support running without setting cookies
+    * **Bugfix**: `client.get` for Custom Managed Components fixed
+    * **Bugfix**: Prevent duplicate pageviews in monitoring after consent granting
+    * **Bugfix**: Prevent Managed Component routes from blocking origin routes unintentionally
 - publish_date: '2024-02-15'
   title:
   description: |-
-    * **NEW**: Add `manager.route` support for Managed Components
-    * **NEW**: Introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
-    * **NEW**: Add support for client-evaluated triggers (UI update following shortly)
-    * **Pinterest MC**: Add ecommerce support
-    * **Google Ads MC**: Append url and rnd params to pagead/landing endpoint
+    * **Single Page Applications**: Introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
+    * **Pinterest Managed Component**: Add ecommerce support
+    * **Google Ads Managed Component**: Append url and rnd params to pagead/landing endpoint
     * **Bugfix**: Add noindex robots headers for Zaraz GET endpoint responses
-    * **Bugfix**: Gracefully handle responses from custom MCs without mapped endpoints
+    * **Bugfix**: Gracefully handle responses from custom Managed Components without mapped endpoints
 - publish_date: '2024-02-05'
   title:
   description: |-
     * **Dashboard**: rename "tracks" to "events" for consistency
-    * **Pinterest Conversion API MC**: update parameters sent to api
-    * **HTTP MC**: update _settings prefix usage handling
+    * **Pinterest Conversion API Managed Component**: update parameters sent to api
+    * **HTTP Managed Component**: update _settings prefix usage handling
     * **Bugfix**: better minification of client-side js
     * **Bugfix**: fix bug where anchor link click events were not bubbling when using click listener triggers
     * **API update**: begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration

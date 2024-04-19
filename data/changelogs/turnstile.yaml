@@ -2,15 +2,18 @@
 link: "/turnstile/changelog/"
 productName: Turnstile
 entries:
+- publish_date: '2024-04-10'
+  description: |-
+    - Added [`[refresh-timeout]`](/turnstile/get-started/client-side-rendering/#refresh-a-timed-out-widget) and document new automatic interactive timeout-refresh.
 - publish_date: '2024-03-25'
   description: |-
     - Added more [supported languages](/turnstile/reference/supported-languages).
 - publish_date: '2023-12-18'
   description: |-
-    - Added [Pre-Clearance mode](/turnstile/get-started/pre-clearance-support/).
+    - Added [Pre-Clearance mode](/turnstile/concepts/pre-clearance-support/).
 - publish_date: '2023-08-24'
   description: |-
-    - Added [Client-side errors](/turnstile/reference/client-side-errors).
+    - Added [Client-side errors](/turnstile/troubleshooting/client-side-errors/).
 - publish_date: '2023-07-31'
   description: |-
     - Added [`[turnstile.isExpired]`](/turnstile/get-started/client-side-rendering/#access-a-widgets-state).

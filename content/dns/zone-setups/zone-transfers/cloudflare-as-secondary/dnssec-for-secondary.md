@@ -111,7 +111,6 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 {{</tab>}}
 {{</tabs>}}
 
-
 3. Make sure Cloudflare nameservers are added at your registrar. You can see your Cloudflare nameservers on the dashboard by going to **DNS** > **Records**.
 
 4. Make sure there is a DS record added at your registrar. The DS record is obtained from your primary DNS provider (the signer of the zone) and is what indicates to DNS resolvers that your zone has DNSSEC enabled.

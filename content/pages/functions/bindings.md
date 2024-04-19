@@ -6,13 +6,13 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/configuration/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a Cloudflare Developer Platform resource set up to continue.
 
 ## KV namespaces
 
-[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution. 
+[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution.
 
 To bind your KV namespace to your Pages Function, you can configure a KV namespace binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
 
@@ -130,7 +130,7 @@ For example, if your Worker is called `do-worker` and it declares a Durable Obje
 
 ## R2 buckets
 
-[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. 
+[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees.
 
 To bind your R2 bucket to your Pages Function, you can configure a R2 bucket binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#r2-buckets) or the Cloudflare dashboard.
 
@@ -287,42 +287,17 @@ To configure a Workers AI binding via the Cloudflare dashboard:
 5. Give your binding a name under **Variable name**.
 7. Redeploy your project for the binding to take effect.
 
-### Install the Workers AI SDK
-
-To use Workers AI in your Pages Function, you must first install the [Workers AI SDK](/workers-ai/configuration/workers-ai-sdk/) in your Pages project directory:
-
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm install --save-dev @cloudflare/ai
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn add --dev @cloudflare/ai
-```
-
-{{</tab>}}
-{{</tabs>}}
-
 ### Use Workers AI bindings
 
-After you have installed the Workers AI SDK, you can access your Workers AI binding in your Pages Function code. In the following example, your Workers AI binding is called `AI` and you can access the binding in your Pages Function code on `context.env`.
+To use Workers AI in your Pages Function, you can access your Workers AI binding in your Pages Function code. In the following example, your Workers AI binding is called `AI` and you can access the binding in your Pages Function code on `context.env`.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-import { Ai } from '@cloudflare/ai'
-
 export async function onRequest(context) {
-  const ai = new Ai(context.env.AI);
-
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input);
+  const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', input);
 
   return Response.json(answer);
 }
@@ -330,18 +305,14 @@ export async function onRequest(context) {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-import { Ai } from '@cloudflare/ai'
-
 interface Env {
   AI: any;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const ai = new Ai(context.env.AI);
-
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await ai.run('@cf/meta/llama-2-7b-chat-int8', input)
+  const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', input)
 
   return Response.json(answer);
 }
@@ -368,7 +339,7 @@ $ npx wrangler pages dev --ai=<BINDING_NAME>
 
 ## Service bindings
 
-[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function. 
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) enable you to call a Worker from within your Pages Function.
 
 To bind your Pages Function to a Worker, configure a Service binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#service-bindings) or the Cloudflare dashboard.
 
@@ -412,7 +383,7 @@ You can interact with your Service bindings locally in one of two ways:
 - Configure your Pages project's `wrangler.toml` file and run [`npx wrangler pages dev`](/workers/wrangler/commands/#dev-1).
 - Pass arguments to `wrangler pages dev` directly.
 
-To interact with a [Service binding](/workers/configuration/bindings/about-service-bindings/) while developing locally, run `npx wrangler dev` in the Worker project directory of the Worker you want to bind to. In another terminal, run `npx wrangler pages dev` in your Pages project directory.
+To interact with a [Service binding](/workers/runtime-apis/bindings/service-bindings/) while developing locally, run the Worker you want to bind to via `wrangler dev` and in parallel, run `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `SCRIPT_NAME` indicates the name of the Worker. For example, if your Worker is called `my-worker`, connect with this Worker by running it via `npx wrangler dev` (in the Worker's directory) alongside `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` (in the Pages' directory). Interact with this binding by using `context.env` (for example, `context.env.MY_SERVICE`).
 
 If you set up the Service binding via the Cloudflare dashboard, you will need to append `wrangler pages dev` with `--service <BINDING_NAME>=<SCRIPT_NAME>` where `BINDING_NAME` is the name of the Service binding and `SCRIPT_NAME` is the name of the Worker.
 
@@ -424,7 +395,7 @@ For example, to develop locally, if your Worker is called `my-worker`, run `npx 
 
 [Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
 
-To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#queue-producers) or the Cloudflare dashboard:
+To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#queues-producers) or the Cloudflare dashboard:
 
 To configure a queue producer binding via the Cloudflare dashboard:
 
@@ -479,7 +450,7 @@ If using a queue producer binding with a Pages Function, you will be able to sen
 
 The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function.
 
-To bind an Analytics Engine dataset to your Pages Function, you must configure an Analytics Engine binding using [`wrangler.toml`](/pages/functions/wrangler-configuration/#analytics-engine) or the Cloudflare dashboard:
+To bind an Analytics Engine dataset to your Pages Function, you must configure an Analytics Engine binding using [`wrangler.toml`](/pages/functions/wrangler-configuration/#analytics-engine-datasets) or the Cloudflare dashboard:
 
 To configure an Analytics Engine binding via the Cloudflare dashboard:
 

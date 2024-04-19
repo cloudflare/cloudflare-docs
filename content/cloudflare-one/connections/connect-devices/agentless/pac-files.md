@@ -130,7 +130,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
    ```
 
-If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that `curl` is not using IPv6 (use the `-4` option to force IPv4).
 
 ## 3. Create a PAC file
 

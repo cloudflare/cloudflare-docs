@@ -22,7 +22,8 @@
 
 {{- end -}}
 
-{{ .description | $.Page.RenderString }}
+{{ $opts := dict "display" "block" }}
+{{ .description | $.Page.RenderString $opts }}
 
 {{- end -}}
 {{- end -}}

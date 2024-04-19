@@ -33,7 +33,7 @@ For most applications, a single producer Worker per queue, with a single consume
 
 ## Producers
 
-A producer is the term for a client that is publishing or producing messages on to a queue. A producer is configured by [binding](/workers/configuration/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
+A producer is the term for a client that is publishing or producing messages on to a queue. A producer is configured by [binding](/workers/runtime-apis/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
 
 For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `send()` on the binding:
 
@@ -43,16 +43,25 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req: Request, env: Environment, context: ExecutionContext): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
       headers: Object.fromEntries(req.headers),
     };
+
     await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
   },
 };
 ```
+
+{{<Aside type="note">}}
+
+You can also use `[context.waitUntil()]`(/workers/runtime-apis/handlers/fetch/#contextwaituntil) to send the message without blocking the response.
+
+Note that because `waitUntil()` is non-blocking, any errors raised from the `send()` or `sendBatch()` methods on a queue will be implicitly ignored.
+
+{{</Aside>}}
 
 A queue can have multiple producer Workers. For example, you may have multiple producer Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue.
 

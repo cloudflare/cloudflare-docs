@@ -67,7 +67,7 @@ routes = [
 
 ## Worker to Worker communication
 
-On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/configuration/bindings/about-service-bindings/). 
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/runtime-apis/bindings/service-bindings/). 
 
 On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 

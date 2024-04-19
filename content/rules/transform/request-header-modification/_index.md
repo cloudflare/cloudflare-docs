@@ -52,3 +52,5 @@ You can create an HTTP request header modification rule [in the dashboard](/rule
 *   The HTTP request header removal operation will remove all request headers with the provided name.
 
 *   Currently, there is a limited number of HTTP request headers that you cannot modify. Cloudflare may remove restrictions for some of these HTTP request headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="HTTP request header modification rules">}}

@@ -20,8 +20,8 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 
 Two community tools are available for creating backups/exports of D1 databases as `.sql` files. D1 exports can be restored using Wrangler.
 
-* [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](https://developers.cloudflare.com/api/operations/cloudflare-d1-query-database) (slower but simpler.)
-* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](https://developers.cloudflare.com/workers/configuration/bindings/) (faster but more complex.)
+* [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](/api/operations/cloudflare-d1-query-database) (slower but simpler.)
+* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](/workers/runtime-apis/bindings/) (faster but more complex.)
 
 ### Prisma ORM
 
@@ -86,6 +86,16 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 
 * [GitHub](https://github.com/lauragift21/staff-directory)
 * [D1 functionality](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts)
+
+### NuxtHub
+
+`NuxtHub` is a Nuxt module that brings Cloudflare Worker bindings into your Nuxt application with no configuration. It leverages the [Wrangler Platform Proxy](/workers/wrangler/api/#getplatformproxy) in development and direct binding in production to interact with [D1](/d1/), [KV](/kv/) and [R2](/r2/) with server composables (`hubDatabase()`, `hubKV()` and `hubBlob()`).
+
+`NuxtHub` also provides a way to use your remote D1 database in development using the `npx nuxt dev --remote` command.
+
+* [GitHub](https://github.com/nuxt-hub/core)
+* [Documentation](https://hub.nuxt.com)
+* [Example](https://github.com/Atinux/nuxt-todos-edge)
 
 ## Feedback
 

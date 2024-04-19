@@ -78,6 +78,17 @@ For example: `CI=true npm create cloudflare@latest hyperdrive-tutorial --type=si
 
 {{</Aside>}}
 
+### Enable Node.js compatibility
+
+To enable Node.js compatibility, add the `node_compat` flag to your `wrangler.toml`:
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
+
 ## 3. Connect Hyperdrive to a database
 
 {{<Aside type="note" heading="Supported database engines">}}
@@ -151,7 +162,7 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 ## 4. Bind your Worker to Hyperdrive
 
-You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your Hyperdrive configuration to your Worker, add the following to the end of your `wrangler.toml` file:
 
