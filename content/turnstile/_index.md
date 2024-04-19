@@ -43,6 +43,21 @@ Turnstile is WCAG 2.1 AA compliant.
 
 ---
 
+## Availability
+
+Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.
+
+---
+
+## Get started
+
+{{<button-group>}}
+{{<button type="primary" href="/turnstile/get-started/">}}Docs guide{{</button>}}
+{{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank">}}Dashboard{{</button>}}
+{{</button-group>}}
+
+---
+
 ## Features
 
 {{<feature header="Turnstile analytics" href="/turnstile/turnstile-analytics/">}}
@@ -60,13 +75,3 @@ Cloudflare bot solutions identify and mitigate automated traffic to protect your
 {{<related header="WAF" href="/waf/" product="waf">}}
 Get automatic protection from vulnerabilities and the flexibility to create custom rules.
 {{</related>}}
-
-{{<related header="Web Analytics" href="/analytics/web-analytics/" product="analytics">}}
-Get free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
-{{</related>}}
-
----
-
-## Availability
-
-Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.
