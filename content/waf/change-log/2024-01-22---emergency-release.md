@@ -24,7 +24,7 @@ layout: wide
   <tbody>
     <tr>
       <td>Cloudflare Specials</td>
-      <td>...da07a922</td>
+      <td>{{<rule-id>}}6020327a3d424d33b9c33bbeda07a922{{</rule-id>}}</td>
       <td>100623</td>
       <td>Atlassian Confluence - Template Injection - CVE:CVE-2023-22527</td>
       <td>N/A</td>

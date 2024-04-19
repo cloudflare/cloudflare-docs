@@ -99,10 +99,10 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
 
 2. Save the following IDs for the next step:
 
-    - The ID of the entry point ruleset:<br> `060013b1eeb14c93b0dcd896537e0d2c`
-    - The ID of the `execute` rule deploying the Cloudflare Managed Ruleset:<br> `1bdb49371c1f46958fc8b985efcb79e7`.
+    - The ID of the entry point ruleset: {{<rule-id>}}060013b1eeb14c93b0dcd896537e0d2c{{</rule-id>}}
+    - The ID of the `execute` rule deploying the Cloudflare Managed Ruleset: {{<rule-id>}}1bdb49371c1f46958fc8b985efcb79e7{{</rule-id>}}
 
-    To find the correct rule in the `rules` array, search for an `execute` rule containing the ID of the Cloudflare Managed Ruleset (`efb7b8c949ac4650a09736fc376e9aee`) in `action_parameters > id`.
+    To find the correct rule in the `rules` array, search for an `execute` rule containing the ID of the Cloudflare Managed Ruleset ({{<rule-id>}}efb7b8c949ac4650a09736fc376e9aee{{</rule-id>}}) in `action_parameters > id`.
 
     {{<Aside type="note">}}
 To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) or use the [List account rulesets](/api/operations/listAccountRulesets) operation.
