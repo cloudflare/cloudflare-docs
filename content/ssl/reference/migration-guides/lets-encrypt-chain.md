@@ -48,7 +48,7 @@ You can then [manage your advanced certificates](/ssl/edge-certificates/advanced
 
 #### Compatible or modern
 
-For [custom certificates](/ssl/edge-certificates/custom-certificates/) that use compatible or modern [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), and are uploaded before September 9, Cloudlfare will continue to use the cross-signed chain until their expiry.
+For [custom certificates](/ssl/edge-certificates/custom-certificates/) that use compatible or modern [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), and are uploaded before September 9, Cloudflare will continue to use the cross-signed chain until their expiry.
 
 After September 9, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain.
 
