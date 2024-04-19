@@ -263,7 +263,7 @@ Only Super Admins and Administrators with Read/Write access can initiate the del
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=3 text="Will I receive a refund?" >}}
+{{<faq-question level=3 text="Will I receive a refund for my deleted domain registration?" >}}
 
 {{<faq-answer>}}
 No. Refunds will not be issued for costs incurred by a domain registration.
@@ -282,7 +282,7 @@ The delete token is only sent to the Super Admins of the account. If the user re
 
 
 {{<faq-item>}}
-{{<faq-question level=3 text="How long is the delete token valid for?" >}}
+{{<faq-question level=3 text="How long is the domain deletion token valid for?" >}}
 
 {{<faq-answer>}}
 
@@ -293,13 +293,13 @@ The delete token is valid for 30 minutes. After the 30 minutes the code will exp
 
 
 {{<faq-item>}}
-{{<faq-question level=3 text="Will the domain be deleted immediately from the customer's account?" >}}
+{{<faq-question level=3 text="Will the domain be deleted immediately from my account?" >}}
 
 {{<faq-answer>}}
 
-If the domain is within 5 days of the initial registration, the domain will be immediately released by the registry and made available for re-registration. In this scenario the domain will be immediately removed from the registrar section of the user's account.  The user may need to refresh the page to force an update of the data.
+If the domain is within 5 days of the initial registration, the domain will be immediately released by the registry and made available for re-registration. In this scenario the domain will be immediately removed from the registrar section of the account. You may need to refresh the page to force an update of the data.
 
-If the domain is more than 5 days old, it will enter the redemption period and will remain in the customer's account until the redemption period expires and the registry releases the domain.
+If the domain is more than 5 days old, it will enter the redemption period and will remain in account until the redemption period expires and the registry releases the domain.
 
 {{</faq-answer>}}
 {{</faq-item>}}
