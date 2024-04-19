@@ -8,7 +8,7 @@ weight: 2
 
 This page lists the available Managed Transforms. They can modify HTTP request headers or response headers.
 
-{{<Aside type="note" header="Note">}}
+{{<Aside type="warning" header="Warning">}}
 The names of HTTP headers are case-insensitive. Cloudflare may use a capitalization different from the one presented in this page. Make sure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
 {{</Aside>}}
 
@@ -63,6 +63,10 @@ Adds HTTP headers with location information for the visitor's IP address to the 
 - `cf-metro-code`: The visitor's metro code (value from the [`ip.src.metro_code`](/ruleset-engine/rules-language/fields/#field-ip-src-metro_code) field).
 - `cf-postal-code`: The visitor's postal code (value from the [`ip.src.postal_code`](/ruleset-engine/rules-language/fields/#field-ip-src-postal_code) field).
 - `cf-timezone`: The name of the visitor's timezone (value from the [`ip.src.timezone.name`](/ruleset-engine/rules-language/fields/#field-ip-src-timezone-name) field).
+
+{{<Aside type="warning" header="Warning">}}
+Turning on [IP geolocation](/network/ip-geolocation/) will send a `cf-ipcountry` HTTP header to your origin server even when **Add visitor location headers** is turned off.
+{{</Aside>}}
 
 ### Add "True-Client-IP" header
 
