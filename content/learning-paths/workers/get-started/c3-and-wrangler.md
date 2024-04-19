@@ -5,7 +5,7 @@ weight: 1
 layout: learning-unit
 ---
 
-Before deploying your first Worker, learn about the tools you will to build and deploy your Worker project.
+Before deploying your first Worker, learn about the CLI tools you will use to build and deploy your Worker project.
 
 ## Cloudflare dashboard
 
