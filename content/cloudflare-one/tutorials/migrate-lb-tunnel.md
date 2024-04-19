@@ -26,20 +26,40 @@ See additional documentation for working with [Kubernetes](/cloudflare-one/conne
 
 ---
 
-## Creating a Legacy Tunnel with Cloudflare Load Balancer
+## Legacy Tunnel with Cloudflare Load Balancer
 
 This tutorial starts by documenting the steps to create a Legacy Tunnel with Cloudflare Load Balancer so that those can be compared to the migration steps. If you would prefer to start the migration now, skip to [Create a Named Tunnel](#create-a-named-tunnel).
 
-In both modes, the first step is to create a Load Balancer and Origin Pool. Go to the `Traffic` tab of the Cloudflare dashboard. Input a public-facing DNS hostname for a domain in your Cloudflare account.
+In both modes, the first step is to create a load balancer and endpoint pool.
 
-Next, create an origin pool for the load balancer. This will be a group of origins, whether Cloudflare Tunnel connections or traditional IP addresses, used by the load balancer.
+1. Go to **Traffic** > **Load Balancing**.
 
+2. Select **Create Load Balancer**.
+
+3. On the **Hostname** page:
+    * Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
+    * Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
+    * If you want [session-based load balancing](/load-balancing/understand-basics/session-affinity/), toggle the **Session Affinity** switch.
+
+Next, [create an endpoint pool](/load-balancing/pools/create-pool/#create-a-pool) for the load balancer. A pool is a group of {{<glossary-tooltip term_id="endpoint">}}endpoints{{</glossary-tooltip>}} or origins, whether Cloudflare Tunnel connections or traditional IP addresses, used by the load balancer.
 
 In Legacy mode, adding a new instance of `cloudflared` into a Load Balancer pool must be done from the command line tool itself. The `cloudflared` agent will start and create 4 separate connections, enrolling each of these into a load balancer pool.
 
 ```sh
 $ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
 ```
+
+{{<example>}}
+For this example, the load balancer `app.widgetcorp.tech` would have a pool `lisbon-data-center` with endpoints similar to the following:
+
+| Endpoint Name   | Endpoint Address   | Weight |
+|-----------------|--------------------|--------|
+| `0-51cc...d004` | `tunnel:snf...aad` | 1      |
+| `1-51cc...d004` | `tunnel:10x...x1b` | 1      |
+| `2-51cc...d004` | `tunnel:yeq...y15` | 1      |
+| `3-51cc...d004` | `tunnel:vn6...7p6` | 1      |
+
+{{</example>}}
 
 However, the Legacy Tunnel mode has some downsides, including:
 
@@ -68,11 +88,11 @@ In the configuration file, you must specify the location of the credentials file
 
 ![Example of configuration file that specifies the location of the credentials file](/images/cloudflare-one/secure-origin-connections/migrate-lb-tunnel/tunnel-config.png)
 
-You can save the configuration file.
+Save the configuration file.
 
 ## Run the Tunnel
 
-You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Cloudflare's edge in a connection only available to your account. You can use the Tunnel ID value to treat that connection like the IP address of an origin, without the risk of someone reaching it directly and bypassing Cloudflare.
+You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Cloudflare's edge in a connection only available to your account. You can use the Tunnel ID value to treat that connection like the IP address of an {{<glossary-tooltip term_id="endpoint">}}endpoint{{</glossary-tooltip>}} or origin, without the risk of someone reaching it directly and bypassing Cloudflare.
 
 Run the following command, replacing `lisbon-app` with the name of your Tunnel.
 
@@ -82,8 +102,18 @@ $ cloudflared tunnel run lisbon-app
 
 ## Migrate the Load Balancer configuration
 
-You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Create a new Origin Pool in the Load Balancer. Add a new origin to the list.
+You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Create a new pool in the load balancer. Add a new endpoint to the list.
 
-In the origin address field, input the ID of the tunnel followed by `cfargotunnel.com`. In this example, the origin address value would be `6b9b8f72-b655-46fb-b008-a45366e26b48.cfargotunnel.com`.
+In the **Endpoint Address** field, input the ID of the tunnel followed by `cfargotunnel.com`.
 
-Wait 1 minute while the new origin is recognized as healthy by Cloudflare Load Balancer. Once healthy, you can begin to disable the Legacy Argo Tunnel origins from the legacy Load Balancer pool.
+{{<example>}}
+
+ In this example, the endpoint address value would be `6b9b8f72-b655-46fb-b008-a45366e26b48.cfargotunnel.com`.
+
+| Endpoint Name   | Endpoint Address   | Weight |
+|-----------------|--------------------|--------|
+| `lisbon-data-center-one` | `6b9b8f72-b655-46fb-b008-a45366e26b48.cfargotunnel.com` | 1      |
+
+{{</example>}}
+
+Wait 1 minute while the new origin is recognized as healthy by Cloudflare Load Balancer. Once healthy, you can begin to disable the Legacy Argo Tunnel endpoints from the legacy Load Balancer pool.
