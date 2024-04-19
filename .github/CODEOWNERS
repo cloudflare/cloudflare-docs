@@ -46,7 +46,7 @@
 /content/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
 /content/cloudflare-one/policies/browser-isolation/ @maxvp @cloudflare/pcx-technical-writing
 /content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
-/content/email-security/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
 # Consumer products
 /content/1.1.1.1/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
@@ -141,7 +141,7 @@
 # Security products
 /content/api-shield/ @patriciasantaana @cloudflare/pcx-technical-writing
 /content/bots/ @patriciasantaana @cloudflare/pcx-technical-writing
-/content/dmarc-management/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/dmarc-management/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /content/page-shield/ @pedrosousa @cloudflare/pcx-technical-writing
 /content/security-center/ @jason-cf @cloudflare/pcx-technical-writing
