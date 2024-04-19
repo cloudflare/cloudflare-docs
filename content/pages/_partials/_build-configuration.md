@@ -55,6 +55,11 @@ build_configs:
     build_command: npm run build
     build_output_directory: dist
     icon: /icons/framework-icons/logo-vue.svg
+  analog:
+    display_name: Analog
+    build_command: npm run build
+    build_output_directory: dist/analog/public
+    icon: /icons/framework-icons/logo-analog.svg
   astro:
     display_name: Astro
     build_command: npm run build
