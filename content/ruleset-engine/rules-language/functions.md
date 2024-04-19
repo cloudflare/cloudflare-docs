@@ -254,10 +254,12 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
     - `%E4%BD` decodes to `ä½`.
 
+  - The `source` must be a field, that is, it cannot be a literal string.
+
   - The `options` parameter is optional. You must provide any options as a single string wrapped in quotes, such as `"r"` or `"ur"`. The available options are the following:
 
       - `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
-      - `u`: Enables Unicode percent decoding. For example, `%E2%98%81%EF%B8%8F` will be decoded to a cloud emoji (`☁️`).
+      - `u`: Enables Unicode percent decoding. The result will be encoded in UTF-8. For example, `"%u2601"` would be decoded to a cloud emoji (`☁️`) encoded in UTF-8 (`"\xe2\x98\x81"`, with a size of 3 bytes).
 
   - <em>Examples:</em>
     <br />
