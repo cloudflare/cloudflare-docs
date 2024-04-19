@@ -43,6 +43,17 @@ To add the Baselime integration to your Worker:
 
 Once installed, the integration will automatically start forwarding events to Baselime. To learn more about Baselime, refer to [Baselime's official documentation](https://baselime.io/docs/).
 
+
+{{<Aside type="warning">}}
+
+When updating a worker with wrangler the [Tail Worker](https://developers.cloudflare.com/workers/observability/logging/tail-workers) config will be removed. Please add the tail_consumer config to the top level of your `wrangler.toml`.
+
+```toml
+tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
+```
+
+{{</Aside>}}
+
 {{<Aside type="warning">}}
 
 Note that automatic distributed tracing is not yet supported via the Baselime integration. To add tracing, follow the [Baselime documentation](https://baselime.io/docs/sending-data/platforms/cloudflare/traces/).
