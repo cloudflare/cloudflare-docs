@@ -55,26 +55,19 @@ The Rules language supports these transformation functions:
 
   - Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
-  - <em>Example:</em>
-    <br />
-
-    `concat("String1"," ","String",2) == "String1 String2"`
+  - For example, `concat("String1", " ", "String", 2)` will return `"String1 String2"`.
 
 - <code id="function-ends_with">{{<name>}}ends_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
-  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
-  - *Example:*<br />
-    If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
+  - For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
 - <code id="function-len">{{<name>}}len{{</name>}}({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
   - Returns the byte length of a String or Bytes field.
 
-  - <em>Example:</em>
-    <br />
-
-    `len(http.host)`
+  - For example, if `http.host` is `"example.com"`, then `len(http.host)` will return `11`.
 
 - <code id="function-lookup_json_integer">{{<name>}}lookup_json_integer{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}Integer{{</type>}}
 
@@ -87,28 +80,23 @@ The Rules language supports these transformation functions:
 
     A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
     `{ "record_id": "aed53a", "version": 2 }`<br/>
-    The following function call will return `2`:<br/>
-    `lookup_json_integer(http.request.body.raw, "version") == 2`
+    Then `lookup_json_integer(http.request.body.raw, "version")` will return `2`.
 
     B) Given the following nested object:<br/>
     `{ "product": { "id": 356 } }`<br/>
-    The following function call will return `356`:<br/>
-    `lookup_json_integer(http.request.body.raw, "product", "id") == 356`
+    Then `lookup_json_integer(http.request.body.raw, "product", "id")` will return `356`.
 
     C) Given the following JSON array at the root level:<br/>
     `["first_item", -234]`<br/>
-    The following function call will return `-234`:<br/>
-    `lookup_json_integer(http.request.body.raw, 1) == -234`
+    Then `lookup_json_integer(http.request.body.raw, 1)` will return `-234`.
 
     D) Given the following array in a JSON object attribute:<br/>
     `{ "network_ids": [123, 456] }`<br/>
-    The following function call will return `123`:<br/>
-    `lookup_json_integer(http.request.body.raw, "network_ids", 0) == 123`
+    Then `lookup_json_integer(http.request.body.raw, "network_ids", 0)` will return `123`.
 
     E) Given the following root-level array of JSON objects:<br/>
     `[{ "product_id": 123 }, { "product_id": 456 }]`<br/>
-    The following function call will return `456`:<br/>
-    `lookup_json_integer(http.request.body.raw, 1, "product_id") == 456`
+    Then `lookup_json_integer(http.request.body.raw, 1, "product_id")` will return `456`.
 
 - <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}String{{</type>}}
 
@@ -120,43 +108,35 @@ The Rules language supports these transformation functions:
 
     A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
     `{ "company": "cloudflare", "product": "rulesets" }`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, "company") == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, "company") == "cloudflare"` will return `true`.
 
     B) Given the following nested object:<br/>
     `{ "network": { "name": "cloudflare" } }`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"` will return `true`.
 
     C) Given the following JSON array at the root level:<br/>
     `["other_company", "cloudflare"]`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, 1) == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, 1) == "cloudflare"` will return `true`.
 
     D) Given the following array in a JSON object attribute:<br/>
     `{ "networks": ["other_company", "cloudflare"] }`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"` will return `true`.
 
     E) Given the following root-level array of JSON objects:<br/>
     `[{ "network": "other_company" }, { "network": "cloudflare" }]`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"` will return `true`.
 
 - <code id="function-lower">{{<name>}}lower{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
-  - <em>Example:</em>
-    <br />
-
-    `lower(http.host) == "www.cloudflare.com"`
+  - For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) == "www.cloudflare.com"` will return `true`.
 
 - <code id="function-regex_replace">{{<name>}}regex_replace{{</name>}}(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
     - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
-    - *Examples:*
+    - _Examples:_
 
       Literal match replace:<br />
       `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
@@ -186,25 +166,13 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
   - Returns a new byte array with all the occurrences of the given bytes removed.
 
-  - <em>Example:</em>
-
-    ```txt
-    // With http.host = "www.cloudflare.com":
-
-    remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"
-    ```
+  - For example, if `http.host` is `"www.cloudflare.com"`, then `remove_bytes(http.host, "\x2e\x77")` will return `"cloudflarecom"`.
 
 - <code id="function-starts_with">{{<name>}}starts_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
-  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
-  - *Example:*
-
-    ```txt
-    // With http.request.uri.path = "/blog/first-post":
-
-    starts_with(http.request.uri.path, "/blog") == true
-    ```
+  - For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
 - <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
@@ -215,11 +183,11 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
   - *Examples:*
 
     ```txt
-    // With http.request.body.raw = "asdfghjk":
+    // If http.request.body.raw is "asdfghjk":
 
-    substring(http.request.body.raw, 2, 5) == "dfg"
-    substring(http.request.body.raw, 2) == "dfghjk"
-    substring(http.request.body.raw, -2) == "jk"
+    substring(http.request.body.raw, 2, 5)   will return "dfg"
+    substring(http.request.body.raw, 2)      will return "dfghjk"
+    substring(http.request.body.raw, -2)     will return "jk"
     ```
 
 - <code id="function-to_string">{{<name>}}to_string{{</name>}}({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
@@ -229,8 +197,11 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
   - *Examples:*
 
     ```txt
-    to_string(cf.bot_management.score) == "5"
-    to_string(ssl) == "true"
+    // If cf.bot_management.score is 5:
+    to_string(cf.bot_management.score)   will return "5"
+
+    // If ssl is true:
+    to_string(ssl)                       will return "true"
     ```
 
 {{<Aside type="warning">}}
@@ -241,10 +212,7 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
   - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
-  - <em>Example:</em>
-    <br />
-
-    <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
+  - For example, if `http.host` is`"www.cloudflare.com"`, then `upper(http.host)` will return `"WWW.CLOUDFLARE.COM"`.
 
 - <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}[, options{{<param-type>}}String{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
@@ -265,12 +233,12 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
     <br />
 
     ```txt
-    url_decode("John%20Doe") == "John Doe"
-    url_decode("John+Doe") == "John Doe"
-    url_decode("%2520") == "%20"
-    url_decode("%2520", "r") == " "
+    url_decode("John%20Doe")   will return "John Doe"
+    url_decode("John+Doe")     will return "John Doe"
+    url_decode("%2520")        will return "%20"
+    url_decode("%2520", "r")   will return " "
 
-    // With the any() function:
+    // Using url_decode() with the any() function:
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
 
@@ -278,9 +246,7 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
   - Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/#field-cf-random_seed) field.
 
-  - <em>Example:</em>
-    <br />
-    `uuidv4(cf.random_seed)` returns a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`
+  - For example, `uuidv4(cf.random_seed)` will return a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`.
 
 {{<Aside type="warning">}}
 You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
