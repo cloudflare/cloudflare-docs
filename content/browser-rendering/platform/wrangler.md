@@ -44,4 +44,4 @@ After the binding is declared, access the DevTools endpoint using `env.MYBROWSER
 const browser = await puppeteer.launch(env.MYBROWSER);
 ```
 
-To test locally use `npx wrangler dev --remote` (there's no full local support yet, so `--remote` is required) or, to deploy, use `npx wrangler deploy`.
+Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network. Local mode support does not exist for Browser Rendering so `--remote` is required. To deploy, run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy).
