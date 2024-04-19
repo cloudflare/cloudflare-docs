@@ -1,32 +1,37 @@
 ---
-title: Get started
+title: First Worker
 pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
 ---
 
-## Get started
+## Build and deploy your first Worker
 
-This section introduces key differences in command-line tools used to build with Workers. If you prefer to work in the Cloudflare dashboard rather than with a CLI, [follow the dashboard instructions to get started](/workers/get-started/guide/#get-started-in-the-dashboard).
+You can deploy your first Worker via the Cloudflare dashboard or programmatically using your terminal.
 
-The rest of this learning path provides you with necessary information to build with Workers successfully. Most features are available on both the Cloudflare dashboard and programmatically, unless otherwise stated.
+### Via the Cloudflare dashboard
 
-### C3 and Wrangler
 
-You will use two command-line tools when building with Workers: C3 and Wrangler. You will use C3 to create your Worker and Wrangler to develop, test, and deploy it.
+### Via C3 and Wrangler
 
-[C3](https://www.npmjs.com/package/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare. C3 leverages officially developed templates for Workers and framework-specific setup guides to ensure each new application that you set up follows Cloudflare and any third-party best practices for deployment on the Cloudflare network.
 
-When you install C3, it also installs [Wrangler](/workers/wrangler/), a command-line tool for building with Cloudflare developer products. Wrangler allows you to perform [commands](/workers/wrangler/commands/) to build with Workers as well as other developer product projects.
+## YouTube tutorial
 
-After you create your Worker, you can customize configuration via the [`wrangler.toml` file](/workers/wrangler/configuration/) or the Cloudflare dashboard. It is important to note that even though you can make changes to your Worker on the Cloudflare dashboard if you start building programmatically, `wrangler.toml` should remain the [source of truth](/workers/wrangler/configuration/#source-of-truth) if you are using Wrangler.
+There
 
-You will put these concepts to use in the next section.
+<div style="position: relative; padding-top: 56.25%;"><iframe src="https://www.youtube.com/watch?v=H7Qe96fqg1M&t=318s&ab_channel=CloudflareWorkers" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
 
-### Build your first Worker
+## Summary
 
-Create your first Worker by following the [Get started guide](/workers/get-started/guide/).
+You have learned how to:
+
+- Create and deploy a new Workers project.
+- Develop your application locally.
+- Add the Hono framework to your project.
+- Integrate Workers AI into your project.
+
+In the next section, you will learn more about Cloudflare Developer Platform.
 
 ### Related resources
 
-* Explore [Examples](/workers/examples/) to experiment with ready-made Worker code.
+* [Get started guide](/workers/get-started/guide/) - Create a new Worker with Cloudflare Workers' Get started guide.

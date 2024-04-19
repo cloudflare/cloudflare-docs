@@ -21,11 +21,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ## Get started in the dashboard
 
-By following the Get started guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Create application**.
-3. Select **Create Worker** > **Deploy**.
 
 {{<render file="_prereqs.md">}}
 
