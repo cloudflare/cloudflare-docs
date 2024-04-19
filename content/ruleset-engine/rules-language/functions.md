@@ -61,8 +61,7 @@ The Rules language supports these transformation functions:
 
   - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
-  - For example, if `http.request.uri.path` is `"/welcome.html"`,<br>
-    then `ends_with(http.request.uri.path, ".html")` will return `true`.
+  - For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
 - <code id="function-len">{{<name>}}len{{</name>}}({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
@@ -131,8 +130,7 @@ The Rules language supports these transformation functions:
 
   - Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
-  - For example, if `http.host` is `"WWW.cloudflare.com"`,<br>
-    then `lower(http.host) == "www.cloudflare.com"` will return `true`.
+  - For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) == "www.cloudflare.com"` will return `true`.
 
 - <code id="function-regex_replace">{{<name>}}regex_replace{{</name>}}(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
@@ -168,15 +166,13 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
   - Returns a new byte array with all the occurrences of the given bytes removed.
 
-  - For example, if `http.host` is `"www.cloudflare.com"`,<br>
-    then `remove_bytes(http.host, "\x2e\x77")` will return `"cloudflarecom"`.
+  - For example, if `http.host` is `"www.cloudflare.com"`, then `remove_bytes(http.host, "\x2e\x77")` will return `"cloudflarecom"`.
 
 - <code id="function-starts_with">{{<name>}}starts_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
-  - For example, if `http.request.uri.path` is `"/blog/first-post"`,<br>
-    then `starts_with(http.request.uri.path, "/blog")` will return `true`.
+  - For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
 - <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
@@ -216,8 +212,7 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
   - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
-  - For example, if `http.host` is`"www.cloudflare.com"`,<br>
-    then `upper(http.host)` will return `"WWW.CLOUDFLARE.COM"`.
+  - For example, if `http.host` is`"www.cloudflare.com"`, then `upper(http.host)` will return `"WWW.CLOUDFLARE.COM"`.
 
 - <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}[, options{{<param-type>}}String{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
