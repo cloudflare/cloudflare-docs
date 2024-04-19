@@ -65,16 +65,20 @@ To continue building your Worker, open the `index.js` file to write your code. R
 
 If you prefer to follow along with a video tutorial, or have already created your first Worker but want to learn what more you can do with your project, review the following Learn Cloudflare Workers course for beginners.
 
+In this course, you will:
+
+- Deploy your first Worker.
+- Develop your application locally.
+- Add the Hono framework to your project.
+- Integrate Workers AI into your project.
+
 {{<youtube id="H7Qe96fqg1M">}}
 
 ## Summary
 
 You have learned how to:
 
-- Create and deploy a new Workers project.
-- Develop your application locally.
-- Add the Hono framework to your project.
-- Integrate Workers AI into your project.
+- Create and deploy a Worker project using the Cloudflare dashboard and programmatically, using your terminal.
 
 In the next module, you will learn more about Cloudflare Developer Platform.
 
