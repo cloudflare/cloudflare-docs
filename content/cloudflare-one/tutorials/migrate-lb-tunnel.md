@@ -32,19 +32,14 @@ This tutorial starts by documenting the steps to create a Legacy Tunnel with Clo
 
 In both modes, the first step is to create a Load Balancer and Origin Pool. Go to the `Traffic` tab of the Cloudflare dashboard. Input a public-facing DNS hostname for a domain in your Cloudflare account.
 
-![Cloudflare dashboard screen that shows how to create a load balancer](/images/cloudflare-one/secure-origin-connections/migrate-lb-tunnel/create-lb.png)
-
 Next, create an origin pool for the load balancer. This will be a group of origins, whether Cloudflare Tunnel connections or traditional IP addresses, used by the load balancer.
 
-![Cloudflare dashboard screen that shows how to create an origin pool](/images/cloudflare-one/secure-origin-connections/migrate-lb-tunnel/add-pool.png)
 
 In Legacy mode, adding a new instance of `cloudflared` into a Load Balancer pool must be done from the command line tool itself. The `cloudflared` agent will start and create 4 separate connections, enrolling each of these into a load balancer pool.
 
 ```sh
 $ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
 ```
-
-![Cloudflare dashboard screen that shows how to modify existing load balancers](/images/cloudflare-one/secure-origin-connections/migrate-lb-tunnel/classic-tunnel-lb-ui.png)
 
 However, the Legacy Tunnel mode has some downsides, including:
 
@@ -90,7 +85,5 @@ $ cloudflared tunnel run lisbon-app
 You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Create a new Origin Pool in the Load Balancer. Add a new origin to the list.
 
 In the origin address field, input the ID of the tunnel followed by `cfargotunnel.com`. In this example, the origin address value would be `6b9b8f72-b655-46fb-b008-a45366e26b48.cfargotunnel.com`.
-
-![Cloudflare dashboard screen that shows how to migrate a load balancer deployment](/images/cloudflare-one/secure-origin-connections/migrate-lb-tunnel/drain-classic-tunnel.png)
 
 Wait 1 minute while the new origin is recognized as healthy by Cloudflare Load Balancer. Once healthy, you can begin to disable the Legacy Argo Tunnel origins from the legacy Load Balancer pool.
