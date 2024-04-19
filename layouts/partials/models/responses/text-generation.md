@@ -23,7 +23,7 @@ To enable, set the `stream` parameter to true.
 Using the Workers API:
 
 ```javascript
-const stream = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+const stream = await env.AI.run('{{ .Params.model.name }}', {
   stream: true,
   messages,
 });
@@ -38,7 +38,7 @@ return new Response(stream, {
 Using the REST API:
 
 ```sh
-$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer {API_TOKEN}" \
   -d '{ "stream": true, "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "Why is pizza so good?" }]}'
@@ -48,7 +48,7 @@ Streaming responses use [server-sent events](https://developer.mozilla.org/en-US
 
 ```sh
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/meta/llama-2-7b-chat-int8" \
+"https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/meta/{{ .Params.model.name }}" \
 -H "Authorization: Bearer {API_TOKEN}" \
 -H "Content-Type:application/json" \
 -d '{ "prompt": "where is new york?", "stream": true }'
