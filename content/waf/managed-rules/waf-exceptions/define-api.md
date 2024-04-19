@@ -70,7 +70,6 @@ The following example adds a rule that skips all remaining rules in the entry po
     ```bash
     ---
     header: Request
-    highlight: 5-12
     ---
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
@@ -159,7 +158,6 @@ To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/w
     ```bash
     ---
     header: Request
-    highlight: 5-12
     ---
     curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{entry_point_ruleset_id}/rules" \
     --header "Authorization: Bearer <API_TOKEN>" \
