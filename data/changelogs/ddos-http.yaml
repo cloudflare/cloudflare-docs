@@ -4,11 +4,14 @@ productName: DDoS protection
 subCategoryName: HTTP
 topLevelLink: "/ddos-protection/change-log/"
 entries:
-- publish_date: '2024-03-12'
-  scheduled_date: "2024-04-04"
+- publish_date: '2024-04-19'
+  scheduled_date: "2024-04-29"
   scheduled: true
   individual_page: true
   link: '/ddos-protection/change-log/http/scheduled-changes/'
+- publish_date: '2024-04-19'
+  individual_page: true
+  link: '/ddos-protection/change-log/http/2024-04-19/'
 - publish_date: '2024-04-16'
   individual_page: true
   link: '/ddos-protection/change-log/http/2024-04-16-emergency/'
