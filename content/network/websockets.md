@@ -60,3 +60,13 @@ Customers whose usage claims a disproportionate percentage of resources for thei
 ## Technical note
 
 When Cloudflare releases new code to its global network, we may restart servers, which terminates WebSockets connections.
+
+### Best practises
+
+- Implement a [keepalive](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets)
+- Review and then remove or extend timeout settings on the origin and/or on the client
+
+### Troubleshooting
+
+Investigating issues with Websocket can be facilitated with client tools like [wscat](https://github.com/websockets/wscat).
+Being able to reproduce an issue on a single URL with a minimalistic tool helps narrowing down the issue.
