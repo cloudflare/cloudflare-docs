@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: SAML | Citrix ADC
+title: Citrix ADC (SAML)
 weight: 8
 ---
 
-# SAML | Citrix ADC
+# Citrix ADC (SAML)
 
 Cloudflare Zero Trust can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Cloudflare Zero Trust.
 

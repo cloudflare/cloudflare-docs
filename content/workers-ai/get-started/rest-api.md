@@ -1,8 +1,9 @@
 ---
-title: Use the Workers AI REST API
+title: REST API
 pcx_content_type: get-started
 weight: 2
 meta:
+  title: Get started - REST API
   description: Use the Cloudflare Workers AI REST API to deploy a large language model (LLM).
 ---
 

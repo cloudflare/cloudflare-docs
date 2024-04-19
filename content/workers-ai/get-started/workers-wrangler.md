@@ -1,28 +1,19 @@
 ---
-title: Deploy a Workers AI project
+title: CLI
 pcx_content_type: get-started
 weight: 1
 meta:
-  description: Deploy your first Workers AI project using Cloudflare Workers.
+  title: Get started - CLI
+  description: Deploy your first Cloudflare Workers AI project using the CLI.
 ---
 
-# Get started with Workers
+# Get started with the CLI
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
 {{<render file="/_workers-learning-path.md" productFolder="/workers/" >}}
 
 {{<render file="_prereqs.md" productFolder="/workers/" >}}
-
-## Get started in the dashboard
-
-This guide uses the command line. To instead create your Workers AI application using the Cloudflare dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Create application**.
-3. Under **Create using a template**, select **LLM App**. After you select your template, an AI binding will be created for you in the dashboard.
-4. Review the pregenerated code and select **Deploy**.
-5. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
 
 ## 1. Create a Worker project
 
@@ -50,7 +41,7 @@ This will create a new `hello-ai` directory. Your new `hello-ai` directory will 
 Go to your application directory:
 
 ```sh
-cd hello-ai
+$ cd hello-ai
 ```
 
 ## 2. Connect your Worker to Workers AI
@@ -108,7 +99,7 @@ Up to this point, you have created an AI binding for your Worker and configured 
 While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-npx wrangler dev
+$ npx wrangler dev
 ```
 
 {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
@@ -126,7 +117,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 Before deploying your AI Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-npx wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.

@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: SAML | OneLogin
-weight: 4
+title: OneLogin (SAML)
+weight: 19
 ---
 
-# SAML | OneLogin
+# OneLogin (SAML)
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 

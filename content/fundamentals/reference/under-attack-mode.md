@@ -6,7 +6,7 @@ title: Under Attack mode
 
 # Under Attack mode
 
-Cloudflare's **I'm Under Attack Mode** performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attacked (and will temporarily pause access to your site and impact your site analytics).
+Cloudflare's **I'm Under Attack Mode** performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attack (and will temporarily pause access to your site and impact your site analytics).
 
 When enabled, visitors receive an interstitial page.
 

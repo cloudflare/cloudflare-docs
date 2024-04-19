@@ -24,7 +24,7 @@ layout: wide
   <tbody>
     <tr>
       <td>Cloudflare Specials</td>
-      <td>...34ab53c5</td>
+      <td>{{<rule-id>}}1ec47d7bbc9740f88e10292034ab53c5{{</rule-id>}}</td>
       <td>100622</td>
       <td>Ivanti - Auth Bypass, Command Injection - CVE:CVE-2023-46805, CVE:CVE-2024-21887</td>
       <td>N/A</td>
