@@ -15,6 +15,6 @@ The data displayed in Web Analytics is real user monitoring (RUM). For more info
 Cloudflare Web Analytics does not collect or use your visitors’ personal data.
 
 {{<button-group>}}
-{{<button type="primary" href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank">}}Get started{{</button>}}
+{{<button type="primary" href="[https://dash.cloudflare.com/?to=/:account/web-analytics](http://dash.cloudflare.com/sign-up/web-analytics)" target="_blank">}}Get started{{</button>}}
 {{<button type="secondary" href="/analytics/web-analytics/understanding-web-analytics/">}}Learn more{{</button>}}
 {{</button-group>}}
