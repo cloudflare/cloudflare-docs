@@ -7,6 +7,8 @@ meta:
 
 # Packages
 
+{{<render file="_python-workers-beta-packages.md" productFolder="workers">}}
+
 To import a Python package, add the package name to the `requirements.txt` file within the same directory as your `wrangler.toml` configuration file.
 
 For example, if your Worker depends on [FastAPI](https://fastapi.tiangolo.com/), you would add the following:
