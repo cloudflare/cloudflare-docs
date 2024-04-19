@@ -197,3 +197,7 @@ The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-on
 ### Traffic limitations
 
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
+
+### Gateway DNS and resolver policies
+
+Gateway DNS and resolver policies will always apply to traffic proxied via PAC files, regardless of device configuration.
