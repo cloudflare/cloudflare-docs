@@ -14,7 +14,7 @@ You can [download the Workers AI notebook](/workers-ai/static/documentation/note
 
 <div style="position: relative; padding-top: 56.25%;">
     <iframe
-        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/3c46281a9b2b84ee6776a53f87580c45/iframe?preload=true&"
+        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/3c46281a9b2b84ee6776a53f87580c45/iframe?preload=true&letterboxColor=transparent"
         style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
         allowfullscreen="true">

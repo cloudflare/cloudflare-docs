@@ -16,7 +16,7 @@ You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/
 
 <div style="position: relative; padding-top: 56.25%;">
     <iframe
-        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/97b46763341a395a4ce1c0a6f913662b/iframe?preload=true&"
+        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/97b46763341a395a4ce1c0a6f913662b/iframe?preload=true&letterboxColor=transparent"
         style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
         allowfullscreen="true">

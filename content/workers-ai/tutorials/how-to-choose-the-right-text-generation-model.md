@@ -15,7 +15,7 @@ You can [download the Workers AI Text Generation Exploration notebook](/workers-
 
 <div style="position: relative; padding-top: 56.25%;">
     <iframe
-        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/4b4f0b9d7783512b8787e39424cfccd5/iframe?preload=true&"
+        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/4b4f0b9d7783512b8787e39424cfccd5/iframe?preload=true&letterboxColor=transparent"
         style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
         allowfullscreen="true">
