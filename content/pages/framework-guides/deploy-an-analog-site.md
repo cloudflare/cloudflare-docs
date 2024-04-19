@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Deploy an Analog site
 meta:
-  description: Web framework making Vue.js-based development simple and powerful.
+  description: The fullstack Angular meta-framework
 ---
 
 # Deploy an Analog site
