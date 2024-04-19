@@ -16,7 +16,7 @@ The specific configuration steps can vary depending on your infrastructure and s
 2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to the data center hosting the origin servers.
 3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
 
-{{<tabs labels="Dashboard | CLI">}}
+    {{<tabs labels="Dashboard | CLI">}}
 {{<tab label="dashboard" no-code="true">}}
 
 To create a virtual network:
@@ -60,14 +60,14 @@ The specific configuration will vary depending on your use case. Refer to the fo
 1. [Create the Load Balancing monitor](/load-balancing/monitors/create-monitor/) according to your needs.
 2. [Create the origin pool](/load-balancing/pools/create-pool/) specifying your private origin IP addresses and corresponding virtual networks.
 
-{{<Aside type="note">}}
+    {{<Aside type="note">}}
 
 * Currently, Cloudflare does not support entering the same origin IP addresses more than once, even when using different virtual networks.
 * All origins with private IPs must have `virtual_network_id` specified.
 
 {{</Aside>}}
 
-{{<tabs labels="Dashboard | API">}}
+    {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
 {{<render file="_pool-create.md">}}
@@ -109,4 +109,8 @@ $ curl --request PATCH \
 {{</tab>}}
 {{</tabs>}}
 
-3. [Create the load balancer](/load-balancing/load-balancers/create-load-balancer/), specifying the pool and monitor you created in the previous steps, as well as the desired load-balancing method.
+3. [Create the load balancer](/load-balancing/load-balancers/create-load-balancer/), specifying the pool and monitor you created in the previous steps, as well as the desired [global traffic steering policies](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [custom rules](/load-balancing/additional-options/load-balancing-rules/).
+
+    {{<Aside type="warning" header="Spectrum limitations">}}
+If you will use the load balancer with [Spectrum](/spectrum/), consider the applicable [limitations](/load-balancing/additional-options/spectrum/#limitations) on load balancing and monitoring options.
+{{</Aside>}}

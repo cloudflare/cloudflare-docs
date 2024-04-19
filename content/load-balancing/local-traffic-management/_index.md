@@ -27,7 +27,7 @@ Since traffic steering decisions or failover mechanisms rely on the health infor
 
 Cloudflare Load Balancing currently supports using Cloudflare Tunnel as an off-ramp. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support will be added in the future.
 
-### Cloudflare Tunnel
+### Tunnel
 
 Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
 
