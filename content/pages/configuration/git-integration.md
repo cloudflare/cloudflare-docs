@@ -42,16 +42,6 @@ You can remove Cloudflare Pages' access to your GitHub account by viewing the [*
 
 You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access.
 
-## Pausing Automatic Builds
-
-By default, Cloudflare Pages automatically builds and deploys a project whenever its repository receives new commits. You can pause this behavior to keep your website at a particular version and manually deploy new versions when desired.
-
-To pause automatic deployments, go to the Pages project's **Settings** > **Builds & deployments** > select **Pause deployments** at the end of the page.
-
-![Pausing a deployment in the Settings of your Pages project](/images/pages/platform/git.pause.png)
-
-Selecting **Pause deployments** will present a confirmation and, once confirmed, the **Pause deployments** button will be replaced with a **Resume deployments** button. While paused, your **Deployments** list will present a banner message, reminding you that automatic deployments are not enabled.
-
 ## Skipping a specific build via a commit message
 
 Without any configuration required, you can choose to skip a deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, and Pages will omit that deployment. The prefixes are case insensitive.
@@ -129,3 +119,7 @@ Click **Configure** on the Cloudflare Pages application. Under **Repository acce
 #### `There is an internal issue with your Cloudflare Pages Git installation.`
 
 This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/configuration/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).
+
+## Related resources
+
+* [Branch build controls](/pages/configuration/branch-build-controls/#production-branch-control) -  Control which environments and branches you would like to automatically deploy to.
