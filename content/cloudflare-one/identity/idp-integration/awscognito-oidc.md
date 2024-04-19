@@ -6,7 +6,11 @@ weight: 4
 
 # Amazon Cognito
 
-Amazon Cognito provides SSO identity management for web and mobile applications. Cloudflare Zero Trust supports Amazon Cognito as an OIDC identity provider.
+Amazon Cognito provides SSO identity management for end users of web and mobile apps. You can integrate Amazon Cognito as an OIDC identity provider for Cloudflare Zero Trust.
+
+## Prerequisites
+
+- An Amazon Cognito [user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html)
 
 ## Set up Amazon Cognito (OIDC)
 
@@ -24,55 +28,65 @@ To retrieve those values:
 
 1. Log in to your Amazon Cognito admin portal.
 
-2. Select **User pools** > **Your user pool name**.
+2. Go to **User pools** and select your user pool.
 
 3. Select the **App integration** tab.
 
-4. Under **App client list** section, select **Create app client**.
+4. Under **Domain**, copy your user pool domain or [configure a new domain](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html).
 
-5. Under **App client**, choose **Confidential client** option in **App type**.
+5. Make note of the following [Amazon Cognito OIDC endpoints](https://docs.aws.amazon.com/cognito/latest/developerguide/federation-endpoints.html):
 
-6. Enter an **App client name** for your application.
+    - **Auth URL**: `https://<your user pool domain>/oauth2/authorize`
+    - **Token URL**: `https://<your user pool domain>/oauth2/token`
+    - **Certificate (key) URL**: `https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json` (This is the **Token signing key URL** shown in **User pool overview**.)
 
-7. Under **Hosted UI settings**, in the **Allowed callbak URLs** > **URL** field, enter the following URL:
+6. Under **App client list**, select **Create app client**.
 
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+7. For **App type**, select **Confidential client**.
 
-    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+8. Enter an **App client name** for your application.
 
-8. In the **OpenID Connect scopes** tab, select **OpenID**, **Email**, **Profile**.
+9. Ensure that **Generate a client secret** is selected.
 
-9. Select **Create app client**.
+10. Configure the following **Hosted UI settings**:
 
-10. After the app client is created, copy the **Client ID** and **Client secret**.
+    1. In **Allowed callback URLs**, add the following URL:
 
-![Creating an app client in Amazon Cognito](/images/cloudflare-one/identity/amazoncognito/amazoncognito-1.png)
+        ```txt
+        https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+        ```
 
-11. Confirm your OIDC endpoints that are created when you assign a domain to your user pool. Refer to [OAuth 2.0, OpenID Connect, and SAML 2.0 federation endpoints reference - Amazon Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/federation-endpoints.html)
+        You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
-    - **Auth URL**: `https://<Your user pool domain>/oauth2/authorize`.
-    - **Token URL**: `https://<Your user pool domain>/oauth2/token`.
-    - **Certificate (key) URL**: `https://cognito-idp.<Region>.amazonaws.com/<Your user pool ID>/.well-known/jwks.json`.
+    2. Select **Identity providers** to use with this app client. At minimum, enable **Cognito user pool** as a provider.
+
+    3. For **OAuth 2.0 grant types**, select **Authorization code grant**.
+
+    4. For **OpenID Connect scopes**, select **OpenID**, **Email**, and **Profile**.
+
+11. Select **Create app client**.
+
+12. Next, select the app client you just created.
+
+13. Copy its **Client ID** and **Client secret**.
 
 ### 2. Add Amazon Cognito as an identity provider
 
-1. In Zero Trust, go to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 
-3. Choose **OpenID Connect** on the next page.
+3. Select **OpenID Connect**.
 
-4. Name your identity provider and fill in the required fields with the information obtained above.
+4. Name your identity provider and fill in the required fields with the information obtained from Amazon Cognito.
 
 5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-6. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+6. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
 7. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 ## Example API Configuration
 
@@ -81,13 +95,13 @@ To test that your connection is working, go to **Authentication** > **Login meth
   "config": {
     "client_id": "<your client id>",
     "client_secret": "<your client secret>",
-    "auth_url": "https://<Your user pool domain>/oauth2/authorize",
-    "token_url": "https://<Your user pool domain>/oauth2/token",
-    "certs_url": "https://cognito-idp.<Region>.amazonaws.com/<Your user pool ID>/.well-known/jwks.json",
+    "auth_url": "https://<your user pool domain>/oauth2/authorize",
+    "token_url": "https://<your user pool domain>/oauth2/token",
+    "certs_url": "https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json",
     "scopes": ["openid", "email", "profile"],
     "claims": ["sub", "cognito:username", "name", "cognito:groups"]
   },
   "type": "oidc",
-  "name": "Generic Amazon Cognito"
+  "name": "Amazon Cognito example"
 }
 ```
