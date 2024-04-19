@@ -48,7 +48,9 @@ Deleting a domain registration from Cloudflare Registrar starts an irreversible 
 
 There may be instances where users may wish to delete a domain prior to expiration. In most cases a domain may be deleted prior to expiration by following these steps: 
 
-1. Navigate to the {{<button type="primary" href="https://dash.cloudflare.com/?to=/:account/domains" target="_blank">}}Go to <strong>Manage domain</strong>{{</button>}} page in the **Registrar** section of the Cloudflare dashboard and select the domain you wish to delete
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. From **Overview**, scroll down to **Domain Registration** and click **Manage domain**.
+  {{<button type="primary" href="https://dash.cloudflare.com/?to=/:account/domains" target="_blank">}}Go to <strong>Manage domain</strong>{{</button>}}
 2. Under the **configuration** tab on the Manage page you will find a **Delete** button
 3. If the domain is deletable the button will be active.  The button will be disabled if your domain cannot be deleted and you should refer to the Registrar [FAQ](/registrar/faq/#why-am-i-unable-to-delete-my-registrar-domain).
 4. Once you click the Delete button, you will be presented with a confirmation window. If you proceed, an email will be sent to all users with the Super Admin role in the account. The email contains a deletion authorization token that must be entered into the window which appears to confirm and complete the deletion.
