@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: LinkedIn
-weight: 15
+weight: 16
 ---
 
 # LinkedIn

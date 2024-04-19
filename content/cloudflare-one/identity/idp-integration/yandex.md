@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Yandex
-weight: 24
+weight: 25
 ---
 
 # Yandex

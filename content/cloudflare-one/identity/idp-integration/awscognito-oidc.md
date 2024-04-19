@@ -1,12 +1,12 @@
 ---
 pcx_content_type: how-to
-title: OIDC | Amazon Cognito
-weight: 13
+title: Amazon Cognito
+weight: 4
 ---
 
-# OIDC | Amazon Cognito
+# Amazon Cognito
 
-Amazon Cognito provides SSO identity management. Cloudflare Access supports Amazon Cognito as an OIDC identity provider.
+Amazon Cognito provides SSO identity management for web and mobile applications. Cloudflare Zero Trust supports Amazon Cognito as an OIDC identity provider.
 
 ## Set up Amazon Cognito (OIDC)
 
