@@ -18,7 +18,7 @@ By default, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's pub
 
 You may use resolver policies if you require access to non-publicly routed domains, such as private network services or internal resources. You may also use resolver policies if you need to access a protected DNS service or want to simplify DNS management for multiple locations.
 
-If your resolver is only reachable by a client device and not by Gateway via a Cloudflare tunnel, Magin WAN tunnel, or other public Internet connections, you should configure [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) for your device. If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply your client-side Local Domain Fallback rules first.
+If your resolver is only reachable by a client device and not by Gateway via a Cloudflare tunnel, Magic WAN tunnel, or other public Internet connections, you should configure [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) for your device. If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply your client-side Local Domain Fallback rules first.
 
 ## Resolver connections
 
