@@ -5,7 +5,7 @@ subCategoryName: HTTP
 topLevelLink: "/ddos-protection/change-log/"
 entries:
 - publish_date: '2024-04-19'
-  scheduled_date: "2024-04-29"
+  scheduled_date: '2024-04-29'
   scheduled: true
   individual_page: true
   link: '/ddos-protection/change-log/http/scheduled-changes/'
