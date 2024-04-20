@@ -6,8 +6,8 @@ entries:
   title:
   description: |-
     * **Instagram Managed Component**: Improve performance of Instagram embeds
-    * **Mixpanel Managed Component**: Include gclid and fbclid values in Mixpanel requests if available
-    * **Consent Management**: Ensure consent platform is enabled when using IAB TCF compliant mode when there's at least one TCF-approved vendor configured.
+    * **Mixpanel Managed Component**: Include `gclid` and `fbclid` values in Mixpanel requests if available
+    * **Consent Management**: Ensure consent platform is enabled when using IAB TCF compliant mode when there's at least one TCF-approved vendor configured
     * **Bugfix**: Ensure track data payload keys take priority over preset-keys when using enrich-payload feature for custom actions
 - publish_date: '2024-04-08'
   title:
