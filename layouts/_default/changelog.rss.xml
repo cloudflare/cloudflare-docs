@@ -26,28 +26,32 @@
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</lastBuildDate>
-    {{- range $changelogDataEntries -}}
-    {{- $entry := . -}}
+    {{- range $index, $entry := $changelogDataEntries -}}
     {{- $link := "" -}}
     {{- $title := "" -}}
-    {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{ $description := $entry.description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
-    {{- with .title -}}
+    {{- with $entry.title -}}
     {{- $link = print $permalink "#" (urlize .) -}}
     {{- $title = . -}}
     {{- else -}}
-    {{- $link = print $permalink "#" (urlize .publish_date) -}}
-    {{- $title = .publish_date -}}
+    {{- $link = print $permalink "#" (urlize $entry.publish_date) -}}
+    {{- $title = $entry.publish_date -}}
     {{- end -}}
-    {{- with .link -}}
+    {{- with $entry.link -}}
     {{- if ne $product "Wrangler" -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
     {{- end -}}
-    {{- with .individual_page -}}
+    {{- with $entry.individual_page -}}
     {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
     {{- $description = $result.content -}}
     {{- $title = $result.title }}
+    {{- with $entry.scheduled -}}
+    {{- with $entry.scheduled_date -}}
+    {{- $title = (printf "%s for %s" $title $entry.scheduled_date) -}}
+    {{- end -}}
+    {{- end -}}
     {{- end -}}
     <item>
     <title>{{- $title -}}</title>

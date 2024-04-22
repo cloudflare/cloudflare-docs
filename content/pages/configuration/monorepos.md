@@ -36,7 +36,7 @@ If a build skips for any reason (i.e. CI Skip, build watch paths, or branch depl
 
 ## Monorepo management tools:
 
-While Pages does not provide specialized tooling for dependency management in monorepos, you may choose to bring additional tooling to help manage your repository. For simple subpackage management, you can utilize tools like [npm](https://docs.npmjs.com/cli/v8/using-npm/workspaces), [pnpm](https://pnpm.io/workspaces), and [Yarn](https://yarnpkg.com/features/workspaces) workspaces. You can also use more powerful tools such as [Turborepo](https://turbo.build/repo/docs), [NX](https://nx.dev/getting-started/intro), or [Lerna](https://nx.dev/getting-started/intro) to additionally manage dependencies and task execution.
+While Pages does not provide specialized tooling for dependency management in monorepos, you may choose to bring additional tooling to help manage your repository. For simple subpackage management, you can utilize tools like [npm](https://docs.npmjs.com/cli/v8/using-npm/workspaces), [pnpm](https://pnpm.io/workspaces), and [Yarn](https://yarnpkg.com/features/workspaces) workspaces. You can also use more powerful tools such as [Turborepo](https://turbo.build/repo/docs), [NX](https://nx.dev/getting-started/intro), or [Lerna](https://lerna.js.org/docs/getting-started) to additionally manage dependencies and task execution.
 
 ## Limitations
 * You must be using [Build System V2](/pages/configuration/language-support-and-tools) or later in order for monorepo support to be enabled.

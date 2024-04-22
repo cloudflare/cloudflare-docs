@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Okta
-weight: 13
+weight: 16
 ---
 
 # Okta
@@ -61,7 +61,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 17. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 {{<Aside type="note">}}
 

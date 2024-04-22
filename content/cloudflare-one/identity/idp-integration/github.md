@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: GitHub
-weight: 13
+weight: 10
 meta:
     title: GitHub - IdP Integration
 ---

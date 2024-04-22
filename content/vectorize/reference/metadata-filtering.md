@@ -6,7 +6,7 @@ weight: 6
 
 # Metadata Filtering
 
-In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/configuration/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, meaning that  `filter` is applied first, and `topK` results are taken from the filtered set. 
+In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/best-practices/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, meaning that  `filter` is applied first, and `topK` results are taken from the filtered set. 
 
 By using metadata filtering to limit the scope of a query, you can filter by specific customer IDs, tenant, product category or any other metadata you associate with your vectors.
 
@@ -25,7 +25,7 @@ Optional `filter` property on `query()` method specifies metadata filter:
 
 ### Namespace versus metadata filtering
 
-Both [namespaces](/vectorize/configuration/insert-vectors/#namespaces) and metadata filtering narrow the vector search space for a query.  Consider the following when evaluating both filter types:
+Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and metadata filtering narrow the vector search space for a query.  Consider the following when evaluating both filter types:
 
 - A namespace filter is applied before metadata filter(s). 
 - A vector can only be part of a single namespace with the documented [limits](/vectorize/platform/limits/). Vector metadata can contain multiple key-value pairs up to [metadata per vector limits](/vectorize/platform/limits/). Metadata values support different types (`string`, `boolean`, and others), therefore offering more flexibility.
@@ -66,7 +66,7 @@ With the following index definition:
 $ npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
 ```
 
-Metadata can be added when [inserting or upserting vectors](/vectorize/configuration/insert-vectors/#examples).
+Metadata can be added when [inserting or upserting vectors](/vectorize/best-practices/insert-vectors/#examples).
 
 ```ts
 const newMetadataVectors: Array<VectorizeVector> = [

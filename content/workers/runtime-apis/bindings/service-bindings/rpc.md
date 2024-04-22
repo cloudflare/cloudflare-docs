@@ -15,7 +15,7 @@ You can use Service bindings to create your own internal APIs that your Worker m
 The [RPC system in Workers](/workers/runtime-apis/rpc) is designed feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
 {{<Aside type="note">}}
-You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#rpc-methods).
+You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#call-rpc-methods).
 {{</Aside>}}
 
 ## Example

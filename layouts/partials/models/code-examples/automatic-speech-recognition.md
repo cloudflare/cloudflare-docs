@@ -5,8 +5,6 @@
   <summary>Workers - TypeScript</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
@@ -18,12 +16,11 @@ export default {
     );
     const blob = await res.arrayBuffer();
 
-    const ai = new Ai(env.AI);
     const input = {
       audio: [...new Uint8Array(blob)],
     };
 
-    const response = await ai.run(
+    const response = await env.AI.run(
       "{{ .Page.Params.model.name}}",
       input
     );
@@ -42,7 +39,7 @@ export default {
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Page.Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --data-binary @talking-llama.mp3
+  --data-binary "@talking-llama.mp3"
 ```
 
 </details>

@@ -7,13 +7,13 @@ pcx_content_type: concept
 
 Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) for sharing direct access to your bucket without revealing your token secret. A presigned URL authorizes anyone with the URL to perform an action to the S3 compatibility endpoint for an R2 bucket. By default, the S3 endpoint requires an `AUTHORIZATION` header signed by your token. Every presigned URL has S3 parameters and search parameters containing the signature information that would be present in an `AUTHORIZATION` header. The performable action is restricted to a specific resource, an [operation](/r2/api/s3/api/), and has an associated timeout.
 
-There are three kinds of resources in R2: 
+There are three kinds of resources in R2:
 
 1. **Account**: For account-level operations (such as `CreateBucket`, `ListBuckets`, `DeleteBucket`) the identifier is the account ID.
 2. **Bucket**: For bucket-level operations (such as `ListObjects`, `PutBucketCors`) the identifier is the account ID, and bucket name.
 3. **Object**: For object-level operations (such as `GetObject`, `PutObject`, `CreateMultipartUpload`) the identifier is the account ID, bucket name, and object path.
 
-All parts of the identifier are part of the presigned URL. 
+All parts of the identifier are part of the presigned URL.
 
 You cannot change the resource being accessed after the request is signed. For example, trying to change the bucket name to access the same object in a different bucket will return a `403` with an error code of `SignatureDoesNotMatch`.
 
@@ -29,9 +29,9 @@ There are three ways to grant an application access to R2:
 2. The application requests a copy of an R2 API token from a vault application and promises to not permanently store that token locally.
 3. The application requests a central application to give it a presigned URL it can use to perform an action.
 
-In scenarios 1 and 2, if the application or vault application is compromised, the holder of the token can perform arbitrary actions. 
+In scenarios 1 and 2, if the application or vault application is compromised, the holder of the token can perform arbitrary actions.
 
-Scenario 3 keeps the credential secret. If the application making a presigned URL request to the central application leaks that URL, but the central application does not have its key storage system compromised, the impact is limited to one operation on the specific resource that was signed. 
+Scenario 3 keeps the credential secret. If the application making a presigned URL request to the central application leaks that URL, but the central application does not have its key storage system compromised, the impact is limited to one operation on the specific resource that was signed.
 
 Additionally, the central application can perform monitoring, auditing, logging tasks so you can review when a request was made to perform an operation on a specific resource. In the event of a security incident, you can use a central application's logging functionality to review details of the incident.
 
@@ -64,7 +64,7 @@ Generate a presigned URL by referring to the following examples:
 
 ## Presigned URL alternative with Workers
 
-A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/configuration/bindings/) that implements your security policy.
+A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/runtime-apis/bindings/) that implements your security policy.
 
 {{<Aside type="note" header="Bindings">}}
 

@@ -6,4 +6,4 @@ _build:
 ---
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
-2. Enable **TLS decryption**.
+2. Turn on **TLS decryption**.

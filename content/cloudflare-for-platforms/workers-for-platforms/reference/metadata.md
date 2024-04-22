@@ -63,10 +63,13 @@ filename: metadata.json
       "text": "<VAR_VALUE>"
     }
   ],
-    {
-      "tags": "[tag1, tag2, tag3]"
-    },
+  "tags": ["tag1", "tag2", "tag3"],
+  "migrations": {
+      "new_tag": "init",
+      "new_classes": ["<TEST_CLASS>"]
+    }
 }
+
 ```
 
 ## Attributes

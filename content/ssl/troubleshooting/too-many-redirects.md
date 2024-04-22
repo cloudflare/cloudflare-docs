@@ -8,7 +8,7 @@ meta:
 
 # ERR_TOO_MANY_REDIRECTS
 
-After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. 
+After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors.
 
 This error occurs when visitors get stuck in a redirect loop.
 
@@ -69,7 +69,7 @@ To solve this issue, either remove HTTPS redirects from your origin server or up
 
 ### Full or Full (strict) encryption mode
 
-If your domain's encryption mode is set to [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/), Cloudflare sends encrypted requests to your origin server over HTTPS. 
+If your domain's encryption mode is set to [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/), Cloudflare sends encrypted requests to your origin server over HTTPS.
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP.
 
@@ -164,7 +164,7 @@ end
 ```
 <br/>
 
-To solve this issue, review your various [URL forwarding rules](/rules/url-forwarding/) and [Page Rules](/rules/page-rules/) to make sure no rules are not in conflict with each other.
+To solve this issue, review your various [redirect rules](/rules/url-forwarding/) and [Page Rules](/rules/page-rules/) to make sure no rules are not in conflict with each other.
 
 {{<Aside type="note">}}
 

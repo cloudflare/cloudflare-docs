@@ -13,11 +13,11 @@ It is important to note that the developer platform product offering is growing 
 
 1. Go to [Cloudflare Docs](https://developers.cloudflare.com).
 2. Select **Product directory** in the top menu.
-3. Select the **Developer platform** filter to view [product documentation for Cloudflare Developer Platform products](https://developers.cloudflare.com/products/?product-group=Developer+platform).
+3. Select the **Developer platform** filter to view [product documentation for Cloudflare Developer Platform products](/products/?product-group=Developer+platform).
 
 ### Bindings
 
-Workers interact with other products on the Cloudflare Developer Platform through [bindings](/workers/configuration/bindings/). 
+Workers interact with other products on the Cloudflare Developer Platform through [bindings](/workers/runtime-apis/bindings/).
 
 You can configure bindings through the Cloudflare dashboard or `wrangler.toml`. After you configure your bindings, access them through the `env` parameter that is provided at the entry point to your Worker. Refer to [Bindings in ES modules format](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) to learn more.
 

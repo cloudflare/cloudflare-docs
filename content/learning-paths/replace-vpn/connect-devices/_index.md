@@ -9,10 +9,14 @@ layout: learning-module
 
 Now that your device enrollment policies and WARP profiles are configured, you can begin deploying the WARP client to user devices for testing.
 
+{{<Aside type="note">}}
+
+The following steps are identical to [Connect user devices](/learning-paths/secure-internet-traffic/connect-devices/) in the Secure your Internet traffic and SaaS apps implementation guide. If you have already completed Secure your Internet traffic and SaaS apps, you can skip ahead to [Build secure access policies](/learning-paths/replace-vpn/build-policies/).
+
+{{</Aside>}}
+
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Manually deploy WARP on a test device.
-- Create an automated script to use with your organization’s managed deployment tool.
-- View user traffic in Zero Trust.
+{{<render file="zero-trust/_connect-devices-objectives.md">}}

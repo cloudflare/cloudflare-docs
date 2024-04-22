@@ -40,7 +40,7 @@ The following Worker script:
 2. Passes request data to the Durable Object.
 3. Publishes to a queue from within the Durable Object.
 
-The `constructor()` in the Durable Object makes your `Environment` available (in scope) on `this.env` to the [`fetch()` handler](/durable-objects/best-practices/access-durable-objects-from-a-worker/#3-use-fetch-handler-method/) in the Durable Object.
+The `constructor()` in the Durable Object makes your `Environment` available (in scope) on `this.env` to the [`fetch()` handler](/durable-objects/best-practices/access-durable-objects-from-a-worker/#3-use-fetch-handler-method) in the Durable Object.
 
 ```ts
 ---
