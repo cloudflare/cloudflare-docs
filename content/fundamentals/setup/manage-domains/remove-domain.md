@@ -34,8 +34,10 @@ If you need to re-add the domain in a different account, make sure the current s
 * If you use Cloudflare Registrar:
 
     * [Disable domain auto-renewal](/registrar/account-options/renew-domains/) or [transfer your domain out of Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/).
-    * If the domain has already expired, it will be automatically removed from your account. Refer to [What happens when a domain expires?](https://developers.cloudflare.com/registrar/faq/#what-happens-when-a-domain-expires)
-    * If the domain has not yet expired, you can likely request deletion, refer to refer to [Delete a domain registration](https://developers.cloudflare.com/registrar/account-options/domain-management/#delete-a-domain-registration)
+    
+    * If the domain has already expired, it will be automatically removed from your account. Refer to [What happens when a domain expires?](/registrar/faq/#what-happens-when-a-domain-expires)
+    
+    * If the domain has not yet expired you can likely request deletion. Refer to [Delete a domain registration](/registrar/account-options/domain-management/#delete-a-domain-registration)
 
     * If enabled, disable DNSSEC. In your domain dashboard, go to **DNS** > **Settings**. Within **DNSSEC**, select **Disable DNSSEC**. Select **Confirm**.
 
