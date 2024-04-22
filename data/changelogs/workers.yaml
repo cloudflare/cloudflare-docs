@@ -28,8 +28,9 @@ entries:
     - Updated v8 to version 12.3.
 - publish_date: '2024-02-24'
   description: |-
-    - v8 updated to version 12.2
+    - v8 updated to version 12.2.
     - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
+    - You can now use [new methods on `Set`](https://github.com/tc39/proposal-set-methods), such as `Set.intersection` and `Set.union`, in Workers.
 - publish_date: '2024-02-23'
   description: |-
     - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
