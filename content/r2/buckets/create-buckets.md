@@ -23,7 +23,7 @@ Create a bucket:
 ```sh
 $ wrangler r2 bucket create your-bucket-name-here
 ```
-{{<Aside type="note" header="Header text">}}
+{{<Aside type="note">}}
 
 Bucket names can only contain lowercase letters (a-z), numbers (0-9), and hyphens (-). The placeholder text is for demo only.
 
