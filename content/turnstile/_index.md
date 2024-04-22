@@ -52,7 +52,8 @@ Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/produc
 ## Get started
 
 {{<button-group>}}
-{{<button type="primary" href="/turnstile/get-started/">}}Docs guide{{</button>}}
+{{<button type="primary" href="/turnstile/get-started/">}}Get started{{</button>}}
+{{<button type="secondary" href="/turnstile/migration/">}}Migration guides{{</button>}}
 {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank">}}Dashboard{{</button>}}
 {{</button-group>}}
 
