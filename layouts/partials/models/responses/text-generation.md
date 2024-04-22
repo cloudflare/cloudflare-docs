@@ -37,7 +37,7 @@ return new Response(stream, {
 
 Using the REST API:
 
-```sh
+```bash
 $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer {API_TOKEN}" \
@@ -46,7 +46,7 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Par
 
 Streaming responses use [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events); the are easy to use, simple to implement on the server side, standardized, and broadly available across many platforms natively or as a polyfill.
 
-```sh
+```bash
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/meta/{{ .Params.model.name }}" \
 -H "Authorization: Bearer {API_TOKEN}" \
