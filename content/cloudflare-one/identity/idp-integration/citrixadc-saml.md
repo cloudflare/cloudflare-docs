@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Citrix ADC (SAML)
-weight: 8
+weight: 9
 ---
 
 # Citrix ADC (SAML)
