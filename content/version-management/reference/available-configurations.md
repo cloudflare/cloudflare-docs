@@ -1,12 +1,12 @@
 ---
-title: Available settings
+title: Available configurations
 pcx_content_type: reference
 weight: 2
 ---
 
-# Available settings
+# Available configurations
 
-When you use Version Management, you can edit various configuration settings, such as [WAF custom rules](/waf/custom-rules/) and [Cache settings](/cache/).
+When you use Version Management, you can edit various configurations, such as [WAF custom rules](/waf/custom-rules/) and [Cache](/cache/).
 
 Generally, you are allowed to edit all zone-level configurations except for the following:
 
@@ -18,7 +18,7 @@ Generally, you are allowed to edit all zone-level configurations except for the 
 
 {{<Aside type="note">}}
 
-For the most up-to-date list of these settings, start [editing settings within a version](/version-management/how-to/versions/#change-settings-in-a-version) in the Cloudflare dashboard.
+For the most up-to-date list of these configurations, start [editing configurations within a version](/version-management/how-to/versions/#change-configurations-in-a-version) in the Cloudflare dashboard.
 
 {{</Aside>}}
 
