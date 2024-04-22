@@ -21,8 +21,13 @@ The R2 support in Wrangler allows you to manage buckets and perform basic operat
 Create a bucket:
 
 ```sh
-$ wrangler r2 bucket create your-bucket-name
+$ wrangler r2 bucket create YOUR-BUCKET-NAME
 ```
+{{<Aside type="note" header="Header text">}}
+
+Bucket names can only contain lowercase letters (a-z), numbers (0-9), and hyphens (-). The placeholder text is for demo only.
+
+{{</Aside>}}
 
 List the buckets in the current account:
 
