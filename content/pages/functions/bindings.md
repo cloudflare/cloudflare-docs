@@ -272,6 +272,102 @@ Refer to the [D1 client API documentation](/d1/build-with-d1/d1-client-api/) for
 
 {{<render file="_cli-precedence-over-file.md">}}
 
+## Vectorize indexes
+
+[Vectorize](/vectorize/) is Cloudflare’s native vector database.
+
+To bind your Vectorize index to your Pages Function, you can configure a Vectorize index binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#vectorize-indexes) or the Cloudflare dashboard.
+
+To configure a Vectorize index binding via the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+4. Select your Pages project > **Settings** > **Functions** > **Vectorize index bindings** > **Add binding**.
+5. Give your binding a name under **Variable name**.
+6. Under **Vectorize index**, select your desired Vectorize index. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+### Use Vectorize index bindings
+
+To use Vectorize index in your Pages Function, you can access your Vectorize index binding in your Pages Function code. In the following example, your Vectorize index binding is called `VECTORIZE_INDEX` and you can access the binding in your Pages Function code on `context.env`.
+
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+// Sample vectors: 3 dimensions wide.
+//
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors = [
+	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
+	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
+	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
+	{ id: '4', values: [75.1, 67.1, 29.9], metadata: { url: '/products/sku/418313' } },
+	{ id: '5', values: [58.8, 6.7, 3.4], metadata: { url: '/products/sku/55519183' } },
+];
+
+export async function onRequest(context) {
+  let path = new URL(context.request.url).pathname;
+  if (path.startsWith("/favicon")) {
+    return new Response('', { status: 404 });
+  }
+
+  // You only need to insert vectors into your index once
+  if (path.startsWith("/insert")) {
+    // Insert some sample vectors into your index
+    // In a real application, these vectors would be the output of a machine learning (ML) model,
+    // such as Workers AI, OpenAI, or Cohere.
+    let inserted = await context.env.VECTORIZE_INDEX.insert(sampleVectors);
+
+    // Return the number of IDs we successfully inserted
+    return Response.json(inserted);
+  }
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+export interface Env {
+	// This makes our vector index methods available on context.env.VECTORIZE_INDEX.*
+	// For example, context.env.VECTORIZE_INDEX.insert() or query()
+	VECTORIZE_INDEX: VectorizeIndex;
+}
+
+// Sample vectors: 3 dimensions wide.
+//
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
+	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
+	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
+	{ id: '4', values: [75.1, 67.1, 29.9], metadata: { url: '/products/sku/418313' } },
+	{ id: '5', values: [58.8, 6.7, 3.4], metadata: { url: '/products/sku/55519183' } },
+];
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  let path = new URL(context.request.url).pathname;
+  if (path.startsWith("/favicon")) {
+    return new Response('', { status: 404 });
+  }
+
+  // You only need to insert vectors into your index once
+  if (path.startsWith("/insert")) {
+    // Insert some sample vectors into your index
+    // In a real application, these vectors would be the output of a machine learning (ML) model,
+    // such as Workers AI, OpenAI, or Cohere.
+    let inserted = await context.env.VECTORIZE_INDEX.insert(sampleVectors);
+
+    // Return the number of IDs we successfully inserted
+    return Response.json(inserted);
+  }
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
 ## Workers AI
 
 [Workers AI](/workers-ai/) allows you to run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
