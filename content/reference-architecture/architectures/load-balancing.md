@@ -142,7 +142,7 @@ Figure 4 shows how a GTM load balancer is used to select a data center based on 
 
 ![Global traffic management steers traffic to the proper region or data center](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-4.png "Figure 4: Global traffic management load balancer overview")
 
-Global Traffic Managers can also proxy traffic and perform a variety of inspections, including reading/changing/deleting headers in HTTP requests and modifying URLs based on region or geographic location. GTM functionality is best implemented by cloud-based load balancers (like Cloudflare) since the goal is to steer traffic from anywhere in the world. Hardware load balancers exist in a single physical location, which means the further traffic endpointates from the load balancer, the slower the end-user experience. A cloud-based load balancer can run in many different geographic locations, helping it provide a performant solution for DNS-only, layer 4, and layer 7 contexts.
+Global Traffic Managers can also proxy traffic and perform a variety of inspections, including reading/changing/deleting headers in HTTP requests and modifying URLs based on region or geographic location. GTM functionality is best implemented by cloud-based load balancers (like Cloudflare) since the goal is to steer traffic from anywhere in the world. Hardware load balancers exist in a single physical location, which means the further traffic originates from the load balancer, the slower the end-user experience. A cloud-based load balancer can run in many different geographic locations, helping it provide a performant solution for DNS-only, layer 4, and layer 7 contexts.
 
 
 #### Local traffic manager / local traffic management (LTM)
@@ -161,7 +161,7 @@ There are two main load balancer architectures:
     * Focused on maximum performance
 * Cloud-based load balancers
     * Software deployed public cloud infrastructure
-    * Handle requests closer to the endpointator of the request
+    * Handle requests closer to the originator of the request
 
 Each approach has advantages and disadvantages. On-premises load balancers usually exist inside of private networks completely controlled by the organization. These load balancers are collocated with the endpoints they are load balancing, so latency and RTT time should be minimal. The disadvantage of these on-premises load balancers is that they are restricted to a single physical location. Which means traffic from other regions can have long RTT and high latency in responses. Also, adding another data center requires purchasing and deploying all new equipment. On-premises load balancers also typically require cloud-based load balancers for geographic traffic steering to get requests routed by a geographically local or region-appropriate data center. The advantages of cloud-based load balancers is that they can operate in almost any geographic region without concern for rack space, power, cooling, or maintenance and can scale without concern for new chassis, modules, or larger network connections. Cloud-based load balancers do however increase latency and RTT between the load balancer and the endpoints as they are not typically colocated with the endpoints they are steering traffic toward.
 
