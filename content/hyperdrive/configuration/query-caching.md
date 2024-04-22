@@ -60,7 +60,7 @@ For example:
 
 ```sh
 # wrangler v3.11 and above required
-$ npx wrangler hyperdrive update my-hyperdrive --disable-caching
+$ npx wrangler hyperdrive update my-hyperdrive --caching-disabled
 ```
 
 You can also configure multiple Hyperdrive connections from a single application: one connection that enables caching for popular queries, and a second connection where you do not want to cache queries, but still benefit from Hyperdrive's latency benefits and connection pooling.
