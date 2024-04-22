@@ -125,7 +125,7 @@ export default {
 			host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
 			password: env.HYPERDRIVE.password,
-			port: Number(env.HYPERDRIVE.port),
+			port: env.HYPERDRIVE.port,
 			database: env.HYPERDRIVE.database
 		})
 
