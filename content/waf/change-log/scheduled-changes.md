@@ -27,7 +27,7 @@ layout: wide
       <td>2024-04-29</td>
       <td>Block</td>
       <td>100532_BETA</td>
-      <td>...</td>
+      <td>{{<rule-id>}}048dc8c7995f44b5871eed98554f9705{{</rule-id>}}</td>
       <td>Vulnerability scanner - Activity Beta</td>
       <td>This will replace the ...34780914 in NEW WAF</td>
     </tr>
@@ -36,7 +36,7 @@ layout: wide
       <td>2024-04-29</td>
       <td>Block</td>
       <td>100533_BETA</td>
-      <td>...</td>
+      <td>{{<rule-id>}}5569308c0bc84e49962516b2aaa061e3{{</rule-id>}}</td>
       <td>NoSQL - Injection Beta</td>
       <td>This will replace the ...2753531e in NEW WAF</td>
     </tr>
