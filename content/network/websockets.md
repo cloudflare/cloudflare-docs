@@ -63,8 +63,8 @@ When Cloudflare releases new code to its global network, we may restart servers,
 
 ### Best practises
 
-- Implement a [keepalive](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets)
-- Review and then remove or extend timeout settings on the origin and/or on the client
+- Implement a [keepalive](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets).
+- Review and then remove or extend timeout settings on the origin and/or on the client.
 
 ### Troubleshooting
 
