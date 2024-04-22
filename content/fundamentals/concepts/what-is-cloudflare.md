@@ -10,7 +10,11 @@ weight: 1
 
 ## What is a connectivity cloud?
 
-A connectivity cloud is a new approach for delivering the many services companies need to secure and connect their digital environment. It’s a unified, intelligent, platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications and users. It includes a huge array of security, performance, and developer services — not with an eye to replace everything everywhere, but with the ability to fit in wherever needed and consolidate many critical services onto a single platform.
+A connectivity cloud is a new approach for delivering the many services companies need to secure and connect their digital environment. 
+
+As a unified and intelligent platform of programmable cloud-native services, a connectivity cloud enables any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications and users. 
+
+Cloudflare's connectivity cloud includes a huge array of security, performance, and developer services — not with an eye to replace everything everywhere, but with the ability to fit in wherever needed and consolidate many critical services onto a single platform.
 
 ![Cloudflare Product areas](/images/fundamentals/cloudflare-areas.png)
 
