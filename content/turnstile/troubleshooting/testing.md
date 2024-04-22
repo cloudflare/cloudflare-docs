@@ -34,4 +34,4 @@ Production secret keys will reject this token. You must also use a dummy secret 
 | `2x0000000000000000000000000000000AA` | Always fails |
 | `3x0000000000000000000000000000000AA` | Yields a "token already spent" error |
 
-Dummy secret keys will accept any response token as valid, so make sure to never use them in production.
+Dummy secret keys should never be used in production as it will accept any response token as valid. 
