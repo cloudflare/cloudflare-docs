@@ -37,8 +37,3 @@ Learn how to get started by [creating an account](/fundamentals/setup/account/cr
 Learn more about Cloudflare through our Reference Architecture library. These comprehensive guides and diagrams are designed to provide a foundational knowledge of the Cloudflare platform and products. 
 
 {{</related>}}
-
-
-
-
-
