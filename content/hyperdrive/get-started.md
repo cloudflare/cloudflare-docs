@@ -54,16 +54,15 @@ Refer to [How Workers works](/workers/reference/how-workers-works/) to learn abo
 Create a new project named `hyperdrive-tutorial` by running:
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare@latest hyperdrive-tutorial
 ```
 
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
-- Name your directory `hyperdrive-tutorial`.
-- Choose `"Hello World" Worker` for the type of application.
-- Select `yes` to using TypeScript.
-- Select `yes` to using Git.
-- Select `no` to deploying.
+1. Choose `"Hello World" Worker` for the type of application.
+2. Select `yes` to using TypeScript.
+3. Select `yes` to using Git.
+4. Select `no` to deploying.
 
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
