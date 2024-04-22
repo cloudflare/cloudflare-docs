@@ -274,13 +274,9 @@ A Worker must be able to be parsed and execute its global scope (top-level code 
 
 ## Number of Workers
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
+You can have up to 500 Workers on your account on the Workers Paid plan, and up to 100 Workers on the Workers Free plan.
 
-{{<Aside type="note">}}
-
-App Workers do not count towards this limit.
-
-{{</Aside>}}
+If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ---
 
