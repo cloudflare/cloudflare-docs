@@ -20,7 +20,7 @@ To change between different versions of your zone:
 If you are on a product that is not available for versioning, you will not be able to switch to another version, and can only make changes under your Global Configuration.
 {{</Aside>}}
 
-The Domain Summary is accessible from all pages and allows you to quickly switch between versions and domains
+The Domain Summary is accessible from all pages and allows you to quickly switch between versions and domains.
 
 ![Switch between versions of your configuration](/images/version-management/configurable-versions.png)
 
