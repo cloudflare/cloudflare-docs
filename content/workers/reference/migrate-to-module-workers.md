@@ -55,7 +55,7 @@ export default {
 
 ## Bindings
 
-[Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
 
 Workers using ES modules format do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
 
@@ -129,7 +129,7 @@ The following code represents a `getTodos` function that calls the `get` functio
 filename: todos.js
 ---
 async function getTodos(env) {
-  // NOTE: Relies on the TODO KV binding which has been provided inside of 
+  // NOTE: Relies on the TODO KV binding which has been provided inside of
   // the env parameter of the `getTodos` function
   let value = await env.TODO.get("to-do:123");
   return new Response(value);
@@ -205,7 +205,7 @@ export default {
 
 ## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/context/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
 
 This example code:
 

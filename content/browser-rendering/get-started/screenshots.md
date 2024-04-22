@@ -60,7 +60,7 @@ Take note of the IDs for the next step.
 
 ## 4. Configure `wrangler.toml`
 
-Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/configuration/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
 Update your `wrangler.toml` configuration file with the Browser Rendering API binding and the KV namespaces you created:
 
@@ -173,9 +173,9 @@ If the same `"url"` is requested again, it will use the cached version in KV ins
 
 ## 6. Test
 
-Run `npx wrangler dev --remote` to test your Worker locally before deploying to Cloudflare's global network.
+Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network. Local mode support does not exist for Browser Rendering so `--remote` is required.
 
-To test taking your first screenshot, go to the following URL: 
+To test taking your first screenshot, go to the following URL:
 
 `<LOCAL_HOST_URL>/?url=https://example.com`
 

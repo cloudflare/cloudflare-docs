@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Google Workspace
-weight: 13
+weight: 12
 meta:
     title: Google Workspace - IdP
 ---
@@ -65,7 +65,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 13. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should not be shared. Copy both values.
 
-14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.  
+14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.
     ![Location of Trust internal apps setting in the Google Admin dashboard](/images/cloudflare-one/identity/gsuite/trust-internal-apps.png)
 
 15. Enable the **Trust internal, domain-owned apps** option. This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.

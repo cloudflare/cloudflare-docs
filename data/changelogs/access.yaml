@@ -2,6 +2,10 @@
 link: "/cloudflare-one/changelog/access/"
 productName: Access
 entries:
+- publish_date: '2024-04-15'
+  title: Zero Trust User identity audit logs
+  description: |-
+    All user identity changes via SCIM or Authentication events are logged against a user's registry identity.
 - publish_date: '2024-02-22'
   title: Access for SaaS OIDC Support
   description: |-

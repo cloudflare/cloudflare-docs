@@ -2,6 +2,8 @@
 title: Test APIs
 pcx_content_type: reference
 weight: 5
+meta:
+  description: Runtime helpers for writing tests, exported from the `cloudflare:test` module.
 ---
 
 # Test APIs

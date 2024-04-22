@@ -66,8 +66,8 @@ If traffic for your domain is destined for a different port than the ones listed
 
 Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing one of the following:
 
-- If you are using [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/), enable rule ID `100015` ("Anomaly:Port - Non Standard Port (not 80 or 443)").
-- If you are using the new [Cloudflare Web Application Firewall (WAF)](/waf/), enable rule ID `8e361ee4328f4a3caf6caf3e664ed6fe` ("Anomaly:Port - Non Standard Port (not 80 or 443)"), which is disabled by default. This rule is part of the Cloudflare Managed Ruleset.
+- If you are using [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/), enable rule ID `100015` (`Anomaly:Port - Non Standard Port (not 80 or 443)`).
+- If you are using the new [Cloudflare Web Application Firewall (WAF)](/waf/), enable rule ID {{<rule-id>}}8e361ee4328f4a3caf6caf3e664ed6fe{{</rule-id>}} (`Anomaly:Port - Non Standard Port (not 80 or 443)`), which is disabled by default. This rule is part of the Cloudflare Managed Ruleset.
 
 Ports 80 and 443 are the only ports compatible with:
 
@@ -75,6 +75,7 @@ Ports 80 and 443 are the only ports compatible with:
 - Proxying of [Cloudflare Apps](https://cloudflareapps.com/apps/developer/docs/getting-started)
 
 {{<render file="_open-ports-blocked-traffic.md" productFolder="waf" >}}
+<br>
 
 The WAF's [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) includes a rule that will block traffic at the application layer (layer 7 in the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), preventing HTTP/HTTPS requests over non-standard ports from reaching the origin server.
 

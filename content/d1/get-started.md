@@ -94,15 +94,15 @@ $ npx wrangler d1 create prod-d1-tutorial
 
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
-database_name = prod-d1-tutorial"
+database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
-This will create a new D1 database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+This will create a new D1 database, and output the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 ## 4. Bind your Worker to your D1 database
 
-You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
 To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -263,6 +263,20 @@ $ npx wrangler deploy
 You can now visit the URL for your newly created project to query your live database.
 
 For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
+
+## 8. (Optional) Delete your database
+
+To delete your database, run:
+
+```sh
+$ npx wrangler d1 delete prod-d1-tutorial
+```
+
+If you want to delete your Worker, run:
+
+```sh
+$ npx wrangler delete d1-tutorial
+```
 
 By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally.
 

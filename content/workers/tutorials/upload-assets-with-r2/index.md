@@ -44,7 +44,7 @@ To continue with this guide:
 1. Give your new Worker application a name.
 2. Select `"Hello World" Worker` for the type of application.
 3. Select `Yes` to using TypeScript.
-4. Select `No` to deploying your application. 
+4. Select `No` to deploying your application.
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
@@ -63,17 +63,17 @@ $ npx wrangler r2 bucket list
 
 ## Configure access to an R2 bucket
 
-After your new R2 bucket is ready, use it inside your Worker application. 
+After your new R2 bucket is ready, use it inside your Worker application.
 
-Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an [R2 bucket binding](/workers/configuration/bindings/#r2-bucket-bindings). Add the following R2 bucket binding to your `wrangler.toml` file:
+Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an R2 bucket [binding](/workers/runtime-apis/bindings/). Add the following R2 bucket binding to your `wrangler.toml` file:
 
 ```toml
 [[r2_buckets]]
-binding = 'MY_BUCKET' 
+binding = 'MY_BUCKET'
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of the R2 bucket you created earlier. 
+Give your R2 bucket binding name. Replace `<YOUR_BUCKET_NAME>` with the name of the R2 bucket you created earlier.
 
 Your Worker application can now access your R2 bucket using the `MY_BUCKET` variable. You can now perform CRUD (Create, Read, Update, Delete) operations on the contents of the bucket.
 
@@ -94,7 +94,7 @@ export default {
     const key = url.pathname.slice(1);
     // Retrieve the key "image.png"
     const object = await env.MY_BUCKET.get(key);
-    
+
     if (object === null) {
       return new Response('Object Not Found', { status: 404 });
     }
@@ -144,7 +144,7 @@ export default {
       await env.MY_BUCKET.put(key, request.body);
       return new Response(`Object ${key} uploaded successfully!`);
     }
-    
+
     // include the previous code here...
   },
 } satisfies ExportedHandler;
