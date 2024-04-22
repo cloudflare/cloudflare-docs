@@ -1377,6 +1377,8 @@
 /hyperdrive/platform/supported-databases/ /hyperdrive/reference/supported-databases/ 301
 /hyperdrive/changelog/ /hyperdrive/platform/changelog/ 301
 /hyperdrive/learning/ /hyperdrive/configuration/ 301
+/hyperdrive/reference/metrics/ /hyperdrive/observability/metrics/ 301
+/hyperdrive/reference/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
 
 # zaraz
 

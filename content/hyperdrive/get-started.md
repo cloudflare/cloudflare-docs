@@ -1,7 +1,7 @@
 ---
-weight: 2
 title: Get started
 pcx_content_type: get-started
+weight: 2
 ---
 
 # Get started
@@ -155,7 +155,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/observability/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -275,6 +275,6 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 - Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
 - How to [configure query caching](/hyperdrive/configuration/query-caching/).
-- [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
+- [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
