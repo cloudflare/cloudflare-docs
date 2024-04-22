@@ -92,3 +92,7 @@ Once migration completes, you are charged for storage & Class A/B operations as 
 Sippy is free to use. You are only charged for the operations Sippy makes to your R2 bucket. If a requested object is not present in R2, Sippy will copy it over from your source bucket. Objects with sizes < 200MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates, and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Sippy copies objects over to R2.
 
 As objects are migrated to R2, they are served from R2, and you are charged for storage & Class A/B operations as described in previous sections.
+
+## Cloudflare billing policy
+
+To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/).
