@@ -25,7 +25,7 @@ To enable a [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/sec
 3. Select **Add Bot Management**.
 
 {{<Aside type="note">}}
-If you are not seeing it enabled on your zone or if you still see **Add Bot Management** on the Cloudflare dashboard, refer to your account team for the proper entitlements.
+If you are not seeing Bot Management enabled on your zone or if you still see **Add Bot Management** on the Cloudflare dashboard, contact your account team for the proper entitlements.
 {{</Aside>}}
 
 ## Setup
