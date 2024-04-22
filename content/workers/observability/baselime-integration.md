@@ -44,15 +44,7 @@ To add the Baselime integration to your Worker:
 Once installed, the integration will automatically start forwarding events to Baselime. To learn more about Baselime, refer to [Baselime's official documentation](https://baselime.io/docs/).
 
 
-{{<Aside type="warning">}}
-
-When updating a Worker with Wrangler the [Tail Consumer](/workers/observability/logging/tail-workers) config will be removed. Please add the tail_consumer config to the top level of your `wrangler.toml`.
-
-```toml
-tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
-```
-
-{{</Aside>}}
+{{<render file="_wrangler-tail-warning.md">}}
 
 {{<Aside type="warning">}}
 
