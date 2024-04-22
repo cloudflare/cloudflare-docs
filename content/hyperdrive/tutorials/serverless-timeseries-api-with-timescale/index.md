@@ -293,6 +293,6 @@ In this tutorial, you have learned how to create a working example to ingest and
 
 ## Next steps
 
-- Learn more about [How Hyperdrive Works](/hyperdrive/reference/how-hyperdrive-works/).
+- Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
 - Learn more about [Timescale](https://timescale.com).
 - Refer to the [troubleshooting guide](/hyperdrive/observability/troubleshooting/) to debug common issues.

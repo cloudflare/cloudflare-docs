@@ -81,5 +81,5 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 ## Related resources
 
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and Hyperdrive locally and debug issues before deploying.
-* Learn [how Hyperdrive works](/hyperdrive/reference/how-hyperdrive-works/).
+* Learn [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
 * Understand how to [configure query caching in Hyperdrive](/hyperdrive/configuration/query-caching/).

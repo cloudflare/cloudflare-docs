@@ -263,7 +263,7 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 ## Next steps
 
-- Learn more about [how Hyperdrive works](/hyperdrive/reference/how-hyperdrive-works/).
+- Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
 - How to [configure query caching](/hyperdrive/configuration/query-caching/).
 - [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.
 
