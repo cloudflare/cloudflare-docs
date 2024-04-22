@@ -61,7 +61,7 @@ In your Worker project directory, C3 has generated the following:
 
 To continue building your Worker, open the `index.js` file to write your code. Refer to [Examples](/workers/examples/) to use ready-made code you can experiment with.
 
-## YouTube tutorial
+## Video tutorial
 
 If you prefer to follow along with a video tutorial, or have already created your first Worker but want to learn what more you can do with your project, review the following Learn Cloudflare Workers course for beginners.
 
@@ -69,11 +69,19 @@ In this course, you will:
 
 - Deploy your first Worker.
 - Develop your application locally.
-- Add the Hono framework to your project.
+- Add the Hono framework to your project. tst
 - Integrate Workers AI into your project.
 
-{{<youtube id="H7Qe96fqg1M">}}
+<div style="position: relative; padding-top: 56.25%;">
+    <iframe
+        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/7cb5528acbea8502c810781e1970b453/iframe?preload=true&letterboxColor=transparent"
+        style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen="true">
+    </iframe>
+</div>
 
+Find [the video on YouTube](https://youtu.be/H7Qe96fqg1M?si=GVkdGLrmb1faiHma) and explore other Cloudflare Workers tutorials.
 ## Summary
 
 You have learned how to:
