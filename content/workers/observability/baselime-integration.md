@@ -46,7 +46,7 @@ Once installed, the integration will automatically start forwarding events to Ba
 
 {{<Aside type="warning">}}
 
-When updating a worker with wrangler the [Tail Consumer](/workers/observability/logging/tail-workers) config will be removed. Please add the tail_consumer config to the top level of your `wrangler.toml`.
+When updating a Worker with Wrangler the [Tail Consumer](/workers/observability/logging/tail-workers) config will be removed. Please add the tail_consumer config to the top level of your `wrangler.toml`.
 
 ```toml
 tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]

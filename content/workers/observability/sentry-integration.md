@@ -46,6 +46,16 @@ Once installed, the integration will automatically start forwarding matching eve
 
 {{<Aside type="warning">}}
 
+When updating a Worker with Wrangler the [Tail Consumer](/workers/observability/logging/tail-workers) config will be removed. Please add the tail_consumer config to the top level of your `wrangler.toml`.
+
+```toml
+tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
+```
+
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+
 Each Cloudflare account can only be linked to one Sentry organization. Use the [Sentry SDK](https://github.com/getsentry/sentry-javascript) in order to send events to projects in more than one Sentry organization.
 
 {{</Aside>}}
