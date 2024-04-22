@@ -25,8 +25,8 @@ Cloudflare recommends that sitekeys used in production do not allow local domain
 | `3x00000000000000000000FF` | Forces an interactive challenge | visible |
 
 These dummy sitekeys will produce the `XXXX.DUMMY.TOKEN.XXXX` dummy response token.
-Production secret keys will reject this token, so for testing purposes you also need to use a dummy secret key.
 
+Production secret keys will reject this token. You must also use a dummy secret key for testing purposes.
 
 | Secret key | Description |
 | --- | --- |
