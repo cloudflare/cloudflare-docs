@@ -1,7 +1,7 @@
 ---
 title: Consumer concurrency
 pcx_content_type: concept
-weight: 9
+weight: 5
 ---
 
 # Consumer concurrency

@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
-title: Configuration
-weight: 3
+title: Configure Queues
+weight: 1
 meta:
   title: Cloudflare Queues - Configuration
 ---
 
-# Configuration
+# Configure Queues
 
 Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
 

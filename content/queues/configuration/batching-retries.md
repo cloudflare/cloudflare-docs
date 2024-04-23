@@ -1,7 +1,7 @@
 ---
 title: Batching, Retries and Delays
 pcx_content_type: concept
-weight: 4
+weight: 2
 ---
 
 # Batching, Retries and Delays

@@ -1,7 +1,7 @@
 ---
 title: Dead Letter Queues
 pcx_content_type: concept
-weight: 5
+weight: 3
 ---
 
 # Dead Letter Queues

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: JavaScript APIs
-weight: 5
+weight: 6
 meta:
   title: Cloudflare Queues - JavaScript APIs
 ---
