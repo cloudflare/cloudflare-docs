@@ -5,9 +5,15 @@ title: Server-side Excludes (SSE)
 weight: 2
 ---
 
-# Server-side Excludes (SSE)
+{{<heading-pill style="deprecated">}} Server-side Excludes (SSE) {{</heading-pill>}}
 
 If there is sensitive content on your website that you want visible to real visitors, but that you want to hide from suspicious visitors, wrap the content with Cloudflare Server-side Excludes (SSE) tags.
+
+{{<Aside type="warning" header="Deprecation notice">}}
+Server-side Excludes (SSE) has been deprecated. The SSE functionality will be removed on 2024-06-14. After this date, SSE will no longer be available via the Cloudflare dashboard, API, or Terraform.
+
+If you are experiencing unmitigated bot attacks or content scraping, we recommend transitioning to our Enterprise-grade [Bot Management](/bots/get-started/bm-subscription/) or our self-serve [Super Bot Fight Mode](/bots/get-started/pro/) solutions. These services are specifically designed to provide superior security in handling bot attacks and other security threats.
+{{</Aside>}}
 
 ## Set up
 
