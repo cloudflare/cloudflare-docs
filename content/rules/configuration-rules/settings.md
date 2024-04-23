@@ -113,6 +113,34 @@ header: API configuration example
 
 {{</details>}}
 
+## Disable Real User Monitoring (RUM)
+
+[Cloudflare Web Analytics](/analytics/web-analytics/), also known as Real User Monitoring (RUM), is Cloudflare's free, privacy-first analytics for your website.
+
+Use this setting to turn off Web Analytics for matching requests.
+
+{{<Aside type="warning" header="Warning">}}
+Configuration rules have precedence over any [Web Analytics rules](/analytics/web-analytics/configuring-web-analytics/rules/). If you configure a rule in Web Analytics to enable the feature and a configuration rule to disable it, the configuration rule will win.
+{{</Aside>}}
+
+
+{{<details header="API information">}}
+
+API configuration property name: `"disable_rum"` (boolean).
+
+```json
+---
+header: API configuration example
+---
+"action_parameters": {
+  "disable_rum": true
+}
+```
+
+{{<render file="_configuration-rule-link-to-examples.md">}}
+
+{{</details>}}
+
 ## Disable Zaraz
 
 [Cloudflare Zaraz](/zaraz/) gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
