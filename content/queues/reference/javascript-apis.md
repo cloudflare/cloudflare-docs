@@ -27,7 +27,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     await env.MY_QUEUE.send({
       url: req.url,
       method: req.method,
@@ -35,7 +35,7 @@ export default {
     });
     return new Response('Sent!');
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 The Queues API also supports writing multiple messages at once:
@@ -121,7 +121,7 @@ Optional configuration that applies when sending a batch of messages to a queue.
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of seconds to [delay messages](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  - Must be a positive integer. 
+  - Must be a positive integer.
 
 ### `QueuesContentType`
 
@@ -284,4 +284,4 @@ declare interface QueueRetryOptions {
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of seconds to [delay a message](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  - Must be a positive integer. 
+  - Must be a positive integer.

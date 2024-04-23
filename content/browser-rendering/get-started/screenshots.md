@@ -132,7 +132,7 @@ interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env): Promise<Response> {
 		const { searchParams } = new URL(request.url);
 		let url = searchParams.get("url");
 		let img: Buffer;
@@ -160,7 +160,7 @@ export default {
 			);
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}

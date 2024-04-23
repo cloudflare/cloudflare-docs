@@ -43,7 +43,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment, context: ExecutionContext): Promise<Response> {
+  async fetch(req, env, context): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -52,7 +52,7 @@ export default {
 
     await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 {{<Aside type="note">}}
@@ -79,7 +79,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -93,7 +93,7 @@ export default {
       return Response.json({"msg": e}, { status: 500 })
     }
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 To only accept simple strings when writing to a queue, set `{ contentType: "text" }` instead:

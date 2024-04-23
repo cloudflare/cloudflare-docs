@@ -177,9 +177,9 @@ export interface Env {
 
 export default {
     async fetch(
-        request: Request,
-        env: Env,
-        ctx: ExecutionContext
+        request,
+        env,
+        ctx
     ): Promise<Response> {
         const client = new Client({connectionString:env.HYPERDRIVE.connectionString});
         await client.connect();
@@ -230,7 +230,7 @@ export default {
             return resp;
         }
     }
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ## 5. Deploy your Worker

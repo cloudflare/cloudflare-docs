@@ -155,7 +155,7 @@ const sampleVectors: Array<VectorizeVector> = [
 ];
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith("/favicon")) {
 			return new Response('', { status: 404 });
@@ -174,7 +174,7 @@ export default {
 
 		return Response.json({text: "nothing to do... yet"}, { status: 404 })
 	}
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 In the code above, you:
@@ -216,7 +216,7 @@ const sampleVectors: Array<VectorizeVector> = [
 ];
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith("/favicon")) {
 			return new Response('', { status: 404 });
@@ -258,7 +258,7 @@ export default {
 			matches: matches,
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ## 6. Deploy your Worker

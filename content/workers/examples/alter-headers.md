@@ -48,7 +48,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     const response = await fetch(request);
 
     // Clone the response so that it's no longer immutable

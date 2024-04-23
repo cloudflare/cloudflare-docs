@@ -21,10 +21,10 @@ export default {
 {{<tab label="ts">}}
 ```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		return new Response('Hello World!');
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}

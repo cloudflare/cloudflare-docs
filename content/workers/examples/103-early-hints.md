@@ -87,7 +87,7 @@ const HTML = `
 `;
 
 export default {
-  async fetch(req) {
+  async fetch(req): Promise<Response> {
     // If request is for test.css, serve the raw CSS
     if (/test\.css$/.test(req.url)) {
       return new Response(CSS, {
