@@ -36,7 +36,7 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
 
 - **Origin server name** (default): Set SNI to the custom origin
 
-  - If custom origin is `custom-origin.example`, then the SNI is `custom-origin.example`.
+  - If custom origin is `custom-origin.example.com`, then the SNI is `custom-origin.example.com`.
 
 - **Host header**: Set SNI to the host header (or a host header override)
 
