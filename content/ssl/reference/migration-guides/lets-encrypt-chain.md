@@ -46,7 +46,7 @@ You can then [manage your advanced certificates](/ssl/edge-certificates/advanced
 
 ### Total TLS
 
-For [Total TLS](/ssl/edge-certificates/additional-options/total-tls/), if you are worried that using Let's Encrypt might impact your visitors experience, go to **SSL/TLS** > **Edge Certificates** and make sure that a different certificate authority is selected in the Total TLS settings.
+For [Total TLS](/ssl/edge-certificates/additional-options/total-tls/), if you are concerned that using Let's Encrypt might impact your visitors' experience, go to **SSL/TLS** > **Edge Certificates** and make sure that a different certificate authority is selected in the Total TLS settings.
 
 Cloudflare will not change Total TLS certificates automatically.
 
