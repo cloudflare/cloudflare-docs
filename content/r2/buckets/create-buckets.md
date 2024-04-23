@@ -21,7 +21,7 @@ The R2 support in Wrangler allows you to manage buckets and perform basic operat
 Create a bucket:
 
 ```sh
-$ wrangler r2 bucket create your-bucket-name-here
+$ wrangler r2 bucket create your-bucket-name
 ```
 {{<Aside type="note">}}
 
