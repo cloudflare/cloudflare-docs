@@ -61,7 +61,7 @@ To view the added DNS record, select *...* next to the connected domain and sele
 
 {{<Aside type="note">}}
 
-If the zone is on the Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
+If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
 
 {{</Aside>}}
 
