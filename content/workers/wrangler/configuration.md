@@ -421,7 +421,7 @@ browser = { binding = "<BINDING_NAME>" }
 
 # or
 
-[[browser]]
+[browser]
 binding = "<BINDING_NAME>"
 ```
 
@@ -937,7 +937,7 @@ Example:
 ---
 filename: wrangler.toml
 ---
-analytics_engine_datasets = { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+analytics_engine_datasets = [{ binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }]
 
 # or
 

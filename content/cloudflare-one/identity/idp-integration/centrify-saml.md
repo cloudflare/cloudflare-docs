@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: SAML | Centrify
-weight: 1
+title: Centrify (SAML)
+weight: 8
 ---
 
-# SAML | Centrify
+# Centrify (SAML)
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 

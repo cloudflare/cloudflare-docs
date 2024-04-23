@@ -92,7 +92,7 @@ $ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${
   -H "Content-Type: application/json"
 ```
 
-You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same (rate limit](queues/platform/limits/) against the Cloudflare API.
+You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same [rate limit](/queues/platform/limits/) against the Cloudflare API.
 
 ### Create API tokens
 
@@ -160,7 +160,7 @@ Pull consumers follow a "short polling" approach: if there are messages availabl
 
 {{<Aside type="note">}}
 
-The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation. 
+The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation.
 
 The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
 
@@ -228,7 +228,7 @@ Additionally:
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
-<!-- 
+<!--
 
 ## Examples
 

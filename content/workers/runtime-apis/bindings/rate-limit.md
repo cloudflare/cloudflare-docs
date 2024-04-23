@@ -41,7 +41,7 @@ name = "MY_RATE_LIMITER"
 type = "ratelimit"
 # An identifier you define, that is unique to your Cloudflare account.
 # Must be an integer.
-namespace_id = "1001" 
+namespace_id = "1001"
 
 # Limit: the number of tokens allowed within a given period in a single
 # Cloudflare location
@@ -85,7 +85,7 @@ interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const { pathname } = new URL(request.url)
 
     const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }) // key can be any string of your choosing
@@ -95,7 +95,7 @@ export default {
 
     return new Response(`Success!`)
   }
-}
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}
@@ -114,7 +114,7 @@ A rate limiting binding has three settings:
 
 1. `namespace_id` (number) - a positive integer that uniquely defines this rate limiting configuration - e.g. `namespace_id = "999"`.
 2. `limit` (number) - the limit (number of requests, number of API calls) to be applied. This is incremented when you call the `limit()` function in your Worker.
-3. `period` (seconds) - must be `10` or `60`. The period to measure increments to the `limit` over, in seconds. 
+3. `period` (seconds) - must be `10` or `60`. The period to measure increments to the `limit` over, in seconds.
 
 For example, to apply a rate limit of 1500 requests per minute, you would define a rate limiting configuration as follows:
 
@@ -126,10 +126,29 @@ filename: wrangler.toml
 [[unsafe.bindings]]
 name = "MY_RATE_LIMITER"
 type = "ratelimit"
-namespace_id = "1001" 
+namespace_id = "1001"
 
-# 1500 requests - calls to limit() increment this 
+# 1500 requests - calls to limit() increment this
 simple = { limit = 1500, period = 60 }
+```
+
+## Best practices
+
+The `key` passed to the `limit` function, that determines what to rate limit on, should represent a unique characteristic of a user or class of user that you wish to rate limit.
+
+* Good choices include API keys in `Authorization` HTTP headers, URL paths or routes, specific query parameters used by your application, and/or user IDs and tenant IDs. These are all stable identifiers and are unlikely to change from request-to-request.
+* It is not recommended to use IP addresses or locations (regions or countries), since these can be shared by many users in many valid cases. You may find yourself unintentionally rate limiting a wider group of users than you intended by rate limiting on these keys.
+
+```ts
+// Recommended: use a key that represents a specific user or class of user
+const url = new URL(req.url)
+const userId = url.searchParams.get("userId") || ""
+const { success } = await env.MY_RATE_LIMITER.limit({ key: userId })
+
+// Not recommended:  many users may share a single IP, especially on mobile networks
+// or when using privacy-enabling proxies
+const ipAddress = req.headers.get("cf-connecting-ip") || ""
+const { success } = await env.MY_RATE_LIMITER.limit({ key: ipAddress })
 ```
 
 ## Locality

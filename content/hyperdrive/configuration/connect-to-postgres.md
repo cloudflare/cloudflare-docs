@@ -44,7 +44,7 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
-| -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
+| -------------------- | -------------------------- | ------------------------ |  ----------------------- |
 | node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this.   |
 | Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` | Must pass `prepare: false` when creating the client. |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
@@ -116,7 +116,7 @@ export interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+	async fetch(request, env, ctx): Promise<Response> {
 		// Create a database client that connects to your database via Hyperdrive
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
@@ -125,7 +125,7 @@ export default {
 			host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
 			password: env.HYPERDRIVE.password,
-			port: Number(env.HYPERDRIVE.port),
+			port: env.HYPERDRIVE.port,
 			database: env.HYPERDRIVE.database
 		})
 
@@ -143,7 +143,7 @@ export default {
 			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}
@@ -177,7 +177,7 @@ export interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+	async fetch(request, env, ctx): Promise<Response> {
 
     // Important: Set `prepare: false` as Postgres.js named prepared statements
     // are not compatible with connection pooling systems like Hyperdrive
@@ -194,7 +194,7 @@ export default {
 			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

@@ -35,7 +35,7 @@ export default {
 ```ts
 import { parse } from "cookie";
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     // The name of the cookie
     const COOKIE_NAME = "__uid";
     const cookie = parse(request.headers.get("Cookie") || "");

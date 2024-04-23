@@ -121,7 +121,7 @@ Optional configuration that applies when sending a batch of messages to a queue.
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of seconds to [delay messages](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  - Must be a positive integer. 
+  - Must be a positive integer.
 
 ### `QueuesContentType`
 
@@ -284,4 +284,4 @@ declare interface QueueRetryOptions {
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
   - The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
-  - Must be a positive integer. 
+  - Must be a positive integer.

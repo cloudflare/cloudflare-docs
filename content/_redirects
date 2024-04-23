@@ -581,6 +581,11 @@
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
 /learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
+/learning-paths/workers/configure/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/test/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
+
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
 /learning-paths/dns-filtering/create-policy/order-of-enforcement/ /learning-paths/secure-internet-traffic/build-dns-policies/order-of-precedence/ 301
@@ -1377,6 +1382,9 @@
 /vectorize/configuration/ /vectorize/best-practices/ 301
 
 
+# version management
+/version-management/reference/available-settings/ /version-management/reference/available-configurations/ 301
+
 # hyperdrive
 
 /hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/configuration/how-hyperdrive-works/ 301
@@ -1386,6 +1394,8 @@
 /hyperdrive/platform/supported-databases/ /hyperdrive/reference/supported-databases/ 301
 /hyperdrive/changelog/ /hyperdrive/platform/changelog/ 301
 /hyperdrive/learning/ /hyperdrive/configuration/ 301
+/hyperdrive/reference/metrics/ /hyperdrive/observability/metrics/ 301
+/hyperdrive/reference/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
 
 # zaraz
 
@@ -1478,8 +1488,10 @@
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
+/cloudflare-one/identity/idp-integration/saml-centrify/ /cloudflare-one/identity/idp-integration/centrify-saml/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
+/cloudflare-one/identity/idp-integration/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/applications/login-page/ 301
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301

@@ -60,7 +60,7 @@ For example:
 
 ```sh
 # wrangler v3.11 and above required
-$ npx wrangler hyperdrive update my-hyperdrive --disable-caching
+$ npx wrangler hyperdrive update my-hyperdrive --caching-disabled
 ```
 
 You can also configure multiple Hyperdrive connections from a single application: one connection that enables caching for popular queries, and a second connection where you do not want to cache queries, but still benefit from Hyperdrive's latency benefits and connection pooling.
@@ -82,4 +82,4 @@ const noCachingClient = new Client({
 
 - Learn more about [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
 - Learn how to [Connect to PostgreSQL](/hyperdrive/configuration/connect-to-postgres/) from Hyperdrive.
-- Review [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
+- Review [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.

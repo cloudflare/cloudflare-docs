@@ -38,7 +38,7 @@ As explained in the [announcement blog post](https://blog.cloudflare.com/introdu
 
 To set up Delegated DCV:
 
-1. Order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) for your zone. You can choose any **Certificate validation method**.
+1. Order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) for your zone, choosing `TXT` as the **Certificate validation method**.
 2. On **SSL/TLS** > **Edge Certificates**, go to **DCV Delegation for Partial Zones**.
 3. Copy the Cloudflare validation URL.
 4. At your authoritative DNS provider, create `CNAME` record(s) considering the following:

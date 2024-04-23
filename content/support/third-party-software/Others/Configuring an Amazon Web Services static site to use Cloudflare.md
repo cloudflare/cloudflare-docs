@@ -59,16 +59,28 @@ To set up your policy:
     -   `www.example.com` (appearing in `"Resource": "arn:aws:s3:www.example.com/*"`) with the S3 bucket name for your subdomain URL.
     -   The placeholder IP addresses with the current list of [Cloudflare IP addresses](https://www.cloudflare.com/ips)
 
-```sh
-$ curl -I -L example.com
-HTTP/1.1 301 Moved Permanently
-Date: Tue, 23 Jan 2018 23:17:44 GMT
-Connection: keep-alive
-Cache-Control: max-age=3600
-Expires: Wed, 24 Jan 2018 00:17:44 GMT
-Location: https://example.com/
-Server: cloudflare
-CF-RAY: 3e1e77d5c42b8c52-SFO-DOG
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::www.example.com/*",
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": [
+                        "192.2.0.1" (example IP address),
+                        "192.2.0.2" (example IP address),
+                        (add all IPs listed at https://www.cloudflare.com/ips)
+                    ]
+                }
+            }
+        }
+    ]
+}
 ```
 
 ___

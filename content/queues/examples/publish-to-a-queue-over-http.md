@@ -77,7 +77,7 @@ interface Env {
 }
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env): Promise<Response> {
 		// Authenticate that the client has the correct auth key
 		if (env.QUEUE_AUTH_SECRET == "") {
 			return Response.json({ err: "application not configured" }, { status: 500 });
@@ -118,7 +118,7 @@ export default {
 		// Return a HTTP 200 if the send succeeded!
 		return Response.json({ success: true });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 To deploy this Worker:

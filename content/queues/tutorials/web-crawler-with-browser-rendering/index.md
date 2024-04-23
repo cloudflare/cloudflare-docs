@@ -145,11 +145,11 @@ export interface Env {
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     await env.CRAWLER_QUEUE.send({ url: await req.text() });
     return new Response("Success!");
   },
-}
+} satisfies ExportedHandler<Env>;
 ```
 
 This will accept requests to any subpath and forwards the request's body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a `POST` request and contains a well-formed URL in its body. This has been omitted for simplicity.

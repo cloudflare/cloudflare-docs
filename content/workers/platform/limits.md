@@ -114,7 +114,9 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 Workers automatically scale onto thousands of Cloudflare global network servers around the world. There is no general limit to the number of requests per second Workers can handle.
 
-Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
+Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, [contact Cloudflare support](/support/contacting-cloudflare-support/) to increase your limit. Cloudflare's anti-abuse Workers Rate Limiting does not apply to Enterprise customers.
+
+You can also confirm if you have been rate limited by anti-abuse Worker Rate Limiting by logging into the Cloudflare dashboard, selecting your account and zone, and going to **Security** > **Events**. Find the event and expand it. If the **Rule ID** is `worker`, this confirms that it is the anti-abuse Worker Rate Limiting.
 
 The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
@@ -272,13 +274,9 @@ A Worker must be able to be parsed and execute its global scope (top-level code 
 
 ## Number of Workers
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
+You can have up to 500 Workers on your account on the Workers Paid plan, and up to 100 Workers on the Workers Free plan.
 
-{{<Aside type="note">}}
-
-App Workers do not count towards this limit.
-
-{{</Aside>}}
+If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ---
 
