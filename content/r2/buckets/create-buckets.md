@@ -24,7 +24,7 @@ Create a bucket:
 $ wrangler r2 bucket create your-bucket-name
 ```
 
-List the buckets in the current account:
+List buckets in the current account:
 
 ```sh
 $ wrangler r2 bucket list
