@@ -361,7 +361,7 @@ Refer to the [GitHub repository for the complete tutorial](https://github.com/cl
 ## Related resources
 
 - [How Queues works](/queues/reference/how-queues-works/)
-- [Queues Batching and Retries](/queues/reference/batching-retries/)
+- [Queues Batching and Retries](/queues/configuration/batching-retries/)
 - [Browser Rendering](/browser-rendering/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
 

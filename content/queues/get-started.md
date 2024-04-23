@@ -177,7 +177,7 @@ In this guide, you will create a consumer Worker and use it to log and inspect t
 
 {{<Aside type="note">}}
 
-Queues also supports [pull-based consumers](/queues/reference/pull-consumers/), which allows any HTTP-based client to consume messages from a queue. This guide creates a push-based consumer using Cloudflare Workers.
+Queues also supports [pull-based consumers](/queues/configuration/pull-consumers/), which allows any HTTP-based client to consume messages from a queue. This guide creates a push-based consumer using Cloudflare Workers.
 
 {{</Aside>}}
 
