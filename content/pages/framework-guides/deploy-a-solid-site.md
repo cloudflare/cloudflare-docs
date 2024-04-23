@@ -39,7 +39,7 @@ $ npm run dev
 
 {{<render file="_c3-adapter.md">}}
 
-In order to use configure SolidStart so that it can be deployed to Cloudflare pages, appropriately update its config file:
+In order to configure SolidStart so that it can be deployed to Cloudflare pages, update its config file like so:
 
 ```diff
 ---
