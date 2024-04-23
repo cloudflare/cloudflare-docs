@@ -21,7 +21,6 @@ You can use `cf.bot_management.detection_ids` fields in tools such as:
 - [Transform Rules](/rules/transform/)
 - [Workers](/workers/) (as `request.cf.botManagement.detectionIds`)
 
-
 ## Bot Detection IDs via Logpush
 
 You can create or edit their existing Logpush jobs to include the new Bot Detection IDs field which will provide an array of IDs for each request that has heuristics match on it. The `BotDetectionIDs` field is available as part of the HTTP Requests dataset and you can add it to new or existing jobs via the Logpush API or on the Cloudflare dashboard. This is the primary method to discover Detection IDs.
