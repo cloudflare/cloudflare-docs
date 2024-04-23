@@ -581,6 +581,11 @@
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
 /learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
+/learning-paths/workers/configure/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/test/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
+
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
 /learning-paths/dns-filtering/create-policy/order-of-enforcement/ /learning-paths/secure-internet-traffic/build-dns-policies/order-of-precedence/ 301
