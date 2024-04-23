@@ -16,7 +16,7 @@ To use a custom origin server, you need to meet the following requirements:
 
 - You have purchased the [Cloudflare for SaaS Enterprise plan](/cloudflare-for-platforms/cloudflare-for-saas/plans/) and the feature is properly entitled to your account.
 - Each custom origin needs to be a valid hostname with a proxied (orange-clouded) A, AAAA, or CNAME record in your account's DNS. You cannot use an IP address.
-- The DNS record for the custom origin server does not currently support wildcard values. 
+- The DNS record for the custom origin server does not currently support wildcard values.
 
 ## Use a custom origin
 
@@ -36,7 +36,7 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
 
 - **Origin server name** (default): Set SNI to the custom origin
 
-  - If custom origin is `custom-origin.com`, then the SNI is `custom-origin.com`.
+  - If custom origin is `custom-origin.example`, then the SNI is `custom-origin.example`.
 
 - **Host header**: Set SNI to the host header (or a host header override)
 
