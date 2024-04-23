@@ -14,7 +14,7 @@ Weak ETag headers indicate a cached resource is semantically equivalent to the v
 
 {{<Aside type="note">}}
 
-When using weak ETag headers, it is necessary to disable certain features such as [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to prevent Cloudflare from removing the ETag headers set by your origin web server. For a comprehensive list, refer to the [Notes about end-to-end compression](/speed/optimization/content/brotli/content-compression/#notes-about-end-to-end-compression).
+When using weak ETag headers, it is necessary to disable certain features such as [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to prevent Cloudflare from removing the ETag headers set by your origin web server. For a comprehensive list of the features you need to disable, refer to the [Notes about end-to-end compression](/speed/optimization/content/brotli/content-compression/#notes-about-end-to-end-compression).
 
 {{</Aside>}}
 
