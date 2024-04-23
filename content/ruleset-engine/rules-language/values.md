@@ -61,6 +61,8 @@ Therefore, to replace a backslash (`\`) with the `a` character using `regex_repl
 ```txt
 regex_replace(http.host, "\\\\", "a")
 ```
+
+To avoid this situation, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax) for specifying regular expressions.
 {{</Aside>}}
 
 ### Raw string syntax
