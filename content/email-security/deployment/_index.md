@@ -11,3 +11,5 @@ weight: 2
 Select a deployment method to get started.
 
 {{<directory-listing>}}
+
+Can just create your new commit.
