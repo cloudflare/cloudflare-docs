@@ -69,7 +69,7 @@ In this course, you will:
 
 - Deploy your first Worker.
 - Develop your application locally.
-- Add the Hono framework to your project. tst
+- Add the Hono framework to your project.
 - Integrate Workers AI into your project.
 
 <div style="position: relative; padding-top: 56.25%;">
