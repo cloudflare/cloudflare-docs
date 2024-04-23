@@ -219,7 +219,7 @@ export default app
 
 This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database.
 
-This example features the [`@cf/baai/bge-base-en-v1.5` model](/workers-ai/models/bge-base-en-v1.5/), which transforms the text previously given by `@cf/meta/llama-2-7b-chat-int8` into a compact vector.
+This example features the [`@cf/baai/bge-base-en-v1.5` model](/workers-ai/models/bge-base-en-v1.5/), which can be used to create an embedding. Embeddings are stored and retrieved from our vector database [Vectorize](/vectorize/). The user's query is also turned into an embedding so that it can be used for searching within Vectorize.
 
 ```js
 ---
