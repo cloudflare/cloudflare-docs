@@ -16,6 +16,6 @@ Trace currently does not support:
 Additionally, the following products will not appear in trace results:
 
 * [Firewall rules (deprecated)](/firewall/)
-* [IP Access rules (legacy)](/waf/tools/ip-access-rules/)
+* [IP Access rules](/waf/tools/ip-access-rules/)
 * [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
 * [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
