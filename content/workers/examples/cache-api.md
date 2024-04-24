@@ -2,7 +2,6 @@
 type: example
 summary: Use the Cache API to store responses in Cloudflare's cache.
 tags:
-  - Cache API
   - Middleware
   - Caching
 languages:

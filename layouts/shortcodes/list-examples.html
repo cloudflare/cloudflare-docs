@@ -7,6 +7,7 @@
   {{- $target = . -}}
 {{- end -}}
 
+<!-- Build out the filters dynamically -->
 {{ if ne (index $filters 0) "" }}
 <div class="selectorDropdowns">
 {{- range $index, $filter := $filters -}}
@@ -29,12 +30,11 @@
       {{- end -}}
   </select>
   </div>
-
 {{- end -}}
 </div>
 {{ end }}
 
-
+<!-- Add list of examples, with optional filterable properties -->
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
   {{- range $index, $page := $pages.ByWeight -}}
     {{- $x := $page.RelPermalink -}}
@@ -62,8 +62,44 @@
 </ul>
 
 <script>
-  let examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
-  for (example of examples) {
-    console.log(example.getAttribute('data-tags'))
+
+function getSelectValues(selectElementCollection) {
+  let selectedValues = {};
+  for (const htmlElement of selectElementCollection) {
+    let selectElement = htmlElement;
+    let selectedValue =
+      selectElement.options[selectElement.selectedIndex].value;
+    if (selectedValue !== 'all') {
+      selectedValues[selectElement.id] = selectedValue;
+    }
   }
+  return selectedValues;
+}
+
+const examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
+
+const selectorDropdowns = document.getElementsByClassName("selectorFilter");
+for (const dropdown of selectorDropdowns) {
+  dropdown.addEventListener("change", () => {
+    let selectedOptions = getSelectValues(selectorDropdowns);
+    for (const example of examples) {
+
+      let keepValue = true;
+      for (option in selectedOptions) {
+
+        if (!example.dataset[option] || !example.dataset[option].split("|").includes(selectedOptions[option])) {
+          keepValue = false;
+        }
+      }
+      if (keepValue) {
+        console.log(example.firstElementChild.textContent)
+        example.style.display = "";
+      } else {
+        example.style.display = "none";
+      }
+    }
+  })
+}
+
+
 </script>

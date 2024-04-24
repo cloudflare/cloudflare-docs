@@ -3,7 +3,6 @@ type: example
 summary: Send Additional Cache Tags using Workers
 tags:
   - Caching
-  - Cache Tags
 languages:
   - JavaScript
   - Typescript

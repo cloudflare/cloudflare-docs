@@ -4,7 +4,6 @@ summary: Cache POST requests using the Cache API.
 tags:
   - Middleware
   - Caching
-  - Cache API
 languages:
   - JavaScript
   - Typescript
