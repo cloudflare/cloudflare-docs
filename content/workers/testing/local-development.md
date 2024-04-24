@@ -61,16 +61,7 @@ When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 w
 
 [Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the `wrangler.toml` [configuration file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
 
-When you run `wrangler dev` Wrangler creates local resources in a `.wrangler` folder like this:
-
-```bash
-├── .wrangler
-│   ├── state
-│   │   ├── cache
-│   │   ├── <Resource ie. kv, d1, r2>
-│   │       ├── miniflare-<miniflare identifier>
-│   │       ├── <Resource ID or random UUID>
-```
+When you run `wrangler dev` Wrangler stores local resources in a `.wrangler/state` folder, which is automatically created.
 
 If you prefer to specify a directory, you can use the [`--persist-to`](/workers/wrangler/commands/#dev) flag with `wrangler dev` like this:
 
@@ -103,17 +94,17 @@ If using `--persist-to` to specify a custom folder with `wrangler dev` you shoul
 $ npx wrangler kv:key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
 ```
 
-This will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in `wrangler.toml`. This command also assumes that the local persistence data is set to `worker-local` so `--persist-to` is set to that ensuring the data is created in the correct location. If `--persist-to` was not set, it would create the data at `.wrangler`.
+Running `wrangler kv:key put` will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in `wrangler.toml`. This example command sets the local persistence directory to `worker-local` using `--persist-to`, to ensure that the data is created in the correct location. If `--persist-to` was not set, it would create the data in the `.wrangler` folder.
 
 ### Clear Wrangler's local storage
 
-If you need to clear local storage entirely, delete the `.wrangler/state` folder. You can also be more fine-tuned and delete specific resource folders within `.wrangler/state`.
+If you need to clear local storage entirely, delete the `.wrangler/state` folder. You can also be more fine-grained and delete specific resource folders within `.wrangler/state`.
 
 Any deleted folders will be created automatically the next time you run `wrangler dev`.
 
-## Develop locally using remote resources and bindings
+## Develop using remote resources and bindings
 
-There may be times you want to develop against remote resources and bindings. To run `wrangler dev` in remote mode, add the `--remote` flag:
+There may be times you want to develop against remote resources and bindings. To run `wrangler dev` in remote mode, add the `--remote` flag, which will run both your code and resources remotely:
 
 ```sh
 $ npx wrangler dev --remote
