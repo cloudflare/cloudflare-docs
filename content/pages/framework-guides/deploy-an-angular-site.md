@@ -33,6 +33,7 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 ### Create a GitHub repository
 
 {{<render file="/_framework-guides/_create-gh-repo.md">}}
+<br/>
 
 ```sh
 # Skip the following three commands if you have built your application
