@@ -13,13 +13,13 @@ layout: example
 
 {{<Aside type="warning" header="Caution when using in production">}}
 
-* This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, refer to the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
+- This code is provided as a sample, and is not suitable for production code without protecting against timing attacks. To learn how to implement production-safe code, refer to the [`timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate against timing attacks in your Workers code.
 
-* The example code contains a generic header key and value of `X-Custom-PSK` and `mypresharedkey`. To best protect your resources, change the header key and value in the Workers editor before saving your code.
+- The example code contains a generic header key and value of `X-Custom-PSK` and `mypresharedkey`. To best protect your resources, change the header key and value in the Workers editor before saving your code.
 
 {{</Aside>}}
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -71,6 +71,26 @@ export default {
     });
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch
+
+async def on_fetch(request):
+    PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK"
+    PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey"
+
+    psk = request.headers.get(PRESHARED_AUTH_HEADER_KEY)
+
+    if psk == PRESHARED_AUTH_HEADER_VALUE:
+      # Correct preshared header key supplied. Fetch request from origin.
+      return fetch(request)
+
+    # Incorrect key supplied. Reject the request.
+    return Response.new("Sorry, you have supplied an invalid key.", status=403);
 ```
 
 {{</tab>}}
