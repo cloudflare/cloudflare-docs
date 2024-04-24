@@ -18,9 +18,10 @@ When a Worker running in production has an error that prevents it from returning
 | Error code | Meaning                                                                                                           |
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
 | `1101`     | Worker threw a JavaScript exception.                                                                              |
-| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                      |
+| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                             |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](https://support.cloudflare.com/)                   |
 | `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
-| `1019`     | Worker hit [loop limit](#loop-limit).                                                    |
+| `1019`     | Worker hit [loop limit](#loop-limit).                                                                             |
 | `1021`     | Worker has requested a host it cannot access.                                                                     |
 | `1022`     | Cloudflare has failed to route the request to the Worker.                                                         |
 | `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
