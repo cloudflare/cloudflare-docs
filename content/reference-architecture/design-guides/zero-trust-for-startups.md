@@ -45,7 +45,7 @@ A few things explicitly not covered in this document:
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 * What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (five-minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU (two minutes)
 * Blog: [Zero Trust, SASE, and SSE: foundational concepts for your next-generation network](https://blog.cloudflare.com/zero-trust-sase-and-sse-foundational-concepts-for-your-next-generation-network/) (14-minute read)
-* Reference architecture: [Evolving to a SASE architecture with Cloudflare](reference-architecture/architectures/sase/) (three-hour read)
+* Reference architecture: [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/) (three-hour read)
 
 ## Getting started — Foundational decisions
 
