@@ -13,7 +13,7 @@ In this guide, you will create a new Solid application implemented via [SolidSta
 
 At the time of writing SolidStart is in beta, this may make the following guide inaccurate in the event of a breaking change.
 
-_Note: This guide is based on the [Beta 2 version](https://github.com/solidjs/solid-start/discussions/1052)_
+_Note: This guide is based on the [SolidStart Beta 2 version](https://github.com/solidjs/solid-start/discussions/1052)_
 
 {{</Aside>}}
 
