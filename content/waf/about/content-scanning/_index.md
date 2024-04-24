@@ -20,7 +20,7 @@ Once enabled, content scanning will run for all incoming traffic, identifying {{
 
 For every request with one or more detected content objects, the content scanner connects to an antivirus (AV) scanner to perform a thorough analysis of the content objects. Using the results of the scan, the WAF will populate several fields you can use in rule expressions. For example, you can create a basic rule to block requests containing malicious files, or a more complex rule where the expression matches specific file sizes, file types, or URI paths.
 
-Cloudflare uses a third-party scanner for WAF content scanning and for the [AV scanner in Zero Trust](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/).
+Cloudflare uses a third-party scanner for WAF content scanning and for the [anti-virus (AV) scanner in Zero Trust](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/).
 
 {{<Aside type="warning" header="Warning">}}
 Content scanning will not apply any mitigation actions to requests with content objects considered malicious. It only provides a signal that you can use to define your attack mitigation strategy. You must create rules — [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) — to perform actions based on detected signals.
