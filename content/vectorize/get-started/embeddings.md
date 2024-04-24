@@ -12,7 +12,7 @@ Vectorize allows you to generate [vector embeddings](/vectorize/reference/what-i
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
-If this is your first time using Vectorize or a vector database, start with [Vectorize Get started](/vectorize/get-started/intro/) guide.
+If this is your first time using Vectorize or a vector database, start with the [Vectorize Get started guide](/vectorize/get-started/intro/).
 
 {{</Aside>}}
 
