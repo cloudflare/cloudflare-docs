@@ -10,11 +10,12 @@ meta:
 
 Trace currently does not support:
 
-* [Spectrum](/spectrum/) applications
 * Hostnames using [Data Localization Suite](/data-localization/)
+* [Spectrum](/spectrum/) applications
 
 Additionally, the following products will not appear in trace results:
 
-* [Firewall rules](/firewall/)
-* [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
+* [Firewall rules (deprecated)](/firewall/)
+* [IP Access rules (legacy)](/waf/tools/ip-access-rules/)
 * [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
+* [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
