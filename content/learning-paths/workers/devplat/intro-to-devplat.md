@@ -40,7 +40,7 @@ For a detailed guide to choosing the correct storage option, refer to [Choose a 
 
 ## Image optimization and video streaming
 
-[Cloudflare Stream](https://developers.cloudflare.com/stream/) and [Cloudflare Images](https://developers.cloudflare.com/images/) deliver videos and pictures to your end-users without configuring or maintaining infrastructure.
+[Cloudflare Stream](/stream/) and [Cloudflare Images](/images/) deliver videos and pictures to your end-users without configuring or maintaining infrastructure.
 
 ## AI
 
