@@ -1,8 +1,12 @@
 ---
 type: example
-summary: Inject Turnstile implicitly into HTML elements using the HTMLRewriter runtime API.
+summary: Inject [Turnstile](/turnstile/) implicitly into HTML elements using the HTMLRewriter runtime API.
 tags:
   - Originless
+  - HTMLRewriter
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Turnstile with Workers
 weight: 1001

@@ -3,6 +3,9 @@ type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
   - Debugging
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Logging headers to console
 weight: 1001

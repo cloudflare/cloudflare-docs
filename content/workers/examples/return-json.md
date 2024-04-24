@@ -6,6 +6,10 @@ demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
   - Originless
+languages:
+  - JavaScript
+  - Typescript
+  - Python
 pcx_content_type: configuration
 title: Return JSON
 weight: 2

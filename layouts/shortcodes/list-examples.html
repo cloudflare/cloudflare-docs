@@ -11,15 +11,22 @@
     {{- $x := .RelPermalink -}}
     {{- $isExample := (strings.HasPrefix $x $target) -}}
     {{- if and (ne $x $target) $isExample -}}
-    <li class="DocsCodeExamplesOverview--example">
+    <li class="DocsCodeExamplesOverview--example" {{ with .Params.tags }} data-tags="{{ delimit . "|" }}" {{ end }} {{ with .Params.languages }} data-languages="{{ delimit . "|" }}" {{ end }}>
       <div class="DocsCodeExamplesOverview--example-title">
         {{- .Page.RenderString (printf "[%s](%s)" .Title .RelPermalink) -}}
       </div>
 
       <div class="DocsCodeExamplesOverview--example-description">
-        <p>{{ .Params.summary }}</p>
+        {{ .Params.summary | .Page.RenderString }}
       </div>
     </li>
     {{- end -}}
   {{- end -}}
 </ul>
+
+<script>
+  let examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
+  for (example of examples) {
+    console.log(example.getAttribute('data-tags'))
+  }
+</script>

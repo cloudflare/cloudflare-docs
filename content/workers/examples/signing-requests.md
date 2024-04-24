@@ -5,6 +5,10 @@ summary: Verify a signed request using the HMAC and SHA-256 algorithms or
 tags:
   - Security
   - WebCrypto
+languages:
+  - JavaScript
+  - Typescript
+  - Python
 pcx_content_type: configuration
 title: Sign requests
 weight: 1001

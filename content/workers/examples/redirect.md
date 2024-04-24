@@ -4,6 +4,10 @@ summary: Redirect requests from one URL to another or from one set of URLs to
   another set.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - Typescript
+  - Python
 pcx_content_type: configuration
 title: Redirect
 weight: 6

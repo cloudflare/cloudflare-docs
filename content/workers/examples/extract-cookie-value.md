@@ -4,6 +4,9 @@ summary: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
 tags:
   - Headers
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Cookie parsing
 weight: 1001

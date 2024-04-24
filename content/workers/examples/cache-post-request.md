@@ -5,6 +5,10 @@ tags:
   - Middleware
   - Caching
   - Cache API
+languages:
+  - JavaScript
+  - Typescript
+  - Python
 pcx_content_type: configuration
 title: Cache POST requests
 weight: 1001

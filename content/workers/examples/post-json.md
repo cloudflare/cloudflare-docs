@@ -3,6 +3,9 @@ type: example
 summary: Send a POST request with JSON data. Use to share data with external servers.
 tags:
   - Originless
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Post JSON
 weight: 1001

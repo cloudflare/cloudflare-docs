@@ -4,6 +4,9 @@ summary: Send Additional Cache Tags using Workers
 tags:
   - Caching
   - Cache Tags
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Cache Tags using Workers
 weight: 1001

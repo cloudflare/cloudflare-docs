@@ -4,6 +4,9 @@ summary: Redirect requests to certain URLs based on a mapped object to the
   request's URL.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Bulk redirects
 weight: 1001

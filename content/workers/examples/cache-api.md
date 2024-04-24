@@ -5,6 +5,9 @@ tags:
   - Cache API
   - Middleware
   - Caching
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Using the Cache API
 weight: 1001

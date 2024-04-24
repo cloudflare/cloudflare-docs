@@ -5,6 +5,9 @@ summary: Block other websites from linking to your content. This is useful for
 tags:
   - Security
   - Headers
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Hot-link protection
 weight: 1001

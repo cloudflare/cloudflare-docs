@@ -4,6 +4,9 @@ summary: Send two GET request to two urls and aggregates the responses into one
   response.
 tags:
   - Originless
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Aggregate requests
 weight: 1001

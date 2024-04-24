@@ -5,6 +5,9 @@ tags:
   - Security
   - Originless
   - Authentication
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001

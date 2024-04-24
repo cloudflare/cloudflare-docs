@@ -4,6 +4,9 @@ summary: Get all geolocation data fields and display them in HTML.
 tags:
   - Originless
   - Geolocation
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: "Geolocation: Hello World"
 weight: 1001

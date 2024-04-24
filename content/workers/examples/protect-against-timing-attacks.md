@@ -3,6 +3,8 @@ type: example
 summary: Protect against timing attacks by safely comparing values using `timingSafeEqual`.
 tags:
   - Security
+languages:
+  - Typescript
 pcx_content_type: configuration
 title: Using timingSafeEqual
 weight: 1001

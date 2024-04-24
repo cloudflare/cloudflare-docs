@@ -5,6 +5,10 @@ summary: Access custom Cloudflare properties and control how Cloudflare features
 demo: https://accessing-the-cloudflare-object.workers-sites-examples.workers.dev
 tags:
   - Originless
+languages:
+  - JavaScript
+  - Typescript
+  - Python
 pcx_content_type: configuration
 title: Accessing the Cloudflare Object
 weight: 11

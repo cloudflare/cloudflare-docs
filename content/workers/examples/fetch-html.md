@@ -4,6 +4,10 @@ summary: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
 tags:
   - Originless
+languages:
+  - JavaScript
+  - Typescript
+  - Python
 pcx_content_type: configuration
 title: Fetch HTML
 weight: 3

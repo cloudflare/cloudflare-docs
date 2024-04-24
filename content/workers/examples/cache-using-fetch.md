@@ -6,6 +6,9 @@ tags:
   - Caching
   - Cache API
   - Middleware
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Cache using fetch
 weight: 1001

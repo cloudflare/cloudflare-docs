@@ -3,6 +3,9 @@ type: example
 summary: Set multiple Cron Triggers on three different schedules.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Multiple Cron Triggers
 weight: 1001

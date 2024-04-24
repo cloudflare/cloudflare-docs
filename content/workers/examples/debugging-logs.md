@@ -4,6 +4,9 @@ summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
   - Logging
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Debugging logs
 weight: 1001

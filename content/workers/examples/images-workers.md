@@ -4,6 +4,9 @@ summary: Set up custom domain for Images using a Worker or serve images using a 
 tags:
   - Images
   - Workers
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Custom Domain with Images
 weight: 1001

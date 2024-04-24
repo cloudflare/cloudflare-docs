@@ -5,6 +5,9 @@ summary: Allow or deny a request based on a known pre-shared key in a header.
 tags:
   - Authentication
   - WebCrypto
+languages:
+  - JavaScript
+  - Typescript
 pcx_content_type: configuration
 title: Auth with headers
 weight: 1001
