@@ -39,7 +39,7 @@ filename: public/sales-enquiry.html
   <form data-static-form-name="sales">
     <label>Email address <input type="email" name="email" /></label>
     <label>Message <textarea name="message"></textarea></label>
-    <button type="submit">
+    <button type="submit">Submit</button>
   </form>
 </body>
 ```
