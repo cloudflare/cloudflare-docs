@@ -4,25 +4,26 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list JAMstack application
-layout: single
 ---
 
 # Build a todo list JAMstack application
+
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
 
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 
-In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/workers/runtime-apis/kv/).
+In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
-![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](./media/finished.png)
+![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](/images/workers/tutorials/jamstack/finished.png)
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 
 1.  How building with Workers makes it easy to focus on writing code and ship finished products.
 2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
-If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
+If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/kristianfreeman/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
 
 ## Init
 
@@ -34,11 +35,11 @@ In your terminal, create a Worker project with your desired project name; for ex
 ---
 header: Generate a project
 ---
-$ wrangler init todos
+$ npx wrangler init todos
 $ cd todos
 ```
 
-Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates/).
+Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/examples/).
 
 Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -61,7 +62,7 @@ async function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network).
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's global network](https://www.cloudflare.com/network).
 
 If you compare this with more traditional architectures, where an origin server would accept requests and return responses, Cloudflare Workers allows you to do the same work without managing hardware and closer to the client, resulting in reduced cost and latencies.
 
@@ -87,7 +88,7 @@ To get started with KV, set up a namespace. All of your cached data will be stor
 ---
 header: Create a new KV namespace
 ---
-$ wrangler kv:namespace create "TODOS" --preview
+$ npx wrangler kv:namespace create "TODOS" --preview
 ```
 
 Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
@@ -568,7 +569,7 @@ The final result of your code is a system that checks the `todos` variable, upda
 
 ## Conclusions and next steps
 
-By completing this tutorial, you have built a static HTML, CSS, and JavaScript application that is transparently powered by Workers and Workers KV, which take full advantage of Cloudflare's edge network.
+By completing this tutorial, you have built a static HTML, CSS, and JavaScript application that is transparently powered by Workers and Workers KV, which take full advantage of Cloudflare's global network.
 
 If you would like to keep improving on your project, you can implement a better design (you can refer to a live version available at [todos.signalnerve.workers.dev](https://todos.signalnerve.workers.dev/)), or make additional improvements to security and speed.
 
@@ -610,7 +611,7 @@ async function updateTodos(request) {
 }
 ```
 
-After making these changes and deploying the Worker one more time, your todo list application now includes per-user functionality while still taking full advantage of Cloudflare's edge network.
+After making these changes and deploying the Worker one more time, your todo list application now includes per-user functionality while still taking full advantage of Cloudflare's global network.
 
 The final version of your Worker script should look like this:
 
@@ -748,4 +749,4 @@ addEventListener('fetch', event => {
 });
 ```
 
-You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos).
+You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/kristianfreeman/cloudflare-workers-todos).

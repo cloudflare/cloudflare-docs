@@ -3,86 +3,123 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
-  title: Cloudflare Workers documentation
+  title: Cloudflare Workers
 ---
 
-{{<content-column>}}
+# Cloudflare Workers
 
-# Cloudflare Workers documentation
+{{<description>}}
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+{{</description>}}
 
-Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+{{<plan type="all">}}
 
-Cloudflare Workers runs on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/workers/platform/pricing/).
+Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 
-Learn more about [how Workers works](/workers/learning/how-workers-works/).
+Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in hundreds of cities worldwide, offering both [Free and Paid plans](/workers/platform/pricing/).
 
-{{<button-group>}}
-{{<button type="primary" href="/workers/get-started/guide">}}Get started{{</button>}}
-{{<button type="secondary" href="/workers/tutorials">}}View the tutorials{{</button>}}
-{{<button type="secondary" href="/workers/platform/betas">}}Explore betas{{</button>}}
-{{<button type="secondary" href="/workers/platform/storage-objects">}}Storage options guide{{</button>}}
-{{</button-group>}}
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
 
 ---
 
-## Installing the Workers CLI
+## Features
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+{{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
-```sh
-$ npm install -g wrangler
-```
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
 
-or install with `yarn`:
+{{</feature>}}
 
-```sh
-$ yarn global add wrangler
-```
+{{<feature header="Bindings" href="/workers/runtime-apis/bindings/">}}
 
-Read more about [installing Wrangler](/workers/wrangler/install-and-update/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
----
+{{</feature>}}
 
-## Playground
+{{<feature header="Playground" href="/workers/playground/" cta="Use the Playground">}}
 
-View this Hello World example in the Workers playground:
+The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser against any site. No setup required.
 
-```js
----
-header: Module syntax
----
-export default {
-  async fetch(request) {
-    return new Response("Hello World!");
-  },
-};
-```
-
-{{<button-group>}}
-{{<button type="primary" href="https://cloudflareworkers.com/?_gl=1*18yfays*_ga*MTUzMDY1NDM1NS4xNjU5NTMxOTI3*_gid*ODI3NTE3MjI0LjE2NTk1MzE5Mjc.#68813a741e791a07c49fd1aa01359cc6:about:blank">}}Launch playground{{</button>}}
-{{<button type="secondary" href="/workers/learning/playground">}}Learn more{{</button>}}
-{{</button-group>}}
+{{</feature>}}
 
 ---
 
-## Related resources
+## Related products
 
-- [How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers
-- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans
-- [HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker
-- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day)
-- [Storage objects guide](/workers/platform/storage-objects/) - Learn which storage object is best for your project.
+{{<related header="Workers AI" href="/workers-ai/" product="workers-ai">}}
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+
+{{</related>}}
+
+{{<related header="R2" href="/r2/" product="r2">}}
+
+Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+{{</related>}}
+
+{{<related header="D1" href="/d1/" product="d1">}}
+
+Create new serverless SQL databases to query from your Workers and Pages projects.
+
+{{</related>}}
+
+{{<related header="Durable Objects" href="/durable-objects/" product="durable-objects">}}
+
+A globally distributed coordination API with strongly consistent storage.
+
+{{</related>}}
+
+{{<related header="KV" href="/kv/" product="kv">}}
+
+Create a global, low-latency, key-value data storage.
+
+{{</related>}}
+
+{{<related header="Queues" href="/queues/" product="queues">}}
+
+Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
+
+{{</related>}}
+
+{{<related header="Hyperdrive" href="/hyperdrive/" product="hyperdrive">}}
+
+Turn your existing regional database into a globally distributed database.
+
+{{</related>}}
+
+{{<related header="Vectorize" href="/vectorize/" product="vectorize">}}
+
+Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
+
+{{</related>}}
+
+{{<related header="Zaraz" href="/zaraz/" product="zaraz">}}
+
+Offload third-party tools and services to the cloud and improve the speed and security of your website.
+
+{{</related>}}
+
+
 
 ---
 
-## Community
+## More resources
 
-[Explore third-party packages](https://workers.cloudflare.com/works) that work on Workers, submitted by Cloudflare users.
+{{<resource-group>}}
 
-[Connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers.
+{{<resource header="Learning Path" href="/learning-paths/workers/" icon="reference-architecture">}}New to Workers? Get started with the Workers Learning Path.{{</resource>}}
 
-[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
+{{<resource header="Plans" href="/workers/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
 
-{{</content-column>}}
+{{<resource header="Limits" href="/workers/platform/limits/" icon="documentation-clipboard">}}Learn about plan limits (Free plans get 100,000 requests per day).{{</resource>}}
+
+{{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
+
+{{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
+
+{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+
+{{</resource-group>}}

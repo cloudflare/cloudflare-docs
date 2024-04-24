@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Node types
 weight: 3
+meta:
+    title: Node types | Ethereum
 ---
 
 # Types of Ethereum Nodes

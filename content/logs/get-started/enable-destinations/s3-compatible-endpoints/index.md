@@ -2,7 +2,6 @@
 title: Enable S3-compatible endpoints
 pcx_content_type: how-to
 weight: 57
-layout: single
 meta:
   title: Enable Logpush to S3-compatible endpoints
 ---
@@ -28,21 +27,11 @@ Enable Logpush to an S3-compatible destination via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1.  Log in to the Cloudflare dashboard.
+{{<render file="_enable-logpush-job.md">}}
 
-2.  Select the Enterprise account or domain you want to use with Logpush.
+7. In **Select a destination**, choose **S3-Compatible**.
 
-3.  Go to **Analytics** > **Logs**.
-
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
-
-5.  Select the dataset you want to push to a storage service.
-
-6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7.  Select **S3-Compatible**.
-
-8.  Enter or select the following destination information:
+8. Enter or select the following destination information:
 
     - **S3 Compatible Bucket Path**
     - **Bucket region**
@@ -50,9 +39,9 @@ To enable the Cloudflare Logpush service:
     - **Secret Access Key**
     - **Endpoint URL**
 
-9.  Click **Validate access**.
+9. Select **Validate access**.
 
-10. Click **Save and Start Pushing** to finish enabling Logpush.
+10. Select **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists the S3-compatible destination as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
@@ -60,8 +49,8 @@ Once connected, Cloudflare lists the S3-compatible destination as a connected se
 
 To set up S3-compatible endpoints:
 
-1.  Create a job with the appropriate endpoint URL and authentication parameters.
-2.  Enable the job to begin pushing logs.
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+2. Enable the job to begin pushing logs.
 
 {{<Aside type="note" header="Note">}}
 

@@ -1,21 +1,29 @@
 {{ $data := slice }}
 {{ $fileplaceholder := "" }}
-{{- range readDir "./assets/json/" -}}
-{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+
+<!-- Get learning paths from ./assets/json folder -->
+{{- range readDir "./data/learning-paths/" -}}
+{{- $fileplaceholder :=  print "./data/learning-paths/" .Name -}}
 {{- $file_data := getJSON $fileplaceholder -}}
 {{ $data = $data | append $file_data }}
 {{- end -}}
+
 {{- $numTrails := len $data -}}
 {{ $product_array := slice }}
-{{ $category_array := slice }}
+{{ $product_group_array := slice }}
 {{- range $data -}}
 {{ with .products }}
 {{- $product_array = sort (union $product_array .) -}}
 {{- end -}}
-{{ with .category }}
-{{- $category_array = sort (union $category_array .) -}}
+{{ with .product_group }}
+{{- $product_group_array = $product_group_array | append . -}}
+{{- end -}}
+{{- with .additional_groups -}}
+{{- $product_group_array = union $product_group_array . -}}
 {{- end -}}
 {{- end -}}
+
+{{- $product_group_array = sort (uniq $product_group_array) -}}
 
 <div class="headerInfo">
 <p class="numTrails" id="numTrails">{{$numTrails}} results</p>
@@ -25,10 +33,10 @@
 <div class="selectorDropdowns">
 
 <div>
-<label for="roles">Category</label>
-<select class="selectorFilter" name="data-category" id="category">
+<label for="product_group">Product group</label>
+<select class="selectorFilter" name="data-product_group" id="product_group">
     <option value="all">Select...</option>
-    {{- range $category_array -}}
+    {{- range $product_group_array -}}
     <option value="{{.}}">{{.}}</option>
     {{- end -}}
 </select>

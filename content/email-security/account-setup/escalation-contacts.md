@@ -6,7 +6,15 @@ weight: 2
 
 # Escalation contacts
 
-Whenever Area 1 finds an exceptional phishing threat or Email Service irregularity behavior (compromised email servers at a partner or vendor, wire fraud tactics, and more), we try to reach out to our customers.
+Whenever Area 1 finds an exceptional {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} threat or Email Service irregularity behavior (compromised email servers at a partner or vendor, wire fraud tactics, and more), we try to reach out to our customers.
+
+There are four types of contacts available to configure, each with a priority type:
+- **SOC Contact**: P1 priority.
+- **Triage Analyst**: P2 priority.
+- **In-Depth Analyst**: P3 priority.
+- **Executive Contact**: P4 priority.
+
+Area 1 will start by reaching out to P1-level contacts. If they do not respond, we will then try reaching out to the other contacts down the list until we receive a reply from one of these groups.
 
 You can enable these special notifications through an opt-in process:
 

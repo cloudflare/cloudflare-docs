@@ -8,19 +8,19 @@ meta:
 
 # How Bulk Redirects work
 
-For each incoming request, Cloudflare evaluates all URL Redirects of each Bulk Redirect List that is enabled by a Bulk Redirect Rule.
+For each incoming request, Cloudflare evaluates all URL redirects of each Bulk Redirect List that is enabled by a Bulk Redirect Rule.
 
-If there is a match for a URL Redirect according to the URL matching algorithm, the redirect action is performed immediately, according to the URL Redirect configuration parameters. Cloudflare performs no further processing once a redirect action has been executed.
+If there is a match for a URL redirect according to the URL matching algorithm, the redirect action is performed immediately, according to the URL redirect configuration parameters. Cloudflare performs no further processing once a redirect action has been executed.
 
 ## Matching the source URL of redirects
 
-The following URL Redirect parameters control the matching behavior between the request URL and source URLs of the configured (and enabled) URL Redirects:
+The following URL redirect parameters control the matching behavior between the request URL and source URLs of the configured (and enabled) URL redirects:
 
 {{<definitions>}}
 
 - **Subpath matching** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
-    - If true, the URL Redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL Redirect:
+    - If true, the URL redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL redirect:
 
         — Source URL: `https://example.com/foo/`
 
@@ -28,9 +28,13 @@ The following URL Redirect parameters control the matching behavior between the 
 
     - With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
 
+    {{<Aside type="note" header="Note">}}
+URL redirects with **Subpath matching** enabled cannot contain more than 16 `/` (slash) characters in the source URL path.
+    {{</Aside>}}
+
 - **Include subdomains** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
-    - If true, the source URL hostname of the URL Redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL Redirect:
+    - If true, the source URL hostname of the URL redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL redirect:
 
         — Source URL: `https://example.com/about`
 
@@ -40,7 +44,7 @@ The following URL Redirect parameters control the matching behavior between the 
 
 {{</definitions>}}
 
-For detailed information on these parameters, refer to [URL Redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
+For detailed information on these parameters, refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
 
 ## Configuring the path and query string behavior
 
@@ -50,7 +54,7 @@ The following parameters configure how Cloudflare determines the path and query 
 
 - **Preserve query string** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
-    - If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL Redirect:
+    - If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL redirect:
 
         — Source URL: `https://example.com/about`
 
@@ -60,9 +64,9 @@ The following parameters configure how Cloudflare determines the path and query 
 
 - **Preserve path suffix** {{<prop-meta>}}(default: true){{</prop-meta>}}
 
-    - Defines if the final target URL will include the parts of the request path that did not match the URL Redirect's source URL.
+    - Defines if the final target URL will include the parts of the request path that did not match the URL redirect's source URL.
 
-    - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL Redirect:
+    - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL redirect:
 
         — Source URL: `https://example.com/a/`
 
@@ -74,35 +78,28 @@ The following parameters configure how Cloudflare determines the path and query 
 
 {{</definitions>}}
 
-For detailed information on these parameters, refer to [URL Redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
+For detailed information on these parameters, refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
 
 ## URL matching algorithm
 
-The URL of an incoming request matches a URL Redirect in a list if:
+The URL of an incoming request matches a URL redirect in a list if:
 
-1. The scheme (`http` or `https`) is the same as the source URL of the URL Redirect definition. Source URLs with no scheme will match both `http` and `https`.
+1. The scheme (`http` or `https`) is the same as the source URL of the URL redirect definition. Source URLs with no scheme will match both `http` and `https`.
 
-2. The hostname is the same as the hostname in the source URL of the URL Redirect definition. If **Include subdomains** is enabled, the subdomains of the hostname in the redirect definition will also match.
+2. The hostname is the same as the hostname in the source URL of the URL redirect definition. If **Include subdomains** is enabled, the subdomains of the hostname in the redirect definition will also match.
 
-3. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the URL Redirect's source URL when determining if there is a match. For example, a URL Redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
+3. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the URL redirect's source URL when determining if there is a match. For example, a URL redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
 
-    {{<Aside type="note" header="Note">}}
+### Determining the URL redirect to apply
 
-URL Redirects with **Subpath matching** enabled are only considered for request paths with 16 or fewer slashes. For example, if there is a configured URL Redirect with source URL set to `example.com/foo` and with **Subpath matching** enabled:
+If multiple URL redirects can apply, then the redirect that wins is determined by the following rules:
 
-- This URL Redirect would be considered for an incoming request with path `/1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16` (16 slashes in path).
-- This URL Redirect would _not_ be considered for an incoming request with path `/1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16/17` (17 slashes in path).
+1. Given two URL redirects with **Subpath matching** enabled, the URL redirect with the most specific path wins over the other URL redirect.<br>
+If there are two URL redirects with source URL paths `/folder` and `/folder/subfolder`, an incoming request for the `/folder/subfolder/item` URL path will match the second redirect (`/folder/subfolder`) because it is more specific.
 
-This does not affect URL Redirects with **Subpath matching** disabled. Exact path matches are always considered, even for redirects with **Subpath matching** enabled.
+2. URL redirects with the exact hostname win over URL redirects with the **Include subdomains** option enabled.
 
-    {{</Aside>}}
+3. Given two URL redirects with **Include subdomains** enabled, the URL with the most specific domain wins over the other URL redirect.<br>
+If there are two URL redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request to `qux.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
 
-### Determining the URL Redirect to apply
-
-If multiple URL Redirects can apply, then the redirect that wins is determined by the following rules:
-
-1. URL Redirects with the exact hostname win over URL Redirects with the **Include subdomains** option enabled.
-2. URL Redirects with **Include subdomains** enabled win over other URL Redirects with **Include subdomains** enabled if their domain is more specific.
-3. URL Redirects with a concrete scheme win over URL Redirects that match both `http` and `https` schemes.
-
-Regarding ordering rule 2 (more specific domains win over less specific domains), if there are two URL Redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request to `qux.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
+4. URL redirects with a concrete scheme win over URL redirects that match both `http` and `https` schemes.

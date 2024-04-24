@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: View rulesets
 weight: 2
-layout: list
+layout: wide
 ---
 
 # View rulesets
@@ -12,16 +12,14 @@ layout: list
 
 You can list the available rulesets for a zone, account, or phase.
 
-<details>
-<summary>Example: View available rulesets at the zone level</summary>
-<div>
+{{<details header="Example: View available rulesets at the zone level">}}
 
 ```bash
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response displays the following rulesets:
@@ -70,19 +68,16 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: View available rulesets at the account level</summary>
-<div>
+{{<details header="Example: View available rulesets at the account level">}}
 
 ```bash
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response displays the following rulesets:
@@ -140,16 +135,13 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View the rules included in a ruleset
 
 You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of managed rulesets.
 
-<details>
-<summary>Example: View rules in a phase entry point ruleset at the zone level</summary>
-<div>
+{{<details header="Example: View rules in a phase entry point ruleset at the zone level">}}
 
 The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
 
@@ -157,8 +149,8 @@ The following example lists the rules in version `2` of the `http_request_firewa
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2 \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -193,12 +185,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: View rules in a managed ruleset</summary>
-<div>
+{{<details header="Example: View rules in a managed ruleset">}}
 
 The following example lists the rules in version `2` of a managed ruleset (the most recent version of that ruleset).
 
@@ -206,8 +195,8 @@ The following example lists the rules in version `2` of a managed ruleset (the m
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/2" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/2 \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -262,8 +251,7 @@ header: Response
 
 Each rule in a managed ruleset can have associated tags or categories, listed in the `categories` field.
 
-</div>
-</details>
+{{</details>}}
 
 ## Related resources
 

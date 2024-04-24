@@ -6,14 +6,37 @@ weight: 8
 
 # Activate the Cloudflare WordPress plugin
 
-For users on the free plan, be sure to purchase APO before installing the WordPress plugin. For users on a Pro plan or higher, continue to Install and activate the Cloudflare WordPress plugin.
+After you [change your nameservers](/automatic-platform-optimization/get-started/change-nameservers/), activate the Cloudflare WordPress plugin.
+
+## Prerequisites
+
+Before activating the Cloudflare WordPress plugin, review the following prerequisites.
+
+### Plan type
+
+For users on the free plan, [purchase APO](#purchase-apo) before installing the WordPress plugin. 
+
+For users on a Pro plan or higher, continue to [Install and activate](#install-and-activate-the-cloudflare-wordpress-plugin) the Cloudflare WordPress plugin.
+
+### Plugin compatibility
+
+Cloudflare recommends turning off plugins such as WP Rocket Cache Plugin, W3 Total Cache, or similar plugins when first setting up APO. After confirming APO is working, we recommend testing whether turning on the plugins listed above improves results or causes unexpected behavior. In many cases, using APO along with other caching plugins can cause unexpected results.
+
+We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 Total Cache, or similar plugins after APO activation.
+
+For more details, refer to [Plugin compatibility](/automatic-platform-optimization/about/plugin-compatibility/).
+
+### Limitations
+
+The Cloudflare APO WordPress plugin does not support multisite WordPress installation.
 
 ## Purchase APO
 
-1.  Open your Cloudflare dashboard.
-2.  Select the **Speed** tile and locate the **Optimized Delivery** section.
-3.  From **Automatic Platform Optimization for WordPress**, select **Purchase**.
-4.  Enter your payment information and select **Confirm payment**.
+1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2.  Select your account and zone.
+3.  Go to **Speed** > **Optimization** > **Content Optimization**.
+4.  For **Automatic Platform Optimization for WordPress**, select **Purchase**.
+5.  Enter your payment information and select **Confirm payment**.
 
 ## Install and activate the Cloudflare WordPress plugin
 
@@ -24,14 +47,6 @@ The easiest way to begin using APO is directly from Cloudflare’s WordPress plu
 3.  In the search field, enter `Cloudflare`.
 4.  Locate the Cloudflare plugin and select **Install now**.
 5.  After the plugin finishes installing, select **Activate**. The Cloudflare plugin now displays in your Plugins list.
-
-{{<Aside type="warning">}}
-
-Cloudflare recommends turning off plugins such as WP Rocket Cache Plugin, W3 Total Cache, or similar plugins when first setting up APO. After confirming APO is working, we recommend testing whether turning on the plugins listed above improves results or causes unexpected behavior. In many cases, using APO along with other caching plugins can cause unexpected results.
-
-We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 Total Cache, or similar plugins after APO activation.
-
-{{</Aside>}}
 
 ## Activate APO
 

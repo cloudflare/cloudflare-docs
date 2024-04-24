@@ -17,7 +17,7 @@ Do the following:
 
 2.  Extract the content of the downloaded `.tar.gz` file to a local folder.
 
-3.  Open a terminal and navigate to the local folder containing the `matched-data-cli` tool.
+3.  Open a terminal and go to the local folder containing the `matched-data-cli` tool.
 
     ```sh
     ~ $ cd matched-data-cli

@@ -1,6 +1,6 @@
 ---
 title: Reference
-pcx_content_type: reference
+pcx_content_type: navigation
 weight: 6
 meta:
   title: Reference — Zone setups

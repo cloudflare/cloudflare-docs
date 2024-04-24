@@ -15,7 +15,8 @@ You need to create an Access Control List (ACL) in certain situations:
 
 An ACL is configured at the account level, which means that it will apply to every primary and secondary zone in your account.
 
-## Using the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 To create a new ACL using the dashboard:
 
@@ -28,6 +29,10 @@ To create a new ACL using the dashboard:
     - **IP range**: Enter a range of IPv4 or IPv6 addresses (limited to a maximum of /24 for IPv4 and /64 for IPv6).
 6. Click **Create**.
 
-## Using the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
-To create a new ACL using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-acl)-create-acl) request.
+To create a new ACL using the API, send a [POST](/api/operations/secondary-dns-(-acl)-create-acl) request.
+
+{{</tab>}}
+{{</tabs>}}

@@ -2,12 +2,11 @@
 pcx_content_type: reference
 title: Filtering
 weight: 11
-layout: single
 ---
 
 # Filtering
 
-Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can easily exceed supported bounds, and the data returned can be noisy.
+Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can exceed supported bounds, and the data returned can be noisy.
 
 ## Filter Structure
 
@@ -82,9 +81,19 @@ filters
 
 Operator support varies, depending on the node type and node name.
 
-#### Common operators
+#### Array operators
 
-The following operators are supported for all types:
+The following operators are supported for all array types:
+
+| Operator | Comparison                                      |
+| -------- | ----------------------------------------------- |
+| `has`    | array contains a value                          |
+| `hasall` | array contains all of a list of values          |
+| `hasany` | array contains at least one of a list of values |
+
+#### Scalar operators
+
+The following operators are supported for all scalar types:
 
 | Operator | Comparison          |
 | -------- | ------------------- |
@@ -100,6 +109,10 @@ The following operators are supported for all types:
 The `like` operator is available for string comparisons and supports the `%` character as a wildcard.
 
 ## Examples
+
+{{<Aside type="note">}}
+Filtering times are based on event start timestamps, which means requests that end after the filter may be included in queries (as long as they start within the given time).
+{{</Aside>}}
 
 ### General example
 
@@ -172,9 +185,48 @@ httpRequestsAdaptiveGroups(
 WHERE datetime="2018-01-01T10:00:00Z"
   AND ((clientCountryName = "US") OR (clientCountryName = "GB"))
 ```
+
+### Filter an array by one value
+
+The following GraphQL examples show how to filter an array field to only return data
+that includes a specific value. The SQL equivalent follows.
+
+#### GraphQL {#001}
+
+```graphql
+mnmFlowDataAdaptiveGroups(filter: {ruleIDs_has: "rule-id"}) {
+    ...
+}
+```
+
+#### SQL {#002}
+
+```sql
+WHERE has(ruleIDs, 'rule-id')
+```
+
+### Filter an array by multiple values
+
+The following GraphQL examples show how to filter an array field to only return data
+that includes several values. The SQL equivalent follows.
+
+#### GraphQL {#001}
+
+```graphql
+mnmFlowDataAdaptiveGroups(filter: {ruleIDs_hasall: ["rule-id-1", "rule-id-2"]}) {
+    ...
+}
+```
+
+#### SQL {#002}
+
+```sql
+WHERE has(ruleIDs, 'rule-id-1') AND has(ruleIDs, 'rule-id-2')
+```
+
 ### Filter end users
 
-Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.  
+Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.
 
 ## Subqueries (advanced filters)
 

@@ -124,7 +124,7 @@ Using "CKM_ECDSA_SHA256" Mechanism
 
 ## 3. Obtain and upload signed certificates from your Certificate Authority (CA)
 
-Provide the CSRs created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/ssl/keyless-ssl/configuration/#step-2--upload-keyless-ssl-certificates).
+Provide the CSRs created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/ssl/keyless-ssl/configuration/cloudflare-tunnel/#step-3---upload-keyless-ssl-certificates).
 
 ---
 

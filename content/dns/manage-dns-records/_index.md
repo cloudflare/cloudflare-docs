@@ -1,14 +1,14 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: navigation
 title: DNS records
-weight: 4
+weight: 5
 ---
 
 # DNS records
 
 DNS records help communicate information about your domain to visitors and other web services.
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions=true >}}
 
 {{<Aside type="note" header="Note:">}}
 

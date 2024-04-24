@@ -1,11 +1,11 @@
 ---
 title: Origin server
 pcx_content_type: navigation
-weight: 8
+weight: 5
 ---
 
 # Origin server
 
 Learn more about SSL/TLS protection options for your origin servers:
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions=true >}}

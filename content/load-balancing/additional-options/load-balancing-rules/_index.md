@@ -8,13 +8,13 @@ meta:
 
 # Custom rules
 
-Use load balancing rules to customize the behavior of your load balancer. For example, create a rule that selects an origin pool based on the URI path of an HTTP request.
+{{<render file="_custom-rules-definition.md">}}
 
-## More details
+## How custom rules work
+
+As with [WAF custom rules](/waf/custom-rules/), each load balancing custom rule is a combination of two elements: an [expression](/load-balancing/additional-options/load-balancing-rules/expressions/) and an [action](/load-balancing/additional-options/load-balancing-rules/actions/). Expressions define the criteria for an HTTP request to trigger an action. The action tells Cloudflare how to handle the request.
 
 You can [create Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/create-rules/) whenever you create or edit a load balancer in **Traffic** > **Load Balancing**.
-
-As with [firewall rules](/firewall/cf-firewall-rules/), each Load Balancing rule is a combination of two elements: an [expression](/load-balancing/additional-options/load-balancing-rules/expressions/) and an [action](/load-balancing/additional-options/load-balancing-rules/actions/). Expressions define the criteria for an HTTP request to trigger an action. The action tells Cloudflare how to handle the request.
 
 When building expressions for Load Balancing rules, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/) for definitions and usage.
 
@@ -24,4 +24,4 @@ By default, non-Enterprise customers have **one** Load Balancing rule **per load
 
 ## Limitations
 
-At the moment, you cannot use load balancing rules with [Cloudflare Spectrum](/spectrum/about/load-balancer/).
+At the moment, you cannot use Load Balancing rules with [Cloudflare Spectrum](/spectrum/about/load-balancer/).

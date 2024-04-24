@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how to
+pcx_content_type: how-to
 title: Manage creators
 ---
 
@@ -43,10 +43,10 @@ highlight: [35]
     "modified": "2014-01-02T02:20:00Z",
     "uploadExpiry": "2014-01-02T02:20:00Z",
     "playback": {
-      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.m3u8",
-      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/manifest/video.mpd"
+      "hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
+      "dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
     },
-    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/watch",
+    "preview": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/watch",
     "readyToStream": true,
     "requireSignedURLs": true,
     "size": 4190963,
@@ -56,14 +56,14 @@ highlight: [35]
       "errorReasonCode": "",
       "errorReasonText": ""
     },
-    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/ea95132c15732412d22c1476fa83f27a/thumbnails/thumbnail.jpg",
+    "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
     "thumbnailTimestampPct": 0.529241,
     "creator": "<CREATOR_ID>",
-    "uid": "ea95132c15732412d22c1476fa83f27a",
+    "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
     "liveInput": "fc0a8dc887b16759bfd9ad922230a014",
     "uploaded": "2014-01-02T02:20:00Z",
     "watermark": {
-      "uid": "ea95132c15732412d22c1476fa83f27a",
+      "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
       "size": 29472,
       "height": 600,
       "width": 400,
@@ -74,10 +74,6 @@ highlight: [35]
       "padding": 0.1,
       "scale": 0.1,
       "position": "center"
-    },
-    "nft": {
-      "contract": "0x57f1887a8bf19b14fc0d912b9b2acc9af147ea85",
-      "token": 5
     }
   }
 }
@@ -88,12 +84,12 @@ You can associate videos with a single creator by setting a default creator ID v
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/live_inputs"
-–header ‘X-Auth-Email: --’
-–header ‘X-Auth-Key: --’
-–data ‘{“DefaultCreator”:“1234”}’
+–header 'X-Auth-Email: --'
+–header 'X-Auth-Key: --'
+–data '{"DefaultCreator":"1234"}'
 ```
 
-If you have multiple creators who start live streams, [create a live input](/stream/get-started/#step-1-create-a-live-input) for each creator who will live stream and then set a `DefaultCreator` value per input. Setting the default creator ID for each input ensures that any recorded videos streamed from the creator's input will inherit the `DefaultCreator` value. 
+If you have multiple creators who start live streams, [create a live input](/stream/get-started/#step-1-create-a-live-input) for each creator who will live stream and then set a `DefaultCreator` value per input. Setting the default creator ID for each input ensures that any recorded videos streamed from the creator's input will inherit the `DefaultCreator` value.
 
 At this time, you can only manage the default creator ID values via the API.
 
@@ -104,7 +100,7 @@ To update the creator property in existing videos, make a POST request to the vi
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" \
   -H "Authorization: Bearer <AUTH_TOKEN>" \
-  -d '{"creator":"test123"}'  
+  -d '{"creator":"test123"}'
 ```
 
 ## Direct creator upload
@@ -212,10 +208,6 @@ highlight: [36]
         "padding": 0.1,
         "scale": 0.1,
         "position": "center"
-      },
-      "nft": {
-        "contract": "0x57f1887a8bf19b14fc0d912b9b2acc9af147ea85",
-        "token": 5
       }
     }
   ],
@@ -226,7 +218,7 @@ highlight: [36]
 
 ## tus
 
-Add the Creator ID via the `Upload-Creator` header. For more information, refer to [Using tus](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb).
+Add the Creator ID via the `Upload-Creator` header. For more information, refer to [Using tus](/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos).
 
 ## Query by Creator ID with GraphQL
 

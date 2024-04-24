@@ -3,12 +3,14 @@ title: Create a rule in the dashboard
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Create an HTTP Request Header Modification Rule in the dashboard
+  title: Create an HTTP request header modification rule in the dashboard
 ---
 
-# Create an HTTP Request Header Modification Rule in the dashboard
+# Create an HTTP request header modification rule in the dashboard
 
-Create HTTP Request Header Modification Rules in the **Modify Request Header** tab of the **Transform Rules** page. Refer to [Request header modification examples](/rules/transform/request-header-modification/examples/) for examples of rule definitions.
+Refer to [Request header modification examples](/rules/transform/request-header-modification/examples/) for examples of rule definitions.
+
+To create a rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
@@ -18,13 +20,13 @@ Create HTTP Request Header Modification Rules in the **Modify Request Header** t
 
 4. Select **Create rule**.
 
-    ![The HTTP Request Header Modification Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-request-header-modification-rule.png)
+    ![The HTTP request header modification rule creation page in the Cloudflare dashboard.](/images/rules/transform/create-request-header-modification-rule.png)
 
 5. In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
 6. Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
 
-7. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/).
+7. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
     {{<Aside type="note">}}
 Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
@@ -42,8 +44,8 @@ Check the [available fields and functions](/rules/transform/request-header-modif
 
     The following example includes the modification of three headers:
 
-    ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/rules/static/transform/request-header-modification-example.png)
+    ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/images/rules/transform/request-header-modification-example.png)
 
 11.  To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-If you choose to deploy your HTTP Request Header Modification Rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
+If you choose to deploy your HTTP request header modification rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.

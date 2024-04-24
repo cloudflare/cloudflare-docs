@@ -9,6 +9,7 @@ export function toc() {
 
   if (article) {
     let headers = article.querySelectorAll('h2,h3,h4');
+    
     let i = 0,
       tmp: Element,
       last: ListItem,
@@ -17,7 +18,6 @@ export function toc() {
 
     for (; i < headers.length; i++) {
       tmp = headers[i];
-
       if (tmp.nodeName === 'H2') {
         container = target;
       } else if (last && tmp.nodeName > last.h) {
@@ -28,8 +28,11 @@ export function toc() {
       }
 
       last = document.createElement('li') as ListItem;
-      let text = tmp.lastElementChild.textContent.trim();
-      last.innerHTML = `<a class="DocsTableOfContents-link" href="#${tmp.id}">${text}</a>`;
+      let a = document.createElement('a');
+      a.classList.add('DocsTableOfContents-link');
+      a.href = '#' + tmp.id;
+      a.textContent = tmp.lastElementChild.textContent.trim();
+      last.append(a);
       container.appendChild(last);
       last.h = tmp.nodeName;
     }

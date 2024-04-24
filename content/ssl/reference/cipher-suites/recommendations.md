@@ -1,15 +1,15 @@
 ---
 title: Recommendations
-pcx_content_type: configuration
-layout: list
-weight: 1
+pcx_content_type: reference
+layout: wide
+weight: 2
 meta:
-  title: Cipher suites recommendations — Edge certificates
+  title: Cipher suites recommendations
 ---
 
-# Cipher suites recommendations — Edge certificates
+# Cipher suites recommendations
 
-If your application has specific security requirements, Cloudflare recommends using the following values when you [restrict cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
+The following list presents a reference for three different security levels and how Cloudflare recommends that you set them up if you need to [restrict cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) used between Cloudflare and clients that access your website or application.
 
 | Recommended security level | Description | Cipher suites [to specify](/ssl/reference/cipher-suites/customize-cipher-suites/) | Other settings |
 | --- | --- | --- | --- |

@@ -1,7 +1,7 @@
 ---
-title: Network Interconnect
+title: Network Interconnect (CNI)
 pcx_content_type: tutorial
-weight: 8
+weight: 10
 meta:
   title: Network Interconnect and Magic Transit
 ---
@@ -18,7 +18,7 @@ For more information about Network Interconnect, refer to the [Network Interconn
 
 When working with Magic Transit and CNI, observe these guidelines:
 
-- You must implement MSS clamping because Cloudflare Network Interconnect does not support 1500 byte packets.
+- You must implement {{<glossary-tooltip term_id="maximum segment size (MSS)">}}MSS clamping{{</glossary-tooltip>}} because Cloudflare Network Interconnect does not support 1500 byte packets.
 
 - Set the MSS clamp size to 1332 bytes to accommodate the additional overhead from the Foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
 

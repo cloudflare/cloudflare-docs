@@ -4,14 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m43.5
 product:
   title: WAF
   url: /waf/
+  group: Application security
 
 meta:
   title: Cloudflare Web Application Firewall (WAF) docs
   description: Protect against web application vulnerabilities with Cloudflare’s
     Web Application Firewall (WAF).
   author: '@cloudflare'
-  image: /core-services-preview.png
-
+  
 resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf
@@ -22,3 +22,8 @@ externals:
     url: https://www.cloudflare.com/waf/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: waf

@@ -1,6 +1,6 @@
 ---
 title: SPF records
-pcx_content_type: how-to
+pcx_content_type: troubleshooting
 weight: 2
 meta:
     title: Troubleshooting SPF records

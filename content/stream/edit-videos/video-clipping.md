@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how to
+pcx_content_type: how-to
 title: Clip videos
 ---
 
@@ -7,11 +7,11 @@ title: Clip videos
 
 With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only want to share a five minute clip from the middle of the video, you can clip the video to remove the content before and after the five minute clip.
 
-Refer to the [Video clipping API documentation](https://developers.cloudflare.com/api/operations/stream-video-clipping-clip-videos-given-a-start-and-end-time) for more information.
+Refer to the [Video clipping API documentation](/api/operations/stream-video-clipping-clip-videos-given-a-start-and-end-time) for more information.
 
 {{<Aside type="note" header="Note:">}}
 
-Video clipping does not work with recordings of live streams. 
+Clipping works differently for live streams and recordings. For more information, refer to [Live instant clipping](/stream/stream-live/live-instant-clipping/).
 
 {{</Aside>}}
 
@@ -22,6 +22,12 @@ Before you can clip a video, you will need an API token. For more information on
 ## Required parameters
 
 To clip your video, determine the start and end times you want to use from the existing video to create the new video. Use the `videoUID` and the start end times to make your request.
+
+{{<Aside type="note">}}
+
+Clipped videos will not inherit the `scheduledDeletion` date. To set the deletion date, you must clip the video first and then set the deletion date.
+
+{{</Aside>}}
 
 ```json
 ---
@@ -50,7 +56,7 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<Y
 --data-raw '{
     "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
     "startTimeSeconds": 10,
-    "endTimeSeconds": 15,
+    "endTimeSeconds": 15
     }'
 ```
 

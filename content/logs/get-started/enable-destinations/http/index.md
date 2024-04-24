@@ -1,8 +1,7 @@
 ---
 pcx_content_type: how-to
-title: Enable HTTP destination 
+title: Enable HTTP destination
 weight: 50
-layout: single
 ---
 
 # Enable HTTP destination
@@ -21,7 +20,7 @@ The supported parameters are as follows:
     - **dataset** (required): For example, `http_requests`.
     - **name** (optional): We suggest using your domain name as the job name.
     - **logpull_options** (optional): Refer to [API configuration options](/logs/get-started/api-configuration/#options) to configure fields, sample rate, and timestamp format.
-- Unique fields: 
+- Unique fields:
     - **destination_conf**: Where to send the logs. This consists of an endpoint URL and HTTP headers used.
         - Any `"header_*"` URL parameters will be used to set request headers.
             - The HTTPS endpoint cannot have custom URL parameters that conflicts with any `"header_*"` URL parameters you have set.
@@ -33,7 +32,7 @@ The supported parameters are as follows:
     - **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that you cannot to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
 {{<Aside type="note" header="Note">}}
-Note that the `ownership_challenge` parameter is not required to create a Logpush job to an HTTP endpoint.
+The `ownership_challenge` parameter is not required to create a Logpush job to an HTTP endpoint. You need to make sure that the file upload to validate the destination accepts a gzipped `test.txt.gz` with content as {"content":"tests"} compressed, otherwise it will return an error, like `error validating destination: error writing object: error uploading`.
 {{</Aside>}}
 
 

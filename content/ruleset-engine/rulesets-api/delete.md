@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Delete rulesets
 weight: 10
-layout: list
+layout: wide
 ---
 
 # Delete rulesets
@@ -21,11 +21,11 @@ Use one of the following API endpoints:
 
 | Operation                               | Method + Endpoint                                     |
 | --------------------------------------- | ----------------------------------------------------- |
-| [Delete an account ruleset][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
-| [Delete a zone ruleset][dr-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>`       |
+| [Delete an account ruleset][dr-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}` |
+| [Delete a zone ruleset][dr-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}`       |
 
-[dr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-delete-an-account-ruleset
-[dr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-delete-a-zone-ruleset
+[dr-account]: /api/operations/deleteAccountRuleset
+[dr-zone]: /api/operations/deleteZoneRuleset
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
@@ -45,9 +45,9 @@ The following example request deletes an existing ruleset.
 ---
 header: Request
 ---
-curl -X DELETE \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>"
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Delete ruleset version
@@ -56,13 +56,13 @@ Deletes a specific version of a ruleset.
 
 Use one of the following API endpoints:
 
-| Operation                                             | Method + Endpoint                                                               |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [Delete an account ruleset version][drv-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
-| [Delete a zone ruleset version][drv-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`       |
+| Operation                                        | Method + Endpoint                                                               |
+| -------------------------------------------------| ------------------------------------------------------------------------------- |
+| [Delete an account ruleset version][drv-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/versions/{version_number}` |
+| [Delete a zone ruleset version][drv-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number}`       |
 
-[drv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-delete-an-account-ruleset-version
-[drv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-delete-a-zone-ruleset-version
+[drv-account]: /api/operations/deleteAccountRulesetVersion
+[drv-zone]: /api/operations/deleteZoneRulesetVersion
 
 If the delete operation succeeds, the method call returns a `204 No Content` HTTP status code.
 
@@ -84,7 +84,7 @@ The following example request deletes a version of an existing ruleset.
 ---
 header: Request
 ---
-curl -X DELETE \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>" \
--H "Authorization: Bearer <API_TOKEN>"
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/{version_number} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```

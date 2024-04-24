@@ -12,76 +12,98 @@ layout: example
 
 ## Redirect all requests to one URL
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts | py">}}
+{{<tab label="js" default="true">}}
 
-```js
+{{<render file="_redirect-example-js.md">}}
+
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
 export default {
-  async fetch(request) {
-    const destinationURL = 'https://example.com';
+  async fetch(request): Promise<Response> {
+    const destinationURL = "https://example.com";
     const statusCode = 301;
     return Response.redirect(destinationURL, statusCode);
   },
-};
+} satisfies ExportedHandler;
 ```
+
 {{</tab>}}
-{{<tab label="js/sw">}}
-```js
-const destinationURL = 'https://example.com';
-const statusCode = 301;
+{{<tab label="py">}}
 
-async function handleRequest(request) {
-  return Response.redirect(destinationURL, statusCode);
-}
+```py
+from js import Response
 
-addEventListener('fetch', async event => {
-  event.respondWith(handleRequest(event.request));
-});
+def on_fetch(request):
+    destinationURL = "https://example.com"
+    statusCode = 301
+    return Response.redirect(destinationURL, statusCode)
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
 ## Redirect requests from one domain to another
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts | py">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
   async fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
 
     const url = new URL(request.url);
     const { pathname, search } = url;
 
     const destinationURL = `${base}${pathname}${search}`;
-    console.log(destinationURL)
+    console.log(destinationURL);
 
     return Response.redirect(destinationURL, statusCode);
   },
 };
 ```
+
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts">}}
 
-```js
-const base = 'https://example.com';
-const statusCode = 301;
+```ts
+export default {
+  async fetch(request): Promise<Response> {
+    const base = "https://example.com";
+    const statusCode = 301;
 
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  const { pathname, search } = url;
+    const url = new URL(request.url);
+    const { pathname, search } = url;
 
-  const destinationURL = base + pathname + search;
+    const destinationURL = `${base}${pathname}${search}`;
+    console.log(destinationURL);
 
-  return Response.redirect(destinationURL, statusCode);
-}
-
-addEventListener('fetch', async event => {
-  event.respondWith(handleRequest(event.request));
-});
+    return Response.redirect(destinationURL, statusCode);
+  },
+} satisfies ExportedHandler;
 ```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, URL
+
+async def on_fetch(request):
+    base = "https://example.com"
+    statusCode = 301
+
+    url = URL.new(request.url)
+
+    destinationURL = f'{base}{url.pathname}{url.search}'
+    print(destinationURL)
+
+    return Response.redirect(destinationURL, statusCode)
+```
+
 {{</tab>}}
 {{</tabs>}}
-

@@ -12,7 +12,7 @@ To change whether and how traffic reaches a waiting room, update the values for 
 
 To enable a waiting room:
 
-1.  Go to **Traffic** > **Waiting Rooms**.
+1.  Go to **Traffic** > **Waiting Room**.
 2.  On a waiting room, set **Enabled** to **On**.
 
 ## Queue options
@@ -21,7 +21,7 @@ By default, an active waiting room puts visitors in a queue when traffic approac
 
 However, if you want all visitors to be queued for a predefined amount of time — in preparation for a product release or other time-based event — use the [Create scheduled events](/waiting-room/additional-options/create-events/) option.
 
-You may also use the **Queue All** option on a waiting room as an emergency stop to all traffic during unexpected or temporary downtime. As long as the waiting room is active and **Queue All** is enabled, no traffic will reach your application.
+You may also use the **Queue-all** option on a waiting room as an emergency stop to all traffic during unexpected or temporary downtime. As long as the waiting room is active and **Queue-all** is enabled, no traffic will reach your application.
 
 ### Queue visitors when necessary
 

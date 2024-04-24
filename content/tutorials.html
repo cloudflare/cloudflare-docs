@@ -16,13 +16,15 @@ layout: home
   <div class="coveo-main-section">
     <div class="coveo-facet-column">
       <div class="CoveoDynamicFacetManager">
-        <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="10" data-sort-criteria="occurrences" data-enable-collapse='false'></div>
+        <div class="CoveoDynamicFacet" data-title="Product" data-field="@product" data-number-of-values="100"
+          data-sort-criteria="occurrences" data-enable-collapse='false'></div>
       </div>
     </div>
     <div class="coveo-results-column">
       <div class="CoveoErrorReport" data-pop-up="false"></div>
-      <div class="CoveoResultList" data-layout="card" data-wait-animation="fade" data-auto-select-fields-to-include="false">
-          <script id="Default" class="result-template" type="text/html">
+      <div class="CoveoResultList" data-layout="card" data-wait-animation="fade"
+        data-auto-select-fields-to-include="false">
+        <script id="Default" class="result-template" type="text/html">
             <div class="coveo-result-frame" style="display:flex; justify-content: space-between;">
             <div class="tutorialHeading">
               //   TUTORIAL   //
@@ -40,5 +42,7 @@ layout: home
         </script>
       </div>
       <div class="CoveoPager"></div>
-      <div class="CoveoResultsPerPage" data-initial-choice="25"></div>
+      <div class="CoveoResultsPerPage" data-initial-choice="10"></div>
     </div>
+  </div>
+</div>

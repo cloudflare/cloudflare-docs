@@ -8,14 +8,13 @@ weight: 5
 
 When we talk about dynamic load balancing, that means your load balancer only directs requests to servers that can handle the traffic.
 
-But how does your load balancer _know_ which servers can handle the traffic? We determine that through a system of monitors, health checks, and origin pools.
+But how does your load balancer _know_ which servers can handle the traffic? We determine that through a system of monitors, health monitors, and origin pools.
 
 ---
 
-## Components
+## Dynamic load balancing
 
-Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
-
+Dynamic load balancing happens through a combination of {{<glossary-tooltip term_id="origin pool" link="/load-balancing/pools/">}}origin pools{{</glossary-tooltip>}}, {{<glossary-tooltip term_id="monitor" link="/load-balancing/monitors/">}}monitors{{</glossary-tooltip>}}, and {{<glossary-tooltip term_id="health check">}}health checks{{</glossary-tooltip>}}. 
 
 {{<render file="_health-check-diagram.md">}}
 
@@ -23,22 +22,19 @@ Dynamic load balancing happens through a combination of [origin pools](/load-bal
 
 ## How an origin becomes unhealthy
 
-The purpose of each **health check** is to determine whether an origin has changed status from the previous health check.
-
-A health check will fail if one of the following conditions are met:
-
-- The health check exceeds the duration specified in the monitor's **Timeout** field (and does so more than the specified number of **Retries**).
-- The origin does not return the **Expected codes** or **Response body** specified in the monitor's configuration.
+{{<glossary-definition term_id="health check" prepend="Health checks are ">}}
 
 {{<render file="_health-check-regions.md">}}
 
 {{<Aside type="note">}}
 
-If **Health Check Regions** for a pool is set to **All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
+If **Health Monitor Regions** for a pool is set to **All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
 
 {{</Aside>}}
 
-For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
+Load balancing analytics and logs will only show global health changes.
+
+For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
 
 ---
 
@@ -54,20 +50,11 @@ When an [individual origin becomes unhealthy](#how-an-origin-becomes-unhealthy),
 
 ### Traffic distribution
 
-When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Traffic steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/):
-
-- **Off**:
-
-  - If the active pool becomes unhealthy, traffic goes to the next pool in order.
-  - If an inactive pool becomes unhealthy, traffic continues to go to the active pool (but would skip over the unhealthy pool in the failover order).
-
-- **All other methods**: Traffic is distributed across all remaining pools according to the steering policy.
+{{<render file="_unhealthy-pool-traffic-distribution.md">}}
 
 ### Fallback pools
 
-Because a load balancer **Fallback Pool** is meant to be a pool of last resort, it's health is not taken into account when directing traffic.
-
-If all pools in a Load Balancer are manually disabled or unhealthy, traffic will always go to the fallback pool.
+{{<render file="_fallback-pools.md">}}
 
 ---
 
@@ -83,8 +70,3 @@ If a load balancer reaches **Critical** health and the pool serving as your fall
 
 - If Cloudflare proxies your hostname, you will see a 530 HTTP/1016 Origin DNS failure.
 - If Cloudflare does not proxy your hostname, you will see the SOA record.
-
-
-[^1]: Groups that contain one or more origin servers.
-[^2]: Are attached to individual origin servers and issue health checks at regular intervals.
-[^3]: Which are issued by a monitor at regular interval and — depending on the monitor settings — return a **pass** or **fail** value to make sure an origin is still able to receive traffic.

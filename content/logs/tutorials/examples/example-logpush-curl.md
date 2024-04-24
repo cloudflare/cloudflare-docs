@@ -8,10 +8,10 @@ weight: 88
 
 You can manage your Cloudflare Logpush service from the command line using cURL.
 
-Before getting started, review:
+Before getting started, review the following documentation:
 
 - [API configuration](/logs/get-started/api-configuration/)
-- [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs)
+- [Logpush job object definition](/api/operations/get-zones-zone_identifier-logpush-jobs)
 
 {{<Aside type="note">}}
 
@@ -31,7 +31,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 
 ### Parameters
 
-- **destination_conf** - See [Destination](/logs/get-started/api-configuration/#destination) for details.
+- **destination_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
 
 ### Response
 
@@ -54,7 +54,7 @@ You will need to provide the token contained in this file when creating a job in
 
 {{<Aside type="note" header="Note">}}
 
-When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
+When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it is uploaded.
 
 {{</Aside>}}
 
@@ -224,7 +224,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 }
 ```
 
-## Step 4 - Delete a job
+## Optional - Delete a job
 
 ```bash
 curl -s -X DELETE \
@@ -244,7 +244,7 @@ Be careful when deleting a job because this action cannot be reversed.
 }
 ```
 
-## Step 5 - Retrieve your job
+## Optional - Retrieve your job
 
 Retrieve a specific job, using the job ID:
 
@@ -314,7 +314,7 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 }
 ```
 
-## Step 6 - Updating **logpull_options**
+## Optional - Update **logpull_options**
 
 If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **logpull_options** for your zone.
 

@@ -1,10 +1,10 @@
 ---
 title: Methods
-pcx_content_type: how-to
+pcx_content_type: concept
 weight: 1
-layout: single
 meta:
   title: Methods — Domain Control Validation
+  description: Review different methods to perform Domain Control Validation when using Cloudflare SSL/TLS.
 ---
 
 # DCV Methods
@@ -17,27 +17,19 @@ For details on each method available for DCV, refer to the following resources:
 
 {{<directory-listing>}}
 
----
+{{<Aside type="note">}}
 
-### DCV - Full zones
+For guidance on when you need to perform DCV, refer to [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/).
 
-For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
-
-{{<render file="_full-zone-acm-dcv.md">}}
-
-### DCV - Partial zones
-
-For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
-
-{{<render file="_partial-zone-acm-dcv.md">}}
+{{</Aside>}}
 
 ---
 
 ## Verify DCV status
 
-To verify the [DCV status](/ssl/reference/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](https://developers.cloudflare.com/api/operations/ssl-verification-ssl-verification-details).
+To verify the [DCV status](/ssl/reference/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](/api/operations/ssl-verification-ssl-verification-details).
 
-A status of `active` means that the certificate has been deployed to Cloudflare’s edge network and will be served as soon as HTTP traffic is proxied to Cloudflare.
+A status of `active` means that the certificate has been deployed to Cloudflare’s global network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 
 ## Update DCV methods
 

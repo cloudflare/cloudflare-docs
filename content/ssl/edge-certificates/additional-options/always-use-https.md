@@ -2,11 +2,18 @@
 pcx_content_type: how-to
 title: Always Use HTTPS
 weight: 15
+learning_center:
+    title: What is HTTPS?
+    link: https://www.cloudflare.com/learning/ssl/what-is-https/
 ---
 
 # Always Use HTTPS
 
-Always Use HTTPS redirects all `http` requests to `https` for all subdomains and hosts in your application.
+Always Use HTTPS redirects all your visitor requests from `http` to `https`, for all subdomains and hosts in your application.
+
+{{<Aside>}}
+This process does not impact certificate validation. If you use [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/), you can still enable Always Use HTTPS.
+{{</Aside>}}
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 
@@ -24,13 +31,19 @@ To redirect traffic for all subdomains and hosts in your application, you can en
 To enable **Always Use HTTPS** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  For **Always Use HTTPS**, switch the toggle to **On**.
+
+{{<Aside type="note">}}
+
+When you set your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) to **Off**, you will not have an option for **Always Use HTTPS** visible in your Cloudflare dashboard.
+
+{{</Aside>}}
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}
@@ -49,4 +62,4 @@ For example, you could forward traffic from a specific subdomain to HTTPS. You w
 
 ### Limitations
 
-Forcing HTTPS does not resolve issues with [mixed content](https://support.cloudflare.com/hc/articles/200170476), as browsers check the protocol of included resources before making a request. You will need to use only relative links or HTTPS links on pages that you force to HTTPS. Cloudflare can automatically resolve some mixed-content links using our [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) functionality.
+Forcing HTTPS does not resolve issues with [mixed content](/ssl/troubleshooting/mixed-content-errors/), as browsers check the protocol of included resources before making a request. You will need to use only relative links or HTTPS links on pages that you force to HTTPS. Cloudflare can automatically resolve some mixed-content links using our [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) functionality.

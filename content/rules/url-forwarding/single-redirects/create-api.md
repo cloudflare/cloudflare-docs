@@ -10,30 +10,29 @@ meta:
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a redirect rule via API.
 
-## Prerequisites
-
-{{<render file="url-forwarding/_requires-proxied-site.md">}}
-
-The API token used in API requests to manage redirect rules must have at least the following permission:
-
-* _Zone_ > _Dynamic Redirect_ > _Edit_
-
-## Create a redirect rule
-
 Add redirect rules to the entry point ruleset of the `http_request_dynamic_redirect` phase at the zone level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
+
+{{<render file="url-forwarding/_requires-proxied-site.md" withParameters="Single Redirects">}}
+
+## Basic rule settings
 
 A redirect rule must have:
 
 * `action` set to `redirect`
 * An `action_parameters` object with additional configuration settings — refer to [Available settings](/rules/url-forwarding/single-redirects/settings/) for details.
 
-The following request of the [Create zone ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
+## Example requests
 
-```json
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+The following request of the [Create a zone ruleset](/api/operations/createZoneRuleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
+
+```bash
+---
+header: Request
+---
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "Redirect rules ruleset",
   "kind": "zone",
   "phase": "http_request_dynamic_redirect",
@@ -56,9 +55,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 }'
 ```
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -95,17 +92,19 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update zone ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-ruleset) operation instead, like in the following example:
+If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation instead, like in the following example:
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "Redirect rules ruleset",
   "kind": "zone",
   "phase": "http_request_dynamic_redirect",
@@ -141,9 +140,7 @@ curl -X PUT \
 }'
 ```
 
-<details>
-<summary>Example response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -201,5 +198,12 @@ curl -X PUT \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage redirect rules must have at least the following permission:
+
+* _Zone_ > _Dynamic Redirect_ > _Edit_

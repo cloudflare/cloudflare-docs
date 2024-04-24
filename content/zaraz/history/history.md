@@ -1,18 +1,16 @@
 ---
 pcx_content_type: how-to
-title: Zaraz History
+title: Version History
 weight: 2
 ---
 
-# Zaraz History
+# Version History
 
-Zaraz History enables you to keep track of all the changes made in your account. With Zaraz History you can also revert changes to previous settings should there be a problem.
+Version History enables you to keep track of all the Zaraz configuration changes made in your website. With Version History you can also revert changes to previous settings should there be a problem.
 
-{{<Aside type="note">}}This feature is available to customers on a [Workers Paid plan](/workers/platform/pricing/).{{</Aside>}}
+To access Version History you need to enable [Preview & Publish mode](/zaraz/history/preview-mode/) first. Then, you can access Version History under **Zaraz** > **History**.
 
-To access Zaraz History you need to enable [Preview & Publish mode](/zaraz/history/preview-mode/) first. Then, you can access Zaraz History under **Zaraz** > **History**.
-
-## Access Zaraz History
+## Access Version History
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **History**.
@@ -23,7 +21,7 @@ To access Zaraz History you need to enable [Preview & Publish mode](/zaraz/histo
 
 ## Revert changes
 
-Zaraz History enables you to revert any changes made to your Zaraz settings.
+Version History enables you to revert any changes made to your Zaraz settings.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **History**.

@@ -3,8 +3,7 @@ type: table
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
-rss: file
+layout: wide
 ---
 
 # Scheduled changes
@@ -24,32 +23,23 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-01-16</td>
-      <td>2023-01-30</td>
+      <td>2024-04-22</td>
+      <td>2024-04-29</td>
       <td>Block</td>
-      <td>N/A</td>
-      <td>...bbc447fa</td>
-      <td>XSS - JavaScript Events</td>
-      <td>This detection will replace 100135C in legacy WAF and ...de5e2367 in new WAF</td>
+      <td>100532_BETA</td>
+      <td>{{<rule-id>}}048dc8c7995f44b5871eed98554f9705{{</rule-id>}}</td>
+      <td>Vulnerability scanner - Activity Beta</td>
+      <td>This will replace the {{<rule-id>}}0242110ae62e44028a13bf4834780914{{</rule-id>}} in NEW WAF</td>
     </tr>
     <tr>
-      <td>2023-01-16</td>
-      <td>2023-01-30</td>
-      <td>Log</td>
-      <td>100557</td>
-      <td>...4c2e80c3</td>
-      <td>Code Injection - JavaScript</td>
-      <td>N/A</td>
+      <td>2024-04-22</td>
+      <td>2024-04-29</td>
+      <td>Block</td>
+      <td>100533_BETA</td>
+      <td>{{<rule-id>}}5569308c0bc84e49962516b2aaa061e3{{</rule-id>}}</td>
+      <td>NoSQL - Injection Beta</td>
+      <td>This will replace the {{<rule-id>}}920e3b10aa934194928a598a2753531e{{</rule-id>}} in NEW WAF</td>
     </tr>
-    <tr>
-      <td>2023-01-16</td>
-      <td>2023-01-30</td>
-      <td>Log</td>
-      <td>100559</td>
-      <td>...65414846</td>
-      <td>Prototype pollution Attack, Headers</td>
-      <td>N/A</td>
-    </tr>
-</tbody>
+  </tbody>
 </table>
 {{</table-wrap>}}

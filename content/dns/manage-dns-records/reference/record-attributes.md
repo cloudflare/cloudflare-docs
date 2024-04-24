@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Record attributes
 weight: 4
 meta: 
@@ -20,7 +20,7 @@ These attributes are particularly useful when:
 
 {{<Aside type="note">}}
 
-The information in record attributes will not impact DNS record resolution or propagation timing and is only meant for your reference.
+The information in record attributes will not impact DNS record resolution or propagation timing and is only meant for your private reference. This information is only visible to [members](/fundamentals/setup/manage-members/manage/) of your Cloudflare account and is not visibile publicly.
 
 {{</Aside>}}
 
@@ -42,7 +42,7 @@ Comments and tags are only supported for [full](/dns/zone-setups/full-setup/) an
 
 ## Add or edit record attributes
 
-Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record).
+Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](/api/operations/dns-records-for-a-zone-create-dns-record).
 
 You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records.
 

@@ -117,14 +117,14 @@ This section lists the licenses of the projects used in cargo-about.
 
 Overview of licenses:
 
-- [MIT](#MIT) (54)
-- [Apache](#Apache-2.0) (41)
-- [BSD](#BSD-3-Clause) (8)
-- [BSD](#BSD-2-Clause) (3)
-- [ISC](#ISC) (3)
-- [BSD](#0BSD) (2)
-- [Mozilla](#MPL-2.0) (2)
-- [OpenSSL](#OpenSSL) (1)
+- [MIT](#mit-license) (54)
+- [Apache](#apache-license-20) (41)
+- [BSD](#bsd-3-clause-new-or-revised-license) (8)
+- [BSD](#bsd-2-clause-simplified-license) (3)
+- [ISC](#isc-license) (3)
+- [BSD](#bsd-zero-clause-license) (2)
+- [Mozilla](#mozilla-public-license-20) (2)
+- [OpenSSL](#openssl-license) (1)
 
 All license text:
 

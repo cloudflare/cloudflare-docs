@@ -1,107 +1,100 @@
 ---
 pcx_content_type: how-to
 title: Split Tunnels
-weight: 6
+weight: 3
 ---
 
 # Configure Split Tunnels
 
-Split Tunnels mode can be configured to exclude or include IP addresses or domains from going through WARP. This feature is commonly used to run WARP alongside a VPN (in Exclude mode) or to provide access to a specific Tunnel (in Include mode).
+Split Tunnels can be configured to exclude or include IP addresses or domains from going through WARP. This feature is commonly used to run WARP alongside a VPN (in Exclude mode) or to provide access to a specific private network (in Include mode).
 
 {{<Aside type="warning">}}
 
-Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration.
+Split Tunnels only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration.
 
 {{</Aside>}}
 
-You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
+Changes made to your Split Tunnel configuration are immediately propagated to clients. Because Split Tunnels controls what Gateway has visibility on at the network level, we recommend testing all changes before rolling out updates to end users.
 
-Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Be sure to make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes.
+## Change Split Tunnels mode
 
-## Set up Split Tunnels
+{{<render file="warp/_change-split-tunnels-mode.md" productFolder="cloudflare-one">}}
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client**.
+## Add a route
 
-2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
+{{<render file="warp/_add-split-tunnels-route.md" productFolder="cloudflare-one">}}
 
-3. Under **Split Tunnels**, choose a Split Tunnel mode:
+### When to use Split Tunnels
 
-    - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
-    - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies.
+Use Split Tunnels when you need to bypass Gateway entirely for a site or allow traffic through the [firewall that WARP creates](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall). Common scenarios include:
 
-4. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
+- Connect to a third-party application which requires the actual IP address of the end-user device (for example, [Microsoft 365](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic)).
+- Optimize voice and video.
+- Connect to a [third-party VPN](/cloudflare-one/connections/connect-devices/warp/deployment/vpn/) endpoint.
 
-On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
+### When not to use Split Tunnels
 
-## Add an IP address
+Do not exclude a site from Split Tunnels if you want to see the traffic in your Gateway logs. In particular, we do not recommend using Split Tunnels to:
 
-1. [Navigate](#set-up-split-tunnels) to the **Split Tunnels** page.
-2. In the **Selector** dropdown, select _IP Address_.
-3. Enter the IP address or CIDR you want to exclude or include.
-4. Enter an optional description and then select **Save destination**.
+- Solve connectivity issues with a specific website. For configuration guidance, refer to our [troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#cannot-connect-to-a-specific-app-or-website).
+- Solve performance issues with a specific website. Since Cloudflare operates within 50 milliseconds of 95% of the Internet-connected population, it is usually faster to send traffic through us. If you are encountering a performance-related issue, it is best to first explore your Gateway policies or reach out to Support.
 
-The IP address will appear in the list of Split Tunnel entries. Traffic to these IP addresses will be excluded or included from WARP.
+## Cloudflare Zero Trust domains
 
-## Add a domain
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP session durations](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
 
-1. [Navigate](#set-up-split-tunnels) to the **Split Tunnels** page.
-2. In the **Selector** dropdown, select _Domain_.
-3. Enter a [valid domain](#valid-domains) to exclude or include.
-4. Enter an optional description and then select **Save destination**.
-5. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
+- The application protected by the Access or Gateway policy
+- `edge.browser.run` if using [Browser Isolation](/cloudflare-one/policies/browser-isolation/)
 
-When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
+## Domain-based Split Tunnels
 
-### Consequences of adding a domain
-
-Domain-based split tunneling has a few ramifications you should be aware of before deploying in your organization:
+Domain-based split tunneling has a few ramifications you should be aware of before deploying in your organization:.
 
 - Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
-- You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you exclude or include a domain hosted by a CDN, such as Cloudflare. If other domains resolve to that same IP, those domains will be excluded or included as well.
-- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
+- You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you add a domain hosted by a CDN or large Internet provider such as Cloudflare, AWS, or Azure. For example, if you wanted to exclude a VPN hosted on AWS, do not add `*.amazonaws.com` as that will open up your devices to all traffic on AWS. Instead, add the specific VPN endpoint (`*.cvpn-endpoint-<UUID>.prod.clientvpn.us-west-2.amazonaws.com`).
+- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/gateway/application-app-types/), you will need to manually add all domains used by a particular app or service.
 - WARP must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
 
 ### Valid domains
 
 {{<table-wrap>}}
-| Split tunnel domain | Matches        | Does not match |
+| Split tunnel domain | Matches | Does not match |
 | ------------------- | -------------- | --------------- |
-| `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
+| `example.com` | exact match of `example.com` | subdomains such as `www.example.com` |
 | `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
-| `*.example.com`    | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
+| `*.example.com` | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
 {{</table-wrap>}}
 
-### Cloudflare Zero Trust domains
-
-Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP sesssion durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
-
-- The IdP used to authenticate to Cloudflare Zero Trust
-- `<your-team-name>.cloudflareaccess.com`
-- The application protected by the Access or Gateway policy
-
-## Remove an item from Split Tunnels
-
-1. [Navigate](#set-up-split-tunnels) to the Split Tunnels page.
-2. Find the IP address or hostname in the list and select **Delete**.
-
-{{<Aside type="note">}}
-
-If you need to revert to the default Split Tunnels entries, delete all entries from the list. Once the list is empty, the page will re-populate with the default values.
-
-{{</Aside>}}
-
-## Important platform differences
+### Platform differences
 
 Domain-based Split Tunnels work differently on mobile clients than on desktop clients. If both mobile and desktop clients will connect to your organization, it is recommended to use Split Tunnels based on IP addresses or CIDR, which work the same across all platforms.
 
-### Windows, Linux and macOS behavior
+#### Windows, Linux and macOS
 
 Clients on these platforms work by dynamically inserting the IP address of the domain immediately after it is resolved into the routing table for split tunneling. This allows the desktop clients to support wildcard domain prefixes (for example, `*.example.com`), not just a singular domain (like `example.com` or `www.example.com`).
 
-### iOS, Android and ChromeOS behavior
+#### iOS, Android and ChromeOS
 
 Due to platform differences, mobile clients can only apply Split Tunnels rules when the tunnel is initially started. This means:
 
 - Domain-based Split Tunnels rules are created when the tunnel is established based on the IP address for that domain at that time. The route is refreshed each time the tunnel is established.
 
 - Wildcard domain prefixes (for example, `*.example.com`) are supported only if they have valid wildcard DNS records. Other wildcard domains are not supported because the client is unable to match wildcard domains to hostnames when starting up the tunnel. Unsupported wildcard domain prefixes can still exist in your configuration, but they will be ignored on mobile platforms.
+
+## Remove a route
+
+{{<Aside type="warning">}}
+Removing default Split Tunnel entries may cause users to lose Internet connectivity or block their access to local resources.
+{{</Aside>}}
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+
+2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
+
+3. Under **Split Tunnels**. select **Manage**.
+
+4. Find the IP address or hostname in the list and select **Delete**.
+
+If you need to revert to the default Split Tunnel entries recommended by Cloudflare, select **Restore default entries**.

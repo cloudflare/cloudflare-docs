@@ -1,7 +1,7 @@
 ---
 title: TXT
 pcx_content_type: how-to
-weight: 1
+weight: 2
 meta:
   title: TXT method — Domain Control Validation — SSL/TLS
 ---
@@ -9,20 +9,13 @@ meta:
 # TXT DCV method
 
 {{<render file="_txt-validation-definition.md">}}
+<br/>
 
 ---
 
-## Zone setups
+## When to use
 
-### Full zones
-
-{{<render file="_full-zone-acm-dcv.md">}}
-
-### Partial zones
-
-For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
-
-{{<render file="_partial-zone-acm-dcv.md">}}
+Generally, you need to perform TXT-based DCV when your certificate [requires DCV](/ssl/edge-certificates/changing-dcv-method/) and you cannot perform [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 
 ---
 
@@ -50,18 +43,28 @@ For partial zones[^2], the process depends on whether the certificate uses a wil
 {{</tab>}}
 {{</tabs>}}
 
-You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
-
 ### Update DNS records
 
-At your authoritative DNS provider, create a TXT record named the `txt_name` and containing the `txt_value`. Once this TXT record is in place, validation and certificate issuance will automatically complete.
+At your authoritative DNS provider, create a TXT record named the `txt_name` and containing the `txt_value`. 
+
+Repeat this process for all the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
+
+If one or more of the hostnames on the certificate fail to validate, the certificate will not be issued or renewed.
+
+This means that a wildcard certificate covering `example.com` and `*.example.com` will require two DCV tokens to be placed at the authoritative DNS provider. Similarly, a certificate with five hostnames in the SAN (including a wildcard) will require five DCV tokens to be placed at the authoritative DNS provider.
 
 ### Complete DCV
 
+Once you update your DNS records, you can either [wait for the next retry](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or request an immediate recheck.
+
 {{<render file="_dcv-validate-patch.md">}}
 
-## Renew DCV tokens
+TXT records used for DCV can be removed from your authoritative DNS provider as soon as the certificate is issued.
 
-{{<render file="_dcv-token-renewal.md">}}
+## Renewal
+
+{{<render file="_dcv-certificate-renewal.md">}}
+
+{{<render file="_dcv-renewal-fallback.md">}}
 
 [^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.

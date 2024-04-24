@@ -6,23 +6,27 @@ weight: 51
 
 # Supported fields and operators
 
-The fields available for load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer.
+The fields that are supported by load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer or not.
 
-If you use the wrong set of fields, you might see unexpected behavior from load balancing rules. For best results, use the fields associated with your traffic's proxy status.
+If you use the wrong set of fields, you might see unexpected behaviors. For best results, use the fields associated with your traffic's [proxy status](/load-balancing/understand-basics/proxy-modes/).
+
+Also, some Load Balancing rules fields are available on the Expression Builder - as described in [Load Balancing expressions](/load-balancing/additional-options/load-balancing-rules/expressions/#working-with-expressions) - while others can only be configured manually, via API or [Expression Editor](/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor)
+
+## Expression Builder field sets
+
+Consider the following table to know how the fields available in the [Expression Builder](/load-balancing/additional-options/load-balancing-rules/expressions/#expression-builder) are grouped.
 
 | Field Set | Section in Expression Builder | Description |
 | --- | --- | --- |
-| [Fields supported regardless of proxy](#fields-supported-regardless-of-proxy) | `BOTH` | The values that are always accessible regardless of whether the load balancer is proxied or not. |
-| [Proxied-only fields](#proxied-only-fields) | `PROXIED ONLY` | The values accessible only when the load balancer's traffic is proxied. |
-| [Unproxied-only fields](#unproxied-only-fields) | `NON-PROXIED ONLY` | The values accessible only when the load balancer's traffic is not proxied (DNS-only traffic). |
+| [Fields supported regardless of proxy](#fields-supported-regardless-of-proxy) | `BOTH` | Values that are always accessible regardless of the load balancer proxy status. |
+| [Proxied-only fields](#proxied-only-fields) | `PROXIED ONLY` | Values accessible only when the load balancer is proxied. |
+| [Unproxied-only fields](#unproxied-only-fields) | `NON-PROXIED ONLY` | Values accessible only when the load balancer is not proxied (DNS-only traffic). |
 
-![Choose load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
-
-For a step-by-step guide for creating a rule using the UI's Expression Builder, see [Create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/). Note that there are a few fields that are still API-only and not present in the UI.
+![Choose load balancer fields based on the proxy status header](/images/load-balancing/proxy-status.png)
 
 ## Fields supported regardless of proxy
 
-Regardless of whether your traffic is proxied, you have access to the following fields:
+Regardless of your traffic [proxy status](/load-balancing/understand-basics/proxy-modes/), Load Balancing rules can access values for the following fields:
 
 <table style="width:100%">
   <thead>
@@ -85,7 +89,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
   <tbody>
     <tr id="field-http-cookie">
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-cookie"><code>http.cookie</code></a><br />{{<type>}}String{{</type>}}</td>
-      <td>(API-only)</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the entire cookie as a string.</p>
         <p>Example value:
@@ -95,9 +99,9 @@ Many of these fields are referenced from the [Rules language documentation](/rul
     </tr>
     <tr id="field-http-host">
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-host"><code>http.host</code></a><br />{{<type>}}String{{</type>}}</td>
-      <td>(API-only)</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
-        <p>Represents the host name used in the full request URI.
+        <p>Represents the hostname used in the full request URI.
         </p>
         <p>Example value:
         <br /><code class="InlineCode">www.example.org</code>
@@ -106,7 +110,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
     </tr>
     <tr id="field-http-referer">
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-referer"><code>http.referer</code></a><br />{{<type>}}String{{</type>}}</td>
-      <td>(API-only)</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.
         </p>
@@ -116,7 +120,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-headers">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers"><code>http.request.headers</code></a><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers"><code>http.request.headers</code></a><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td><code>Header</code></td>
       <td>
         <p>Represents HTTP request headers as a Map (or associative array).</p>
@@ -132,64 +136,6 @@ Many of these fields are referenced from the [Rules language documentation](/rul
         <p>Example value:
         <br /><code class="InlineCode">{"content-type": ["application/json"]}</code>
         </p>
-      </td>
-    </tr>
-    <tr id="field-http-request-headers-names">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers-names"><code>http.request.headers.names</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
-      <td>(API-only)</td>
-      <td>
-         <p>Represents the names of the headers in the HTTP request.</p>
-         <p>The names are not pre-processed and retain the original case used in the request.</p>
-         <p><strong>Note:</strong> In HTTP/2 the names of HTTP headers are always in lowercase. Recent versions of the <code class="InlineCode">curl</code> tool <a href="https://curl.se/docs/http2.html#curl-tool">enable HTTP/2 by default</a> for HTTPS connections.
-         </p>
-         <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.request.headers.values</code>.
-         </p>
-         <p>Duplicate headers are listed multiple times.
-         </p>
-         <p><em>Decoding:</em> no decoding performed
-         <br /><em>Whitespace:</em> preserved
-         <br /><em>Non-ASCII:</em> preserved
-         </p>
-         <p>Example:
-         <br /><code class="InlineCode">any(http.request.headers.names[*] == "content-type")</code>
-         </p>
-         <p>Example value:
-         <code class="InlineCode">["content-type"]</code>
-         </p>
-      </td>
-    </tr>
-    <tr id="field-http-request-headers-values">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers-values"><code>http.request.headers.values</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
-      <td>(API-only)</td>
-      <td>
-         <p>Represents the values of the headers in the HTTP request.</p>
-         <p>The values are not pre-processed and retain the original case used in the request.</p>
-         <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.request.headers.names</code>.
-         </p>
-         <p>Duplicate headers are listed multiple times.
-         </p>
-         <p><em>Decoding:</em> no decoding performed
-         <br /><em>Whitespace:</em> preserved
-         <br /><em>Non-ASCII:</em> preserved
-         </p>
-         <p>Example 1:
-         <br />
-         <code class="InlineCode">any(http.request.headers.values[*] == "application/json")</code>
-         </p>
-         <p>Example value 1:
-         <br />
-         <code class="InlineCode">["application/json"]</code>
-         </p>
-         <p>Additionally used to match requests according to the specified operator and the length/size entered for the header value.
-         </p>
-         <p>Example 2:
-         <br />
-         <code class="InlineCode">any(len(http.request.headers.values[*])[*] gt 10)</code>
-         </p>
-         <p>Example value 2:
-         <br />
-         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
-         </p>
       </td>
     </tr>
     <tr id="field-http-request-method">
@@ -226,8 +172,8 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args"><code>http.request.uri.args</code></a><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
-      <td>(API-only)</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args"><code>http.request.uri.args</code></a><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
         </p>
@@ -247,7 +193,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
     </tr>
     <tr id="field-http-request-uri-args-names">
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
-      <td>(API-only)</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
         </p>
@@ -266,7 +212,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
     </tr>
     <tr id="field-http-request-uri-args-values">
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-values"><code>http.request.uri.args.values</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
-      <td>(API-only)</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
         </p>
@@ -378,15 +324,15 @@ If your traffic is not proxied through Cloudflare, you have access to all the fi
     </tr>
     <tr id="field-dns-rr-opt-client">
       <td valign="top"><code class>dns.rr.opt.client</code><br />{{<type>}}Boolean{{</type>}}</td>
-       <td>(API-only)</td>
+       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>When <code>true</code>, this field indicates that the EDNS Client Subnet (ECS) address was sent with the DNS request.
         </p>
       </td>
-    </tr>  
+    </tr>
     <tr id="field-dns-rr-opt-client-addr">
       <td valign="top"><code class>dns.rr.opt.client.addr</code><br />{{<type>}}String{{</type>}}</td>
-      <td>(API-only)</td>
+      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>If present, this field represents the ECS address sent with the DNS request.
         </p>

@@ -12,14 +12,14 @@ To create a load balancer in the dashboard:
 2.  Click **Create Load Balancer**.
 
 3.  On the **Hostname** page:
-    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
+    *   Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
     *   Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
     *   If you want [session-based load balancing](/load-balancing/understand-basics/session-affinity/), toggle the **Session Affinity** switch.
 
 4.  Click **Next**.
 
 5.  On the **Add an Origin Pool** page:
-    *   Select one or more existing pools or [create a new pool](/load-balancing/how-to/create-pool/#via-the-dashboard).
+    *   Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool).
     *   If you are going to set [traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/) to **Off**, re-order the pools in your load balancer to adjust the fallback order.
     *   If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools).
     *   If you choose to set traffic steering to **Random**, you can set [Weights](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the API) to your pools to determine the percentage of traffic sent to each pool.
@@ -28,7 +28,7 @@ To create a load balancer in the dashboard:
 
 7.  On the **Monitors** page:
     *   Review the monitors attached to your pools.
-    *   If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/how-to/create-monitor/#via-the-dashboard).
+    *   If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/monitors/create-monitor/#create-a-monitor).
 
 8.  Click **Next**.
 

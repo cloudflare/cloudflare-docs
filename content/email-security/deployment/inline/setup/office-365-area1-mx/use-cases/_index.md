@@ -2,14 +2,13 @@
 title: Use cases
 pcx_content_type: how-to
 weight: 1
-layout: single
 meta:
    title: Office 365 use cases
 ---
 
 # Office 365 use cases
 
-Before following our use case tutorials, read through this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and [defanging emails](/email-security/email-configuration/email-policies/link-actions/), as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta), before setting up Office 365.
+Before following our use case tutorials, read through this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and [defanging emails](/email-security/email-configuration/email-policies/link-actions/), as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation), before setting up Office 365.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
@@ -24,7 +23,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         <div class="large-img">
 
-        ![Defang suspicious emails](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/defang-suspicious.png)
+        ![Defang suspicious emails](/email-security/static/flexible-partial-images/o365-area1-mx/defang-suspicious.png)
 
         </div>
 
@@ -35,7 +34,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         <div class="large-img">
 
-        ![Enable Email Link Isolation](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step4-enterprise-advantage-customer.png)
+        ![Enable Email Link Isolation](/email-security/static/flexible-partial-images/o365-area1-mx/step4-enterprise-advantage-customer.png)
 
         </div>
 
@@ -55,7 +54,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
     <div class="large-img">
 
-    ![Enable all the options mentioned in step 9](/email-security/static/deployment/inline-setup/o365-area1-mx/prefix-subject.png)
+    ![Enable all the options mentioned in step 9](/images/email-security/deployment/inline-setup/o365-area1-mx/prefix-subject.png)
 
     </div>
 
@@ -70,7 +69,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
     <div class="large-img">
 
-    ![Enable all the options mentioned in step 7](/email-security/static/deployment/inline-setup/o365-area1-mx/prefix-subject-enterprise.png)
+    ![Enable all the options mentioned in step 7](/images/email-security/deployment/inline-setup/o365-area1-mx/prefix-subject-enterprise.png)
 
     </div>
 

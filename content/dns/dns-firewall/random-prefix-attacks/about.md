@@ -1,5 +1,5 @@
 ---
-pcx_content_type: overview
+pcx_content_type: concept
 title: About
 weight: 4
 meta:
@@ -11,13 +11,13 @@ meta:
 {{<render file="_random-prefix-attack-definition.md">}}
 <br/>
 
-## Attack charactertistics
+## Attack characteristics
 
 ### Queries for nonexistent domains
 
 If the request only involved nonexistent domains, the `NXDOMAIN` errors would only be served by the top-level domain (TLD) nameservers for `com.`. This means that the queries never reach the authoritative nameservers.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: Random prefix attacks diagram
       A[End user query to <code>example.com</code>] --"1)"--> B[<code>1.1.1.1 resolver</code>]
@@ -25,14 +25,14 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
       C --"3)" <code>NXDOMAIN error</code>--> B
       B --"4)" <code>NXDOMAIN error</code>--> A
       D[Authoritative NS]
-</div>
+```
 <br/>
 
 ### Queries for nonexistent subdomains
 
 These attacks are successful because they target subdomains, which require a response from a domain's authoritative nameservers. 
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: Random prefix attacks diagram
       A[End user query to <code>random.example.com</code>] --"1)"--> B[<code>1.1.1.1 resolver</code>]
@@ -41,7 +41,7 @@ These attacks are successful because they target subdomains, which require a res
       B -- "4)" --> D[Authoritative NS]
       D --"5)" <code>NXDOMAIN error</code>--> B
       B --"6)" <code>NXDOMAIN error</code>--> A
-</div>
+```
 <br/>
 
 With an attack against a subdomain of an existing domain, the resolver is forced to fully resolve it against the authoritative nameservers since these random subdomains are likely not cached by the resolver or any other proxy. If an attacker sends enough of these queries, and the authoritative nameservers cannot handle the query load, it will become unresponsive or even fall over, taking all zones it is hosting down, not just the attacked zone.

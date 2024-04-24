@@ -17,11 +17,13 @@ Speed up your global traffic with a single click
 
 Argo Smart Routing detects real-time network issues and routes traffic across the most efficient network path. These benefits are most apparent for users farthest from your origin server.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ---
 
 ## Features
 
-{{<feature header="Analytics" href="/analytics/">}}
+{{<feature header="Analytics" href="/argo-smart-routing/analytics/">}}
 
 Argo Smart Routing includes comprehensive analytics to compare performance improvements with and without Argo enabled.
 
@@ -31,7 +33,7 @@ Argo Smart Routing includes comprehensive analytics to compare performance impro
 
 ## Related products
 
-{{<related header="Argo Tiered Cache" href="/cache/about/tiered-cache/" product="cache">}}
+{{<related header="Tiered Cache" href="/cache/how-to/tiered-cache/" product="cache">}}
 Increase cache hit ratios to reduce requests to your origin server.
 {{</related>}}
 

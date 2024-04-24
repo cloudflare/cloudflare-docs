@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-To receive an email when Cloudflare is unable to reach your origin, [create a notification](/fundamentals/notifications/create-notifications/) for **Passive Origin Monitoring**.
+To receive an email when Cloudflare is unable to reach your origin, [create a notification](/notifications/get-started/#create-a-notification) for **Passive Origin Monitoring**.

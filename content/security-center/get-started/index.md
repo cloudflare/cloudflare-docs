@@ -15,10 +15,16 @@ This guide covers the steps you need to take to set up Security Center in your C
 
 ## Enable Security Insights and start initial scan
 
+{{<render file="_setup.md">}}
+
+### Start a new scan
+
+To manually start a scan:
+
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2.  Go to Account Home > **Security Center** > **Infrastructure**.
+3.  Select **Scan now**.
 
-2.  In the Account Home, go to **Security Center** > **Security Insights**.
+### Scan Frequency
 
-3.  Under **Perform initial scan**, select **Start scan**.
-
-The initial Security Insights scan will start. The initial scan time depends on the number of IT assets in all the domains of your Cloudflare account. When the scan is complete, the status of the page will change from **Scan in Progress** to **Last scan performed on: `<DATE_TIME>`**.
+Once you enable Security Insights, Cloudflare performs scans at a [regular frequency](/security-center/security-insights/how-it-works/#scan-frequency), according to your Cloudflare plan.

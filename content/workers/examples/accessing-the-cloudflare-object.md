@@ -11,9 +11,13 @@ weight: 11
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts | py">}}
+{{<tab label="js" default="true">}}
+
 ```js
+---
+playground: true
+---
 export default {
   async fetch(req) {
     const data =
@@ -26,14 +30,16 @@ export default {
         "content-type": "application/json;charset=UTF-8",
       },
     });
-  }
-}
+  },
+};
 ```
+
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
+
 ```ts
-const handler: ExportedHandler = {
-  async fetch(req) {
+export default {
+  async fetch(req): Promise<Response> {
     const data =
       req.cf !== undefined
         ? req.cf
@@ -44,10 +50,23 @@ const handler: ExportedHandler = {
         "content-type": "application/json;charset=UTF-8",
       },
     });
-  }
-};
-
-export default handler;
+  },
+} satisfies ExportedHandler;
 ```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import json
+from js import Response, Headers, JSON
+
+def on_fetch(request):
+    error = json.dumps({ "error": "The `cf` object is not available inside the preview." })
+    data = request.cf if request.cf is not None else error
+    headers = Headers.new({"content-type":"application/json"}.items())
+    return Response.new(JSON.stringify(data, None, 2), headers=headers)
+```
+
 {{</tab>}}
 {{</tabs>}}

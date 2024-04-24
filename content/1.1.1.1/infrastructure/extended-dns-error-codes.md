@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Extended DNS error codes
-layout: list
+layout: wide
 ---
 
 # Extended DNS error codes
@@ -36,7 +36,7 @@ layout: list
             <td>2</td>
             <td>Unsupported DS Digest Type</td>
             <td><code>EDE: 2 (Unsupported DS Digest Type): (no supported DS digest type for example.com.)</code></td>
-            <td>The domain did not pass DNSSEC validation due to an unsupported digest type on the DS record. If none of the provided DS records are supported, the domain will fail to resolve. Make sure to <a href="/dns/additional-options/dnssec/">add a supported DS record</a> with your registrar.</td>
+            <td>The domain did not pass DNSSEC validation due to an unsupported digest type on the DS record. If none of the provided DS records are supported, the domain will fail to resolve. Make sure to <a href="/dns/dnssec/">add a supported DS record</a> with your registrar.</td>
         </tr>
         <tr>
             <td>3</td>
@@ -58,37 +58,37 @@ layout: list
             <td>7</td>
             <td>Signature Expired</td>
             <td><code>EDE: 7 (Signature Expired): (for DNSKEY example.com., id = 12345: RRSIG example.com., expiration = 123456)</code></td>
-            <td>This domain did not pass DNSSEC validation due to an expired signature. Make sure your zone is signed with valid <a href="https://support.cloudflare.com/hc/articles/360021111972">DNSSEC signatures</a>.</td>
+            <td>This domain did not pass DNSSEC validation due to an expired signature. Make sure your zone is signed with valid <a href="/dns/dnssec/troubleshooting/">DNSSEC signatures</a>.</td>
         </tr>
         <tr>
             <td>8</td>
             <td>Signature Not Yet Valid</td>
             <td><code>EDE: 8 (Signature Not Yet Valid): (for DNSKEY example.com., id = 12345: RRSIG example.com., inception = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. Make sure your zone is signed with valid <a href="https://support.cloudflare.com/hc/articles/360021111972">DNSSEC signatures</a>.</td>
+            <td>This domain did not pass DNSSEC validation. Make sure your zone is signed with valid <a href="/dns/dnssec/troubleshooting/">DNSSEC signatures</a>.</td>
         </tr>
         <tr>
             <td>9</td>
             <td>DNSKEY Missing</td>
             <td><code>EDE: 9 (DNSKEY Missing): (no SEP matching the DS found for example.com.)</code></td>
-            <td>This domain did not pass DNSSEC validation. It does not have a SEP DNSKEY that matches the set of DS records at the registry. Make sure to either sign the zone using keys that match the current DS set, or <a href="/dns/additional-options/dnssec/">add the missing DS records</a> with your registrar.</td>
+            <td>This domain did not pass DNSSEC validation. It does not have a SEP DNSKEY that matches the set of DS records at the registry. Make sure to either sign the zone using keys that match the current DS set, or <a href="/dns/dnssec/">add the missing DS records</a> with your registrar.</td>
         </tr>
         <tr>
             <td>10</td>
             <td>RRSIGs Missing</td>
             <td><code>EDE: 10 (RRSIGs Missing): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>1.1.1.1 was unable to retrieve Resource Record Signatures (RRSigs) to verify the authenticity of the records. Check your <a href="/dns/">DNS configuration</a> and the response code. If the response code is not <code>SERVFAIL</code> this error indicates that there is a key rollover at the zone, or a key that is only used to sign the Zone Signing Key (ZSK).</td>
+            <td>1.1.1.1 was unable to retrieve Resource Record Signatures (RRSigs) to verify the authenticity of the records. Check your <a href="/dns/">DNS configuration</a> and the response code. If the response code is not <code>SERVFAIL</code>, this error indicates that there is a non-operational key issue somewhere along the path, but the resolver found at least one successful path for validation. Examples of non-operational key issues include but are not limited to key rollover in-progress, stand-by key, and attacker stripping signatures made by a certain key.</td>
         </tr>
         <tr>
             <td>11</td>
             <td>No Zone Key Bit Set</td>
             <td><code>EDE: 11 (No Zone Key Bit Set): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/additional-options/dnssec/">DNSSEC configuration</a> or DNSSEC's <a href="https://support.cloudflare.com/hc/articles/360021111972">troubleshooting guide</a>.</td>
+            <td>This domain did not pass DNSSEC validation. The zone's SEP DNSKEY must <a href="https://datatracker.ietf.org/doc/html/rfc4035#section-5.3.1">set a Zone Key flag</a>. Check your <a href="/dns/dnssec/">DNSSEC configuration</a> or DNSSEC's <a href="/dns/dnssec/troubleshooting/">troubleshooting guide</a>.</td>
         </tr>
         <tr>
             <td>12</td>
             <td>NSEC Missing</td>
             <td><code>EDE: 12 (NSEC Missing): failed to verify an insecure referral proof for example.com</code></td>
-            <td>This domain did not pass DNSSEC validation. The upstream nameserver did not include a valid proof of non-existence for the target name. Make sure the zone is <a href="https://support.cloudflare.com/hc/articles/360021111972">signed with DNSSEC</a> and has valid <a href="https://www.cloudflare.com/dns/dnssec/dnssec-complexities-and-considerations/">NSEC/NSEC3 records</a>.</td>
+            <td>This domain did not pass DNSSEC validation. The upstream nameserver did not include a valid proof of non-existence for the target name. Make sure the zone is <a href="/dns/dnssec/troubleshooting/">signed with DNSSEC</a> and has valid <a href="https://www.cloudflare.com/dns/dnssec/dnssec-complexities-and-considerations/">NSEC/NSEC3 records</a>.</td>
         </tr>
         <tr>
             <td>13</td>

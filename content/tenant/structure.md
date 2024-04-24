@@ -8,7 +8,7 @@ weight: 1
 
 Cloudflare helps Channel and Alliance partners manage their and their customers' accounts through a Tenant structure.
 
-![Partner accounts contain a tenant, which is a container for customer accounts and zones. For more details, keep reading.](/tenant/static/tenant-diagram.png)
+![Partner accounts contain a tenant, which is a container for customer accounts and zones. For more details, keep reading.](/images/tenant/tenant-diagram.png)
 
 ## Tenants and Tenant admins
 
@@ -25,12 +25,6 @@ This Tenant structure gives your account streamlined administrative access to cu
 - Resources[^3]
 
 At the same time, this structure keeps your customers' data and settings separate from each other.
-
-## Limitations
-
-Since non-Enterprise accounts can only have one Super administrator, your account will be the only Super administrator allowed on their account.
-
-For more details, refer to [Super administrators](/fundamentals/account-and-billing/account-setup/manage-account-members/#change-super-administrator).
 
 [^1]: {{<render file="_account-definition.md">}}
 [^2]: {{<render file="_user-definition.md">}}

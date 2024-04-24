@@ -27,7 +27,7 @@ Create a VM where you will deploy the keyless daemon.
 
 ## 2. Deploy the keyless server
 
-Follow [these instructions](/ssl/keyless-ssl/configuration/##step-3--set-up-and-activate-key-server) to deploy your keyless server.
+Follow [these instructions](/ssl/keyless-ssl/configuration/cloudflare-tunnel/#step-4---set-up-and-activate-key-server) to deploy your keyless server.
 
 ---
 

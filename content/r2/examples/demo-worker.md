@@ -1,33 +1,17 @@
 ---
-title: Using R2 in a Worker
-summary: A demo of how to use R2 in a Worker.
+title: Expose an R2 bucket to the Internet via a Worker
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
+# Expose an R2 bucket to the Internet via a Worker
+
 Below is an example Worker that exposes an R2 bucket to the Internet and demonstrates its functionality for storing and retrieving objects.
+
+For a simpler guide level explanation of how to use R2 in a worker, refer to [use R2 in a Worker](/r2/api/workers/workers-api-usage/).
 
 ```ts
 interface Env {
   MY_BUCKET: R2Bucket
-}
-
-function parseRange(encoded: string | null): undefined | { offset: number, end: number, length: number } {
-  if (encoded === null) {
-    return
-  }
-
-  const parts = encoded.split("bytes=")[1]?.split("-") ?? []
-  if (parts.length !== 2) {
-    throw new Error('Not supported to skip specifying the beginning/ending byte at this time')
-  }
-
-  return {
-    offset: Number(parts[0]),
-    end:    Number(parts[1]),
-    length: Number(parts[1]) + 1 - Number(parts[0]),
-  }
 }
 
 function objectNotFound(objectName: string): Response {
@@ -40,7 +24,7 @@ function objectNotFound(objectName: string): Response {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request, env): Promise<Response> {
     const url = new URL(request.url)
     const objectName = url.pathname.slice(1)
 
@@ -67,9 +51,8 @@ export default {
       }
 
       if (request.method === 'GET') {
-        const range = parseRange(request.headers.get('range'))
         const object = await env.MY_BUCKET.get(objectName, {
-          range,
+          range: request.headers,
           onlyIf: request.headers,
         })
 
@@ -80,10 +63,10 @@ export default {
         const headers = new Headers()
         object.writeHttpMetadata(headers)
         headers.set('etag', object.httpEtag)
-        if (range) {
-          headers.set("content-range", `bytes ${range.offset}-${range.end}/${object.size}`)
+        if (object.range) {
+          headers.set("content-range", `bytes ${object.range.offset}-${object.range.end ?? object.size - 1}/${object.size}`)
         }
-        const status = object.body ? (range ? 206 : 200) : 304
+        const status = object.body ? (request.headers.get("range") !== null ? 206 : 200) : 304
         return new Response(object.body, {
           headers,
           status
@@ -122,5 +105,5 @@ export default {
       status: 400
     })
   }
-}
+} satisfies ExportedHandler<Env>;
 ```

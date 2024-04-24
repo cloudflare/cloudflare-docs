@@ -33,7 +33,7 @@ The following rule performs rate limiting on incoming requests with a given base
 {{<example>}}
 
 Expression:<br />
-`(http.request.uri.path contains "/product*" and http.request.method eq "POST")`
+`(http.request.uri.path contains "/product" and http.request.method eq "POST")`
 
 Rule characteristics:
 

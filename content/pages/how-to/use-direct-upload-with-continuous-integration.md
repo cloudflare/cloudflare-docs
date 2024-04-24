@@ -30,13 +30,13 @@ To generate an API token:
 6. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
 7. Select **Continue to summary** > **Create Token**.
 
-![Follow the instructions above to create an API token for Cloudflare Pages](../media/select-api-token-for-pages.png)
+![Follow the instructions above to create an API token for Cloudflare Pages](/images/pages/how-to/select-api-token-for-pages.png)
 
 Now that you have created your API token, you can use it to push your project from continuous integration platforms.
 
 ### Get project account ID
 
-To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API\* on the right-side menu. If you have not added a zone, add one by selecting **Add site\*\*. You can purchase a domain from [Cloudflare's registrar](/registrar/)
+To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API** on the right-side menu. If you have not added a zone, add one by selecting **Add site**. You can purchase a domain from [Cloudflare's registrar](/registrar/).
 
 ## Use GitHub Actions
 
@@ -108,13 +108,13 @@ After you have generated your Cloudflare API token and found your account ID in 
 
 To add environment variables, in the CircleCI web application:
 
-1. Go to your project's settings.
+1. Go to your Pages project > **Settings**.
 2. Select **Projects** in the side menu.
 3. Select the ellipsis (...) button in the project's row. You will see the option to add environment variables.
 4. Select **Environment Variables** > **Add Environment Variable**.
 5. Enter the name and value of the new environment variable, which is your Cloudflare credentials (`CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`).
 
-![Follow the instructions above to add environment variables to your CircleCI settings](../media/project-settings-env-var-v2.png)
+![Follow the instructions above to add environment variables to your CircleCI settings](/images/pages/how-to/project-settings-env-var-v2.png)
 
 ### Set up a workflow
 
@@ -147,7 +147,7 @@ Your continuous integration workflow is broken down into jobs when using CircleC
 
 {{<Aside type="note" header="Note">}}
 
-If your project uses a Node version less than `16.13.0`, you will have to upgrade your Node version as Wrangler requires at least Node.js version `16.13.0`.
+Wrangler requires a Node version of at least `16.17.0`. You must upgrade your Node.js version if your version is lower than `16.17.0`.
 
 {{</Aside>}}
 
@@ -189,4 +189,4 @@ env:
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler v2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.

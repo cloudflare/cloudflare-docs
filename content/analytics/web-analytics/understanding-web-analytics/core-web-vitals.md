@@ -20,12 +20,13 @@ Vitals Explorer enables you to easily pinpoint which elements in a web page are 
 To find Vitals Explorer:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select the **Analytics** drop-down and choose **Web Analytics**.
+2. Select the **Analytics & Logs** drop-down and choose **Web Analytics**.
 3. Select your website and select **Core Web Vitals**.
 
 Vitals Explorer is divided into three main sections, each one with information about a specific feature that affects user experience:
 
 - [Largest Contentful Paint (LCP)](https://web.dev/optimize-lcp/): Measures perceived load speed by the user. It returns how long the main content of the page takes to be loaded.
+- [Interaction to Next Paint (INP](https://web.dev/inp/): Measures user interface responsiveness – how quickly a website responds to user interactions like clicks or key presses.
 - [First Input Delay (FID)](https://web.dev/optimize-fid/): Measures how fast a website is to respond to the first user input.
 - [Cumulative Layout Shift (CLS)](https://web.dev/optimize-cls/): Measures visual stability, that is, if there are shifts in the page layout as the various elements are being loaded into view.
 
@@ -39,7 +40,7 @@ Each table — LCP, FID, and CLS — also shows you the performance of these ele
 
 These numbers refer to how an element performs relatively to others in your page. For example, if an element takes 3,900 ms to load and is in the 75 percentile, this means that it is slower to load than 75% of the elements in your page.
 
-![Debug View page](/analytics/static/images/web-analytics/core-web-vitals-debug-view.png)
+![Debug View page](/images/analytics/web-analytics/core-web-vitals-debug-view.png)
 
 ## Information collected
 

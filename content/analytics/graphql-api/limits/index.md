@@ -2,7 +2,8 @@
 pcx_content_type: reference
 title: Limits
 weight: 31
-layout: single
+meta:
+    title: GraphQL API - Limits
 ---
 
 # Limits
@@ -25,6 +26,8 @@ These limits are applied to every query for every plan:
 * A zone-scoped query can include up to **10 zones**
 * An account-scoped query can include only **1 account**
 
+Additionally, there is a limited number of queries you can make per request. The total number of queries in a request is equal to the number of zone/account scopes, multiplied by the number of nodes to which they are applied.
+
 ## User limits
 
 Cloudflare GraphQL API limits the number of GraphQL requests each user can send.
@@ -32,8 +35,8 @@ The default quota is **300 GraphQL queries over 5-minute window**. It allows a
 user to run at least **1 query every second** or do a burst of 300 queries and
 then wait 5 minutes before issuing another query.
 
-That rate limit is applied in addition to the general rate limits enforced by
-the Cloudflare API.
+That rate limit is applied in addition to the [general rate limits enforced by
+the Cloudflare API](/fundamentals/api/reference/limits/).
 
 ## Node limits and availability
 

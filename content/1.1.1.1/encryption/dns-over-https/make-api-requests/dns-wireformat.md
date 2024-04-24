@@ -7,7 +7,7 @@ meta:
 
 # Using DNS Wireformat
 
-Cloudflare respects DNS wireformat as defined in [RFC1035](https://datatracker.ietf.org/doc/html/rfc1035).
+Cloudflare respects DNS wireformat as defined in [RFC 1035](https://datatracker.ietf.org/doc/html/rfc1035).
 
 To send queries using DNS wireformat, set the header `accept: application/dns-message`, or `content-type: application/dns-message` if using `POST` to signalize the media type of the query.
 

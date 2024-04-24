@@ -7,7 +7,7 @@ title: Migrating a Jekyll-based site from GitHub Pages
 
 # Migrating a Jekyll-based site from GitHub Pages
 
-In this tutorial, you will learn how to to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll is one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
+In this tutorial, you will learn how to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll is one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
 
 This tutorial will guide you through:
 
@@ -43,7 +43,7 @@ If your GitHub Pages repository already has a `Gemfile` and `Gemfile.lock` prese
 
 {{</Aside>}}
 
-Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/pages/platform/build-configuration/).
+Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/pages/configuration/build-configuration/).
 
 Specifically, you will need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 
@@ -109,11 +109,15 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 {{<Aside type="note">}}
 
-If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/pages/get-started/#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Git integration guide](/pages/get-started/git-integration/), which explains how to connect your existing Git repository to Cloudflare Pages.
 
 {{</Aside>}}
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
 
@@ -133,7 +137,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Migrating your custom domain
 
@@ -141,10 +145,10 @@ If you are using a [custom domain with GitHub Pages](https://docs.github.com/en/
 
 Note that it may take some time for DNS caches to expire and for this change to be reflected, depending on the DNS TTL (time-to-live) value you set when you originally created the record.
 
-Refer to the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) section of the Get started guide for a list of detailed steps.
+Refer to the [adding a custom domain](/pages/configuration/custom-domains/#add-a-custom-domain) section of the Get started guide for a list of detailed steps.
 
 ## What's next?
 
 - Learn how to [customize HTTP response headers](/pages/how-to/add-custom-http-headers/) for your Pages site using Cloudflare Workers.
-- Understand how to [rollback a potentially broken deployment](/pages/platform/rollbacks/) to a previously working version.
-- [Configure redirects](/pages/platform/redirects/) so that visitors are always directed to your 'canonical' custom domain.
+- Understand how to [rollback a potentially broken deployment](/pages/configuration/rollbacks/) to a previously working version.
+- [Configure redirects](/pages/configuration/redirects/) so that visitors are always directed to your 'canonical' custom domain.

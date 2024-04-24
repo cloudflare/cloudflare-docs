@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Add rule to ruleset
 weight: 7
-layout: list
+layout: wide
 ---
 
 # Add rule to ruleset
@@ -14,42 +14,40 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Create account ruleset rule][ar-account] | `POST /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules` |
-| [Create zone ruleset rule][ar-zone] | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules` |
+| [Create an account ruleset rule][ar-account] | `POST /accounts/{account_id}/rulesets/{ruleset_id}/rules` |
+| [Create a zone ruleset rule][ar-zone] | `POST /zones/{zone_id}/rulesets/{ruleset_id}/rules` |
 
-[ar-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset-rule
-[ar-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset-rule
+[ar-account]: /api/operations/createAccountRulesetRule
+[ar-zone]: /api/operations/createZoneRulesetRule
+
+Include the rule definition in the request body.
+
+By default, the rule will be added to the end of the existing list of rules in the ruleset. To define a specific position for the rule, include a `position` object in the request body according to the guidelines in [Change the order of a rule in a ruleset](/ruleset-engine/rulesets-api/update-rule/#change-the-order-of-a-rule-in-a-ruleset).
 
 Invoking this method creates a new version of the ruleset.
 
-Include the rule definition in the request body. The rule will be added to the end of the existing list of rules in the ruleset.
-
 ## Example
 
-The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List zone rulesets](https://developers.cloudflare.com/api/operations/zone-rulesets-list-zone-rulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/listZoneRulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
-```json
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "action": "js_challenge",
   "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
   "description": "challenge GB and FR or based on IP Reputation"
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The response includes the complete ruleset after adding the rule.
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="false">}}
 
 ```json
 {
@@ -89,5 +87,12 @@ The response includes the complete ruleset after adding the rule.
 }
 ```
 
-</div>
-</details>
+{{</details>}}
+
+## Define the rule position in the ruleset
+
+To define the position of the new rule in the ruleset, include a `position` object in the request, containing one of the following:
+
+{{<render file="_rule-position-values.md">}}
+
+For examples of using a `position` object, refer to [Update a rule in a ruleset](/ruleset-engine/rulesets-api/update-rule/#examples).

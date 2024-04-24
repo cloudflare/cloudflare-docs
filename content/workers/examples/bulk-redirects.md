@@ -10,25 +10,25 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
   async fetch(request) {
-    const externalHostname = 'examples.cloudflareworkers.com';
+    const externalHostname = "examples.cloudflareworkers.com";
 
     const redirectMap = new Map([
-      ['/bulk1', 'https://' + externalHostname + '/redirect2'],
-      ['/bulk2', 'https://' + externalHostname + '/redirect3'],
-      ['/bulk3', 'https://' + externalHostname + '/redirect4'],
-      ['/bulk4', 'https://google.com'],
+      ["/bulk1", "https://" + externalHostname + "/redirect2"],
+      ["/bulk2", "https://" + externalHostname + "/redirect3"],
+      ["/bulk3", "https://" + externalHostname + "/redirect4"],
+      ["/bulk4", "https://google.com"],
     ]);
 
     const requestURL = new URL(request.url);
     const path = requestURL.pathname;
     const location = redirectMap.get(path);
-    
+
     if (location) {
       return Response.redirect(location, 301);
     }
@@ -37,32 +37,34 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
-{{<tab label="js/sw">}}
-```js
-const externalHostname = 'examples.cloudflareworkers.com';
+{{<tab label="ts">}}
 
-const redirectMap = new Map([
-  ['/bulk1', 'https://' + externalHostname + '/redirect2'],
-  ['/bulk2', 'https://' + externalHostname + '/redirect3'],
-  ['/bulk3', 'https://' + externalHostname + '/redirect4'],
-  ['/bulk4', 'https://google.com'],
-]);
+```ts
+export default {
+  async fetch(request): Promise<Response> {
+    const externalHostname = "examples.cloudflareworkers.com";
 
-async function handleRequest(request) {
-  const requestURL = new URL(request.url);
-  const path = requestURL.pathname;
-  const location = redirectMap.get(path);
-  if (location) {
-    return Response.redirect(location, 301);
-  }
-  // If request not in map, return the original request
-  return fetch(request);
-}
+    const redirectMap = new Map([
+      ["/bulk1", "https://" + externalHostname + "/redirect2"],
+      ["/bulk2", "https://" + externalHostname + "/redirect3"],
+      ["/bulk3", "https://" + externalHostname + "/redirect4"],
+      ["/bulk4", "https://google.com"],
+    ]);
 
-addEventListener('fetch', async event => {
-  event.respondWith(handleRequest(event.request));
-});
+    const requestURL = new URL(request.url);
+    const path = requestURL.pathname;
+    const location = redirectMap.get(path);
+
+    if (location) {
+      return Response.redirect(location, 301);
+    }
+    // If request not in map, return the original request
+    return fetch(request);
+  },
+} satisfies ExportedHandler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

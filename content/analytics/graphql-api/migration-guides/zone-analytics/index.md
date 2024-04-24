@@ -6,7 +6,7 @@ weight: 12
 
 # Zone Analytics to GraphQL Analytics
 
-The [Zone Analytics API](https://developers.cloudflare.com/api/operations/zone-analytics-(-deprecated)-get-dashboard) allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
+The [Zone Analytics API](/api/operations/zone-analytics-(-deprecated)-get-dashboard) allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
 
 For example, here is a sample curl call to get data for a two minute period:
 
@@ -14,9 +14,7 @@ For example, here is a sample curl call to get data for a two minute period:
 curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?since=2019-09-08T20:00:00Z&until=2019-09-08T20:02:00Z&continuous=false" | jq .
 ```
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -253,8 +251,7 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https:
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 As you can see from the response, Zone Analytics returns metrics along many dimensions and does not give you the option to control what you receive. With GraphQL Analytics, you can ask for only the data that you need. However, if you wanted to get exactly the same metrics and dimensions as you would from Zone Analytics, here is the query you would make:
 
@@ -316,9 +313,7 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 }
 ```
 
-<details>
-<summary>Response</summary>
-<div>
+{{<details header="Response">}}
 
 ```json
 {
@@ -503,8 +498,7 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 Notice that you can specify the request time period using a dataset filter (refer to [Filtering](/analytics/graphql-api/features/filtering/)). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it is available.
 

@@ -17,6 +17,8 @@ Develop Web3 applications without having to worry about running infrastructure
 
 Web3, or the distributed web, is a set of technologies that enables hosting of content and web applications in a serverless manner by leveraging distributed systems and consensus protocols.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ---
 
 ## Features
@@ -34,13 +36,6 @@ Gives you read and write access to the [Ethereum network](/web3/ethereum-gateway
 
 {{</feature>}}
 
-{{<feature header="Polygon Gateway" href="/web3/polygon-gateway/">}}
-{{<plan id="web3.polygon.properties.availability.summary">}}
-
-Gives you read and write access to the [Polygon network](/web3/polygon-gateway/) without installing any software on your computer.
-
-{{</feature>}}
-
 ---
 
 ## Benefits
@@ -51,7 +46,7 @@ Cloudflare's Web3 gateways provide HTTP-accessible interfaces to Web3 networks, 
 - **Security**: Get the protection benefits of Cloudflare's global Anycast network for [enhanced security](https://blog.cloudflare.com/cloudflare-thwarts-17-2m-rps-ddos-attack-the-largest-ever-reported/).
 - **Reduced maintenance**: Cloudflare — and not your developers — maintains and monitors security, reliability, and performance.
 - **Reliability**: Cloudflare's global Anycast network provides a high level of [reliability and availability](https://www.cloudflare.com/network/).
-- **Performance**: With Cloudflare's edge network of data centers in over 270 cities, content can be cached and served from data centers close to your end users.  
+- **Performance**: With Cloudflare's edge network of data centers in [hundreds of cities worldwide](https://www.cloudflare.com/network/), content can be cached and served from data centers close to your end users.  
 
 ---
 

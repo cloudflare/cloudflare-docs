@@ -1,6 +1,7 @@
 ---
 title: Web
 weight: 1
+pcx_content_type: reference
 ---
 
 # Web

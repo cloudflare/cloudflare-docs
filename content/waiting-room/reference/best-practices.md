@@ -31,3 +31,10 @@ When users are actively queueing, only make changes to your [configuration setti
 ### Queueing method
 
 {{<render file="_change-queueing-method.md">}}
+
+## Waiting Room and SEO
+
+SEO crawlers may end up in a queue during active queueing. When this happens, your sites search results and SEO may be impacted. To avoid this, you can enable SEO Crawler Bypassing from the Waiting Room dashboard or via API. SEO Crawler Bypassing ensures that trusted SEO Crawlers, verified by Bot Management, are never placed in your waiting rooms. By not being queued, SEO crawlers are always able to crawl your site, which helps maintain your SEO and search results in major search engines.
+
+By enabling this service, you understand that these verified crawlers are completely bypassing your waiting rooms. No waiting room settings or features will apply to this traffic.
+

@@ -10,12 +10,18 @@ Before making changes, make sure you are inside the correct version of your zone
 To change between different versions of your zone:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **Version Management**.
-4. On a specific version, select **Select**.
+2. Select your account and a domain that has version management. The Global Configuration of your domain will load.
+3. Go to the product or feature you wish to modify.
+    - **If the product or feature is available for versioning**: The last version you were working on will load.
+    - **If the product or feature is NOT available for versioning**: Your Global Configuration will load, and any changes you make will impact live traffic.
+4. Ensure that the configuration or version displayed in the domain summary bar is the one you would like to work on. If not, select the version in the domain summary bar to open the version switcher.
 
-You can also change which version you are in from any page by using the sidebar dropdown.
+{{<Aside type="note">}}
+If you are on a product that is not available for versioning, you will not be able to switch to another version, and can only make changes under your Global Configuration.
+{{</Aside>}}
 
-![Select a version from the Versions page or the sidebar dropdown](/version-management/static/change-version.png)
+The Domain Summary is accessible from all pages and allows you to quickly switch between versions and domains.
 
-From within a version, you can update settings just as you would with your normal zone settings. Any changes are saved automatically.
+![Switch between versions of your configuration](/images/version-management/configurable-versions.png)
+
+From within a version, you can update configurations just as you would with your normal zone configurations. Any changes are saved automatically.

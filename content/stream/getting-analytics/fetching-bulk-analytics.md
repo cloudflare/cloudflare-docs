@@ -31,7 +31,7 @@ Stream collects data about the number of minutes of video delivered to viewers f
 | `clientCountryName` | ISO 3166 alpha2 country code from the client who viewed the video                                        |
 | `creator`           | The [Creator ID](/stream/manage-video-library/creator-id/) associated with individual videos, if present |
 
-Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
+Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](/analytics/graphql-api/features/filtering/).
 
 ### Metrics
 
@@ -54,8 +54,8 @@ query {
     }) {
       streamMinutesViewedAdaptiveGroups(
         filter: {
-          date_geq: "2022-03-01"
-          date_lt: "2022-02-01"
+          date_geq: "2022-02-01"
+          date_lt: "2022-03-01"
         }
         orderBy:[sum_minutesViewed_DESC]
         limit: 100
@@ -119,125 +119,6 @@ header: GraphQL response
 }
 ```
 
-## Client side analytics
-
-Client-side analytics are collected by the Stream Player, in viewers' web browsers. This enables more detailed metrics that can be used to understand the quality of viewers' experience, including how often video playback stops due to buffering or how often the quality level switches during playback.
-
-{{<Aside header="Client-side analytics are only available with the Stream Player">}}
-Client-side analytics are only collected when the [Stream Player](/stream/viewing-videos/using-the-stream-player/) is used. If you use a different player, only server-side analytics will be available.
-{{</Aside>}}
-
-### Filters and Dimensions
-
-| Field               | Description                                                       |
-| ------------------- | ----------------------------------------------------------------- |
-| `date`              | Date                                                              |
-| `datetime`          | DateTime                                                          |
-| `uid`               | UID of the video                                                  |
-| `clientCountryName` | ISO 3166 alpha2 country code from the client who viewed the video |
-| `deviceBrowser`     | Browser                                                           |
-| `deviceOs`          | Device operating system                                           |
-| `deviceType`        | Device type                                                       |
-
-Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
-
-### Metrics
-
-| Node                                | Field               | Description                                             |
-| ----------------------------------- | ------------------- | ------------------------------------------------------- |
-| `videoPlaybackEventsAdaptiveGroups` | `timeViewedMinutes` | Minutes of video viewed                                 |
-| `videoPlaybackEventsAdaptiveGroups` | `count`             | Number of times video playback has started              |
-| `videoBufferEventsAdaptiveGroups`   | `count`             | Number of times video playback stopped due to buffering |
-| `videoQualityEventsAdaptiveGroups`  | `count`             | Number of times video quality changed during playback   |
-
-### Examples
-
-#### Get the view count and minutes viewed for all videos in your Stream account
-
-```graphql
----
-header: GraphQL Request
----
-query {
-  viewer {
-    accounts(filter:{
-      accountTag:"<ACCOUNT_ID>"
-
-    }) {
-      videoPlaybackEventsAdaptiveGroups(
-        filter: {
-          date_geq: "2020-09-01"
-          date_lt: "2020-09-25"
-        }
-        orderBy:[uid_ASC]
-        limit: 1000
-      ) {
-        count
-        sum {
-          timeViewedMinutes
-        }
-        dimensions{
-          uid
-        }
-      }
-    }
-  }
-}
-```
-
-```json
----
-header: GraphQL response
----
-{
-  "data": {
-    "viewer": {
-      "accounts": [
-        {
-          "videoPlaybackEventsAdaptiveGroups": [
-            {
-              "count": 5,
-              "dimensions": {
-                "uid": "35f58cd097b40b1264124d9easbd62249"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 0,
-              "dimensions": {
-                "uid": "5646153f8dea17f44dss542a42e76cfd04"
-              },
-              "sum": {
-                "timeViewedMinutes": 0
-              }
-            },
-            {
-              "count": 2,
-              "dimensions": {
-                "uid": "764254b444dss68c63702e8545536dfb422"
-              },
-              "sum": {
-                "timeViewedMinutes": 1225
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
-}
-```
-
-#### About the response above:
-
-- Each object inside `videoPlaybackEventsAdaptiveGroups` represents one video.
-- `uid` represents the unique identifier for the video.
-- `count` shows the view count for one video during the specified date range.
-- `timeViewedMinutes` shows the minutes viewed per video during the specified date range.
-- If a video did not have views in the date range specified, it will NOT be included in the response
 
 ## Pagination
 

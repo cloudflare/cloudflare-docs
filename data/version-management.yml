@@ -5,16 +5,21 @@ product:
   title: Version Management
   url: /version-management/
   wrap: true
+  group: Cloudflare essentials
 
 meta:
   title: Cloudflare Version Management docs
   description: Cloudflare Version Management lets you safely manage configurations on the edge with versioning, staging, and rollbacks.
   author: '@cloudflare'
-  image: /core-services-preview.png
-
+  
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/versioning
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: version-management

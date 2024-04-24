@@ -18,11 +18,11 @@ You will need to manually create an app for Area 1 in Okta.
 
 2. In the Admin console, go to **Applications** > **Applications**.
 
-    ![Go to Applications in your Okta Admin console](/email-security/static/sso/okta/step2-applications.png)
+    ![Go to Applications in your Okta Admin console](/images/email-security/sso/okta/step2-applications.png)
 
 3. Select **Create App Integration** > **SAML 2.0**, and select **Next**.
 
-    ![Choose SAML 2.0 as the new app integration type](/email-security/static/sso/okta/step3-saml.png)
+    ![Choose SAML 2.0 as the new app integration type](/images/email-security/sso/okta/step3-saml.png)
 
 4. Enter a descriptive name for your app, such as `Area 1`, and select **Next**.
 
@@ -42,7 +42,7 @@ You will need to manually create an app for Area 1 in Okta.
     | **Name format**                     | Select _Unspecified_ from the drop-down menu.                                               |
     | **Value**                           | Select `user.email` from the drop-down menu.                                                |
 
-    ![Input the correct settings in SAML settings](/email-security/static/sso/okta/step5-saml-settings.png)
+    ![Input the correct settings in SAML settings](/images/email-security/sso/okta/step5-saml-settings.png)
 
 6. Select **Next**.
 
@@ -54,21 +54,21 @@ You will need to manually create an app for Area 1 in Okta.
 
 10. Okta should display the app you have just created. If not, go to **Applications** > **Applications**, and select it.
 
-11. In the **Sign On** tab, navigate to **View SAML setup instructions** and select it to retrieve the SAML provider information.
+11. In the **Sign On** tab, go to **View SAML setup instructions** and select it to retrieve the SAML provider information.
 
-    ![Find the View SAML setup instructions button](/email-security/static/sso/okta/step11-saml-instructions.png)
+    ![Find the View SAML setup instructions button](/images/email-security/sso/okta/step11-saml-instructions.png)
 
 12. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Area 1 dashboard.
 
-    ![Copy and save the SSO URL to use later in the Area 1 dashboard](/email-security/static/sso/okta/step12-sso-url.png)
+    ![Copy and save the SSO URL to use later in the Area 1 dashboard](/images/email-security/sso/okta/step12-sso-url.png)
 
 13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to  finish configuration in the Area 1 dashboard. The start of the metadata should be similar to the following:
 
     ```txt
-    <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
+    <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
     ```
 
-    ![Copy and save the XML metadata to use later in the Area 1 dashboard](/email-security/static/sso/okta/step13-optional.png)
+    ![Copy and save the XML metadata to use later in the Area 1 dashboard](/images/email-security/sso/okta/step13-optional.png)
 
 ## 2. Configure Area 1 to connect to Okta
 
@@ -78,11 +78,11 @@ You will need to manually create an app for Area 1 in Okta.
 
 3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
-    ![Fill out your authorized administrators](/email-security/static/sso/generic/step3-users-actions.png)
+    ![Fill out your authorized administrators](/images/email-security/sso/generic/step3-users-actions.png)
 
 4. Go to **SSO Settings** and enable **Single Sign On** switch.
 
-    ![Enable SSO](/email-security/static/sso/generic/step4-sso.png)
+    ![Enable SSO](/images/email-security/sso/generic/step4-sso.png)
 
 5. In **SSO Enforcement**, choose one of the settings according to your specific needs:
 {{<render file="_sso-enforcement.md">}}

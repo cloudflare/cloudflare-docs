@@ -20,15 +20,15 @@ After your call with Cloudflare, complete the [prerequisites](/magic-transit/pre
 
 ## 3. Run pre-flight checks
 
-After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, Letter of Authorization (LOA), Internet Routing Registry (IRR), and maximum segment size (MSS) configurations.
+After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, {{<glossary-tooltip term_id="letter of agency">}}Letter of Agency (LOA){{</glossary-tooltip>}}, Internet Routing Registry (IRR), and {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} configurations.
 
 ## 4. Advertise prefixes
 
-Once Cloudflare’s pre-flight checks have passed and your account team verifies the date to complete the change, the process of onboarding your prefixes to Cloudflare’s edge network begins.
+Once Cloudflare’s pre-flight checks have passed and your account team verifies the date to complete the change, the process of onboarding your {{<glossary-tooltip term_id="prefix">}}prefixes{{</glossary-tooltip>}} to Cloudflare’s global network network begins.
 
-To configure the edge network, Cloudflare routes traffic sourced from Cloudflare’s network and attracts traffic from the broader Internet by advertising your customer-owned prefixes.
+To configure our global network, Cloudflare routes traffic sourced from Cloudflare’s network and attracts traffic from the broader Internet by advertising your customer-owned prefixes.
 
-You control the edge router advertisement, which dictates whether Cloudflare’s edge network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the tunnels to your data centers.
+You control the edge router advertisement, which dictates whether Cloudflare’s global network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the tunnels to your data centers.
 
 If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 
@@ -44,4 +44,4 @@ When using [Cloudflare Network Interconnect](/network-interconnect/) with Magic 
 
 ## 5. Go live and announce prefixes
 
-Once edge network configuration is complete, schedule a go-live call. During this call, you announce your prefixes from Cloudflare’s edge network for the first time.
+Once edge network configuration is complete, schedule a go-live call. During this call, you announce your prefixes from Cloudflare’s global network for the first time.

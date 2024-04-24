@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Custom certificates are meant for Business and Enterprise clients who want to utilize their own SSL certificates.
+Custom certificates are meant for Business and Enterprise customers who want to use their own SSL certificates.

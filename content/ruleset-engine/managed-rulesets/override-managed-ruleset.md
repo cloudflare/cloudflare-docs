@@ -77,15 +77,14 @@ It is **not recommended** that you enable all the rules in a managed ruleset at 
 
 The following request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase, and defines a rule override to enable rule `<RULE_ID>` and set its action to `log`.
 
-<details>
-<summary>Example: Execute a managed ruleset with overrides in a phase at the zone level</summary>
-<div>
+{{<details header="Example: Execute a managed ruleset with overrides in a phase at the zone level">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Deploy managed ruleset, enabling a specific rule with log action",
   "rules": [
     {
@@ -108,20 +107,18 @@ curl -X PUT \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 The following request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase, and defines a ruleset override that sets the action to `log` for all (enabled) rules.
 
-<details>
-<summary>Example: Execute a managed ruleset with overrides in a phase at the account level</summary>
-<div>
+{{<details header="Example: Execute a managed ruleset with overrides in a phase at the account level">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Deploy managed ruleset for example.com, overriding the rules action to log",
   "rules": [
     {
@@ -138,7 +135,6 @@ curl -X PUT \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
 For additional examples of configuring overrides, refer to [Managed ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).

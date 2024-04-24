@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Generic OIDC
-weight: 12
+weight: 1
 ---
 
 # Generic OIDC
@@ -12,25 +12,27 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 1. Visit your identity provider and create a client/app.
 
-2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+
 3. Copy the content of these fields:
 
-    - Client ID
-    - Client secret
-    - Auth URL: The `authorization_endpoint` URL of your IdP
-    - Token URL: The `token_endpoint` URL of your IdP
-    - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
+   - Client ID
+   - Client secret
+   - Auth URL: The `authorization_endpoint` URL of your IdP
+   - Token URL: The `token_endpoint` URL of your IdP
+   - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
 
-    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
+   You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
 
-4. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+4. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-5. Under **Login methods**, click **Add new**.
+5. Under **Login methods**, select **Add new**.
 
 6. Choose **OpenID Connect**..
 
@@ -38,11 +40,27 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter custom OIDC claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
-10. Click **Save**.
+10. Select **Save**.
 
-To test that your connection is working, navigate to **Authentication** > **Login methods** and click **Test** next to the login method you want to test. On success, a confirmation screen displays.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
+
+## Optional configurations
+
+### OIDC claims
+
+OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes. Custom OIDC claims are not currently supported in Gateway policies.
+
+#### Email claim
+
+You can specify a custom **Email claim** name that Access will use to identify user emails. This is useful if your IdP does not return the standard `email` claim in the OIDC ID token.
+
+#### Multi-record OIDC claims
+
+Cloudflare Access extends support for multi-record OIDC claims. These claims are parsed out and can be individually referenced in policies. This feature enables granular access control and precise user authorization in applications.
+
+Cloudflare Access does not support partial OIDC claim value references or OIDC scopes.
 
 ## Example API Configuration
 

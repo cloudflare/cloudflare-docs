@@ -15,8 +15,3 @@ You can simultaneously configure an OTP and an identity provider to allow users 
 Additionally, Cloudflare Zero Trust can integrate with [endpoint protection providers](/cloudflare-one/identity/devices/) to check requests for device posture. This allows you to configure security policies that rely on additional signals from endpoint security providers to allow or deny connections to your applications.
 
 {{<directory-listing>}}
-
-## Related tutorials
-
-*   [Require U2F keys with Okta](/cloudflare-one/tutorials/okta-u2f/)
-*   [Troubleshoot user login details](/cloudflare-one/tutorials/user-diagnostics/)

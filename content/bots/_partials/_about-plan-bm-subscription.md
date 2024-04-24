@@ -31,7 +31,7 @@ _build:
     </tr>
     <tr>
       <td><b>Actions</b></td>
-      <td>Customer chooses from several options, including block, CAPTCHA challenge, and JS challenge</td>
+      <td>Customer chooses from several options, including block and various challenges</td>
     </tr>
     <tr>
       <td><b>Analytics</b></td>
@@ -39,7 +39,7 @@ _build:
     </tr>
     <tr>
       <td><b>Additional control</b></td>
-      <td>Ability to restrict by path, IP address, and more. Access to <a href="/bots/concepts/bot-score/">bot score</a>, <a href="/bots/concepts/ja3-fingerprint/">JA3 fingerprint</a>, and <a href="/bots/concepts/cloudflare-bot-tags/">bot tags</a> fields.</td>
+      <td>Ability to restrict by path, IP address, and more. Access to <a href="/bots/concepts/bot-score/">bot score</a>, <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 fingerprint</a>, and <a href="/bots/concepts/cloudflare-bot-tags/">bot tags</a> fields.</td>
     </tr>
   </tbody>
 </table>

@@ -8,15 +8,15 @@ meta:
 
 # Configuration Rules settings
 
-You can change the configuration settings described below in a Configuration Rule.
+You can change the configuration settings described below in a configuration rule.
 
 ## Automatic HTTPS Rewrites
 
-Enable or disable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) [^1] for matching requests.
+[Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) prevents end users from seeing `Mixed content` errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Automatic HTTPS Rewrites for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"automatic_https_rewrites"` (boolean).
 
@@ -29,18 +29,24 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Auto Minify
 
-Select which file extensions to minify automatically using [Auto Minify](https://support.cloudflare.com/hc/articles/200168196) [^2].
+[Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to configure which file extensions you want to minify automatically:
+- HTML
+- CSS
+- JS
+
+{{<Aside type="note" header="Note">}}
+Before using this setting, turn off Auto Minify globally for your zone (in **Speed** > **Optimization** > **Content Optimization**) and then turn it on for specific requests and file extensions in a configuration rule.
+{{</Aside>}}
+
+{{<details header="API information">}}
 
 API configuration object name: `"autominify"` (object).
 
@@ -57,18 +63,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Browser Integrity Check
 
-Enable or disable [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086) [^3] for matching requests.
+[Browser Integrity Check](/waf/tools/browser-integrity-check/) blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Browser Integrity Check for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"bic"` (boolean).
 
@@ -81,18 +86,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Disable Apps
 
-Disable all active [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started) [^4] for matching requests.
+[Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/), now deprecated, is a platform for sharing high-quality apps that anyone with a website can use.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn off all active Cloudflare Apps for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"disable_apps"` (boolean).
 
@@ -105,42 +109,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
-
-## Disable Railgun
-
-Disable [Cloudflare Railgun](/railgun/) [^5] for matching requests.
-
-<details>
-<summary>API information</summary>
-<div>
-
-API configuration property name: `"disable_railgun"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "disable_railgun": true
-}
-```
-
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
-
-</div>
-</details>
+{{</details>}}
 
 ## Disable Zaraz
 
-Disable [Cloudflare Zaraz](/zaraz/) [^6] for matching requests.
+[Cloudflare Zaraz](/zaraz/) gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn off Zaraz for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"disable_zaraz"` (boolean).
 
@@ -153,18 +132,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Hotlink Protection
 
-Enable or disable [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026) [^7] for matching requests.
+[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Hotlink Protection for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"hotlink_protection"` (boolean).
 
@@ -177,18 +155,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Email Obfuscation
 
-Enable or disable [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016) [^8] for matching requests.
+[Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Email Obfuscation for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"email_obfuscation"` (boolean).
 
@@ -201,18 +178,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Mirage
 
-Enable or disable [Mirage](https://support.cloudflare.com/hc/articles/219178057) [^9] for matching requests.
+[Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Mirage for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"mirage"` (boolean).
 
@@ -225,18 +201,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Opportunistic Encryption
 
-Enable or disable [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) [^10] for matching requests.
+[Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) allows browsers to access HTTP URIs over an encrypted TLS channel.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Opportunistic Encryption for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"opportunistic_encryption"` (boolean).
 
@@ -249,18 +224,22 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Polish
 
-Set [Polish](/images/polish/) [^11] compression options for matching requests.
+[Cloudflare Polish](/images/polish/) is a one-click image optimization product that automatically optimizes images in your site.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to configure Polish for matching requests:
+- Off
+- Lossless
+- Lossy
+
+Refer to [Compression options](/images/polish/compression/#compression-options) for more information on these values.
+
+{{<details header="API information">}}
 
 API configuration property name: `"polish"` (string).
 
@@ -275,18 +254,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Rocket Loader
 
-Enable or disable [Rocket Loader](/fundamentals/speed/rocket-loader/) [^12] for matching requests.
+[Rocket Loader](/speed/optimization/content/rocket-loader/) prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Rocket Loader for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"rocket_loader"` (boolean).
 
@@ -299,18 +277,26 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Security Level
 
-Select the [Security Level](https://support.cloudflare.com/hc/articles/200170056) [^13] for matching requests.
+[Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to select the security level for matching requests:
+
+- Off
+- Essentially Off
+- Low
+- Medium
+- High
+- I'm Under Attack
+
+Refer to [Security levels](/waf/tools/security-level/#security-levels) for more information on these values.
+
+{{<details header="API information">}}
 
 API configuration property name: `"security_level"` (string).
 
@@ -325,18 +311,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Server Side Excludes
 
-Enable or disable [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036) [^14] for matching requests.
+[Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off Server Side Excludes for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"server_side_excludes"` (boolean).
 
@@ -349,18 +334,25 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## SSL
 
-Select the [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) [^15] for matching requests.
+[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to configure the SSL/TLS encryption mode for matching requests:
+
+- Off
+- Flexible
+- Full
+- Strict
+- Origin Pull
+
+Refer to [Available encryption modes](/ssl/origin-configuration/ssl-modes/#available-encryption-modes) for more information on these values.
+
+{{<details header="API information">}}
 
 API configuration property name: `"ssl"` (string).
 
@@ -375,18 +367,17 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/fundamentals/signed-exchanges/signed-exchanges/) [^16] for matching requests.
+[Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
 
-<details>
-<summary>API information</summary>
-<div>
+Use this setting to turn on or off signed exchanges for matching requests.
+
+{{<details header="API information">}}
 
 API configuration property name: `"sxg"` (boolean).
 
@@ -399,39 +390,6 @@ header: API configuration example
 }
 ```
 
-Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create-api/#examples) for complete API examples.
+{{<render file="_configuration-rule-link-to-examples.md">}}
 
-</div>
-</details>
-
-[^1]: Automatic HTTPS Rewrites prevents end users from seeing “mixed content” errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
-
-[^2]: Auto Minify can remove all unnecessary characters from HTML, JavaScript, and CSS files.
-
-[^3]: Browser Integrity Check blocks access to pages based on specific HTTP headers commonly abused by spammers.
-
-[^4]: Cloudflare Apps is a platform for sharing high-quality apps that are easy to use by anyone with a website.
-
-[^5]: Railgun is a WAN optimization technology that compresses previously unreachable web objects using techniques similar to those used in high-quality video compression.
-
-[^6]: Zaraz gives you complete control over third-party tools and services for your website, and allows you to offload them to Cloudflare’s edge.
-
-[^7]: Hotlink Protection prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
-
-[^8]: Email Obfuscation helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
-
-[^9]: Mirage accelerates image delivery for your visitors based on their device.
-
-[^10]: Opportunistic Encryption allows browsers to access HTTP URIs over an encrypted TLS channel.
-
-[^11]: Cloudflare Polish is a one-click image optimization product that automatically optimizes images in your site.
-
-[^12]: Rocket Loader prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
-
-[^13]: The Security Level controls Managed Challenges for requests from low reputation IP addresses.
-
-[^14]: Server Side Excludes allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
-
-[^15]: Encryption modes control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
-
-[^16]: Signed exchanges (SXG) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
+{{</details>}}

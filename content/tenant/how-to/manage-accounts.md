@@ -10,13 +10,37 @@ weight: 1
 
 ## Create account
 
-{{<render file="_create-account.md">}}
+{{<render file="_account-preamble.md">}}
 
-## Fetch account
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_create-account-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_create-account-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
+
+## View accounts
 
 When you create an account with the Tenant API, your Cloudflare user owns that account from creation, ongoing management, and finally deletion.
 
-To view any accounts owned by your Cloudflare user, send a [`GET`](https://developers.cloudflare.com/api/operations/accounts-list-accounts) request to the `/accounts` endpoint.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To view any accounts owned by your tenant using the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **Tenants** > **Managed Accounts**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To fetch any accounts owned by your tenant using the API, send a [`GET`](/api/operations/accounts-list-accounts) request to the `/accounts` endpoint.
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to.
 
@@ -26,7 +50,7 @@ header: Request
 ---
 curl -X GET https://api.cloudflare.com/client/v4/accounts \
 -H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
+-H 'x-auth-key: <API_KEY>'
 ```
 
 ```json
@@ -62,10 +86,13 @@ header: Response
   "messages": []
 }
 ```
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Update account
 
-To update an account, send a [`PUT`](https://developers.cloudflare.com/api/operations/accounts-update-account) request to the `/accounts/<ACCOUNT_ID>` endpoint.
+To update an account, send a [`PUT`](/api/operations/accounts-update-account) request to the `/accounts/<ACCOUNT_ID>` endpoint.
 
 ## Delete account
 
@@ -79,7 +106,7 @@ header: Request
 ---
 curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID> \
 -H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
+-H 'x-auth-key: <API_KEY>'
 ```
 
 A successful request will return the id to confirm the operation:

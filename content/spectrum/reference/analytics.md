@@ -12,13 +12,13 @@ Cloudflare measures the following metrics for every connection.
 
 | Metric         | Name                                | Example | Unit                 |
 | -------------- | ----------------------------------- | ------- | -------------------- |
-| count          | Count of total events               | 1000    | Count                |
-| bytesIngress   | Sum of ingress bytes                | 1000    | Sum                  |
-| bytesEgress    | Sum of egress bytes                 | 1000    | Sum                  |
-| durationAvg    | Average connection duration         | 1.0     | Time in milliseconds |
-| durationMedian | Median connection duration          | 1.0     | Time in milliseconds |
-| duration90th   | 90th percentile connection duration | 1.0     | Time in milliseconds |
-| duration99th   | 99th percentile connection duration | 1.0     | Time in milliseconds |
+| count          | Count of total events               | `1000`    | Count                |
+| bytesIngress   | Sum of ingress bytes                | `1000`    | Sum                  |
+| bytesEgress    | Sum of egress bytes                 | `1000`    | Sum                  |
+| durationAvg    | Average connection duration         | `1.0`     | Time in milliseconds |
+| durationMedian | Median connection duration          | `1.0`     | Time in milliseconds |
+| duration90th   | 90th percentile connection duration | `1.0`     | Time in milliseconds |
+| duration99th   | 99th percentile connection duration | `1.0`     | Time in milliseconds |
 
 {{</table-wrap>}}
 
@@ -30,10 +30,10 @@ You can divide your analytics further by the following dimensions.
 
 | Dimension | Name                          | Example                                                    |
 | --------- | ----------------------------- | ---------------------------------------------------------- |
-| event     | Connection Event              | connect, progress, disconnect, originError, clientFiltered |
-| appID     | Application ID                | 40d67c87c6cd4b889a4fd57805225e85                           |
-| coloName  | Colo Name                     | SFO                                                        |
-| ipVersion | IP version used by the client | 4, 6                                                       |
+| event     | Connection Event              | `connect`, `progress`, `disconnect`, `originError`, `clientFiltered` |
+| appID     | Application ID                | `40d67c87c6cd4b889a4fd57805225e85`                           |
+| coloName  | Colo Name                     | `SFO`                                                        |
+| ipVersion | IP version used by the client | `4`, `6`                                                       |
 
 {{</table-wrap>}}
 
@@ -45,20 +45,16 @@ Use the operators below to filter data.
 
 | Operator | Name                     | URL Encoded |
 | -------- | ------------------------ | ----------- |
-| \==      | Equals                   | %3D%3D      |
-| !=       | Does not equals          | !%3D        |
-| \>       | Greater Than             | %3E         |
-| <        | Less Than                | %3C         |
-| \>=      | Greater than or equal to | %3E%3D      |
-| <=       | Less than or equal to    | %3C%3D      |
+| `==`      | Equals                   | `%3D%3D`      |
+| `!=`       | Does not equal           | `!%3D`        |
+| `>`       | Greater Than             | `%3E`         |
+| `<`        | Less Than                | `%3C`         |
+| `>=`      | Greater than or equal to | `%3E%3D`      |
+| `<=`       | Less than or equal to    | `%3C%3D`      |
 
 {{</table-wrap>}}
 
-Filters can be combined using OR and AND boolean logic.
-
-- AND takes precedence over OR in all expressions.
-- OR operator is defined using a comma `,` or the OR keyword surrounded by whitespace.
-- AND operator is defined using a semicolon `;` or the AND keyword surrounded by whitespace.
+{{<render file="_api-combine-filters.md" productFolder="fundamentals">}}
 
 ## Analytics request structure
 

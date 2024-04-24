@@ -6,7 +6,7 @@ weight: 0
 
 # Static resource protection
 
-Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their static resources from bots.
+Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their {{<glossary-tooltip term_id="static content">}}static resources{{</glossary-tooltip>}} from bots.
 
 {{<Aside type="warning" header="Warning">}}
 If you enable static resource protection, you may block good bots — like mail clients — that routinely fetch static resources. Make sure you understand your existing infrastructure before enabling this feature.
@@ -23,8 +23,10 @@ To enable this feature as a Pro or Business customer or an Enterprise customer w
 ## Bot Management for Enterprise
 
 {{<render file="_static-resources-bm.md">}}
+<br/>
+
+To exclude static resources, you would need to include `not (cf.bot_management.static_resource)` as part of your custom rule.
 
 ## Which files are protected?
 
-Cloudflare defines static resources as files with the following extensions:
-`|css|jar|js|jpg|jpeg|gif|ico|png|bmp|pict|csv|doc|docx|xls|xlsx|pdf|ps|pls|ppt|txt|ico|pptx|tif|tiff|ttf|otf|woff|woff2|webp|svg|svgz|eot|eps|ejs|swf|torrent|midi|mid|`
+{{<render file="_static-resources-list.md">}}

@@ -1,55 +1,65 @@
 ---
 title: Overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
-  title: Cloudflare Waiting Room docs
+  title: Cloudflare Waiting Room
 ---
 
 # Cloudflare Waiting Room
 
-Cloudflare Waiting Room protects websites by queueing site visitors when a website experiences unmanageable surges in legitimate traffic that may otherwise bring an application down.
+{{<description>}}
+A virtual waiting room to manage peak traffic.
+{{</description>}}
 
-## Benefits
+{{<plan type="business">}}
 
-Waiting Room protects **your origin server** by preventing surges in legitimate traffic that may overload your origin.
+Cloudflare Waiting Room allows you to route excess users of your website to a customized waiting room, helping preserve customer experience and protect origin servers from being overwhelmed with requests.
 
-Waiting Room also benefits **your visitors** by:
+---
 
-- Keeping your application online and preventing them from reaching error pages.
-- Showing estimated wait times that are continuously updated.
-- Opening up new spots more quickly by tracking dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration/).
-- Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
-- Appearing in your own [branding and style](/waiting-room/how-to/customize-waiting-room/), which enhances trust and lets you provide additional information as needed.
+## Features
 
-## How it works
+{{<feature header="Scheduled Event" href="/waiting-room/additional-options/create-events/">}}
+Customize the behavior of a waiting room for a specific period of time.
+{{</feature>}}
 
-Once you have [created and activated a waiting room](/waiting-room/get-started/) for a specific application page:
+{{<feature header="Waiting Room Rules" href="/waiting-room/additional-options/waiting-room-rules/">}}
+Create rules to indicate specific traffic or areas of your site or application that you do not want a waiting room to apply to.
+{{</feature>}}
 
-- If a page is not experiencing heavy traffic, a visitor accesses the page directly.
-- If page traffic crosses a [user-defined threshold](/waiting-room/reference/configuration-settings/#session-duration/), a visitor enters a virtual waiting room until it is their turn to access the page:
-  - Each user receives a [cookie](/waiting-room/reference/waiting-room-cookie/) to manage the dynamic outflow of requests from the waiting room to the origin website in First In First Out (FIFO) order.
-  - While in the waiting room, the user's browser automatically refreshes every 20 seconds to give them updated information about their estimated wait time.
-  - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/waiting-room/reference/configuration-settings/#session-duration/).
-  - Because waiting rooms support dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration/), new spots appear more quickly and estimated wait times are lower and more accurate.
+{{<feature header="Waiting Room Analytics" href="/waiting-room/waiting-room-analytics/">}}
+Get insights into the traffic going through your waiting room.
+{{</feature>}}
 
-![Waiting Room process flow showing how a request is managed by Cloudflare and placed in a waiting room before reaching the origin website](/waiting-room/static/waiting-room-process-flow.png)
+{{<feature header="Additional hostname and path coverage" href="/waiting-room/how-to/place-waiting-room/">}}
+Apply a single waiting room to multiple hostnames and paths within the same zone.
+{{</feature>}}
 
-## Availability
+---
 
-The following customers have access to Cloudflare Waiting Room:
+## Related products
 
-- Those qualified under [Project Fair Shot](https://www.cloudflare.com/fair-shot/)
-- Business customers
+{{<related header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/" product="cloudflare-for-platforms">}} 
+Cloudflare for SaaS allows you to extend the security and performance benefits of Cloudflare’s network to your customers via their own custom or vanity domains.
+{{</related>}}
 
-Access to certain features depends on a customer's [plan type](/waiting-room/plans/).
+{{<related header="Rules" href="/rules/" product="rules">}}
+Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
+{{</related>}}
 
-## Prerequisites
+{{<related header="SSL/TLS" href="/ssl/" product="ssl">}}
+Cloudflare SSL/TLS encrypts your web traffic to prevent data theft and other tampering.
+{{</related>}}
 
-- Cloudflare’s CDN is required to use the Waiting Room feature.
-- Configure a [proxied DNS record](/dns/manage-dns-records/how-to/create-dns-records/) or a [proxied load balancer](/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname. A DNS record is not auto-configured after a waiting room is created.
-- Visitors must enable cookies. Refer to [Waiting Room cookies](/waiting-room/reference/waiting-room-cookie/) for information on how cookies are used in Cloudflare Waiting Room.
+---
 
-{{<button-group>}}
-  {{<button type="primary" href="/waiting-room/get-started/">}}Get started{{</button>}}
-{{</button-group>}}
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="Pricing" href="https://www.cloudflare.com/plans/" icon="price">}}Explore pricing options for Waiting Room.{{</resource>}}
+
+{{</resource-group>}}
+

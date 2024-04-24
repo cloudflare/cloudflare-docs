@@ -8,30 +8,30 @@ weight: 42
 
 ## Endpoints
 
-The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/<account_identifier>` and Zone-scoped use `/zone/<zone_identifier>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
-The `<JOB_ID>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
+The `<zone_identifier>` argument is the zone id (hexadecimal string). The `<account_identifier>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
+The `<job_identifier>` argument is the numeric job id. The `<dataset>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
 {{<table-wrap>}}
 
-| Operation | Description | URL |
+| Operation | Description | API |
 |---|---|---|
-| `POST` | Create job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://developers.cloudflare.com/api/operations/logpush-jobs-create-logpush-job) |
-| `GET` | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://developers.cloudflare.com/api/operations/logpush-jobs-get-logpush-job-details) |
-| `GET` | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs) |
-| `GET` | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/jobs`](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs-for-a-dataset) |
-| `GET` | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`](https://developers.cloudflare.com/api/operations/logpush-jobs-list-fields) |
-| `PUT` | Update job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://developers.cloudflare.com/api/operations/logpush-jobs-update-logpush-job) |
-| `DELETE` | Delete job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://developers.cloudflare.com/api/operations/logpush-jobs-delete-logpush-job) |
-| `POST` | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists`](https://developers.cloudflare.com/api/operations/logpush-jobs-check-destination-exists) |
-| `POST` | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership`](https://developers.cloudflare.com/api/operations/logpush-jobs-get-ownership-challenge) |
-| `POST` | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership/validate`](https://developers.cloudflare.com/api/operations/logpush-jobs-validate-ownership-challenge) |
-| `POST` | Validate log options | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin`](https://developers.cloudflare.com/api/operations/logpush-jobs-validate-origin) |
+| `POST` | Create job | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-jobs) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-jobs) |
+| `GET` | Retrieve job | [Zone-scoped job](/api/operations/get-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/get-accounts-account_identifier-logpush-jobs-job_identifier) |
+| `GET` | Retrieve all jobs for all datasets | [Zone-scoped jobs](/api/operations/get-zones-zone_identifier-logpush-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_identifier-logpush-jobs) |
+| `GET` | Retrieve all jobs for a dataset  | [Zone-scoped jobs](/api/operations/get-zones-zone_identifier-logpush-datasets-dataset-jobs) / [Account-scoped jobs](/api/operations/get-accounts-account_identifier-logpush-datasets-dataset-jobs) |
+| `GET` | Retrieve all available fields for a dataset  | [Zone-scoped fields](/api/operations/get-zones-zone_identifier-logpush-datasets-dataset-fields) / [Account-scoped fields](/api/operations/get-accounts-account_identifier-logpush-datasets-dataset-fields) |
+| `PUT` | Update job | [Zone-scoped job](/api/operations/put-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/put-accounts-account_identifier-logpush-jobs-job_identifier) |
+| `DELETE` | Delete job | [Zone-scoped job](/api/operations/delete-zones-zone_identifier-logpush-jobs-job_identifier) / [Account-scoped job](/api/operations/delete-accounts-account_identifier-logpush-jobs-job_identifier) |
+| `POST` | Check whether destination exists | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-validate-destination-exists) / [Account-scoped job](/api/operations/delete-accounts-account_identifier-logpush-validate-destination-exists) |
+| `POST` | Get ownership challenge | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-ownership) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-ownership) |
+| `POST` | Validate ownership challenge | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-ownership-validate) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-ownership-validate) |
+| `POST` | Validate log options | [Zone-scoped job](/api/operations/post-zones-zone_identifier-logpush-validate-origin) / [Account-scoped job](/api/operations/post-accounts-account_identifier-logpush-validate-origin) |
 
 {{</table-wrap>}}
 
-For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/tutorials/examples/example-logpush-curl/).
+For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutorials/examples/).
 
 ## Connecting
 
@@ -39,7 +39,7 @@ The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
 $ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" \
-    'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
+    'https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/jobs'
 ```
 
 ## Ownership
@@ -49,7 +49,7 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 ```bash
-$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
+$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/ownership \
 -H "X-Auth-Email: <EMAIL>" \ 
 -H "X-Auth-Key: <API_KEY>" \
 -H "Content-Type: application/json" \ 
@@ -75,7 +75,7 @@ You will need to provide the token contained in the file when creating a job.
 
 {{<Aside type="note" header="Note">}}
 
-When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
+When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it is uploaded.
 
 {{</Aside>}}
 
@@ -87,7 +87,7 @@ You can specify your cloud service provider destination via the required **desti
 As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination.
 {{</Aside>}}
 
-*  **Cloudflare R2**: bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>/account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
+*  **Cloudflare R2**: bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
 *   **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
 *   **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
 *   **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
@@ -108,7 +108,7 @@ For more information on the value for your cloud storage provider, consult the f
 To check if a destination is already in use:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
+$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
 ```
 
 Response
@@ -128,7 +128,7 @@ Response
 
 {{<Aside type="note" header="Note">}}
 
-For a detailed description, refer to [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs).
+For a detailed description, refer to the [API documentation](/api/operations/get-zones-zone_identifier-logpush-jobs).
 
 {{</Aside>}}
 
@@ -143,7 +143,7 @@ The kind parameter cannot be used to update existing Logpush jobs. You can only 
 {{</Aside>}}
 
 ```bash
-curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs' \
+curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/jobs' \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \
 -d '{
@@ -161,7 +161,7 @@ Logpull_options has been replaced with Custom Log Formatting output_options. Ple
 
 If you are still using logpull_options, here are the options that you can customize:
 
-1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
+1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/datasets/{dataset}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/datasets/{dataset}/fields/default`.
 2.  **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 3.  **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 
@@ -172,10 +172,13 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull_options** are valid:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin 
--d '{ "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true”,
-"dataset": "http_requests", 
-}' | jq .
+curl https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+  "dataset": "http_requests"
+}'
 ```
 
 Response
@@ -198,7 +201,7 @@ Use filters to select the events to include and/or remove from your logs. For mo
 
 ## Sampling rate
 
-Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
+Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
 
 ## Max Upload Parameters
 
@@ -218,4 +221,4 @@ You can add custom fields to your HTTP request log entries in the form of HTTP r
 
 ## Audit
 
-The following actions are recorded in **Cloudflare Audit Logs**: create, update, and delete job.
+The following Logpush actions are recorded in **Cloudflare Audit Logs**: create, update, and delete job.

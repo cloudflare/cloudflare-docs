@@ -11,8 +11,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -22,8 +22,8 @@ export default {
      * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied
      * @param {string} someHost the host the request will resolve too
      */
-    const someHost = 'example.com';
-    const someUrl = 'https://foo.example.com/api.js';
+    const someHost = "example.com";
+    const someUrl = "https://foo.example.com/api.js";
 
     /**
      * The best practice is to only assign new RequestInit properties
@@ -31,14 +31,14 @@ export default {
      */
     const newRequestInit = {
       // Change method
-      method: 'POST',
+      method: "POST",
       // Change body
-      body: JSON.stringify({ bar: 'foo' }),
+      body: JSON.stringify({ bar: "foo" }),
       // Change the redirect mode.
-      redirect: 'follow',
+      redirect: "follow",
       // Change headers, note this method will erase existing headers
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       // Change a Cloudflare feature on the outbound response
       cf: { apps: false },
@@ -58,8 +58,8 @@ export default {
     );
 
     // Set headers using method
-    newRequest.headers.set('X-Example', 'bar');
-    newRequest.headers.set('Content-Type', 'application/json');
+    newRequest.headers.set("X-Example", "bar");
+    newRequest.headers.set("Content-Type", "application/json");
     try {
       return await fetch(newRequest);
     } catch (e) {
@@ -70,60 +70,66 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
-{{<tab label="js/sw">}}
-```js
-/**
- * Example someHost is set up to return raw JSON
- * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied
- * @param {string} someHost the host the request will resolve too
- */
-const someHost = 'example.com';
-const someUrl = 'https://foo.example.com/api.js';
+{{<tab label="ts">}}
 
-async function handleRequest(request) {
-  /**
-   * The best practice is to only assign new RequestInit properties
-   * on the request object using either a method or the constructor
-   */
-  const newRequestInit = {
-    // Change method
-    method: 'POST',
-    // Change body
-    body: JSON.stringify({ bar: 'foo' }),
-    // Change the redirect mode.
-    redirect: 'follow',
-    // Change headers, note this method will erase existing headers
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    // Change a Cloudflare feature on the outbound response
-    cf: { apps: false },
-  };
+```ts
+export default {
+  async fetch(request): Promise<Response> {
+    /**
+     * Example someHost is set up to return raw JSON
+     * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied
+     * @param {string} someHost the host the request will resolve too
+     */
+    const someHost = "example.com";
+    const someUrl = "https://foo.example.com/api.js";
 
-  // Change just the host
-  const url = new URL(someUrl);
+    /**
+     * The best practice is to only assign new RequestInit properties
+     * on the request object using either a method or the constructor
+     */
+    const newRequestInit = {
+      // Change method
+      method: "POST",
+      // Change body
+      body: JSON.stringify({ bar: "foo" }),
+      // Change the redirect mode.
+      redirect: "follow",
+      // Change headers, note this method will erase existing headers
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // Change a Cloudflare feature on the outbound response
+      cf: { apps: false },
+    };
 
-  url.hostname = someHost;
+    // Change just the host
+    const url = new URL(someUrl);
 
-  // Best practice is to always use the original request to construct the new request
-  // to clone all the attributes. Applying the URL also requires a constructor
-  // since once a Request has been constructed, its URL is immutable.
-  const newRequest = new Request(url.toString(), new Request(request, newRequestInit));
+    url.hostname = someHost;
 
-  // Set headers using method
-  newRequest.headers.set('X-Example', 'bar');
-  newRequest.headers.set('Content-Type', 'application/json');
-  try {
-    return await fetch(newRequest);
-  } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500 });
-  }
-}
+    // Best practice is to always use the original request to construct the new request
+    // to clone all the attributes. Applying the URL also requires a constructor
+    // since once a Request has been constructed, its URL is immutable.
+    const newRequest = new Request(
+      url.toString(),
+      new Request(request, newRequestInit)
+    );
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+    // Set headers using method
+    newRequest.headers.set("X-Example", "bar");
+    newRequest.headers.set("Content-Type", "application/json");
+    try {
+      return await fetch(newRequest);
+    } catch (e) {
+      return new Response(JSON.stringify({ error: e.message }), {
+        status: 500,
+      });
+    }
+  },
+} satisfies ExportedHandler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

@@ -12,8 +12,8 @@ weight: 2
 
 When messages come to your recipients from certain domains, Area 1 triggers certain [detections](/email-security/reference/dispositions-and-attributes/) by default:
 
-- **Proximity Domains**: Domains with similar spelling to your existing domain. Will trigger a `Spoof` detection.
-- **Recent Domains**: Domains created recently (exact definition set in [Added Detections](/email-security/email-configuration/enhanced-detections/added-detections/)). Will trigger a `Malicious` or `Suspicious` detection.
+- **Proximity Domains**: Domains with similar spelling to your existing domain. Will trigger a `SPOOF` detection.
+- **Recent Domains**: Domains created recently (exact definition set in [Added Detections](/email-security/email-configuration/enhanced-detections/added-detections/)). Will trigger a `MALICIOUS` or `SUSPICIOUS` detection.
 
 However, sometimes those domains are legitimate. For example, your company may have registered several lookalike domains to combat domain squatters.
 

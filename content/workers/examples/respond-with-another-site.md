@@ -11,46 +11,50 @@ weight: 12
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts | py">}}
+{{<tab label="js" default="true">}}
 
-```js
-export default {
-	async fetch(request) {
-		async function MethodNotAllowed(request) {
-			return new Response(`Method ${request.method} not allowed.`, {
-				status: 405,
-				headers: {
-					Allow: 'GET',
-				},
-			});
-		}
-		// Only GET requests work with this proxy.
-		if (request.method !== 'GET') return MethodNotAllowed(request);
-		return fetch(`https://example.com`);
-  },
-};
-```
+{{<render file="_respond-another-site-example-js.md">}}
+
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts">}}
 
-```js
-addEventListener('fetch', function (event) {
-  event.respondWith(handleRequest(event.request));
-});
-async function handleRequest(request) {
-  // Only GET requests work with this proxy.
-  if (request.method !== 'GET') return MethodNotAllowed(request);
-  return fetch(`https://example.com`);
-}
-function MethodNotAllowed(request) {
-  return new Response(`Method ${request.method} not allowed.`, {
-    status: 405,
-    headers: {
-      Allow: 'GET',
-    },
-  });
-}
+```ts
+export default {
+  async fetch(request): Promise<Response> {
+    async function MethodNotAllowed(request) {
+      return new Response(`Method ${request.method} not allowed.`, {
+        status: 405,
+        headers: {
+          Allow: "GET",
+        },
+      });
+    }
+    // Only GET requests work with this proxy.
+    if (request.method !== "GET") return MethodNotAllowed(request);
+    return fetch(`https://example.com`);
+  },
+} satisfies ExportedHandler;
 ```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch, Headers
+
+def on_fetch(request):
+    def method_not_allowed(request):
+        msg = f'Method {request.method} not allowed.'
+        headers = Headers.new({"Allow": "GET"}.items)
+        return Response.new(msg, headers=headers, status=405)
+
+    # Only GET requests work with this proxy.
+    if request.method != "GET":
+        return method_not_allowed(request)
+
+    return fetch("https://example.com")
+```
+
 {{</tab>}}
 {{</tabs>}}

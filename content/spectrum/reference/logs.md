@@ -10,7 +10,7 @@ Spectrum logs the entire lifecycle of every client that connects through it. The
 
 For each connection, Spectrum logs a connect event and either a disconnect or error event. Details on status codes can be found below.
 
-## Configuring Logpush
+## Configure Logpush
 
 Spectrum [log events](/logs/reference/log-fields/) can be configured through the dashboard or API, depending on your preferred [destination](/logs/get-started/enable-destinations/).
 
@@ -45,7 +45,7 @@ Spectrum [log events](/logs/reference/log-fields/) can be configured through the
 | 524  | Opening a connection to origin failed due to an internal system error.                             |
 | 530  | Internal error while resolving origin to an IP.                                                    |
 | 531  | Could not resolve origin to an IP.                                                                 |
-| 532  | The origin connection was not opened because the origin IP is blacklisted.                         |
+| 532  | The origin connection was not opened because the origin IP is blocked.                         |
 | 533  | Internal error while resolving origin to an IP.                                                    |
 | 540  | The client/edge TLS handshake failed due to an invalid configuration.                              |
 | 999  | Unknown connection error.                                                                          |

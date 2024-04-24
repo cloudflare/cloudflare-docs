@@ -5,25 +5,21 @@ _build:
   list: never
 ---
 
-To configure several rules at once in the Browse Managed Ruleset interface:
+5. Search for rules using the available filters. You can search for tags.
 
-1. Enter search terms in the available input to find the rules you want to configure. You can search for tags.
+6. In the results list, select the checkboxes for all the rules you want to configure.
 
-    ![Example of filtering rules by the wordpress tag in the Browse rules page](/waf/static/waf-selected-tag.png)
+    Alternatively, select a tag name under the search input to filter the rules with that tag, and then select the checkboxes for the rules you want to configure. To extend your selection to all rules with the tag across all pages, select **Select all &lt;NUMBER> rules**.
 
-2. In the results list, select the checkboxes for all the rules you want to configure.
+    ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/images/waf/waf-modify-selected-rules.png)
 
-    Alternatively, select a tag name under the search input to filter the rules with that tag, and then select the checkboxes for the rules you want to configure.
+7. Update one or more fields for the selected rules using the buttons displayed in the top right corner of the table.
 
-3. Update one or more fields for the selected rules using the drop-down lists displayed in the top right corner of the table.
+8. Select **Next**.
 
-    ![Selecting all rules in a page displays additional drop-down lists above the table to override the behavior of several rules at once.](/waf/static/waf-modify-selected-rules.png)
-
-4. Select **Next**.
-
-5. If you selected a tag, a dialog appears asking you if any new rules with the selected tag should be configured with the field values you selected.
+9. If you selected a tag, a dialog appears asking you if any new rules with the selected tag should be configured with the field values you selected.
 
     * Select **Do not apply to new rules** to apply your configurations to the selected rules only.
     * Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
 
-6. Select **Save**.
+10. Select **Save**.

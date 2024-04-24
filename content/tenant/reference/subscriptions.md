@@ -10,11 +10,11 @@ When [provisioning services for an account](/tenant/how-to/manage-subscriptions/
 
 The subscriptions available to you will vary depending on your current partner program ([Self-Service Partner Program](https://www.cloudflare.com/cloudflare-partners-self-serve-program-closed-beta/) or [Enterprise Resellers and MSP Program](https://portal.cloudflarepartners.com)).
 
-The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](https://developers.cloudflare.com/api/operations/zone-rate-plan-list-available-rate-plans) or [account subscriptions](https://developers.cloudflare.com/api/operations/account-subscriptions-list-subscriptions) endpoints.
+The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](/api/operations/zone-rate-plan-list-available-rate-plans) or [account subscriptions](/api/operations/account-subscriptions-list-subscriptions) endpoints.
 
 ## Zone plans
 
-When creating or updating a [zone plan](https://developers.cloudflare.com/api/operations/zone-subscription-zone-subscription-details), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
+When creating or updating a [zone plan](/api/operations/zone-subscription-zone-subscription-details), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
 
 | Partner program | Available subscriptions |
 | --- | --- |
@@ -42,8 +42,8 @@ The following table lists sample values for various Developer platform subscript
 
 | Feature | Subscription IDs |
 | --- | --- |
-| [Images](/images/cloudflare-images/) | `IMAGES_ENT`,`IMAGES_BASIC`|
-| [Image resizing](/images/image-resizing/) | `IMAGE_RESIZING_ENT`, `IMAGE_RESIZING_BASIC` |
+| [Images](/images/) | `IMAGES_ENT`,`IMAGES_BASIC`|
+| [Image transformations](/images/transform-images/) | `IMAGE_RESIZING_ENT`, `IMAGE_RESIZING_BASIC` |
 | [Stream](/stream/) | `PARTNERS_STREAM_ENT`, `PARTNERS_STREAM_BASIC`, `STREAM_BASIC` |
 | [Workers](/workers) | `PARTNERS_WORKERS_ENT`, `WORKERS_PAID`, `PARTNERS_WORKERS_SS`, `PARTNERS_WORKERS_BASIC` |
 
@@ -53,6 +53,7 @@ The following table lists sample values for various application performance and 
 
 | Feature | Subscription IDs |
 | --- | --- |
+| [API Shield](/api-shield/) | `API_SHIELD_ZONE` |
 | [Advanced certificate manager](/ssl/edge-certificates/advanced-certificate-manager/) | `ADVANCED_CERT_MANAGER_FREE`, `ADVANCED_CERT_MANAGER` |
 | [Argo smart routing](/argo-smart-routing/) | `PARTNERS_ZONE_ARGO`, `ARGO_ZONE_BASIC` |
 | [Ethereum gateway](/web3/ethereum-gateway/) | `WEB3_ETHEREUM_ENT`, `WEB3_ETHEREUM_ENT_CONTRACT`, `WEB3_ETHEREUM_ENT_PAYGO` |
@@ -60,7 +61,16 @@ The following table lists sample values for various application performance and 
 | [Load balancing](/load-balancing/) | `PARTNERS_LOAD_BALANCING`, `PARTNERS_LOAD_BALANCING_ENT`, `LOAD_BALANCING_BASIC_PLUS` |
 | [Rate limiting](/waf/rate-limiting-rules/) | `PARTNERS_RATE_LIMITING` |
 | [Spectrum](/spectrum/) | `PARTNERS_SPECTRUM` |
-| [Waiting Room](/waiting-room/) | `WAITING_ROOMS_BASIC` |
+| [Waiting Room](/waiting-room/) | `WAITING_ROOMS_BASIC`, `WAITING_ROOMS_ADV` |
+
+### Network services
+
+The following table lists sample values for various network services subscriptions.
+
+| Feature | Subscription IDs |
+| --- | --- |
+| [Magic Firewall](/magic-firewall/) | `MAGIC_FIREWALL_BASIC`, `MAGIC_FIREWALL_ADVANCED` |
+| [Magic WAN](/magic-wan/) | `MAGIC_WAN` |
 
 ## Getting new subscriptions
 

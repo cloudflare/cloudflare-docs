@@ -10,12 +10,12 @@ meta:
 
 Setting your encryption mode to **Off (not recommended)** redirects any HTTPS request to plaintext HTTP.
 
-<div class="mermaid">
+```mermaid
     flowchart LR
         accTitle: No SSL/TLS Encryption
         accDescr: With an encryption mode of Off, your application does not encrypt traffic between the visitor and Cloudflare or between Cloudflare and your server.
         A[Browser] <--Unencrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
-</div>
+```
 
 ## Use when
 
@@ -23,7 +23,18 @@ Cloudflare does not recommend setting your encryption mode to **Off**.
 
 ## Required setup
 
-There is no required setup for this option.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 
@@ -33,8 +44,9 @@ When you set your encryption mode to **Off**, your application:
 - Will be marked as "not secure" by Chrome and other browsers, reducing visitor trust.
 - Will be penalized in [SEO rankings](https://webmasters.googleblog.com/2014/08/https-as-ranking-signal.html).
 
-{{<Aside type="note">}}
+### Incompatible settings
 
-When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
+When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) or [**Onion Routing**](/network/onion-routing/).
 
-{{</Aside>}}
+{{<render file="_ssl-mode-no-aop.md">}}
+<br/>

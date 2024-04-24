@@ -2,7 +2,7 @@
 pcx_content_type: concept
 type: overview
 title: API Gateway
-weight: 2
+weight: 4
 ---
 
 # API Gateway

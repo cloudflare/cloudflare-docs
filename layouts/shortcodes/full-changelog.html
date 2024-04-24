@@ -1,0 +1,258 @@
+{{- $changelogData := partial "full-changelog-data.html" -}}
+{{- $changelogRendered := slice -}} 
+{{- $products := slice -}} 
+{{- range $index, $product := $changelogData -}} 
+{{- $products = $products | append $product.productName -}}
+{{- range $index2, $item := $product.entries -}} 
+{{- $placeholderDict := (dict "product" $product.productName "link" $product.link) -}}
+{{- with $product.topLevelLink -}}
+{{- $placeholderDict = (dict "product" $product.productName "link" $product.topLevelLink) -}}
+{{- end -}}
+{{- with $item.individual_page -}}
+{{- $title := "" -}}
+{{- with $.Site.GetPage (replaceRE `\/$` "" $item.link) -}}
+{{- $title = .Title -}}
+{{- if eq $product.productName "DDoS protection" -}}
+{{- $title = printf "%s ruleset - %s" (delimit (findRE `^.*?\s` (index .Ancestors 0).Title) "") .Title -}}
+{{- end -}}
+{{- end -}}
+{{ $description := printf "For more details, refer to the dedicated page for [%s](%s)." $title $item.link -}}
+{{- with $item.scheduled -}}
+{{- with $item.scheduled_date -}}
+{{- $title = (printf "%s for %s" $title $item.scheduled_date) -}}
+{{- end -}}
+{{- end -}}
+{{- $placeholderDict = merge $placeholderDict (dict "title" $title "description" $description) -}}
+{{- end -}}
+{{- $changelogRendered = $changelogRendered 
+  | append (merge $item $placeholderDict) -}} 
+{{- end -}} 
+{{- end -}}
+
+<!-- Order and remove dupe values -->
+{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}} 
+{{- $products = sort ($products | uniq) . "asc" -}}
+
+<div class="selectorDropdowns">
+  <div>
+    <label for="product">Product</label>
+    <select class="selectorFilter" name="data-product" id="product">
+      <option value="all">Select...</option>
+      {{- range $products -}}
+      <option value="{{ . | lower }}">{{.}}</option>
+      {{- end -}}
+    </select>
+  </div>
+  <div class="searchInput">
+    <label for="searchInput">Text search</label>
+    <input type="text" id="searchInput" placeholder="Search..." />
+  </div>
+</div>
+
+<div id="changelogContent">
+{{- range $changelogRendered -}}
+
+<div class="data-row" data-product="{{.product | lower}}" data-changelog="{{- print .link "index.xml" -}}" data-date="{{ .publish_date | time.Format "January 2, 2006" }}">
+  <h3>{{- .product -}}</h3>
+  {{- with .title -}}
+  <p><strong>{{ . | $.Page.RenderString }}</strong></td>
+  {{- end -}}
+  <p>{{ .description | $.Page.RenderString }}</td>
+</div>
+{{- end -}}
+
+<div class="viewMoreContainer">
+  <button
+    id="showAllButton"
+    style="display: none"
+    class="viewMoreButton"
+  >
+    View more changes
+  </button>
+</div>
+
+<script>
+  const productsDropdown = document.getElementById("product");
+  const searchInput = document.getElementById("searchInput");
+  const dataRows = document.querySelectorAll(".data-row");
+  const showAllButton = document.getElementById("showAllButton");
+  let descriptionText = document.getElementById("description");
+
+  let MAX_VISIBLE_ROWS = 50;
+
+  // add date headers
+
+  // Initialize variable to store last date
+  let lastDate = null;
+  const entriesContainer = document.getElementById('changelogContent');
+
+  // Loop through each entry
+  dataRows.forEach(entry => {
+    // Get date from data attribute
+    const date = entry.getAttribute('data-date');
+
+    // Check if date has changed
+    if (date !== lastDate) {
+      // Create and append sticky date header
+      const stickyHeader = document.createElement('div');
+      stickyHeader.classList.add('sticky-date-header');
+      stickyHeader.textContent = date;
+      entriesContainer.insertBefore(stickyHeader, entry);
+
+      // Update last date
+      lastDate = date;
+    }
+  });
+
+  // Function to update URL parameters
+  function updateURLParams() {
+    const params = new URLSearchParams();
+    if (productsDropdown.value !== "all") {
+      params.set("product", productsDropdown.value);
+    }
+    history.replaceState(null, "", "?" + params.toString());
+  }
+
+  // Function to update description text
+
+  function updateDescriptionText() {
+    let productName = "Changelog";
+    let changelogLink = "/changelog/index.xml";
+    const regexPattern = `developers\.cloudflare\.com(.*?)#`;
+    for (const dropdown of productsDropdown) {
+      if (dropdown.selected === true && dropdown.value !== "all") {
+        productName = dropdown.label;
+        while (changelogLink === "/changelog/index.xml") {
+          dataRows.forEach((row) => {
+            if (row.getAttribute("data-product") === productName.toLowerCase()) {
+              changelogLink = row.getAttribute("data-changelog");
+              }
+          });
+        }
+      }
+    }
+    descriptionText.innerHTML = `Subscribe to all ${productName} posts via <a class='rssLink' target="_blank" href=${changelogLink}>RSS</a>.`;
+  }
+
+  // Function to filter and show/hide rows
+  function updateTable() {
+    updateURLParams();
+    updateDescriptionText();
+
+    let visibleRowCount = 0;
+
+    dataRows.forEach((row) => {
+      const productMatch =
+        productsDropdown.value === "all" ||
+        row.getAttribute("data-product").toLowerCase() ===
+          productsDropdown.value.toLowerCase();
+      const searchMatch =
+        searchInput.value.trim() === "" ||
+        Array.from(row.children).some((cell) =>
+          cell.textContent
+            .toLowerCase()
+            .includes(searchInput.value.trim().toLowerCase())
+        );
+      if (productMatch && searchMatch) {
+        row.style.display = "table-row";
+        visibleRowCount++;
+        if (visibleRowCount > MAX_VISIBLE_ROWS) {
+          row.style.display = "none";
+        }
+      } else {
+        row.style.display = "none";
+      }
+    });
+
+    if (visibleRowCount > MAX_VISIBLE_ROWS) {
+      showAllButton.style.display = "block";
+    } else {
+      showAllButton.style.display = "none";
+    }
+    updateStickyHeaderVisibility();
+  }
+
+  function showAllEntries() {
+    MAX_VISIBLE_ROWS += 20;
+    updateTable();
+  }
+
+  // Set initial values from URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const productFilter = urlParams.get("product");
+  if (productFilter) {
+    for (const option of productsDropdown) {
+      if (option.value === productFilter.toLowerCase()) {
+        productsDropdown.value = productFilter.toLowerCase();
+      }
+    }
+  }
+
+  function updateStickyHeaderVisibility() {
+    const stickyHeaders = document.querySelectorAll('.sticky-date-header');
+
+    stickyHeaders.forEach((stickyHeader, index) => {
+        // Get the next sticky header or the end of the entries container
+        const nextStickyHeader = stickyHeaders[index + 1] || entriesContainer.lastElementChild;
+
+        // Get all entries between this sticky header and the next one
+        const entriesBetween = [];
+        let nextElement = stickyHeader.nextElementSibling;
+        while (nextElement !== nextStickyHeader) {
+            entriesBetween.push(nextElement);
+            nextElement = nextElement.nextElementSibling;
+        }
+
+        // Check if all entries between this sticky header and the next one are hidden
+        const allHidden = entriesBetween.every(entry => entry.style.display === 'none');
+
+        // Update the visibility of the sticky header
+        stickyHeader.style.display = allHidden ? 'none' : '';
+        if (index === (stickyHeaders.length - 1)) {
+          stickyHeader.style.display = 'none';
+        }
+    });
+}
+
+  // Initial table update
+  updateTable();
+
+  // Event listeners
+  productsDropdown.addEventListener("change", updateTable);
+  searchInput.addEventListener("input", updateTable);
+  showAllButton.addEventListener("click", showAllEntries);
+</script>
+
+
+<style>
+  @media (min-width: 972px) {
+    #changelogContent {
+      max-width: 80%;
+  }
+    .sticky-date-header {
+      top: 55px !important;
+    }
+}
+  @media (max-width: 500px) {
+    .code-container {
+      overflow-x: auto;
+      max-width: 320px;
+    }
+    code {
+      word-break: break-all !important;
+    }
+  }
+.sticky-date-header {
+    position: sticky;
+    top: 45px;
+    padding: 10px;
+    padding-left: 1px;
+    border-bottom: 1px solid #ccc;
+    z-index: 1000;
+    background: var(--background-color);
+    font-weight: 400;
+    font-size: 1.4em;
+  }
+
+
+</style>

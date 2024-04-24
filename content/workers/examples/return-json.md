@@ -10,50 +10,41 @@ pcx_content_type: configuration
 title: Return JSON
 weight: 2
 layout: example
+updated: 2024-01-11
 ---
 
+{{<tabs labels="js | ts | py">}}
+{{<tab label="js" default="true">}}
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<render file="_return-json-example-js.md">}}
 
-```js
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
 export default {
-	async fetch(request) {
+  async fetch(request): Promise<Response> {
+    const data = {
+      hello: "world",
+    };
 
-		const data = {
-			hello: 'world',
-		};
-
-		const json = JSON.stringify(data, null, 2);
-
-		return new Response(json, {
-			headers: {
-				'content-type': 'application/json;charset=UTF-8',
-			},
-		});
-	},
-};
+    return Response.json(data);
+  },
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="py">}}
 
-```js
-addEventListener('fetch', event => {
-  const data = {
-    hello: 'world',
-  };
+```py
+from js import Response, Headers
+import json
 
-  const json = JSON.stringify(data, null, 2);
-
-  return event.respondWith(
-    new Response(json, {
-      headers: {
-        'content-type': 'application/json;charset=UTF-8',
-      },
-    })
-  );
-});
+def on_fetch(request):
+    data = json.dumps({"hello": "world"})
+    headers = Headers.new({"content-type": "application/json"}.items())
+    return Response.new(data, headers=headers)
 ```
+
 {{</tab>}}
 {{</tabs>}}

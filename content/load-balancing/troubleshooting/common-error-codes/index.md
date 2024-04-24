@@ -1,25 +1,24 @@
 ---
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 title: Common error codes
 weight: 51
-layout: single
 ---
 
 # Common error codes
 
-The Cloudflare Load Balancing API adds global health to each pool and origin server. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and origin health status. The quorum is taken from PoPs responsible for running health checks in a region, and the majority result is used.
+The Cloudflare Load Balancing API adds global health to each pool and origin server. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and origin health status. The quorum is taken from PoPs responsible for running health monitor requests in a region, and the majority result is used.
 
-When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Check Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
+When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Monitor Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
 
-You can get a per-data center breakdown of the health of your origins from the Cloudflare API from the List Health Check Events command:
+You can get a per-data center breakdown of the health of your origins from the Cloudflare API from the List Health Monitor Events command:
 
 ```txt
 GET user/load_balancing_analytics/events
 ```
 
-If a health check fails, the breakdown will include the reason.
+If a health monitor request fails, the breakdown will include the reason.
 
-For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Check Events](https://developers.cloudflare.com/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
+For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Monitor Events](/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
 
 Common troubleshooting causes and solutions are listed below.
 
@@ -29,7 +28,7 @@ Common troubleshooting causes and solutions are listed below.
 
 ### Cause
 
-Our health checks failed to establish a TCP connection to your origin server.
+Our health monitor requests failed to establish a TCP connection to your origin server.
 
 ### Solution
 
@@ -75,7 +74,7 @@ Either change your Cloudflare monitor configuration to use HTTPS, or set the val
 
 The response body returns from your origin server and does not include the (case-insensitive) value of `expected_body` configured in your monitor.
 
-Note that we only read the first 10 KB of the response. If you return a larger response, and the expected_body is not in the first 10 KB, the health check will fail.
+Note that we only read the first 10 KB of the response. If you return a larger response, and the expected_body is not in the first 10 KB, the health monitor request will fail.
 
 ### Solution
 
@@ -99,7 +98,7 @@ If you're using a self-signed certificate, we recommend either using a publicly 
 
 ### Cause
 
-Our health check (client) was not able to match a name on the server certificate to the hostname of the request.
+Our health monitor (client) was not able to match a name on the server certificate to the hostname of the request.
 
 ### Solution
 
@@ -168,7 +167,7 @@ Data transmission was not acknowledged and retransmit of data did not succeed.
 
 ### Solution
 
-Confirm whether the SYN-ACK for the handshake takes place at your origin and _[contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
+Confirm whether the SYN-ACK for the handshake takes place at your origin and [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ---
 
@@ -264,7 +263,7 @@ Load Balancing is not enabled for your account or zone.
 
 ### Solution
 
-For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/how-to/enable-load-balancing/).
+For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/get-started/enable-load-balancing/).
 
 ---
 
@@ -288,7 +287,7 @@ You will receive this error when you attempt to delete an origin pool that is re
 
 ### Solution
 
-Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [reenable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
 
 ---
 
@@ -300,6 +299,4 @@ If the failure cannot be classified as any other type of failure mentioned above
 
 ### Solution
 
-_[Contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
-
----
+[Contact Cloudflare Support](/support/contacting-cloudflare-support/).

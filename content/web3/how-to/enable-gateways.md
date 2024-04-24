@@ -20,6 +20,8 @@ To subscribe to a Web3 gateway (if you have not already subscribed):
 6. Click **Proceed to Payment Details**.
 7. Enter your payment information (if not already attached to your account) and complete your purchase.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Manage existing subscription
 
 To update an existing subscription or subscribe to an additional gateway:

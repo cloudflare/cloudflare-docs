@@ -10,8 +10,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -21,10 +21,10 @@ export default {
      * Replace url1 and url2 with the hosts you wish to send requests to
      * @param {string} url the URL to send the request to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url1 = someHost + '/requests/json';
-    const url2 = someHost + '/requests/json';
-    const type = 'application/json;charset=UTF-8';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url1 = someHost + "/requests/json";
+    const url2 = someHost + "/requests/json";
+    const type = "application/json;charset=UTF-8";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -33,12 +33,12 @@ export default {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return response.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return response.text();
       } else {
         return response.text();
@@ -47,10 +47,10 @@ export default {
 
     const init = {
       headers: {
-        'content-type': type,
+        "content-type": type,
       },
     };
-    
+
     const responses = await Promise.all([fetch(url1, init), fetch(url2, init)]);
     const results = await Promise.all([
       gatherResponse(responses[0]),
@@ -60,53 +60,57 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts">}}
 
-```js
-/**
- * someHost is set up to return JSON responses
- * Replace url1 and url2 with the hosts you wish to send requests to
- * @param {string} url the URL to send the request to
- */
-const someHost = 'https://examples.cloudflareworkers.com/demos';
-const url1 = someHost + '/requests/json';
-const url2 = someHost + '/requests/json';
-const type = 'application/json;charset=UTF-8';
+```ts
+export default {
+  async fetch(request): Promise<Response> {
+    /**
+     * someHost is set up to return JSON responses
+     * Replace url1 and url2 with the hosts you wish to send requests to
+     * @param {string} url the URL to send the request to
+     */
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url1 = someHost + "/requests/json";
+    const url2 = someHost + "/requests/json";
+    const type = "application/json;charset=UTF-8";
 
-/**
- * gatherResponse awaits and returns a response body as a string.
- * Use await gatherResponse(..) in an async function to get the response body
- * @param {Response} response
- */
-async function gatherResponse(response) {
-  const { headers } = response;
-  const contentType = headers.get('content-type') || '';
-  if (contentType.includes('application/json')) {
-    return JSON.stringify(await response.json());
-  } else if (contentType.includes('application/text')) {
-    return response.text();
-  } else if (contentType.includes('text/html')) {
-    return response.text();
-  } else {
-    return response.text();
-  }
-}
+    /**
+     * gatherResponse awaits and returns a response body as a string.
+     * Use await gatherResponse(..) in an async function to get the response body
+     * @param {Response} response
+     */
+    async function gatherResponse(response) {
+      const { headers } = response;
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        return JSON.stringify(await response.json());
+      } else if (contentType.includes("application/text")) {
+        return response.text();
+      } else if (contentType.includes("text/html")) {
+        return response.text();
+      } else {
+        return response.text();
+      }
+    }
 
-async function handleRequest() {
-  const init = {
-    headers: {
-      'content-type': type,
-    },
-  };
-  const responses = await Promise.all([fetch(url1, init), fetch(url2, init)]);
-  const results = await Promise.all([gatherResponse(responses[0]), gatherResponse(responses[1])]);
-  return new Response(results.join(), init);
-}
+    const init = {
+      headers: {
+        "content-type": type,
+      },
+    };
 
-addEventListener('fetch', event => {
-  return event.respondWith(handleRequest());
-});
+    const responses = await Promise.all([fetch(url1, init), fetch(url2, init)]);
+    const results = await Promise.all([
+      gatherResponse(responses[0]),
+      gatherResponse(responses[1]),
+    ]);
+    return new Response(results.join(), init);
+  },
+} satisfies ExportedHandler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

@@ -1,0 +1,7 @@
+name: CASB
+
+product:
+  title: CASB
+  group: Cloudflare One
+  url: /cloudflare-one/applications/scan-apps/
+  grid_placeholder: true

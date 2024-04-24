@@ -1,14 +1,17 @@
 ---
-title: Using R2 with the Cache API
-summary: Use the Cache API to store objects from R2 in Cloudflare's cache.
-type: example
-tags:
-  - Cache API
-  - R2
-pcx_content_type: configuration
-weight: 1001
-layout: example
+title: Use the Cache API
+pcx_content_type: how-to
 ---
+
+# Use the Cache API
+
+Use the [Cache API](/workers/runtime-apis/cache/) to store R2 objects in Cloudflare's cache.
+
+{{<Aside type="note">}}
+
+You will need to [connect a custom domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) to your Worker in order to use the Cache API. Cache API operations in the Cloudflare Workers dashboard editor, Playground previews, and any `*.workers.dev` deployments will have no impact.
+
+{{</Aside>}}
 
 ```js
 

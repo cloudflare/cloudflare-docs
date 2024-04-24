@@ -9,7 +9,9 @@ title: TransformStream
 
 A transform stream consists of a pair of streams: a writable stream, known as its writable side, and a readable stream, known as its readable side. Writes to the writable side result in new data being made available for reading from the readable side.
 
-The Workers platform currently only implements an identity transform stream, a type of transform stream which forwards all chunks written to its writable side to its readable side, without any changes.
+Workers currently only implements an identity transform stream, a type of transform stream which forwards all chunks written to its writable side to its readable side, without any changes.
+
+---
 
 ## Constructor
 
@@ -29,12 +31,14 @@ let { readable, writable } = new TransformStream();
 
 {{<definitions>}}
 
-- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
+
+---
 
 ## `IdentityTransformStream`
 
@@ -60,12 +64,14 @@ let { readable, writable } = new IdentityTransformStream();
 
 {{<definitions>}}
 
-- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
+
+---
 
 ## `FixedLengthStream`
 
@@ -90,14 +96,16 @@ let { readable, writable } = new FixedLengthStream(1000);
 
 {{<definitions>}}
 
-- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
 
+---
+
 ## Related resources
 
-- [Using Streams.](/workers/learning/using-streams/)
-- [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)
+- [Streams](/workers/runtime-apis/streams/)
+- [Transform Streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#transform-stream)

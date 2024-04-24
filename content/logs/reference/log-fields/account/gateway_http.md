@@ -25,19 +25,29 @@ The descriptions below detail the fields available for `gateway_http`.
 | DestinationIP | Destination ip of the request. | string |
 | DestinationPort | Destination port of the request. | string |
 | DeviceID | UUID of the device where the HTTP request originated from. | string |
+| DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
+| DownloadMatchedDlpProfileEntries | List of matched DLP entries in the HTTP request. | array[string] |
+| DownloadMatchedDlpProfiles | List of matched DLP profiles in the HTTP request. | array[string] |
 | DownloadedFileNames | List of files downloaded in the HTTP request. | array[string] |
 | Email | Email used to authenticate the client. | string |
+| FileInfo | Information about files detected within the HTTP request. | object |
 | HTTPHost | Content of the host header in the HTTP request. | string |
 | HTTPMethod | HTTP request method. | string |
+| HTTPStatusCode | HTTP status code gateway returned to the user. Zero if nothing was returned (for example, client disconnected). | int |
 | HTTPVersion | Version name for the HTTP request. | string |
 | IsIsolated | If the requested was isolated with Cloudflare Browser Isolation or not. | bool |
 | PolicyID | The gateway policy UUID applied to the request, if any. | string |
 | PolicyName | The name of the gateway policy applied to the request, if any. | string |
 | Referer | Contents of the referer header in the HTTP request. | string |
 | RequestID | Cloudflare request ID. This might be empty on bypass action. | string |
+| SessionID | Network session ID. | string |
 | SourceIP | Source ip of the request. | string |
+| SourceInternalIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | SourcePort | Source port of the request. | string |
 | URL | HTTP request URL. | string |
+| UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (for example, expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>error</em> \| <em>passThrough</em>. | string |
+| UploadMatchedDlpProfileEntries | List of matched DLP entries in the HTTP request. | array[string] |
+| UploadMatchedDlpProfiles | List of matched DLP profiles in the HTTP request. | array[string] |
 | UploadedFileNames | List of files uploaded in the HTTP request. | array[string] |
 | UserAgent | Contents of the user agent header in the HTTP request. | string |
 | UserID | User identity where the HTTP request originated from. | string |

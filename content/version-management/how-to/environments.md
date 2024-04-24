@@ -7,20 +7,12 @@ weight: 2
 # Manage environments
 
 {{<render file="_environment-definition.md">}}
-<br/>
-
-{{<Aside type="note">}}
-
-During the open beta, you can only interact with applications and versions using the Cloudflare dashboard.
-
-{{</Aside>}}
 
 ---
 
 ## Create environment
 
 {{<render file="_enable-default-creation.md">}}
-<br/>
 
 {{<render file="_create-environment-situation.md">}}
 <br/>
@@ -37,11 +29,11 @@ To create a new environment:
   - [**Traffic filter**](/version-management/reference/traffic-filters/): Limits which requests are sent to this environment.
   - **Initial position**: Controls where this environment should be in your testing process. 
   
-7. Select **Create**. The environment may take a few minutes to be created.
+7. Select **Create**.
 
 {{<Aside type="note">}}
 
-You can only adjust the [**Read-only Environment** setting](/version-management/reference/read-only-environments/) after an environment has been created.
+You can only adjust the [**Read-only Environment**](/version-management/reference/read-only-environments/) configuration after an environment has been created.
 
 {{</Aside>}}
 

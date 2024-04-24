@@ -1,8 +1,7 @@
 ---
 title: Get started
 pcx_content_type: get-started
-weight: 2
-layout: single
+weight: 3
 meta:
   title: Get started with SSL/TLS
 ---
@@ -11,51 +10,59 @@ meta:
 
 Follow the steps below to enable SSL/TLS protection for your application.
 
----
+{{<tutorial>}}
 
-## Prerequisites
+{{<tutorial-prereqs>}}
 
-- [Create an account and register an application](/fundamentals/get-started/setup/)
+- [Create an account and register an application](/fundamentals/setup/)
 
----
+{{</tutorial-prereqs>}}
 
-## Step 1 — Choose an edge certificate
+
+
+{{<tutorial-step title="Choose an edge certificate" >}}
+
+As explained in the [concepts page](/ssl/concepts/#ssltls-certificate), edge certificates are the SSL/TLS certificates that Cloudflare presents to your visitors.
 
 Cloudflare offers a variety of options for your application's edge certificates:
 
-- [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<render file="_universal-ssl-definition.md">}}
+- [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<glossary-definition term_id="Universal SSL certificate">}}
 - [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): {{<render file="_acm-definition.md">}}
 - [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): {{<render file="_custom-certificates-definition.md">}}
 - [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): {{<render file="_keyless-ssl-definition.md">}}
 
-{{<Aside type="note" header="Note:">}}
+Refer to [Edge certificates](/ssl/edge-certificates/) for more information on how different certificate types can respond to common use cases.
 
-{{<render file="../../cloudflare-for-platforms/cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}}
+{{<Aside type="note" header="For SaaS providers">}}
+
+{{<render file="_ssl-for-saas-definition.md" productFolder="cloudflare-for-platforms" >}}
 
 For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
 
 {{</Aside>}}
 
-## Step 2 — Choose your encryption mode
+{{</tutorial-step>}}
 
-Once you have chosen your edge certificate, [choose an encryption mode](/ssl/origin-configuration/ssl-modes/) to specify how Cloudflare should encrypt connections between a) visitors and Cloudflare and b) Cloudflare and your origin server.
+{{<tutorial-step title="Choose your encryption mode" >}}
 
-{{<Aside type="warning" header="Warning:">}}
+Once you have chosen your edge certificate, [choose an encryption mode](/ssl/origin-configuration/ssl-modes/).
 
-Before choosing an encryption mode, make sure you have changed relevant settings on your application or origin server. Otherwise, visitors may encounter errors on your site.
+Encryption modes specify how Cloudflare encrypts connections between (a) visitors and Cloudflare, and (b) Cloudflare and your origin server. For more context about this two-part process refer to the [concepts page](/ssl/concepts/#ssltls-certificate).
 
-{{</Aside>}}
+Note that some encryption modes will require you to have a valid [origin certificate](/ssl/concepts/#origin-certificate), which is managed on your origin server. Each encryption mode setup page lists out this and other requirements and you can also [consider other Cloudflare options to use with your origin server](/ssl/origin-configuration/), such as [Origin CA certificates](/ssl/origin-configuration/origin-ca/).
 
-## Step 3 — Enforce HTTPS connections
+{{</tutorial-step>}}
 
-Even if your application has an active edge certificate, visitors can still access resources over unsecured HTTP connections.
+{{<tutorial-step title="Enforce HTTPS connections" >}}
 
-Using various Cloudflare settings, however, you can force all or most visitor connections to [use HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/).
+{{<render file="_enforce-https-recommendation.md">}}
 
-## Step 4 (optional) — Enable additional features
+{{</tutorial-step>}}
 
-After you have chosen your edge certificate and updated your encryption mode, review the following Cloudflare settings:
+{{<tutorial-step title="Enable additional features" optional=true >}}
 
-- [Edge certificates](/ssl/edge-certificates/additional-options/): Customize different aspects of your edge certificates, from enabling **Opportunistic Encryption** to specifying a **Minimum TLS Version**.
-- [Authenticated origin pull](/ssl/origin-configuration/authenticated-origin-pull/): Ensure all requests to your origin server originate from the Cloudflare network.
-- [Notifications](/fundamentals/notifications/notification-available/): Set up alerts related to certificate validation status, issuance, deployment, renewal, and expiration.
+{{<render file="_get-started-additional-features.md">}}
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}

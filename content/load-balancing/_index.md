@@ -17,19 +17,19 @@ Maximize application performance and availability
 
 Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
 
-Free, Pro, and Business users can enable Load Balancing in their [Cloudflare dashboard](https://dash.cloudflare.com/). Accounts with at least one **Enterprise** plan should contact their account team.
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ---
 
 ## Features
 
-{{<feature header="Load balancing and failover" href="/load-balancing/understand-basics/load-balancers/">}}
+{{<feature header="Load balancing and failover" href="/load-balancing/load-balancers/">}}
 
 Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
 
 {{</feature>}}
 
-{{<feature header="Active monitoring" href="/load-balancing/understand-basics/monitors/">}}
+{{<feature header="Active monitoring" href="/load-balancing/monitors/">}}
 
 Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
 
@@ -57,7 +57,7 @@ Review comprehensive analytics to evaluate traffic flow, assess origin health st
 
 ## Related products
 
-{{<related header="Standalone Health Checks" href="https://support.cloudflare.com/hc/articles/4404867308429" product="load-balancing">}}
+{{<related header="Standalone Health Checks" href="/health-checks/" product="health-checks">}}
 Actively monitor whether your origin server is online by sending specific requests at regular intervals.
 {{</related>}}
 

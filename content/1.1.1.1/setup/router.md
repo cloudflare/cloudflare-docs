@@ -21,9 +21,9 @@ meta:
 6. {{<render file="_all-ipv6.md">}}
 7. Save the updated settings.
 
-## Using DNS-Over-TLS on OpenWRT
+## Using DNS-Over-TLS on OpenWrt
 
-It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if it is running OpenWRT. For more details, see our blog post on the topic: [Adding DNS-Over-TLS support to OpenWRT (LEDE) with Unbound](https://blog.cloudflare.com/dns-over-tls-for-openwrt/).
+It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if it is running OpenWrt. For more details, see our blog post on the topic: [Adding DNS-Over-TLS support to OpenWrt (LEDE) with Unbound](https://blog.cloudflare.com/dns-over-tls-for-openwrt/).
 
 ## FRITZ!Box
 

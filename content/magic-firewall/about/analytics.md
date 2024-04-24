@@ -1,7 +1,6 @@
 ---
 title: Analytics
 pcx_content_type: concept
-weight: 2
 meta:
   title: Magic Firewall Analytics
 ---

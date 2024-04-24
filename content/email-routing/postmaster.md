@@ -1,36 +1,48 @@
 ---
 pcx_content_type: reference
 title: Postmaster
-weight: 7
+weight: 8
+meta:
+    description: Reference page with postmaster information for professionals, as well as a known limitations section.
 ---
 
-# Postmaster
+# Postmaster reference page
 
-The postmaster page provides technical information about Email Routing to professionals who administer email systems, and other email providers.
+This page provides technical information about Email Routing to professionals who administer email systems, and other email providers.
 
-Here you will find information regarding Email Routing, along with best practices, rules, guidelines, and troubleshooting tools.
+Here you will find information regarding Email Routing, along with best practices, rules, guidelines, troubleshooting tools, as well as known limitations for Email Routing.
 
-## Limits
+## Postmaster
 
-Currently, Email Routing does not support messages bigger than 25 MiB.
+### Authenticated Received Chain (ARC)
 
-## Outbound prefixes
+Email Routing supports [Authenticated Received Chain (ARC)](http://arc-spec.org/). ARC is an email authentication system designed to allow an intermediate email server (such as Email Routing) to preserve email authentication results. Google also supports ARC. 
 
-Email Routing sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
+### Contact information
 
-If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
 
-**IPv4**
+### DKIM signature
 
-`104.30.0.0/19`
+[DKIM (DomainKeys Identified Mail)](https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail) ensures that email messages are not altered in transit between the sender and the recipient's SMTP servers through public-key cryptography.
 
-**IPv6**
+Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
 
-`2405:8100:c000::/38`
+Email Routing signs email on behalf of `email.cloudflare.net`. If the sender did not sign the email, the receiver will likely use Cloudflare's signature for authentication.
 
-_Ranges last updated: October 4th, 2022_
+Below is the DKIM key for `email.cloudflare.net`:
 
-## IPv6 support
+```sh
+$ dig TXT 2022._domainkey.email.cloudflare.net +short
+
+"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnraPy1d8e6+lzeE1HIoUvYWoAOUSREkNHcwxA/ueVM8f6FKXvPu/9gVpgkn8iUyaCfk2z1MW+OVLuFeH64YRMa39mkaQalgke2tZ05SnjRUtYEHYvfrqPuMT+Ouk+GecpgvrtMq5gMXm6ZfeUhQkdWxmMQJGf4fdW5I0piUQJMhK/Qc1dNRSskk" "TiUtXKnsEdjTN2xcnHhyj985S0xOEAxm9Uj1rykPqVvKpqEdjUkujbXOwR0KmHTvPyFpBjCCfxAVqOwwo9zBYuvk/nh0qlDgLIpy0SimrYhNFCq2XBxIj4tdUzIl7qZ5Ck6zLCQ+rjzJ4sm/zA+Ov9kDkbcmyrwIDAQAB"
+```
+
+### DMARC enforcing
+
+Email Routing enforces Domain-based Message Authentication, Reporting & Conformance (DMARC). Depending on the sender's DMARC policy, Email Routing will reject emails when there is an authentication failure. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+
+### IPv6 support
 
 Currently, Email Routing will connect to the upstream SMTP servers using IPv6 if they provide AAAA records for their MX servers, and fall back to IPv4 if that is not possible.
 
@@ -52,21 +64,7 @@ gmail-smtp-in.l.google.com. 17 IN AAAA 2a00:1450:400c:c09::1b
 
 Email Routing also supports IPv6 through Cloudflare’s inbound MX servers.
 
-## Outbound hostnames
-
-In addition to the outbound prefixes, Email Routing will use the domain `email.cloudflare.net` for the `HELO/EHLO` command.
-
-PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For example:
-
-```sh
-$ dig a0-7.email.cloudflare.net +short
-104.30.0.7
-
-$ dig -x 104.30.0.7 +short
-a0-7.email.cloudflare.net.
-```
-
-## MX, SPF, and DKIM records
+### MX, SPF, and DKIM records
 
 Email Routing automatically adds a few DNS records to the zone when our customers enable Email Routing. If we take `example.com` as an example:
 
@@ -80,7 +78,55 @@ example.com. 300 IN TXT "v=spf1 include:_spf.mx.cloudflare.net ~all"
 
 [The MX (mail exchange) records](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/) tell the Internet where the inbound servers receiving email messages for the zone are. In this case, anyone who wants to send an email to `example.com` can use the `amir.mx.cloudflare.net`, `linda.mx.cloudflare.net`, or `isaac.mx.cloudflare.net` SMTP servers.
 
-## SPF record
+### Outbound hostnames
+
+In addition to the outbound prefixes, Email Routing will use the domain `email.cloudflare.net` for the `HELO/EHLO` command.
+
+PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For example:
+
+```sh
+$ dig a0-7.email.cloudflare.net +short
+104.30.0.7
+
+$ dig -x 104.30.0.7 +short
+a0-7.email.cloudflare.net.
+```
+
+### Outbound prefixes
+
+Email Routing sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
+
+If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
+
+**IPv4**
+
+`104.30.0.0/20`
+
+**IPv6**
+
+`2405:8100:c000::/38`
+
+_Ranges last updated: December 13th, 2023_
+
+### Sender rewriting
+
+Email Routing rewrites the SMTP envelope sender (`MAIL FROM`) to the forwarding domain to avoid issues with [SPF](#spf-record). Email Routing uses the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme) to achieve this.
+
+This has no effect to the end user's experience, though. The message headers will still report the original sender's `From:` address.
+
+### SMTP errors
+
+In most cases, Email Routing forwards the upstream SMTP errors back to the sender client in-session.
+
+### Spam and abusive traffic
+
+Handling spam and abusive traffic is essential to any email provider. Email Routing filters emails based on advanced anti-spam criteria, [powered by Area 1](/email-security/). When Email Routing detects and blocks a spam email, you will receive a message with details explaining what happened. For example:
+
+```txt
+554 <YOUR_IP_ADDRESS> found on one or more DNSBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
+```
+
+### SPF record
 
 A SPF DNS record is an anti-spoofing mechanism that is used to specify which IP addresses and domains are allowed to send emails on behalf of your zone.
 
@@ -111,42 +157,33 @@ This response means:
 
 You can read more about SPF, DKIM, and DMARC in our [Tackling Email Spoofing and Phishing](https://blog.cloudflare.com/tackling-email-spoofing/) blog.
 
-## DKIM
+---
 
-DKIM (DomainKeys Identified Mail) ensures that email messages are not altered in transit between the sender and the recipient's SMTP servers through public-key cryptography.
+## Known limitations
 
-Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
+Below, you will find information regarding known limitations for Email Routing.
 
-Email Routing signs email on behalf of `email.cloudflare.net`. If the sender did not sign the email, the receiver will likely use Cloudflare's signature for authentication.
+### Email address internationalization (EAI)
 
-Below is the DKIM key for `email.cloudflare.net`:
+Email Routing does not support [internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports [internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name). 
 
-```sh
-$ dig TXT 2022._domainkey.email.cloudflare.net +short
+This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the `@` symbol). Refer to the following examples:
 
-"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnraPy1d8e6+lzeE1HIoUvYWoAOUSREkNHcwxA/ueVM8f6FKXvPu/9gVpgkn8iUyaCfk2z1MW+OVLuFeH64YRMa39mkaQalgke2tZ05SnjRUtYEHYvfrqPuMT+Ouk+GecpgvrtMq5gMXm6ZfeUhQkdWxmMQJGf4fdW5I0piUQJMhK/Qc1dNRSskk" "TiUtXKnsEdjTN2xcnHhyj985S0xOEAxm9Uj1rykPqVvKpqEdjUkujbXOwR0KmHTvPyFpBjCCfxAVqOwwo9zBYuvk/nh0qlDgLIpy0SimrYhNFCq2XBxIj4tdUzIl7qZ5Ck6zLCQ+rjzJ4sm/zA+Ov9kDkbcmyrwIDAQAB"
-```
+* `info@piñata.es` - Supported.
+* `piñata@piñata.es` - Not supported.
 
-## Sender rewriting
+### Non-delivery reports (NDRs)
 
-Email Routing rewrites the SMTP envelope sender (`MAIL FROM`) to the forwarding domain to avoid issues with SPF. Email Routing uses a scheme similar to the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme).
+Email Routing does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
 
-For example, when receiving an email at `mycfdomain.com` with a sender address of `me@example.com`, Email Routing will rewrite the `MAIL FROM` to `me=example.com@mycfdomain.com`. The rewriting happens during the SMTP session to the destination upstream.
+### Restrictive DMARC policies can make forwarded emails fail
 
-This has no effect to the end user's experience, though. The message headers will still report the original sender's `From:` address.
+Due to the nature of email forwarding, restrictive DMARC policies might make forwarded emails fail to be delivered. Refer to [dmarc.org](https://dmarc.org/wiki/FAQ#My_users_often_forward_their_emails_to_another_mailbox.2C_how_do_I_keep_DMARC_valid.3F) for more information.
 
-## Spam and abusive traffic
+### Sending or replying to an email from your Cloudflare domain
 
-Handling spam and abusive traffic is essential to any email provider. Email Routing filters emails based on advanced anti-spam criteria, [powered by Area 1](https://blog.cloudflare.com/why-we-are-acquiring-area-1/). When Email Routing detects and blocks a spam email, you will receive a message with details explaining what happened. For example:
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).
 
-```txt
-554 <YOUR_IP_ADDRESS> found on one or more DNSBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
-```
+### Signs such "`+`" and "`.`" are treated as normal characters for custom addresses
 
-## SMTP errors
-
-In most cases, Email Routing simply forwards the upstream SMTP errors back to the sender client in-session.
-
-## Contact information
-
-The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
+Email Routing does not have advanced routing options. Characters such as `+` or `.`, which perform special actions in email providers like Gmail and Outlook, are currently treated as normal characters on custom addresses. More flexible routing options are in our roadmap.

@@ -8,7 +8,7 @@ meta:
 
 # Certificate signing requests (CSRs) — Cloudflare for SaaS
 
-{{<render file="../../ssl/_partials/_csr-definition.md">}} <br>
+{{<render file="_csr-definition.md" productFolder="ssl" >}} 
 
 Once the CSR has been generated, provide it to your customer. Your customer will then pass it along to their preferred CA to obtain a certificate and return it to you. After you receive the certificate, you should upload it to Cloudflare and reference the unique CSR ID that was provided to you during CSR creation.
 
@@ -111,7 +111,7 @@ EOF
 ))
 ```
 
-With the request body built, [create the custom hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
+With the request body built, [create the custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
 
 ---
 

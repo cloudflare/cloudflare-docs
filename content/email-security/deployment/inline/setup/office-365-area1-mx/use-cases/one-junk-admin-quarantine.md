@@ -1,9 +1,10 @@
 ---
 title: 1 - Junk email and Area 1 Admin Quarantine
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 meta:
     title: Junk email and Area 1 Admin Quarantine - Office 365
+updated: 2023-01-12
 ---
 
 # Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
@@ -12,19 +13,19 @@ In this tutorial, you will learn how to deliver emails to the Office 365 junk em
 
 ## Configure domains
 
-{{<render file="_o365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
+{{<render file="deployment/_o365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
 
 ## Create quarantine policies
 
-{{<render file="_o365-use-case-1-3-create-quarantine-policy.md">}}
+{{<render file="deployment/_o365-use-case-1-3-create-quarantine-policy.md">}}
 
 ## Configure quarantine notifications
 
-{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
+{{<render file="deployment/_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 
-{{<render file="_o365-use-cases-antispam.md" withParameters="_UserNotifyAdminRelease_;;_UserNotifyAdminRelease_;;_UserNotifyAdminRelease_;;step7-spam.png">}}
+{{<render file="deployment/_o365-use-cases-antispam.md" withParameters="_UserNotifyAdminRelease_;;_UserNotifyAdminRelease_;;_UserNotifyAdminRelease_;;step7-spam.png">}}
 
 
 ## Create transport rules
@@ -43,7 +44,7 @@ To create the transport rules that will send emails with certain dispositions to
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_.
 
-    ![Set the rules in the above step](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
+    ![Set the rules in the above step](/email-security/static/flexible-partial-images/o365-area1-mx/step4-rules.png)
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.

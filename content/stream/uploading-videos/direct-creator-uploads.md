@@ -11,12 +11,7 @@ Direct creator uploads let your end users to upload videos directly to Cloudflar
 **Two options:**
 
 1. For videos under 200MB, [generate URLs that accept an HTTP POST request](/stream/uploading-videos/direct-creator-uploads#basic-upload-flow-for-small-videos).
-2. For videos over 200MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#tus).
-
-#### Example Apps
-
-- [Direct Creator Uploads (using a HTTP POST request)](https://workers.new/stream/upload/direct-creator-uploads)
-- [Direct Creator Uploads (using tus for resumable, multi-part uploads)](https://workers.new/stream/upload/direct-creator-uploads-tus)
+2. For videos over 200 MB, or if you need to allow users to resume uploads that may be interrupted by poor network connections or users closing your app while videos are still uploading, [generate URLs that use the tus protocol](/stream/uploading-videos/direct-creator-uploads#advanced-upload-flow-using-tus-for-large-videos).
 
 ## Basic upload flow, for small videos
 
@@ -24,8 +19,7 @@ Use this if your users upload videos under 200MB, and you do not need to allow r
 
 ### Step 1: Generate a unique one-time upload URL
 
-- [End-to-end code example on Stackblitz](https://workers.new/stream/direct-creator-uploads)
-- [API Reference Docs for `/direct_upload`](https://developers.cloudflare.com/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls)
+[API Reference Docs for `/direct_upload`](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls)
 
 
 ```bash
@@ -56,7 +50,7 @@ header: Response
 }
 ```
 
-## Step 2: Use the upload URL in your app 
+## Step 2: Use the upload URL in your app
 
 Using the `uploadURL` provided in the previous request, users can upload video
 files. Uploads are limited to 200 MB in size.
@@ -80,8 +74,6 @@ size, you will receive a `4xx` HTTP status code response.
 [tus](https://tus.io/) is a protocol that supports resumable uploads. Use TUS if your users upload videos over 200MB **or** you need to allow resumable uploads. If your users upload via a mobile app or often use your app or website using a mobile network (ex: LTE, 5G), we strongly encourage you to use TUS.
 
 ### Step 1: Create your own API endpoint that returns an upload URL
-
-[Run and edit this code in your browser using Stackblitz](https://workers.new/stream/direct-creator-uploads-tus)
 
 ```javascript
 ---
@@ -121,7 +113,6 @@ Note in the example above that the one-time upload URL is returned in the `Locat
 
 Use this API endpoint **directly** in your tus client. A common mistake is to extract the upload URL from your new API endpoint, and use this directly. See below for a complete example of how to use the API from Step 1 with the uppy tus client.
 
-[Run and edit this code in your browser using Stackblitz](https://workers.new/stream/upload/direct-creator-uploads-tus)
 
 ```html
 ---
@@ -176,15 +167,16 @@ For more details on using tus and example client code, refer to [Resumable uploa
 
 ### Upload-Metadata header syntax
 
-You can apply the [same constraints](https://developers.cloudflare.com/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls) as Direct Creator Upload via basic upload when using tus. To do so, you must pass the `expiry` and `maxDurationSeconds` as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
+You can apply the [same constraints](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls) as Direct Creator Upload via basic upload when using tus. To do so, you must pass the `expiry` and `maxDurationSeconds` as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
 Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, _not_ an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
-In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
+In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes, uploaded prior to the expiry timestamp, and to make this video private:
 
-`'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'`
+`'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls,expiry MjAyNC0wMi0yN1QwNzoyMDo1MFo='`
 
-_NjAw_ is the base64 encoded value for "600" (or 10 minutes).
+`NjAw` is the base64 encoded value for "600" (or 10 minutes).
+`MjAyNC0wMi0yN1QwNzoyMDo1MFo=` is the base64 encoded value for "2024-02-27T07:20:50Z" (an RFC3339 format timestamp)
 
 ## Tracking user upload progress
 

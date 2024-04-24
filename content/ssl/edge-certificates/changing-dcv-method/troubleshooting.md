@@ -1,26 +1,54 @@
 ---
 title: Troubleshooting
-pcx_content_type: reference
-weight: 2
+pcx_content_type: troubleshooting
+weight: 3
 meta:
   title: Troubleshooting Domain Control Validation
 ---
 
 # Troubleshooting Domain Control Validation
 
-When performing Domain Control Validation (DCV) for partial domains using Universal SSL certificates, you might experience issues with certificate issuance and renewal using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/).
+Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
 
-If these issues occur while using HTTP DCV, review the following settings:
+[Blocked validation URLs](#blocked-validation-url) or [misconfigured DNS settings](#dns-settings-and-records) might interfere with the {{<glossary-tooltip term_id="Certificate Authority (CA)">}}certificate authority's{{</glossary-tooltip>}} ability to finish the validation process. In these situations, you may need to update your configuration at Cloudflare or at your authoritative DNS provider. Additionally, there can also be [errors on the CA side](#ca-errors).
 
-- **Cloudflare Firewall Rules**: Review your [firewall rules](/firewall/) to ensure that your rules _do not_:
+{{<Aside type="note">}}
+If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
+{{</Aside>}}
 
-  - Block requests from the United States
-  - Block requests from the issuing Certificate Authority's IP addresses
-  - Enable CAPTCHAs on the validation URL
+## Blocked validation URL
 
-- **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](https://support.cloudflare.com/hc/articles/200170076) and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
+If you have issues while HTTP DCV is in place, review the following settings:
 
-- **Authoritative DNS provider**: Check your settings at your authoritative DNS provider to make sure that:
+- **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/), [IP Access Rules](/waf/tools/ip-access-rules/), and other [configuration rules](/rules/configuration-rules/) to make sure that your rules _do not_ enable interactive challenge on the validation URL.
 
-  - [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) is configured correctly.
-  - Your [CAA records](https://support.cloudflare.com/hc/articles/115000310832) allow Cloudflare's partner Certificate Authorities can issue certificates on your behalf.
+- **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](/fundamentals/reference/under-attack-mode/), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/rules/page-rules/) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
+
+  {{<Aside type="warning">}}
+{{<render file="_dcv-path-security.md">}}
+{{</Aside>}}
+
+## DNS settings and records
+
+The errors below refer to situations that have to be addressed at the authoritative DNS provider:
+
+* `the Certificate Authority had trouble performing a DNS lookup: dns problem: looking up caa for nsheiapp.codeacloud.com: dnssec: bogus`
+* `Certificate authority encountered a SERVFAIL during DNS lookup, please check your DNS reachability.`
+
+Consider the following when troubleshooting:
+
+- [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) must be configured correctly. You can use [DNSViz](https://dnsviz.net/) to understand and troubleshoot the deployment of DNSSEC.
+- Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
+- The HTTP verification process is done preferably over **IPv6**, so if any `AAAA` record exists and does not point to the same dual-stack location as the `A` record, the validation will fail.
+
+## CA errors
+
+### Rate limiting
+
+{{<render file="_error-rate-limiting.md">}}
+
+### Internal errors
+
+When the certificate authority finds an issue during the CA check portion of the [DCV flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), you may see a `Internal error with Certificate Authority` message. In this case, either wait or try a different certificate authority.
+
+When the error states that the `certificate authority will not issue for this domain`, you can try a different certificate authority or contact the CA directly.

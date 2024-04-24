@@ -13,7 +13,7 @@ Page load time summary gives you an overview of how long your web page takes to 
 
 Below is a list of all the components you can inspect:
 
-- **Page load**: The total amount of time required to load the page.
+- **Page load**: The total amount of time required to load the page. Note that page load time does not correspond to the sum of the other timings available in Web Analytics. This happens because the page load time also includes timings that are not displayed, such as pre-DNS lookup timings and unattributed gaps between timing metrics.
 - **DNS** (`domainLookupEnd` - `domainLookupStart`): How long a DNS query takes. This could appear as zero for reused connections or content stored in the local cache (memory or disk).
 - **TCP** (`connectEnd` - `connectStart`): How long it takes to establish a TCP connection with the server. If using HTTPS, this process includes TLS negotiation time.
 - **Request** (`responseStart` - `requestStart`): The time elapsed between making an HTTP request and receiving the first byte of the response.
@@ -21,7 +21,7 @@ Below is a list of all the components you can inspect:
 - **Processing** (`domComplete` - `domInteractive`): How long it took to render the page. This includes loading any resources that block page rendering, including images, scripts, and style sheets. If this number is big, optimize your document architecture, resource size, or configure settings in the Cloudflare Speed app, such as Auto Minify the source code. This document process can be drilled down more with `domInteractive`, `domContentLoadedEventStart`, `domContentLoadedEventEnd`, and `domComplete`.
 - **Load Event** (`loadEventEnd` - `loadEventStart`): An event triggered by the browser when a document and its resources finish loading. The Load Event duration may be a useful metric if you have additional functions or any logic for the load event.
 
-![Web Analytics load time summary page](/analytics/static/images/web-analytics/dash-web_analytics-page_load_time.png)
+![Web Analytics load time summary page](/images/analytics/web-analytics/dash-web_analytics-page_load_time.png)
 
 ## Data collected for Paint Timings
 

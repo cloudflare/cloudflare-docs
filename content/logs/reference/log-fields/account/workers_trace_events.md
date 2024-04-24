@@ -15,6 +15,7 @@ The descriptions below detail the fields available for `workers_trace_events`.
 | Field | Value | Type |
 | -- | -- | -- |
 | DispatchNamespace | The Cloudflare Worker dispatch namespace. | string |
+| Entrypoint | The name of the entrypoint class in which the Worker began execution. | string |
 | Event | Details about the source event. | object |
 | EventTimestampMs | The timestamp of when the event was received, in milliseconds. | int |
 | EventType | The event type that triggered the invocation. <br />Possible values are <em>fetch</em>. | string |
@@ -22,5 +23,7 @@ The descriptions below detail the fields available for `workers_trace_events`.
 | Logs | List of console messages emitted during the invocation. | array[object] |
 | Outcome | The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>. | string |
 | ScriptName | The Cloudflare Worker script name. | string |
+| ScriptTags | A list of user-defined tags used to categorize the Worker. | array[string] |
+| ScriptVersion | The version of the script that was executed. | object |
 
 {{</table-wrap>}}

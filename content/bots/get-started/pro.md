@@ -19,9 +19,13 @@ Super Bot Fight Mode is included in your Pro subscription. When enabled, the pro
 
 {{<render file="_get-started-pro-biz-steps.md">}}
 
+{{<render file="_flexible-sbfm.md">}}
+
 ## Disable Super Bot Fight Mode
 
 {{<render file="_disable-sbfm.md">}}
+
+{{<render file="_flexible-sbfm.md">}}
 
 ## Analytics
 
@@ -29,9 +33,9 @@ Super Bot Fight Mode is included in your Pro subscription. When enabled, the pro
 
 Use the **Bot Report** to monitor bot traffic for the past 24 hours.
 
-To access the **Bot Report**, go to **Security** > **Bots**. If you see a double-digit percentage of automated traffic, you may want to upgrade to [Bot Management](/bots/get-started/bm-subscription/) to save money on origin costs and protect your domain from large-scale attacks.
+To access the **Bot Report**, go to **Security** > **Bots**. If you see a double-digit percentage of automated traffic, you may want to upgrade to [Bot Management](/bots/plans/bm-subscription/) to save money on origin costs and protect your domain from large-scale attacks.
 
-![Example traffic distribution as part of a bot report](/bots/static/bot-report-pro.png)
+![Example traffic distribution as part of a bot report](/images/bots/bot-report-pro.png)
 
 ### Security events
 
@@ -40,3 +44,5 @@ You can see bot-related actions by going to **Security** > **Events**. Any reque
 ## Ruleset Engine
 
 {{<render file="_bfm-ruleset-engine.md">}}
+
+{{<render file="_bfm-change-notice.md">}}

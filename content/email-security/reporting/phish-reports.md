@@ -2,11 +2,13 @@
 title: Phish reports
 pcx_content_type: how-to
 weight: 2
+meta:
+    description: Access Phish reports through the dashboard or an email digest.
 ---
 
 # Phish reports
 
-Area 1 automatically generates phish reports to provide an overview of your email traffic.
+Area 1 automatically generates {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} reports to provide an overview of your email traffic. The report only includes malicious emails. Spam and bulk emails are not included.
 
 ## In the dashboard
 

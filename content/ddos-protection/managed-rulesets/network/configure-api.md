@@ -20,10 +20,9 @@ When configuring the Network-layer DDoS Attack Protection managed ruleset, use o
 
 {{<Aside type="warning" header="Important">}}
 
-The Network-layer DDoS Attack Protection managed ruleset is always enabled. You cannot disable its rules using an override with `"enabled": false`.
-
-You can only define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level.
-
+* The Network-layer DDoS Attack Protection managed ruleset is always enabled. You cannot disable its rules using an override with `"enabled": false`.
+* {{<render file="managed-rulesets/_read-only-rules-note.md">}}
+* You can only define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level.
 {{</Aside>}}
 
 ## Example
@@ -36,11 +35,15 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 
 The overrides apply to all packets matching the rule expression: `ip.dst in { 1.1.1.0/24 }`.
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/ddos_l4/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/ddos_l4/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "description": "Define overrides for the Network-layer DDoS Attack Protection managed ruleset",
   "rules": [
     {
@@ -70,6 +73,8 @@ curl -X PUT \
 ```
 
 The response returns the created (or updated) phase entry point ruleset.
+
+{{<details header="Response">}}
 
 ```json
 {
@@ -114,5 +119,7 @@ The response returns the created (or updated) phase entry point ruleset.
   }
 }
 ```
+
+{{</details>}}
 
 For more information on defining overrides for managed rulesets using the Rulesets API, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
