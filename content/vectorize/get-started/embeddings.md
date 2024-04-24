@@ -12,7 +12,7 @@ Vectorize allows you to generate [vector embeddings](/vectorize/reference/what-i
 
 {{<Aside type="note" header="New to Vectorize?">}}
 
-If this is your first time using Vectorize or a vector database, Cloudflare recommends starting with the [Get started](/vectorize/get-started/intro/) guide.
+If this is your first time using Vectorize or a vector database, start with [Vectorize Get started](/vectorize/get-started/intro/) guide.
 
 {{</Aside>}}
 
@@ -38,16 +38,15 @@ You will create a new project that will contain a Worker script, which will act 
 Open your terminal and create a new project named `embeddings-tutorial` by running the following command:
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare@latest embeddings-tutorial
 ```
 
 When setting up your `embeddings-tutorial` Worker, answering the questions as below:
 
-- Enter `embeddings-tutorial` as the directory for where you want to create your application.
-- Choose `"Hello World Worker"` for the type of application.
-- Select `yes` to using TypeScript.
-- Select `yes` to using Git.
-- Select `no` to deploying.
+1. Choose `"Hello World Worker"` for the type of application.
+2. Select `yes` to using TypeScript.
+3. Select `yes` to using Git.
+4. Select `no` to deploying.
 
 This will create a new `embeddings-tutorial` directory. Your new `embeddings-tutorial` directory will include:
 
@@ -63,12 +62,6 @@ For example: `CI=true npm create cloudflare@latest embeddings-tutorial --type=si
 {{</Aside>}}
 
 ## 2. Create an index
-
-{{<Aside type="note" heading="Vectorize open beta">}}
-
-Vectorize is currently in open beta. Read [the announcement blog](https://blog.cloudflare.com/vectorize-vector-database-open-beta/) to learn more.
-
-{{</Aside>}}
 
 A vector database is distinct from a traditional SQL or NoSQL database. A vector database is designed to store vector embeddings, which are representations of data, but not the original data itself.
 
@@ -252,6 +245,8 @@ Extend this example by:
 - Adding more inputs and generating a larger set of vectors.
 - Accepting a custom query parameter passed in the URL, for example via `URL.searchParams`.
 - Creating a new index with a different [distance metric](/vectorize/best-practices/create-indexes/#distance-metrics) and observing how your scores change in response to your inputs.
+
+By finishing this tutorial, you have successfully created a Vectorize index, used Workers AI to generate vector embeddings, and deployed your project globally.
 
 ## Next steps
 
