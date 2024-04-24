@@ -353,7 +353,7 @@ The bindings supported by `getPlatformProxy` are:
 
  * [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 
- * [Queue bindings](/queues/reference/javascript-apis/)
+ * [Queue bindings](/queues/configuration/javascript-apis/)
 
  * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
 

@@ -1,9 +1,9 @@
 ---
-title: Reference
+title: Observability
 pcx_content_type: navigation
-weight: 8
+weight: 4
 ---
 
-# Reference
+# Observability
 
 {{<directory-listing>}}

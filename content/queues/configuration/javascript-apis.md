@@ -1,7 +1,7 @@
 ---
-pcx_content_type: reference
+pcx_content_type: configuration
 title: JavaScript APIs
-weight: 5
+weight: 6
 meta:
   title: Cloudflare Queues - JavaScript APIs
 ---
@@ -27,7 +27,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req, env): Promise<Response> {
+  async fetch(req: Request, env: Environment): Promise<Response> {
     await env.MY_QUEUE.send({
       url: req.url,
       method: req.method,
@@ -35,7 +35,7 @@ export default {
     });
     return new Response('Sent!');
   },
-} satisfies ExportedHandler<Environment>;
+};
 ```
 
 The Queues API also supports writing multiple messages at once:
@@ -111,7 +111,7 @@ Optional configuration that applies when sending a message to a queue.
 
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
-  - The number of seconds to [delay a message](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  - The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
   - Must be an integer between 0 and 43200 (12 hours). Setting this value to zero will explicitly prevent the message from being delayed, even if there is a global (default) delay at the queue level.
 
 ### `QueueSendBatchOptions`
@@ -120,7 +120,7 @@ Optional configuration that applies when sending a batch of messages to a queue.
 
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
-  - The number of seconds to [delay messages](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  - The number of seconds to [delay messages](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
   - Must be a positive integer.
 
 ### `QueuesContentType`
@@ -283,5 +283,5 @@ declare interface QueueRetryOptions {
 
 - {{<code>}}delaySeconds{{<param-type>}}number{{</param-type>}}{{</code>}}
 
-  - The number of seconds to [delay a message](/queues/reference/batching-retries/) for within the queue, before it can be delivered to a consumer.
+  - The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
   - Must be a positive integer.

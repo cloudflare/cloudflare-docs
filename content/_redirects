@@ -805,6 +805,15 @@
 /queues/learning/metrics/ /queues/reference/metrics/ 301
 /queues/learning/local-development/ /queues/reference/local-development/ 301
 /queues/learning/ /queues/reference/ 301
+/queues/reference/configuration/ /queues/configuration/configure-queues/ 301
+/queues/reference/batching-retries/ /queues/configuration/batching-retries/ 301
+/queues/reference/dead-letter-queues/ /queues/configuration/dead-letter-queues/ 301
+/queues/reference/javascript-apis/ /queues/configuration/javascript-apis/ 301
+/queues/reference/pull-consumers/ /queues/configuration/pull-consumers/ 301
+/queues/reference/consumer-concurrency/ /queues/configuration/consumer-concurrency/ 301
+/queues/reference/local-development/ /queues/configuration/local-development/ 301
+/queues/reference/metrics/ /queues/observability/metrics/ 301
+
 
 # reference architectures & design guides
 /reference-architecture/sase-reference-architecture/ /reference-architecture/architectures/sase/ 301

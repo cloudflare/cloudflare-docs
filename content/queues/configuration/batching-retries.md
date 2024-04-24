@@ -1,7 +1,7 @@
 ---
 title: Batching, Retries and Delays
 pcx_content_type: concept
-weight: 4
+weight: 2
 ---
 
 # Batching, Retries and Delays
@@ -95,7 +95,7 @@ Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivale
 
 When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery as failed. You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
 
-Messages that reach the configured maximum retries will be deleted from the queue, or if a [dead-letter queue](/queues/reference/dead-letter-queues/) (DLQ) is configured, written to the DLQ instead.
+Messages that reach the configured maximum retries will be deleted from the queue, or if a [dead-letter queue](/queues/configuration/dead-letter-queues/) (DLQ) is configured, written to the DLQ instead.
 
 {{<Aside type="note">}}
 
@@ -107,7 +107,7 @@ When a single message within a batch fails to be delivered, the entire batch is 
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) to learn more. 
+Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
 
 {{</Aside>}}
 
@@ -252,6 +252,6 @@ export default {
 
 ## Related
 
-* Review the [JavaScript API](/queues/reference/javascript-apis/) documentation for Queues.
+* Review the [JavaScript API](/queues/configuration/javascript-apis/) documentation for Queues.
 * Learn more about [How Queues Works](/queues/reference/how-queues-works/).
-* Understand the [metrics available](/queues/reference/metrics/) for your queues, including backlog and delayed message counts.
+* Understand the [metrics available](/queues/observability/metrics/) for your queues, including backlog and delayed message counts.

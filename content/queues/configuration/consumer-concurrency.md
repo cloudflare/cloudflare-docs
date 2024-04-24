@@ -1,7 +1,7 @@
 ---
 title: Consumer concurrency
 pcx_content_type: concept
-weight: 9
+weight: 5
 ---
 
 # Consumer concurrency
@@ -28,7 +28,7 @@ Where possible, Queues will optimize for keeping your backlog from growing expon
 
 {{<Aside type="note" header="Consumer concurrency and retried messages">}}
 
-[Retrying messages with `retry()`](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
+[Retrying messages with `retry()`](/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries) or calling `retryAll()` on a batch will **not** count as a failed invocation.
 
 {{</Aside>}}
 

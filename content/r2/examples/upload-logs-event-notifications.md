@@ -83,7 +83,7 @@ bucket_name = "example-log-sink-bucket"
 
 ## 6. Write event notification messages to R2
 
-Add a [`queue` handler](/queues/reference/javascript-apis/#consumer) to `src/index.ts` to handle writing batches of notifications to our log sink bucket (you do not need a [fetch handler](/workers/runtime-apis/handlers/fetch/)):
+Add a [`queue` handler](/queues/configuration/javascript-apis/#consumer) to `src/index.ts` to handle writing batches of notifications to our log sink bucket (you do not need a [fetch handler](/workers/runtime-apis/handlers/fetch/)):
 
 ```ts
 ---

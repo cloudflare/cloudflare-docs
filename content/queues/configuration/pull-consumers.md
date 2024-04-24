@@ -1,7 +1,7 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Pull consumers
-weight: 6
+weight: 4
 meta:
   title: Cloudflare Queues - Pull consumers
 ---
@@ -187,7 +187,7 @@ You may have multiple HTTP clients pulling from the same queue concurrently: eac
 
 Messages marked for retry will be put back into the queue and can be delivered to any consumer. Messages are _not_ tied to a specific consumer, as consumers do not have an identity and to avoid a slow or stuck consumer from holding up processing of messages in a queue.
 
-Multiple consumers can be useful in cases where you have multiple upstream resources (for example, GPU infrastructure), where you want to autoscale based on the [backlog](/queues/reference/metrics/) of a queue, and/or cost.
+Multiple consumers can be useful in cases where you have multiple upstream resources (for example, GPU infrastructure), where you want to autoscale based on the [backlog](/queues/observability/metrics/) of a queue, and/or cost.
 
 ## 4. Acknowledge messages
 
@@ -257,7 +257,7 @@ The following example is a Go application that pulls from a queue on startup, ac
 
 {{<Aside type="warning">}}
 
-When attaching a pull-based consumer to a queue, you should ensure that messages are sent with only a `text`, `bytes` or `json` [content type](/queues/reference/javascript-apis/#queuescontenttype).
+When attaching a pull-based consumer to a queue, you should ensure that messages are sent with only a `text`, `bytes` or `json` [content type](/queues/configuration/javascript-apis/#queuescontenttype).
 
 The default content type is `json`.
 

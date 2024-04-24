@@ -1,9 +1,9 @@
 ---
-title: Reference
+title: Configuration
 pcx_content_type: navigation
-weight: 8
+weight: 3
 ---
 
-# Reference
+# Configuration
 
 {{<directory-listing>}}
