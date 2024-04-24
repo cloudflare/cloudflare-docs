@@ -1,3 +1,5 @@
+{{- $filters := split (.Get "filters") "," -}}
+
 {{- $target := printf "%sexamples/" .Page.FirstSection.RelPermalink -}}
 {{- $pages := (where .Site.Pages "Section" .Page.Section) -}}
 
@@ -5,19 +7,54 @@
   {{- $target = . -}}
 {{- end -}}
 
+{{ if ne (index $filters 0) "" }}
+<div class="selectorDropdowns">
+{{- range $index, $filter := $filters -}}
+
+{{- $optionsArray := slice -}}
+{{- range $index, $page := $pages.ByWeight -}}
+{{- with (index $page.Params $filter) }}
+{{- $optionsArray = $optionsArray | append . -}}
+{{- end -}}
+{{- end -}}
+
+{{- $optionsArray = sort (uniq $optionsArray) -}}
+
+<div>
+  <label for="{{$filter}}">{{replace $filter "-" " " | title}}</label>
+  <select class="selectorFilter" name="data-{{$filter}}" id="{{$filter}}">
+      <option value="all">Select...</option>
+      {{- range $optionsArray -}}
+      <option value="{{.}}">{{.}}</option>
+      {{- end -}}
+  </select>
+  </div>
+
+{{- end -}}
+</div>
+{{ end }}
+
 
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
-  {{- range $pages.ByWeight -}}
-    {{- $x := .RelPermalink -}}
+  {{- range $index, $page := $pages.ByWeight -}}
+    {{- $x := $page.RelPermalink -}}
     {{- $isExample := (strings.HasPrefix $x $target) -}}
     {{- if and (ne $x $target) $isExample -}}
-    <li class="DocsCodeExamplesOverview--example" {{ with .Params.tags }} data-tags="{{ delimit . "|" }}" {{ end }} {{ with .Params.languages }} data-languages="{{ delimit . "|" }}" {{ end }}>
+    <li class="DocsCodeExamplesOverview--example"
+    {{ if ne (index $filters 0) "" }}
+    {{ range $index2, $filter := $filters }}
+    {{ with (index $page.Params $filter) }}
+    data-{{$filter}}="{{ delimit (.) "|" }}"
+    {{ end }}
+    {{ end }}
+    {{ end }}
+    >
       <div class="DocsCodeExamplesOverview--example-title">
-        {{- .Page.RenderString (printf "[%s](%s)" .Title .RelPermalink) -}}
+        {{- .Page.RenderString (printf "[%s](%s)" $page.Title $page.RelPermalink) -}}
       </div>
 
       <div class="DocsCodeExamplesOverview--example-description">
-        {{ .Params.summary | .Page.RenderString }}
+        {{ $page.Params.summary | .Page.RenderString }}
       </div>
     </li>
     {{- end -}}

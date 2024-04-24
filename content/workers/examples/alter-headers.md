@@ -7,6 +7,7 @@ tags:
 languages:
   - JavaScript
   - Typescript
+  - Python
 pcx_content_type: configuration
 title: Alter headers
 weight: 1001

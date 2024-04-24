@@ -8,6 +8,7 @@ tags:
 languages:
   - JavaScript
   - Typescript
+  - Python
 pcx_content_type: configuration
 title: Auth with headers
 weight: 1001

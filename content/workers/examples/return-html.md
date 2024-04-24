@@ -8,6 +8,7 @@ languages:
   - JavaScript
   - Typescript
   - Python
+playground-link: true
 pcx_content_type: configuration
 title: Return small HTML page
 weight: 1
