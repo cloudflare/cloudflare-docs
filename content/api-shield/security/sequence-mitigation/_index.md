@@ -8,6 +8,69 @@ weight: 4
 
 Sequence Mitigation allows you to enforce request patterns for authenticated clients communicating with your API. This feature utilizes the same underlying system that powers Sequence Analytics.
 
+You can use Sequence Rules to establish a set of known behavior for API clients.
+
+For example, you may expect that API requests made during a bank funds transfer could conform to the following order in time:
+
+| Order | Method | Path | Description |
+| --- | --- | --- | --- |
+| 1 | `GET` | `/api/v1/users/{user_id}/accounts` | `user_id` is the active user. |
+| 2 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is one of the user’s accounts. |
+| 3 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user. |
+| 4 | `POST` | `/api/v1/transferFunds` | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
+
+You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/accounts` before `GET /api/v1/accounts/{account_id}/balance` and that you request `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds`.
+
+Using Sequence Mitigation, you can enforce that request pattern with two new Sequence Mitigation rules.
+
+{{<Aside type="note">}}
+You can create Sequence Mitigation rules for a sequence even if the sequence is not listed in [Sequence Analytics](/api-shield/security/sequence-analytics/).
+{{</Aside>}}
+
+You can also set up a negative security model with Sequence Mitigation. See [Configuration](/api-shield/security/sequence-mitigation/configure/#configure) to understand how to distinguish between rule types using the `kind` field.
+
+## Process
+
+You can create a sequence rule to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
+
+In the bank funds transfer example, enforcing that a user requests `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds` is considered a positive security model, since a user may only perform a funds transfer after listing an account balance.
+
+A negative security model may be useful if you see abusive behavior that is outside the norm of your application and you need to stop the requests while researching the correct positive security model to implement. 
+
+For example, if there was a bug that allowed an unauthorized user to get an account number via a user’s profile `GET /api/v1/users/{var1}/profile` and then an unauthorized user attempted to retrieve account numbers from emails and make immediate funds transfers, you can create up a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
+
+## Create a sequence rule
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **API Shield** > **API Rules**.
+3. Select **Create sequence rule**. 
+4. Name your rule.
+5. Select a starting endpoint. This is the endpoint that you expect users to hit first in their request flow when using your API.
+    1. Choose a hostname to display the list of endpoints for that hostname.
+    2. Choose an endpoint.
+    3. Select **Set as starting endpoint**.
+6. Select a final endpoint. This is the endpoint you are targeting for protection.
+    1. Choose a hostname to display the list of endpoints for that hostname.
+    2. Choose an endpoint.
+    3. **Select Set as ending endpoint**.
+7. Choose an action that corresponds to the security model type:
+    - **Allow**: This will create a positive security model by defining approved sequences on your API.
+    - **Log** / **Block**: This will test or enforce a negative security model defining known bad sequences on your API.
+{{<Aside type="note">}} 
+If you chose **Allow**, select whether to log or block the request to the final endpoint when users do not first request the starting endpoint in the sequence.
+{{</Aside>}}
+8. Select **Create rule**.
+
+## Edit a sequence rule
+
+Text
+
+## Reprioritize a rule
+
+You can change the priority order of your rules by selecting and dragging the rules on the list. 
+
+You can also explicitly set a priority order by selecting the three dots on your rule and choosing **Move to…** where you can set the new priority in the resulting modal window.
+
 ## Limitations
 
 ### Endpoint Management
