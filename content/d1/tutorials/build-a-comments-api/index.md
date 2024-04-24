@@ -33,6 +33,7 @@ $ npm install hono
 ## 2. Initialize your Hono application
 
 In `src/worker.js`, initialize a new Hono application, and define the following endpoints:
+
 - `GET /api/posts/:slug/comments`.
 - `POST /api/posts/:slug/comments`.
 
@@ -65,7 +66,7 @@ You will now create a D1 database. In Wrangler v2, there is support for the `wra
 $ wrangler d1 create d1-example
 ```
 
-Reference your created database in your Worker code by creating a [binding](/workers/configuration/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
+Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
 
 ```toml
 ---
@@ -84,7 +85,7 @@ With your binding configured in your `wrangler.toml` file, you can interact with
 Interact with D1 by issuing direct SQL commands using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute d1-example --command "SELECT name FROM sqlite_schema WHERE type ='table'"
+$ wrangler d1 execute d1-example --remote --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 
 Executing on d1-example:
 
@@ -118,7 +119,7 @@ CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:
 
 ```sh
-$ wrangler d1 execute d1-example --file schemas/schema.sql
+$ wrangler d1 execute d1-example --remote --file schemas/schema.sql
 ```
 
 ## 5. Execute SQL
@@ -138,7 +139,7 @@ app.get('/api/posts/:slug/comments', async c => {
 })
 ```
 
-The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to the [querying databases documentation](/d1/how-to/query-databases/) for a list of all methods available in D1's client API.
+The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to [D1 client API](/d1/build-with-d1/d1-client-api/) for a list of all methods available.
 
 In this function, you accept a `slug` URL query parameter and set up a new SQL statement where you select all comments with a matching `post_slug` value to your query parameter. You can then return it as a JSON response.
 
@@ -212,7 +213,7 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 This application is an API back-end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
-Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Hono allows you to enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
+Interacting with this API from a front-end will require enabling specific Cross-Origin Resource Sharing (or _CORS_) headers in your back-end API. Hono allows you to enable Cross-Origin Resource Sharing for your application. Import the `cors` module and add it as middleware to your API in `src/worker.js`:
 
 ```typescript
 ---

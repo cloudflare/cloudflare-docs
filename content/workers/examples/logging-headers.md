@@ -28,14 +28,12 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     console.log(new Map(request.headers));
     return new Response("Hello world");
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

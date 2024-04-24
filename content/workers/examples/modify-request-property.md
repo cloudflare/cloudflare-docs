@@ -75,8 +75,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     /**
      * Example someHost is set up to return raw JSON
      * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied
@@ -128,9 +128,7 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

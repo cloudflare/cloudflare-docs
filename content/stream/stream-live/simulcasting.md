@@ -2,6 +2,9 @@
 pcx_content_type: tutorial
 title: Simulcast (restream) videos
 weight: 5
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Simulcast (restream) videos

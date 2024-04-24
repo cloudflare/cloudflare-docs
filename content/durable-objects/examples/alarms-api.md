@@ -14,6 +14,7 @@ layout: example
 This example implements an `alarm()` handler that wakes the Durable Object once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
 
 ```js
+// Worker
 export default {
   async fetch(request, env) {
     let id = env.BATCHER.idFromName("foo");
@@ -23,6 +24,7 @@ export default {
 
 const SECONDS = 1000;
 
+// Durable Object
 export class Batcher {
   constructor(state, env) {
     this.state = state;
@@ -32,6 +34,7 @@ export class Batcher {
       this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
     });
   }
+
   async fetch(request) {
     this.count++;
 
@@ -50,6 +53,7 @@ export class Batcher {
       },
     });
   }
+
   async alarm() {
     let vals = await this.storage.list();
     await fetch("http://example.com/some-upstream-service", {

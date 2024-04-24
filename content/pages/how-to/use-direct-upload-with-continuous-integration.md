@@ -13,7 +13,7 @@ In your project directory, install [Wrangler](/workers/wrangler/install-and-upda
 
 ```sh
 # Publish created project
-$ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages publish <DIRECTORY> --project-name=<PROJECT_NAME>
+$ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages deploy <DIRECTORY> --project-name=<PROJECT_NAME>
 ```
 
 ## Get credentials from Cloudflare
@@ -135,7 +135,7 @@ jobs:
      # Run your project's build step
      - run: npm install && npm run build
      # Publish with wrangler
-     - run: npx wrangler pages publish dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
+     - run: npx wrangler pages deploy dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
 
 workflows:
  Publish-to-Pages-workflow:
@@ -182,7 +182,7 @@ install:
 
 script:
   - npm run build # Switch this out with your build command or remove it if you don't have a build step
-  - npx wrangler pages publish dist --project-name=<PROJECT NAME>
+  - npx wrangler pages deploy dist --project-name=<PROJECT NAME>
 
 env:
   - CLOUDFLARE_ACCOUNT_ID: { $CLOUDFLARE_ACCOUNT_ID }

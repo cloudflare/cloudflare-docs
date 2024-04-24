@@ -4,15 +4,20 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
+weight: 2
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
 
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers. At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare's AI toolkit. You do not need to have experience working with AI tools to build this application.
 
+{{<render file="_prereqs.md" productFolder="/workers/" >}}
+
+You will also need access to [Vectorize](/vectorize/platform/pricing/).
+
 ## 1. Create a new Worker project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
+C3 (`create-cloudflare-cli`) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
 Open a terminal window and run C3 to create your Worker project:
 
@@ -38,13 +43,13 @@ This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/
 For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `no` to using TypeScript.
 
 You will be asked if you would like to deploy the project to Cloudflare.
 
-* If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-* If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
+- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
+- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 
 In your project directory, C3 has generated the following:
 
@@ -74,17 +79,11 @@ If you have issues with this step or you do not have access to a browser interfa
 
 You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
 
-## 3. Adding the AI package
+## 3. Adding the AI binding
 
-To begin using Cloudflare's AI products, you can add the `@cloudflare/ai` package to your application, and enable the `AI` binding in your application configuration. This will allow you to query a large language model from directly inside your code.
+To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
-First, install the `@cloudflare/ai` package:
-
-```sh
-$ npm install @cloudflare/ai
-```
-
-Next, add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform:
+This example features the [`@cf/meta/llama-2-7b-chat-int8` model](/workers-ai/models/llama-2-7b-chat-int8/), which generates text.
 
 ```toml
 ---
@@ -101,13 +100,9 @@ Now, find the `src/index.js` file. Inside the `fetch` handler, you can query the
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
-
 export default {
 	async fetch(request, env, ctx) {
-    const ai = new Ai(env.AI)
-
-    const answer = await ai.run(
+    const answer = await env.AI.run(
       '@cf/meta/llama-2-7b-chat-int8',
       {
         messages: [
@@ -143,7 +138,7 @@ Embeddings allow you to add additional capabilities to the language models you c
 To begin using Vectorize, create a new embeddings index using `wrangler`. This index will store vectors with 768 dimensions, and will use cosine similarity to determine which vectors are most similar to each other:
 
 ```sh
-$ wrangler vectorize create vector-index --dimensions=768 --metric=cosine
+$ npx wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 ```
 
 Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
@@ -163,10 +158,10 @@ To implement the searching feature, you must set up a D1 database from Cloudflar
 Create a new D1 database using `wrangler`:
 
 ```sh
-$ wrangler d1 create database
+$ npx wrangler d1 create database
 ```
 
-Then, add the configuration details for your new D1 database to `wrangler.toml`:
+Then, paste the configuration details output from the previous command into `wrangler.toml`:
 
 ```toml
 # ... existing wrangler configuration
@@ -174,19 +169,19 @@ Then, add the configuration details for your new D1 database to `wrangler.toml`:
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
 database_name = "database"
-database_id = "abc-def-geh"
+database_id = "abc-def-geh" # replace this with a real database_id (UUID)
 ```
 
 In this application, we'll create a `notes` table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute database --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
+$ npx wrangler d1 execute database --remote --command "CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)"
 ```
 
 Now, we can add a new note to our database using `wrangler d1 execute`:
 
 ```sh
-$ wrangler d1 execute database --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
+$ npx wrangler d1 execute database --remote --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
 ## 5. Creating notes and adding them to Vectorize
@@ -203,14 +198,11 @@ Then, import `hono` into your `src/index.js` file. You should also update the `f
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
 import { Hono } from "hono"
 const app = new Hono()
 
 app.get('/', async (c) => {
-  const ai = new Ai(c.env.AI)
-
-  const answer = await ai.run(
+  const answer = await c.env.AI.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
       messages: [
@@ -225,17 +217,15 @@ app.get('/', async (c) => {
 export default app
 ```
 
-This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database:
+This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database.
+
+This example features the [`@cf/baai/bge-base-en-v1.5` model](/workers-ai/models/bge-base-en-v1.5/), which can be used to create an embedding. Embeddings are stored and retrieved from our vector database [Vectorize](/vectorize/). The user's query is also turned into an embedding so that it can be used for searching within Vectorize.
 
 ```js
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
-
 app.post('/notes', async (c) => {
-  const ai = new Ai(c.env.AI)
-
   const { text } = await c.req.json()
   if (!text) {
 			return c.text("Missing text", 400);
@@ -251,7 +241,7 @@ app.post('/notes', async (c) => {
 			return c.text("Failed to create note", 500);
 	}
 
-  const { data } = await ai.run('@cf/baai/bge-base-en-v1.5', { text: [text] })
+  const { data } = await c.env.AI.run('@cf/baai/bge-base-en-v1.5', { text: [text] })
   const values = data[0]
 
   if (!values) {
@@ -296,7 +286,6 @@ Finally, you can query the LLM binding to get a response.
 ---
 filename: src/index.js
 ---
-import { Ai } from '@cloudflare/ai'
 import { Hono } from 'hono'
 const app = new Hono()
 
@@ -304,11 +293,9 @@ const app = new Hono()
 // app.post('/notes', async (c) => { ... })
 
 app.get('/', async (c) => {
-  const ai = new Ai(c.env.AI);
-
   const question = c.req.query('text') || "What is the square root of 9?"
 
-  const embeddings = await ai.run('@cf/baai/bge-base-en-v1.5', { text: question })
+  const embeddings = await c.env.AI.run('@cf/baai/bge-base-en-v1.5', { text: question })
   const vectors = embeddings.data[0]
 
   const SIMILARITY_CUTOFF = 0.75
@@ -330,7 +317,7 @@ app.get('/', async (c) => {
 
   const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
-  const { response: answer } = await ai.run(
+  const { response: answer } = await c.env.AI.run(
     '@cf/meta/llama-2-7b-chat-int8',
     {
       messages: [
@@ -372,9 +359,9 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
-* Review Cloudflare's [AI documentation](/workers-ai).
-* Review [Tutorials](/workers/tutorials/) to build projects on Workers.
-* Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
-* Understand how Workers works in [Reference](/workers/reference/).
-* Learn about Workers features and functionality in [Platform](/workers/platform/).
-* Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.
+- Review Cloudflare's [AI documentation](/workers-ai).
+- Review [Tutorials](/workers/tutorials/) to build projects on Workers.
+- Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.
+- Understand how Workers works in [Reference](/workers/reference/).
+- Learn about Workers features and functionality in [Platform](/workers/platform/).
+- Set up [Wrangler](/workers/wrangler/install-and-update/) to programmatically create, test, and deploy your Worker projects.

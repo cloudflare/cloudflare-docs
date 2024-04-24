@@ -7,12 +7,13 @@ layout: learning-unit
 
 Now that you have learned how Area 1 can protect your inbox from phishing attacks and the two main integration methods, refer to the following resources to onboard and enhance your email security posture:
 
-| Resource | Description | 
+| Resource | Description |
 | --- | --- |
+| [Phish submissions](/email-security/email-configuration/phish-submissions/) | As part of your continuous email security posture, administrators and security analysts need to submit missed phish samples to Area 1 Service Addresses so Cloudflare can process them and take necessary action. Refer to this guide for more information. |
 | [Inline integration](/email-security/deployment/inline/setup/) | Refer to this guide to get started with the Area 1 inline integration method. |
 | [API integration](/email-security/deployment/api/setup/) | Refer to this guide to get started with the Area 1 API integration method. |
 | [Email retraction](/email-security/email-configuration/retract-settings/) | With journaling, BCC or MS Graph configured, use email retraction to take post-delivery actions against suspicious messages. |
-| [Email link isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation) | Email Link Isolation rewrites links that could be exploited, alerts users when there is uncertainty around the website they are visiting, and protects against malware and vulnerabilities through [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). | 
+| [Email link isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation) | Email Link Isolation rewrites links that could be exploited, alerts users when there is uncertainty around the website they are visiting, and protects against malware and vulnerabilities through [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). |
 | [Business email compromise (BEC)](/email-security/email-configuration/enhanced-detections/business-email-compromise/) | BEC protects against attackers trying to impersonate organizational leaders. |
 | [Trusted domains](/email-security/email-configuration/lists/trusted-domains/) | Trusted domains allows you to identify domains that should be exempted from Area 1 detections. |
 | [Message allow patterns](/email-security/email-configuration/lists/allowed-patterns/) | Allowed patterns exempts messages that match certain patterns from normal detection scanning. |

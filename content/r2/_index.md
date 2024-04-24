@@ -10,6 +10,14 @@ meta:
 
 # Cloudflare R2
 
+{{<description>}}
+
+Object storage for all your data.
+
+{{</description>}}
+
+{{<plan type="workers-paid">}}
+
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 You can use R2 for multiple scenarios, including but not limited to:
@@ -24,6 +32,8 @@ You can use R2 for multiple scenarios, including but not limited to:
 {{<button type="primary" href="/r2/get-started/">}}Get started{{</button>}}
 {{<button type="secondary" href="/r2/examples/">}}Browse the examples{{</button>}}
 {{</button-group>}}
+
+---
 
 ## Features
 
@@ -51,6 +61,8 @@ Create bucket scoped tokens for granular control over who can access your data.
 
 {{</feature>}}
 
+---
+
 ## Related products
 
 {{<related header="Workers" href="/workers/" product="workers">}}
@@ -68,13 +80,15 @@ Upload, store, encode, and deliver live and on-demand video with one API, withou
 A suite of products tailored to your image-processing needs.
 {{</related>}}
 
+---
+
 ## More resources
 
 {{<resource-group>}}
 
 {{<resource header="Pricing" href="/r2/pricing" icon="price">}} Understand pricing for free and paid tier rates. {{</resource>}}
 
-{{<resource header="Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
+{{<resource header="Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
 
 {{<resource header="Twitter" href="https://twitter.com/cloudflaredev" icon="twitter">}} Learn about product announcements, new tutorials, and what is new in Cloudflare Workers. {{</resource>}}
 

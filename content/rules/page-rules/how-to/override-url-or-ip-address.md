@@ -54,6 +54,6 @@ To configure a resolve override in Page Rules, do the following:
 
 The _Resolve Override_ setting only allows override of the hostname, not the path.
 
-If you need to modify the path also, you will need to either use a [Worker](/workers/runtime-apis/request/#requestinitcfproperties) or combine the page rule with a [transform rule](/rules/transform/url-rewrite/).
+If you need to modify the path also, you will need to either use a [Worker](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) or combine the page rule with a [transform rule](/rules/transform/url-rewrite/).
 
 {{</Aside>}}

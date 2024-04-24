@@ -7,7 +7,7 @@ meta:
 
 # 1.1.1.1 Public DNS Resolver
 
-_Last updated December 5, 2023_
+_Last updated March 27, 2024_
 
 ## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
@@ -19,7 +19,7 @@ Nearly everything on the Internet starts with a DNS request. DNS is the Internet
 
 Unfortunately, by default, DNS is usually slow and insecure. Your ISP, and anyone else listening in on the Internet, can see every site you visit and every app you use — even if their content is encrypted. Creepily, some DNS providers sell data about your Internet activity or use it to target you with ads.
 
-Given the current state of affairs, Cloudflare created a DNS resolver with your privacy and security in mind. Cloudflare, in partnership with APNIC, runs the 1.1.1.1 public resolver, a recursive DNS service that values user privacy and security. DNS requests sent to our public resolver are sent over a secure channel, significantly decreasing the odds of any unwanted spying or man in the middle attacks.
+Given the current state of affairs, Cloudflare created a DNS resolver with your privacy and security in mind. Cloudflare, in partnership with APNIC, runs the 1.1.1.1 public resolver, a recursive DNS service that values user privacy and security. DNS requests sent to our public resolver can be sent over a secure channel, significantly decreasing the odds of any unwanted spying or man in the middle attacks.
 
 The 1.1.1.1 public DNS resolver was designed for privacy first, and Cloudflare commits to the following:
 
@@ -74,6 +74,7 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * queryDo
 * querySize
 * queryEdns
+* queryCd
 * responseType
 * responseCode
 * responseSize
@@ -83,6 +84,7 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * responseMinTTL
 * reused
 * srcAsNum
+* srcCountry
 * srcIPVersion
 * validationState
 
@@ -102,19 +104,19 @@ The following subrequest data is included in the Public Resolver Logs:
 * subrequest.recordData
 * subrequest.error
 
-Except for the limited aggregated data generated using the Public Resolver Logs described below, all of the Public Resolver Logs are deleted within 25 hours of Cloudflare’s receipt of such information.
+Except for the limited sampled data from the Public Resolver Logs (which do not include truncated IP addresses) used to generate the aggregated data described below, all of the Public Resolver Logs are deleted within 25 hours of Cloudflare’s receipt of such information.
 
-Cloudflare will only store the following aggregated data:
+Cloudflare may make the following aggregations:
 
 * Total number of queries with different protocol settings (for example, tcp/udp/dnssec) by Cloudflare data centers.
 * Response code/time quantiles with different protocol settings by Cloudflare data centers.
 * Total Number of Requests Processed by Cloudflare data centers.
-* Aggregate List of All Domain Names Requested, aggregate number of requests and timestamp of first time requested
-* Number of unique clients, queries over IPv4, queries over IPv6, queries with the RD bit set, queries asking for DNSSEC, number of bogus, valid, and invalid DNSSEC answers, queries by type, number of answers with each response code, response time quantiles (e.g. 50 percentile), and number of cached answers per minute, per day, per protocol (HTTPS/UDP/TCP/TLS), per Cloudflare data center, and per Autonomous System Number.
+* Aggregate List of All Domain Names Requested and aggregate number of requests and timestamp of first time requested by region.
+* Number of unique clients, queries over IPv4, queries over IPv6, queries with the RD bit set, queries asking for DNSSEC, number of bogus, valid, and invalid DNSSEC answers, queries by type, number of answers with each response code, response time quantiles (e.g. 50 percentile), response TTL, and number of cached answers per minute, per day, per protocol (HTTPS/UDP/TCP/TLS), per region, per Cloudflare data center, and per Autonomous System Number.
 * Number of queries, number of queries with EDNS, number of bytes and time in answers quantiles (e.g. 50 percentile) by day, month, Cloudflare data center, and by IPv4 vs IPv6.
 * Number of queries, response codes and response code quantiles (e.g. 50 percentile) by day, region, name and type.
 
-Cloudflare may store the aggregated data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
+Cloudflare may store the data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 
 ## What about requests for content blocking?
 

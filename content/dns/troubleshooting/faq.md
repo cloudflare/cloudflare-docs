@@ -30,7 +30,11 @@ ___
 
 Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOis search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
 
-Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+{{<Aside type="warning">}}
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool.
+{{</Aside>}}
+
+Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
 
 ___
 

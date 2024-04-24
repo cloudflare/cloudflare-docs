@@ -127,7 +127,7 @@
         "pages": [
           {
             "url_path": "/waf/managed-rules/waf-exceptions/",
-            "link_title": "WAF Exceptions",
+            "link_title": "Exceptions",
             "additional_description": "Skip the execution of WAF managed rulesets or some of their rules."
           },
           {

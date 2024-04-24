@@ -88,8 +88,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const DEBUG = true;
     const SOME_HOOK_SERVER = "https://webhook.flow-wolf.io/hook";
 
@@ -155,9 +155,7 @@ const handler: ExportedHandler = {
     }
     return new Response(text, response);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -1,6 +1,6 @@
 ---
 title: Database commands
-weight: 12
+weight: 6
 pcx_content_type: concept
 ---
 
@@ -10,7 +10,7 @@ D1 supports a number of database-level commands that allow you to list tables, i
 
 ## Commands
 
-You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/how-to/query-databases/).
+You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/d1-client-api/).
 
 ### `PRAGMA table_list`
 
@@ -68,7 +68,7 @@ Shows the schema (columns, types, null, default values) for the given `TABLE_NAM
 
 ### `PRAGMA table_xinfo(TABLE_NAME)`
 
-Similar to `PRAGMA table_info(TABLE_NAME)` but also includes [generated columns](/d1/how-to/generated-columns/).
+Similar to `PRAGMA table_info(TABLE_NAME)` but also includes [generated columns](/d1/reference/generated-columns/).
 
 ### `PRAGMA index_list(TABLE_NAME)`
 
@@ -99,7 +99,7 @@ Show the indexed column(s) for the given `INDEX_NAME`.
 You can also query the `sqlite_master` table to show all tables, indexes, and the original SQL used to generate them:
 
 ```sql
-SELECT name, sql FROM sqlite_master"
+SELECT name, sql FROM sqlite_master
 ```
 ```json
       {
@@ -120,8 +120,29 @@ SELECT name, sql FROM sqlite_master"
       }
 ```
 
+## `PRAGMA defer_foreign_keys = (on|off)`
+
+Allows you to defer the enforcement of [foreign key constraints](/d1/build-with-d1/foreign-keys/) until the end of the current transaction. This can be useful during [database migrations](/d1/reference/migrations/), as schema changes may temporarily violate constraints depending on order in which they are applied.
+
+This does not disable foreign key enforcement outside of the current transaction: if you have not resolved outstanding foreign key violations at the end of your transaction, it will fail with a `FOREIGN KEY constraint failed` error.
+
+To defer foreign key enforcement, set `PRAGMA defer_foreign_keys = on` at the start of your transaction, or ahead of changes that would violate constraints: 
+
+```sql
+-- Defer foreign key enforcement in this transaction.
+PRAGMA defer_foreign_keys = on
+
+-- Run your CREATE TABLE or ALTER TABLE / COLUMN statements
+ALTER TABLE users ...
+
+-- This is implicit if not set by the end of the transaction.
+PRAGMA defer_foreign_keys = off
+```
+
+Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys.
+
 ## Related resources
 
-* Learn [how to create indexes](/d1/how-to/using-indexes/#list-indexes) in D1.
-* Use D1's [JSON functions](/d1/how-to/querying-json/) to query JSON data.
+* Learn [how to create indexes](/d1/build-with-d1/use-indexes/#list-indexes) in D1.
+* Use D1's [JSON functions](/d1/build-with-d1/query-json/) to query JSON data.
 * Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and debug issues before deploying.

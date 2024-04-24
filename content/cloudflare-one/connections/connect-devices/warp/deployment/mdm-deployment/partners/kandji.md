@@ -45,7 +45,7 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
       If **ENFORCED_VERSION** is left blank (`""`), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. Refer to the script comments for more details.
 
    6. In the **Install Details** section, select **Installer Package**.
-   7. Under **Installer Package**, upload the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
+   7. Under **Installer Package**, upload the `Cloudflare_WARP_<VERSION>.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
    8. Select **Save**.
 
 To verify that Cloudflare WARP was installed, select the app in the **Custom App** library and view its **Status** tab.

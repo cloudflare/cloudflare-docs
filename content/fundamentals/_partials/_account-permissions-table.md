@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: editWord;;editProduct
+inputParameters: editWord;;editProduct;;cloudflareName
 ---
 
 | Name                                                         | Description                                                                                                                                              |
@@ -67,8 +67,8 @@ inputParameters: editWord;;editProduct
 | Cloudflare One Connectors $1 | Grants write access to Cloudflare One Connectors |
 | Cloudflare One Networks Read | Grants read access to Cloudflare One Networks |
 | Cloudflare One Networks $1 | Grants write access to Cloudflare One Networks |
-| Cloudflare Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
-| Cloudflare Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
+| $3 Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
+| $3 Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
 | $2 Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
 | $2 Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
 | Constellation Read                                           | Grants read access to [Constellation](/constellation/).                                                                                                  |
@@ -111,6 +111,8 @@ inputParameters: editWord;;editProduct
 | Page Shield $1                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
 | Pub/Sub Read                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
 | Pub/Sub $1                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
+| Queues Read                                           | Grants read access to [Queues](/queues/).                                                                                                                     |
+| Queues $1                                           | Grants write access to [Queues](/queues/).                                                                                                                     |
 | Rule Policies Read                                           | Grants read access to Rule Policies.                                                                                                                     |
 | Rule Policies $1                                           | Grants write access to Rule Policies.                                                                                                                    |
 | Stream Read                                                  | Grants read access to [Cloudflare Stream](/stream/).                                                                                                     |

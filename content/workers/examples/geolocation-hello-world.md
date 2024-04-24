@@ -59,8 +59,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     let html_content = "";
     let html_style =
       "body{padding:6em; font-family: sans-serif;} h1{color:#f6821f;}";
@@ -94,9 +94,7 @@ const handler: ExportedHandler = {
       },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

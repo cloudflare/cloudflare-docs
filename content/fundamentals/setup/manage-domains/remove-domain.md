@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Remove a domain
-weight: 5
 meta:
     title: Remove a domain from Cloudflare
 ---
@@ -28,13 +27,17 @@ If you need to re-add the domain in a different account, make sure the current s
 
 ### Actions within Cloudflare
 
-* [Cancel active add-on subscriptions]/fundamentals/subscriptions-and-billing/cancel-subscription/.
+* [Cancel active add-on subscriptions](/fundamentals/subscriptions-and-billing/cancel-subscription/).
 
 * [Delete all the Logpush jobs for that domain](/logs/tutorials/examples/example-logpush-curl/#optional---delete-a-job)
 
 * If you use Cloudflare Registrar:
 
     * [Disable domain auto-renewal](/registrar/account-options/renew-domains/) or [transfer your domain out of Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/).
+    
+    * If the domain has already expired, it will be automatically removed from your account. Refer to [What happens when a domain expires?](/registrar/faq/#what-happens-when-a-domain-expires)
+    
+    * If the domain has not yet expired you can likely request deletion. Refer to [Delete a domain registration](/registrar/account-options/domain-management/#delete-a-domain-registration)
 
     * If enabled, disable DNSSEC. In your domain dashboard, go to **DNS** > **Settings**. Within **DNSSEC**, select **Disable DNSSEC**. Select **Confirm**.
 

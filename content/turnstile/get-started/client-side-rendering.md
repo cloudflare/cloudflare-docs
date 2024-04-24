@@ -32,7 +32,7 @@ Refer to the [demo](https://demo.turnstile.workers.dev/) and its [source code](h
 
 ### Protect forms
 
-Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, customers can embed `<div class="cf-turnstile"></div>` into their site to protect their forms.
+Turnstile is often used to protect forms on websites such as login forms, contact forms, and more. After inserting the JavaScript script tag, you can embed `<div class="cf-turnstile"></div>` into your site to protect your forms.
 
 <div>
 
@@ -170,11 +170,11 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 
 To unmount Turnstile, `turnstile.render()` will return an ID which you can pass to `turnstile.remove()`.
 
-## Refreshing a widget
+## Refresh an expired token
 
 A few seconds before a token expires, the `expired-callback` is invoked.
 
-The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired. 
+The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired.
 
 By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token by rerunning the challenge. After the challenge is solved again, the `callback`, if specified, is invoked with the new token.
 
@@ -182,18 +182,26 @@ The visitor can also be instructed to manually obtain a new token by setting the
 
 Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
 
+## Refresh a timed-out widget
+
+When managed mode is chosen, Turnstile may present the visitor with an interactive challenge at times. If this interactive challenge is presented but was not solved within a given time period, it will time out and Turnstile's challenge process will need to be restarted.
+
+The `refresh-timeout` or `data-refresh-timeout` parameter defines the behaviour when the interactive challenge encounters a timeout. By default, the widget automatically refreshes (`auto`). However, the widget can also be configured such that the visitor needs to manually refresh a timed-out widget (`manual`), or the widget can only refreshed externally (`refresh-timeout="never"`) by the application (e.g. by calling Turnstile's `reset()` function).
+
+When a widget is encountering the interactivity timeout the `timeout-callback` is invoked.
+
 ## Execution modes
 
 By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some scenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a challenge runs and a token is being generated.
 
-There are two options: 
-- The challenge runs automatically after calling the `render()` function. 
+There are two options:
+- The challenge runs automatically after calling the `render()` function.
 - The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
 This detaches the appearance and rendering of a widget from its execution.
 
 ## Appearance modes
 
-If a widget is visible, its appearance can be controlled via the `appearance` parameter. 
+If a widget is visible, its appearance can be controlled via the `appearance` parameter.
 
 By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
 
@@ -214,7 +222,7 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/reference/client-side-errors). |
+| `error-callback` | `data-error-callback` | A JavaScript callback invoked when there is an error (e.g. network error or the challenge failed). Refer to [Client-side errors](/turnstile/troubleshooting/client-side-errors/). |
 | `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback invoked when the token expires and does not reset the widget. |
 | `before-interactive-callback` | `data-before-interactive-callback` | A JavaScript callback invoked before the challenge enters interactive mode. |
@@ -223,11 +231,12 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). Refer to the [list of supported languages](/turnstile/reference/supported-languages/) for more information. |
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
-| `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge expires. |
+| `timeout-callback` | `data-timeout-callback` | A JavaScript callback invoked when the challenge presents an interactive challenge but was not solved within a given time. A callback will reset the widget to allow a visitor to solve the challenge again. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
 | `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
 | `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry upon failure. |
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
-| `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
+| `refresh-timeout` | `data-refresh-timeout` | Controls whether the widget should automatically refresh upon entering an interactive challenge and observing a timeout. Can take `auto` (automatically refreshes upon encountering an interactive timeout), `manual` (prompts the visitor to manually refresh) or `never` (will show a timeout), defaults to `auto`.  Only applies to widgets of mode managed.|
+| `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |

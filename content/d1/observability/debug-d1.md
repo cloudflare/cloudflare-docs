@@ -10,7 +10,7 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 ## Handle errors
 
-The D1 [client API](/d1/how-to/query-databases/) returns detailed [error messages](/d1/how-to/query-databases/#errors) within an `Error` object. 
+The D1 [client API](/d1/build-with-d1/d1-client-api/) returns detailed [error messages](/d1/build-with-d1/d1-client-api/#errors) within an `Error` object. 
 
 To ensure you are capturing the full error message, log or return `e.message` as follows:
 
@@ -31,15 +31,9 @@ try {
 
 ## View logs
 
-View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/log-from-workers/#use-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/log-from-workers/#view-logs-from-the-dashboard).
+View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/logging/real-time-logs#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/logging/real-time-logs#view-logs-from-the-dashboard).
 
 ## Report issues
-
-{{<Aside type="note" header="Reporting bugs during the public beta">}}
-
-D1 is in public beta and Cloudflare welcomes any bug reports or issues.
-
-{{</Aside>}}
 
 * To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85).
 * To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev).
@@ -49,11 +43,11 @@ You should include as much of the following in any bug report:
 
 * The ID of your database. Use `wrangler d1 list` to match a database name to its ID.
 * The query (or queries) you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
-* The Worker code that makes the query, including any calls to `bind()` using the [client API](/d1/how-to/query-databases/).
+* The Worker code that makes the query, including any calls to `bind()` using the [client API](/d1/build-with-d1/d1-client-api/).
 * The full error text, including the content of [`error.cause.message`](#handle-errors).
 
 ## Related resources
 
 * Learn [how to debug Workers](/workers/observability/).
-* Understand how to [access logs](/workers/observability/log-from-workers/) generated from your Worker and D1.
-* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/observability/local-development-and-testing/).
+* Understand how to [access logs](/workers/observability/logging/) generated from your Worker and D1.
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/testing/local-development/).

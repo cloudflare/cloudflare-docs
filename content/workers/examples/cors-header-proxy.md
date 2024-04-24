@@ -170,8 +170,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
@@ -319,9 +319,7 @@ const handler: ExportedHandler = {
       return rawHtmlResponse(DEMO_PAGE);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

@@ -27,10 +27,7 @@ A HTTP Archive (HAR) records all web browser requests including the request and 
 A HAR file can include sensitive details such as passwords, payment
 information, and private keys.
 
-You can remove sensitive information from your HAR file by:
-
-- Using a [HAR Sanitizer](https://blog.cloudflare.com/introducing-har-sanitizer-secure-har-sharing/).
-- Manually removing sensitive information.
+Remove sensitive information using a [HAR Sanitizer](https://har-sanitizer.pages.dev/).
 
 {{</Aside>}}
 
@@ -393,6 +390,11 @@ Traceroute (MTR) is a tool that combines traceroute and ping, which is another c
 MTR works by discovering the network path in a similar manner to traceroute, and then regularly sending packets to continue collecting information to provide an updated view into the network’s health and speed.
 
 Like traceroute, MTR can use ICMP or UDP for outgoing packets but relies on ICMP for return (Type 11: Time Exceeded) packets.
+
+{{<Aside type="note">}}
+For MacOS users, MTR can be installed through [homebrew](https://formulae.brew.sh/formula/mtr).
+For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases).
+{{</Aside>}}
 
 ### How do I use MTR to generate network path report?
 

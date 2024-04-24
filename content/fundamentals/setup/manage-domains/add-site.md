@@ -1,7 +1,6 @@
 ---
 title: Add a site
 pcx_content_type: tutorial
-weight: 1
 ---
 
 # Add site to Cloudflare
@@ -30,12 +29,7 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 ## 2 — Update nameservers
 
-{{<render file="_nameserver-preamble.md" productFolder="dns" >}}
-<br/>
-
-Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar. Make sure DNSSEC **is disabled** at this point.
-
-{{<render file="_minimize-downtime-tip.md" productFolder="dns" >}}
+{{<render file="_update-nameservers.md" productFolder="fundamentals" >}}
 
 ## 3 — Complete SSL/TLS setup
 
