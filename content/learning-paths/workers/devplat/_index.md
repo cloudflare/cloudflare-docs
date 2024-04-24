@@ -1,7 +1,7 @@
 ---
 title: Build applications with Cloudflare's Developer Platform
 pcx_content_type: overview
-weight: 5
+weight: 3
 layout: learning-module
 ---
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure AD®
-weight: 5
+weight: 6
 ---
 
 # Microsoft Azure AD®

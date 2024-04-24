@@ -12,7 +12,7 @@ A handy way to explore all of the models available on [Workers AI](/workers-ai) 
 
 You can [download the Workers AI notebook](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai.ipynb) or view the embedded notebook below.
 
-{{<youtube id="uv1Cz_BDFmo">}}
+{{<stream video_id="3c46281a9b2b84ee6776a53f87580c45">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai the <audio> tag is hard coded)
 

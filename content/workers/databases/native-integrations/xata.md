@@ -56,7 +56,7 @@ To set up an integration with Xata:
    filename: Worker code
    ---
    export default {
-     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+     async fetch(request, env, ctx): Promise<Response> {
        const xata = new XataClient({
          apiKey: env.XATA_API_KEY,
          branch: env.XATA_BRANCH,
@@ -74,7 +74,7 @@ To set up an integration with Xata:
          status: 200
        });
      },
-   };
+   } satisfies ExportedHandler<Env>;
    ```
 
 To learn more about Xata, refer to [Xata's official documentation](https://xata.io/docs).

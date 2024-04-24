@@ -169,7 +169,7 @@ async function pubsub(
 }
 
 const worker = {
-  async fetch(req: Request, env: any, ctx: ExecutionContext) {
+  async fetch(req, env, ctx): Promise<Response> {
     // Retrieve this from your Broker's "publicKey" field.
     //
     // Each Broker has a unique key to distinguish between your Broker vs. others
@@ -197,7 +197,7 @@ const worker = {
 
     return new Response("not a valid Broker request", { status: 403 });
   },
-};
+} satisfies ExportedHandler;
 
 export default worker;
 ```

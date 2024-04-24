@@ -1,7 +1,7 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Pull consumers
-weight: 6
+weight: 4
 meta:
   title: Cloudflare Queues - Pull consumers
 ---
@@ -92,7 +92,7 @@ $ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${
   -H "Content-Type: application/json"
 ```
 
-You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same (rate limit](queues/platform/limits/) against the Cloudflare API.
+You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same [rate limit](/queues/platform/limits/) against the Cloudflare API.
 
 ### Create API tokens
 
@@ -160,7 +160,7 @@ Pull consumers follow a "short polling" approach: if there are messages availabl
 
 {{<Aside type="note">}}
 
-The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation. 
+The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation.
 
 The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
 
@@ -187,7 +187,7 @@ You may have multiple HTTP clients pulling from the same queue concurrently: eac
 
 Messages marked for retry will be put back into the queue and can be delivered to any consumer. Messages are _not_ tied to a specific consumer, as consumers do not have an identity and to avoid a slow or stuck consumer from holding up processing of messages in a queue.
 
-Multiple consumers can be useful in cases where you have multiple upstream resources (for example, GPU infrastructure), where you want to autoscale based on the [backlog](/queues/reference/metrics/) of a queue, and/or cost.
+Multiple consumers can be useful in cases where you have multiple upstream resources (for example, GPU infrastructure), where you want to autoscale based on the [backlog](/queues/observability/metrics/) of a queue, and/or cost.
 
 ## 4. Acknowledge messages
 
@@ -228,7 +228,7 @@ Additionally:
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
-<!-- 
+<!--
 
 ## Examples
 
@@ -257,7 +257,7 @@ The following example is a Go application that pulls from a queue on startup, ac
 
 {{<Aside type="warning">}}
 
-When attaching a pull-based consumer to a queue, you should ensure that messages are sent with only a `text`, `bytes` or `json` [content type](/queues/reference/javascript-apis/#queuescontenttype).
+When attaching a pull-based consumer to a queue, you should ensure that messages are sent with only a `text`, `bytes` or `json` [content type](/queues/configuration/javascript-apis/#queuescontenttype).
 
 The default content type is `json`.
 
@@ -273,6 +273,6 @@ Your consumer will need to decode the `json` and `bytes` types before operating 
 
 ## Next steps
 
-- Review the [REST API documentation](/api/operations/queue-create-queue-consumer) and schema for Queues.
+- Review the [REST API documentation](/api/operations/queue-v2-create-queue-consumer) and schema for Queues.
 - Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
 - Understand [what limit apply](/queues/platform/limits/) when consuming and writing to a queue.

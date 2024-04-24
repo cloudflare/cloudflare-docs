@@ -317,7 +317,7 @@
 /durable-objects/configuration/access-durable-object-from-a-worker/ /durable-objects/best-practices/access-durable-objects-from-a-worker/ 301
 /durable-objects/configuration/create-durable-object-stubs/ /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ 301
 /durable-objects/reference/error-handling/ /durable-objects/best-practices/error-handling/ 301
-/durable-objects/reference/troubleshooting/ durable-objects/observability/troubleshooting/ 301
+/durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
 
 # email-routing
@@ -581,6 +581,11 @@
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
 /learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
+/learning-paths/workers/configure/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/test/ /learning-paths/workers/get-started/ 301
+/learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
+
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
 /learning-paths/dns-filtering/create-policy/order-of-enforcement/ /learning-paths/secure-internet-traffic/build-dns-policies/order-of-precedence/ 301
@@ -690,8 +695,8 @@
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
 /magic-wan/configuration/manually/how-to/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ 301
 /magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ 301
-/magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/
-/magic-wan/configuration/manually/how-to/tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/
+/magic-wan/configuration/manually/how-to/enable-magic-roles/ /magic-wan/configuration/common-settings/enable-magic-roles/ 301
+/magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 
@@ -800,6 +805,15 @@
 /queues/learning/metrics/ /queues/reference/metrics/ 301
 /queues/learning/local-development/ /queues/reference/local-development/ 301
 /queues/learning/ /queues/reference/ 301
+/queues/reference/configuration/ /queues/configuration/configure-queues/ 301
+/queues/reference/batching-retries/ /queues/configuration/batching-retries/ 301
+/queues/reference/dead-letter-queues/ /queues/configuration/dead-letter-queues/ 301
+/queues/reference/javascript-apis/ /queues/configuration/javascript-apis/ 301
+/queues/reference/pull-consumers/ /queues/configuration/pull-consumers/ 301
+/queues/reference/consumer-concurrency/ /queues/configuration/consumer-concurrency/ 301
+/queues/reference/local-development/ /queues/configuration/local-development/ 301
+/queues/reference/metrics/ /queues/observability/metrics/ 301
+
 
 # reference architectures & design guides
 /reference-architecture/sase-reference-architecture/ /reference-architecture/architectures/sase/ 301
@@ -1368,6 +1382,9 @@
 /vectorize/configuration/ /vectorize/best-practices/ 301
 
 
+# version management
+/version-management/reference/available-settings/ /version-management/reference/available-configurations/ 301
+
 # hyperdrive
 
 /hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/configuration/how-hyperdrive-works/ 301
@@ -1377,6 +1394,8 @@
 /hyperdrive/platform/supported-databases/ /hyperdrive/reference/supported-databases/ 301
 /hyperdrive/changelog/ /hyperdrive/platform/changelog/ 301
 /hyperdrive/learning/ /hyperdrive/configuration/ 301
+/hyperdrive/reference/metrics/ /hyperdrive/observability/metrics/ 301
+/hyperdrive/reference/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
 
 # zaraz
 
@@ -1469,8 +1488,10 @@
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/identity/devices/warp-client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
+/cloudflare-one/identity/idp-integration/saml-centrify/ /cloudflare-one/identity/idp-integration/centrify-saml/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
+/cloudflare-one/identity/idp-integration/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/applications/login-page/ 301
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301

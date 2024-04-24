@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Signed AuthN requests (SAML)
-weight: 9
+weight: 24
 ---
 
 # Signed AuthN requests (SAML)

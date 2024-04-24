@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Jumpcloud (SAML)
-weight: 13
+weight: 14
 ---
 
 # SAML | Jumpcloud

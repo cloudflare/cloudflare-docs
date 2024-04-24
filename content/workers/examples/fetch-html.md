@@ -21,7 +21,7 @@ updated: 2024-01-11
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request: Request): Promise<Response> {
     /**
      * Replace `remote` with the host you wish to send requests to
      */
@@ -29,7 +29,7 @@ export default {
 
     return await fetch(remote, request);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

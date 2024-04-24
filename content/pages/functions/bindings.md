@@ -393,7 +393,7 @@ For example, to develop locally, if your Worker is called `my-worker`, run `npx 
 
 ## Queue Producers
 
-[Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
+[Queue Producers](/queues/configuration/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
 
 To bind a queue to your Pages Function, configure a queue producer binding in your Pages Function using [`wrangler.toml`](/pages/functions/wrangler-configuration/#queues-producers) or the Cloudflare dashboard:
 
@@ -444,7 +444,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your Queue Producer binding locally
 
-If using a queue producer binding with a Pages Function, you will be able to send events to a queue locally. However, it is not possible to consume events from a queue with a Pages Function. You will have to create a [separate consumer Worker](/queues/get-started/#5-create-your-consumer-worker) with a [queue consumer handler](/queues/reference/javascript-apis/#consumer) to consume events from the queue. Wrangler does not yet support running separate producer Functions and consumer Workers bound to the same queue locally.
+If using a queue producer binding with a Pages Function, you will be able to send events to a queue locally. However, it is not possible to consume events from a queue with a Pages Function. You will have to create a [separate consumer Worker](/queues/get-started/#5-create-your-consumer-worker) with a [queue consumer handler](/queues/configuration/javascript-apis/#consumer) to consume events from the queue. Wrangler does not yet support running separate producer Functions and consumer Workers bound to the same queue locally.
 
 ## Analytics Engine
 

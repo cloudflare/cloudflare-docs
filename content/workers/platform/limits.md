@@ -67,7 +67,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/reference/javascript-apis/#consumer) |     |
+| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer) |     |
 | [Duration](#duration)       |   None                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
@@ -274,13 +274,9 @@ A Worker must be able to be parsed and execute its global scope (top-level code 
 
 ## Number of Workers
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
+You can have up to 500 Workers on your account on the Workers Paid plan, and up to 100 Workers on the Workers Free plan.
 
-{{<Aside type="note">}}
-
-App Workers do not count towards this limit.
-
-{{</Aside>}}
+If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ---
 

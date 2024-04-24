@@ -43,7 +43,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment, context: ExecutionContext): Promise<Response> {
+  async fetch(req, env, context): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -52,7 +52,7 @@ export default {
 
     await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 {{<Aside type="note">}}
@@ -79,7 +79,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -93,7 +93,7 @@ export default {
       return Response.json({"msg": e}, { status: 500 })
     }
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 To only accept simple strings when writing to a queue, set `{ contentType: "text" }` instead:
@@ -108,14 +108,14 @@ To only accept simple strings when writing to a queue, set `{ contentType: "text
       return Response.json({"msg": e}, { status: 500 })
 ```
 
-The [`QueuesContentType`](/queues/reference/javascript-apis/#queuescontenttype) API documentation describes how each format is serialized to a queue.
+The [`QueuesContentType`](/queues/configuration/javascript-apis/#queuescontenttype) API documentation describes how each format is serialized to a queue.
 
 ## Consumers
 
 Queues supports two types of consumer:
 
-1. A [consumer Worker](/queues/reference/configuration/), which is push-based: the Worker is invoked when the queue has messages to deliver.
-2. A [HTTP pull consumer](/queues/reference/pull-consumers/), which is pull-based: the consumer calls the queue endpoint over HTTP to receive and then acknowledge messages.
+1. A [consumer Worker](/queues/configuration/configure-queues/), which is push-based: the Worker is invoked when the queue has messages to deliver.
+2. A [HTTP pull consumer](/queues/configuration/pull-consumers/), which is pull-based: the consumer calls the queue endpoint over HTTP to receive and then acknowledge messages.
 
 A queue can only have one type of consumer configured.
 
@@ -188,7 +188,7 @@ To remove a queue from your project, run `wrangler queues consumer remove <queue
 
 A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker.
 
-This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumer guide](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer for a queue.
+This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumer guide](/queues/configuration/pull-consumers/) to learn how to configure a pull-based consumer for a queue.
 
 ## Messages
 
@@ -196,5 +196,5 @@ A message is the object you are producing to and consuming from a queue.
 
 Any JSON serializable object can be published to a queue. For most developers, this means either simple strings or JSON objects. You can explicitly [set the content type](#content-types) when sending a message.
 
-Messages themselves can be [batched when delivered to a consumer](/queues/reference/batching-retries/). By default, messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried. You can also choose to [explictly acknowledge](/queues/reference/batching-retries/) messages as they are successfully processed, and/or mark individual messages to be retried.
+Messages themselves can be [batched when delivered to a consumer](/queues/configuration/batching-retries/). By default, messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried. You can also choose to [explictly acknowledge](/queues/configuration/batching-retries/) messages as they are successfully processed, and/or mark individual messages to be retried.
 

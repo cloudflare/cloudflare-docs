@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Centrify (SAML)
-weight: 7
+weight: 8
 ---
 
 # Centrify (SAML)

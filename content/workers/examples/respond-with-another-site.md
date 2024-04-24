@@ -21,7 +21,7 @@ layout: example
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     async function MethodNotAllowed(request) {
       return new Response(`Method ${request.method} not allowed.`, {
         status: 405,

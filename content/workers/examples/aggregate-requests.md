@@ -66,7 +66,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     /**
      * someHost is set up to return JSON responses
      * Replace url1 and url2 with the hosts you wish to send requests to

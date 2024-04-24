@@ -20,7 +20,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const response = await env.AI.run("{{ .Params.model.name }}", {
       prompt: "tell me a story",
@@ -29,7 +29,7 @@ export default {
     });
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -61,7 +61,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -80,7 +80,7 @@ export default {
       headers: { "content-type": "text/event-stream" },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -94,7 +94,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -107,7 +107,7 @@ export default {
 
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
