@@ -8,6 +8,8 @@ tags:
 languages:
   - JavaScript
   - Typescript
+preview:
+  - true
 pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001

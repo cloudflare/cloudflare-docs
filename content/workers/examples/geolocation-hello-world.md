@@ -7,6 +7,8 @@ tags:
 languages:
   - JavaScript
   - Typescript
+preview:
+  - true
 pcx_content_type: configuration
 title: "Geolocation: Hello World"
 weight: 1001

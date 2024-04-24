@@ -9,6 +9,8 @@ languages:
   - JavaScript
   - Typescript
   - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Respond with another site
 weight: 12

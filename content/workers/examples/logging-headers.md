@@ -6,6 +6,8 @@ tags:
 languages:
   - JavaScript
   - Typescript
+preview:
+  - true
 pcx_content_type: configuration
 title: Logging headers to console
 weight: 1001

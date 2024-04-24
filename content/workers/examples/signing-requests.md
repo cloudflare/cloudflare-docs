@@ -9,6 +9,8 @@ languages:
   - JavaScript
   - Typescript
   - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Sign requests
 weight: 1001

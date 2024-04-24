@@ -8,6 +8,8 @@ languages:
   - JavaScript
   - Typescript
   - Python
+preview:
+  - true
 playground-link: true
 pcx_content_type: configuration
 title: Return small HTML page

@@ -6,6 +6,8 @@ tags:
 languages:
   - JavaScript
   - Typescript
+preview:
+  - true
 pcx_content_type: configuration
 title: Country code redirect
 weight: 1001

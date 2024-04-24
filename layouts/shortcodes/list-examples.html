@@ -22,11 +22,11 @@
 {{- $optionsArray = sort (uniq $optionsArray) -}}
 
 <div>
-  <label for="{{$filter}}">{{replace $filter "-" " " | title}}</label>
+  <label for="{{$filter}}">{{replace $filter "_" " " | title}}</label>
   <select class="selectorFilter" name="data-{{$filter}}" id="{{$filter}}">
       <option value="all">Select...</option>
       {{- range $optionsArray -}}
-      <option value="{{.}}">{{.}}</option>
+      <option value="{{.}}">{{. | title}}</option>
       {{- end -}}
   </select>
   </div>
@@ -86,6 +86,14 @@ for (const dropdown of selectorDropdowns) {
 
       let keepValue = true;
       for (option in selectedOptions) {
+        console.log(option)
+        console.log(selectedOptions[option])
+        if (example.dataset[option]) {
+          console.log(example.dataset)
+          console.log(example.dataset[option])
+          console.log(example.dataset[option].split("|"))
+        }
+
 
         if (!example.dataset[option] || !example.dataset[option].split("|").includes(selectedOptions[option])) {
           keepValue = false;
