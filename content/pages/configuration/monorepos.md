@@ -27,7 +27,7 @@ GitHub will display separate comments for each project with the updated project 
 
 ### GitHub check runs and GitLab commit statuses
 
-If you have multiple projects associated with your repository, your [GitHub check run](https://docs.GitHub.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
+If you have multiple projects associated with your repository, your [GitHub check run](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
 
 ![GitHub check run](/images/pages/configuration/ghcheckrun.png)
 ![GitLab commit status](/images/pages/configuration/glcommitstatus.png)
