@@ -428,9 +428,9 @@ When using Wrangler in the default local development mode, files will be written
 
 - Configure Durable Object namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects) the same way they are configured with Cloudflare Workers.
 
-{{<Aside type="warning" header="">}}
+{{<Aside type="warning">}}
 
-Durable Object bindings configured in a Pages project's `wrangler.toml` require the `script_name` key. For Workers, the `script_name` key is optional.
+{{<render file="_do-note.md" productFolder="pages">}} Durable Object bindings configured in a Pages project's `wrangler.toml` require the `script_name` key. For Workers, the `script_name` key is optional.
 
 {{</Aside>}}
 

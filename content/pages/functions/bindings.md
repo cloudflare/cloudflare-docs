@@ -70,6 +70,8 @@ $ npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST
 
 [Durable Objects](/durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state.
 
+{{<render file="_do-note.md" productFolder="pages">}}
+
 To bind your Durable Object to your Pages Function, you can configure a Durable Object binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
 
 To configure a Durable Object binding via the Cloudflare dashboard:
