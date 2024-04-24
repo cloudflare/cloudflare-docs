@@ -6,7 +6,7 @@ weight: 2
 
 # Limits
 
-Workers AI is now Generally Available. We've updated our rate limits to reflect 
+Workers AI is now Generally Available. We've updated our rate limits to reflect
 
 Note that model inferences in local mode using Wrangler will also count towards these limits. Beta models may have lower rate limits while we work on performance and scale.
 
@@ -47,9 +47,13 @@ Rate limits are default per task type, with some per-model limits defined as fol
 
 ### [Text-to-Image](/workers-ai/models/#text-to-image)
 - 720 requests per minute
-- [@cf/runwayml/stable-diffusion-v1-5-img2img](/workers-ai/models/stable-diffusion-v1-5-img2img/) is 1500 requests per minute 
+- [@cf/runwayml/stable-diffusion-v1-5-img2img](/workers-ai/models/stable-diffusion-v1-5-img2img/) is 1500 requests per minute
 
 ### [Translation](/workers-ai/models/#translation)
 - 720 requests per minute
 
+## Limitations
 
+Streaming during local development is currently unsupported.
+
+You will see all messages come in at once. When deployed, the server will properly stream the messages.
