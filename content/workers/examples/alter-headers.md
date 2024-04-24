@@ -13,7 +13,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -22,7 +22,7 @@ playground: true
 ---
 export default {
   async fetch(request) {
-    const response = await fetch("https://example.com", request);
+    const response = await fetch("https://example.com");
 
     // Clone the response so that it's no longer immutable
     const newResponse = new Response(response.body, response);
@@ -39,8 +39,7 @@ export default {
 
     // Adjust the value for an existing header
     newResponse.headers.set("x-header-to-change", "NewValue");
-    // Remove logging from final output
-    console.log(new Map(newResponse.headers))
+
     return newResponse;
   },
 };
@@ -69,9 +68,38 @@ export default {
 
     // Adjust the value for an existing header
     newResponse.headers.set("x-header-to-change", "NewValue");
+
     return newResponse;
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch
+
+async def on_fetch(request):
+    response = await fetch("https://example.com")
+
+    # Clone the response so that it's no longer immutable
+    new_response = Response.new(response.body, response)
+
+    # Add a custom header with a value
+    new_response.headers.append(
+      "x-workers-hello",
+      "Hello from Cloudflare Workers"
+    )
+
+    # Delete headers
+    new_response.headers.delete("x-header-to-delete")
+    new_response.headers.delete("x-header2-to-delete")
+
+    # Adjust the value for an existing header
+    new_response.headers.set("x-header-to-change", "NewValue")
+
+    return new_response
 ```
 
 {{</tab>}}
