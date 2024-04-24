@@ -427,6 +427,13 @@ When using Wrangler in the default local development mode, files will be written
 [Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 - Configure Durable Object namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects) the same way they are configured with Cloudflare Workers.
+
+{{<Aside type="warning" header="">}}
+
+Durable Object bindings configured in a Pages project's `wrangler.toml` require the `script_name` key. For Workers, the `script_name` key is optional.
+
+{{</Aside>}}
+
 - Interact with your [Durable Object namespace binding](/pages/functions/bindings/#durable-objects).
 
 ### Environment variables
