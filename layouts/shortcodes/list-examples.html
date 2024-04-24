@@ -4,92 +4,92 @@
 {{- $pages := (where .Site.Pages "Section" .Page.Section) -}}
 
 {{- with .Get "directory" -}}
-  {{- $target = . -}}
+{{- $target = . -}}
 {{- end -}}
 
 <!-- Build out the filters dynamically -->
 {{ if ne (index $filters 0) "" }}
 <div class="selectorDropdowns">
-{{- range $index, $filter := $filters -}}
+  {{- range $index, $filter := $filters -}}
 
-{{- $optionsArray := slice -}}
-{{- range $index, $page := $pages.ByWeight -}}
-{{- with (index $page.Params $filter) }}
-{{- $optionsArray = $optionsArray | append . -}}
-{{- end -}}
-{{- end -}}
+  {{- $optionsArray := slice -}}
+  {{- range $index, $page := $pages.ByWeight -}}
+  {{- with (index $page.Params $filter) }}
+  {{- $optionsArray = $optionsArray | append . -}}
+  {{- end -}}
+  {{- end -}}
 
-{{- $optionsArray = sort (uniq $optionsArray) -}}
+  {{- $optionsArray = sort (uniq $optionsArray) -}}
 
-<div>
-  <label for="{{$filter}}">{{replace $filter "_" " " | title}}</label>
-  <select class="selectorFilter" name="data-{{$filter}}" id="{{$filter}}">
+  <div>
+    <label for="{{$filter}}">{{replace $filter "_" " " | title}}</label>
+    <select class="selectorFilter" name="data-{{$filter}}" id="{{$filter}}">
       <option value="all">Select...</option>
       {{- range $optionsArray -}}
       <option value="{{.}}">{{. | title}}</option>
       {{- end -}}
-  </select>
+    </select>
   </div>
-{{- end -}}
+  {{- end -}}
 </div>
 {{ end }}
 
 <!-- Add list of examples, with optional filterable properties -->
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
   {{- range $index, $page := $pages.ByWeight -}}
-    {{- $x := $page.RelPermalink -}}
-    {{- $isExample := (strings.HasPrefix $x $target) -}}
-    {{- if and (ne $x $target) $isExample -}}
-    <li class="DocsCodeExamplesOverview--example"
-    {{ if ne (index $filters 0) "" }}
-    {{ range $index2, $filter := $filters }}
-    {{ with (index $page.Params $filter) }}
-    data-{{$filter}}="{{ delimit (.) "|" }}"
-    {{ end }}
-    {{ end }}
-    {{ end }}
-    >
-      <div class="DocsCodeExamplesOverview--example-title">
-        {{- .Page.RenderString (printf "[%s](%s)" $page.Title $page.RelPermalink) -}}
-      </div>
+  {{- $x := $page.RelPermalink -}}
+  {{- $isExample := (strings.HasPrefix $x $target) -}}
+  {{- if and (ne $x $target) $isExample -}}
+  <li class="DocsCodeExamplesOverview--example" {{ if ne (index $filters 0) "" }} {{ range $index2, $filter :=$filters
+    }} {{ with (index $page.Params $filter) }} data-{{$filter}}="{{ delimit (.) " |" }}" {{ end }} {{ end }} {{ end }}>
+    <div class="DocsCodeExamplesOverview--example-title">
+      {{- .Page.RenderString (printf "[%s](%s)" $page.Title $page.RelPermalink) -}}
+    </div>
 
-      <div class="DocsCodeExamplesOverview--example-description">
-        {{ $page.Params.summary | .Page.RenderString }}
-      </div>
-    </li>
-    {{- end -}}
+    <div class="DocsCodeExamplesOverview--example-description">
+      {{ $page.Params.summary | .Page.RenderString }}
+    </div>
+  </li>
+  {{- end -}}
   {{- end -}}
 </ul>
 
 <script>
-const selectorDropdowns = document.getElementsByClassName("selectorFilter");
-document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
+  const selectorDropdowns = document.getElementsByClassName("selectorFilter");
 
-  urlParams.forEach((value, key) => {
-    console.log(value, key)
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.forEach((value, key) => {
+      for (const dropdown of selectorDropdowns) {
+        if (key === dropdown.id) {
+          for (option of dropdown.options) {
+            if (value === option.value) {
+              option.selected = true;
+            }
+          }
+        }
+      }
+    })
+    filterList();
   })
 
-})
-
-function getSelectValues(selectElementCollection) {
-  let selectedValues = {};
-  for (const htmlElement of selectElementCollection) {
-    let selectElement = htmlElement;
-    let selectedValue =
-      selectElement.options[selectElement.selectedIndex].value;
-    if (selectedValue !== 'all') {
-      selectedValues[selectElement.id] = selectedValue;
+  function getSelectValues(selectElementCollection) {
+    let selectedValues = {};
+    for (const htmlElement of selectElementCollection) {
+      let selectElement = htmlElement;
+      let selectedValue =
+        selectElement.options[selectElement.selectedIndex].value;
+      if (selectedValue !== 'all') {
+        selectedValues[selectElement.id] = selectedValue;
+      }
     }
+    return selectedValues;
   }
-  return selectedValues;
-}
 
-const examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
+  function filterList() {
 
+    const examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
 
-for (const dropdown of selectorDropdowns) {
-  dropdown.addEventListener("change", () => {
     let selectedOptions = getSelectValues(selectorDropdowns);
     for (const example of examples) {
 
@@ -111,6 +111,10 @@ for (const dropdown of selectorDropdowns) {
       newUrl.searchParams.set(option, selectedOptions[option])
     }
     history.pushState({}, '', newUrl.toString());
-  })
-}
+  }
+
+  for (const dropdown of selectorDropdowns) {
+    dropdown.addEventListener("change", filterList)
+  }
+
 </script>
