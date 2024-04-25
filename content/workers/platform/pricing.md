@@ -67,7 +67,7 @@ A Worker that serves 15 million requests per month, and uses an average of 7 mil
 
 #### Example 2 
 
-A Worker that runs on a [cron trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report. 
+A Worker that runs on a [Cron Trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report. 
 - 720 requests/month
 - 3 minutes (180,000ms) of CPU time per request
 
