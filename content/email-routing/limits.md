@@ -12,7 +12,7 @@ When you process emails with Email Workers and you are on [Workers’ free prici
 
 You can use the [log functionality for Workers](/workers/observability/logging/) to look for messages related to CPU limits (such as `EXCEEDED_CPU`) and troubleshoot any issues regarding allocation errors.
 
-If you encounter these error messages frequently, consider upgrading your to the [Workers Paid plan](/workers/platform/pricing/) for higher usage limits.
+If you encounter these error messages frequently, consider upgrading to the [Workers Paid plan](/workers/platform/pricing/) for higher usage limits.
 
 ## Message size
 

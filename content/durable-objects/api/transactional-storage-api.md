@@ -16,21 +16,21 @@ The following code snippet shows you how to store and retrieve data using the Tr
 
 ```js
 export class Counter {
-  constructor(state, env) {
-    this.state = state;
+  constructor(ctx, env) {
+    this.ctx = ctx;
   }
 
   async fetch(request) {
     let url = new URL(request.url);
 
     // retrieve data
-    let value = (await this.state.storage.get("value")) || 0; 
+    let value = (await this.ctx.storage.get("value")) || 0; 
 
     // increment counter and get a new value
     value += 1; 
 
     // store data
-    await this.state.storage.put("value", value); 
+    await this.ctx.storage.put("value", value); 
 
     return new Response(value);
   }
@@ -93,7 +93,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}deleteAll{{</code>}}(options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) : {{<type>}}Promise{{</type>}}
 
-  - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
+  - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted. `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
 #### Supported options
 

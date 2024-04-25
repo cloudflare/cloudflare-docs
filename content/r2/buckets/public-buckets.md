@@ -49,15 +49,15 @@ Disable public access to your [`r2.dev` subdomain](#disable-managed-public-acces
 
 ## Connect a bucket to a custom domain
 
-1. Go to **R2** and select your bucket.
-2. On the bucket page, select **Settings**.
-3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
-5. Enter the domain name you want to connect to and select **Continue**.
-6. Review the new record that will be added to the DNS table and select **Connect Domain**.
+{{<render file="_custom-domain-steps.md">}}
 
-Your domain is now connected. The status takes a few minutes to change from **Initializing** to **Active**, and you may need to refresh to review the status update. If the status has not changed, select the *...* next to your bucket and select **Retry connection**.
+To view the added DNS record, select **...** next to the connected domain and select **Manage DNS**.
 
-To view the added DNS record, select *...* next to the connected domain and select **Manage DNS**.
+{{<Aside type="note">}}
+
+If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
+
+{{</Aside>}}
 
 ### Restrictions
 

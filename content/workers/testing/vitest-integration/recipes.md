@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Recipes
 weight: 3
+meta:
+  description: Examples that demonstrate how to write unit tests and integration tests for Workers projects with the Workers Vitest integration.
 ---
 
 # Recipes

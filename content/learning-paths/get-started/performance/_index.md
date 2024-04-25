@@ -7,7 +7,7 @@ layout: learning-module
 
 # Performance
 
-Improve your application’s performance by enabling and optimizing your sites settings. 
+Improve your application’s performance by enabling and optimizing your site's settings. 
 
 ## Objectives
 

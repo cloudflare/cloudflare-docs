@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Customer Metadata Boundary
-weight: 3
+weight: 5
 ---
 
 # Customer Metadata Boundary
@@ -38,4 +38,4 @@ Additionally, customers have the option to configure [Logpush](/logs/about/) to 
 
 ## Product specific-behavior
 
-For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Overview section](/data-localization/).
+For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page.

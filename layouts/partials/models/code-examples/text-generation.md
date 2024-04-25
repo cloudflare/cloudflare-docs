@@ -1,19 +1,67 @@
 {{/* */}}
+
 ## Code Examples
+
+{{- $loraFlag := false }}
+{{- range .Params.model.properties }}
+{{- if and (eq .property_id "lora") (eq .value "true") }}
+{{- $loraFlag = true }}
+{{- end }}
+{{- end }}
+
+{{ if $loraFlag }}
+
+<details>
+  <summary>Worker</summary>
+
+```ts
+export interface Env {
+  AI: any;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    const response = await env.AI.run("{{ .Params.model.name }}", {
+      prompt: "tell me a story",
+      raw: true, //skip applying the default chat template
+      lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
+    });
+    return Response.json(response);
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</details>
+
+<details>
+  <summary>curl</summary>
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Params.model.name }} \
+  -X POST \
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \
+  -d '{
+    "prompt": "tell me a story",
+    "raw": "true",
+    "lora": "00000000-0000-0000-0000-000000000"
+  }'
+```
+
+</details>
+
+{{ else }}
 
 <details>
   <summary>Worker - Streaming</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -23,19 +71,16 @@ export default {
       },
     ];
 
-    const stream = await ai.run(
-      "{{ .Params.model.name }}",
-      {
-        messages,
-        stream: true,
-      }
-    );
+    const stream = await env.AI.run("{{ .Params.model.name }}", {
+      messages,
+      stream: true,
+    });
 
     return new Response(stream, {
       headers: { "content-type": "text/event-stream" },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -44,15 +89,12 @@ export default {
   <summary>Worker</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: any;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -61,11 +103,11 @@ export default {
         content: "What is the origin of the phrase Hello, World",
       },
     ];
-    const response = await ai.run("{{ .Params.model.name }}", { messages });
+    const response = await env.AI.run("{{ .Params.model.name }}", { messages });
 
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -108,3 +150,4 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 ```
 
 </details>
+{{ end }}

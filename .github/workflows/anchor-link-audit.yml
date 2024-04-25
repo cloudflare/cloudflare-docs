@@ -14,13 +14,13 @@ jobs:
     name: Compiles
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.1
-      - uses: peaceiris/actions-hugo@v2
+          node-version: 20
+      - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.123.5'
           extended: true

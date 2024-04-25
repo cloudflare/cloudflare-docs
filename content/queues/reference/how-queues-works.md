@@ -33,7 +33,7 @@ For most applications, a single producer Worker per queue, with a single consume
 
 ## Producers
 
-A producer is the term for a client that is publishing or producing messages on to a queue. A producer is configured by [binding](/workers/configuration/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
+A producer is the term for a client that is publishing or producing messages on to a queue. A producer is configured by [binding](/workers/runtime-apis/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
 
 For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `send()` on the binding:
 
@@ -43,16 +43,25 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env, context): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
       headers: Object.fromEntries(req.headers),
     };
+
     await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
+
+{{<Aside type="note">}}
+
+You can also use `[context.waitUntil()]`(/workers/runtime-apis/handlers/fetch/#contextwaituntil) to send the message without blocking the response.
+
+Note that because `waitUntil()` is non-blocking, any errors raised from the `send()` or `sendBatch()` methods on a queue will be implicitly ignored.
+
+{{</Aside>}}
 
 A queue can have multiple producer Workers. For example, you may have multiple producer Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue.
 
@@ -70,7 +79,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     let message = {
       url: req.url,
       method: req.method,
@@ -84,7 +93,7 @@ export default {
       return Response.json({"msg": e}, { status: 500 })
     }
   },
-};
+} satisfies ExportedHandler<Environment>;
 ```
 
 To only accept simple strings when writing to a queue, set `{ contentType: "text" }` instead:
@@ -99,14 +108,14 @@ To only accept simple strings when writing to a queue, set `{ contentType: "text
       return Response.json({"msg": e}, { status: 500 })
 ```
 
-The [`QueuesContentType`](/queues/reference/javascript-apis/#queuescontenttype) API documentation describes how each format is serialized to a queue.
+The [`QueuesContentType`](/queues/configuration/javascript-apis/#queuescontenttype) API documentation describes how each format is serialized to a queue.
 
 ## Consumers
 
 Queues supports two types of consumer:
 
-1. A [consumer Worker](/queues/reference/configuration/), which is push-based: the Worker is invoked when the queue has messages to deliver.
-2. A [HTTP pull consumer](/queues/reference/pull-consumers/), which is pull-based: the consumer calls the queue endpoint over HTTP to receive and then acknowledge messages.
+1. A [consumer Worker](/queues/configuration/configure-queues/), which is push-based: the Worker is invoked when the queue has messages to deliver.
+2. A [HTTP pull consumer](/queues/configuration/pull-consumers/), which is pull-based: the consumer calls the queue endpoint over HTTP to receive and then acknowledge messages.
 
 A queue can only have one type of consumer configured.
 
@@ -177,10 +186,15 @@ To remove a queue from your project, run `wrangler queues consumer remove <queue
 
 ### Pull consumers
 
-A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker. This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumers](/queues/reference/pull-consumers/) to learn how to configure a pull-based consumer.
+A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker.
+
+This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumer guide](/queues/configuration/pull-consumers/) to learn how to configure a pull-based consumer for a queue.
 
 ## Messages
 
-A message is the object you are producing to and consuming from a queue. Any serializable object can be published to a queue: for most developers, this means either simple strings or JSON objects.
+A message is the object you are producing to and consuming from a queue.
 
-Messages themselves can be batched when delivered to the consumer, and messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried.
+Any JSON serializable object can be published to a queue. For most developers, this means either simple strings or JSON objects. You can explicitly [set the content type](#content-types) when sending a message.
+
+Messages themselves can be [batched when delivered to a consumer](/queues/configuration/batching-retries/). By default, messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried. You can also choose to [explictly acknowledge](/queues/configuration/batching-retries/) messages as they are successfully processed, and/or mark individual messages to be retried.
+

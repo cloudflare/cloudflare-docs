@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Generic SAML 2.0
-weight: 1
+weight: 2
 ---
 
 # Generic SAML 2.0
@@ -26,7 +26,7 @@ The typical setup requirements are:
 2. Set both the **Entity/Issuer ID** and the **Single sign-on URL** to:
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ``` 
+    ```
     You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 3. Set the **Name ID/Email format** to `emailAddress`.
 4. (Optional) Set the signature policy to _Always Sign_.
@@ -46,7 +46,7 @@ If your identity provider supports metadata file configuration, use the endpoint
 
 ## 3. Test the connection
 
-You can now [test the IdP integration](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
+You can now [test the IdP integration](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
 
 ## Optional configurations
 

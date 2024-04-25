@@ -8,6 +8,12 @@ title: Connect to and query your Turso database using Workers
 
 # Connect to and query your Turso database using Workers
 
+{{<Aside type="note">}}
+
+For a more seamless experience, refer to the [Turso Database Integration guide](/workers/databases/native-integrations/turso/). The Turso Database Integration will connect your Worker to a Turso database by getting the right configuration from Turso and adding it as [secrets](/workers/configuration/secrets/) to your Worker.
+
+{{</Aside>}}
+
 This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
 
 ## Prerequisites

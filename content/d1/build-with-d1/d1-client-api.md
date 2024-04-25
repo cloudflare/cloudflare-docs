@@ -1,12 +1,12 @@
 ---
-title: D1 client API
+title: Query D1
 pcx_content_type: concept
-weight: 3
+weight: 1
 ---
 
 # D1 client API
 
-D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
+D1 is compatible with most SQLite's SQL convention since it leverages SQLite's query engine. D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
 
 ## Prepared and static statements
 

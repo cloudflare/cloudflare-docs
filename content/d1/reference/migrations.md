@@ -1,7 +1,7 @@
 ---
 title: Migrations
 pcx_content_type: concept
-weight: 11
+weight: 1
 ---
 
 # Migrations
@@ -34,12 +34,8 @@ migrations_table = "<d1_migrations>" # Customize this value to change your appli
 migrations_dir = "<FOLDER_NAME>" # Customize this value to rename the `migrations` folder
 ```
 
-## Plans for the future
+## Foreign key constraints
 
-These are some of the features we plan to add in the future:
+When applying a migration, you may need to temporarily disable [foreign key constraints](/d1/build-with-d1/foreign-keys/). To do so, call `PRAGMA defer_foreign_keys = true` before making changes that would violate foreign keys.
 
-- **Down migration**: The same way that apply builds up the database, there will be a way to go down migrations or rollback changes.
-- **Fake migrations**: Mark a migration as already applied without changing the database.
-- **Apply only a specific migration**: Apply only a specific migration without going through the sequential order.
-
-To request more features or to contribute directly to the Wrangler project, go to the [Wrangler repository](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).
+Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys and D1.

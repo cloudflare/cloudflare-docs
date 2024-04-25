@@ -50,7 +50,7 @@ There is a default (top-level) environment and named environments that provide e
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
 
-The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
+The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/runtime-apis/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
 ## Inheritable keys
 
@@ -64,7 +64,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of your Worker. Alphanumeric and dashes only.
+  - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`, etc.) and dashes (`-`) only. Do not use underscores (`_`).
 
 - `main` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -401,7 +401,7 @@ cpu_ms = 100
 
 The [Workers Browser Rendering API](/browser-rendering/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
 
-A [browser binding](/workers/configuration/bindings/#browser-bindings) will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+A [browser binding](/workers/runtime-apis/bindings/) will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
 
 {{<definitions>}}
 
@@ -421,13 +421,13 @@ browser = { binding = "<BINDING_NAME>" }
 
 # or
 
-[[browser]]
+[browser]
 binding = "<BINDING_NAME>"
 ```
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -684,7 +684,7 @@ header: wrangler.toml
 ---
 kv_namespaces = [
   { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
-  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>"
+  { binding = "<BINDING_NAME2>", id = "<NAMESPACE_ID2>" }
 ]
 
 # or
@@ -700,7 +700,7 @@ id = "<NAMESPACE_ID2>"
 
 ### Queues
 
-[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/reference/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/configuration/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
 
 To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
 
@@ -714,6 +714,10 @@ To bind Queues to your producer Worker, assign an array of the below object to t
 
   - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
 
+- `delivery_delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The number of seconds to [delay messages sent to a queue](/queues/configuration/batching-retries/#delay-messages) for by default. This can be overridden on a per-message or per-batch basis.
+
 {{</definitions>}}
 
 Example:
@@ -725,6 +729,7 @@ header: wrangler.toml
 [[queues.producers]]
   binding = "<BINDING_NAME>"
   queue = "<QUEUE_NAME>"
+  delivery_delay = 60 # Delay messages by 60 seconds before they are delivered to a consumer
 ```
 
 To bind Queues to your consumer Worker, assign an array of the below object to the `[[queues.consumers]]` key.
@@ -745,7 +750,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/configuration/javascript-apis/#messagebatch) is invoked.
 
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -756,7 +761,11 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
-  - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+  - Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+
+- `retry_delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The number of seconds to [delay retried messages](/queues/configuration/batching-retries/#delay-messages) for by default, before they are re-delivered to the consumer. This can be overridden on a per-message or per-batch basis [when retrying messages](/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries).
 
 {{</definitions>}}
 
@@ -773,6 +782,7 @@ header: wrangler.toml
   max_retries = 10
   dead_letter_queue = "my-queue-dlq"
   max_concurrency = 5
+  retry_delay = 120 # Delay retried messages by 2 minutes before re-attempting delivery
 ```
 
 ### R2 buckets
@@ -865,7 +875,7 @@ index_name = "<INDEX_NAME>"
 ```
 ### Service bindings
 
-A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/configuration/bindings/about-service-bindings/).
+A service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. Refer to [About Service Bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 To bind other Workers to your Worker, assign an array of the below object to the `services` key.
 
@@ -879,6 +889,10 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
   - The name of the Worker.
 
+- `entrypoint` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of the [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to. If you do not specify an entrypoint, the default export of the Worker will be used.
+
 {{</definitions>}}
 
 Example:
@@ -888,7 +902,7 @@ Example:
 header: wrangler.toml
 ---
 services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
+  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", entrypoint = "<ENTRYPOINT_NAME>" }
 ]
 
 # or
@@ -896,6 +910,7 @@ services = [
 [[services]]
 binding = "<BINDING_NAME>"
 service = "<WORKER_NAME>"
+entrypoint = "<ENTRYPOINT_NAME>"
 ```
 
 ### Analytics Engine Datasets
@@ -922,7 +937,7 @@ Example:
 ---
 filename: wrangler.toml
 ---
-analytics_engine_datasets = { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+analytics_engine_datasets = [{ binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }]
 
 # or
 
@@ -935,7 +950,7 @@ dataset = "<DATASET_NAME>"
 
 To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
 
-To create a [binding](/workers/configuration/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+To create a [binding](/workers/runtime-apis/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
 
 {{<definitions>}}
 
@@ -1129,6 +1144,29 @@ It is not possible to polyfill all Node APIs or behaviors, but it is possible to
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
+## Source maps
+
+[Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
+
+
+{{<definitions>}}
+
+- `upload_source_maps` {{<type>}}boolean{{</type>}}
+
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2).
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+upload_source_maps = true
+
+```
+
 ## Workers Sites
 
 {{<Aside type="note" header="Cloudflare Pages">}}
@@ -1196,4 +1234,4 @@ If you change your environment variables in the Cloudflare dashboard, Wrangler w
 
 If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
-Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
+Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

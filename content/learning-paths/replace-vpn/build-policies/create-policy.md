@@ -21,12 +21,12 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 {{<tab label="dashboard" no-code="true">}}
 
 | Traffic Selector | Operator | Value                  |
-| -------- | -------- | ---------------------- |
-| Domain   | in list  | `Company Wiki domains` |
+| ---------------- | -------- | ---------------------- |
+| Domain           | in list  | `Company Wiki domains` |
 
-| Identity Selector | Operator | Value                  |
-| -------- | -------- | ---------------------- |
-| User email  | matches regex  | `.*@example.com` |
+| Identity Selector | Operator      | Value            |
+| ----------------- | ------------- | ---------------- |
+| User email        | matches regex | `.*@example.com` |
 
 | Action |
 | ------ |
@@ -85,13 +85,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-| Traffic Selector | Operator | Value                  |
-| -------- | -------- | ---------------------- |
+| Traffic Selector | Operator | Value              |
+| ---------------- | -------- | ------------------ |
 | Destination IP   | in list  | `Company Wiki IPs` |
 
-| Identity Selector | Operator | Value                  |
-| -------- | -------- | ---------------------- |
-| User Email  | matches regex  | `.*@example.com` |
+| Identity Selector | Operator      | Value            |
+| ----------------- | ------------- | ---------------- |
+| User Email        | matches regex | `.*@example.com` |
 
 | Action |
 | ------ |
@@ -148,10 +148,10 @@ We recommend adding a catch-all policy to the bottom of your network policy list
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-| Traffic Selector | Operator | Value          | Logic |
-| -------- | -------- | ---------------------- | ----- |
-| Destination IP   | in list  | `All private network ranges` | Or  |
-| SNI Domain  | in list | `All private apex domains` | |
+| Traffic Selector | Operator | Value                        | Logic |
+| ---------------- | -------- | ---------------------------- | ----- |
+| Destination IP   | in list  | `All private network ranges` | Or    |
+| SNI Domain       | in list  | `All private apex domains`   |       |
 
 | Action |
 | ------ |

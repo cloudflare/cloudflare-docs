@@ -77,7 +77,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     /**
      * rawHtmlResponse returns HTML inputted directly
      * into the worker script

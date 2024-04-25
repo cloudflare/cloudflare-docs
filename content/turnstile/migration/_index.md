@@ -1,7 +1,7 @@
 ---
 title: Migration
 pcx_content_type: migration
-weight: 3
+weight: 2
 ---
 
 # Migrate from alternative services

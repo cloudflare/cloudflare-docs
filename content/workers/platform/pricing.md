@@ -43,7 +43,7 @@ Workers Enterprise accounts are billed based on the usage model specified in the
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
 | **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
-| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation                    |
+| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation                    |
 
 {{</table-wrap>}}
 <sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
@@ -78,7 +78,7 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 |             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | **Bundled** |  10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
-| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation        |
+| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation        |
 
 {{</table-wrap>}}
 
@@ -209,7 +209,7 @@ Service bindings cost the same as any normal Worker. Each invocation is charged 
 
 If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
 
-For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
+For more information on how service bindings work, refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ## Fine Print
 

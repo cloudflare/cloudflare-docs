@@ -24,7 +24,7 @@ function objectNotFound(objectName: string): Response {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request, env): Promise<Response> {
     const url = new URL(request.url)
     const objectName = url.pathname.slice(1)
 
@@ -105,5 +105,5 @@ export default {
       status: 400
     })
   }
-}
+} satisfies ExportedHandler<Env>;
 ```
