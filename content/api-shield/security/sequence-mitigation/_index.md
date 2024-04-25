@@ -61,9 +61,9 @@ If you chose **Allow**, select whether to log or block the request to the final 
 {{</Aside>}}
 8. Select **Create rule**.
 
-## Edit a sequence rule
+## Edit a sequence rule 
 
-Text
+You also have the option to edit an existing rule by selecting it on the rule list. You can rename your rule, adjust the starting and ending endpoint order, modify the endpoint, and change the action of the rule. 
 
 ## Reprioritize a rule
 
