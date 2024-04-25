@@ -491,6 +491,12 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 
   - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
 
+- `outbound` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}} The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
+  - `parameters` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} A list of parameters to pass data from your [dynamic dispatch Worker](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+
+
 {{</definitions>}}
 
 ```toml
@@ -500,6 +506,8 @@ header: wrangler.toml
 [[dispatch_namespaces]]
 binding = "<BINDING_NAME>"
 namespace = "<NAMESPACE_NAME>"
+outbound = {service = "<WORKER_NAME>", parameters = ["params_object"]}
+
 ```
 
 ### Durable Objects
