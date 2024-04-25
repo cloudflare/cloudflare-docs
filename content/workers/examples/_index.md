@@ -9,4 +9,4 @@ layout: wide
 
 # Examples
 
-{{<list-examples filters="tags,languages,preview">}}
+{{<list-examples filters="languages,tags,preview">}}
