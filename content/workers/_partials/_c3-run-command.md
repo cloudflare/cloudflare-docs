@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-{{<tabs labels="npm | yarn">}}
+{{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
 
 ```sh
@@ -21,4 +21,13 @@ $ yarn create cloudflare
 ```
 
 {{</tab>}}
+
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm create cloudflare
+```
+
+{{</tab>}}
+
 {{</tabs>}}
