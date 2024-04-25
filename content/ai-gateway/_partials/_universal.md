@@ -22,7 +22,7 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 header: Request
 ---
 
-curl https: //gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY_NAME -X POST \
+curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY_NAME -X POST \
   --header 'Content-Type: application/json' \
   --data '[
   {
