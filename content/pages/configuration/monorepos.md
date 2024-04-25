@@ -23,11 +23,11 @@ Take for example `my-monorepo` above with two associated Pages projects (`market
 
 Once you've created a separate Pages project for each of the projects within your Git repository, each Git push will issue a new build and deployment for all connected projects unless specified in your build configuration.
 
-Github will display separate comments for each project with the updated project and deployment URL if there is a Pull Request associated with the branch.
+GitHub will display separate comments for each project with the updated project and deployment URL if there is a Pull Request associated with the branch.
 
 ### GitHub check runs and GitLab commit statuses
 
-If you have multiple projects associated with your repository, your [Github check run](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
+If you have multiple projects associated with your repository, your [GitHub check run](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
 
 ![GitHub check run](/images/pages/configuration/ghcheckrun.png)
 ![GitLab commit status](/images/pages/configuration/glcommitstatus.png)
