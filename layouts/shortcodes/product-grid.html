@@ -401,7 +401,7 @@ span a img {
           href="{{ .url }}"
           data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
-          onclick="zarazTrackSelect('docs grid option selected', '{{.title}}')"
+          onclick="zarazTrackSelect('select docs grid option', '{{.title}}')"
         >
           <span>{{ .title }}</span>
         </a>

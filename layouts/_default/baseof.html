@@ -29,9 +29,9 @@
     {{- block "scripts" . -}}{{- end -}}
 
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
-
-    <script src="https://developers.cloudflare.com/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
-
+    {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
+    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
+    {{- end -}}
   </head>
   <body>
     {{- block "main" . -}}{{- end -}}
