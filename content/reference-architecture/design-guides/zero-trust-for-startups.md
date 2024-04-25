@@ -118,7 +118,7 @@ Cloudflare _matters_ in this case because once you’ve determined a source of t
 
 Cloudflare can simplify your architecture by becoming the singular enforcement point for your identity against your private applications, your networks, your developer services, and your SaaS applications. Cloudflare is one of the only vendors to be able to provide Zero Trust authentication concepts as a web proxy (layer 7 services), as a VPN replacement (layer 3/4 services), and as a secure web gateway. 
 
-[IMAGE PLACEHOLDER HERE]
+![The various ways employees, contractors, vendors, or customers may verify their identity to access your company's resources](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-getting-started-foundational-decisions-identity.svg)
 
 ### Device posture
 
@@ -134,7 +134,7 @@ Common device posture strategies usually rely on a combination of an endpoint ma
 
 As you begin to use third-party vendors for Zero Trust security outcomes, those vendors need to ingest first-party signals to help you make the best security decisions. In this case, Cloudflare becomes your point of policy enforcement for device posture — in addition to identity posture. The Cloudflare device agent will evaluate your device ownership or health metrics, and use them in conjunction with policies about user identity to ensure access to sensitive resources both has proper identity verification and is coming from a compliant device with the acceptable level of security control. 
 
-[IMAGE PLACEHOLDER HERE]
+![Cloudflare's device posture enforcement in action](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-getting-started-foundational-decisions-device-posture.svg)
 
 ## Traditional and mesh network building
 
@@ -165,7 +165,7 @@ Cloudflare Zero Trust can make private networking concepts extensible to your en
 
 With this ‘overlay’ network, a small piece of software sits in your network and provides both ‘network’ tunnels (to give users administrative access to services on your internal network, replacing traditional exposed-bastion concepts) and ‘application’ tunnels (micro-tunnels that will only allow an authenticated user to explicitly reach the singular service defined in the tunnel).
 
-[IMAGE PLACEHOLDER HERE]
+![Cloudflare providing network and application tunnels to access both company and Internet resources](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-traditional-and-mesh-network-building-connecting-users-to-networks.svg)
 
 This makes it significantly easier to manage user access to multiple, distinct private networking environments without forcing the user to change their profile, switch settings, or constantly disconnect or reconnect from one or multiple clients. It also gives you the capability to easily expose a single private application or service to specific audiences while adhering to Zero Trust principles. 
 
@@ -207,9 +207,9 @@ If your organization is experimenting with mesh connectivity, Cloudflare can hel
 
 The Cloudflare products that are typically most relevant for startups are a combination of our WARP client (via `cloudflared`) and Cloudflare Tunnel (via WARP Connector). This allows you to manage remote access, mesh connectivity, and traditional networking connectivity from a single dashboard. On a more granular level, this means you can configure device posture information, identity information, client certificates, and common L4 indicators (like port, IP, and source/destination protocols) from a single point of policy enforcement — enabling you to build robust security policies for both human and autonomous network interaction.
 
-[IMAGE PLACEHOLDER HERE]
+![Cloudflare connecting mutliple cloud providers, public, and private networks](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-traditional-and-mesh-network-building-connecting-networks-to-networks.svg)
 
-This blend of networking models is designed to support a wide range of use cases, whether you are trying to provide remote access to your corporate network, extend your corporate network to encompass cloud environments on on-premises equipment, or continue building out a model for mesh connectivity between critical infrastructure without introducing additional risk or overhead. 
+This blend of networking models is designed to support a wide range of use cases, whether you are trying to provide remote access to your corporate network, extend your corporate network to encompass cloud environments on on-premises equipment, or continue building out a model for mesh connectivity between critical infrastructure without introducing additional risk or overhead.
 
 ## Building Zero Trust into internal tooling
 
@@ -231,7 +231,7 @@ Once the _Cloudflare_ token has been created, it is passed to your internal appl
 
 By using Cloudflare tokens, your users will have a seamless experience both _authenticating_ through your established Zero Trust proxy and getting _authorized_ directly into your application with the same information.
 
-[IMAGE PLACEHOLDER HERE]
+![How Cloudflare consumes tokens to validate requests and authorize access to internal tools](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-building-zero-trust-into-internal-tooling-consuming-tokens.svg)
 
 ### Your Zero Trust vendor as an SSO
 
@@ -251,7 +251,7 @@ In a lot of cases, you may even use both products for application access. For ex
 
 Now, users reaching the application from outside your network will already carry the Cloudflare JWT, and will be seamlessly authenticated into your application.
 
-[IMAGE PLACEHOLDER HERE]
+![Building zero trust into internal tooling and SSO](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-building-zero-trust-into-internal-tooling-sso.svg)
 
 ## Remote access for contractors, vendors, and customers
 
@@ -300,7 +300,7 @@ Cloudflare can help provide scoped secure access for both web and network connec
 * **[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) can act as a unidirectional access model to provide corporate users access to scoped customer resources.** It is lightweight, easy to deploy, and can even be built into your deployment packages and deployed alongside the services you manage in customer environments.
 * **Cloudflare WARP Connector can help you build secure, extensible networks relevant for each of your client controls.** This is particularly helpful when bidirectional (site-to-site) traffic flows are a necessity for the way that you engage with your customers, interact with their applications, or address other management concerns. WARP Connector has all of the same inline security policy application and auditability controls as the rest of your deployment, so you can maintain a Zero Trust security posture while achieving customer connectivity.
 
-[IMAGE PLACEHOLDER HERE]
+![How Cloudflare provides remote access for contractors, vendors, and customers](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-remote-access-for-contractors-vendors-and-customers.svg)
 
 ## Protecting against Internet threats (or, _is secure web gateway a part of Zero Trust?_)
 
@@ -337,7 +337,7 @@ All of our SWG functionality is controlled via policy that factors in user ident
 
 Cloudflare allows you to functionally build a new perimeter by identifying, applying policies to, and securing the outbound traffic on your managed endpoint devices. You can achieve the same unified security control as the old castle-and-moat perimeter, while applying independent, granular security evaluation (but without backhauling any user traffic). Then, you can use that security evaluation to apply even stronger controls from your Zero Trust-protected applications, helping you distinguish between low, medium, and high risk users, make determinations about how to handle BYOD traffic, and more.
 
-[IMAGE PLACEHOLDER HERE]
+![How Cloudflare protects against Internet threats](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-protecting-against-internet-threats.svg)
 
 ## Adopting and securing SaaS applications
 
@@ -345,7 +345,7 @@ The concept of SaaS security means a lot of things to a lot of people. For that 
 
 Some make the argument that SaaS applications are either 1) inherently secure when you’ve integrated SSO, or 2) are the functional responsibility of the SaaS provider to secure. While these arguments address the way in which your SaaS investment is accessed and secured, they do not contextualize why companies use SaaS — which is typically for storing corporate information. The proliferation of ‘places your sensitive data may live’ will be an increasingly important factor in your SaaS security decisions.
 
-The above statements all imply that you know what SaaS tooling your users engage with, but often that is not the case. First, we’ll address ‘sanctioned’ SaaS adoption, and then we will discuss concepts related to ‘unsanctioned’ SaaS (also known as shadow IT). 
+The above statements all imply that you know what SaaS tooling your users engage with, but often that is not the case. First, we’ll address ‘sanctioned’ SaaS adoption, and then we will discuss concepts related to ‘unsanctioned’ SaaS (also known as shadow IT).
 
 ### Sanctioned SaaS applications
 
