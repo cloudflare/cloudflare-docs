@@ -5,7 +5,7 @@ tags:
   - Images
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Custom Domain with Images
 weight: 1001

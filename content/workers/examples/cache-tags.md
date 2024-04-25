@@ -5,7 +5,7 @@ tags:
   - Caching
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Cache Tags using Workers
 weight: 1001

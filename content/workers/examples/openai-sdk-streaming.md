@@ -5,7 +5,7 @@ tags:
   - AI
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Stream OpenAI API Responses
 weight: 1001

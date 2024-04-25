@@ -6,7 +6,7 @@ tags:
   - HTMLRewriter
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Turnstile with Workers
 weight: 1001

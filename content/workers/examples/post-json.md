@@ -5,7 +5,7 @@ tags:
   - Originless
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Post JSON
 weight: 1001

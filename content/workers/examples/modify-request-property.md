@@ -7,7 +7,7 @@ tags:
   - Headers
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Modify request property
 weight: 1001

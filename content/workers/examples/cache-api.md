@@ -6,7 +6,7 @@ tags:
   - Caching
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Using the Cache API
 weight: 1001

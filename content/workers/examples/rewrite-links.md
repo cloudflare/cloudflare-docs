@@ -6,7 +6,7 @@ tags:
   - HTMLRewriter
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
   - Python
 pcx_content_type: configuration
 title: Rewrite links

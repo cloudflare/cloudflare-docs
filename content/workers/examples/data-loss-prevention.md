@@ -6,7 +6,7 @@ tags:
   - Security
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Data loss prevention
 weight: 1001

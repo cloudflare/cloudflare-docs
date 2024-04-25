@@ -7,7 +7,7 @@ tags:
   - Originless
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Read POST
 weight: 1001

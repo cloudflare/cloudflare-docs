@@ -7,7 +7,7 @@ tags:
   - Middleware
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
   - Python
 preview:
   - true

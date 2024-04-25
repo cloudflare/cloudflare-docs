@@ -4,7 +4,7 @@ summary: Protect against timing attacks by safely comparing values using `timing
 tags:
   - Security
 languages:
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Using timingSafeEqual
 weight: 1001

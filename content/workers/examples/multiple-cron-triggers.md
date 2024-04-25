@@ -5,7 +5,7 @@ tags:
   - Middleware
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Multiple Cron Triggers
 weight: 1001

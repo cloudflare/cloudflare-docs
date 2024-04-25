@@ -6,7 +6,7 @@ tags:
   - Geolocation
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: "Geolocation: Weather application"
 weight: 1001

@@ -7,7 +7,7 @@ tags:
   - Authentication
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 preview:
   - true
 pcx_content_type: configuration

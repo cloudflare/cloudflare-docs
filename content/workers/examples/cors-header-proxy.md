@@ -6,7 +6,7 @@ tags:
   - Headers
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: CORS header proxy
 weight: 1001

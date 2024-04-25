@@ -6,7 +6,7 @@ tags:
   - Headers
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
   - Python
 pcx_content_type: configuration
 title: 103 Early Hints

@@ -7,7 +7,7 @@ tags:
   - Originless
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
   - Python
 pcx_content_type: configuration
 title: A/B testing with same-URL direct access

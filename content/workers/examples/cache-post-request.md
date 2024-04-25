@@ -6,7 +6,7 @@ tags:
   - Caching
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
   - Python
 pcx_content_type: configuration
 title: Cache POST requests

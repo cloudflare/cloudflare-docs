@@ -8,7 +8,7 @@ tags:
   - Originless
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
   - Python
 preview:
   - true

@@ -6,7 +6,7 @@ tags:
   - Logging
 languages:
   - JavaScript
-  - Typescript
+  - TypeScript
 pcx_content_type: configuration
 title: Debugging logs
 weight: 1001
