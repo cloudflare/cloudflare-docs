@@ -10,7 +10,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     // Can be a string or array of strings]
     const stories = [
@@ -28,7 +28,7 @@ export default {
 
     return Response.json(embeddings);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -68,7 +68,7 @@ print(response.json())
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Page.Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }
+  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }'
 ```
 
 </details>

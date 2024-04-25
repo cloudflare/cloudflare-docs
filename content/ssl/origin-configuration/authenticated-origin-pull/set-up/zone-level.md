@@ -32,7 +32,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 ## 2. Configure origin to accept client certificates
 
-{{<render file="_aop-configure-origin.md">}}
+{{<render file="_aop-configure-origin.md" withParameters="To use the Cloudflare certificate, download it from [step 1 above](#1-upload-certificate-to-origin), rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.;; To use the Cloudflare certificate, donwload it from [step 1 above](#1-upload-certificate-to-origin), rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.">}}
 
 ## 3. Configure Cloudflare to use client certificate
 

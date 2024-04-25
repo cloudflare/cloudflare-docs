@@ -60,7 +60,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     let html_content = "";
     let html_style =
       "body{padding:6em; font-family: sans-serif;} h1{color:#f6821f;}";

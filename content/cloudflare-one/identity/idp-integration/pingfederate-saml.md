@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: PingFederate®
-weight: 7
+weight: 21
 ---
 
 # PingFederate®

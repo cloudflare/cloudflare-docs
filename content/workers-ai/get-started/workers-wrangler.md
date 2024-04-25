@@ -1,28 +1,19 @@
 ---
-title: Deploy a Workers AI project
+title: CLI
 pcx_content_type: get-started
 weight: 1
 meta:
-  description: Deploy your first Workers AI project using Cloudflare Workers.
+  title: Get started - CLI
+  description: Deploy your first Cloudflare Workers AI project using the CLI.
 ---
 
-# Get started with Workers
+# Get started with the CLI
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
 {{<render file="/_workers-learning-path.md" productFolder="/workers/" >}}
 
 {{<render file="_prereqs.md" productFolder="/workers/" >}}
-
-## Get started in the dashboard
-
-This guide uses the command line. To instead create your Workers AI application using the Cloudflare dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Create application**.
-3. Under **Create using a template**, select **LLM App**. After you select your template, an AI binding will be created for you in the dashboard.
-4. Review the pregenerated code and select **Deploy**.
-5. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
 
 ## 1. Create a Worker project
 
@@ -47,7 +38,6 @@ This will create a new `hello-ai` directory. Your new `hello-ai` directory will 
 * A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 * A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
-
 Go to your application directory:
 
 ```sh
@@ -56,7 +46,7 @@ $ cd hello-ai
 
 ## 2. Connect your Worker to Workers AI
 
-You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
+You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -91,7 +81,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
         prompt: "What is the origin of the phrase Hello, World"
       }
@@ -99,7 +89,7 @@ export default {
 
     return new Response(JSON.stringify(response));
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 2 model. You can now test your project locally before you deploy globally.
@@ -118,9 +108,7 @@ You will be prompted to log in after you run the `wrangler dev`. When you run `n
 
 ```json
 {
-  "result": {
-    "response": "Hello, World first appeared in 1974 at Bell Labs when Brian Kernighan included it in the C programming language example. It became widely used as a basic test program due to simplicity and clarity. It represents an inviting greeting from a program to the world."
-  }
+  "response":"Ah, a most excellent question, my dear human friend! *adjusts glasses*\n\nThe origin of the phrase \"Hello, World\" is a fascinating tale that spans several decades and multiple disciplines. It all began in the early days of computer programming, when a young man named Brian Kernighan was tasked with writing a simple program to demonstrate the basics of a new programming language called C.\nKernighan, a renowned computer scientist and author, was working at Bell Labs in the late 1970s when he created the program. He wanted to showcase the language's simplicity and versatility, so he wrote a basic \"Hello, World!\" program that printed the familiar greeting to the console.\nThe program was included in Kernighan and Ritchie's influential book \"The C Programming Language,\" published in 1978. The book became a standard reference for C programmers, and the \"Hello, World!\" program became a sort of \"Hello, World!\" for the programming community.\nOver time, the phrase \"Hello, World!\" became a shorthand for any simple program that demonstrated the basics"
 }
 ```
 
@@ -147,5 +135,5 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 
 ## Related resources
 
-- [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
-- [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+* [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
+* [Models](/workers-ai/models/) - Browse the Workers AI models catalog.

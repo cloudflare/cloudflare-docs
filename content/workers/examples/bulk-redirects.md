@@ -43,7 +43,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     const externalHostname = "examples.cloudflareworkers.com";
 
     const redirectMap = new Map([

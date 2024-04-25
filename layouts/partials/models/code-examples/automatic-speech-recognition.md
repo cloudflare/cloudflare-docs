@@ -10,7 +10,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const res: any = await fetch(
       "https://github.com/Azure-Samples/cognitive-services-speech-sdk/raw/master/samples/cpp/windows/console/samples/enrollment_audio_katie.wav"
     );
@@ -27,7 +27,7 @@ export default {
 
     return Response.json({ input: { audio: [] }, response });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -39,7 +39,7 @@ export default {
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Page.Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --data-binary @talking-llama.mp3
+  --data-binary "@talking-llama.mp3"
 ```
 
 </details>

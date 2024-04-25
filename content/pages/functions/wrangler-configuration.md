@@ -122,6 +122,14 @@ $ pnpm wrangler pages download config <PROJECT_NAME>
 
 Review your generated `wrangler.toml` file. To start using `wrangler.toml` for your Pages project's configuration, create a new deployment, via [Git integration](/pages/get-started/git-integration/) or [Direct Upload](/pages/get-started/direct-upload/).
 
+### Handling compatibility dates set to "Latest"
+
+In the Cloudflare dashboard, you can set compatibility dates for preview deployments to "Latest". This will ensure your project is always using the latest compatibility date without the need to explicitly set it yourself.
+
+If you download a `wrangler.toml` from a project configured with "Latest" using the `wrangler pages download` command, your `wrangler.toml` will have the latest compatibility date available at the time you downloaded the configuration file. Wrangler does not support the "Latest" functionality like the dashboard. Compatibility dates must be explicitly set when using `wrangler.toml`.
+
+Refer to [this guide](/workers/configuration/compatibility-dates/) for more information on what compatibility dates are and how they work.
+
 ## Differences using `wrangler.toml` for Pages Functions and Workers
 
 If you have used [Workers](/workers), you may already be familiar with [`wrangler.toml`](/workers/wrangler/configuration/). There are a few key differences to be aware of when using `wrangler.toml` with your Pages Functions project:
@@ -129,7 +137,7 @@ If you have used [Workers](/workers), you may already be familiar with [`wrangle
 - The configuration fields **do not match exactly** between Pages Functions `wrangler.toml` file and the Workers equivalent. For example, configuration keys like `main`, which are Workers specific, do not apply to a Pages Function's `wrangler.toml`.
 - The Pages `wrangler.toml` introduces a new key, `pages_build_output_dir`, which is only used for Pages projects.
 - The concept of [environments](/pages/functions/wrangler-configuration/#configure-environments) and configuration inheritance in this file **is not** the same as Workers.
-- this file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
+- This file becomes the [source of truth](/pages/functions/wrangler-configuration/#source-of-truth) when used, meaning that you **can not edit the same fields in the dashboard** once you are using this file.
 
 ## Configure environments
 
@@ -312,7 +320,7 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
-- `placement` {{<type-link href="#placement">}}Placement{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `placement` {{<type>}}Placement{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/smart-placement/).
 
@@ -403,7 +411,7 @@ A [binding](/pages/functions/bindings/) enables your Pages Functions to interact
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Function can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
 {{<Aside type="note">}}
 
@@ -419,6 +427,13 @@ When using Wrangler in the default local development mode, files will be written
 [Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 - Configure Durable Object namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects) the same way they are configured with Cloudflare Workers.
+
+{{<Aside type="warning">}}
+
+{{<render file="_do-note.md" productFolder="pages">}} Durable Object bindings configured in a Pages project's `wrangler.toml` require the `script_name` key. For Workers, the `script_name` key is optional.
+
+{{</Aside>}}
+
 - Interact with your [Durable Object namespace binding](/pages/functions/bindings/#durable-objects).
 
 ### Environment variables
@@ -449,7 +464,7 @@ When using Wrangler in the default local development mode, files will be written
 
 ### Queues Producers
 
-[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/reference/batching-retries/). [Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/configuration/batching-retries/). [Queue Producers](/queues/configuration/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
 
 {{<Aside type="note">}}
 

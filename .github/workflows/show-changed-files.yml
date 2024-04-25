@@ -16,7 +16,7 @@ jobs:
     if: github.event.issue.pull_request && github.event.issue.state == 'open' && github.event.comment.user.id == 73139402 && contains(github.event.comment.body, 'Deploy successful')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/show-changed-files
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
