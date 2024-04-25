@@ -243,3 +243,4 @@ async function handleRequest(request) {
 
 * [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
 * [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how to handle errors from remote-procedure calls.
