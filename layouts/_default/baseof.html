@@ -21,21 +21,21 @@
     <link rel="preload" href="{{$littlefootJS}}" as="script" />
     <link rel="stylesheet" href="{{$littlefootCSS}}" />
 
-    
-    {{- block "styles" . -}}{{- end -}} 
+
+    {{- block "styles" . -}}{{- end -}}
 
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
     {{- partial "script" (dict "src" "main.ts" "defer" true) -}}
     {{- block "scripts" . -}}{{- end -}}
 
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
-    {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
-    <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
-    {{- end -}}
+
+    <script src="https://developers.cloudflare.com/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
+
   </head>
   <body>
     {{- block "main" . -}}{{- end -}}
-    <script defer src="{{$littlefootJS}}" type="application/javascript" ></script> 
+    <script defer src="{{$littlefootJS}}" type="application/javascript" ></script>
     <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
   </body>
 </html>

@@ -11,9 +11,9 @@
   {{- $additional_groups = $additional_groups | append . -}}
 {{- end -}}
 
-{{- $dataArray = $dataArray | append 
-(dict "group" .group "title" .title  "show" (default true .show) "url" 
-.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
+{{- $dataArray = $dataArray | append
+(dict "group" .group "title" .title  "show" (default true .show) "url"
+.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout)
 "additional_groups" (default (slice) ($additional_groups))) -}}
 {{- end -}}
 {{- end -}}
@@ -176,7 +176,7 @@
   font-size: 1.2em;
 }
 
-[theme="dark"] .filter-header, [theme="dark"] .clear-button, 
+[theme="dark"] .filter-header, [theme="dark"] .clear-button,
 [theme="dark"] .close-button, [theme="dark"] .CheckboxLabel {
   color: var(--gray-7);
 }
@@ -369,7 +369,7 @@ span a img {
         <legend class="FilterLegend">Product Group</legend>
         {{- range $availableOptions -}}
         <div>
-          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="product-group" onclick="zarazTrackSelect('product grid select filter', 'product-group | {{.}}')">
+          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="product-group" onclick="zarazTrackSelect('select docs grid filter', 'product-group | {{.}}')">
           <label class="CheckboxLabel" for="{{- . -}}">{{- . -}}</label>
         </div>
         {{- end -}}
@@ -379,7 +379,7 @@ span a img {
         <span><a href="/fundamentals/subscriptions-and-billing/preview-services/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
-        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available" onclick="zarazTrackSelect('product grid select filter', 'preview available | preview available')">
+        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available" onclick="zarazTrackSelect('select docs grid filter', 'preview available | preview available')">
         <label class="CheckboxLabel" for="preview-available">True</label>
       </div>
   </fieldset>
@@ -392,7 +392,7 @@ span a img {
   </div>
 </div>
   <div class="ProductGrid--content" id="ProductGrid--content">
-    {{- range $dataArray -}} 
+    {{- range $dataArray -}}
       {{- if (ne .show false) -}}
         {{- $wrap := default false .wrap -}}
         <a
@@ -401,13 +401,13 @@ span a img {
           href="{{ .url }}"
           data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
-          onclick="zarazTrackSelect('product grid option selected', '{{.title}}')"
+          onclick="zarazTrackSelect('docs grid option selected', '{{.title}}')"
         >
           <span>{{ .title }}</span>
         </a>
         {{- end -}}
       {{- end -}}
-      
+
   </div>
   <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="javascript:triggerSearch();">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
   </div>
@@ -437,7 +437,7 @@ span a img {
     for (let i = 0; i < checkboxes.length; i++) {
       checkboxes[i].addEventListener('change', filterList);
     }
-    
+
     // Listen for input on the search box
     let searchBox = document.getElementById('search');
     searchBox.addEventListener('input', filterList);
@@ -449,11 +449,11 @@ function filterList() {
   let checkedPreview = document.querySelector('input[name="preview-available"]:checked');
   let numCheckboxes = checkedGroups.length + (checkedPreview ? 1 : 0);
   let searchBox = document.getElementById('search');
-  
+
   // Get all checked checkboxes
   let visibleItems = false;
   let checkedValues = [];
-  
+
   let filterButton = document.getElementById('filter-button');
   if (numCheckboxes === 0) {
     filterButton.innerText = "Filter Products";
@@ -461,7 +461,7 @@ function filterList() {
     let suffix = numCheckboxes > 1 ? 's' : '';
     filterButton.innerText = `Filter Products (${numCheckboxes} filter${suffix} applied)`;
   }
-  
+
   // Get the value of the search box
   let searchTerm = searchBox.value.toLowerCase();
   let listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
@@ -482,7 +482,7 @@ function filterList() {
 
     let previewMatch = previewValue === '' || previewValue === listItems[k].getAttribute('data-preview-tryout');
     let searchMatch = searchTerm === '' || listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0;
-    
+
     if (groupMatch && searchMatch && previewMatch) {
       listItems[k].style.display = '';
       visibleItems = true;
@@ -490,7 +490,7 @@ function filterList() {
       listItems[k].style.display = 'none';
     }
   }
-  // Trigger empty state message 
+  // Trigger empty state message
   let emptyStateMessage = document.getElementById("emptyState")
   let productGridContent = document.getElementById("ProductGrid--content")
   if (!visibleItems) {
@@ -532,7 +532,7 @@ function resetFilters() {
   filterList();
   hideElement('filter-popup');
 }
-   
+
 
 function toggleVisibility(id) {
   const element = document.getElementById(id);

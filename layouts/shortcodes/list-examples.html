@@ -42,7 +42,8 @@
   {{- if and (ne $x $target) $isExample -}}
   <li class="DocsCodeExamplesOverview--example" {{ if ne (index $filters 0) "" }} {{ range $index2, $filter :=$filters
     }} {{ with (index $page.Params $filter) }} data-{{$filter}}="{{ delimit (.) "|" }}" {{ end }} {{ end }} {{ end }}>
-    <div class="DocsCodeExamplesOverview--example-title">
+    <div class="DocsCodeExamplesOverview--example-title"
+    onclick="zarazTrackSelect('docs grid option selected', '{{$page.Title}}')" >
       {{- .Page.RenderString (printf "[%s](%s)" $page.Title $page.RelPermalink) -}}
     </div>
 
@@ -121,7 +122,7 @@
   for (const dropdown of selectorDropdowns) {
     dropdown.addEventListener("change", filterList)
     dropdown.addEventListener("change", function(event) {
-      zarazTrackSelect('select example filter', `${dropdown.id} | ${event.target.value}`)
+      zarazTrackSelect('select docs grid filter', `${dropdown.id} | ${event.target.value}`)
     })
   }
 
