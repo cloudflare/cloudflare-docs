@@ -6,6 +6,12 @@ weight: 6
 
 # Configuration via `wrangler.toml`
 
+{{<Aside type="warning">}}
+
+If your project contains an existing `wrangler.toml` file that you [previously used for local development](/pages/functions/local-development/), make sure you verify that it matches your project settings in the Cloudflare dashboard before opting-in to deploy your Pages project with `wrangler.toml`. Instead of writing your `wrangler.toml` file by hand, Cloudflare recommend's using `npx wrangler pages download config` to download your current project settings into a `wrangler.toml` file.
+
+{{</Aside>}}
+
 Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or `wrangler.toml`, a configuration file used to customize the development and deployment setup for [Workers](/workers/) and Pages Functions.
 
 This page serves as a reference on how to configure your Pages project via `wrangler.toml`.
