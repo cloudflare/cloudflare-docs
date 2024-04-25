@@ -50,7 +50,42 @@ Workers Enterprise accounts are billed based on the usage model specified in the
 
 ### Example pricing: Standard Usage Model
 
-A Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+#### Example 1 
+
+A Worker that serves 15 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $1.50             | (15,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
+| **CPU time**       |  $1.50             | ((7 ms of CPU time per request * 15,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $8.00             |                                                                                                          |
+
+{{</table-wrap>}}
+
+#### Example 2 
+
+A Worker that runs on a [Cron Trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report. 
+- 720 requests/month
+- 3 minutes (180,000ms) of CPU time per request
+
+In this scenario, the estimated monthly cost would be calculated as:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $0.00             | -                                |
+| **CPU time**       |  $1.99             | ((180,000 ms of CPU time per request * 720 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $6.99            |                                                                                                          |
+{{</table-wrap>}}
+
+#### Example 3 
+
+A high traffic Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
 
 {{<table-wrap>}}
 
@@ -58,8 +93,8 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | **Subscription**   |  $5.00              |                                                                                                          |
 | **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
-| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
-| **Total**          |  $45.40             |                                                                                                          |
+| **CPU time**       |  $13.40             | ((7 ms of CPU time per request * 100,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $45.40  
 
 {{</table-wrap>}}
 
@@ -123,7 +158,11 @@ Resulting in the following estimated costs:
 
 {{</table-wrap>}}
 
-### How to switch the usage model
+### How to switch usage models
+
+{{<Aside type="note">}}
+Only some Workers Enterprise customers maintain the ability to change usage models.
+{{</Aside>}}
 
 Usage models can be changed at the individual Worker level: 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
