@@ -1846,7 +1846,7 @@
       }
     },
     "server_side_excludes": {
-      "title": "Server-side Excludes",
+      "title": "Server-side Excludes (deprecated)",
       "link": "/waf/tools/scrape-shield/server-side-excludes/",
       "properties": {
         "availability": {

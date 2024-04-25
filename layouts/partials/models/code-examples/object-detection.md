@@ -10,7 +10,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const res: any = await fetch("https://cataas.com/cat");
     const blob = await res.arrayBuffer();
 
@@ -25,7 +25,7 @@ export default {
 
     return new Response(JSON.stringify({ inputs: { image: [] }, response }));
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -33,11 +33,11 @@ export default {
 <details>
   <summary>curl</summary>
 
-```sh
+```bash
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/detr-resnet-50 \
     -X POST \
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-    --data-binary @pedestrian-boulevard-manhattan-crossing.jpg
+    --data-binary "@pedestrian-boulevard-manhattan-crossing.jpg"
 ```
 
 </details>

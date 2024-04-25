@@ -10,7 +10,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const response = await env.AI.run(
       "{{ .Page.Params.model.name }}",
@@ -21,7 +21,7 @@ export default {
 
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>

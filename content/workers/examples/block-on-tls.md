@@ -42,7 +42,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     try {
       const tlsVersion = request.cf.tlsVersion;
       // Allow only TLS versions 1.2 and 1.3

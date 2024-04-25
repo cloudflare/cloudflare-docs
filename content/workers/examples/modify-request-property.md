@@ -76,7 +76,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     /**
      * Example someHost is set up to return raw JSON
      * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied

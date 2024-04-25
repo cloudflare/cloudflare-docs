@@ -98,12 +98,12 @@ async def on_fetch(request):
 ---
 filename: src/entry.py
 ---
-from js import Response
+from js import Response, Headers
 import json
 
 async def on_fetch(request):
     # Use json.loads to serialize Python objects to JSON strings
-    payload = json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True) 
+    payload = json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True)
 
     headers = Headers.new({"content-type": "application/json"}.items())
     return Response.new(payload, headers=headers)
@@ -124,7 +124,7 @@ def to_js(obj):
 
 async def on_fetch(request, env):
     # Bindings are available on the 'env' parameter
-    # https://developers.cloudflare.com/queues/ 
+    # https://developers.cloudflare.com/queues/
 
     # The default contentType is "json"
     # We can also pass plain text strings
@@ -136,8 +136,24 @@ async def on_fetch(request, env):
     return Response.json(to_js({"write": "success"}))
 ```
 
+### Query a D1 Database
+
+```python
+---
+filename: src/entry.py
+---
+from js import Response
+
+async def on_fetch(request, env):
+    results = await env.DB.prepare("PRAGMA table_list").all()
+    # Return a JSON response
+    return Response.json(results)
+```
+
+Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
+
 ## Next steps
 
-* If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
-* Learn more about [calling JavaScript methods and accessing JavaScript objects](/workers/languages/python/ffi/) from Python
-* Understand the [supported packages and versions](/workers/languages/python/packages/) currently available to Python Workers.
+- If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
+- Learn more about [calling JavaScript methods and accessing JavaScript objects](/workers/languages/python/ffi/) from Python
+- Understand the [supported packages and versions](/workers/languages/python/packages/) currently available to Python Workers.

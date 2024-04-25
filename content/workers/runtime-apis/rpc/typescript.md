@@ -9,7 +9,7 @@ meta:
 
 # TypeScript
 
-The [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) package provides the `Service` and `DurableObjectNamespace` types, each of which accepts a single type parameter for the server-side [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc) or [`DurableObject`](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#rpc-methods) types.
+The [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) package provides the `Service` and `DurableObjectNamespace` types, each of which accepts a single type parameter for the server-side [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc) or [`DurableObject`](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#call-rpc-methods) types.
 
 Using higher-order types, we automatically generate client-side stub types (e.g., forcing all methods to be async).
 
@@ -21,10 +21,10 @@ interface Env {
   COUNTER_OBJECT: DurableObjectNamespace<Counter>
 }
 
-export default <ExportedHandler<Env>>{
-  async fetch(req, env, ctx) {
+export default {
+  async fetch(req, env, ctx): Promise<Response> {
     const result = await env.SUM_SERVICE.sum(1, 2);
     return new Response(result.toString());
   }
-}
+} satisfies ExportedHandler<Env>;
 ```

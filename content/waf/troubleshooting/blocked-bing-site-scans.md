@@ -18,10 +18,10 @@ The rule you should temporarily skip is the following:
 
 {{<table-wrap>}}
 
-|                     | Name                                             | ID                                 |
-|---------------------|--------------------------------------------------|------------------------------------|
-| **Managed Ruleset** | Cloudflare Managed Ruleset                       | `efb7b8c949ac4650a09736fc376e9aee` |
-| **Rule**            | Anomaly:Header:User-Agent - Fake Bing or MSN Bot | `ae20608d93b94e97988db1bbc12cf9c8` |
+|                     | Name                                             | ID                                                          |
+|---------------------|--------------------------------------------------|-------------------------------------------------------------|
+| **Managed Ruleset** | Cloudflare Managed Ruleset                       | {{<rule-id>}}efb7b8c949ac4650a09736fc376e9aee{{</rule-id>}} |
+| **Rule**            | Anomaly:Header:User-Agent - Fake Bing or MSN Bot | {{<rule-id>}}ae20608d93b94e97988db1bbc12cf9c8{{</rule-id>}} |
 
 {{</table-wrap>}}
 

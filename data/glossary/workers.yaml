@@ -8,7 +8,7 @@ entries:
 
 - term: binding
   general_definition: |-
-    [Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
+    [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare Developer Platform.
 
 - term: Cron Triggers
   general_definition: |-
