@@ -50,8 +50,8 @@ export default {
 It is strongly recommended that you *do not* replace the entire `process.env` object with the request `env` object. Doing so will cause you to lose any environment variables that were set previously and will cause unexpected behavior for other Workers running in the same isolate. Specifically, it would cause inconsistency with the `process.env` object when accessed via named imports.
 
 ```js
-const * as process from 'node:process';
-const { env } from 'node:process';
+import * as process from 'node:process';
+import { env } from 'node:process';
 
 process.env === env; // true! they are the same object
 process.env = {}; // replace the object! Do not do this!

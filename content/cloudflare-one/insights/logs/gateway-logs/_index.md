@@ -6,13 +6,17 @@ weight: 3
 
 # Gateway activity logs
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
 
 {{</Aside>}}
 
-{{<render file="gateway/_activity-logs.md" productFolder="cloudflare-one">}}
+Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/) for sessions proxied by Gateway.
+
+To view Gateway activity logs, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway**. Select an individual row to investigate the event in more detail.
+
+Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/insights/logs/logpush/).
 
 ## Selective logging
 
@@ -104,22 +108,26 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 {{<table-wrap>}}
 
-| **Value**                | **Description**                                             |
-| ------------------------ | ----------------------------------------------------------- |
-| `allowedByQueryName`     | Domain or hostname in the query matched an Allow policy.    |
-| `blockedByQueryName`     | Domain or hostname in the query matched a Block policy.     |
-| `allowedRule`            | IP address in the response matched an Allow policy.         |
-| `blockedRule`            | IP address in the response matched a Block policy.          |
-| `blockedByCategory`      | Domain or hostname matched a category in a Block policy.    |
-| `blockedAlwaysCategory`  | Domain or hostname is always blocked by Cloudflare.         |
-| `allowedOnNoLocation`    | Allowed because query did not match a Gateway DNS location. |
-| `allowedOnNoPolicyMatch` | Allowed because query did not match a policy.               |
-| `overrideForSafeSearch`  | Response was overridden by a Safe Search policy.            |
-| `overrideApplied`        | Response was overridden by an Override policy.              |
+| Name                     | Value | Description                                                 |
+|--------------------------|-------|-------------------------------------------------------------|
+| `blockedByCategory`      | `3`   | Domain or hostname matched a category in a Block policy.    |
+| `allowedOnNoLocation`    | `4`   | Allowed because query did not match a Gateway DNS location. |
+| `allowedOnNoPolicyMatch` | `5`   | Allowed because query did not match a policy.               |
+| `blockedAlwaysCategory`  | `6`   | Domain or hostname is always blocked by Cloudflare.         |
+| `overrideForSafeSearch`  | `7`   | Response was overridden by a Safe Search policy.            |
+| `overrideApplied`        | `8`   | Response was overridden by an Override policy.              |
+| `blockedRule`            | `9`   | IP address in the response matched a Block policy.          |
+| `allowedRule`            | `10`  | IP address in the response matched an Allow policy.         |
 
 {{</table-wrap>}}
 
 ## Network logs
+
+{{<Aside type="warning" header="Failed connection logs">}}
+
+Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
+
+{{</Aside>}}
 
 ### Explanation of the fields
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Google
-weight: 13
+weight: 12
 ---
 
 # Google

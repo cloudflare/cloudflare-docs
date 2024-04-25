@@ -53,3 +53,5 @@ You can create different kinds of Transform Rules in the dashboard or via Cloudf
 * [Managed Transforms](/rules/transform/managed-transforms/)
 
 Refer to [Rules language](/ruleset-engine/rules-language/) for more information on building expressions for Transform Rules.
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="Transform Rules">}}

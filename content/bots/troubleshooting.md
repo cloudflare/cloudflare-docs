@@ -52,8 +52,8 @@ Yandex updates their bots very frequently, you may see more false positives whil
 
 **Workarounds:**
 
-- Create a [WAF exception](/waf/managed-rules/waf-exceptions/) to temporarily skip the managed rule with ID `...f6cbb163` when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
-- Create a [WAF custom rule with the _Skip_ action](/waf/custom-rules/skip/) to temporarily bypass WAF Managed Rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
+- Create an [exception](/waf/managed-rules/waf-exceptions/) to temporarily skip the managed rule with ID {{<rule-id>}}2854e3f18ad946049e6d90ccf6cbb163{{</rule-id>}} when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
+- Create a [WAF custom rule with the _Skip_ action](/waf/custom-rules/skip/) to temporarily bypass WAF Managed Rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.**
 
 If you are using the legacy WAF managed rules ([now deprecated](/waf/reference/migration-guides/waf-managed-rules-migration/)), disable the WAF managed rule with ID `100203` temporarily.
 
@@ -106,7 +106,7 @@ ___
 The difference is significant:
 
 -   Threat score (_cf.threat\_score_) is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).
--   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script**.** The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
+-   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script. The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
 
 These fields are available via [WAF custom rules](/waf/custom-rules/) and other products based on the Ruleset Engine.
 
@@ -214,6 +214,10 @@ If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can
 -   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 
 {{<render file="_flexible-sbfm.md">}}
+
+You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/pro/).
+
+Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trigger if an IP Access rule matches the request. For example, the IP Access rule matches the connecting IP.
 
 {{</faq-answer>}}
 {{</faq-item>}}

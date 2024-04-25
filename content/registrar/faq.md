@@ -84,7 +84,7 @@ You can leave the domain **In Progress** and Cloudflare will wait until after th
 
 {{<faq-answer>}}
 
-If you have an [unverified email address](/fundamentals/setup/account-setup/verify-email-address/), you might experience issues when initiating a domain transfer.
+If you have an [unverified email address](/fundamentals/setup/account/verify-email-address/), you might experience issues when initiating a domain transfer.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -227,6 +227,79 @@ No. Once a restore has been completed it can not be reversed. It may be possible
 Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.
 
 {{</Aside>}}
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+---
+
+## Domain deletions
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Why am I unable to delete my Registrar domain?" >}}
+
+{{<faq-answer>}}
+
+A domain can only be deleted if all the following conditions are met:
+
+* The user initiating the action is a Super Admin or Read/Write Administrator.
+* The domain is not delete locked at the registry with either `clientDeleteProhibited` or `serverDeleteProhibited`.
+* The domain is not already in `pendingDelete`, `redemptionPeriod`, or in `pendingTransfer`.
+* The domain has not been administratively locked by Cloudflare.  This typically occurs for legal reasons such as a UDRP filing or court order, but may also be the result of an abuse or payment investigation.
+* The domain is NOT a .UK domain. .UK domains currently cannot be deleted at the registry.
+
+If any of the above conditions are not met, the domain cannot be deleted.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Who has permission to delete a domain registration?" >}}
+{{<faq-answer>}}
+
+Only Super Admins and Administrators with Read/Write access can initiate the deletion of a domain.  Note that only Super Admins will receive the email with the delete token.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Will I receive a refund for my deleted domain registration?" >}}
+
+{{<faq-answer>}}
+No. Refunds will not be issued for costs incurred by a domain registration.
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="How do I get the domain deletion token?" >}}
+
+{{<faq-answer>}}
+
+The delete token is only sent to the Super Admins of the account. If the user requesting the deletion is not a Super Admin they will need to obtain the delete token from one of the Super Admins of the account.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+
+{{<faq-item>}}
+{{<faq-question level=3 text="How long is the domain deletion token valid for?" >}}
+
+{{<faq-answer>}}
+
+The delete token is valid for 30 minutes. After the 30 minutes the code will expire and the user must restart the process.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Will the domain be deleted immediately from my account?" >}}
+
+{{<faq-answer>}}
+
+If the domain is within 5 days of the initial registration, the domain will be immediately released by the registry and made available for re-registration. In this scenario the domain will be immediately removed from the registrar section of the account. You may need to refresh the page to force an update of the data.
+
+If the domain is more than 5 days old, it will enter the redemption period and will remain in account until the redemption period expires and the registry releases the domain.
 
 {{</faq-answer>}}
 {{</faq-item>}}

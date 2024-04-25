@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: SAML | Keycloak
-weight: 10
+title: Keycloak (SAML)
+weight: 15
 ---
 
-# SAML | Keycloak
+# Keycloak (SAML)
 
 Keycloak is an open source identity and access management solution built by JBoss. If you need a Keycloak lab environment for testing, refer to [this example](https://github.com/mw866/tunnel-keycloak).
 

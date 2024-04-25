@@ -9,6 +9,8 @@ weight: 4
 
 The following limits apply to users of the Cloudflare Web3 Gateways.
 
+{{<render file="_pricing-page-reference.md">}}
+
 ## IPFS Gateway
 
 The following limits apply to Cloudflare's [IPFS Gateway](/web3/ipfs-gateway/).

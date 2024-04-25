@@ -16,6 +16,6 @@ _build:
 5. Under **Split Tunnels**, choose a mode:
 
    - **Exclude IPs and domains** — (Default) All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
-   - **Include IPs and Domains** — Only traffic destined to the IPs or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies. In order to use certain features, you will need to manually add [Zero Trust domains](#cloudflare-zero-trust-domains).
+   - **Include IPs and Domains** — Only traffic destined to the IPs or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies. In order to use certain features, you will need to manually add [Zero Trust domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains).
 
-All clients with this device profile will now switch to the new mode and its default route configuration. Next, [add](#add-a-route) or [remove](#remove-a-route) routes from your Split Tunnel configuration.
+All clients with this device profile will now switch to the new mode and its default route configuration. Next, [add](#add-a-route) or [remove](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) routes from your Split Tunnel configuration.

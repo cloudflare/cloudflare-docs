@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure AD®
-weight: 4
+weight: 6
 ---
 
 # Microsoft Azure AD®
@@ -96,17 +96,18 @@ More narrow permissions may be used, however this is the set of permissions that
 
 4. Enter the **Application (client) ID**, **Client secret**, and **Directory (tenant) ID** obtained from the Azure dashboard.
 
-5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+5. (Optional) Configure the following settings:
 
-6. (Optional) If you are using Azure AD groups, enable **Support Groups**.
+    - **Proof Key for Code Exchange**: Perform [PKCE](https://www.oauth.com/oauth2-servers/pkce/) on all login attempts.
+    - **Support Groups**: Allow Cloudflare to read a user's Azure AD group membership.
+    - **Azure AD Policy Sync**: Refer to our [Azure AD Conditional Access tutorial](/cloudflare-one/tutorials/azuread-conditional-access/).
+    - **Enable SCIM**: Refer to [Synchronize users and groups](#synchronize-users-and-groups).
+    - **Email claim**: Enter the Azure AD claim that you wish to use for user identification (for example, `preferred_username`).
+    - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
-7. (Optional) In **Email claim**, enter the Azure AD claim that you wish to use for user identification (for example, `preferred_username`).
+6. Select **Save**.
 
-8. (Optional) Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
-
-9. Select **Save**.
-
-To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 ## Synchronize users and groups
 
@@ -177,6 +178,10 @@ You can create Access and Gateway policies for groups that are not synchronized 
 ### Nested groups
 
 Access and Gateway policies for an Azure group will also apply to all [nested groups](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/how-to-manage-groups#add-or-remove-a-group-from-another-group). For example, if a user belongs to the group `US devs`, and `US devs` is part of the broader group `Devs`, the user would be allowed or blocked by all policies created for `Devs`.
+
+## Force user interaction during WARP reauthentication
+
+You can require users to re-enter their credentials into Azure AD whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/operations/access-identity-providers-update-an-access-identity-provider) and set the `prompt` parameter to either `login` or `select_account`.
 
 ## Example API Configuration
 

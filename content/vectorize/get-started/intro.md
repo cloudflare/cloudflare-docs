@@ -37,16 +37,15 @@ You will create a new project that will contain a Worker, which will act as the 
 Create a new project named `vectorize-tutorial` by running:
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare@latest vectorize-tutorial
 ```
 
 When setting up your `vectorize-tutorial` Worker, answering the questions as below:
 
-- Enter `vectorize-tutorial` as the directory for where you want to create your application.
-- Choose `"Hello World Worker"` for the type of application.
-- Select `yes` to using TypeScript.
-- Select `yes` to using Git.
-- Select `no` to deploying.
+1. Choose `"Hello World Worker"` for the type of application.
+2. Select `yes` to using TypeScript.
+3. Select `yes` to using Git.
+4. Select `no` to deploying.
 
 This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 
@@ -63,12 +62,6 @@ For example: `CI=true npm create cloudflare@latest vectorize-tutorial --type=sim
 
 ## 2. Create an index
 
-{{<Aside type="note" heading="Vectorize open beta">}}
-
-Vectorize is currently in open beta. Read [the announcement blog](https://blog.cloudflare.com/vectorize-vector-database-open-beta/) to learn more.
-
-{{</Aside>}}
-
 A vector database is distinct from a traditional SQL or NoSQL database. A vector database is designed to store vector embeddings, which are representations of data, but not the original data itself.
 
 To create your first Vectorize index, change into the directory you just created for your Workers project:
@@ -83,7 +76,7 @@ To create an index, you will need to use the `wrangler vectorize create` command
 - Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
 - Only used for describing the index, and is not directly referenced in code.
 
-In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
+In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be Euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
 {{<render file="_vectorize-wrangler-version.md">}}
 
@@ -99,11 +92,11 @@ binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
 index_name = "tutorial-index"
 ```
 
-The command above will create a new vector database, and output the [binding](/workers/configuration/bindings/) configuration needed in the next step.
+The command above will create a new vector database, and output the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/configuration/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
 
 To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -129,7 +122,7 @@ Before you can query a vector database, you need to insert vectors for it to que
 
 First, go to your `vectorize-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+Clear the content of `index.ts`, and paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
 
 ```typescript
 ---
@@ -155,7 +148,7 @@ const sampleVectors: Array<VectorizeVector> = [
 ];
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith("/favicon")) {
 			return new Response('', { status: 404 });
@@ -174,14 +167,14 @@ export default {
 
 		return Response.json({text: "nothing to do... yet"}, { status: 404 })
 	}
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 In the code above, you:
 
-- Define a binding to your Vectorize index from your Workers code. This binding matches the `binding` value you set in `wrangler.toml` under `[[vectorize]]`.
-- Specify a set of example vectors that you will query against in the next step.
-- Insert those vectors into the index and confirm it was successful.
+1. Define a binding to your Vectorize index from your Workers code. This binding matches the `binding` value you set in `wrangler.toml` under `[[vectorize]]`.
+2. Specify a set of example vectors that you will query against in the next step.
+3. Insert those vectors into the index and confirm it was successful.
 
 In the next step, you will expand the Worker to query the index and the vectors you insert.
 
@@ -216,7 +209,7 @@ const sampleVectors: Array<VectorizeVector> = [
 ];
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith("/favicon")) {
 			return new Response('', { status: 404 });
@@ -258,7 +251,7 @@ export default {
 			matches: matches,
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ## 6. Deploy your Worker
@@ -266,7 +259,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -335,8 +328,12 @@ From here, experiment by passing a different `queryVector` and observe the resul
 
 In a real-world application, the `queryVector` would be the vector embedding representation of a query from a user or system, and our `sampleVectors` would be generated from real content. To build on this example, read the [vector search tutorial](/vectorize/get-started/embeddings/) that combines Workers AI and Vectorize to build an end-to-end application with Workers.
 
-## Next steps
+By finishing this tutorial, you have successfully created and queried your first Vectorize index, a Worker to access that index, and deployed your project globally.
+
+## Related resources
 
 - [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 - Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- [Euclidean Distance vs Cosine Similarity](https://www.baeldung.com/cs/euclidean-distance-vs-cosine-similarity).
+- [Dot product](https://en.wikipedia.org/wiki/Dot_product).

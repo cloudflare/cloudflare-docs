@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Cloudflare Time Services docs
-  description: 'Cloudflare’s suite of time services: NTP, NTS, and Roughtime.'
+  description: "Cloudflare's suite of time services: NTP, NTS, and Roughtime."
   author: '@cloudflare'
 
 externals:

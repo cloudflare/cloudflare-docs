@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Workers Sites
 meta:
-  description: Use [Cloudflare Pages](/pages/) for hosting fullstack applications instead of Workers Sites. Do not use Workers Sites for new projects.
+  description: Use [Cloudflare Pages](/pages/) for hosting full-stack applications instead of Workers Sites. Do not use Workers Sites for new projects.
 ---
 
 # Workers Sites

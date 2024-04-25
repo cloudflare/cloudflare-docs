@@ -6,9 +6,24 @@ weight: 5
 
 # Virtual networks
 
-[Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) supports the creation and configuration of virtual networks. Virtual networks allow you to manage different private networks which have overlapping IP ranges.
+{{<details header="Feature availability">}}
 
-For example, an organization may want to expose two distinct virtual private cloud (VPC) networks which they consider to be “production” and “staging”. However, if the two private networks happened to receive the same RFC 1918 IP assignment, there may be two different resources with the same IP address. By creating two separate virtual networks, you can deterministically route traffic to duplicative private addresses like `10.128.0.1/32` staging and `10.128.0.1/32` production. End users would then select which network to connect to by accessing their WARP client settings.
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans |
+
+| System   | Availability |
+| ---------| -------------|
+| Windows  | ✅           |
+| macOS    | ✅           |
+| Linux    | ✅           |
+| iOS      | ✅           |
+| Android  | ✅           |
+| ChromeOS | ✅           |
+
+{{</details>}}
+
+{{<render file="tunnel/_virtual-networks-intro.md" productFolder="cloudflare-one">}}
 
 ## Use cases
 
@@ -125,7 +140,7 @@ If no `--vnet` option is specified, the tunnel will be assigned to the default v
 We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
 
 6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
-   
+
     ```txt
     tunnel: <Tunnel-UUID>
     credentials-file: /root/.cloudflared/credentials-file.json
@@ -177,7 +192,7 @@ To delete a virtual network:
 2. (Optional) Delete the tunnel associated with the virtual network.
 
     ```sh
-    $ cloudflared tunnel delete staging-tunnel 
+    $ cloudflared tunnel delete staging-tunnel
     ```
 
 3. Delete the virtual network.
@@ -193,10 +208,18 @@ You can verify that the virtual network was successfully deleted by typing `clou
 
 ## Connect to a virtual network
 
-1. Open the WARP client on your device.
+### Windows, macOS, and Linux
 
+1. Open the WARP client.
 2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
+3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
+When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+
+### iOS, Android, and ChromeOS
+
+1. Launch the Cloudflare One Agent app.
+2. Go to **Advanced** > **Connection options** > **Virtual networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
 When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.

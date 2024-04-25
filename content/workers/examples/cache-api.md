@@ -56,8 +56,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request, env, ctx) {
+interface Env {}
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
     const cacheUrl = new URL(request.url);
 
     // Construct the cache key from the cache URL
@@ -90,9 +91,7 @@ const handler: ExportedHandler = {
     }
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

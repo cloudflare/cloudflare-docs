@@ -3,26 +3,30 @@ updated: 2023-06-14
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: OpenAI GPT function calling with JavaScript and Cloudflare Workers 
+title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
+layout: single
 ---
 
-# Use OpenAI GPT function calling with JavaScript and Cloudflare Workers 
+# Use OpenAI GPT function calling with JavaScript and Cloudflare Workers
 
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 
-In this tutorial, you will learn to use [OpenAI function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with JavaScript and Cloudflare Workers. Your Worker application will interact with the OpenAI API to define a function in your Worker code, have OpenAI tell you when to call that function and share those results with OpenAI to continue that conversation. For this guide, you will allow users to specify real-time data that needs to be pulled from a URL.
+In this tutorial, you will build a project that leverages [OpenAI's function calling](https://platform.openai.com/docs/guides/function-calling) feature, available in OpenAI's latest Chat Completions API models. The function calling feature allows the AI model to intelligently decide when to call a function based on the input, and respond in JSON format to match the function's signature. You will use the function calling feature to request for the model to determine a website URL which contains information relevant to a message from the user, retrieve the text content of the site, and, finally, return a final response from the model informed by real-time web data.
 
-You will learn how to:
 
-- Make an API call from Cloudflare Workers to OpenAI's API using JavaScript.
-- Determine if OpenAI is indicating you should call a function in your code based on a user's input.
-- Use Worker secrets with Wrangler.
+### What you will learn
+
+- How to use OpenAI's function calling feature.
+- Integrating OpenAI's API in a Cloudflare Worker.
+- Fetching and processing website content using Cheerio.
+- Handling API responses and function calls in JavaScript.
+- Storing API keys as secrets with Wrangler.
 
 ---
 
-## 1. Create a Worker project
+## 1. Create a new Worker project
 
 Create a Worker project in the command line:
 
@@ -34,10 +38,11 @@ $ npm create cloudflare@latest
 ```
 
 For setup, select the following options:
-* For `Where do you want to create your application?`, indicate `openai-function-calling-workers`.
-* For `What type of application do you want to create?`, choose `"Hello World" script`.
-* For `Do you want to use TypeScript?`, choose `no`.
-* For `Do you want to deploy your application?`, choose `yes`.
+
+- For `Where do you want to create your application?`, indicate `openai-function-calling-workers`.
+- For `What type of application do you want to create?`, choose `"Hello World" script`.
+- For `Do you want to use TypeScript?`, choose `no`.
+- For `Do you want to deploy your application?`, choose `yes`.
 
 Go to your new `openai-function-calling-workers` Worker project:
 
@@ -51,196 +56,198 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 ## 2. Make a request to OpenAI
 
-With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. You will also be using the `axios-fetch` adapter to interact with OpenAI's node library on the edge. Install the OpenAI node library and `axios-fetch` adapter with `npm`:
+With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. In this project, you will also use the Cheerio library to handle processing the HTML content of websites
+
 ```sh
-$ npm install openai
-$ npm install @vespaiach/axios-fetch-adapter
+$ npm install openai cheerio
 ```
 
-Initially, your generated `index.js` file should look like this:
+Now, define the structure of your Worker in `index.js`:
+
 ```js
 ---
 filename: index.js
 ---
 export default {
-	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
-	},
+  async fetch(request, env, ctx) {
+    // Initialize OpenAI API
+    // Handle incoming requests
+    return new Response('Hello World!');
+  },
 };
+
 ```
 
-Above `export default`, add the imports for `openai` and `axios-fetch`:
+Above `export default`, add the imports for `openai` and `cheerio`:
+
 ```js
 ---
 filename: index.js
 ---
-import { Configuration, OpenAIApi } from "openai";
-import fetchAdapter from "@vespaiach/axios-fetch-adapter";
+import OpenAI from "openai";
+import * as cheerio from 'cheerio';
 ```
 
-Within your `fetch` function, set up the configuration and instantiate your `OpenAIApi` client:
+Within your `fetch` function, instantiate your `OpenAI` client:
 
 ```js
 ---
 filename: index.js
 ---
 async fetch(request, env, ctx) {
-  const configuration = new Configuration({
+  const openai = new OpenAI({
     apiKey: env.OPENAI_API_KEY,
-    baseOptions: {
-      adapter: fetchAdapter
-    }
   });
-  const openai = new OpenAIApi(configuration);
 
+  // Handle incoming requests
   return new Response('Hello World!');
 },
 ```
 
-To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set your `OPENAI_API_KEY`. This key is the API key you created earlier in the OpenAI dashboard:
+Use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set `OPENAI_API_KEY`. This [secret's](/workers/configuration/secrets/) value is the API key you created earlier in the OpenAI dashboard:
+
 ```sh
 $ npx wrangler secret put <OPENAI_API_KEY>
 ```
 
 For local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
+
 ```
 OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 ```
 
-Now, make a request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) with your functions argument to indicate that you are enabling [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) with this request.
+Now, make a request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api):
+
 ```js
 ---
 filename: index.js
 ---
-try {
-  const chatCompletion = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo-0613",
-    messages: [{role: "user", content: "What's happening in the NBA today?"}],
-    functions: [
-      {
-        name: "read_website_content",
-        description: "Read the content on a given website",
-        parameters: {
-        type: "object",
-        properties: {
-          url: {
-          type: "string",
-          description: "The URL to the website to read ",
-          }
-        },
-        required: ["url"],
-        },
-      }
-    ]
-  });
+export default {
+  async fetch(request, env, ctx) {
+    const openai = new OpenAI({
+      apiKey: env.OPENAI_API_KEY,
+    });
 
-  const msg = chatCompletion.data.choices[0].message;
-  console.log(msg.function_call)
+      const url = new URL(request.url);
+      const message = url.searchParams.get('message');
 
-  return new Response('Hello World!');
-} catch (e) {
-  return new Response(e);
-}
+      const messages = [{ role: 'user', content: message ? message : "What's in the news today?" }];
+
+      const tools = [
+        {
+          type: 'function',
+          function: {
+            name: 'read_website_content',
+            description: 'Read the content on a given website',
+            parameters: {
+              type: 'object',
+              properties: {
+                url: {
+                  type: 'string',
+                  description: 'The URL to the website to read',
+                },
+              },
+              required: ['url'],
+            },
+          },
+        },
+      ];
+
+      const chatCompletion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo-1106',
+        messages: messages,
+        tools: tools,
+        tool_choice: 'auto',
+      });
+
+      const assistantMessage = chatCompletion.choices[0].message;
+      console.log(assistantMessage);
+
+      //Later you will continue handling the assistant's response here
+      return new Response(assistantMessage.content);
+  },
+};
+
 ```
 
 Review the arguments you are passing to OpenAI:
 
-* **model**: The model you want OpenAI to use for your request.
-* **messages**: A list containing the messages that are part of the conversation happening. In this guide, you only have one user message asking what is happening in the NBA today.
-* **functions**: A list containing all the functions that you are telling OpenAI about. In this guide, you only have one function. Your function has the following properties:
-    * **name**: The name of your function. You will be calling yours `read_website_content`.
-    * **description**: A short description that lets OpenAI know what your function does. You are letting OpenAI know that your function reads the content on a given website.
-    * **parameters**: The parameters that the function can accept described as a JSON Schema object. You will have one parameter called `url`.
-
-After your request to OpenAI completes, you are logging the message back to confirm it is telling you to call your function. Run your code with `npx wrangler dev` and open it in a browser by pressing `b`. You should see the following in your terminal log:
-```sh
-Object {
-  name: read_website_content,
-  arguments: {
-    "url": "https://www.nba.com/"
-  }
-}
-```
-
-Function calling intelligently determines what content to pass in the argument. Take note that you did not specify your `messages` `content` as `"what's happening on nba.com today?"`, but instead asked `"What's happening in the NBA today?"`. OpenAI determined that "https://www.nba.com" was the right URL to pass to your function.
+- **model**: This is the model you want OpenAI to use for your request. In this case, you are using 'gpt-3.5-turbo-1106'.
+- **messages**: This is an array containing all messages that are part of the conversation. Initially you provide a message from the user, and we later add the response from the model. The content of the user message is either the `message` query parameter from the request URL or the default "What's in the news today?".
+- **tools**: An array containing the actions available to the AI model. In this example you only have one tool, `read_website_content`, which reads the content on a given website.
+  - **name**: The name of your function. In this case, it is `read_website_content`.
+  - **description**: A short description that lets the model know the purpose of the function. This is optional but helps the model know when to select the tool.
+  - **parameters**: A JSON Schema object which describes the function. In this case we request a response containing an object with the required property `url`.
+- **tool_choice**: This argument is technically optional as `auto` is the default. This argument indicates that either a function call or a normal message response can be returned by OpenAI.
 
 ## 3. Building your `read_website_content()` function
 
-Add the code to call your function when OpenAI determines you need to:
+You will now need to define the `read_website_content` function, which is referenced in the `tools` array. The `read_website_content` function fetches the content of a given URL and extracts the text from `<p>` tags using the `cheerio` library:
+
+Add this code above the `export default` block in your `index.js` file:
+
 ```js
 ---
 filename: index.js
 ---
- let websiteContent;
-
- if (msg.function_call.name === "read_website_content") {
-    const url = JSON.parse(msg.function_call.arguments).url;
-    websiteContent = await read_website_content(url);
-    console.log(websiteContent);
- }
-```
-
-The above function does not exist. You need to create it. Use a node library called [`cheerio`](https://github.com/cheeriojs/cheerio) to the websites content. Run `npm` to install `cheerio`:
-```sh
-$ npm install cheerio
-```
-
-With cheerio installed, import it at the top of your `index.js` file and immediately create your `read_website_content` function:
-```js
----
-filename: index.js
----
-import cheerio from "cheerio"; 
-
 async function read_website_content(url) {
-  console.log("reading website content");
+  console.log('reading website content');
 
   const response = await fetch(url);
   const body = await response.text();
-  let cheerioBody = await cheerio.load(body);
+  let cheerioBody = cheerio.load(body);
   const resp = {
-    website_body: cheerioBody("p").text(),
-    url: url
-  }
+    website_body: cheerioBody('p').text(),
+    url: url,
+  };
   return JSON.stringify(resp);
 }
 ```
 
-In this function, you take the URL that you received back from OpenAI and use JavaScript's [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to pull the content of the website. Then, your function will use `cheerio` to pull out only the text of the website. You then create a JSON object for the response.
+In this function, you take the URL that you received from OpenAI and use JavaScript's [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to pull the content of the website and extract the paragraph text. Now we need to determine when to call this function.
 
-With this function in place, run your code again to review that you are properly calling your function and pulling website data:
-```sh
-$ npx wrangler dev
-```
+## 4. Process the Assistant's Messages
 
-When you open a browser, you should see the log of the website content in your terminal.
+Next, we need to process the response from the OpenAI API to check if it includes any function calls. If a function call is present, you should execute the corresponding function in your Worker. Note that the assistant may request multiple function calls.
 
-## 4. Send your function response back to OpenAI
-
-The last part of your application is returning the data you got back from your `index.js` function to OpenAI and having it answer the user's original question. Right after you log `websiteContent`, make a second call to the chat completion API:
+Modify the fetch method within the `export default` block as follows:
 ```js
 ---
 filename: index.js
 ---
-const secondChatCompletion = await openai.createChatCompletion({
-  model: "gpt-3.5-turbo-0613",
-  messages: [
-    {role: "user", content: "What's happening in New York City today?"},
-    msg,
-    {
-      role: "function",
-      name: msg.function_call.name,
-      content: websiteContent
-    }
-  ],
-});
+// ... your previous code ...
 
-return new Response(secondChatCompletion.data.choices[0].message.content);
+if (assistantMessage.tool_calls) {
+  for (const toolCall of assistantMessage.tool_calls) {
+    if (toolCall.function.name === 'read_website_content') {
+      const url = JSON.parse(toolCall.function.arguments).url;
+      const websiteContent = await read_website_content(url);
+      messages.push({
+        role: 'tool',
+        tool_call_id: toolCall.id,
+        name: toolCall.function.name,
+        content: websiteContent,
+      });
+    }
+  }
+
+  const secondChatCompletion = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo-1106',
+    messages: messages,
+  });
+
+  return new Response(secondChatCompletion.choices[0].message.content);
+} else {
+  // this is your existing return statement
+  return new Response(assistantMessage.content);
+}
 ```
 
-This request to OpenAI will look similar to first request. But this time, instead of passing the schema data about your function, you are passing a message that contains the response you got back from your function. OpenAI will use this information to build its response, which you will output to the browser.
+Check if the assistant message contains any function calls by checking for the `tool_calls` property. Because the AI model can call multiple functions by default, you need to loop through any potential function calls and add them to the `messages` array. Each `read_website_content` call will invoke the `read_website_content` function you defined earlier and pass the URL generated by OpenAI as an argument. `
 
-Run your code again by running `npx wrangler dev` and open it in your browser. This will now show you OpenAI's response using real-time information from the website. You can try other websites and topics by updating the user's message in your two API calls.
+The `secondChatCompletion` is needed to provide a response informed by the data you retrieved from each function call. Now, the last step is to deploy your Worker.
+
+Test your code by running `npx wrangler dev` and open the provided url in your browser. This will now show you OpenAI’s response using real-time information from the retrieved web data.
 
 ## 5. Deploy your Worker application
 
@@ -250,12 +257,12 @@ To deploy your application, run the `npx wrangler deploy` command to deploy your
 $ npx wrangler deploy
 ```
 
-You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
+You can now preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`. Going to this URL will display the response from OpenAI. Optionally, add the `message` URL parameter to write a custom message: for example, `https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/?message=What is the weather in NYC today?`.
 
 ## 6. Next steps
 
-Reference the [finished code for this tutorial on GitHub](https://github.com/rickyrobinett/workers-sdk/tree/main/templates/examples/openai-function-calling).
+Reference the [finished code for this tutorial on GitHub](https://github.com/LoganGrasby/Cloudflare-OpenAI-Functions-Demo/blob/main/src/worker.js).
 
-To continue working with Workers and AI, refer to [the guide on using LangChaing and Cloudflare Workers together](https://blog.cloudflare.com/langchain-and-cloudflare/) or [how to build a ChatGPT plugin with Cloudflare Workers](https://blog.cloudflare.com/magic-in-minutes-how-to-build-a-chatgpt-plugin-with-cloudflare-workers/).
+To continue working with Workers and AI, refer to [the guide on using LangChain and Cloudflare Workers together](https://blog.cloudflare.com/langchain-and-cloudflare/) or [how to build a ChatGPT plugin with Cloudflare Workers](https://blog.cloudflare.com/magic-in-minutes-how-to-build-a-chatgpt-plugin-with-cloudflare-workers/).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with fellow developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.

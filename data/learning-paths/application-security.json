@@ -62,12 +62,12 @@
         "estimated_time": 15,
         "pages": [
           {
-            "url_path": "/fundamentals/setup/account-setup/verify-email-address/",
+            "url_path": "/fundamentals/setup/account/verify-email-address/",
             "link_title": "Verify your email address"
           },
           {
             "external_link": true,
-            "url_path": "/fundamentals/account-and-billing/account-security/2fa/",
+            "url_path": "/fundamentals/setup/account/account-security/2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
@@ -75,15 +75,15 @@
             "link_title": "Manage account access"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/manage-active-sessions/",
+            "url_path": "/fundamentals/setup/account/account-security/manage-active-sessions/",
             "link_title": "Review active sessions (if needed)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/review-audit-logs/",
+            "url_path": "/fundamentals/setup/account/account-security/review-audit-logs/",
             "link_title": "Review audit logs (if needed)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/securing-a-compromised-account/",
+            "url_path": "/fundamentals/setup/account/account-security/secure-a-compromised-account/",
             "link_title": "Secure a compromised account (if needed)"
           }
         ]
@@ -127,7 +127,7 @@
         "pages": [
           {
             "url_path": "/waf/managed-rules/waf-exceptions/",
-            "link_title": "WAF Exceptions",
+            "link_title": "Exceptions",
             "additional_description": "Skip the execution of WAF managed rulesets or some of their rules."
           },
           {

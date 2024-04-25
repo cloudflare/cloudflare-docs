@@ -6,10 +6,15 @@ weight: 1
 
 # WARP client checks
 
-These device posture checks are performed by the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/). To use this feature, you must [deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) to your company devices in a [mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) that supports device posture checks:
-- Gateway with WARP 
+These device posture checks are performed by the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/). To use this feature, you must [deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) to your devices and enable the desired posture checks.
+
+## Supported WARP modes
+
+- Gateway with WARP
 - Secure Web Gateway without DNS filtering
 - Device Information Only
+
+## Supported operating systems
 
 | Device posture check | macOS | Windows | Linux | iOS | Android/ChromeOS |
 | ---------------------| ----- | ------- | ----- | --- | ---------------- |

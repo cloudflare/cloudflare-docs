@@ -26,9 +26,11 @@ C[(Origin server)]
 A == "Request" ==> B -.-> C
 C -.-> B == "Response<br>(Gzip / Brotli / No compression)" ==> A
 
-style A stroke-width: 3px
-style B stroke: orange,fill: orange
+style A stroke-width: 2px
+style B stroke: orange,fill: orange,color: black
 style C stroke-dasharray: 5 5
+linkStyle 0,3 stroke-width: 2px
+linkStyle 1,2 stroke-width: 1px
 ```
 
 If supported by visitors' web browsers, Cloudflare will return Gzip or Brotli-encoded responses for the following content types:
@@ -122,8 +124,10 @@ A -.-> B == "Request<br>Accept-Encoding: gzip, br" ==> C
 C == "Response<br>Accept-Encoding: (Gzip / Brotli / No compression)" ==> B -.-> A
 
 style A stroke-dasharray: 5 5
-style B stroke: orange,fill: orange
-style C stroke-width: 3px
+style B stroke: orange,fill: orange,color: black
+style C stroke-width: 2px
+linkStyle 1,2 stroke-width: 2px
+linkStyle 0,3 stroke-width: 1px
 ```
 
 If your origin server responds to a Cloudflare request using Gzip/Brotli compression, we will keep the same compression in the response sent to the website visitor if:

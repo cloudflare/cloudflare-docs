@@ -8,34 +8,39 @@ meta:
 
 # CSP directives supported by policies
 
-Page Shield monitors scripts loaded on your website and the connections they make. Monitored resources are displayed in the [**Monitors** dashboard](/page-shield/detection/monitor-connections-scripts/).
-
 Page Shield policies support most {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} directives, covering both monitored and unmonitored resources. You can use a policy to control other types of resources besides scripts and their connections, even though Page Shield is not monitoring these resources.
 
-Each CSP directive can contain multiple values, including schemes, hostnames, URIs, and special keywords between single quotes (such as `'none'`). Hostname and URI values support a `*` wildcard for the leftmost subdomain.
+Each CSP directive can contain multiple values, including:
+- Schemes
+- Hostnames
+- URIs
+- Special keywords between single quotes (for example, `'none'`)
+- Hashes between single quotes (for example, `'sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC'`)
 
-The following table lists the supported CSP directives and keywords you can use in Page Shield policies:
+Hostname and URI values support a `*` wildcard for the leftmost subdomain.
+
+The following table lists the supported CSP directives and special values you can use in Page Shield policies:
 
 {{<table-wrap>}}
 
-Directive         | Name in the dashboard | Supported keywords | Monitored
-------------------|-----------------------|--------------------|----------
-`script-src`      | Scripts         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`connect-src`     | Connections     | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
-`default-src`     | Default         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`img-src`         | Images          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`style-src`       | Styles          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`font-src`        | Fonts           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`object-src`      | Objects         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`media-src`       | Media           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`child-src`       | Child           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`form-action`     | Form actions    | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`worker-src`      | Workers         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`base-uri`        | Base URI        | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`manifest-src`    | Manifests       | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`frame-src`       | Frames          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'` | No
-`frame-ancestors` | Frame ancestors | `'none'`<br>`'self'`     | No
-`upgrade-insecure-requests` | Upgrade insecure requests | N/A  | No
+Directive         | Name in the dashboard | Supported special values | Monitored
+------------------|-----------------------|--------------------------|----------
+`script-src`      | Scripts         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`connect-src`     | Connections     | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | [Yes](/page-shield/detection/monitor-connections-scripts/)
+`default-src`     | Default         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`img-src`         | Images          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`style-src`       | Styles          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`font-src`        | Fonts           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`object-src`      | Objects         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`media-src`       | Media           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`child-src`       | Child           | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`form-action`     | Form actions    | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`worker-src`      | Workers         | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`base-uri`        | Base URI        | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`manifest-src`    | Manifests       | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`frame-src`       | Frames          | `'none'`<br>`'self'`<br>`'unsafe-inline'`<br>`'unsafe-eval'`<br>`'<HASH>'` | No
+`frame-ancestors` | Frame ancestors | `'none'`<br>`'self'`           | No
+`upgrade-insecure-requests` | Upgrade insecure requests | N/A        | No
 
 {{</table-wrap>}}
 

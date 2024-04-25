@@ -8,6 +8,12 @@ title: Connect to and query your Turso database using Workers
 
 # Connect to and query your Turso database using Workers
 
+{{<Aside type="note">}}
+
+For a more seamless experience, refer to the [Turso Database Integration guide](/workers/databases/native-integrations/turso/). The Turso Database Integration will connect your Worker to a Turso database by getting the right configuration from Turso and adding it as [secrets](/workers/configuration/secrets/) to your Worker.
+
+{{</Aside>}}
+
 This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
 
 ## Prerequisites
@@ -216,14 +222,14 @@ export interface Env {
 }
 
 export default {
-    async fetch(request: Request, env: Env): Promise<Response> {
+    async fetch(request, env): Promise<Response> {
         if (env.router === undefined) {
             env.router = buildRouter(env);
         }
 
         return env.router.handle(request);
     },
-};
+} satisfies ExportedHandler<Env>;
 
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();
@@ -380,5 +386,5 @@ To clean up the resources you created as part of this tutorial:
 
 * Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
 * Understand how to [debug your Cloudflare Worker](/workers/observability/).
-* Join the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF).
+* Join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
 * Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

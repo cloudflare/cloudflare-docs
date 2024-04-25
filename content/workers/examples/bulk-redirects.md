@@ -42,8 +42,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const externalHostname = "examples.cloudflareworkers.com";
 
     const redirectMap = new Map([
@@ -63,9 +63,7 @@ const handler: ExportedHandler = {
     // If request not in map, return the original request
     return fetch(request);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

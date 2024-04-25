@@ -117,7 +117,7 @@ function postLog(data) {
 
 ## Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -151,5 +151,5 @@ async function handleRequest(request) {
 
 ## Related resources
 
-* [Log from Workers](/workers/observability/log-from-workers/) - Learn how to log your Workers.
-* [Logpush](/workers/observability/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
+* [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.

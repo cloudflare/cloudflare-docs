@@ -28,7 +28,7 @@ externals:
   - title: Pricing
     url: https://workers.cloudflare.com/#plans
   - title: Discord
-    url: https://discord.gg/cloudflaredev
+    url: https://discord.cloudflare.com
 
 algolia:
   index: developers-cloudflare2

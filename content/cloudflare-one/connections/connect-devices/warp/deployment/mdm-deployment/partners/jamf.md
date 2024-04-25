@@ -21,7 +21,7 @@ meta:
 1. Log in to your [Jamf](https://www.jamf.com/) account.
 2. Go to **Computer** > **All Settings** (gear icon).
 3. Select **Computer Management** > **Packages** > **New**.
-4. Upload the `Cloudflare_WARP.pkg` file.
+4. Upload the `Cloudflare_WARP_<VERSION>.pkg` file.
    For the Display name, we recommend entering the version number of the package being uploaded.
 5. Select **Save** to complete the upload.
 
@@ -31,7 +31,7 @@ meta:
 2. Enter a Display name such as `Cloudflare WARP Client`.\
    For **Triggers**, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
 3. Select **Packages** > **Configure**.
-4. Select **Add** next to the `Cloudflare_WARP.pkg` file you previously uploaded.
+4. Select **Add** next to the `Cloudflare_WARP_<VERSION>.pkg` file you previously uploaded.
 5. Select **Save**.
 
 ### 3. Add a Configuration Profile

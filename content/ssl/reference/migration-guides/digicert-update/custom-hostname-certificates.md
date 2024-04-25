@@ -19,7 +19,7 @@ The SSL for SaaS renewals offboarding has been postponed and started gradually r
 
 {{</Aside>}}
 
-On **November 1, 2023**, Cloudflare will stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
+On **November 1, 2023**, Cloudflare will gradually stop using DigiCert as the CA for SSL for SaaS certificate renewals. This will not affect existing SSL for SaaS certificates, but only certificate renewals.
 
 The default CA - for API orders that do not specify `certificate_authority` - and the CA used for certificate renewals will shift to either Let's Encrypt or Google Trust Services.
 

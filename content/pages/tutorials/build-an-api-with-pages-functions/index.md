@@ -9,7 +9,7 @@ title: Build an API for your front end using Pages Functions
 # Build an API for your front end using Pages Functions
 ## Introduction
 
-In this tutorial, you will build a full stack Pages application. Your application will contain:
+In this tutorial, you will build a full-stack Pages application. Your application will contain:
 
 * A front end, built using Cloudflare Pages and the [React framework](/pages/framework-guides/deploy-a-react-site/).
 * A JSON API, built with [Pages Functions](/pages/functions/get-started/), that returns blog posts that can be retrieved and rendered in your front end.
@@ -284,7 +284,7 @@ Deploy your application to Pages:
 
 After configuring your site, begin your first deploy. You should see Cloudflare Pages installing `blog-frontend`, your project dependencies, and building your site.
 
-By completing this tutorial, you have created a full stack Pages application.
+By completing this tutorial, you have created a full-stack Pages application.
 
 ## Related resources
 

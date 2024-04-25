@@ -116,9 +116,9 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 
 ## Configure skip rules
 
-The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
+The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or exceptions) for the Cloudflare Managed Ruleset:
 
-* The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`) for specific URLs, according to the rule expression.
+* The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID {{<rule-id>}}efb7b8c949ac4650a09736fc376e9aee{{</rule-id>}}) for specific URLs, according to the rule expression.
 * The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
 
 Add the two skip rules to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
@@ -179,8 +179,8 @@ Ensure that you place the skip rules **before** the rule that executes the manag
 
 The following example adds three [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for the Cloudflare Managed Ruleset:
 
-* A rule override for rule with ID `5de7edfa648c4d6891dc3e7f84534ffa` setting the action to `log`.
-* A rule override for rule with ID `75a0060762034a6cb663fd51a02344cb` disabling the rule.
+* A rule override for rule with ID {{<rule-id>}}5de7edfa648c4d6891dc3e7f84534ffa{{</rule-id>}} setting the action to `log`.
+* A rule override for rule with ID {{<rule-id>}}75a0060762034a6cb663fd51a02344cb{{</rule-id>}} disabling the rule.
 * A tag override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`.
 
 {{<Aside type="warning" header="Important">}}
@@ -258,19 +258,19 @@ highlight: 9-11
 
 ## Configure the OWASP paranoia level, score threshold, and action
 
-The OWASP Managed Ruleset supports the following configurations:
+The OWASP managed ruleset supports the following configurations:
 
 * Enable all the rules up to a specific paranoia level by creating tag overrides that disable all the rules associated with higher paranoia levels.
 
-* Set the action to perform when the calculated threat score is greater than the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `action` property.
+* Set the action to perform when the calculated threat score is greater than the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID {{<rule-id>}}6179ae15870a4bb7b2d480d4843b323c{{</rule-id>}}), and including the `action` property.
 
-* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property.
+* Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID {{<rule-id>}}6179ae15870a4bb7b2d480d4843b323c{{</rule-id>}}), and including the `score_threshold` property.
 
 For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) page in the WAF documentation.
 
 The following example rule of a `cloudflare_ruleset` Terraform resource performs the following configuration:
 
-* Deploys the OWASP Managed Ruleset.
+* Deploys the OWASP managed ruleset.
 * Sets the OWASP paranoia level to _PL2_.
 * Sets the score threshold to `60` (_Low_).
 * Sets the ruleset action to `log`.
