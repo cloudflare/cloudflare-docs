@@ -8,7 +8,7 @@ weight: 6
 
 {{<Aside type="warning">}}
 
-If your project contains an existing `wrangler.toml` file that you [previously used for local development](/pages/functions/local-development/), make sure you verify that it matches your project settings in the Cloudflare dashboard before opting-in to deploy your Pages project with `wrangler.toml`. Instead of writing your `wrangler.toml` file by hand, Cloudflare recommend's using `npx wrangler pages download config` to download your current project settings into a `wrangler.toml` file.
+If your project contains an existing `wrangler.toml` file that you [previously used for local development](/pages/functions/local-development/), make sure you verify that it matches your project settings in the Cloudflare dashboard before opting-in to deploy your Pages project with `wrangler.toml`. Instead of writing your `wrangler.toml` file by hand, Cloudflare recommends using `npx wrangler pages download config` to download your current project settings into a `wrangler.toml` file.
 
 {{</Aside>}}
 
