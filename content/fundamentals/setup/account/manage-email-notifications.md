@@ -1,6 +1,6 @@
 ---
 title: Manage email notifications
-pcx_content_type: reference
+pcx_content_type: how-to
 weight: 4
 ---
 
