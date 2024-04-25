@@ -2,7 +2,6 @@
 type: example
 summary: Access custom Cloudflare properties and control how Cloudflare features
   are applied to every request.
-demo: https://accessing-the-cloudflare-object.workers-sites-examples.workers.dev
 languages:
   - JavaScript
   - TypeScript

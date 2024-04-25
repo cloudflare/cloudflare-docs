@@ -4,6 +4,7 @@ summary: Redirect requests from one URL to another or from one set of URLs to
   another set.
 tags:
   - Middleware
+  - Redirects
 languages:
   - JavaScript
   - TypeScript

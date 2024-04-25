@@ -4,6 +4,7 @@ summary: Redirect requests to certain URLs based on a mapped object to the
   request's URL.
 tags:
   - Middleware
+  - Redirects
 languages:
   - JavaScript
   - TypeScript

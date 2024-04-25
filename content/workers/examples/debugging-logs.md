@@ -3,7 +3,6 @@ type: example
 summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
-  - Logging
 languages:
   - JavaScript
   - TypeScript
