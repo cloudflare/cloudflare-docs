@@ -201,7 +201,6 @@ export const products = pgTable('products', {
   name: text('name'),
   description: text('description'),
   price: doublePrecision('price'),
-
 });
 ```
 
@@ -330,10 +329,10 @@ export type Env = {
 const app = new Hono<{ Bindings: Env }>();
 
 app.get('/', async (c) => {
-    const sql = neon(c.env.DATABASE_URL);
-    const db = drizzle(sql);
-    const result = await db.select().from(products);
-    return c.json({ result });
+  const sql = neon(c.env.DATABASE_URL);
+  const db = drizzle(sql);
+  const result = await db.select().from(products);
+  return c.json({ result });
 });
 
 app.onError((error, c) => {
