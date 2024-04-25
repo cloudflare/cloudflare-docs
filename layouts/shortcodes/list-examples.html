@@ -55,81 +55,85 @@
 </ul>
 
 <script>
+  // Grab persistent items from DOM
   const selectorDropdowns = document.getElementsByClassName("selectorFilter");
-    const examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
+  const examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.forEach((value, key) => {
-        for (const dropdown of selectorDropdowns) {
-          if (key === dropdown.id) {
-            for (option of dropdown.options) {
-              if (value === option.value) {
-                option.selected = true;
-              }
+  // Add listener for filtering by search params
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.forEach((value, key) => {
+      for (const dropdown of selectorDropdowns) {
+        if (key === dropdown.id) {
+          for (option of dropdown.options) {
+            if (value === option.value) {
+              option.selected = true;
             }
           }
         }
-      })
-      filterList();
+      }
     })
+    filterList();
+  })
 
-    function zarazTrackSelect(eventName, selectedOption) {
-      zaraz.track(eventName, { selected_option: selectedOption })
-    }
+  // define persistent functions
+  function zarazTrackSelect(eventName, selectedOption) {
+    zaraz.track(eventName, { selected_option: selectedOption })
+  }
 
-    function getSelectValues(selectElementCollection) {
-      let selectedValues = {};
-      for (const htmlElement of selectElementCollection) {
-        let selectElement = htmlElement;
-        let selectedValue =
-          selectElement.options[selectElement.selectedIndex].value;
-        if (selectedValue !== 'all') {
-          selectedValues[selectElement.id] = selectedValue;
-        }
+  function getSelectValues(selectElementCollection) {
+    let selectedValues = {};
+    for (const htmlElement of selectElementCollection) {
+      let selectElement = htmlElement;
+      let selectedValue =
+        selectElement.options[selectElement.selectedIndex].value;
+      if (selectedValue !== 'all') {
+        selectedValues[selectElement.id] = selectedValue;
       }
-      return selectedValues;
     }
+    return selectedValues;
+  }
 
-    function filterList() {
-      let selectedOptions = getSelectValues(selectorDropdowns);
-      for (const example of examples) {
+  function filterList() {
+    let selectedOptions = getSelectValues(selectorDropdowns);
+    for (const example of examples) {
 
-        let keepValue = true;
-        for (option in selectedOptions) {
-          if (!example.dataset[option] || !example.dataset[option].split("|").includes(selectedOptions[option])) {
-            keepValue = false;
-          }
-        }
-        if (keepValue) {
-          example.style.display = "";
-        } else {
-          example.style.display = "none";
-        }
-      }
-      let newUrl = new URL(window.location);
-      newUrl.search = ''
-
+      let keepValue = true;
       for (option in selectedOptions) {
-        newUrl.searchParams.set(option, selectedOptions[option])
+        if (!example.dataset[option] || !example.dataset[option].split("|").includes(selectedOptions[option])) {
+          keepValue = false;
+        }
       }
-      history.pushState({}, '', newUrl.toString());
-    }
-
-    window.onload = function () {
-      for (const dropdown of selectorDropdowns) {
-        dropdown.addEventListener("change", filterList)
-        dropdown.addEventListener("change", function (event) {
-          zarazTrackSelect('select docs grid filter', `${dropdown.id} | ${event.target.value}`)
-        })
-      }
-
-      for (const example of examples) {
-        const titles = example.getElementsByClassName("DocsCodeExamplesOverview--example-title")
-        const link = titles[0].firstElementChild
-        link.addEventListener("click", function () {
-          zarazTrackSelect('select docs grid option', link.href)
-        })
+      if (keepValue) {
+        example.style.display = "";
+      } else {
+        example.style.display = "none";
       }
     }
+    let newUrl = new URL(window.location);
+    newUrl.search = ''
+
+    for (option in selectedOptions) {
+      newUrl.searchParams.set(option, selectedOptions[option])
+    }
+    history.pushState({}, '', newUrl.toString());
+  }
+
+  // Add listeners for tracking events
+  window.onload = function () {
+    for (const dropdown of selectorDropdowns) {
+      dropdown.addEventListener("change", filterList)
+      dropdown.addEventListener("change", function (event) {
+        zarazTrackSelect('select docs grid filter', `${dropdown.id} | ${event.target.value}`)
+      })
+    }
+
+    for (const example of examples) {
+      const titles = example.getElementsByClassName("DocsCodeExamplesOverview--example-title")
+      const link = titles[0].firstElementChild
+      link.addEventListener("click", function () {
+        zarazTrackSelect('select docs grid option', link.href)
+      })
+    }
+  }
 </script>
