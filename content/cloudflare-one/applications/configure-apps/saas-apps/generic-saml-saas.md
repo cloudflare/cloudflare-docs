@@ -65,7 +65,9 @@ Next, configure your SaaS application to require users to log in through Cloudfl
 
 You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO endpoint>/saml-metadata`.
 
-In SAML Responses, both the SAML Response itself and the Assertion are signed using the SHA-256 algorithm.
+### Validate SAML Response
+	
+When acting as a SAML identity provider, Cloudflare will sign both the SAML Response and the SAML Assertion using the SHA-256 algorithm. The SaaS application can validate this signature using the **Public key** that you upload to the SaaS application.
 
 ## 4. Test the integration
 
