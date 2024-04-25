@@ -59,6 +59,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 5. Sign in with the username and password created while setting up the server.
 
 ## Connect to SMB server with `cloudflared access`
+(not suitable for windows clients that have shared folders)
 
 {{<render file="tunnel/_cloudflared-access.md">}}
 
