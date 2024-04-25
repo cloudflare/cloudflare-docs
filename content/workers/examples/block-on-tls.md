@@ -10,7 +10,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -62,6 +62,19 @@ export default {
     }
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch
+
+async def on_fetch(request):
+    tls_version = request.cf.tlsVersion
+    if tls_version != "TLSv1.2" and tls_version != "TLSv1.3":
+        return Response.new("Please use TLS version 1.2 or higher.", status=403)
+    return fetch(request)
 ```
 
 {{</tab>}}
