@@ -2,7 +2,6 @@
 type: example
 summary: Personalize website styling based on localized user time.
 tags:
-  - Originless
   - Geolocation
 languages:
   - JavaScript

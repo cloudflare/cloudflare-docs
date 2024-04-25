@@ -2,7 +2,6 @@
 type: example
 summary: Inject [Turnstile](/turnstile/) implicitly into HTML elements using the HTMLRewriter runtime API.
 tags:
-  - Originless
   - HTMLRewriter
 languages:
   - JavaScript

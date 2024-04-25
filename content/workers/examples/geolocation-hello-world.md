@@ -2,7 +2,6 @@
 type: example
 summary: Get all geolocation data fields and display them in HTML.
 tags:
-  - Originless
   - Geolocation
 languages:
   - JavaScript

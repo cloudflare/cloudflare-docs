@@ -2,7 +2,6 @@
 type: example
 summary: Fetch weather data from an API using the user's geolocation data.
 tags:
-  - Originless
   - Geolocation
 languages:
   - JavaScript
