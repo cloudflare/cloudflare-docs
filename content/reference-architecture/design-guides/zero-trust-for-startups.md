@@ -68,7 +68,7 @@ Next, build a map of your physical and virtual private infrastructure (essential
 
 Once you’ve developed a comprehensive list of your existing resources, this will serve as an asset inventory for your development of a Zero Trust architecture. If you don’t know what you need to protect, it’ll be difficult to protect it, no matter how many security tools you have.
 
-[IMAGE PLACEHOLDER HERE]
+![A snapshot of the foundational decisions to make when establishing a zero trust architecture](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-getting-started-foundational-decisions.svg)
 
 A valuable third step may be to begin stack-ranking these services by risk level in the event of a breach, to later determine the specificity of your security policy. For example, your internal tool to alert on build status may be a level 3, but your production database for customer information would be a level 1. A level 3 application may be able to be accessed by a user on their own device, assuming they can meet your identity control requirements, but a level 1 application may require access from a corporate device and the use of a specific kind of multi-factor authentication (MFA).
 
