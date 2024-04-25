@@ -494,7 +494,7 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 - `outbound` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}} The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
-  - `parameters` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} A list of parameters to pass data from your [dynamic dispatch Worker](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+  - `parameters` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
 
 
 {{</definitions>}}
