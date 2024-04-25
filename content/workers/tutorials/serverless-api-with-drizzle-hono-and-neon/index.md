@@ -29,16 +29,105 @@ First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new 
 ---
 header: Create a new project with C3
 ---
-$ npm create cloudflare
+$ npm create cloudflare@latest
 ```
 
 To configure your Worker:
 
-- Choose `"Hello World" Worker` for the type of application you would like to create.
-- Answer `Yes` to using TypeScript.
-- Answer `No` to deploying your Worker.
+- Choose `Website or web app` for the type of application you would like to create.
+- Choose `Hono` to `Which development framework do you want to use?`
+- Answer `Yes` to `Do you want to use git for version control?`
+- Answer `No` to `Do you want to deploy your application?`
 
-## 2. Set up Hono.js
+![Choose Website or web app](./cf1.png)
+![Choose Hono](./cf2.png)
+
+Now wait for a bit to finish the setup. It should look similar to this:
+
+```sh
+➜  ~ npm create cloudflare@latest
+Need to install the following packages:
+create-cloudflare@2.21.0
+Ok to proceed? (y) y
+
+using create-cloudflare version 2.21.0
+
+╭ Create an application with Cloudflare Step 1 of 3
+│
+├ In which directory do you want to create your application?
+│ dir ./polished-term-27ba
+│
+├ What type of application do you want to create?
+│ type Website or web app
+│
+├ Which development framework do you want to use?
+│ framework Hono
+│
+├ Continue with Hono via `npx create-hono@0.7.0 polished-term-27ba --template cloudflare-workers --install --pm npm`
+│
+
+Need to install the following packages:
+create-hono@0.7.0
+Ok to proceed? (y) y
+create-hono version 0.7.0
+✔ Using target directory … polished-term-27ba
+✔ Cloning the template
+✔ Installing project dependencies
+🎉 Copied project files
+Get started with: cd polished-term-27ba
+
+├ Copying template files
+│ files copied to project directory
+│
+╰ Application created
+
+╭ Configuring your application for Cloudflare Step 2 of 3
+│
+├ Installing @cloudflare/workers-types
+│ installed via npm
+│
+├ Adding latest types to `tsconfig.json`
+│ added @cloudflare/workers-types/2023-07-01
+│
+├ Retrieving current workerd compatibility date
+│ compatibility date 2024-04-23
+│
+├ Updating `src/index.ts`
+│ updated `src/index.ts`
+│
+├ Updating `package.json` scripts
+│ updated `package.json`
+│
+├ Do you want to use git for version control?
+│ yes git
+│
+├ Initializing git repo
+│ initialized git
+│
+├ Committing new files
+│ git commit
+│
+╰ Application configured
+
+╭ Deploy with Cloudflare Step 3 of 3
+│
+├ Do you want to deploy your application?
+│ no deploy via `npm run deploy`
+│
+├  APPLICATION CREATED  Deploy your application with npm run deploy
+│
+│ Navigate to the new directory cd polished-term-27ba
+│ Run the development server npm run dev
+│ Deploy your application npm run deploy
+│ Read the documentation https://developers.cloudflare.com/workers
+│ Stuck? Join us at https://discord.cloudflare.com
+│
+╰ See you again soon!
+
+➜  ~
+```
+
+## 2. Set up Hono
 
 To get started, run the following command in your project to add Hono as a dependency:
 
@@ -241,17 +330,16 @@ export type Env = {
 const app = new Hono<{ Bindings: Env }>();
 
 app.get('/', async (c) => {
-  try {
     const sql = neon(c.env.DATABASE_URL);
     const db = drizzle(sql);
     const result = await db.select().from(products);
-
     return c.json({ result });
-  } catch (error) {
-    console.log(error);
-    return c.json({ error }, 400);
-  }
 });
+
+app.onError((error, c) => {
+  console.log(error)
+  return c.json({ error }, 400)
+})
 
 export default app;
 ```
