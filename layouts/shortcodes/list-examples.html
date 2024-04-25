@@ -73,6 +73,10 @@
     filterList();
   })
 
+  function zarazTrackSelect(eventName, selectedOption) {
+    zaraz.track(eventName, {selected_option: selectedOption})
+  }
+
   function getSelectValues(selectElementCollection) {
     let selectedValues = {};
     for (const htmlElement of selectElementCollection) {
@@ -116,6 +120,9 @@
 
   for (const dropdown of selectorDropdowns) {
     dropdown.addEventListener("change", filterList)
+    dropdown.addEventListener("change", function(event) {
+      zarazTrackSelect('select example filter', `${dropdown.id} | ${event.target.value}`)
+    })
   }
 
 </script>
