@@ -23,7 +23,7 @@ Using versions and deployments is useful if:
 
 Versions and deployments are in **beta and under active development**. Refer to [Limits](/workers/configuration/versions-and-deployments/#limits) before using these features.
 
-Provide your feeback on versions and deployments through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
+Provide your feedback on versions and deployments through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
 
 {{</Aside>}}
 
