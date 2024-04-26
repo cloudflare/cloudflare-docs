@@ -22,7 +22,7 @@ To set up an integration with Momento Cache:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
-    4. Select **Integrations** > **Momento**. 
+    4. Select **Integrations** > **Momento**.
     5. Follow the setup flow, review and grant permissions needed to add secrets to your Worker.
     6. Next, connect to Momento.
     7. Select a preferred region.
@@ -32,7 +32,7 @@ To set up an integration with Momento Cache:
 
     ```ts
     export default {
-      async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+      async fetch(request, env, ctx): Promise<Response> {
         const client = new MomentoFetcher(env.MOMENTO_API_KEY, env.MOMENTO_REST_ENDPOINT);
         const cache = env.MOMENTO_CACHE_NAME;
         const key = 'user';
@@ -48,11 +48,11 @@ To set up an integration with Momento Cache:
         const getResponse = await client.get(cache, key);
         console.log('getResponse', getResponse);
 
-        return new Response(JSON.stringify({ 
+        return new Response(JSON.stringify({
           response: getResponse
         }));
       },
-    };
+    } satisfies ExportedHandler<Env>;
     ```
 
 To learn more about Momento, refer to [Momento's official documentation](https://docs.momentohq.com/getting-started).

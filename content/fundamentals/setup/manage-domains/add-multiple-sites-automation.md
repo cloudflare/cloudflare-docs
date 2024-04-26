@@ -2,7 +2,6 @@
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add multiple sites via automation
-weight: 2
 ---
 
 # Add multiple sites via automation
@@ -54,7 +53,7 @@ ___
       -H 'X-Auth-Key: <CLOUDFLARE_API_KEY>' \
       --data '{
       "account": {
-        "id":"<ACCOUNT_ID" 
+        "id":"<ACCOUNT_ID>" 
       },
       "name": "'"$domain"'",
       "type": "full"
@@ -64,12 +63,7 @@ ___
   done
 ```
 
-3. Add executable commands to the script:
-```js
-  chmod +x add-multiple-zones.sh
-```
-
-4. Open the command line and run:
+3. Open the command line and run:
 ```js
   bash add-multiple-zones.sh
 ```

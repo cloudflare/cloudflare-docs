@@ -11,7 +11,7 @@ In this guide, you will create a new Hugo application and deploy it using Cloudf
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-Go to [Deploying with Cloudflare Pages](#deploy-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages).
+Go to [Deploy with Cloudflare Pages](#deploy-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/git-integration/).
 
 ## Install Hugo
 
@@ -161,7 +161,7 @@ $ hugo new posts/hello-world.md
 
 Inside of `hello-world.md`, add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -208,4 +208,4 @@ If you plan to use [preview deployments](/pages/configuration/preview-deployment
 
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Hugo">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hugo">}}

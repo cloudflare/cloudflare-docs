@@ -11,6 +11,10 @@ The Workers runtime provides the `connect()` API for creating outbound [TCP conn
 
 Many application-layer protocols are built on top of the Transmission Control Protocol (TCP). These application-layer protocols, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB, require an underlying TCP socket API in order to work.
 
+{{<Aside type="note">}}
+Connecting to a PostgreSQL database? You should use [Hyperdrive](/hyperdrive/), which provides the `connect()` API with built-in connection pooling and query caching.
+{{</Aside>}}
+
 ## `connect()`
 
 The `connect()` function returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data. This allows you to read and write data on an ongoing basis, as long as the connection remains open.
@@ -21,7 +25,7 @@ The `connect()` function returns a TCP socket, with both a [readable](/workers/r
 import { connect } from 'cloudflare:sockets';
 
 export default {
-  async fetch(req: Request) {
+  async fetch(req): Promise<Response> {
     const gopherAddr = { hostname: "gopher.floodgap.com", port: 70 };
     const url = new URL(req.url);
 
@@ -38,7 +42,7 @@ export default {
       return new Response("Socket connection failed: " + error, { status: 500 });
     }
   }
-};
+} satisfies ExportedHandler;
 ```
 
 {{<definitions>}}
@@ -81,7 +85,7 @@ export default {
 
 - `remoteAddress` {{<type>}}string | null{{</type>}}
   - The address of the remote peer the socket is connected to. May not always be set.
- 
+
 - `localAddress` {{<type>}}string | null{{</type>}}
   - The address of the local network endpoint for this socket. May not always be set.
 
@@ -140,20 +144,20 @@ import { connect } from 'cloudflare:sockets';
 const connectionUrl = { hostname: "google.com", port: 80 };
 export interface Env { }
 export default {
-  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(req, env, ctx): Promise<Response> {
     try {
       const socket = connect(connectionUrl);
       const writer = socket.writable.getWriter();
       const encoder = new TextEncoder();
       const encoded = encoder.encode("GET / HTTP/1.0\r\n\r\n");
       await writer.write(encoded);
-      
+
       return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
     } catch (error) {
       return new Response(`Socket connection failed: ${error}`, { status: 500 });
     }
   }
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ## Close TCP connections
@@ -172,11 +176,12 @@ const reader = socket.readable.getReader(); // This fails
 ```
 
 ## Considerations
- 
+
 - Outbound TCP sockets to [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are temporarily blocked, but will be re-enabled shortly.
-- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/handlers/scheduled/), [`queue()`](/queues/reference/javascript-apis/#consumer)) or [`alarm()`](/durable-objects/api/alarms/).
+- TCP sockets cannot be created in global scope and shared across requests. You should always create TCP sockets within a handler (ex: [`fetch()`](/workers/get-started/guide/#3-write-code), [`scheduled()`](/workers/runtime-apis/handlers/scheduled/), [`queue()`](/queues/configuration/javascript-apis/#consumer)) or [`alarm()`](/durable-objects/api/alarms/).
 - Each open TCP socket counts towards the maximum number of [open connections](/workers/platform/limits/#simultaneous-open-connections) that can be simultaneously open.
 - By default, Workers cannot create outbound TCP connections on port `25` to send email to SMTP mail servers. [Cloudflare Email Workers](/email-routing/email-workers/) provides APIs to process and forward email.
+- Support for handling inbound TCP connections is [coming soon](https://blog.cloudflare.com/workers-tcp-socket-api-connect-databases/). Currently, it is not possible to make an inbound TCP connection to your Worker, for example, by using the `CONNECT` HTTP method.
 
 ## Troubleshooting
 

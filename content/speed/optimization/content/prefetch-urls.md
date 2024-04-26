@@ -49,8 +49,13 @@ To do this, include a Link HTTP response header pointing to a manifest file with
 Example HTTP response header:<br/>
 `Link: <http://www.example.com/manifest.txt>; rel="prefetch"`
 
-Example manifest.txt:<br/>
-`/static/fetch1 //other.example.com/fetch2 http://another.example.com/fetch3`
+Example `manifest.txt` file:
+
+```txt
+/static/fetch1
+//other.example.com/fetch2
+http://another.example.com/fetch3
+```
 {{</example>}}
 
 The manifest file should contain URIs, protocol-relative URLs or full URLs, separated by new lines. These files must be on your websites that are on Cloudflare. If you reference HTML pages, only the HTML page itself will be pre-fetched - any sub-requests from that HTML will not be fetched unless they are also defined explicitly in your manifest.

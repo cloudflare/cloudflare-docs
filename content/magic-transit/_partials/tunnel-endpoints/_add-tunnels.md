@@ -67,6 +67,8 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
+{{<render file="connector/_account-id-api-key" productFolder="magic-wan" >}}
+
 {{<details header="GRE tunnel">}}
 
 Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create-gre-tunnels) to create a GRE tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).

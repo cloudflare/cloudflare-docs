@@ -5,14 +5,8 @@ _build:
   list: never
 ---
 
-Cloudflare is a global network of [servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/). When you add your application to Cloudflare, we use this network to sit in between requests and your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
+{{<stream video_id="bdf5733bed92deded731efee29b2346f" poster="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/bdf5733bed92deded731efee29b2346f/thumbnails/thumbnail.jpg?time=70s">}}
 
-![Cloudflare sits in between requests and your origin server.](/images/fundamentals/get-started/website-with-cloudflare.svg)
+Cloudflare is one of the world’s largest [connectivity cloud networks](https://blog.cloudflare.com/welcome-to-connectivity-cloud). Today, anyone with an Internet presence can have faster and more secure websites and applications thanks to Cloudflare. This includes bloggers, businesses, and even non-profits.
 
-This [position](/fundamentals/concepts/how-cloudflare-works/) allows us to do several things — speeding up content delivery and user experience ([CDN](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)), protecting your website from malicious activity ([DDoS](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), [Web Application Firewall](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/)), routing traffic ([Load balancing](/load-balancing/), [Waiting Room](/waiting-room/)), and more.
-
-{{<Aside type="note">}}
-
-For more details about what Cloudflare is and does, refer to the [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
-
-{{</Aside>}}
+Millions of Internet properties are on Cloudflare, and our network is growing by tens of thousands each day. Cloudflare powers Internet requests for millions of websites and serves 55 million HTTP requests per second on average.

@@ -108,14 +108,22 @@ To allow these applications to function normally, administrators can configure b
 
 If you see this warning, you may have to disable DNS over HTTPS setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
+## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
+
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+
+Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
+
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
 
-## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
+## WARP on Linux shows `DNS connectivity check failed`.
 
-This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. To solve the issue:
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests.
+
+To solve the issue:
 
 1. Add the following line to `/etc/systemd/resolved.conf`:
 
@@ -123,7 +131,9 @@ This error means that the `systemd-resolved` service on Linux is not allowing WA
 ResolveUnicastSingleLabel=yes
 ```
 
-2. Restart the service:
+2. Make sure that no other DNS servers are configured in `/etc/systemd/resolved.conf`. For example, if the file contains `DNS=X.Y.Z.Q`, comment out the line.
+
+3. Restart the service:
 
 ```sh
 $ sudo systemctl restart systemd-resolved.service
@@ -165,3 +175,23 @@ To disable third-party storage partitioning:
 1. Go to `chrome://flags/#third-party-storage-partitioning`.
 2. Set **Experimental third-party storage partitioning** to _Disabled_.
 3. Select **Relaunch** to apply the change.
+
+## I see `WebGL context creation error occurred`.
+
+Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology. This allows us to deliver a secure, performant remote computing experience without the bandwidth limitations of traditional solutions. While we expect most websites to work perfectly, some browser features and web technologies such as WebGL (Web Graphics Library) are unsupported.
+
+WebGL is a JavaScript API for rendering high-performance interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins.  Support for WebGL is present in all modern browsers.  However, the user's device must also have access to the underlying [hardware](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API#browser_compatibility) that supports these features.
+
+When running remote browser isolation in a virtualized environment, the user's device may not have access to the required system resources. To resolve the error, you can configure your browser to render vector graphics entirely through software, without using the hardware acceleration provided by a GPU.
+
+To enable software rasterization:
+
+1. Go to `chrome://flags/#override-software-rendering-list`.
+2. Set **Override software rendering list** to _Enabled_.
+3. Select **Relaunch** to apply the change.
+
+## I cannot send emails on port `25`.
+
+By default, the WARP client blocks outgoing SMTP traffic on port `25` to prevent users from abusing our service to send spam. Modern email service providers use port `587` or `465` to encrypt emails over a TLS/SSL connection. For more information, refer to [What SMTP port should be used?](https://www.cloudflare.com/learning/email-security/smtp-port-25-587/).
+
+If you need to unblock port `25`, contact your account team.

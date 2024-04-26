@@ -618,6 +618,8 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 * Access to `cf.bot_management.*` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
+* Access to `cf.waf.content_scan.*` fields requires a Cloudflare Enterprise plan with [WAF content scanning](/waf/about/content-scanning/) enabled.
+
 * The `cf.tls_client_auth.*` string fields are only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
 {{</Aside>}}
@@ -675,7 +677,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
           </p>
-          <p>For more details, refer to <a href="/bots/concepts/ja3-fingerprint/">JA3 Fingerprints</a>.
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3 Fingerprints</a>.
           </p>
         </td>
     </tr>
@@ -917,6 +919,34 @@ The Cloudflare Rules language supports these dynamic fields:
       <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
       </p></td>
     </tr>
+    <tr id="field-cf-tls_client_extensions_sha1">
+      <td><code>cf.tls_client_extensions_sha1</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+      </p>
+      <p>Example:<br/>
+      <code>"OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_hello_length">
+      <td><code>cf.tls_client_hello_length</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+      <p>The length of the client hello message sent in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>. Specifically, the length of the bytestring of the client hello.
+      </p>
+      <p>Example:<br/>
+      <code>508</code>
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_random">
+      <td><code>cf.tls_client_random</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+      <p>The value of the 32-byte random value provided by the client in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>, encoded in Base64. Refer to <a href="https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2">RFC 8446</a> for more details.
+      </p>
+      <p>Example:<br/>
+      <code>"YWJjZA=="</code>
+      </p></td>
+    </tr>
     <tr id="field-cf-tls_version">
       <td><code>cf.tls_version</code><br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -924,6 +954,75 @@ The Cloudflare Rules language supports these dynamic fields:
         </p>
         <p>Example:<br/>
         <code>"TLSv1.2"</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_obj">
+        <td><code>cf.waf.content_scan.has_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+        <td>
+          <p>When true, the request contains at least one {{<markdown>}}{{<glossary-tooltip term_id="content object">}}content object{{</glossary-tooltip>}}{{</markdown>}}.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_malicious_obj">
+        <td><code>cf.waf.content_scan.has_malicious_obj</code><br />{{<type>}}Boolean{{</type>}}</td>
+        <td>
+          <p>When true, the request contains at least one malicious content object.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_malicious_obj">
+        <td><code>cf.waf.content_scan.num_malicious_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+        <td>
+          <p>The number of malicious content objects detected in the request (zero or greater).
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_failed">
+      <td><code>cf.waf.content_scan.has_failed</code><br />{{<type>}}Boolean{{</type>}}</td>
+      <td>
+        <p>When true, the file scanner was unable to scan all the content objects detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_obj">
+      <td><code>cf.waf.content_scan.num_obj</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+        <p>The number of content objects detected in the request (zero or greater).
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_sizes">
+      <td><code>cf.waf.content_scan.obj_sizes</code><br />{{<type>}}Array&lt;Integer&gt;{{</type>}}</td>
+      <td>
+        <p>An array of file sizes in bytes, in the order the content objects were detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_types">
+      <td><code>cf.waf.content_scan.obj_types</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+      <td>
+        <p>An array of file types in the order the content objects were detected in the request.
+        </p>
+        <p>If Cloudflare cannot determine the file type of a content object, the corresponding value in the <code>obj_types</code>array will be <code>application/octet-stream</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_results">
+      <td><code>cf.waf.content_scan.obj_results</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
+      <td>
+        <p>An array of scan results in the order the content objects were detected in the request.
+        </p>
+        <p>The possible values are: <code>clean</code>, <code>suspicious</code>, <code>infected</code>, and <code>not scanned</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.
         </p>
       </td>
     </tr>

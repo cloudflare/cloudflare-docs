@@ -57,7 +57,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const OLD_URL = "developer.mozilla.org";
     const NEW_URL = "mynewdomain.com";
 

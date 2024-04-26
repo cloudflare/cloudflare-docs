@@ -1,7 +1,7 @@
 ---
-title: Build applications with Cloudflare's Developer Platform
+title: Learn about Cloudflare's Developer Platform
 pcx_content_type: overview
-weight: 5
+weight: 3
 layout: learning-module
 ---
 
@@ -11,6 +11,7 @@ The Cloudflare Developer Platform allows you to build full-stack applications wi
 
 ## Objectives
 
-- Understand what a binding is and how it is configured.
-- Explore the storage options available to your Worker.
-- Review database integrations.
+By the end of this module, you will learn:
+
+- Cloudflare Developer Platform's product offering.
+- What storage options are available to your Worker.

@@ -30,7 +30,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/9a7806061c88ada191ed06f989cc
 
 ## Availability
 
-Notification History is available on all plans. The amount of history clients have access to depends on the the type of plan:
+Notification History is available on all plans. The amount of history clients have access to depends on the type of plan:
 
 - **Free, Pro, and Business**: History from the past 30 days.
 - **Enterprise**: History from the past 90 days.

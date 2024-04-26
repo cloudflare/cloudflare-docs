@@ -29,10 +29,6 @@ The `<DATASET>` argument indicates the log category. For example, `http_requests
 - [Custom fields](/logs/reference/custom-fields/) for HTTP requests are only available in Logpush.
 - All other datasets are only available through Logpush.
 
-## Versions
-
-Unless otherwise noted, fields are available in both Logpush v1 (Logpush prior to mid-2020) and Logpush v2 (all Logpush jobs after mid-2020).
-
 ## Deprecation
 
 Deprecated fields remain available to prevent breaking existing jobs. They may eventually become empty values if completely removed. Customers are encouraged to migrate away from deprecated fields if they are using them.

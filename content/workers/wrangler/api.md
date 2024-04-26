@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: API
 weight: 2
 meta:
-  description: An experimental API to programmatically manage your Cloudflare Workers.
+  description: A set of programmatic APIs that can be integrated with local Cloudflare Workers-related workflows.
 ---
 
 # Wrangler API
@@ -23,10 +23,9 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 {{<Aside type="note">}}
 
-The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future.
+The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future.
 
-There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) and we will review the issue.
-
+`unstable_dev()` has no known bugs and is safe to use. If you discover any bugs, open a [GitHub issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</Aside>}}
 
@@ -237,6 +236,12 @@ describe("multi-worker testing", () => {
 
 The `getPlatformProxy` function provides a way to obtain an object containing proxies (to **local** `workerd` bindings) and emulations of Cloudflare Workers specific values, allowing the emulation of such in a Node.js process.
 
+{{<Aside type="warning">}}
+
+`getPlatformProxy` is, by design, to be used exclusively in Node.js applications. `getPlatformProxy` cannot be run inside the Workers runtime.
+
+{{</Aside>}}
+
 One general use case for getting a platform proxy is for emulating bindings in applications targeting Workers, but running outside the Workers runtime (for example, framework local development servers running in Node.js), or for testing purposes (for example, ensuring code properly interacts with a type of binding).
 
 {{<Aside type="note">}}
@@ -258,6 +263,7 @@ const platform = await getPlatformProxy(options);
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object containing preferences for the bindings:
+
         * `configPath` {{<type>}}string{{</type>}}
 
           The path to the configuration object to use (default `wrangler.toml`).
@@ -269,6 +275,8 @@ const platform = await getPlatformProxy(options);
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
           Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
+
+          **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: "./my-directory/v3"`.
 
 {{</definitions>}}
 
@@ -289,7 +297,7 @@ const platform = await getPlatformProxy(options);
 
 *   `ctx` {{<type>}}object{{</type>}}
 
-    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) and [`passThroughOnException`](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) functions that do nothing.
+    * Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception) functions that do nothing.
 
 *   `caches` {{<type>}}object{{</type>}}
 
@@ -335,29 +343,29 @@ All supported bindings found in your `wrangler.toml` are available to you via `e
 
 The bindings supported by `getPlatformProxy` are:
 
- * [Environmental variables](/workers/wrangler/configuration/#environmental-variables)
+ * [Environment variables](/workers/configuration/environment-variables/)
 
- * [Service bindings](/workers/configuration/bindings/#service-bindings)
+ * [Service bindings](/workers/runtime-apis/bindings/service-bindings/)
 
- * [KV namespace bindings](/workers/configuration/bindings/#kv-namespace-bindings)
+ * [KV namespace bindings](/kv/api/)
 
- * [Durable Object bindings](/workers/configuration/bindings/#durable-object-bindings)
+ * [Durable Object bindings](/durable-objects/api/)
 
-    * To use a Durable Object binding with `getPlatformProxy`, you need to always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
+    * To use a Durable Object binding with `getPlatformProxy`, always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
 
       For example, in the `wrangler.toml` file that `getPlatformProxy` reads, there can be a Durable Object
       binding declared with a `class_name` of `"MyDurableObject"` and a `script_name` of `"my-worker"`.
-      In order for this binding to be successfully proxied by `getPlatformProxy` a worker named `my-worker`
+      In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
       with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
       separately via `wrangler dev`.
 
- * [R2 bucket bindings](/workers/configuration/bindings/#r2-bucket-bindings)
+ * [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 
- * [Queue bindings](/workers/configuration/bindings/#queue-bindings)
+ * [Queue bindings](/queues/configuration/javascript-apis/)
 
- * [D1 database bindings](/workers/configuration/bindings/#d1-database-bindings)
+ * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
 
- * [Workers AI bindings](/workers/configuration/bindings/#workers-ai-bindings)
+ * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
     * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
 

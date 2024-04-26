@@ -9,4 +9,4 @@ _build:
 
 The following video shows how to integrate [Network Analytics logs](/logs/reference/log-fields/account/network_analytics_logs/) in Splunk.
 
-{{<youtube id="j2oADzpG_yg">}}
+{{<stream video_id="745f65f9f4e29506842f9b44243c545c">}}
