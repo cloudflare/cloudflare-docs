@@ -83,7 +83,7 @@ API Shield uses your configured {{<glossary-tooltip term_id="session identifier"
 
 API Shield currently stores the last 10 requested endpoints by each API user identified by the session identifier. Sequence Mitigation de-duplicates requests to the same endpoint while building the sequence. 
 
-To illustrate, in the original [sequence example](/api-shield/security/sequence-mitigation/)) listed above, Sequence Mitigation would store the following sequence:
+To illustrate, in the original [sequence example](/api-shield/security/sequence-mitigation/) listed above, Sequence Mitigation would store the following sequence:
 
 1. `GET /api/v1/users/{user_id}/accounts`
 2. `GET /api/v1/accounts/{account_id}/balance`
