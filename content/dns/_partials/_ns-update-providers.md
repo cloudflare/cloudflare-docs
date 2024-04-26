@@ -42,6 +42,7 @@ _build:
 - [Porkbun](https://kb.porkbun.com/article/22-how-to-change-your-nameservers)
 - [Rackspace](https://support.rackspace.com/how-to/rackspace-name-servers/)
 - [Register](https://www.register.com/knowledge)
+- [Squarespace](https://support.squarespace.com/hc/articles/4404183898125-Nameservers-and-DNSSEC-for-Squarespace-managed-domains#toc-open-the-domain-s-advanced-settings)
 - [Site5](https://kb.site5.com/dns-2/custom-nameservers/)
 - [Softlayer](https://console.bluemix.net/docs/infrastructure/dns/add-edit-custom-name-servers.html#add-edit-or-delete-custom-name-servers-for-a-domain)
 - [Yola](https://helpcenter.yola.com/hc/articles/360012492660-Changing-your-name-servers)

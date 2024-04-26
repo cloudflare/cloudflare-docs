@@ -23,94 +23,22 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
+      <td>2024-04-22</td>
+      <td>2024-04-29</td>
       <td>Block</td>
-      <td>100632</td>
-      <td>...49621813</td>
-      <td>Nginx - File Inclusion</td>
-      <td></td>
+      <td>100532_BETA</td>
+      <td>{{<rule-id>}}048dc8c7995f44b5871eed98554f9705{{</rule-id>}}</td>
+      <td>Vulnerability scanner - Activity Beta</td>
+      <td>This will replace the {{<rule-id>}}0242110ae62e44028a13bf4834780914{{</rule-id>}} in NEW WAF</td>
     </tr>
     <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
+      <td>2024-04-22</td>
+      <td>2024-04-29</td>
       <td>Block</td>
-      <td>100633</td>
-      <td>...7dc64fb6</td>
-      <td>PHP - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100634</td>
-      <td>...7eac8439</td>
-      <td>Generic Database - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100635</td>
-      <td>...a0ccf665</td>
-      <td>Generic Log - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100636</td>
-      <td>...e485e537</td>
-      <td>Generic Webservers - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100637</td>
-      <td>...1813c52d</td>
-      <td>Generic Home Directory - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100638</td>
-      <td>...241fb0cb</td>
-      <td>Generic System Process - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100639</td>
-      <td>...d03cd48f</td>
-      <td>Command Injection</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100640</td>
-      <td>...e367ad17</td>
-      <td>Generic System - File Inclusion</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2024-04-02</td>
-      <td>2024-04-08</td>
-      <td>Block</td>
-      <td>100641</td>
-      <td>...a8f03d2d</td>
-      <td>Apache - File Inclusion</td>
-      <td></td>
+      <td>100533_BETA</td>
+      <td>{{<rule-id>}}5569308c0bc84e49962516b2aaa061e3{{</rule-id>}}</td>
+      <td>NoSQL - Injection Beta</td>
+      <td>This will replace the {{<rule-id>}}920e3b10aa934194928a598a2753531e{{</rule-id>}} in NEW WAF</td>
     </tr>
   </tbody>
 </table>

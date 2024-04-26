@@ -1,7 +1,6 @@
-
 ---
 title: Cloudflare Workers KV
-weight: xx
+weight: 1
 layout: overview
 pcx_content_type: overview
 ---
@@ -12,7 +11,7 @@ pcx_content_type: overview
 Create a global, low-latency, key-value data storage. 
 {{</description>}}
 
-{{<plan type="workers_all">}}
+{{<plan type="workers-all">}}
 
 Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency. 
 

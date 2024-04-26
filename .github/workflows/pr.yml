@@ -1,7 +1,7 @@
 name: PR Opened
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
-on: 
+on:
   pull_request_target:
     types: [opened, reopened]
 
@@ -14,7 +14,7 @@ jobs:
     name: Update assignees
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

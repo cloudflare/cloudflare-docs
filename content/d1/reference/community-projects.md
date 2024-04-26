@@ -39,12 +39,11 @@ The `feathers-kysely` database adapter follows the FeathersJS Query Syntax stand
 * [feathers-kysely on GitHub](https://github.com/marshallswain/feathers-kysely)
 
 ### Drizzle ORM
+Drizzle is a headless TypeScript ORM with a head which runs on Node, Bun and Deno. Drizzle ORM lives on the Edge and it is a JavaScript ORM too. It comes with a drizzle-kit CLI companion for automatic SQL migrations generation. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
 
-Drizzle ORM is a TypeScript ORM for SQL databases designed with maximum type safety in mind. It also comes with an automatic migrations generation tool. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
-
+* [Docs](https://orm.drizzle.team/docs)
 * [GitHub](https://github.com/drizzle-team/drizzle-orm)
-* [D1 example](https://github.com/drizzle-team/drizzle-orm/tree/main/examples/cloudflare-d1)
-* [SQLite API surface](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/sqlite-core/README.md)
+* [D1 example](https://orm.drizzle.team/docs/get-started-sqlite#cloudflare-d1)
 
 ### d1-orm
 
@@ -79,6 +78,16 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 
 * [GitHub](https://github.com/lauragift21/staff-directory)
 * [D1 functionality](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts)
+
+### NuxtHub
+
+`NuxtHub` is a Nuxt module that brings Cloudflare Worker bindings into your Nuxt application with no configuration. It leverages the [Wrangler Platform Proxy](/workers/wrangler/api/#getplatformproxy) in development and direct binding in production to interact with [D1](/d1/), [KV](/kv/) and [R2](/r2/) with server composables (`hubDatabase()`, `hubKV()` and `hubBlob()`).
+
+`NuxtHub` also provides a way to use your remote D1 database in development using the `npx nuxt dev --remote` command.
+
+* [GitHub](https://github.com/nuxt-hub/core)
+* [Documentation](https://hub.nuxt.com)
+* [Example](https://github.com/Atinux/nuxt-todos-edge)
 
 ## Feedback
 

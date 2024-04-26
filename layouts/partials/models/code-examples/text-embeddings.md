@@ -5,15 +5,12 @@
   <summary>Worker - TypeScript</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
     // Can be a string or array of strings]
     const stories = [
@@ -22,7 +19,7 @@ export default {
       "This is a story about a hugging emoji",
     ];
 
-    const embeddings = await ai.run(
+    const embeddings = await env.AI.run(
       "{{ .Page.Params.model.name }}",
       {
         text: stories,
@@ -31,7 +28,7 @@ export default {
 
     return Response.json(embeddings);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -71,7 +68,7 @@ print(response.json())
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/{{ .Page.Params.model.name }} \
   -X POST \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }
+  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }'
 ```
 
 </details>

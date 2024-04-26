@@ -1,7 +1,7 @@
 ---
 title: Account customizations
 pcx_content_type: navigation
-weight: 5
+weight: 6
 meta: 
     title: Customize account and profile
 ---

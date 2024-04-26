@@ -24,14 +24,27 @@ Send and receive messages with guaranteed delivery and no charges for egress ban
 
 {{</Aside>}}
 
-Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/reference/delivery-guarantees/), [offload work from a request](/queues/reference/how-queues-works/), [send data from Worker to Worker](/queues/reference/configuration/), and [buffer or batch data](/queues/reference/batching-retries/).
+Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/reference/delivery-guarantees/), [offload work from a request](/queues/reference/how-queues-works/), [send data from Worker to Worker](/queues/configuration/configure-queues/), and [buffer or batch data](/queues/configuration/batching-retries/).
 
 ---
 
 ## Features
 
-{{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
+{{<feature header="Batching, Retries and Delays" href="/queues/configuration/batching-retries/">}}
+
+Cloudflare Queues allows you to batch, retry and delay messages. 
+
+{{</feature>}}
+
+{{<feature header="Dead Letter Queues" href="/queues/configuration/dead-letter-queues/">}}
+
+Redirect your messages when a delivery failure occurs.
+
+{{</feature>}}
+
+{{<feature header="Pull consumers" href="/queues/configuration/pull-consumers/">}}
+
+Configure pull-based consumers to pull from a queue over HTTP from infrastructure outside of Cloudflare Workers.
 
 {{</feature>}}
 
@@ -68,9 +81,9 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
 
-{{<resource header="Configuration" href="/queues/reference/configuration/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
+{{<resource header="Configuration" href="/queues/configuration/configure-queues/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
 
-{{<resource header="JavaScript APIs" href="/queues/reference/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
+{{<resource header="JavaScript APIs" href="/queues/configuration/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
 
 
 {{</resource-group>}}
