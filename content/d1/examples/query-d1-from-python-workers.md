@@ -30,7 +30,7 @@ If you are new to Cloudflare Workers, refer to the [Get started guide](/workers/
 
 ## Query from Python
 
-This example assumes you have an existing D1 database. To allow your Python Worker to query your database, you first need to create a [binding](/workers/configuration/bindings/) between your Worker and your D1 database and define this in your `wrangler.toml` configuration file.
+This example assumes you have an existing D1 database. To allow your Python Worker to query your database, you first need to create a [binding](/workers/runtime-apis/bindings/) between your Worker and your D1 database and define this in your `wrangler.toml` configuration file.
 
 You will need the `database_name` and `database_id` for a D1 database. You can use the `wrangler` CLI to create a new database or fetch the ID for an existing database as follows:
 
@@ -101,7 +101,7 @@ You can then deploy your Python Worker directly:
 $ npx wrangler deploy
 
 # Example output
-# 
+#
 # Your worker has access to the following bindings:
 # - D1 Databases:
 #   - DB: db-enam (c89db32e-83f4-4e62-8cd7-7c8f97659029)

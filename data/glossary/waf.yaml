@@ -39,6 +39,10 @@ entries:
   general_definition: |-
     a request to which Cloudflare applied a terminating action such as block or challenge.
 
+- term: paranoia level
+  general_definition: |-
+    classifies rules of the OWASP managed ruleset according to their aggressiveness.
+
 - term: rate limiting
   general_definition: |-
     rate limiting is a technique used in computer systems to control the rate at which requests are processed. It can be used as a security measure to prevent attacks, or to limit resource usage in your origin servers.

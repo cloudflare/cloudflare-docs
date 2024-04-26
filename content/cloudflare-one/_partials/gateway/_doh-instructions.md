@@ -52,5 +52,5 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 {{</details>}}
 
 {{<details header="Safari">}}
-As of today, Safari does not support DNS over HTTPS.
+Currently, Safari does not support DNS over HTTPS.
 {{</details>}}

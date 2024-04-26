@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 type: overview
 title: Examples
-weight: 3
+weight: 5
 meta:
   title: Cloudflare Queues - Examples
 layout: wide

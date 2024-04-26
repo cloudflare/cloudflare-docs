@@ -6,7 +6,7 @@ weight: 4
 
 # Read-only environments
 
-When an environment is read-only, versions deployed to this environment will permanently become read-only. This setting protects sensitive environments from accidental changes.
+When an environment is read-only, versions deployed to this environment will permanently become read-only. This configuration protects sensitive environments from accidental changes.
 
 **Version Zero** is an exception to this rule and is always editable.
 

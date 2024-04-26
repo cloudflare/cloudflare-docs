@@ -2,6 +2,14 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-26'
+  description: |-
+    - Updated v8 to version 12.4.
+- publish_date: '2024-04-11'
+  description: |-
+    - Improve Streams API spec compliance by exposing `desiredSize` and other properties on stream class prototypes
+    - The new `URL.parse(...)` method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.
+    - R2 bindings objects now have a `storageClass` option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.
 - publish_date: '2024-04-05'
   description: |-
     - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
@@ -12,6 +20,9 @@ entries:
 - publish_date: '2024-04-03'
   description: |-
     - When the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+- publish_date: '2024-04-02'
+  description: |-
+    - You can now [write Workers in Python](/workers/languages/python)
 - publish_date: '2024-04-01'
   description: |-
     - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-dates/#support-for-accepting-custom-thenables-in-internal-apis) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
@@ -23,6 +34,11 @@ entries:
     - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
     - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
     - Updated v8 to version 12.3.
+- publish_date: '2024-02-24'
+  description: |-
+    - v8 updated to version 12.2.
+    - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
+    - You can now use [new methods on `Set`](https://github.com/tc39/proposal-set-methods), such as `Set.intersection` and `Set.union`, in Workers.
 - publish_date: '2024-02-23'
   description: |-
     - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.

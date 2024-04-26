@@ -169,7 +169,7 @@ async function pubsub(
 }
 
 const worker = {
-  async fetch(req: Request, env: any, ctx: ExecutionContext) {
+  async fetch(req, env, ctx): Promise<Response> {
     // Retrieve this from your Broker's "publicKey" field.
     //
     // Each Broker has a unique key to distinguish between your Broker vs. others
@@ -197,7 +197,7 @@ const worker = {
 
     return new Response("not a valid Broker request", { status: 403 });
   },
-};
+} satisfies ExportedHandler;
 
 export default worker;
 ```
@@ -293,7 +293,7 @@ Some common failure modes can result in messages not being sent to subscribed cl
 - Failing to correctly validate incoming requests. This can happen if you are not using the correct public keys (keys are unique to each of your Brokers), if the keys are malformed, and/or if you have not populated the keys in the Worker via environmental variables.
 - Not returning a HTTP 200 response. Any other HTTP status code is interpreted as an error and the message is dropped.
 - Not returning a valid Content-Type. The Content-Type in the HTTP response header must be `application/octet-stream`
-- Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) if you need to write messages to other destinations after returning the message to the broker.
+- Taking too long to return a response (more than 10 seconds). You can use [`ctx.waitUntil`](/workers/runtime-apis/context/#waituntil) if you need to write messages to other destinations after returning the message to the broker.
 - Returning an invalid or unstructured body, a body or payload that exceeds size limits, or returning no body at all.
 
 Because the Worker is acting as the "server" in the HTTP request-response lifecycle, invalid responses from your Worker can fail silently, as the Broker can no longer return an error response.

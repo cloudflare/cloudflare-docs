@@ -83,7 +83,7 @@ For example, to define a column based on a value within a larger JSON object, us
 ```sql
 CREATE TABLE some_table (
     -- other columns omitted
-    -- JSON: {"measurement":{"aqi":[21,42,58],"wind_mph":"13","location":"US-NY"}}
+    raw_data TEXT -- JSON: {"measurement":{"aqi":[21,42,58],"wind_mph":"13","location":"US-NY"}}
     location AS (json_extract(raw_data, '$.measurement.location')) STORED
 )
 ```

@@ -5,43 +5,46 @@ title: Server-side Excludes (SSE)
 weight: 2
 ---
 
-# Server-side Excludes (SSE)
+{{<heading-pill style="deprecated">}} Server-side Excludes (SSE) {{</heading-pill>}}
 
 If there is sensitive content on your website that you want visible to real visitors, but that you want to hide from suspicious visitors, wrap the content with Cloudflare Server-side Excludes (SSE) tags.
 
+{{<Aside type="warning" header="Deprecation notice">}}
+Server-side Excludes (SSE) has been deprecated. The SSE functionality will be removed on 2024-06-14. After this date, SSE will no longer be available via the Cloudflare dashboard, API, or Terraform.
+
+If you are experiencing unmitigated bot attacks or content scraping, we recommend transitioning to our Enterprise-grade [Bot Management](/bots/get-started/bm-subscription/) or our self-serve [Super Bot Fight Mode](/bots/get-started/pro/) solutions. These services are specifically designed to provide superior security in handling bot attacks and other security threats.
+{{</Aside>}}
+
 ## Set up
 
-### Enable
+### 1. Turn on SSE
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-To enable **Server-side Excludes** in the dashboard:
-
-1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Select your account and website.
-3.  Go to **Scrape Shield**.
-4.  For **Server-side**, switch the toggle to **On**.
+{{<render file="tools/_sse-instructions-dash.md" withParameters="on;;On">}}
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Server-side Excludes** with the API, send a [`PATCH`](/api/operations/zone-settings-change-server-side-exclude-setting) request with the `value` parameter set to `"on"`.
+{{<render file="tools/_sse-instructions-api.md" withParameters="on">}}
 
 {{</tab>}}
 {{</tabs>}}
 
 {{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
-### Exclude content
+### 2. Exclude content
 
-Once you have enabled **Server-side Excludes**, you need to wrap your content in specific SSE tags.
+Once you have turned on **Server-side Excludes**, you need to wrap your content in specific SSE tags.
 
-```
+```txt
 <!--sse--><!--/sse-->
 ```
 
-```
+For example:
+
+```txt
 <!--sse-->Bad visitors cannot see my phone number, 555-555-5555<!--/sse-->
 ```
 
@@ -53,6 +56,21 @@ However, SSE will still function correctly since Cloudflare applies both it and 
 moves through our network to the visitor's computer.
 
 {{</Aside>}}
+
+## Turn off SSE
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+{{<render file="tools/_sse-instructions-dash.md" withParameters="off;;Off">}}
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="tools/_sse-instructions-api.md" withParameters="off">}}
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 

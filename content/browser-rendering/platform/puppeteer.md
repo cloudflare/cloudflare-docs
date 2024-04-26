@@ -48,7 +48,7 @@ interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env): Promise<Response> {
 		const browser = await puppeteer.launch(env.MYBROWSER);
 		const page = await browser.newPage();
 		await page.goto("https://example.com");
@@ -56,7 +56,7 @@ export default {
 		await browser.close();
 		return Response.json(metrics);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}

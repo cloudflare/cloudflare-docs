@@ -19,30 +19,34 @@
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</lastBuildDate>
-    {{- range $changelogRendered -}}
-    {{- $entry := . -}}
+    {{- range $index, $entry := $changelogRendered -}}
     {{- $link := "" -}}
     {{- $title := "" -}}
-    {{- $rellink := .url -}}
-    {{- $product := .product -}}
-    {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{- $rellink := $entry.url -}}
+    {{- $product := $entry.product -}}
+    {{ $description := $entry.description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
-    {{- with .title -}}
+    {{- with $entry.title -}}
     {{ $title = printf "%s - %s" $product . }}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
     {{- else -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
     {{- $title = printf "%s - %s" $product .publish_date -}}
     {{- end -}}
-    {{- with .link -}}
+    {{- with $entry.link -}}
     {{- if ne $product "Wrangler" -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
     {{- end -}}
     {{- end -}}
-    {{- with .individual_page -}}
+    {{- with $entry.individual_page -}}
     {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
     {{- $description = $result.content -}}
     {{- $title = printf "%s - %s" $product $result.title }}
+    {{- with $entry.scheduled -}}
+    {{- with $entry.scheduled_date -}}
+    {{- $title = (printf "%s for %s" $title $entry.scheduled_date) -}}
+    {{- end -}}
+    {{- end -}}
     {{- end -}}
     <item>
     <title>{{- $title -}}</title>

@@ -6,15 +6,12 @@
   <summary>Workers - TypeScript</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
     // Picture of a dog
     const exampleInputImage = await fetch(
@@ -33,7 +30,7 @@ export default {
     };
 
     const response =
-      await ai.run(
+      await env.AI.run(
         "@cf/runwayml/stable-diffusion-v1-5-inpainting",
         inputs
       );
@@ -44,7 +41,7 @@ export default {
       },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>

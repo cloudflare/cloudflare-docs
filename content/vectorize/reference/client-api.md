@@ -109,7 +109,7 @@ let vectorExample = {
 
 ## Binding to a Worker
 
-[Bindings](/workers/configuration/bindings/) allow you to attach resources, including Vectorize indexes or [R2 buckets](/workers/configuration/bindings/#r2-bucket-bindings), to your Worker.
+[Bindings](/workers/runtime-apis/bindings/) allow you to attach resources, including Vectorize indexes or R2 buckets, to your Worker.
 
 Bindings are defined in either the [`wrangler.toml`](/workers/wrangler/configuration/) configuration associated with your Workers project, or via the Cloudflare dashboard for your project.
 
@@ -127,4 +127,4 @@ Refer to the [bindings documentation](/workers/wrangler/configuration/#vectorize
 
 New Workers projects created via `npm create cloudflare` or `wrangler init` automatically include the relevant TypeScript types for Vectorize.
 
-Older projects, or non-Workers projects looking to use Vectorize's [HTTP API](https://developers.cloudflare.com/api/operations/vectorize-list-vectorize-indexes) in a TypeScript project, should ensure `@cloudflare/workers-types` version `4.20230922.0` or later is installed.
+Older projects, or non-Workers projects looking to use Vectorize's [REST API](https://developers.cloudflare.com/api/operations/vectorize-list-vectorize-indexes) in a TypeScript project, should ensure `@cloudflare/workers-types` version `4.20230922.0` or later is installed.

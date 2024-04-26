@@ -130,7 +130,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
    $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
    ```
 
-If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that curl is not using IPv6 (use the `-4` option to force IPv4).
+If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that `curl` is not using IPv6 (use the `-4` option to force IPv4).
 
 ## 3. Create a PAC file
 
@@ -197,3 +197,7 @@ The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-on
 ### Traffic limitations
 
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/), mTLS authentication, or UDP traffic. To enforce HTTP policies for UDP traffic, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
+
+### Gateway DNS and resolver policies
+
+Gateway DNS and resolver policies will always apply to traffic proxied via PAC files, regardless of device configuration.

@@ -23,11 +23,11 @@ Take for example `my-monorepo` above with two associated Pages projects (`market
 
 Once you've created a separate Pages project for each of the projects within your Git repository, each Git push will issue a new build and deployment for all connected projects unless specified in your build configuration.
 
-Github will display separate comments for each project with the updated project and deployment URL if there is a Pull Request associated with the branch.
+GitHub will display separate comments for each project with the updated project and deployment URL if there is a Pull Request associated with the branch.
 
 ### GitHub check runs and GitLab commit statuses
 
-If you have multiple projects associated with your repository, your [Github check run](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
+If you have multiple projects associated with your repository, your [GitHub check run](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks#checks) or [Gitlab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html) will appear like the following on your repository:
 
 ![GitHub check run](/images/pages/configuration/ghcheckrun.png)
 ![GitLab commit status](/images/pages/configuration/glcommitstatus.png)
@@ -36,7 +36,7 @@ If a build skips for any reason (i.e. CI Skip, build watch paths, or branch depl
 
 ## Monorepo management tools:
 
-While Pages does not provide specialized tooling for dependency management in monorepos, you may choose to bring additional tooling to help manage your repository. For simple subpackage management, you can utilize tools like [npm](https://docs.npmjs.com/cli/v8/using-npm/workspaces), [pnpm](https://pnpm.io/workspaces), and [Yarn](https://yarnpkg.com/features/workspaces) workspaces. You can also use more powerful tools such as [Turborepo](https://turbo.build/repo/docs), [NX](https://nx.dev/getting-started/intro), or [Lerna](https://nx.dev/getting-started/intro) to additionally manage dependencies and task execution.
+While Pages does not provide specialized tooling for dependency management in monorepos, you may choose to bring additional tooling to help manage your repository. For simple subpackage management, you can utilize tools like [npm](https://docs.npmjs.com/cli/v8/using-npm/workspaces), [pnpm](https://pnpm.io/workspaces), and [Yarn](https://yarnpkg.com/features/workspaces) workspaces. You can also use more powerful tools such as [Turborepo](https://turbo.build/repo/docs), [NX](https://nx.dev/getting-started/intro), or [Lerna](https://lerna.js.org/docs/getting-started) to additionally manage dependencies and task execution.
 
 ## Limitations
 * You must be using [Build System V2](/pages/configuration/language-support-and-tools) or later in order for monorepo support to be enabled.
