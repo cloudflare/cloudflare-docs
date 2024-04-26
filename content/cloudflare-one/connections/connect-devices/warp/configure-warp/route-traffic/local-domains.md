@@ -6,17 +6,23 @@ weight: 2
 
 # Configure Local Domain Fallback
 
-{{<render file="warp/_local-domains-description.md" productFolder="cloudflare-one">}}
+By default, Cloudflare Zero Trust excludes common top-level domains, used for local resolution, from being sent to Gateway for processing. These top-level domains are resolved by the local DNS resolver configured for the device on its primary interface.
 
-## View local domains
+You can add additional domains to the Local Domain Fallback list and specify a DNS server to use in place of the Gateway resolver. The WARP client proxies these requests directly to the configured fallback servers.
+
+## Limitations
+
+Local Domain Fallback only applies to devices running the WARP client.
+
+Because DNS requests subject to Local Domain Fallback bypass the Gateway resolver, they are not subject to Gateway DNS policies or DNS logging. If you want to route DNS queries to custom resolvers and apply Gateway filtering, use [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/). If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply client-side Local Domain Fallback rules first.
+
+## Manage local domains
+
+### View domains
 
 To view the domains subject to Local Domain Fallback:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-
-2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
-
-3. Scroll down to **Local Domain Fallback** and select **Manage**.
+{{<render file="warp/_view-local-domains.md" productFolder="cloudflare-one">}}
 
 On this page, you will see a list of domains excluded from Gateway. You can [add](#add-a-domain) or [remove](#delete-a-domain) domains from the list at any time.
 
@@ -26,14 +32,25 @@ Local Domain Fallback configuration only impacts where DNS requests get resolved
 
 {{</Aside>}}
 
-## Add a domain
+### Add a domain
 
-{{<render file="warp/_add-local-domain.md" productFolder="cloudflare-one">}}
+{{<render file="warp/_view-local-domains.md" productFolder="cloudflare-one">}}
+4. In **Domain**, enter the domain that you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (in other words, `example.com` is interpreted as `*.example.com`).
 
-## Delete a domain
+5. {{<render file="warp/_add-local-domain-ip.md" productFolder="cloudflare-one">}}
 
-1. Go to [**Local Domain Fallback**](#view-local-domains).
+6. Enter an optional description and select **Save domain**.
 
-2. Find the domain in the list and select **Delete**.
+7. DNS traffic to the local domain fallback server is routed according to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration. To ensure that queries can reach your private DNS server:
+   - If your DNS server is only reachable outside of the WARP tunnel (for example, via a third-party VPN), [exclude](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) the server's IP.
+   - If your DNS server is only reachable through the WARP tunnel (for example, if it is connected to Cloudflare via `cloudflared` or Magic WAN), [include](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) the server's IP.
+
+[Learn more](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests) about how WARP handles DNS requests.
+
+### Delete a domain
+
+{{<render file="warp/_view-local-domains.md" productFolder="cloudflare-one">}}
+
+4. Find the domain in the list and select **Delete**.
 
 The domain will no longer be excluded from Gateway DNS policies, effective immediately.

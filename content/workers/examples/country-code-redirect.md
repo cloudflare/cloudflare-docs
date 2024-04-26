@@ -47,8 +47,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     /**
      * A map of the URLs to redirect to
      * @param {Object} countryMap
@@ -69,9 +69,7 @@ const handler: ExportedHandler = {
       return fetch(request);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

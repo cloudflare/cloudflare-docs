@@ -19,6 +19,16 @@ If you add or remove a user from a group in your IdP, Gateway will not detect th
 - Log out from an Access-protected application and log back in.
 - In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
+### View a user's identity
+
+To view the identity that Gateway will use when evaluating policies:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**. This page lists the users who have authenticated to the WARP client.
+2. Select a user.
+3. Under **User Registry identity**, select the user name.
+
+This page shows the information reported by the IdP when the user registered the WARP client.
+
 ### Extended email addresses
 
 {{<render file="gateway/_extended-email.md">}}

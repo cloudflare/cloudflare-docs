@@ -20,7 +20,7 @@ For more details about how O2O is different than other Cloudflare setups, refer 
 
 ## Enable
 
-You can only enable O2O on the Cloudflare Enterprise plan.
+BigCommerce customers can enable O2O on any Cloudflare zone plan.
 
 To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a `CNAME` DNS record.
 

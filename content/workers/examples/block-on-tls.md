@@ -10,7 +10,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -41,8 +41,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request): Promise<Response> {
     try {
       const tlsVersion = request.cf.tlsVersion;
       // Allow only TLS versions 1.2 and 1.3
@@ -61,9 +61,20 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch
+
+async def on_fetch(request):
+    tls_version = request.cf.tlsVersion
+    if tls_version not in ("TLSv1.2", "TLSv1.3"):
+        return Response.new("Please use TLS version 1.2 or higher.", status=403)
+    return fetch(request)
 ```
 
 {{</tab>}}

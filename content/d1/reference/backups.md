@@ -12,9 +12,9 @@ D1 has built-in support for creating and restoring backups of your databases, in
 
 The snapshot based backups described in this documentation are deprecated, and limited to the original alpha databases.
 
-Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/reference/backups/) used for legacy alpha databases.
+Databases using D1's [production storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/reference/backups/) used for legacy alpha databases.
 
-To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: beta` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
+To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: production` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
 
 {{</Aside>}}
 
@@ -79,7 +79,7 @@ $ wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
 🌀 Done!
 ```
 
-The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](/d1/how-to/importing-data/) to D1.
+The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](/d1/build-with-d1/import-data/) to D1.
 
 ## Restoring a backup
 

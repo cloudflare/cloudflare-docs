@@ -2,11 +2,14 @@
 title: Stream live video
 pcx_content_type: navigation
 weight: 4
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Stream live video
 
-Cloudflare Stream lets you or your users stream live video, and play live video in your website or app, without managing and configuring any of your own infrastructure.
+Cloudflare Stream lets you or your users [stream live video](https://www.cloudflare.com/learning/video/what-is-live-streaming/), and play live video in your website or app, without managing and configuring any of your own infrastructure.
 
 ## How Stream works
 

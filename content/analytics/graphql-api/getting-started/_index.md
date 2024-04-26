@@ -23,6 +23,10 @@ For examples of how to build your own GraphQL Analytics dashboard and query
 specific information, such as Firewall and Workers events, please refer to
 [Tutorials][6].
 
+{{<Aside type="note" header="Data unavailability: Customer Metadata Boundary configuration">}}
+{{<render file="_customer_metadata_boundary_error.md">}}
+{{</Aside>}}
+
 [1]: </analytics/graphql-api/getting-started/authentication/>
 [2]: </analytics/graphql-api/getting-started/querying-basics/>
 [3]: </analytics/graphql-api/getting-started/explore-graphql-schema/>

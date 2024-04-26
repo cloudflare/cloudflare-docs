@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: editWord
+inputParameters: editWord;;editProduct;;cloudflareName
 ---
 
 | Name                                                         | Description                                                                                                                                              |
@@ -34,8 +34,8 @@ inputParameters: editWord
 | Account Firewall Access Rules $1                           | Grants write access to account firewall access rules.                                                                                                    |
 | Account Rulesets Read                                        | Grants read access to [Account Rulesets](/ruleset-engine/about/rulesets/).                                                                               |
 | Account Rulesets $1                                        | Grants write access to [Account Rulesets](/ruleset-engine/about/rulesets/).                                                                              |
-| Account Settings Read                                        | Grants read access to [Account resources, account membership, and account level features](/fundamentals/account-and-billing/).                           |
-| Account Settings $1                                        | Grants write access to [Account resources, account membership, and account level features](/fundamentals/account-and-billing/).                          |
+| Account Settings Read                                        | Grants read access to [Account resources, account membership, and account level features](/fundamentals/subscriptions-and-billing/).                           |
+| Account Settings $1                                        | Grants write access to [Account resources, account membership, and account level features](/fundamentals/subscriptions-and-billing/).                          |
 | Account: SSL and Certificates Read                           | Grants read access to [SSL and Certificates](/ssl/).                                                                                                     |
 | Account: SSL and Certificates $1                           | Grants write access to [SSL and Certificates](/ssl/).                                                                                                    |
 | Account WAF Read                                             | Grants read access to [Account WAF](/waf/).                                                                                                              |
@@ -45,8 +45,8 @@ inputParameters: editWord
 | Allow Request Tracer Read                                    | Grants read access to Request Tracer.                                                                                                                    |
 | API Gateway Read                                             | Grants read access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                  |
 | API Gateway $1                                             | Grants write access to [API Gateway (including API Shield)](/api-shield/) for all domains in an account.                                                 |
-| Billing Read                                                 | Grants read access to [billing profile, subscriptions, and access to fetch invoices](/fundamentals/account-and-billing/) and entitlements.               |
-| Billing $1                                                 | Grants write access to [billing profile, subscriptions, and access to fetch invoices and entitlements](/fundamentals/account-and-billing/).              |
+| Billing Read                                                 | Grants read access to [billing profile, subscriptions, and access to fetch invoices](/fundamentals/subscriptions-and-billing/) and entitlements.               |
+| Billing $1                                                 | Grants write access to [billing profile, subscriptions, and access to fetch invoices and entitlements](/fundamentals/subscriptions-and-billing/).              |
 | Bulk URL Redirects Read                                      | Grants read access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                       |
 | Bulk URL Redirects $1                                      | Grants write access to [Bulk URL Redirects](/rules/url-forwarding/bulk-redirects/).                                                                      |
 | China Network Steering Read                                  | Grants read access to [China Network Steering](/china-network/).                                                                                         |
@@ -67,10 +67,10 @@ inputParameters: editWord
 | Cloudflare One Connectors $1 | Grants write access to Cloudflare One Connectors |
 | Cloudflare One Networks Read | Grants read access to Cloudflare One Networks |
 | Cloudflare One Networks $1 | Grants write access to Cloudflare One Networks |
-| Cloudflare Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
-| Cloudflare Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
-| Cloudflare Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
-| Cloudflare Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
+| $3 Pages Read                                        | Grants access to view [Cloudflare Pages](/pages/) projects.                                                                                              |
+| $3 Pages $1                                        | Grants access to create, edit and delete [Cloudflare Pages](/pages/) projects.                                                                           |
+| $2 Tunnel Read                                       | Grants access to view [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                               |
+| $2 Tunnel $1                                       | Grants access to create and delete [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/).                                                  |
 | Constellation Read                                           | Grants read access to [Constellation](/constellation/).                                                                                                  |
 | Constellation $1                                           | Grants write access to [Constellation](/constellation/).                                                                                                 |
 | D1 Read                                                      | Grants read access to [D1](/d1/).                                                                                                                        |
@@ -111,6 +111,8 @@ inputParameters: editWord
 | Page Shield $1                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
 | Pub/Sub Read                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
 | Pub/Sub $1                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
+| Queues Read                                           | Grants read access to [Queues](/queues/).                                                                                                                     |
+| Queues $1                                           | Grants write access to [Queues](/queues/).                                                                                                                     |
 | Rule Policies Read                                           | Grants read access to Rule Policies.                                                                                                                     |
 | Rule Policies $1                                           | Grants write access to Rule Policies.                                                                                                                    |
 | Stream Read                                                  | Grants read access to [Cloudflare Stream](/stream/).                                                                                                     |

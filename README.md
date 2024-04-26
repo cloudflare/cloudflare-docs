@@ -6,9 +6,9 @@
 
 ## Setup
 
-You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
+You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [installation instructions](https://gohugo.io/installation/) for your operating system to get started.
 
-> **Important:** This project is built with version `0.110.0+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
+> **Important:** This project is built with version `0.123.5+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
 
 You must also have a recent version of Node.js (18+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
 
@@ -31,7 +31,7 @@ When making changes to the site, including any content changes, you may run a lo
 $ npm run dev
 ```
 
-This spawns a server that will be accessible via `http://localhost:5173` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
+This spawns a server that will be accessible via `http://localhost:5173` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes.
 
 Additionally, this project includes a CI step for ensuring consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or the content's output display. To see the style error(s), you may run:
 
@@ -39,11 +39,11 @@ Additionally, this project includes a CI step for ensuring consistent code style
 $ npm run lint
 ```
 
-Finally, some of these code-style errors may be fixed automatically. To do so, you may run:
+### Recommendations
 
-```sh
-$ npm run format
-```
+Part of our application accesses the GitHub API (to populate the [Wrangler changelog](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/partials/wrangler-changelog.html)).
+
+Since GitHub gives a higher request limit to authenticated requests, you may want to add a [classic token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic) with permissions for `repos:public_repo` to `/assets/secrets/github_token.txt`. The token value should be the only thing in your file.
 
 ## Deployment
 

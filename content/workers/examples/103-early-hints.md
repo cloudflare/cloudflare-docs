@@ -26,7 +26,7 @@ Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view 
 
 You can return `Link` headers from a Worker running on your zone to speed up your page load times.
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -86,8 +86,8 @@ const HTML = `
 </html>
 `;
 
-const handler: ExportedHandler = {
-  async fetch(req) {
+export default {
+  async fetch(req): Promise<Response> {
     // If request is for test.css, serve the raw CSS
     if (/test\.css$/.test(req.url)) {
       return new Response(CSS, {
@@ -105,9 +105,37 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import re
+from js import Response, Headers
+
+CSS = "body { color: red; }"
+HTML = """
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Early Hints test</title>
+    <link rel="stylesheet" href="/test.css">
+</head>
+<body>
+    <h1>Early Hints test page</h1>
+</body>
+</html>
+"""
+def on_fetch(request):
+    if re.search("test.css", request.url):
+        headers = Headers.new({"content-type": "text/css"}.items())
+        return Response.new(CSS, headers=headers)
+    else:
+        headers = Headers.new({"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}.items())
+        return Response.new(HTML, headers=headers)
 ```
 
 {{</tab>}}

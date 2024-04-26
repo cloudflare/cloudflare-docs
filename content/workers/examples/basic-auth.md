@@ -176,8 +176,11 @@ function timingSafeEqual(a: string, b: string) {
   return crypto.subtle.timingSafeEqual(aBytes, bBytes);
 }
 
-export default <ExportedHandler<{ PASSWORD: string }>>{
-  async fetch(request, env) {
+interface Env {
+  PASSWORD: string;
+}
+export default {
+  async fetch(request, env): Promise<Response> {
     const BASIC_USER = "admin";
 
     // You will need an admin password. This should be
@@ -250,7 +253,7 @@ export default <ExportedHandler<{ PASSWORD: string }>>{
 
     return new Response("Not Found.", { status: 404 });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

@@ -17,7 +17,7 @@ The following is a Cisco IOS XE configuration example:
 crypto ikev2 proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
  encryption aes-cbc-256
  integrity sha512 sha384 sha256
- group 14 5
+ group 14
 !
 crypto ikev2 policy CF_MAGIC_WAN_IKEV2_POLICY
  match fvrf any

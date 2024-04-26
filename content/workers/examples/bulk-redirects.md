@@ -10,7 +10,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -42,8 +42,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const externalHostname = "examples.cloudflareworkers.com";
 
     const redirectMap = new Map([
@@ -63,9 +63,33 @@ const handler: ExportedHandler = {
     // If request not in map, return the original request
     return fetch(request);
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch, URL
+
+async def on_fetch(request):
+    external_hostname = "examples.cloudflareworkers.com"
+
+    redirect_map = {
+      "/bulk1": "https://" + external_hostname + "/redirect2",
+      "/bulk2": "https://" + external_hostname + "/redirect3",
+      "/bulk3": "https://" + external_hostname + "/redirect4",
+      "/bulk4": "https://google.com",
+      }
+
+    url = URL.new(request.url)
+    location = redirect_map.get(url.pathname, None)
+
+    if location:
+        return Response.redirect(location, 301)
+
+    # If request not in map, return the original request
+    return fetch(request)
 ```
 
 {{</tab>}}

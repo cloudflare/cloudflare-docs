@@ -5,7 +5,7 @@ title: /cdn-cgi/ endpoint
 
 # /cdn-cgi/ endpoint
 
-When you [add a domain to Cloudflare](/fundamentals/setup/account-setup/add-site/), Cloudflare adds a `/cdn-cgi/` endpoint (`www.example.com/cdn-cgi/`) to that domain.
+When you [add a domain to Cloudflare](/fundamentals/setup/manage-domains/add-site/), Cloudflare adds a `/cdn-cgi/` endpoint (`www.example.com/cdn-cgi/`) to that domain.
 
 This endpoint is managed and served by Cloudflare. It cannot be modified or customized. The endpoint is not used by every Cloudflare product, but you may find some products use the endpoint in its URL.
 

@@ -23,7 +23,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 ## 1. Set up Cloudflare
 
-1. [Add your zone to Cloudflare](/fundamentals/setup/account-setup/add-site/).
+1. [Add your zone to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 
     To add your zone using the API, refer to the [Create Zone endpoint](/api/operations/zones-post).
 
@@ -42,7 +42,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 --data '{"status": "active"}'
 ```
 
-4. Enable multi-signer DNSSEC using the following request. This step can only be achieved via the [API](/api/operations/dnssec-edit-dnssec-status).
+4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
 $ curl --request PATCH \

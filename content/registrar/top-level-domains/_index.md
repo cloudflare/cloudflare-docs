@@ -2,11 +2,14 @@
 pcx_content_type: reference
 title: Top Level Domains supported
 weight: 5
+learning_center:
+  title: What is a top-level domain?
+  link: https://www.cloudflare.com/learning/dns/top-level-domain/
 ---
 
 # Top Level Domains supported 
 
-Cloudflare supports over 200 top-level domains (TLDs)[^1] and is always evaluating adding new TLDs. We have no specific timeframes for TLDs not yet listed.
+Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/dns/top-level-domain/)[^1] and is always evaluating adding new TLDs. We have no specific timeframes for TLDs not yet listed.
 
 [^1]: You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). 
 
