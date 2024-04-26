@@ -772,6 +772,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets to be served.
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show interactive dev session (defaults to true if the terminal supports interactivity)
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
