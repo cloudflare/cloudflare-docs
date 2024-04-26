@@ -83,7 +83,7 @@ async def on_fetch(request):
       }
 
     url = URL.new(request.url)
-    location = redirect_map[url.pathname]
+    location = redirect_map.get(url.pathname, None)
 
     if location:
         return Response.redirect(location, 301)
