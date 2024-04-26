@@ -23,13 +23,13 @@ In this tutorial, you will learn how to send transactional emails from Workers u
 To continue with this tutorial, you’ll need:
 
 - A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you don’t already have one.
-- A [registered](https://developers.cloudflare.com/registrar/get-started/register-domain/) domain.
+- A [registered](/registrar/get-started/register-domain/) domain.
 - Installed [npm](https://docs.npmjs.com/getting-started).
 - A [Resend account](https://resend.com/signup).
 
 ## Create a Worker project
 
-Start by using [C3](https://developers.cloudflare.com/pages/get-started/c3) to create a Worker project in the command line, then, answer the prompts:
+Start by using [C3](/pages/get-started/c3/) to create a Worker project in the command line, then, answer the prompts:
 
 ```bash
 ---
@@ -64,7 +64,7 @@ export default {
 
 ## Add your domain to Resend
 
-If you don’t already have a Resend account, you can sign up for a free account [here](https://resend.com/signup). After signing up, go to `Domains` using the side menu, and click the button to add a new domain. On the modal, enter the domain you want to add and then select a region.
+If you don’t already have a Resend account, you can sign up for a [free account here](https://resend.com/signup). After signing up, go to `Domains` using the side menu, and click the button to add a new domain. On the modal, enter the domain you want to add and then select a region.
 
 Next, you’re presented with a list of DNS records to add to your Cloudflare domain. On your Cloudflare dashboard, select the domain you entered earlier and navigate to `DNS` > `Records`. Copy/paste the DNS records ( i.e DKIM, SPF, and DMARC records) from Resend to your Cloudflare domain.
 
@@ -124,5 +124,5 @@ And finally, deploy your Worker with `npm run deploy`.
 
 ## Related resources
 
-- [Storing API keys and tokens with Secrets](https://developers.cloudflare.com/workers/configuration/secrets/).
-- [Transferring your domain to Cloudflare](https://developers.cloudflare.com/registrar/get-started/transfer-domain-to-cloudflare/).
+- [Storing API keys and tokens with Secrets](/workers/configuration/secrets/).
+- [Transferring your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/).
