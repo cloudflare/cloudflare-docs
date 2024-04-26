@@ -96,8 +96,8 @@ To set up an integration with Turso:
     import { Client as LibsqlClient, createClient } from "@libsql/client/web";
 
     export interface Env {
-      LIBSQL_DB_URL?: string;
-      LIBSQL_DB_AUTH_TOKEN?: string;
+      TURSO_URL?: string;
+      TURSO_AUTH_TOKEN?: string;
     }
 
     export default {
@@ -120,14 +120,14 @@ To set up an integration with Turso:
     } satisfies ExportedHandler<Env>;
 
     function buildLibsqlClient(env: Env): LibsqlClient {
-      const url = env.LIBSQL_DB_URL?.trim();
+      const url = env.TURSO_URL?.trim();
       if (url === undefined) {
-        throw new Error("LIBSQL_DB_URL env var is not defined");
+        throw new Error("TURSO_URL env var is not defined");
       }
 
-      const authToken = env.LIBSQL_DB_AUTH_TOKEN?.trim();
+      const authToken = env.TURSO_AUTH_TOKEN?.trim();
       if (authToken == undefined) {
-        throw new Error("LIBSQL_DB_AUTH_TOKEN env var is not defined");
+        throw new Error("TURSO_AUTH_TOKEN env var is not defined");
       }
 
       return createClient({ url, authToken })
