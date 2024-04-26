@@ -6,7 +6,7 @@ weight: 3
 
 # Investigate threats
 
-Customers have the ability to investigate the details of an IP address, domain name, URL, Autonomous System Number (ASN), or JavaScript file. The Investigate feature can be found in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan).
+Users can investigate the details of an IP address, domain name, URL, Autonomous System Number (ASN), or JavaScript file. You can find the Investigate feature in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan).
 
 You can search with Investigate by [IP address](/security-center/investigate/investigate-threats/#ip-address), [domain](/security-center/investigate/investigate-threats/#domain), [URL](/security-center/investigate/investigate-threats/#url) and [AS number](/security-center/investigate/investigate-threats/#as-number).
 
@@ -26,11 +26,13 @@ IP address search allows you to search both [IPv4 and IPv6](https://www.cloudfla
 
 A [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is a string of text that maps to an IP address. Domain names are used to help people remember where websites are hosted. Domain names are purchased through [registrars](/registrar/) and can be acquired easily by anyone.
 
-When you search for a domain name, Cloudflare will provide an overview of the domain's category and IP addresses it currently resolves to.
+When you search for a domain name, Cloudflare will provide an overview of the domain's [category](#domain-categories) and IP addresses it currently resolves to.
 
 ### Domain categories
 
 {{<render file="gateway/_domain-categories.md" productFolder="cloudflare-one">}}
+
+For a detailed list of categories, refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
 A domain can have multiple categories. Cloudflare displays both the parent category and the detailed child category. You can [request category changes](/security-center/investigate/change-categorization/) for a domain. Miscategorized domains can also request to have a category added. This request goes through an approval process with the Cloudflare team.
 
