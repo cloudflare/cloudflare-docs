@@ -72,7 +72,7 @@ from js import Response, fetch
 
 async def on_fetch(request):
     tls_version = request.cf.tlsVersion
-    if tls_version != "TLSv1.2" and tls_version != "TLSv1.3":
+    if tls_version not in ("TLSv1.2", "TLSv1.3"):
         return Response.new("Please use TLS version 1.2 or higher.", status=403)
     return fetch(request)
 ```
