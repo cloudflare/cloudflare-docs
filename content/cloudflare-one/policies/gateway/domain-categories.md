@@ -8,6 +8,10 @@ weight: 9
 
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
+{{<render file="gateway/_domain-categories.md">}}
+
+This combination helps us stay ahead of emerging threats. While we cannot disclose specific methodologies due to security considerations, please rest assured that we continually strive to protect your online experience.
+
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
 To request changes to a domain's categorization, refer to [Change categorization](/security-center/investigate/change-categorization/).
@@ -227,13 +231,13 @@ When creating a DNS block policy for security or content categories, you can opt
 
 Our domain categorization process consists of a robust data-driven approach that combines Cloudflare's proprietary data and third-party intelligence (encompassing both open-source and commercial feeds), with machine learning models and insights from our community feedback. This multifaceted strategy ensures the most accurate, timely, and comprehensive domain categorization available.
 
-First, the categorization engine begins with a vast array of data sources. This includes: 
+First, the categorization engine begins with a vast array of data sources. This includes:
 
 1. Cloudflare’s proprietary data leveraging Cloudflare’s extensive network data.
 
 2. Third-party intelligence feeds. We incorporate data from over 30 open-source intelligence feeds and premium commercial feeds, including industry leaders like Avira, Zvelo and others. This aggregation enriches our categorization with diverse insights and global threat intelligence.
 
-Then, the initial categorization is refined and continuously improved through: 
+Then, the initial categorization is refined and continuously improved through:
 
 3. Machine learning models. Our advanced algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
 
