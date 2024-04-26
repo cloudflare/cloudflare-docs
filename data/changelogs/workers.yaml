@@ -2,6 +2,9 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-26'
+  description: |-
+    - Updated v8 to version 12.4.
 - publish_date: '2024-04-11'
   description: |-
     - Improve Streams API spec compliance by exposing `desiredSize` and other properties on stream class prototypes
