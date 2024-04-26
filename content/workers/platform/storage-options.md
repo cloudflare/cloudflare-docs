@@ -25,6 +25,7 @@ Available storage and persistency products include:
 - [D1](#d1) as a relational, SQL-based database.
 - [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
 - [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
+- [Analytics Engine](/analytics/analytics-engine/) for storing and querying (using SQL) time-series data and product metrics at scale.
 - [Vectorize](/vectorize/) for vector search and storing embeddings from [Workers AI](/workers-ai/).
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
@@ -41,18 +42,23 @@ The following table highlights the performance and consistency characteristics o
 
 | Feature                           | Workers KV                                       | R2                                    | Durable Objects                  | D1                                                  |
 | --------------------------------- | ------------------------------------------------ | ------------------------------------- | -------------------------------- | --------------------------------------------------- |
-| Maximum storage per account       | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 50GiB <sup>3</sup><sup>beta</sup>                   |
+| Maximum storage per account       | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 250GiB <sup>3</sup>                                 |
 | Storage grouping name<sup>2</sup> | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
-| Maximum size per value            | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 2 GiB per database                                  |
-| Consistency model                 | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>4</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
+| Maximum size per value            | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 10 GiB per database <sup>4</sup>                    |
+| Consistency model                 | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>5</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
 | Supported APIs                    | Workers, HTTP/REST API                           | Workers, S3 compatible                | Workers                          | Workers, HTTP/REST API                              |
 
 {{</table-wrap>}}
 
 <sup>1</sup> Free accounts are limited to 1 GiB of KV storage.
+
 <sup>2</sup> Free accounts are limited to 10 GiB of R2 storage.
+
 <sup>3</sup> Free accounts are limited to 5 GiB of database storage.
-<sup>4</sup> Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
+
+<sup>4</sup> Free accounts are limited to 500 MiB per database.
+
+<sup>5</sup> Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
 
 {{<render file="_limits_increase.md">}}
 
@@ -157,6 +163,26 @@ To get started with Hyperdrive:
 
 - [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
 - Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/configuration/how-hyperdrive-works/).
+
+## Analytics Engine
+
+Analytics Engine is Cloudflare's time-series and metrics database that allows you to write unlimited-cardinality analytics at scale using a built-in API to write data points from Workers and query that data using SQL directly.
+
+Analytics Engine allows you to:
+
+- Expose custom analytics to your own customers
+- Build usage-based billing systems
+- Understand the health of your service on a per-customer or per-user basis
+- Add instrumentation to frequently called code paths, without impacting performance or overwhelming external analytics systems with events
+
+Cloudflare uses Analytics Engine internally to store and product per-product metrics for products like D1 and R2 at scale.
+
+To get started with Analytics Engine:
+
+- Learn how to [get started with Analytics Engine](/analytics/analytics-engine/get-started/)
+- See [an example of writing time-series data to Analytics Engine](/analytics/analytics-engine/recipes/usage-based-billing-for-your-saas-product/)
+- Understand the [SQL API](/analytics/analytics-engine/sql-api/) for reading data from your Analytics Engine datasets
+
 
 ## Vectorize
 

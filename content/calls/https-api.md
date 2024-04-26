@@ -1,16 +1,14 @@
 ---
 pcx_content_type: get-started
-title: HTTPS Signaling API
+title: Connection API
 weight: 5
 ---
 
-# Just five endpoints: HTTPS API
+# Connection API over HTTPS
 
-Cloudflare Calls is designed to facilitate the creation of real-time applications by providing a distributed real-time data plane. The service acts as a WebRTC Selective Forwarding Unit (SFU), enabling developers to build scalable real-time apps such as video conferencing, live streaming, and interactive broadcasts without worrying about infrastructure scaling or regional limitations.
+Cloudflare Calls simplifies the management of peer connections and media tracks through HTTPS API endpoints. These endpoints allow developers to efficiently manage sessions, add or remove tracks, and gather session information.
 
 ## API Endpoints
-
-Cloudflare Calls simplifies the management of peer connections and media tracks through five primary API endpoints. These endpoints allow developers to efficiently manage sessions, add or remove tracks, and gather session information.
 
 - **Create a New Session**: Initiates a new session on the Cloudflare Calls WebRTC server, establishing a PeerConnection on the client side.
   - `POST /apps/{appId}/sessions/new`
@@ -27,7 +25,7 @@ Cloudflare Calls simplifies the management of peer connections and media tracks 
 
 ## Handling Secrets
 
-It is vital to manage App ID and it's secret securely. While track and session IDs can be public, they should be protected to prevent misuse. An attacker could exploit these IDs to disrupt service if your backend server does not authenticate request origins properly, for example by sending requests to close tracks on sessions other than their own. Ensuring the security and authenticity of requests to your backend server is crucial for maintaining the integrity of your application.
+It is vital to manage App ID and its secret securely. While track and session IDs can be public, they should be protected to prevent misuse. An attacker could exploit these IDs to disrupt service if your backend server does not authenticate request origins properly, for example by sending requests to close tracks on sessions other than their own. Ensuring the security and authenticity of requests to your backend server is crucial for maintaining the integrity of your application.
 
 ## Using STUN and TURN Servers
 
@@ -43,6 +41,6 @@ This section provides an overview of the typical lifecycle of a simple session, 
 
 <div class="full-img">
 
-![Example Lifecycle](/images/calls/calls-timeline.png)
+![Example Lifecycle](/images/calls/lifecycle-of-a-session.png)
 
 </div>

@@ -49,7 +49,7 @@ export default {
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env) {
+	async fetch(request, env): Promise<Response> {
 		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
 
@@ -76,7 +76,7 @@ export default {
 			.transform(res);
 		return newRes
 	}
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

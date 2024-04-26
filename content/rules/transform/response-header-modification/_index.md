@@ -63,3 +63,5 @@ You can create an HTTP response header modification rule [in the dashboard](/rul
 * To add a `set-cookie` header to the response, make sure you use the _Add_ operation instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
 
 * Currently you can only use the _Add_ operation with a literal string value.
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="HTTP response header modification rules">}}

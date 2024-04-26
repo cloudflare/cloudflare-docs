@@ -7,6 +7,8 @@ meta:
 
 # Packages
 
+{{<render file="_python-workers-beta-packages.md" productFolder="workers">}}
+
 To import a Python package, add the package name to the `requirements.txt` file within the same directory as your `wrangler.toml` configuration file.
 
 For example, if your Worker depends on [FastAPI](https://fastapi.tiangolo.com/), you would add the following:
@@ -28,7 +30,7 @@ As new versions of Pyodide and additional Python packages become available in Wo
 
 ## Supported Packages
 
-As of March April 2, 2024, the following Python packages are provided directly by the Workers runtime:
+As of April 2, 2024, the following Python packages are provided directly by the Workers runtime:
 
 - aiohttp: 3.9.3
 - aiohttp-tests: 3.9.3

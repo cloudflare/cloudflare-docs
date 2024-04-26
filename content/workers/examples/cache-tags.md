@@ -60,7 +60,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
     const tags =

@@ -60,8 +60,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env, ctx): Promise<Response> {
     // Service configured to receive logs
     const LOG_URL = "https://log-service.example.com/";
 
@@ -99,7 +100,7 @@ export default {
     }
     return response;
   },
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

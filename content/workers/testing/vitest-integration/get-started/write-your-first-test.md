@@ -8,7 +8,7 @@ meta:
 
 # Write your first test
 
-This guide will instruct you through installing and setting up the `@cloudflare/vitest-pool-workers` package. You will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For examples of tests using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
+This guide will instruct you through installing and setting up the `@cloudflare/vitest-pool-workers` package. This will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For examples of tests using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vites
 ## Define Vitest configuration
 
 If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
-You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/configuration/bindings/).
+You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/runtime-apis/bindings/).
 
 ```js
 ---
@@ -142,7 +142,7 @@ export default {
 filename: src/index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx): Promise<Response> {
 		return new Response("Hello World!");
 	},
 } satisfies ExportedHandler<Env>;
@@ -232,7 +232,7 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {

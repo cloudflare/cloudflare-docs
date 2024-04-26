@@ -5,7 +5,7 @@ weight: 3
 layout: learning-unit
 ---
 
-In clientless ZTWA deployments, users connect to internal applications via public hostnames. You will need to own a domain, add it to Cloudflare, and configure Cloudflare as the [authoritative DNS provider](#update-your-nameservers) for that domain. Enterprise customers who cannot change their authoritative DNS provider have the option to configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
+In clientless ZTWA deployments, users connect to internal applications via public hostnames. You will need to own a domain, add it to Cloudflare, and configure Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/setup/#update-your-nameservers) for that domain. Enterprise customers who cannot change their authoritative DNS provider have the option to configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 
 You only need to add one domain to Cloudflare, since you can create an infinite number of subdomains to manage all of your private applications.
 

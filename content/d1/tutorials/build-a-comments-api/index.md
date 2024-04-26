@@ -66,7 +66,7 @@ You will now create a D1 database. In Wrangler v2, there is support for the `wra
 $ wrangler d1 create d1-example
 ```
 
-Reference your created database in your Worker code by creating a [binding](/workers/configuration/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
+Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
 
 ```toml
 ---
@@ -141,7 +141,7 @@ app.get('/api/posts/:slug/comments', async c => {
 
 The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to [D1 client API](/d1/build-with-d1/d1-client-api/) for a list of all methods available.
 
-In this function, you accept a `slug` URL query parameter and set up a new SQL statement where you select all comments with a matching `post_slug` value to your query parameter. You can then return it as a JSON response. 
+In this function, you accept a `slug` URL query parameter and set up a new SQL statement where you select all comments with a matching `post_slug` value to your query parameter. You can then return it as a JSON response.
 
 ## 6. Insert data
 

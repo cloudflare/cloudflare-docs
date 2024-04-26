@@ -26,7 +26,7 @@ If you're using Cloudflare's Wordpress plugin, our "Optimize Cloudflare for Wor
 | WebSockets | On |
 | IP Geolocation | On |
 | Email Address Obfuscation | On |
-| Server-side Excludes | On |
+| Server-side Excludes (deprecated) | On |
 | Hotlink Protection | Off |
 | Image optimization (Polish and Mirage) | Off (unless on Pro or higher plan) |
 | Rocket Loader | Off |

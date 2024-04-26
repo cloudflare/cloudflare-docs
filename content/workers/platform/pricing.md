@@ -43,14 +43,49 @@ Workers Enterprise accounts are billed based on the usage model specified in the
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
 | **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
-| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation                    |
+| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation                    |
 
 {{</table-wrap>}}
 <sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
 ### Example pricing: Standard Usage Model
 
-A Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+#### Example 1 
+
+A Worker that serves 15 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $1.50             | (15,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
+| **CPU time**       |  $1.50             | ((7 ms of CPU time per request * 15,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $8.00             |                                                                                                          |
+
+{{</table-wrap>}}
+
+#### Example 2 
+
+A Worker that runs on a [Cron Trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report. 
+- 720 requests/month
+- 3 minutes (180,000ms) of CPU time per request
+
+In this scenario, the estimated monthly cost would be calculated as:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $0.00             | -                                |
+| **CPU time**       |  $1.99             | ((180,000 ms of CPU time per request * 720 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $6.99            |                                                                                                          |
+{{</table-wrap>}}
+
+#### Example 3 
+
+A high traffic Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
 
 {{<table-wrap>}}
 
@@ -58,8 +93,8 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | **Subscription**   |  $5.00              |                                                                                                          |
 | **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
-| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
-| **Total**          |  $45.40             |                                                                                                          |
+| **CPU time**       |  $13.40             | ((7 ms of CPU time per request * 100,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $45.40  
 
 {{</table-wrap>}}
 
@@ -78,7 +113,7 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 |             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | **Bundled** |  10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
-| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation        |
+| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation        |
 
 {{</table-wrap>}}
 
@@ -123,7 +158,11 @@ Resulting in the following estimated costs:
 
 {{</table-wrap>}}
 
-### How to switch the usage model
+### How to switch usage models
+
+{{<Aside type="note">}}
+Only some Workers Enterprise customers maintain the ability to change usage models.
+{{</Aside>}}
 
 Usage models can be changed at the individual Worker level: 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -209,7 +248,7 @@ Service bindings cost the same as any normal Worker. Each invocation is charged 
 
 If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
 
-For more information on how service bindings work, refer to [About Service bindings](/workers/configuration/bindings/about-service-bindings/).
+For more information on how service bindings work, refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ## Fine Print
 
