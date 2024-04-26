@@ -24,7 +24,9 @@ The email provides information to determine what caused the health status change
 
 {{<Aside type="note">}}
 
-A notification is only sent after a change of status in the marjority of all selected region(s). For a single region, this will be 2 of 3 datacentres; with 13 regions selected, this will be 7 of 13 regions (each regioning requiring a majority).
+A notification is only sent after a change of status in the majority of all selected region(s). 
+
+For a single region, this will be 2 of 3 data centers. With 13 regions selected, this will be 7 of 13 regions.
 
 {{</Aside>}}
 
