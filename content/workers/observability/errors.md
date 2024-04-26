@@ -35,6 +35,28 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
+## Errors on Worker upload
+
+{{<table-wrap>}}
+| Error code | Meaning                                                                                                           |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- |
+| `10006`     | Could not parse script body.                                                                              |
+| `10007`     | Script or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                                      |
+| `10015`     | Account is not entitled to use Workers.                                          |
+| `10016`     | Invalid script name.                                                    |
+| `10026`     | Could not parse request body.                                                                     |
+| `10035`     | Multiple attempts to modify a resource at the same time                                                                                        
+| `10037`     | An account has exceeded the number of [Workers scripts allowed](/workers/platform/limits/#number-of-workers).                         |
+| `10026`     | Could not parse request body.                         |                        |
+| `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                         |
+| `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                         |
+| `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).                         |
+| `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                         |
+| `10068`     | The uploaded script has no registered [event handlers](/workers/runtime-apis/handlers/).                         |
+| `10069`     | The uploaded script contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.                     |
+
+{{</table-wrap>}}
+
 ## Runtime errors
 
 Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
