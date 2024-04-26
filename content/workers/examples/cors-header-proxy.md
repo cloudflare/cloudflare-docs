@@ -234,9 +234,9 @@ export default {
         for (const [reqName, req] of Object.entries(reqs)) {
           try {
             let data = await req()
-            document.getElementById(reqName).innerHTML = JSON.stringify(data)
+            document.getElementById(reqName).textContent = JSON.stringify(data)
           } catch (e) {
-            document.getElementById(reqName).innerHTML = e
+            document.getElementById(reqName).textContent = e
           }
         }
       })()
