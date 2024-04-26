@@ -3,6 +3,7 @@ type: example
 summary: Protect against timing attacks by safely comparing values using `timingSafeEqual`.
 tags:
   - Security
+  - WebCrypto
 languages:
   - TypeScript
 pcx_content_type: configuration
