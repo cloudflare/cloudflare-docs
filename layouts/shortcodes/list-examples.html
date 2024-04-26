@@ -22,7 +22,7 @@
   {{- $optionsArray = sort (uniq $optionsArray) -}}
 
   <div>
-    <label for="{{$filter}}">{{replace $filter "_" " " | title}}</label>
+    <label for="{{$filter}}">{{$filter | title}}</label>
     <select class="selectorFilter" name="data-{{$filter}}" id="{{$filter}}">
       <option value="all">Select...</option>
       {{- range $optionsArray -}}
