@@ -14,6 +14,17 @@
 
 The recommended method to handle text generation responses is streaming.
 
+<aside class="DocsMarkdown--aside" role="note" data-type="warning">
+
+<div class="DocsMarkdown--aside-header">Warning</div>
+
+Streaming during local development is currently unsupported.
+
+You will see all messages come in at once. When deployed, the server will properly stream the messages.
+
+</aside>
+
+
 LLMs work internally by generating responses sequentially using a process of repeated inference — the full output of a LLM model is essentially a sequence of hundreds or thousands of individual prediction tasks. For this reason, while it only takes a few milliseconds to generate a single token, generating the full response takes longer, on the order of seconds.
 
 You can use streaming to start displaying the response as soon as the first tokens are generated, and append each additional token until the response is complete. This yields a much better experience for the end user. Displaying text incrementally as it's generated not only provides instant responsiveness, but also gives the end-user time to read and interpret the text.
