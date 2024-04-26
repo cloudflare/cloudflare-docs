@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure AD®
-weight: 4
+weight: 6
 ---
 
 # Microsoft Azure AD®
@@ -107,7 +107,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 ## Synchronize users and groups
 
@@ -178,6 +178,10 @@ You can create Access and Gateway policies for groups that are not synchronized 
 ### Nested groups
 
 Access and Gateway policies for an Azure group will also apply to all [nested groups](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/how-to-manage-groups#add-or-remove-a-group-from-another-group). For example, if a user belongs to the group `US devs`, and `US devs` is part of the broader group `Devs`, the user would be allowed or blocked by all policies created for `Devs`.
+
+## Force user interaction during WARP reauthentication
+
+You can require users to re-enter their credentials into Azure AD whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/operations/access-identity-providers-update-an-access-identity-provider) and set the `prompt` parameter to either `login` or `select_account`.
 
 ## Example API Configuration
 

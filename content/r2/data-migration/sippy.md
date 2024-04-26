@@ -2,6 +2,9 @@
 title: Sippy (beta)
 pcx_content_type: how-to
 weight: 2
+learning_center:
+  title: What is data migration?
+  link: https://www.cloudflare.com/learning/cloud/what-is-data-migration/
 ---
 
 # Sippy

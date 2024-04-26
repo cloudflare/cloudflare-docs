@@ -1,13 +1,12 @@
 ---
 title: Migration
 pcx_content_type: migration
-weight: 3
+weight: 2
 ---
 
-# Migrating from alternatives
+# Migrate from alternative services
 
-Customers using alternate services can switch to Cloudflare Turnstile.
-Step-by-step guides for select services are available below to assist with the upgrade process.
+If you are using alternative CAPTCHA services, you can switch to Cloudflare Turnstile using the guides below to assist with the upgrade process.
 
 [Get started with Turnstile](/turnstile/get-started/) if there is no guide available yet. 
 

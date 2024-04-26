@@ -1,10 +1,10 @@
 ---
-updated: 2021-01-25
+updated: 2024-03-12
 difficulty: Beginner
 content_type: 🎥 Video
 pcx_content_type: tutorial
-title: Introduction to Cloudflare Workers
-redirect: https://egghead.io/courses/introduction-to-cloudflare-workers-5aa3
+title: Learn Cloudflare Workers - Full Course for Beginners
+redirect: https://www.youtube.com/watch?v=H7Qe96fqg1M
 ---
 
-# Introduction to Cloudflare Workers
+# Learn Cloudflare Workers - Full Course for Beginners

@@ -40,7 +40,7 @@ filename: src/index.ts
 ---
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
-  YOUR_DO_CLASS: DurableObject;
+  YOUR_DO_CLASS: DurableObjectNamespace;
 }
 
 export default {
@@ -71,7 +71,7 @@ export default {
   }
 }
 
-export class YourDurableObject implements Durable Object {
+export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
       this.state = state;
       // Ensure you pass your bindings and environmental variables into

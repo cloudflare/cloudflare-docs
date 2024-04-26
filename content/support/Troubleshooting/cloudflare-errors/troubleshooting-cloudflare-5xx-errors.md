@@ -91,14 +91,20 @@ A 502 or 504 error originating from Cloudflare appears as follows:
 
 ![Example of an unbranded error 502.](/images/support/image5.png)
 
-If the error does not mention “cloudflare,” contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
+If the error does not mention `cloudflare`, contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
+
+Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic. 
+In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
+These traffic adjustments are mostly seamless and take only a few seconds. 
+Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors. 
+You can find more information about our automated traffic management tools [in this blogpost](https://blog.cloudflare.com/meet-traffic-manager).
 
 **Resolution**
 
-To avoid delays processing your inquiry, provide these required details to [Cloudflare Support](/support/contacting-cloudflare-support/):
+If you still need our Support team to help you investigate further, please provide these required details to [Cloudflare Support](/support/contacting-cloudflare-support/) to avoid delays processing your inquiry:
 
 1.  Time and timezone the issue occurred.
-2.  URL that resulted in the HTTP 502 or 504 response (for example: `https://www.example.com/images/icons/image1.png`)
+2.  URL that resulted in the HTTP 502 or 504 response (for example: `https://www.example.com/images/icons/image1.png`).
 3.  Output from browsing to `<YOUR_DOMAIN>/cdn-cgi/trace`.
 
 ___
@@ -107,11 +113,11 @@ ___
 
 HTTP error 503 occurs when your origin web server is overloaded. There are two possible causes discernible by error message:
 
--   Error doesn’t contain “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error doesn't contain `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: Contact your hosting provider to verify if they rate limit requests to your origin web server.
 
--   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error contains `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 

@@ -8,11 +8,13 @@ weight: 1
 
 ## Background
 
-Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called.
+Durable Objects alarms allow you to schedule the Durable Object to be woken up at a time in the future. When the alarm's scheduled time comes, the `alarm()` handler method will be called. Alarms are modified using the [Transactional Storage API](/durable-objects/api/transactional-storage-api/), and alarm operations follow the same rules as other storage operations.
 
-Alarms are modified using the [Transactional Storage API](/durable-objects/api/transactional-storage-api/). Alarm operations follow the same rules as other storage operations. Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`. 
+Notably: 
 
-Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws. Retries are performed using exponential backoff starting at a two second delay from the first failure with up to six retries allowed.
+* Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`.
+* Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
+* Retries are performed using exponential backoff starting at a two second delay from the first failure with up to six retries allowed.
 
 {{<Aside type="note" header="How are alarms different from Cron Triggers?">}}
 
@@ -22,7 +24,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Using the Alarms API](/durable-objects/examples/alarms-api/).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
 
 ## Transactional Storage methods
 
@@ -74,9 +76,46 @@ Alarms can be used to build distributed primitives, like queues or batching of w
  
 {{</definitions>}}
 
----
+## Example
+
+This example shows how to both set alarms with the `setAlarm(timestamp)` method and handle alarms with the `alarm()` handler within your Durable Object.
+
+* The `alarm()` handler will be called once every time an alarm fires.
+* If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine.
+* Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
+
+```js
+export default {
+  async fetch(request, env) {
+    let id = env.ALARM_EXAMPLE.idFromName("foo");
+    return await env.ALARM_EXAMPLE.get(id).fetch(request);
+  },
+};
+
+const SECONDS = 1000;
+
+export class AlarmExample {
+  constructor(ctx, env) {
+    this.ctx = ctx;
+    this.storage = ctx.storage;
+  }
+  async fetch(request) {
+    // If there is no alarm currently set, set one for 10 seconds from now
+    let currentAlarm = await this.storage.getAlarm();
+    if (currentAlarm == null) {
+      this.storage.setAlarm(Date.now() + 10 * SECONDS);
+    }
+  }
+  async alarm() {
+    // The alarm handler will be invoked whenever an alarm fires.
+    // You can use this to do work, read from the Transactional Storage API, make HTTP calls
+    // and set future alarms to run using this.storage.setAlarm() from within this handler.
+  }
+}
+```
 
 ## Related resources
 
-- [Durable Objects alarms announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
-- [Transactional Storage API](/durable-objects/api/transactional-storage-api/).
+* Understand how to [use the Alarms API](/durable-objects/examples/alarms-api/) in an end-to-end example. 
+* Read the [Durable Objects alarms announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
+* Review the [Transactional Storage API](/durable-objects/api/transactional-storage-api/) documentation for Durable Objects.

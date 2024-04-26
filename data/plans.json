@@ -538,6 +538,28 @@
   "dns": {
     "title": "DNS",
     "link": "/dns/",
+    "advanced_nameservers": {
+      "title": "Advanced nameservers",
+      "link": "/dns/foundation-dns/advanced-nameservers/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Included with [Foundation DNS](/dns/foundation-dns/)"
+        },
+        "graphql_analytics": {
+          "title": "GraphQL DNS analytics",
+          "summary": "Advanced nameservers analytics are accessible by GraphQL",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
     "cname_flattening": {
       "title": "CNAME flattening",
       "link": "/dns/cname-flattening/",
@@ -562,7 +584,7 @@
     },
     "custom_nameservers": {
       "title": "Custom nameservers",
-      "link": "/dns/additional-options/custom-nameservers/",
+      "link": "/dns/nameservers/custom-nameservers/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1675,7 +1697,7 @@
           "pro": 0,
           "biz": 0,
           "ent": 0,
-          "ent_plus": 3
+          "ent_plus": 5
         },
         "l_logpush_jobs": {
           "title": "Number of Logpush jobs",
@@ -1824,7 +1846,7 @@
       }
     },
     "server_side_excludes": {
-      "title": "Server-side Excludes",
+      "title": "Server-side Excludes (deprecated)",
       "link": "/waf/tools/scrape-shield/server-side-excludes/",
       "properties": {
         "availability": {
@@ -1853,14 +1875,14 @@
           "lite": "No",
           "pro": "Paid add-on",
           "biz": "Paid add-on",
-          "ent": "Paid add-on"
+          "ent": "Yes"
         },
         "tcp": {
           "title": "TCP",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Paid add-on"
         },
         "udp": {
           "title": "UDP",
@@ -1868,7 +1890,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Paid add-on"
         },
         "v_minecraft": {
           "title": "Minecraft (one app allowed)",

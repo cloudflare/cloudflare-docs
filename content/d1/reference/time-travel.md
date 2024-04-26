@@ -1,7 +1,7 @@
 ---
 title: Time Travel and backups
 pcx_content_type: concept
-weight: 3
+weight: 2
 ---
 
 # Time Travel
@@ -18,7 +18,7 @@ By not having to rely on scheduled backups and/or manually initiated backups, yo
 
 Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/reference/backups/) used for legacy alpha databases.
 
-To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: beta` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
+To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: production` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
 
 {{</Aside>}}
 
@@ -41,9 +41,8 @@ Time Travel supports two timestamp formats:
 
 ## Requirements
 
-
 * [`Wrangler`](/workers/wrangler/install-and-update/) `v3.4.0` or later installed to use Time Travel commands.
-* A database on D1's new `beta` backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` - the output show `version: beta`.
+* A database on D1's production backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` - the output show `version: production`.
 
 ## Retrieve a bookmark
 

@@ -24,11 +24,12 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async scheduled(event, env, ctx) {
+  async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {
     console.log("cron processed");
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}
@@ -36,7 +37,7 @@ export default {
 
 ## Set Cron Triggers in Wrangler
 
-Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more information on how to add a Cron Trigger. 
+Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more information on how to add a Cron Trigger.
 
 If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your `wrangler.toml` file:
 

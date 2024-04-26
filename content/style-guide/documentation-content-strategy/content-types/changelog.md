@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Changelog
-
 ---
 
 # Changelog
@@ -167,6 +166,7 @@ link: "/waf/change-log/"
 productName: WAF
 entries:
 - publish_date: '2023-09-18'
+  scheduled_date: '2023-09-25'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
@@ -179,7 +179,7 @@ entries:
 {{<definitions>}}
 - `publish_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Date of scheduled change, formatted as `YYYY-MM-DD`.
+    - Date when the page was published, formatted as `YYYY-MM-DD`. For pages with scheduled changes, you should update this field when adding/updating entries, so that the changelog item gets placed at the top of the changelog list (and feed). You should _not_ update this date when clearing all scheduled changes due to a release, since this change is not as relevant.
 
 - `individual_page` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -193,7 +193,17 @@ entries:
 
    - Should be included for scheduled pages. Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
 
+- `scheduled_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+   - Should be included for pages with scheduled changes. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
+
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+If the scheduled date gets pushed for a change, update the `publish_date` and `scheduled_date` fields of the changelog entry. This process makes sure customers will receive notifications via their RSS feeds.
+
+{{</Aside>}}
 
 ## Examples
 

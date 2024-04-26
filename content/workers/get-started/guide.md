@@ -17,50 +17,35 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 {{</Aside>}}
 
+{{<render file="/_workers-learning-path.md">}}
+
 ## Get started in the dashboard
 
-By following the Get started guide, you will create a Worker using the command line. To create your first Worker using the Cloudflare dashboard:
+{{<render file="_get-started-dash.md" productFolder="workers">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Create application**.
-3. Select **Create Worker** > **Deploy**.
+## Prerequisites
 
-{{<render file="_prereqs.md">}}
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 ## 1. Create a new Worker project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
+{{<render file="_c3-definition.md" productFolder="workers">}}
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command.md" productFolder="workers">}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
 For this guide, set up a basic Worker:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" script` as the type of application you want to create.
+2. Select `"Hello World" Worker` as the type of application you want to create.
 3. Answer `yes` or `no` to using TypeScript.
 
 {{<Aside type="note">}}
 
-The rest of this guide assumes that the user is creating a JS project. If you are creating a TypeScript project, the files will be `.ts`, a `.tsconfig` file will be created, and proper dependencies will be added.
+The rest of this guide assumes that you will create a JavaScript project. If you are creating a TypeScript project, the files will be `.ts`, a `.tsconfig` file will be created, and proper dependencies will be added.
 
 {{</Aside>}}
 
