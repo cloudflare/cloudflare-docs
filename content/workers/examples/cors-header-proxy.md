@@ -236,7 +236,7 @@ export default {
             let data = await req()
             document.getElementById(reqName).textContent = JSON.stringify(data)
           } catch (e) {
-            document.getElementById(reqName).textContent = e
+            test.getElementById(reqName).textContent = e
           }
         }
       })()
