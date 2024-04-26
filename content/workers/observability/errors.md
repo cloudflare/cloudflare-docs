@@ -36,7 +36,7 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
 ## Errors on Worker upload
-
+These errors occur when a Worker is uploaded or modified. 
 {{<table-wrap>}}
 | Error code | Meaning                                                                                                           |
 | ---------------- | -------------------------------------------------------------------------------------------------------------- |
