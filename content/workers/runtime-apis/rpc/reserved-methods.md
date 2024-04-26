@@ -31,7 +31,7 @@ The `connect()` method of the `WorkerEntrypoint` class is reserved for opening a
 
 ## Disallowed Method Names
 
-The following method (or proprety) names may not be used as RPC methods on any RPC type (including `WorkerEntrypoint`, `DurableObject`, and `RpcTarget`):
+The following method (or property) names may not be used as RPC methods on any RPC type (including `WorkerEntrypoint`, `DurableObject`, and `RpcTarget`):
 
 * `dup`: This is reserved for duplicating a stub. Refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs to learn more about `dup()`.
 * `constructor`: This name has special meaning for JavaScript classes. It is not intended to be called as a method, so it is not allowed over RPC.
