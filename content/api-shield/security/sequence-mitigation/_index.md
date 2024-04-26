@@ -27,8 +27,6 @@ Using Sequence Mitigation, you can enforce that request pattern with two new Seq
 You can create Sequence Mitigation rules for a sequence even if the sequence is not listed in [Sequence Analytics](/api-shield/security/sequence-analytics/).
 {{</Aside>}}
 
-You can also set up a negative security model with Sequence Mitigation. See [Configuration](/api-shield/security/sequence-mitigation/configure/#configure) to understand how to distinguish between rule types using the `kind` field.
-
 ## Process
 
 You can create a sequence rule to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
@@ -37,7 +35,7 @@ In the bank funds transfer example, enforcing that a user requests `GET /api/v1/
 
 A negative security model may be useful if you see abusive behavior that is outside the norm of your application and you need to stop the requests while researching the correct positive security model to implement. 
 
-For example, if there was a bug that allowed an unauthorized user to get an account number via a user’s profile `GET /api/v1/users/{var1}/profile` and then an unauthorized user attempted to retrieve account numbers from emails and make immediate funds transfers, you can create up a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
+For example, if there was an authorization bug that allowed users to iterate through other users' profiles that contain account numbers via `GET /api/v1/users/{var1}/profile` and then a user tries to make fradulent funds transfers, you could create up a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
 
 ## Create a sequence rule
 
@@ -77,10 +75,6 @@ You can also explicitly set a priority order by selecting the three dots on your
 
 To track requests to {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}}, they must be added to [Endpoint Management](/api-shield/management-and-monitoring/). Add your endpoints to endpoint management via [API Discovery](/api-shield/security/api-discovery/), [Schema Validation](/api-shield/security/schema-validation/), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) through the Cloudflare dashboard.
 
-{{<Aside type="note">}}
-API endpoints are subject to change.
-{{</Aside>}}
-
 ### Session Identifiers
 
 API Shield uses your configured {{<glossary-tooltip term_id="session identifier">}}session identifier{{</glossary-tooltip>}} to track sessions. You must configure a session identifier that is unique per end user of your API in order for Sequence Mitigation to function as expected.
@@ -89,7 +83,7 @@ API Shield uses your configured {{<glossary-tooltip term_id="session identifier"
 
 API Shield currently stores the last 10 requested endpoints by each API user identified by the session identifier. Sequence Mitigation de-duplicates requests to the same endpoint while building the sequence. 
 
-To illustrate, in the original sequence example listed in the [Configuration](/api-shield/security/sequence-mitigation/configure/) section, Sequence Mitigation would store the following sequence:
+To illustrate, in the original [sequence example](/api-shield/security/sequence-mitigation/)) listed above, Sequence Mitigation would store the following sequence:
 
 1. `GET /api/v1/users/{user_id}/accounts`
 2. `GET /api/v1/accounts/{account_id}/balance`
