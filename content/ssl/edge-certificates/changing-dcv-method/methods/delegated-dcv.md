@@ -100,6 +100,12 @@ Currently, at certificate renewal, Cloudflare attempts to automatically perform 
 
 Note that settings that interfere with the validation URLs can cause issues in this case. Refer to [Troubleshooting](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) for guidance.
 
+{{<Aside type="note">}}
+If a hostname becomes unreachable during certificate renewal time, the certificate will not be able to be renewed automatically via Delegated DCV. Should you need to renew a certificate for a hostname that is not resolving currently, you can send a PATCH request to [the changing DCV method API endpoint](/api/operations/ssl-verification-edit-ssl-certificate-pack-validation-method) and change the method to TXT to proceed with manual renewal per [the TXT DCV method](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
+
+Once the hostname becomes resolvable again, [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) will resume working as expected.
+{{</Aside>}}
+
 ### Moved domains
 
 If you [move your zone to another account](/fundamentals/setup/manage-domains/move-domain/), you will need to update the `CNAME` record at your authoritative DNS provider with a new validation URL.
