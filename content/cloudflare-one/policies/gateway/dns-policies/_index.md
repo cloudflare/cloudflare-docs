@@ -122,7 +122,7 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-{{<render file="gateway/selectors/_block-content-categories.md" withParameters="When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).">}}
+{{<render file="gateway/policies/_block-content-categories.md" withParameters="When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).">}}
 
 ### DNS CNAME Record
 
