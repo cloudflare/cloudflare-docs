@@ -73,7 +73,7 @@ export default {
 {{<tab label="py">}}
 
 ```py
-from js import Response, fetch, URL
+from js import fetch, URL
 
 async def on_fetch(request):
     # A dict with different URLs to fetch
