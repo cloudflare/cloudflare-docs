@@ -8,6 +8,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Bulk redirects
 weight: 1001

@@ -7,6 +7,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Block on TLS
 weight: 1001

@@ -6,6 +6,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Bulk origin override
 weight: 1001
