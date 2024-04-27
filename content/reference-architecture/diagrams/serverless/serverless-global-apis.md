@@ -18,13 +18,13 @@ Developers define the API endpoints and the corresponding logic or functionality
 
 Additionally, serverless APIs often integrate seamlessly with other cloud services, such as authentication and authorization services, databases, and event-driven architectures, enabling developers to build complex, scalable, and resilient applications with minimal operational overhead.
 
+Most cloud serverless implementations have a single region where your code is executed. This means any request, from anywhere in the world, must traverse the Internet to get to this single location. All responses to the API request must also be sent back over the same Internet route to the user.
+
 ![Figure 1: Traditional single-region architecture](/images/reference-architecture/serverless-global-apis/single-region.png "Figure 1:  Traditional single-region architecture")
 
-Traditional, single-region architecture can lead to high latency, especially with a globally distributed user-base.
+Cloudlare follows a different, global-first approach. Globally-deployed architectures enable lower latency and high availability for users accessing the API from different parts of the world. In order to realize performance gains, not only the compute needs to be distributed, but ideally the data as well. Different solutions such as a caching as well as global replication can enable this.
 
 ![Figure 2: Region Earth](/images/reference-architecture/serverless-global-apis/region-earth.png "Figure 2:  Region Earth")
-
-Globally-deployed architectures enable lower latency and high availability for users accessing the API from different parts of the world. In order to realize performance gains, not only the compute needs to be distributed, but ideally the data as well. Different solutions such as a caching as well as global replication can enable this.
 
 Overall, serverless globally-deployed APIs offer a cost-effective, scalable, and agile approach to building modern applications and services, allowing organizations to focus on delivering value to their users without being encumbered by the complexities of managing infrastructure.
 
