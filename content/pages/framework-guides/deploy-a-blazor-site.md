@@ -9,13 +9,13 @@ title: Deploy a Blazor Site
 
 ## Install .NET
 
-Blazor uses C#. You will need to [install the .NET SDK](https://dotnet.microsoft.com/download) to continue creating a Blazor project. Download and run the installer.
+Blazor uses C#. You will need to the latest version of the [.NET SDK](https://dotnet.microsoft.com/download) (which currently is `8.0`) to continue creating a Blazor project. If you don't have the SDK installed on your system please download and run the installer.
 
 ## Creating a new Blazor WASM project
 
-There are two types of Blazor projects: Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. 
+There are two types of Blazor hosting models: [Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-8.0#blazor-server) which requires a server to run serve the Blazor application to the end user, and [Blazor WebAssembly](https://learn.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-8.0#blazor-webassembly) which runs in the browser. Blazor Server is incompatible with the Cloudflare edge network model, thus this guide only use Blazor WebAssembly.
 
-Create a new Blazor WASM application by running the following command in a new directory:
+Create a new Blazor WebAssembly (WASM) application by running the following command in a new directory:
 
 ```sh
 $ dotnet new blazorwasm -o my-blazor-project
@@ -29,10 +29,12 @@ To deploy, Cloudflare Pages will need a way to build the Blazor project. In the 
 #!/bin/sh
 curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh
 chmod +x dotnet-install.sh
-./dotnet-install.sh -c 7.0 -InstallDir ./dotnet
+./dotnet-install.sh -c 8.0 -InstallDir ./dotnet
 ./dotnet/dotnet --version
 ./dotnet/dotnet publish -c Release -o output
 ```
+
+Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -45,12 +47,6 @@ $ dotnet new gitignore
 ```
 
 {{<render file="/_framework-guides/_create-github-repository.md">}}
-
-{{<Aside type="note">}}
-
-Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`, or commit the file as an executable by running `git add --chmod=+x build.sh`.
-
-{{</Aside>}}
 
 ## Deploy with Cloudflare Pages
 
