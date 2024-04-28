@@ -12,9 +12,8 @@ In this guide, you will create a new VitePress project and deploy it using Cloud
 
 ## Set up a new project
 
-Initialize your git repository.
-
-Scaffold your VitePress site by first adding VitePress locally and then using the bootstrapping tool.
+1. Initialize your git repository.
+2. Scaffold your VitePress site by first adding VitePress locally and then using the bootstrapping tool.
 
 ```sh
 npm add -D vitepress
@@ -52,10 +51,9 @@ Tips:
 - Make sure to add .vitepress/dist and .vitepress/cache to your .gitignore file.
 ```
 
-Push a commit to your repository with the changes.
-
 ## Deploy your site
 
+1. Push a commit to your repository with the changes.
 1. From the account home page, go to _Workers & Pages_
 1. Click _Create Application_. 
 1. On the following page, click the _Pages_ tab
