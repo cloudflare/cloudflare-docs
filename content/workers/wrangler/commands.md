@@ -2012,16 +2012,6 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 {{</Aside>}}
 
-### `secret`
-
-Manage secrets that can be referenced in a Pages project.
-
-```txt
-wrangler pages secret put FOO
-```
-
-All the subcommands and definitions are identical to [`wrangler secret`](#secret).
-
 ---
 
 ## `queues`
