@@ -40,8 +40,8 @@
   {{- $x := $page.RelPermalink -}}
   {{- $isExample := (strings.HasPrefix $x $target) -}}
   {{- if and (ne $x $target) $isExample -}}
-  <li class="DocsCodeExamplesOverview--example" {{ if ne (index $filters 0) "" }} {{ range $index2, $filter :=$filters
-    }} {{ with (index $page.Params $filter) }} data-{{$filter}}="{{ delimit (.) " |" }}" {{ end }} {{ end }} {{ end }}>
+  <li class="DocsCodeExamplesOverview--example" {{ if ne (index $filters 0) "" }} {{ range $index2, $filter := $filters
+    }} {{ with (index $page.Params $filter) }} data-{{$filter}}="{{ delimit (.) "|" }}" {{ end }} {{ end }} {{ end }}>
     <div class="DocsCodeExamplesOverview--example-title">
       {{- .Page.RenderString (printf "[%s](%s)" $page.Title $page.RelPermalink) -}}
     </div>
@@ -111,7 +111,7 @@
       }
     }
     let newUrl = new URL(window.location);
-    newUrl.search = ''
+    newUrl.search = '';
 
     for (option in selectedOptions) {
       newUrl.searchParams.set(option, selectedOptions[option])
