@@ -9,7 +9,7 @@ title: Deploy a Blazor Site
 
 ## Install .NET
 
-Blazor uses C#. You will need to the latest version of the [.NET SDK](https://dotnet.microsoft.com/download) (which currently is `8.0`) to continue creating a Blazor project. If you don't have the SDK installed on your system please download and run the installer.
+Blazor uses C#. You will need to download the latest version of the [.NET SDK](https://dotnet.microsoft.com/download) to continue creating a Blazor project. If you don't have the SDK installed on your system please download and run the installer.
 
 ## Creating a new Blazor WASM project
 
