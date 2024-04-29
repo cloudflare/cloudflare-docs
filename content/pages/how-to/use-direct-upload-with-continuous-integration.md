@@ -5,7 +5,7 @@ title: Use Direct Upload with continuous integration
 
 # Use Direct Upload with continuous integration
 
-Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
+Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
 ## Deploy with Wrangler
 
@@ -96,6 +96,12 @@ In the above code block, you have set up an Action that runs when you push code 
 
 The `${{ secrets.GITHUB_TOKEN }}` will be automatically provided by GitHub Actions with the `contents: read` and `deployments: write` permission. This will enable our Cloudflare Pages action to create a Deployment on your behalf.
 
+{{<Aside type="note">}}
+
+This workflow automatically triggers on the associated branch, unless add a `branch` option to the `with` section.
+
+{{</Aside>}}
+
 ## Using CircleCI for CI/CD
 
 [CircleCI](https://circleci.com/) is another continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. It can be configured to efficiently run complex pipelines with caching, docker layer caching, and resource classes.
@@ -151,7 +157,9 @@ Wrangler requires a Node version of at least `16.17.0`. You must upgrade your No
 
 {{</Aside>}}
 
-The job then proceeds to run all the steps specified, after which you will need to define a `workflow` at the end of your file. You can learn more about creating a custom process with CircleCI from the [official documentation](https://circleci.com/docs/2.0/concepts/).
+You can modify the script with any [`wrangler pages deploy` options](/workers/wrangler/commands/#deploy-1).
+
+After all the specified steps, define a `workflow` at the end of your file. You can learn more about creating a custom process with CircleCI from the [official documentation](https://circleci.com/docs/2.0/concepts/).
 
 ## Travis CI for CI/CD
 
@@ -190,3 +198,5 @@ env:
 ```
 
 In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler v2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+
+You can also modify the script with any [`wrangler pages deploy` options](/workers/wrangler/commands/#deploy-1).
