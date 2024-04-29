@@ -1,9 +1,9 @@
 ---
-title: Fullstack Application
+title: Fullstack Applications
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
-  title: "Fullstack application"
+  title: "Fullstack applications"
 ---
 
 # Fullstack web applications
