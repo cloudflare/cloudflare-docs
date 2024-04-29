@@ -676,7 +676,7 @@ To add secrets to your Pages project:
 5. Select **Encrypt** to create your secret.
 6. Select **Save**.
 
-You use secrets the same way as environment variables. For more guidance, refer to [Environment variables](#environment-variables).
+You use secrets the same way as environment variables. When setting secrets with Wrangler or in the Cloudflare dashboard, it needs to be done before a deployment that uses those secrets. For more guidance, refer to [Environment variables](#environment-variables).
 
 ### Interact with your secrets locally
 
