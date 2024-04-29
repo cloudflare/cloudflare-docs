@@ -164,9 +164,9 @@ You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edg
 {{</Aside>}}
 
 1.  Open a new tab and enter the following depending on the browser you're using:
-- [chrome://net-export](chrome://net-export)
-- [edge://net-export](edge://net-export)
-- [opera://net-export](opera://net-export)
+- `chrome://net-export`
+- `edge://net-export`
+- `opera://net-export`
 2.  Click the **Start Logging To Disk** button.
 3.  Reproduce the network problem in a different tab (the `chrome://net-export/` or `edge://net-export/` tab needs to stay open or logging will automatically stop.)
 4.  Click **Stop Logging** button.
