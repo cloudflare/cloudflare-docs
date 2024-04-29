@@ -157,9 +157,12 @@ ___
 
 ## Identify the Cloudflare data center serving your request
 
-[A map of our data centers](https://www.cloudflare.com/network-map) is listed on the [Cloudflare status page](https://www.cloudflarestatus.com/), sorted by continent. The three-letter code in the data center name is the [IATA code](http://en.wikipedia.org/wiki/IATA_airport_code) of the nearest major international airport. Determine the Cloudflare data center serving requests for your browser by visiting: `http://``_www.example.com_``/cdn-cgi/trace.`
+[A map of our data centers](https://www.cloudflare.com/network-map) is listed on the [Cloudflare status page](https://www.cloudflarestatus.com/), sorted by continent. 
+The three-letter code in the data center name is the [IATA code](http://en.wikipedia.org/wiki/IATA_airport_code) of the nearest major international airport. 
+Determine the Cloudflare data center serving requests for your browser by visiting: 
+`http://``_www.example.com_``/cdn-cgi/trace.`
 
-Replace _www.example.com_ with your domain and hostname.  Note the **colo** field from the output.
+Replace `www.example.com` with your domain and hostname.  Note the `colo` field from the output.
 
 ___
 
@@ -301,7 +304,7 @@ Timeouts are possible for ping results because Cloudflare limits ping
 requests.
 {{</Aside>}}
 
-Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and hostname in the examples below:
+Review the instructions below for running traceroute on different operating systems. Replace `www.example.com` with your domain and hostname in the examples below:
 
 ### Run traceroute on Windows
 
