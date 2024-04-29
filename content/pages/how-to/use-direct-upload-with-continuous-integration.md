@@ -98,7 +98,7 @@ The `${{ secrets.GITHUB_TOKEN }}` will be automatically provided by GitHub Actio
 
 {{<Aside type="note">}}
 
-This workflow automatically triggers on the associated branch, unless you add a `branch` option to the `with` section.
+This workflow automatically triggers on the current git branch, unless you add a `branch` option to the `with` section.
 
 {{</Aside>}}
 
