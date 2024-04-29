@@ -2,9 +2,11 @@
 type: example
 summary: Use the Cache API to store responses in Cloudflare's cache.
 tags:
-  - Cache API
   - Middleware
   - Caching
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Using the Cache API
 weight: 1001

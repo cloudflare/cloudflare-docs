@@ -2,10 +2,14 @@
 type: example
 summary: Send a GET request and read in JSON from the response. Use to fetch
   external data.
-tags:
-  - Originless
 pcx_content_type: configuration
 title: Fetch JSON
+tags:
+  - JSON
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 weight: 4
 layout: example
 ---

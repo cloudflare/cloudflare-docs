@@ -3,8 +3,12 @@ type: example
 summary: Shows how to restrict access using the HTTP Basic schema.
 tags:
   - Security
-  - Originless
   - Authentication
+languages:
+  - JavaScript
+  - TypeScript
+preview:
+  - true
 pcx_content_type: configuration
 title: HTTP Basic Authentication
 weight: 1001

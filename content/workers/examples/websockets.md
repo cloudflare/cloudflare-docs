@@ -3,6 +3,8 @@ type: example
 summary: Use the WebSockets API to communicate in real time with your Cloudflare Workers.
 tags:
   - WebSockets
+languages:
+  - JavaScript
 pcx_content_type: configuration
 title: Using the WebSockets API
 weight: 10000

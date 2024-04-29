@@ -4,7 +4,10 @@ summary: Cache POST requests using the Cache API.
 tags:
   - Middleware
   - Caching
-  - Cache API
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Cache POST requests
 weight: 1001
