@@ -155,6 +155,23 @@ In certain situations when request is not issued or cancelled by the browser (fo
 
 ___
 
+## Capture a NetLog dump
+
+In some cases, in order to further troubleshoot issues related to protols (errors such as `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR`, etc..) our Support team may ask you to provide a [NetLog dump](https://www.chromium.org/for-testers/providing-network-details/).
+
+{{<Aside type="warning">}}
+You can only generate a NetLog dump on the Google Chrome or Microsoft Edge browsers.
+{{</Aside>}}
+
+1.  Open a new tab and go to [about://net-export](about://net-export)
+2.  Click the **Start Logging To Disk** button.
+3.  Reproduce the network problem in a different tab (the `chrome://net-export/` or `edge://net-export/` tab needs to stay open or logging will automatically stop.)
+4.  Click **Stop Logging** button.
+5.  Attach the log file to your support ticket.
+
+
+___
+
 ## Identify the Cloudflare data center serving your request
 
 [A map of our data centers](https://www.cloudflare.com/network-map) is listed on the [Cloudflare status page](https://www.cloudflarestatus.com/), sorted by continent. 
