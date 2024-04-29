@@ -63,7 +63,7 @@ If you chose **Allow**, select whether to log or block the request to the final 
 
 You also have the option to edit an existing rule by selecting it on the rule list. You can rename your rule, adjust the starting and ending endpoint order, modify the endpoint, and change the action of the rule. 
 
-## Reprioritize a rule
+## Reprioritize a sequence rule
 
 You can change the priority order of your rules by selecting and dragging the rules on the list. 
 
