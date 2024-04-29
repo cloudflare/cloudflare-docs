@@ -15,7 +15,7 @@ Blazor uses C#. You will need the latest version of the [.NET SDK](https://dotne
 
 There are two types of Blazor hosting models: [Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-8.0#blazor-server) which requires a server to serve the Blazor application to the end user, and [Blazor WebAssembly](https://learn.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-8.0#blazor-webassembly) which runs in the browser. Blazor Server is incompatible with the Cloudflare edge network model, thus this guide only use Blazor WebAssembly.
 
-Create a new Blazor WebAssembly (WASM) application by running the following command in a new directory:
+Create a new Blazor WebAssembly (WASM) application by running the following command:
 
 ```sh
 $ dotnet new blazorwasm -o my-blazor-project
