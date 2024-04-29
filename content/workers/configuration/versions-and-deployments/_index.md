@@ -35,7 +35,7 @@ Versions also track metadata associated with a version, including: the version I
 
 {{<Aside type="note">}}
 
-State changes for associated Workers [storage resources](/workers/platform/storage-options/) such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/) and [D1](/d1/) are not tracked with versions. Refer to [Bindings](/workers/configuration/versions-and-deployments/#bindings) below for more information.
+State changes for associated Workers [storage resources](/workers/platform/storage-options/) such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/) and [D1](/d1/) are not tracked with versions.
 
 {{</Aside>}}
 
