@@ -191,7 +191,7 @@ $ curl -svo /dev/null http://www.example.com/
 This example curl command returns output detailing the HTTP response and request headers but discards the page body output. curl output confirms the HTTP response and whether Cloudflare is currently proxying traffic for the site.
 
 {{<Aside type="note">}}
-Review the [curl command options]([https://curl.haxx.se/docs/manpage.html](https://curl.se/docs/manpage.html)) for additional functionality.
+Review the [curl command options](https://curl.se/docs/manpage.html) for additional functionality.
 {{</Aside>}}
 
 View the sections below for tips on troubleshooting HTTP errors, performance, caching, and SSL/TLS certificates:
