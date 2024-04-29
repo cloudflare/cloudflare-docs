@@ -57,7 +57,6 @@ Use one or more of the following characteristics:
       <td>
         <ul>
           <li><a href="#incompatible-characteristics">Incompatible with <strong>IP with NAT support</strong></a></li>
-          <li><a href="#ipv6-address-handling">IPv6 address handling</strong></a></li>
         </ul>
       </td>
     </tr>
@@ -67,7 +66,6 @@ Use one or more of the following characteristics:
       <td>
         <ul>
           <li><a href="#incompatible-characteristics">Incompatible with <strong>IP</strong></a></li>
-          <li><a href="#ipv6-address-handling">IPv6 address handling</strong></a></li>
         </ul>
       </td>
     </tr>
@@ -316,10 +314,6 @@ The action behavior can be one of the following:
     ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
 
 ## Notes about rate limiting characteristics
-
-### IPv6 address handling
-
-Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
 
 ### Use cases of IP with NAT support
 
