@@ -70,7 +70,7 @@ To set up your policy:
             "Action": "s3:GetObject",
             "Resource": "arn:aws:s3:::www.example.com/*",
             "Condition": {
-                "IpAddress": {
+                "NotIpAddress": {
                     "aws:SourceIp": [
                         "192.2.0.1" (example IP address),
                         "192.2.0.2" (example IP address),
