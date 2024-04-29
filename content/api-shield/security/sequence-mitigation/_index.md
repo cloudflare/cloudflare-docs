@@ -50,7 +50,7 @@ For example, if there was an authorization bug that allowed users to iterate thr
 6. Select a final endpoint. This is the endpoint you are targeting for protection.
     1. Choose a hostname to display the list of endpoints for that hostname.
     2. Choose an endpoint.
-    3. **Select Set as ending endpoint**.
+    3. Select **Set as ending endpoint**.
 7. Choose an action that corresponds to the security model type:
     - **Allow**: This will create a positive security model by defining approved sequences on your API.
     - **Log** / **Block**: This will test or enforce a negative security model defining known bad sequences on your API.
