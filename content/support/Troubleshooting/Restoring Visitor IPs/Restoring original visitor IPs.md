@@ -379,7 +379,7 @@ ___
 
 ## Restoring original visitor IP with HAProxy
 
-In order to extract the original client IP in the X\_FORWARDD\_FOR header, you need to use the following configuration in HAProxy:
+In order to extract the original client IP in the X\_FORWARDED\_FOR header, you need to use the following configuration in HAProxy:
 
 1.  Create a text file `CF_ips.lst` containing all IP ranges from https://www.cloudflare.com/en-gb/ips/
 2.  Ensure to disable `option forwardfor` in HAProxy
