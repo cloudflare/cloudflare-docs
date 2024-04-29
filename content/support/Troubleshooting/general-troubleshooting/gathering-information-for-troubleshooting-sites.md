@@ -157,7 +157,7 @@ ___
 
 ## Capture a NetLog dump
 
-In some cases, in order to further troubleshoot issues related to protols (errors such as `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR`, etc..) our Support team may ask you to provide a [NetLog dump](https://www.chromium.org/for-testers/providing-network-details/).
+In some cases, in order to further troubleshoot issues related to protocols (errors such as `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR`, etc..) our Support team may ask you to provide a [NetLog dump](https://www.chromium.org/for-testers/providing-network-details/).
 
 {{<Aside type="warning">}}
 You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edge browsers.
