@@ -168,7 +168,8 @@ You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edg
 - `edge://net-export`
 - `opera://net-export`
 2.  Click the **Start Logging To Disk** button.
-3.  Reproduce the network problem in a different tab (the `chrome://net-export/` or `edge://net-export/` tab needs to stay open or logging will automatically stop.)
+3.  Reproduce the network problem in a different tab.
+(the `chrome://net-export/`, `edge://net-export/` or `opera://net-export` tab needs to stay open otherwise logging will automatically stop)
 4.  Click **Stop Logging** button.
 5.  Attach the log file to your support ticket.
 
