@@ -37,7 +37,7 @@ chmod +x dotnet-install.sh
 ./dotnet/dotnet publish -c Release -o output
 ```
 
-Your `build.sh` file needs to be executable for the build command to work. You can do this by running `chmod +x build.sh`.
+Your `build.sh` file needs to be executable for the build command to work. You can make it so by running `chmod +x build.sh`.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
