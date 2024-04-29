@@ -23,7 +23,7 @@ $ dotnet new blazorwasm -o my-blazor-project
 
 ## Create the build script
 
-To deploy, Cloudflare Pages will need a way to build the Blazor project. In the project's directory root, create a `build.sh` file. Populate the file with this:
+To deploy, Cloudflare Pages will need a way to build the Blazor project. In the project's directory root, create a `build.sh` file. Populate the file with this (updating the `.dotnet-install.sh` line appropriately if you're not using the latest .NET SDK):
 
 ```
 ---
