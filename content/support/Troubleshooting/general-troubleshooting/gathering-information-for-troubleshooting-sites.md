@@ -213,7 +213,7 @@ assistance.
 
 ### Performance
 
-curl measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ curl option]([https://curl.haxx.se/docs/manpage.html#-w](https://curl.se/docs/manpage.html#-w)). The example curl below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
+curl measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ curl option](https://curl.haxx.se/docs/manpage.html#-w). The example curl below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
 
 ```
 curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
