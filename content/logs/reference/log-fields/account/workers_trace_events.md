@@ -21,7 +21,7 @@ The descriptions below detail the fields available for `workers_trace_events`.
 | EventType | The event type that triggered the invocation. <br />Possible values are <em>fetch</em>. | string |
 | Exceptions | List of uncaught exceptions during the invocation. | array[object] |
 | Logs | List of console messages emitted during the invocation. | array[object] |
-| Outcome | The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>. | string |
+| Outcome | The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em> \| <em>exceededCpu</em> \| <em>killSwitch</em> \| <em>daemonDown</em> \| <em>scriptNotFound</em> \| <em>canceled</em> \| <em>exceededMemory</em> \| <em>unknown</em>. | string |
 | ScriptName | The Cloudflare Worker script name. | string |
 | ScriptTags | A list of user-defined tags used to categorize the Worker. | array[string] |
 | ScriptVersion | The version of the script that was executed. | object |
