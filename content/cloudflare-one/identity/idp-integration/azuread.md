@@ -22,9 +22,9 @@ To retrieve those values:
 
 1. Log in to the [Azure dashboard](https://portal.azure.com/).
 
-2. Go to **All services** > **Azure Active Directory**.
+2. Go to **All services** > **Microsoft Entra ID**.
 
-3. In the Azure Active Directory menu, go to **Enterprise applications**.
+3. In the Microsoft Entra ID menu, go to **Enterprise applications**.
 
 4. Select **New application** > **Create your own application**.
 
@@ -44,7 +44,7 @@ To retrieve those values:
 
 8. Select **Register**.
 
-9. Next, return to the Azure Active Directory menu and go to **App registrations**.
+9. Next, return to the Microsoft Entra ID menu and go to **App registrations**.
 
 10. Select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**.
 
@@ -125,7 +125,7 @@ To synchronize users and groups between Access and Azure:
 SCIM requires a separate enterprise application from the one created during [initial setup](#set-up-azure-ad-as-an-identity-provider).
 {{</Aside>}}
 
-1. In the Azure Active Directory menu, go to **Enterprise applications**.
+1. In the Microsoft Entra ID menu, go to **Enterprise applications**.
 
 2. Select **New application** > **Create your own application**.
 
