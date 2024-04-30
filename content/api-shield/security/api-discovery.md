@@ -37,7 +37,7 @@ API Discovery runs this process across all your traffic, generating a simple map
 
 API Shield first catalogs your discovered API endpoints in an email inbox-style view. From API Discovery, you can save endpoints to [Endpoint Management](/api-shield/management-and-monitoring/) or ignore endpoints to remove them from view.
 
-You should save all discovered API endpoints to Endpoint Management while ignoring any potential false positives in the API Discovery results by selecting **Save** or **Ignore** on each line. Alternatively, you can bulk-select endpoints to save or ignore. You can get started with saving endpoints by saving all endpoints with a variable. Search for  `var1` in the search box and add all the resulting endpoints. You can examine endpoints without path variables for accuracy later on.
+You should save all discovered API endpoints to Endpoint Management while ignoring any potential false positives in the API Discovery results by selecting **Save** or **Ignore** on each line. Alternatively, you can bulk-select endpoints to save or ignore. You can get started with saving endpoints by saving all endpoints with a variable. Search for `var1` in the search box and add all the resulting endpoints. You can examine endpoints without path variables for accuracy later on.
 
 By adding endpoints to Endpoint Management, you will unlock further [security](/api-shield/security/), [visibility](/api-shield/management-and-monitoring/#endpoint-performance-analysis), and [management](/api-shield/management-and-monitoring/) features of the platform. Endpoint Management monitors the health of your API endpoints by saving, updating, and monitoring performance metrics.
 
