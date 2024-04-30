@@ -25,15 +25,15 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 In most situations, you should avoid setting up any custom caching on your site. Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment.
 
-Therefore, if you add caching to your [custom domain](/pages/configuration/custom-domains/), it may lead to stale assets being served after an initial build.
+Therefore, if you add caching to your [custom domain](/pages/configuration/custom-domains/), it may lead to stale assets being served after a deployment.
 
 In addition, adding caching to your custom domain may cause issues with [Pages redirects](/pages/configuration/redirects/) or [Pages functions](/pages/functions/). These issues can occur because the cached response might get served to your end user before Pages can act on the request.
 
-However, there are some situations where [Cache Rules](/cache/how-to/cache-rules/) on your custom domain does make sense. For example, you may have easily cacheable locations for immutable assets, such as CSS or JS files with content hashes in their URLs. Custom caching can help in this case, speeding up the user experience until the file (and associated filename) changes. Just make sure that your caching does not interfere with any redirects or functions.
+However, there are some situations where [Cache Rules](/cache/how-to/cache-rules/) on your custom domain does make sense. For example, you may have easily cacheable locations for immutable assets, such as CSS or JS files with content hashes in their file names. Custom caching can help in this case, speeding up the user experience until the file (and associated filename) changes. Just make sure that your caching does not interfere with any redirects or Functions.
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If you notice stale assets being served after a new build, go to your zone and then **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) to ensure the latest build gets served.
+If you notice stale assets being served after a new deployment, go to your zone and then **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) to ensure the latest deployment gets served.
 
 {{</Aside>}}
 
