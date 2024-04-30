@@ -7,7 +7,7 @@ _build:
 
 {{<Aside type="note">}}
 
-Only available in early access for Enterprise users. For more information, contact your account team.
+Only available for Enterprise users.
 
 {{</Aside>}}
 
