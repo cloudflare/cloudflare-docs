@@ -47,7 +47,7 @@ Protocol/port | Destination IP/URL | Purpose
 `UDP/4500` | Destination IP `162.159.64.1` | Needed for Connector's initialization and discovery traffic through outbound connections.
 `UDP/4500` | Destination IP - Cloudflare Anycast IPs | Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}Anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
 `TCP/7844`, `UDP/7844` | Outbound connections | This is for debugging facilities in the Connector.
-`UDP/123` | `http://time.cloudflare.com/` | Needed so that Magic WAN Connector can periodically contact Cloudflare's Time Services.
+`UDP/123` | `http://time.cloudflare.com/` | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services.
 
 ## Activate connector
 
