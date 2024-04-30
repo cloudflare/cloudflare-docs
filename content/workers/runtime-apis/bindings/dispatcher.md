@@ -8,5 +8,5 @@ _build:
   render: never
 
 meta:
-  description: Let your customers deploy their own code to your platform, and dynamically dispatch requests from your Worker to their Worker
+  description: Let your customers deploy their own code to your platform, and dynamically dispatch requests from your Worker to their Worker.
 ---
