@@ -17,13 +17,13 @@ The parameters below can be configured for egress traffic inside of a firewall.
 `cloudflared` connects to Cloudflare's global network on port `7844`. To use Cloudflare Tunnel, your firewall must allow outbound connections to the following destinations on port `7844` (via UDP if using the `quic` protocol or TCP if using the `http2` protocol).
 
 {{<table-wrap>}}
-| Destination | Port | Protocols |  Notes |
-| ----------- | -------- | --------- | ------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) | |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) | |
-| `cftunnel.com`              | 7844 | TCP/UDP (`http2`/`quic`) | Only required for firewalls that enforce SNI.|
-| `h2.cftunnel.com`           | 7844 | TCP (`http2`) | Only required for firewalls that enforce SNI. |
-| `quic.cftunnel.com`         | 7844 | UDP (`quic`) | Only required for firewalls that enforce SNI.|
+| Destination | IPv4 | IPv6 | Port    | Protocols |  Notes |
+| ----------- | -----| -----|-------- | --------- | ------- |
+| `region1.v2.argotunnel.com` | `198.41.192.167`, `198.41.192.67`, `198.41.192.57`, `198.41.192.107`, `198.41.192.27`, `198.41.192.7`, `198.41.192.227`, `198.41.192.47`, `198.41.192.37`, `198.41.192.77` |`2606:4700:a0::1`, `2606:4700:a0::2`, `2606:4700:a0::3`, `2606:4700:a0::4`, `2606:4700:a0::5`, `2606:4700:a0::6`, `2606:4700:a0::7`, `2606:4700:a0::8`, `2606:4700:a0::9`, `2606:4700:a0::10` | 7844 | TCP/UDP (`http2`/`quic`) | |
+| `region2.v2.argotunnel.com` | `198.41.200.13`, `198.41.200.193`, `198.41.200.3`, `198.41.200.233`, `198.41.200.53`, `198.41.200.63`, `198.41.200.113`, `198.41.200.73`, `198.41.200.43`, `198.41.200.23`|`2606:4700:a8::1`, `2606:4700:a8::2`, `2606:4700:a8::3`, `2606:4700:a8::4`, `2606:4700:a8::5`, `2606:4700:a8::6`, `2606:4700:a8::7`, `2606:4700:a8::8`, `2606:4700:a8::9`, `2606:4700:a8::10`| 7844 | TCP/UDP (`http2`/`quic`) | |
+| `cftunnel.com`              ||| 7844 | TCP/UDP (`http2`/`quic`) | Only required for firewalls that enforce SNI.|
+| `h2.cftunnel.com`           ||| 7844 | TCP (`http2`) | Only required for firewalls that enforce SNI. |
+| `quic.cftunnel.com`         |||7844 | UDP (`quic`) | Only required for firewalls that enforce SNI.|
 
 {{</table-wrap>}}
 
@@ -170,24 +170,6 @@ region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::7
 region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::8
 region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::9
 region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::10
-...
-```
-
-```sh
-$ dig api.cloudflare.com
-...
-;; ANSWER SECTION:
-api.cloudflare.com.     41      IN      A       104.19.193.29
-api.cloudflare.com.     41      IN      A       104.19.192.29
-...
-```
-
-```sh
-$ dig update.argotunnel.com
-...
-;; ANSWER SECTION:
-update.argotunnel.com.	190	IN	A	104.18.32.167
-update.argotunnel.com.	190	IN	A	172.64.155.89
 ...
 ```
 
