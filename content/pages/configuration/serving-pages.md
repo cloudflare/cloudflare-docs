@@ -21,13 +21,17 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 ## Caching and performance
 
-Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment. Therefore, you should avoid setting Page Rules or custom caching on your site.
+### Recommendations
 
-{{<Aside type="note" header="Purging the cache">}}
+In most situations, you should avoid setting up any custom caching on your site. Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment.
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="/cache/how-to/purge-cache/purge-everything/">**Purge Everything**</a> in the dashboard to ensure the latest build gets served.
+Therefore, if you add caching to your [custom domain](/pages/configuration/custom-domains/), it may lead to stale assets being served after an initial build.
 
-{{</Aside>}}
+In addition, adding caching to your custom domain may cause issues with [Pages redirects](/pages/configuration/redirects/) or [Pages functions](/pages/functions/). These issues can occur because the cached response might get served to your end user before Pages can act on the request.
+
+However, there are some situations where [Cache Rules](/cache/how-to/cache-rules/) on your custom domain does make sense. For example, you may have easily cacheable locations for immutable assets, such as CSS or JS files with content hashes in their URLs. Custom caching can help in this case, speeding up the user experience until the file (and associated filename) changes. Just make sure that your caching does not interfere with any redirects or functions.
+
+### Behavior
 
 For browser caching, Pages always sends `Etag` headers for `200 OK` responses, which the browser then returns in an `If-None-Match` header on subsequent requests for that asset. Pages compares the `If-None-Match` header from the request with the `Etag` it's planning to send, and if they match, Pages instead responds with a `304 Not Modified` that tells the browser it's safe to use what is stored in local cache.
 
