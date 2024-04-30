@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Dispatcher (Workers for Platforms)
 
-external_link: /workers-for-platforms/get-started/configuration/
+external_link: /cloudflare-for-platforms/workers-for-platforms/get-started/configuration/
 _build:
   publishResources: false
   render: never
