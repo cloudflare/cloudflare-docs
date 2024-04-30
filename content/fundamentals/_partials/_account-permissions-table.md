@@ -126,6 +126,7 @@ inputParameters: editWord;;editProduct;;cloudflareName
 | Vectorize Read | Grants read access to [Vectorize](/vectorize/). |
 | Vectorize $1 | Grants write access to [Vectorize](/vectorize/). |
 | Workers AI Read | Grants read access to [Workers AI](/workers-ai/). |
+| Workers AI $1 | Grants write access to [Workers AI](/workers-ai/). |
 | Workers KV Storage Read                                      | Grants read access to [Cloudflare Workers KV Storage](/kv/api/).                                                                        |
 | Workers KV Storage $1                                      | Grants write access to [Cloudflare Workers KV Storage](/kv/api/).                                                                       |
 | Workers R2 Storage Read                                      | Grants read access to [Cloudflare R2 Storage](/r2/).                                                                                                     |
