@@ -76,7 +76,7 @@ inputParameters: editWord;;editProduct;;cloudflareName
 | D1 Read                                                      | Grants read access to [D1](/d1/).                                                                                                                        |
 | D1 $1                                                      | Grants write access to [D1](/d1/).                                                                                                                       |
 | DDoS Botnet Feed Read                                       | Grants read access to Botnet  Feed reports.                                                                                              |
-| DDoS Botnet Feed $1                                       | Grants read access to Botnet  Feed configuration.                                                                                              |
+| DDoS Botnet Feed $1                                       | Grants write access to Botnet  Feed configuration.                                                                                              |
 | DDoS Protection Read                                         | Grants read access to [DDoS protection](/ddos-protection/).                                                                                              |
 | DDoS Protection $1                                         | Grants write access to [DDoS protection](/ddos-protection/).                                                                                             |
 | DNS Firewall Read                                            | Grants read access to [DNS Firewall](/dns/dns-firewall/).                                                                                                |
