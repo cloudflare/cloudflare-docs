@@ -3,7 +3,9 @@ type: example
 summary: Set up custom domain for Images using a Worker or serve images using a prefix path and Cloudflare registered domain.
 tags:
   - Images
-  - Workers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Custom Domain with Images
 weight: 1001

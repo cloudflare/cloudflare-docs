@@ -485,11 +485,17 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamspace"` would both be valid names for the binding.
+  - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamespace"` would both be valid names for the binding.
 
 - `namespace` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
+
+- `outbound` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}} The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
+  - `parameters` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+
 
 {{</definitions>}}
 
@@ -500,6 +506,8 @@ header: wrangler.toml
 [[dispatch_namespaces]]
 binding = "<BINDING_NAME>"
 namespace = "<NAMESPACE_NAME>"
+outbound = {service = "<WORKER_NAME>", parameters = ["params_object"]}
+
 ```
 
 ### Durable Objects

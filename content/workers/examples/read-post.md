@@ -4,7 +4,9 @@ summary: Serve an HTML form, then read POST requests. Use also to read JSON or
   POST data from an incoming request.
 tags:
   - JSON
-  - Originless
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Read POST
 weight: 1001

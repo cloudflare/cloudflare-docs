@@ -3,6 +3,9 @@ type: example
 summary: Use the OpenAI v4 SDK to stream responses from OpenAI.
 tags:
   - AI
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Stream OpenAI API Responses
 weight: 1001

@@ -49,11 +49,13 @@ Package manager caches are automatically saved to the build cache to speed up de
 
 Caching the build output from frameworks can speed up subsequent build times. The build cache supports the following frameworks:
 
-| Framework | Directories cached    |
-| --------- | --------------------- |
-| Gatsby    | `.cache`, `public`    |
-| Next.js   | `.next/cache`         |
-| Astro     | `node_modules/.astro` |
+| Framework | Directories cached         |
+| --------- | -------------------------- |
+| Gatsby    | `.cache`, `public`         |
+| Next.js   | `.next/cache`              |
+| Astro     | `node_modules/.astro`      |
+| Nuxt      | `node_modules/.cache/nuxt` |
+| Eleventy  | `.cache`                   |
 
 ## Limits
 
