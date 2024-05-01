@@ -10,7 +10,7 @@ meta:
 
 ## Introduction
 
-Data at rest refers to data that is stored in a fixed location, such as on a local hard drive, on-premises server, or cloud storage. Many businesses today are using SaaS platforms which store a lot of business data in structured (databases) and unstructured forms (files such as documents, images, spreadsheets). The security of the actual storage of the data, such as encryption and reliable backups, is usually abstracted from your control. But the SaaS applications allow you to manage user accounts, define what data they have access to and also provide an ability to share access to data.
+Data at rest refers to data that is stored in a fixed location, such as on a local hard drive, on-premises server, or cloud storage. Many businesses today are using SaaS platforms that store a lot of business data in structured forms (like databases) and unstructured forms (files like documents, images, spreadsheets). The security of the actual storage of the data, such as encryption and reliable backups, is usually abstracted from your control. But the SaaS applications allow you to manage user accounts, define what data they have access to, and also provide an ability to share access to data.
 
 While Cloudflare mostly secures data in transit as it travels over our network, we also have the ability to connect to your SaaS applications and use our DLP profiles to examine data at rest that might not be adequately secured and then provide recommendations for you to take action.
 
