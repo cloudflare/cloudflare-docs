@@ -16,7 +16,7 @@ While Cloudflare mostly secures data in transit as it travels over our network, 
 
 ## Protecting data with Cloudflare CASB
 
-Cloudflare's API-driven [Cloud Access Security Broker](/cloudflare-one/applications/scan-apps/) (CASB) works by integrating with SaaS APIs and discovering both unstructured data at rest (documents, spreadsheets, and so on) and also examining general configuration of the application and user accounts, to ensure data access controls are correctly configured.
+Cloudflare's API-driven [Cloud Access Security Broker](/cloudflare-one/applications/scan-apps/) (CASB) works by integrating with SaaS APIs and discovering both unstructured data at rest (documents, spreadsheets, and so on) and also examining general configuration of the application and user accounts to ensure data access controls are correctly configured.
 
 [DLP profiles](/cloudflare-one/applications/scan-apps/casb-dlp/) are used to discover if files stored in your SaaS application contain sensitive data. Then matches are compared with access controls, and findings generated. For example, alerting you to a spreadsheet containing credit card information that is accessible by anyone on the Internet. 
 
