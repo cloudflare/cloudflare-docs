@@ -26,7 +26,7 @@ import OpenAI from "openai";
 export default {
  async fetch(request, env, ctx): Promise<Response> {
   const openai = new OpenAI({
-   apiKey: env.OPENAI_API_KEY
+    apiKey: env.OPENAI_API_KEY
   });
 
 // Create a TransformStream to handle streaming data
