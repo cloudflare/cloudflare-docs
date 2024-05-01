@@ -54,6 +54,8 @@ Cloudflare Access can be configured to send OPTIONS requests directly to your or
 3. In the **Settings** tab, scroll down to **CORS settings**.
 4. Enable the **Bypass options requests to origin** toggle. This will remove all existing CORS settings for this application.
 
+It is still important to enforce CORS for the Access JWT, this option should only be used if you have CORS enforcement established in your origin server.
+
 ### Configure response to preflight requests
 
 You can configure Cloudflare to respond to the OPTIONS request on your behalf. The OPTIONS request never reaches your origin. After the preflight exchange resolves, the browser will then send the main request which does include the authentication cookie (assuming you have logged into the Access-protected domain).
