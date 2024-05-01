@@ -120,7 +120,7 @@ To test your code locally, run the following command and navigate to [http://loc
 
 ```bash
 ---
-header: Local development server
+header: Local dev server
 ---
 $ npm start
 ```
