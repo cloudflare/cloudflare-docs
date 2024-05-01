@@ -67,7 +67,7 @@ export default {
 
 If you don’t already have a Resend account, you can sign up for a [free account here](https://resend.com/signup). After signing up, go to `Domains` using the side menu, and click the button to add a new domain. On the modal, enter the domain you want to add and then select a region.
 
-Next, you’re presented with a list of DNS records to add to your Cloudflare domain. On your Cloudflare dashboard, select the domain you entered earlier and navigate to `DNS` > `Records`. Copy/paste the DNS records ( i.e DKIM, SPF, and DMARC records) from Resend to your Cloudflare domain.
+Next, you’re presented with a list of DNS records to add to your Cloudflare domain. On your Cloudflare dashboard, select the domain you entered earlier and navigate to `DNS` > `Records`. Copy/paste the DNS records (DKIM, SPF, and DMARC records) from Resend to your Cloudflare domain.
 
 ![Image of adding DNS records to a Cloudflare domain](/images/workers/tutorials/resend/add_dns_records.png)
 
