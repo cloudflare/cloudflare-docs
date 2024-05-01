@@ -51,7 +51,7 @@ We will insert assets into the cache on a per-data center basis. Assets have a t
 
 ## Headers
 
-By default, Pages automatically adds several [HTTP response headers](https://developer.mozilla.org/en-US/docs/Glossary/Response_header), including:
+By default, Pages automatically adds several [HTTP response headers](https://developer.mozilla.org/en-US/docs/Glossary/Response_header) when serving assets, including:
 
 ```txt
 ---
@@ -60,12 +60,15 @@ header: Headers always added
 Access-Control-Allow-Origin: *
 Cf-Ray: $CLOUDFLARE_RAY_ID
 Referrer-Policy: strict-origin-when-cross-origin
+Etag: $ETAG
+Content-Type: $CONTENT_TYPE
+X-Content-Type-Options: nosniff
 Server: cloudflare
 ```
 
 {{<Aside type="note">}}
 
-The [`CF-RAY`](/fundamentals/reference/cloudflare-ray-id/) header is unique to Cloudflare.
+The [`Cf-Ray`](/fundamentals/reference/cloudflare-ray-id/) header is unique to Cloudflare.
 
 {{</Aside>}}
 
@@ -73,21 +76,15 @@ The [`CF-RAY`](/fundamentals/reference/cloudflare-ray-id/) header is unique to C
 ---
 header: Headers sometimes added
 ---
-// if content-type header is given
-X-Content-Type-Options: nosniff
-Content-Type: $CONTENT_TYPE
 
-// if deployment ID is set
-X-Deployment-ID: $DEPLOYMENT_ID
-
-// if content is encoded
+// if the asset has been encoded
 Cache-Control: no-transform
 Content-Encoding: $CONTENT_ENCODING
 
-// if Cacheable
+// if the asset is cacheable (the request does not have an `Authorization` or `Range` header)
 Cache-Control: public, max-age=0, must-revalidate
 
-// if preview
+// if requesting the asset over a preview URL
 X-Robots-Tag: noindex
 ```
 
