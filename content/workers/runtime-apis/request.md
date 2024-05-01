@@ -161,7 +161,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 ## Properties
 
-All properties of an incoming `Request` object (the request you receive from the [`fetch()` handler](/workers/runtime-apis/fetch-event/)) are read-only. To modify a the properties of an incoming request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
+All properties of an incoming `Request` object (the request you receive from the [`fetch()` handler](/workers/runtime-apis/fetch-event/)) are read-only. To modify the properties of an incoming request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
 
 {{<definitions>}}
 
