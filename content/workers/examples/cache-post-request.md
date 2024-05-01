@@ -138,7 +138,7 @@ async def on_fetch(request, _, ctx):
         response = await cache.match(cache_key)
 
         # Otherwise, fetch response to POST request from origin
-        if not response:
+        if response is None:
             response = await fetch(request)
             ctx.waitUntil(create_proxy(cache.put(cache_key, response.clone())))
 
