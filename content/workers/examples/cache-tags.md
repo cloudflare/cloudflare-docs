@@ -12,7 +12,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -100,6 +100,33 @@ export default {
       });
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import json
+from js import Response, URL, JSON, fetch
+
+async def on_fetch(request):
+    request_url = URL.new(request.url)
+    params = request_url.searchParams
+    tags = params.get("tags").split(",") if params and params.has("tags") else []
+    url = params.get("uri") if params and params.has("uri") else ""
+
+    if url is None:
+        error = json.dumps({"error": "URL cannot be empty"})
+        return Response.json(JSON.parse(error), status=400)
+
+    options = {"cf": {"cacheTags": tags}}
+
+    result = await fetch(url, options)
+    cache_status = result.headers.get("cf-cache-status")
+    last_modified = result.headers.get("last-modified")
+
+    response = json.dumps({"cache": cache_status, "lastModified": last_modified})
+    return Response.json(JSON.parse(response), status=result.status)
 ```
 
 {{</tab>}}

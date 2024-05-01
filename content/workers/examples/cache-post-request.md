@@ -14,7 +14,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -109,6 +109,42 @@ export default {
     }
   },
 } satisfies ExportedHandler<Env>;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import hashlib
+from pyodide.ffi import create_proxy
+from js import fetch, URL, Headers, Request, caches
+
+async def on_fetch(request, _, ctx):
+    if 'POST' in request.method:
+        # Hash the request body to use it as a part of the cache key
+        body = await request.clone().text()
+        body_hash = hashlib.sha256(body.encode('UTF-8')).hexdigest()
+
+        # Store the URL in cache by prepending the body's hash
+        cache_url = URL.new(request.url)
+        cache_url.pathname = "/posts" + cache_url.pathname + body_hash
+
+        # Convert to a GET to be able to cache
+        headers = Headers.new(dict(request.headers).items())
+        cache_key = Request.new(cache_url.toString(), method='GET', headers=headers)
+
+        # Find the cache key in the cache
+        cache = caches.default
+        response = await cache.match(cache_key)
+
+        # Otherwise, fetch response to POST request from origin
+        if not response:
+            response = await fetch(request)
+            ctx.waitUntil(create_proxy(cache.put(cache_key, response.clone())))
+
+        return response
+
+    return fetch(request)
 ```
 
 {{</tab>}}
