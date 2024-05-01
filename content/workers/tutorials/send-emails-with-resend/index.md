@@ -71,6 +71,10 @@ Next, you’re presented with a list of DNS records to add to your Cloudflare do
 
 ![Image of adding DNS records to a Cloudflare domain](/images/workers/tutorials/resend/add_dns_records.png)
 
+{{<Aside type="note">}}
+
+If you need more help adding DNS records in Cloudflare, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
+
 When that’s done, head back to Resend and click on the `Verify DNS Records` button. If all records are properly configured, your domain status should be updated to `Verified`.
 
 ![Image of domain verification on the Resend dashboard](/images/workers/tutorials/resend/verified_domain.png)
