@@ -39,10 +39,20 @@ If you make a simple CORS request to an Access-protected domain and have not yet
 
 If you make a preflighted cross-origin request to an Access-protected domain, the OPTIONS request will return a `403` error. This error occurs regardless of whether you have logged in to the domain. This is because the browser never includes cookies with OPTIONS requests, by design. Cloudflare will therefore block the preflight request, causing the CORS exchange to fail.
 
-There are two ways you can resolve this error:
+There are three ways you can resolve this error:
 
-- **Option 1** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
-- **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
+- **Option 1** — [Bypass OPTIONS requests to origin](#bypass-options-requests-to-origin).
+- **Option 2** - [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
+- **Option 3** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
+
+### Bypass OPTIONS requests to origin
+
+Cloudflare Access can be configured to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
+3. In the **Settings** tab, scroll down to **CORS settings**.
+4. Enable the **Bypass options requests to origin** toggle. This will remove all existing CORS settings for this application.
 
 ### Configure response to preflight requests
 
