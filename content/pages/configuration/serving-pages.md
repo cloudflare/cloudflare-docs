@@ -58,8 +58,16 @@ By default, Pages automatically adds several [HTTP response headers](https://dev
 header: Headers always added
 ---
 Access-Control-Allow-Origin: *
+Cf-Ray: $CLOUDFLARE_RAY_ID
 Referrer-Policy: strict-origin-when-cross-origin
+Server: cloudflare
 ```
+
+{{<Aside type="note">}}
+
+The [`CF-RAY`](fundamentals/reference/cloudflare-ray-id/) header is unique to Cloudflare.
+
+{{</Aside>}}
 
 ```txt
 ---
@@ -67,6 +75,7 @@ header: Headers sometimes added
 ---
 // if content-type header is given
 X-Content-Type-Options: nosniff
+Content-Type: $CONTENT_TYPE
 
 // if deployment ID is set
 X-Deployment-ID: $DEPLOYMENT_ID
