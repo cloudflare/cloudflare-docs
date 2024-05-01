@@ -48,3 +48,38 @@ Pages will also serve Gzip and Brotli responses whenever possible.
 ## Asset retention
 
 We will insert assets into the cache on a per-data center basis. Assets have a time-to-live (TTL) of one week but can also disappear at any time. If you do a new deploy, the assets could exist in that data center up to one week.
+
+## Headers
+
+By default, Pages automatically adds several [HTTP response headers](https://developer.mozilla.org/en-US/docs/Glossary/Response_header), including:
+
+```txt
+---
+header: Headers always added
+---
+Access-Control-Allow-Origin: *
+Referrer-Policy: strict-origin-when-cross-origin
+```
+
+```txt
+---
+header: Headers sometimes added
+---
+// if content-type header is given
+X-Content-Type-Options: nosniff
+
+// if deployment ID is set
+X-Deployment-ID: $DEPLOYMENT_ID
+
+// if content is encoded
+Cache-Control: no-transform
+Content-Encoding: $CONTENT_ENCODING
+
+// if Cacheable
+Cache-Control: public, max-age=0, must-revalidate
+
+// if preview
+X-Robots-Tag: noindex
+```
+
+To modify the headers added by Cloudflare Pages - perhaps to add [Early Hints](/pages/configuration/early-hints/) - update the [_headers file](/pages/configuration/headers/) in your project.
