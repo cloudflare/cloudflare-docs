@@ -8,7 +8,7 @@ title: IP geolocation
 
 IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-request-headers/#cf-ipcountry) to all requests to your origin server.
 
-Cloudflare automatically updates its IP geolocation database using using Maxmind and other data sources, typically twice a week.
+Cloudflare automatically updates its IP geolocation database using Maxmind and other data sources, typically twice a week.
 
 ## Availability
 
