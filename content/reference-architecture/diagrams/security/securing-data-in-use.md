@@ -20,7 +20,7 @@ One method to secure data in use is to have greater control over the browser use
 
 Cloudflare RBI effectively creates an invisible “gap” between a user’s web browser and the endpoint device, thereby protecting the device and the network it is connected to from exploits and attacks. Unlike secure web gateways, antivirus software, or firewalls, which rely on known threat patterns or signatures, RBI is a genuine zero trust mechanism. Because all requests made by an RBI instance go through the Cloudflare Secure Web Gateway, it's possible to enforce access policies to data and also inspect the contents of traffic to enforce any data in transit policies.
 
-But ultimately the content is delivered to the remote browser, where we can then apply data in use access controls such as limiting the ability to download/upload data, copy and paste and prevent printing.
+Ultimately the content is delivered to the remote browser, where Cloudflare can then apply data in use access controls such as limiting the ability to download/upload data, copy and paste, and prevent printing.
 
 Common policies used with RBI: 
 
