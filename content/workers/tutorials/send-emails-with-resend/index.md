@@ -17,6 +17,7 @@ In this tutorial, you will learn how to send transactional emails from Workers u
 - Create a Worker to send emails.
 - Sign up and add a Cloudflare domain to Resend.
 - Send emails from your Worker using Resend.
+- Store API keys securely with secrets.
 
 ## Prerequisites
 
@@ -76,7 +77,7 @@ When that’s done, head back to Resend and click on the `Verify DNS Records` bu
 
 Lastly, navigate to `API Keys` with the side menu, to create an API key. Give your key a descriptive name and the appropriate permissions. Click the button to add your key and then copy your API key to a safe location.
 
-## Send Emails From Your Worker
+## Send emails from your Worker
 
 The final step is putting it all together in a Worker. Open up a terminal in the directory of the Worker you created earlier. Then, install the Resend SDK:
 
@@ -95,10 +96,10 @@ filename: src/index.js
 ---
 import { Resend } from 'resend';
 
-const resend = new Resend('your_resend_api_key');
-
 export default {
 	async fetch(request, env, ctx) {
+		const resend = new Resend('your_resend_api_key');
+
 		const { data, error } = await resend.emails.send({
 			from: 'hello@example.com',
 			to: 'someone@example.com',
@@ -120,7 +121,55 @@ header: Local development server
 $ npm start
 ```
 
-And finally, deploy your Worker with `npm run deploy`.
+Deploy your Worker with `npm run deploy`.
+
+## Move API keys to Secrets
+
+Sensitive information such as API keys and token should always be stored in secrets. All secrets are encrypted to add an extra layer of protection. That said, it’s a good idea to move your API key to a secret and access it from the environment of your Worker.
+
+To add secrets for local development, create a `.dev.vars` file which works exactly like a `.env` file:
+
+```bash
+---
+filename: .dev.vars
+---
+RESEND_API_KEY=your_resend_api_key
+```
+
+Also ensure the secret is added to your deployed worker by running:
+
+```bash
+---
+header: Add secret to deployed Worker
+---
+$ npx wrangler secret put RESEND_API_KEY
+```
+
+The added secret can be accessed on via the `env` parameter passed to your Worker’s fetch event handler:
+
+```jsx
+---
+filename: src/index.js
+---
+import { Resend } from 'resend';
+
+export default {
+	async fetch(request, env, ctx) {
+		const resend = new Resend(env.RESEND_API_KEY);
+
+		const { data, error } = await resend.emails.send({
+			from: 'hello@example.com',
+			to: 'someone@example.com',
+			subject: 'Hello World',
+			html: '<p>Hello from Workers</p>',
+		});
+
+		return Response.json({ data, error });
+	},
+};
+```
+
+And finally, deploy this update with `npm run deploy`.
 
 ## Related resources
 
