@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 3
 ---
 
-# Turnstile client-side error codes
+# Client-side error codes
 
 There are instances where Turnstile may encounter problems, invoking `error-callback`. Refer to the list of [common error codes](#error-codes) below for troubleshooting steps to address them.
 
@@ -55,7 +55,7 @@ When an error code is marked with `***`, it means that the remaining numbers can
 | `110100` `110110` | Invalid {{<glossary-tooltip term_id="sitekey">}}sitekey{{</glossary-tooltip>}} | No | Turnstile was invoked with an invalid sitekey or a sitekey that is no longer active. Verify if the sitekey provided is still active. |
 | `110200` | Domain not allowed. | No | Turnstile was used on a domain that was not allowed for this widget to be used on. Ensure that the domain Turnstile is intended to run on is allowed in the widget configuration. |
 | `110420` | This error occurs when an unsupported or incorrectly formatted action is submitted. | No | Ensure that the action conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. |
-| `110430` | This error occurs when an unsupported or incorrectly formatted action is submitted. The "Invalid CDATA" error in Turnstile refers to an issue encountered when processing Custom Data (CDATA). This error occurs when the CDATA provided does not adhere to the expected format or contains invalid characters. | No | Ensure that the CDATA conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. |
+| `110430` | This error occurs when an unsupported or incorrectly formatted action is submitted. The "Invalid cData" error in Turnstile refers to an issue encountered when processing Custom Data (cData). This error occurs when the cData provided does not adhere to the expected format or contains invalid characters. | No | Ensure that the cData conforms to the specified structure and contains only valid characters and adheres to the documented length limitations. |
 | `110500` | The visitor is using an unsupported browser. | No | Encourage the visitor to upgrade their browser or verify otherwise. |
 | `110510` | The visitor provided an inconsistent user-agent throughout the process of solving Turnstile. | No | The visitor may have browser extensions or settings enabled to spoof their user agent and should disable them to proceed. |
 | `11060*` | The visitor took too long to solve the challenge and the challenge timed out. | Yes | Retry the challenge. The visitor also may have a system clock set to a wrong date. |
