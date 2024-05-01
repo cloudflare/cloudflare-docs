@@ -175,3 +175,4 @@ And finally, deploy this update with `npm run deploy`.
 
 - [Storing API keys and tokens with Secrets](/workers/configuration/secrets/).
 - [Transferring your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/).
+- [Send emails from Workers](/email-routing/email-workers/send-email-workers/)
