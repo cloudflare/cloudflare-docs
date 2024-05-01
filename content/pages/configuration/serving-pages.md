@@ -65,7 +65,7 @@ Server: cloudflare
 
 {{<Aside type="note">}}
 
-The [`CF-RAY`](fundamentals/reference/cloudflare-ray-id/) header is unique to Cloudflare.
+The [`CF-RAY`](/fundamentals/reference/cloudflare-ray-id/) header is unique to Cloudflare.
 
 {{</Aside>}}
 
