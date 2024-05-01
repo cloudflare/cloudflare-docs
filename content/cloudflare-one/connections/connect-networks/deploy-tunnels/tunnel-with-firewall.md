@@ -77,11 +77,12 @@ Alternatively, you may use operating system (OS)-level firewall rules to block a
     $ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
     ```
 
-5. Drop all other ingress traffic.
 
-    {{<Aside type="warning" header="Warning">}}
-    Be very careful with the following command. If you did not preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
-    {{</Aside>}}
+
+5. Drop all other ingress traffic.
+{{<Aside type="warning" header="Warning">}}
+Be very careful with the following command. If you did not preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
+{{</Aside>}}
 
     ```sh
     $ sudo iptables -A INPUT -j DROP
