@@ -20,7 +20,7 @@ Cloudflare's API-driven [Cloud Access Security Broker](/cloudflare-one/applicati
 
 [DLP profiles](/cloudflare-one/applications/scan-apps/casb-dlp/) are used to discover if files stored in your SaaS application contain sensitive data. Matches are then compared with access controls and findings are generated, such as findings to alert you to a spreadsheet that contains credit card information that is accessible by anyone on the Internet. 
 
-When Cloudflare CASB is combined with Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) service – which inspects all the traffic going to and from a SaaS application – customers can achieve comprehensive visibility into both data in transit and data at rest for SaaS applications.
+When Cloudflare CASB is combined with Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) service, which inspects all the traffic going to and from a SaaS application,  customers can achieve comprehensive visibility into both data in transit and data at rest for SaaS applications.
 
 ![Figure 1: Overall solution of user access controls to, and the discovery of sensitive data.](/images/reference-architecture/securing-data-at-rest/securing-data-at-rest-fig1.svg "Figure 1: Overall solution of user access controls to, and the discovery of sensitive data.")
 
