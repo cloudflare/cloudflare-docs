@@ -25,7 +25,7 @@ Cloudflare is one of the leading providers of cloud network security services. T
 - Providing secure connectivity to public websites and APIs using SSL/TLS
 - Creating secure tunnels to private networks and applications which are hosted either in the cloud or on-premises
 
-Cloudflare's [SSL services](https://developers.cloudflare.com/ssl/) are used by millions of websites and are easily implemented by making changes to DNS entries, so that all connections to public websites and APIs are terminated on Cloudflare's edge network. Connectivity from Cloudflare to the destination website or API can also be secured using the same SSL technologies. To ensure the strongest security, Cloudflare uses [post quantum cryptography](https://blog.cloudflare.com/post-quantum-to-origins).
+Cloudflare's [SSL services](/ssl/) are used by millions of websites and are easily implemented by making changes to DNS entries, so that all connections to public websites and APIs are terminated on Cloudflare's edge network. Connectivity from Cloudflare to the destination website or API can also be secured using the same SSL technologies. To ensure the strongest security, Cloudflare uses [post quantum cryptography](https://blog.cloudflare.com/post-quantum-to-origins).
 
 ![Figure 1: Securing data from the user device, all the way to the website/API](/images/reference-architecture/securing-data-in-transit/securing-data-in-transit-fig1.svg "Figure 1: Securing data from the user device, all the way to the website/API")
 
