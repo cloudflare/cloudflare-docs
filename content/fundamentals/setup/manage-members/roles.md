@@ -39,7 +39,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Access rules](/waf/tools/ip-access-rules/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Access rules](/waf/tools/ip-access-rules/), [Zone Lockdown](/waf/tools/zone-lockdown/) settings, and [Cache Rules](/cache/how-to/cache-rules/). |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |
@@ -74,6 +74,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Role | Description |
 | --- | --- |
 | Bot Management | Can edit [Bot Management](/bots/plans/bm-subscription/) (including [Super Bot Fight Mode](/bots/get-started/pro/)) configurations. |
+| Cache Domain Purge | Grants access to [purge the edge cache](/cache/how-to/purge-cache/) for a specific domain. |
 | Domain Administrator | Grants full access to domains in an account, and read-only access to account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain Administrator Read Only | Grants read-only access to domains in an account, as well as account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain API Gateway | Grants full access to API Gateway (including [API Shield](/api-shield/)). |

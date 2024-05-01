@@ -63,7 +63,7 @@ $ npm create cloudflare@latest # or yarn create cloudflare
 C3 will then prompt you for some information on your Worker.
 
 1. Provide a name for your Worker. This is also the name of the new directory where the Worker will be created.
-2. For the question `What type of application do you want to create?`, select `"Hello World" script`.
+2. For the question `What type of application do you want to create?`, select `"Hello World" Worker`.
 3. For the question `Would you like to use TypeScript? (y/n)`, select `y`.
 4. For the question `Do you want to deploy your application?`, select `n`.
 
@@ -82,7 +82,6 @@ name = "queues-web-crawler"
 main = "src/index.ts"
 compatibility_date = "2023-06-09"
 node_compat = true
-usage_model = "unbound"
 
 browser = { binding = "CRAWLER_BROWSER", type = "browser" }
 
@@ -146,11 +145,11 @@ export interface Env {
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     await env.CRAWLER_QUEUE.send({ url: await req.text() });
     return new Response("Success!");
   },
-}
+} satisfies ExportedHandler<Env>;
 ```
 
 This will accept requests to any subpath and forwards the request's body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a `POST` request and contains a well-formed URL in its body. This has been omitted for simplicity.
@@ -362,7 +361,7 @@ Refer to the [GitHub repository for the complete tutorial](https://github.com/cl
 ## Related resources
 
 - [How Queues works](/queues/reference/how-queues-works/)
-- [Queues Batching and Retries](/queues/reference/batching-retries/)
+- [Queues Batching and Retries](/queues/configuration/batching-retries/)
 - [Browser Rendering](/browser-rendering/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
 

@@ -8,6 +8,8 @@ entries:
 - term: autonomous system numbers (ASNs)
   general_definition: |-
     A large network or group of networks that has a unified routing policy. Every computer or device that connects to the Internet is connected to an autonomous system.
+  associated_products:
+    - Magic WAN
 
 - term: Border Gateway Protocol (BGP)
   general_definition: |-

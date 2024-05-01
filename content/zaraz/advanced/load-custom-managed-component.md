@@ -44,8 +44,8 @@ export default async function (manager) {
 ## Deploy a Managed Component to Cloudflare
 
 1. Open a terminal in your Managed Component’s root directory.
-2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialized Cloudflare Worker. Change the path to your `index.js`. You can also rename the Component if you choose.
-3. Your Managed Component should now be [visible on your account](https://dash.cloudflare.com/redirect?account=/workers-and-pages) as a Cloudflare Worker prefixed with `custom-mc`.
+2. From there, run `npx managed-component-to-cloudflare-worker ./index.js my-new-counter-mc`, which will deploy the Managed Component to a specialized Cloudflare Worker. Change the path to your `index.js`. You can also rename the Component.
+3. Your Managed Component should now be [visible on your account](https://dash.cloudflare.com/redirect?account=/workers-and-pages) as a Cloudflare Worker prefixed with `custom-mc-`.
 
 ## Configure a Managed Component in Cloudflare
 
@@ -56,7 +56,7 @@ As with regular tools, it is recommended that you [create the triggers](/zaraz/g
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Zaraz** > **Tools Configuration** > [**Third-party tools**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/tools-config/tools/catalog).
 3. Select **Add new tool** and choose **Custom Managed Component** from the tools library page. Select **Continue** to confirm your selection.
-4. In **Select Custom MC**, choose a Custom Managed Component that you have deployed to your account, such as `my-new-counter-mc`. Select **Continue**.
+4. In **Select Custom MC**, choose a Custom Managed Component that you have deployed to your account, such as `custom-mc-my-new-counter-mc`. Select **Continue**.
 5. In **Permissions**, select the permissions you want to grant the Custom Managed Component. If you run an untrusted Managed Component, pay close attention to what permissions you are granting. Select **Continue**.
 6. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the code of the Managed Component. You can add settings and default fields, as well as use [variables you have previously set up](/zaraz/get-started/create-variables/).
 7. Select **Save**.
@@ -72,5 +72,4 @@ As of now, Custom Managed Components do not support the use of the following met
 - `manager.registerEmbed`
 - `manager.registerWidget`
 - `manager.proxy`
-- `manager.route`
 - `manager.serve`

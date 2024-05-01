@@ -11,7 +11,7 @@ meta:
 Cloudflare Snippets (alpha) provide a flexible way to customize the behavior of your website or application using short pieces of JavaScript code. Use snippets to customize HTTP response headers, implement {{<glossary-tooltip term_id="JSON web token (JWT)" prepend="JSON web token (JWT) is ">}}JWT{{</glossary-tooltip>}} validation, define complex {{<glossary-tooltip term_id="redirect">}}redirect{{</glossary-tooltip>}} functionality, and more.
 
 {{<Aside type="note">}}
-[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets.
+We are gradually rolling out access to Cloudflare Snippets throughout 2024. Refer to [Availability](#availability) for details.
 {{</Aside>}}
 
 ## Snippet elements
@@ -45,7 +45,7 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 ## Availability
 
-[Join the waitlist](https://www.cloudflare.com/en-gb/lp/cloudflare-snippets/) to request access to Cloudflare Snippets (alpha).
+Cloudflare Snippets are [being rolled out](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans#we-are-rolling-out-access-to-cloudflare-snippets) gradually throughout 2024 to all paid plans. Once you have access, the Cloudflare dashboard will show a new **Snippets** tab under **Rules** at the zone level.
 
 {{<feature-table id="rules.snippets">}}
 
@@ -53,12 +53,16 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 Cloudflare Snippets are lightweight compared to [Cloudflare Workers](/workers/). The following limits apply:
 
-Description                | All plans
----------------------------|----------
-Maximum execution time     | 5 ms
-Maximum memory             | 2 MB
-Maximum total package size | 32 KB
-Subrequests                | 1
+Description                                | All plans
+-------------------------------------------|----------
+Maximum execution time                     | 5 ms
+Maximum memory                             | 2 MB
+Maximum total package size                 | 32 KB
+Subrequests<br>_(refer to the note below)_ | 1
+
+{{<Aside type="warning" header="Redirects will count as subrequests">}}
+Each subrequest in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
+{{</Aside>}}
 
 ## Execution order
 

@@ -2,7 +2,13 @@
 type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
-  - Originless
+  - Redirects
+  - Geolocation
+languages:
+  - JavaScript
+  - TypeScript
+preview:
+  - true
 pcx_content_type: configuration
 title: Country code redirect
 weight: 1001
@@ -47,8 +53,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     /**
      * A map of the URLs to redirect to
      * @param {Object} countryMap
@@ -69,9 +75,7 @@ const handler: ExportedHandler = {
       return fetch(request);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

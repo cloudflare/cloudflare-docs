@@ -2,6 +2,47 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-04-26'
+  description: |-
+    - Updated v8 to version 12.4.
+- publish_date: '2024-04-11'
+  description: |-
+    - Improve Streams API spec compliance by exposing `desiredSize` and other properties on stream class prototypes
+    - The new `URL.parse(...)` method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.
+    - R2 bindings objects now have a `storageClass` option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.
+- publish_date: '2024-04-05'
+  description: |-
+    - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
+- publish_date: '2024-04-04'
+  description: |-
+    - There is no longer an explicit limit on the total amount of data which may be uploaded with Cache API [`put()`](/workers/runtime-apis/cache/#put) per request. Other [Cache API Limits](/workers/platform/limits/#cache-api-limits) continue to apply.
+    - The Web standard `ReadableStream.from()` API is now implemented. The API enables creating a `ReadableStream` from a either a sync or async iterable.
+- publish_date: '2024-04-03'
+  description: |-
+    - When the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+- publish_date: '2024-04-02'
+  description: |-
+    - You can now [write Workers in Python](/workers/languages/python)
+- publish_date: '2024-04-01'
+  description: |-
+    - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-dates/#support-for-accepting-custom-thenables-in-internal-apis) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
+    - TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.
+    - The [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) now includes an implementation of the [`MockTracker` API from `node:test`](https://nodejs.org/api/test.html#class-mocktracker). This is not an implementation of the full `node:test` module, and mock timers are currently not included.
+    - Exceptions reported to [Tail Workers](/workers/observability/logging/tail-workers/) now include a "stack" property containing the exception's stack trace, if available.
+- publish_date: '2024-03-11'
+  description: |-
+    - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
+    - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
+    - Updated v8 to version 12.3.
+- publish_date: '2024-02-24'
+  description: |-
+    - v8 updated to version 12.2.
+    - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
+    - You can now use [new methods on `Set`](https://github.com/tc39/proposal-set-methods), such as `Set.intersection` and `Set.union`, in Workers.
+- publish_date: '2024-02-23'
+  description: |-
+    - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
+    - [Durable Object alarm handlers](/durable-objects/api/alarms/#alarm) now impose a maximum wall time of 15 minutes.
 - publish_date: '2023-12-04'
   description: |-
     - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
@@ -9,7 +50,7 @@ entries:
 - publish_date: '2023-10-30'
   description: |-
     - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
-    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model). 
+    - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model).
     - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
 - publish_date: '2023-10-20'
   description: |-
@@ -99,7 +140,7 @@ entries:
     - The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
 - publish_date: '2023-03-24'
   description: |-
-    - Fixed a bug in Wrangler tail and and live logs on the dashboard that
+    - Fixed a bug in Wrangler tail and live logs on the dashboard that
     prevented the Administrator Read-Only and Workers Tail Read roles from successfully
     tailing Workers.
 - publish_date: '2023-03-09'
@@ -114,6 +155,9 @@ entries:
   description: |-
     - Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
     - Previously, an error would be thrown when trying to access unimplemented standard `Request` and `Response` properties. Now those will be left as `undefined`.
+- publish_date: '2023-01-31'
+  description: |-
+    - The [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object now includes two additional properties, `tlsClientHelloLength` and `tlsClientRandom`.
 - publish_date: '2023-01-13'
   description: |-
     - Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.

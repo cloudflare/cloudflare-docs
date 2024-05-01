@@ -10,7 +10,7 @@ If you encounter a false positive caused by a managed rule, do one of the follow
 
 - **Add an exception**: [Exceptions](/waf/managed-rules/waf-exceptions/) allow you to skip the execution of WAF managed rulesets or some of their rules for certain requests.
 
-- **Adjust the OWASP managed ruleset**: A request blocked by rule with ID `...843b323c` and description `949110: Inbound Anomaly Score Exceeded` refers to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). To resolve the issue, [configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/#configure-in-the-dashboard).
+- **Adjust the OWASP managed ruleset**: A request blocked by rule with ID {{<rule-id>}}6179ae15870a4bb7b2d480d4843b323c{{</rule-id>}} and description `949110: Inbound Anomaly Score Exceeded` refers to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). To resolve the issue, [configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/).
 
 - **Disable the corresponding managed rule(s)**: Create an override to disable specific rules. This may avoid false positives, but you will also reduce the overall site security. Refer to the [dashboard instructions](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) on configuring a managed ruleset, or to the [API instructions](/ruleset-engine/managed-rulesets/override-managed-ruleset/) on creating an override.
 

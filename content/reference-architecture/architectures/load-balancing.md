@@ -30,13 +30,10 @@ This reference architecture is designed for IT, web hosting, and network profess
 
 To build a stronger baseline understanding of Cloudflare and its load balancing solution, we recommend the following resources:
 
-What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
-
-Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
-
-Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
-
-Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
+{{<render file="_what-is-cloudflare-link.md">}}
+- Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
+- Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
+- Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
 
 Those who read this reference architecture will learn:
 * How Cloudflare Load Balancing can address both local traffic management and global traffic management use cases.
@@ -114,7 +111,7 @@ In the same way a load balancer can pass traffic to a less-busy server, it can a
 
 Service availability encompasses both unintentional and intentional downtime of origins behind a load balancer. Several factors can contribute to unintentional downtime, including hardware failure, software bugs, network issues, and ISP or other vendor issues. Even for the most advanced organizations, these issues are inevitable. 
 
-Load balancers solve these issues by always monitoring the health of origins. If an origin is slow to respond to a health check, or or fails to respond entirely,the origin is marked as unhealthy. Several methods exist for doing so, including basic health tests like ICMP (ping) and TCP connection tests. More advanced health tests can be used like issuing an HTTP GET request and ensuring a specific response code and response body are returned from the origin. Once a server is in a degraded state, the load balancer will send fewer or no requests its way in favor of healthier origins. As the origin becomes operational again and the load balancer is able to receive responses to its health checks, the origin is marked as operational and has traffic steered towards it once more.
+Load balancers solve these issues by always monitoring the health of origins. If an origin is slow to respond to a health check, or fails to respond entirely,the origin is marked as unhealthy. Several methods exist for doing so, including basic health tests like ICMP (ping) and TCP connection tests. More advanced health tests can be used like issuing an HTTP GET request and ensuring a specific response code and response body are returned from the origin. Once a server is in a degraded state, the load balancer will send fewer or no requests its way in favor of healthier origins. As the origin becomes operational again and the load balancer is able to receive responses to its health checks, the origin is marked as operational and has traffic steered towards it once more.
 
 Intentional downtime comes in a few different forms, including capacity changes, hardware or infrastructure upgrades, and software updates. Load balancers gracefully remove traffic from one or more origins to allow for such maintenance..
 
@@ -396,7 +393,7 @@ A health monitor determines the health of origins once they are configured insid
 
 By default, health monitors probes are sent directly to the origin address, bypassing the entire layer 7 stack. This means that actual traffic to the origin through the load balancer will receive different treatment than the health monitor probe. Depending on the configuration, this could result in a health monitor reporting an origin as healthy, even if actual connections or requests are failing. 
 
-The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire stack. This is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also allows health monitor probes to use the path provided by [Argo Smart Routing](/argo-smart-routing/), ensuring that probes will follow the same path to the origin as actual requests.
+The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire layer 7 stack. This makes health monitors take the exact same path through the network and through other layer 7 process to reach the origin. This is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also ensures health monitor probes use the same path provided by [Argo Smart Routing](/argo-smart-routing/) and the same dedicated egress IPs when organziations leverage [Aegis](https://blog.cloudflare.com/cloudflare-aegis/) to restrict the edge IP addresses that Cloudflare uses to reach their origins.
 
 ![HTTPS health monitor to monitor the status of an origin web server](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-16.png "Figure 16: HTTPS health monitor configuration")
 

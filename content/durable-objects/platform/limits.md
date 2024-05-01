@@ -6,7 +6,7 @@ weight: 2
 
 # Limits
 
-Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers).
+Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers). Durable Objects limits are the same as [Workers Limits](/workers/platform/limits/), as well as the following limits that are specific to Durable Objects:
 
 
 | Feature                                    | Limit                                             |
@@ -35,7 +35,7 @@ Durable Objects can scale horizontally across many Durable Objects. Each individ
 * A simple [storage](/durable-objects/api/transactional-storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
 * Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
 
-A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/reference/troubleshooting/#durable-object-is-overloaded) error to the caller.
+A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded) error to the caller.
 
 ## How many Durable Objects can I create?
 

@@ -4,6 +4,9 @@ summary: Return a response based on the incoming request's URL, HTTP method,
   User Agent, IP address, ASN or device type.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Conditional response
 weight: 1001
@@ -64,8 +67,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const BLOCKED_HOSTNAMES = ["nope.mywebsite.com", "bye.website.com"];
     // Return a new Response based on a URL's hostname
     const url = new URL(request.url);
@@ -107,9 +110,7 @@ const handler: ExportedHandler = {
     );
     return fetch(request);
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

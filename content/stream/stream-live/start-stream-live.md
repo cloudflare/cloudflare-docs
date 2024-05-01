@@ -2,6 +2,9 @@
 pcx_content_type: tutorial
 title: Start a live stream
 weight: 1
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Start a live stream

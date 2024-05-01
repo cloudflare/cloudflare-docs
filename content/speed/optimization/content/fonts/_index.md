@@ -17,15 +17,15 @@ Cloudflare Fonts works by rewriting your webpage’s HTML. It removes Google Fon
 Cloudflare Fonts is compatible with browsers that support Unicode-range subsetting and WOFF or WOFF2 formats, including:
 
 ```
-Chrome 36+ 
+Chrome 36+
 Edge 16+
-Safari 10+ 
-Firefox 44+ 
-Opera 22+ 
-IE 9+ 
-Chrome for Android 115+ 
-Safari on iOS 10+ 
-Samsung Internet 5+ 
+Safari 10+
+Firefox 44+
+Opera 22+
+IE 9+
+Chrome for Android 115+
+Safari on iOS 10+
+Samsung Internet 5+
 ```
 
 ## Get started
@@ -35,6 +35,8 @@ To enable Cloudflare Fonts for your entire domain:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. For **Cloudflare Fonts**, switch the toggle to **On**.
+
+{{<render file="_configuration-rule-promotion.md" productFolder="rules">}}
 
 ## Limitations
 

@@ -5,5 +5,5 @@ external_link: /workers/wrangler/commands/#d1
 _build:
   publishResources: false
   render: never
-weight: 12
+weight: 7
 ---

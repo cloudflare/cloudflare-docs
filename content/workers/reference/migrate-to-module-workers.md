@@ -16,6 +16,7 @@ There are several reasons to migrate your Workers to the ES modules format:
 1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
 2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
 3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
+4.  You can [gradually deploy changes to your Worker](/workers/configuration/versions-and-deployments/gradual-deployments/) when you use the ES modules format.
 
 ## Migrate a Worker
 
@@ -54,7 +55,7 @@ export default {
 
 ## Bindings
 
-[Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform.
 
 Workers using ES modules format do not rely on any global bindings. However, Service Worker syntax accesses bindings on the global scope.
 
@@ -102,7 +103,7 @@ async function getTodos() {
 
 ### Bindings in ES modules format
 
-In ES modules format, bindings are only available inside the `env` parameter that is provided at the entrypoint to your Worker.
+In ES modules format, bindings are only available inside the `env` parameter that is provided at the entry point to your Worker.
 
 To access the `TODO` KV namespace binding in your Worker code, the `env` parameter must be passed from the `fetch` handler in your Worker to the `getTodos` function.
 
@@ -128,7 +129,7 @@ The following code represents a `getTodos` function that calls the `get` functio
 filename: todos.js
 ---
 async function getTodos(env) {
-  // NOTE: Relies on the TODO KV binding which has been provided inside of 
+  // NOTE: Relies on the TODO KV binding which has been provided inside of
   // the env parameter of the `getTodos` function
   let value = await env.TODO.get("to-do:123");
   return new Response(value);
@@ -204,7 +205,7 @@ export default {
 
 ## Access `event` or `context` data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/handlers/fetch/#contextwaituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/context/#waituntil) to delay execution. Workers using ES modules format can access `waitUntil` via the `context` parameter. Refer to [ES modules parameters](/workers/runtime-apis/handlers/fetch/#parameters) for  more information.
 
 This example code:
 
@@ -267,9 +268,9 @@ Below is an example of the request response workflow:
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
 
-    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/handlers/fetch/) to handle unexpected exceptions and operations that may complete after a response is returned.
 
-Learn more about [the lifecycle methods of the `fetch()` handler](/workers/runtime-apis/handlers/fetch/#lifecycle-methods).
+Learn more about [the lifecycle methods of the `fetch()` handler](/workers/runtime-apis/rpc/lifecycle/).
 
 
 ### Supported `FetchEvent` properties

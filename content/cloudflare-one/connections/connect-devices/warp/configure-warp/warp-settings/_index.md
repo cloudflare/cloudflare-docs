@@ -23,9 +23,9 @@ In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch)
 
 {{</Aside>}}
 
-When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
+When `Enabled`, end users can turn off the WARP client using an override code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
 
-You can also set a **Timeout** to define how long the user is allowed to toggle on or off the WARP switch.
+You can set a **Timeout** to define how long a user can toggle on or off the WARP switch. The timer starts when the user first enters their code into the WARP client. The code remains valid and can be reused anytime during this time period. For example, if **Timeout** is 24 hours, the user can re-enter the code at 23:59:00 and continue to turn off WARP until 47:59:00 (up to 48 hours total).
 
 #### Retrieve the override code
 
@@ -37,16 +37,18 @@ To retrieve the one-time code for a user:
 4. Scroll down to **User details** and copy the 7-digit **Override code**.
 5. Share this code with the end user for them to enter on their device.
 
+The user will have an unlimited amount of time to activate their code.
+
 #### Enter the override code
 
 To turn off the WARP client on a user device:
 
 1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
 2. Select **Enter code**.
-3. Enter the override code in the pop-up window.
+3. Enter the override code. The WARP client will display a pop-up window showing when the override expires.
 4. Turn off the WARP switch.
 
-The WARP client will now show **Disabled by Admin Override** and the time when the override code expires. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until Admin override times out.
+The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until the override expires.
 
 ### Install CA to system certificate store
 
@@ -72,13 +74,15 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
 
+This setting is primarily used to enable site-to-site connectivity with [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+
 **Value:**
 
 - `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices.
 
 - `Enabled`: Sets the local interface IP on each device to its {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}}.  The change takes effect within 24 hours.
 
-This setting is primarily used to enable site-to-site connectivity with [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
 
 ## Device settings
 
@@ -188,11 +192,11 @@ Configures the WARP client to redirect DNS requests to a private DNS resolver. F
 
 Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
 
-### Directly route Office 365 traffic
+### Directly route Microsoft 365 traffic
 
 {{<render file="warp/_all-systems-modes-plans.md">}}
 
-Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.
+Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Microsoft 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Microsoft 365 network traffic will bypass WARP and Gateway.
 
 ### Allow users to enable local network exclusion
 
@@ -219,6 +223,7 @@ When `Enabled`, users have the option to access local network resources (such as
 
 {{<Aside type="warning" header="Warning">}}
 Enabling this setting comes with two major consequences:
+
 - **Device is exposed to security threats.** The user may be unaware that traffic to what used to be their company's private network is now actually being routed to their local network. This leaves the device vulnerable to [on-path attackers](https://www.cloudflare.com/learning/security/threats/on-path-attack/) and other security vulnerabilities. For example, imagine that a user's typical workflow involves logging into a remote desktop on the corporate network at `10.0.0.30`. A bad actor could set up a fake server on the local network at `10.0.0.30`. If the user goes to `10.0.0.30` while **Access local network** is enabled, the attacker can now steal their credentials.
 - **User loses access to corporate resources.** — While accessing their local network, the user will be unable to connect to corporate resources that fall within the same IP/CIDR range.
 

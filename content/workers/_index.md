@@ -28,11 +28,11 @@ Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflar
 
 {{<feature header="Wrangler" href="/workers/wrangler/install-and-update/">}}
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](//workers/wrangler/commands/#deploy) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/workers/configuration/bindings/">}}
+{{<feature header="Bindings" href="/workers/runtime-apis/bindings/">}}
 
 Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
@@ -48,6 +48,12 @@ The Playground is a sandbox which gives you an instant way to preview and test a
 
 ## Related products
 
+{{<related header="Workers AI" href="/workers-ai/" product="workers-ai">}}
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+
+{{</related>}}
+
 {{<related header="R2" href="/r2/" product="r2">}}
 
 Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
@@ -57,12 +63,6 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 {{<related header="D1" href="/d1/" product="d1">}}
 
 Create new serverless SQL databases to query from your Workers and Pages projects.
-
-{{</related>}}
-
-{{<related header="Queues" href="/queues/" product="queues">}}
-
-Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
 
 {{</related>}}
 
@@ -78,11 +78,31 @@ Create a global, low-latency, key-value data storage.
 
 {{</related>}}
 
+{{<related header="Queues" href="/queues/" product="queues">}}
+
+Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
+
+{{</related>}}
+
+{{<related header="Hyperdrive" href="/hyperdrive/" product="hyperdrive">}}
+
+Turn your existing regional database into a globally distributed database.
+
+{{</related>}}
+
+{{<related header="Vectorize" href="/vectorize/" product="vectorize">}}
+
+Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
+
+{{</related>}}
+
 {{<related header="Zaraz" href="/zaraz/" product="zaraz">}}
 
 Offload third-party tools and services to the cloud and improve the speed and security of your website.
 
 {{</related>}}
+
+
 
 ---
 

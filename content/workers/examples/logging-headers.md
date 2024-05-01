@@ -3,6 +3,11 @@ type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
   - Debugging
+languages:
+  - JavaScript
+  - TypeScript
+preview:
+  - true
 pcx_content_type: configuration
 title: Logging headers to console
 weight: 1001
@@ -28,14 +33,12 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     console.log(new Map(request.headers));
     return new Response("Hello world");
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

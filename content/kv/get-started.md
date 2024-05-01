@@ -1,5 +1,5 @@
 ---
-weight: 1
+weight: 2
 title: Get started
 pcx_content_type: get-started
 ---
@@ -12,7 +12,7 @@ This guide will instruct you through:
 
 - Creating a KV namespace.
 - Writing key-value pairs to your KV namespace from a Cloudflare Worker.
-- Reading key-value pairs from a KV namespace. 
+- Reading key-value pairs from a KV namespace.
 
 ## Prerequisites
 
@@ -67,7 +67,7 @@ For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --g
 
 {{</Aside>}}
 
-## 3. Create a KV namespace 
+## 3. Create a KV namespace
 
 A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
 
@@ -89,7 +89,7 @@ To create a KV namespace via Wrangler:
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
 ```
 
-The `wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you. 
+The `wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you.
 
 ```sh
 $ wrangler kv:namespace create <YOUR_NAMESPACE>
@@ -120,7 +120,7 @@ Binding names do not need to correspond to the namespace you created. Binding na
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/reference/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. 
+A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/reference/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
 
 Refer to [Environment](/kv/reference/environments/) for more information.
 
@@ -130,17 +130,21 @@ Refer to [Environment](/kv/reference/environments/) for more information.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select **Workers & Pages** > **KV**.
-3. Select **Create a namespace**. 
-4. Enter a name for your namespace. 
+3. Select **Create a namespace**.
+4. Enter a name for your namespace.
 5. Select **Add**.
+
+{{<Aside type="note">}}
+KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/).
+{{</Aside>}}
 
 ## 4. Interact with your KV namespace
 
 You can interact with your KV namespace via [Wrangler](/workers/wrangler/install-and-update/) or directly from your [Workers](/workers/) application.
 
-### Interact with your KV namespace via Wrangler
+### Write a value via Wrangler
 
-To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively.  `<KEY>`and `<VALUE>` are values of your choice.
+To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively.  `<KEY>` and `<VALUE>` are values of your choice.
 
 ```sh
 $ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
@@ -154,27 +158,35 @@ $ wrangler kv:key put --namespace-id=e29b263ab50e42ce9b637fa8370175e8 "<KEY>" "<
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
-A KV namespace can be specified in two ways:
+To create a key and a value in local mode, use the `--local` flag:
 
-1.  With a `--binding`:
+```sh
+$ wrangler kv:key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --local
+```
 
-    ```sh
-    $ wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
-    ```
-
-  This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
-
-2.  With a `--namespace-id`:
-
-    ```sh
-    $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
-    ```
+### Get a value via Wrangler
 
 To access the value using Wrangler, run the `wrangler kv:key get` subcommand in your terminal, and input your key value:
 
 ```sh
-wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
+$ wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
 ```
+
+A KV namespace can be specified in two ways:
+
+-  With a `--binding`:
+
+  ```sh
+  $ wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
+  ```
+
+This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
+
+-  With a `--namespace-id`:
+
+  ```sh
+  $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
+  ```
 
 {{<Aside type="warning">}}
 Exactly one of `--binding` or `--namespace-id` is required.
@@ -184,7 +196,7 @@ Refer to the [`kv:bulk` documentation](/kv/reference/kv-commands/#kvbulk) to wri
 
 ### Interact with your KV namespace via a Worker
 
-You can access the binding from within your Worker 
+You can access the binding from within your Worker.
 
 In your Worker script, add your KV namespace in the `Env` interface:
 
@@ -218,30 +230,29 @@ export interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-
+	async fetch(request, env, ctx): Promise<Response> {
     try {
-      await env.YOUR_KV_NAMESPACE.put("KEY", "VALUE");        
-      const value = await env.YOUR_KV_NAMESPACE.get("KEY");        
-      if (value === null) {            
-        return new Response("Value not found", { status: 404 });        
-        }        
+      await env.YOUR_KV_NAMESPACE.put("KEY", "VALUE");       
+      const value = await env.YOUR_KV_NAMESPACE.get("KEY");       
+      if (value === null) {           
+        return new Response("Value not found", { status: 404 });       
+      }       
       return new Response(value);
     } catch (err) {
       // In a production application, you could instead choose to retry your KV
       // read or fall back to a default code path.
       console.error(`KV returned error: ${err}`)
       return new Response(err, { status: 500 })
-    } 
-	}, 	
-};
+    }
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 The code above:
 
-* Writes a key to `YOUR_KV_NAMESPACE` using KV's `put()` method.
-* Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
-* Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
+1. Writes a key to `YOUR_KV_NAMESPACE` using KV's `put()` method.
+2. Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
+3. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
 ## 5. Develop locally with Wrangler
 
@@ -269,7 +280,7 @@ Run the following command to deploy KV to Cloudflare's global network:
 $ npx wrangler deploy
 ```
 
-You can now visit the URL for your newly created Workers KV application. 
+You can now visit the URL for your newly created Workers KV application.
 
 For example, if the URL of your new Worker is `kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` will send a request to your Worker that writes (and reads) from Workers KV.
 

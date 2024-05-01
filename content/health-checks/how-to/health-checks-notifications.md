@@ -22,6 +22,14 @@ The email provides information to determine what caused the health status change
 8. Choose the **Notification trigger**, which determines when you receive alerts.
 9. Select **Create**.
 
+{{<Aside type="note">}}
+
+A notification is only sent after a change of status in the majority of all selected region(s). 
+
+For a single region, this will be 2 of 3 data centers. With 13 regions selected, this will be 7 of 13 regions.
+
+{{</Aside>}}
+
 See [common error codes](/health-checks/health-checks-analytics/#common-error-codes) for more information regarding the cause of any changes to your Health Check.
 
 Cloudflare encourages you to view your [Health Checks Analytics](/health-checks/health-checks-analytics/#common-error-codes) to get more context about the health of your servers over time. 

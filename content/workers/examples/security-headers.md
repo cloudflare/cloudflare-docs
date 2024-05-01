@@ -6,6 +6,9 @@ summary: Set common security headers (X-XSS-Protection, X-Frame-Options,
 tags:
   - Security
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Set security headers
 weight: 1001
@@ -105,8 +108,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const DEFAULT_SECURITY_HEADERS = {
       /*
     Secure your application with Content-Security-Policy headers.
@@ -187,9 +190,7 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

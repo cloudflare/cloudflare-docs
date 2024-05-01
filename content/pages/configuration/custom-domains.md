@@ -7,12 +7,6 @@ title: Custom domains
 
 When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site.
 
-{{<Aside type="note" header="Purging the cache">}}
-
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. Resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) in the dashboard to ensure the latest build gets served.
-
-{{</Aside>}}
-
 ## Add a custom domain
 
 To add a custom domain:
@@ -87,6 +81,10 @@ To disable access to your project's provided `*.pages.dev` subdomain:
 
 2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
 
+## Caching
+
+For guidelines on caching, refer to [Caching and performance](/pages/configuration/serving-pages/#caching-and-performance).
+
 ## Known issues
 
 ### CAA records
@@ -109,3 +107,11 @@ example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignht
 ```
 
 Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/edge-certificates/troubleshooting/caa-records/) for more information.
+
+### Change DNS entry away from Pages and then back again
+
+Once a custom domain is set up, if you change the DNS entry to point to something else (for example, your origin), the custom domain will become inactive. If you then change that DNS entry to point back at your custom domain, anybody using that DNS entry to visit your website will get errors until it becomes active again. If you want to redirect traffic away from your Pages project temporarily instead of changing the DNS entry, it would be better to use an [Origin rule](/rules/origin-rules/) or a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) instead.
+
+## Relevant resources
+
+- [Debugging Pages](/pages/configuration/debugging-pages/) - Review common errors when deploying your Pages project.

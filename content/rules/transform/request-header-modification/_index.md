@@ -8,15 +8,36 @@ meta:
 
 # HTTP request header modification rules
 
-You can manipulate the headers of incoming HTTP requests through HTTP request header modification rules. Through these rules you can:
+Use HTTP request header modification rules to manipulate the headers of HTTP requests sent to your origin server.
+
+```mermaid
+flowchart LR
+accTitle: Header modifications diagram
+accDescr: Header modification rules can change the headers sent to your origin server (request header modifications) or sent your your website visitors (response header modifications).
+
+A[Visitor]
+B((Cloudflare))
+C[(Origin server)]
+
+A -.-> B == "Includes request<br> header modifications" ==> C
+C -.-> B -. "Includes response<br> header modifications" .-> A
+
+style A stroke-width: 2px
+style B stroke: orange,fill: orange,color: black
+linkStyle 0,2,3 stroke-width: 1px
+linkStyle 1 stroke-width: 3px
+```
+<br>
+
+To modify HTTP headers in the **response** sent to website visitors, refer to [HTTP response header modification rules](/rules/transform/response-header-modification/).
+
+Through HTTP request header modification rules you can:
 
 *   Set the value of an HTTP request header to a literal string value, overwriting its previous value or adding a new header to the request.
 *   Set the value of an HTTP request header according to an expression, overwriting its previous value or adding a new header to the request.
 *   Remove an HTTP header from the request.
 
 You can create an HTTP request header modification rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/) or [via API](/rules/transform/request-header-modification/create-api/).
-
-To modify HTTP headers in the **response**, refer to [HTTP response header modification rules](/rules/transform/response-header-modification/).
 
 ## Important remarks
 
@@ -31,3 +52,5 @@ To modify HTTP headers in the **response**, refer to [HTTP response header modif
 *   The HTTP request header removal operation will remove all request headers with the provided name.
 
 *   Currently, there is a limited number of HTTP request headers that you cannot modify. Cloudflare may remove restrictions for some of these HTTP request headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="HTTP request header modification rules">}}

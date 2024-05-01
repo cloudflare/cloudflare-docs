@@ -3,6 +3,9 @@ type: example
 summary: Set multiple Cron Triggers on three different schedules.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Multiple Cron Triggers
 weight: 1001
@@ -39,10 +42,11 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async scheduled(event, env, ctx) {
+interface Env {}
+export default {
+  async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {
     // Write code for updating your API
-    switch (event.cron) {
+    switch (controller.cron) {
       case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
@@ -59,8 +63,6 @@ const handler: ExportedHandler = {
     console.log("cron processed");
   },
 };
-
-export default handler;
 ```
 
 {{</tab>}}

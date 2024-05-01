@@ -32,41 +32,6 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 
 2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
 
-{{<details header="Python">}}
-
-To serve the TLS certificate using Python:
-
-1. Create a Python 3 script called `myserver.py`:
-
-   ```txt
-   ---
-   filename: myserver.py
-   ---
-   import ssl, http.server
-
-   class BasicHandler(http.server.BaseHTTPRequestHandler):
-         def do_GET(self):
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b'OK')
-            return
-
-   server = http.server.HTTPServer(('0.0.0.0', 3333), BasicHandler)
-   sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-   sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
-   server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
-   server.serve_forever()
-   ```
-
-2. Run the script:
-
-   ```sh
-   $ python3 myserver.py
-   ```
-
-{{</details>}}
-
 {{<details header="nginx in Docker">}}
 
 To serve the TLS certificate from an nginx container in Docker:
@@ -122,6 +87,46 @@ If needed, replace `/certs/example.pem` and `/certs/example.key` with the locati
 
 {{</details>}}
 
+
+{{<details header="Python">}}
+
+{{<Aside type="warning">}}
+This Python script is intended for a quick proof of concept (PoC) and should not be used in production environments.
+{{</Aside>}}
+
+To serve the TLS certificate using Python:
+
+1. Create a Python 3 script called `myserver.py`:
+
+   ```txt
+   ---
+   filename: myserver.py
+   ---
+   import ssl, http.server
+
+   class BasicHandler(http.server.BaseHTTPRequestHandler):
+         def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b'OK')
+            return
+
+   server = http.server.ThreadingHTTPServer(('0.0.0.0', 3333), BasicHandler)
+   sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+   sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
+   server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
+   server.serve_forever()
+   ```
+
+2. Run the script:
+
+   ```sh
+   $ python3 myserver.py
+   ```
+
+{{</details>}}
+
 3. To test that the server is working, run a curl command from the end user's device:
 
 ```sh
@@ -129,6 +134,10 @@ $ curl -v --insecure https://<private-server-IP>:3333/
 ```
 
 You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
+
+### Supported cipher suites
+
+The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your TLS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
 
 ## 2. Extract the SHA-256 fingerprint
 
@@ -176,8 +185,7 @@ To check if the WARP client detects the network location:
 2. Disconnect and reconnect to the network.
 3. Open a terminal and run `warp-cli debug alternate-network`.
 
-{{<Aside type="note">}}
-The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+## Best practices
 
-If multiple managed networks are configured and reachable, the first managed network to respond is used when determining which WARP settings profile the device should receive.
-{{</Aside>}}
+- The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
