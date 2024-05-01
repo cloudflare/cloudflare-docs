@@ -155,6 +155,9 @@ entries:
   description: |-
     - Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
     - Previously, an error would be thrown when trying to access unimplemented standard `Request` and `Response` properties. Now those will be left as `undefined`.
+- publish_date: '2023-01-31'
+  description: |-
+    - The [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object now includes two additional properties, `tlsClientHelloLength` and `tlsClientRandom`.
 - publish_date: '2023-01-13'
   description: |-
     - Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.
