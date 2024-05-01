@@ -177,7 +177,7 @@ All properties of an incoming `Request` object (the request you receive from the
 *   `cf` {{<type-link href="#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
     *   An object containing properties about the incoming request provided by Cloudflare’s global network.
-    *   This property is read-only. To modify its values, pass in the new values on the [`cf` key of the `init` options argument](/workers/runtime-apis/request/#requestinit) when creating a new Request object
+    *   This property is read-only (unless created from an existing `Request`). To modify its values, pass in the new values on the [`cf` key of the `init` options argument](/workers/runtime-apis/request/#requestinit) when creating a new `Request` object.
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
