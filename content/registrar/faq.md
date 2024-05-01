@@ -20,7 +20,7 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 {{<faq-answer>}}
 
-Domain transfers sometimes fail. Refer to [Registrar: troubleshoot stalled domain transfers](https://support.cloudflare.com/hc/articles/4424747060109) for more information on what might have happened and how to solve the issue.
+Domain transfers sometimes fail. Refer to [Registrar: troubleshoot stalled domain transfers](/registrar/troubleshooting/) for more information on what might have happened and how to solve the issue.
 
 If you cannot solve the issue, open a support ticket or contact your account team.
 
@@ -84,7 +84,7 @@ You can leave the domain **In Progress** and Cloudflare will wait until after th
 
 {{<faq-answer>}}
 
-If you have an [unverified email address](https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg), you might experience issues when initiating a domain transfer.
+If you have an [unverified email address](/fundamentals/setup/account/verify-email-address/), you might experience issues when initiating a domain transfer.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -134,21 +134,174 @@ If a year is not added to your registration, you have effectively paid twice for
 
 {{<faq-answer>}}
 
-Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. Contact your account team for assistance. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
-
 In summary, here is what will happen after a domain expires:
 
-- **Day 0:** Expiration Date.
-- **Day 1 - 30:** Grace Period (domain resolves normally).
-- **Day 31 - 40:** Suspension Period (domains resolves to suspension page).
-- **Day 41 - 70:** Redemption Period.
-- **Day 71 - 75:** Pending Delete Period.
+- **Day 0**: Expiration Date.
+- **Day 1 - 30**: Grace Period (domain resolves normally).
+- **Day 31 - 40**: Suspension Period (domains resolves to suspension page).
+- **Day 41 - 70**: Redemption Period.
+- **Day 71 - 75**: Pending Delete Period.
+
+Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). 
+
+During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. 
+
+The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
+
+If the domain is in a state where it can be restored, the Manage Domain page in the Registrar section of dash will display a message indicating the domain is restorable. You will then will be able to initiate the restore process directly from the dashboard.
 
 {{</faq-answer>}}
+{{</faq-item>}}
 
-{{<Aside type="note" header="Note">}}Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.{{</Aside>}}
+## Domain restoration
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Which domains are eligible to be restored?" >}}
+
+{{<faq-answer>}}
+
+Domains that are in the Redemption Period and have an EPP status of redemptionPeriod may be restored. For most TLDs this will include domains that are between 40 and 70 days past expiration. 
+
+Currently `.uk` domains cannot be restored using this process. We are working on an alternative process for `.uk` domains and will provide additional information at a later date.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Is there a fee to restore a domain?" >}}
+
+{{<faq-answer>}}
+
+Yes, in most cases there is a restore fee. 
+
+The amount varies depending on the TLD. The restore fee is separate from the renewal fee. You will be presented with both the restore and renewal fees before confirming they wish to proceed.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Will the domain be renewed after the restore has completed?" >}}
+
+{{<faq-answer>}}
+
+Yes. We will attempt to renew the domain after the restore has been completed. While not common, it is possible for the renewal transaction to fail. 
+
+In the event of a failure, we will make several retry attempts. If we are unable to process the renewal after several retries, you will be presented with a message that you should contact support for assistance.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="How long does the restore process take?" >}}
+
+{{<faq-answer>}}
+
+The entire process can take a few minutes to complete. 
+
+There are multiple steps to the restore process, and each step must be completed in a specific sequence. These steps are performed automatically by the system. The UI will continue to poll for an updated status and will provide feedback as each step completes.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="What happens if the domain renewal fails?" >}}
+
+{{<faq-answer>}}
+
+The restore and the renewal are two distinct processes that happen sequentially. 
+
+In rare cases the domain may be successfully restored but the renewal fails. We will make several attempts to renew the domain. However, should all the renewals fail the customer may attempt to manually renew the domain or contact support so we may investigate the cause of the failure.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Can a restore be reversed or refunded?" >}}
+
+{{<faq-answer>}}
+
+No. Once a restore has been completed it can not be reversed. It may be possible to delete the domain again but there are no refunds.
+
+{{<Aside type="note" header="Note">}}
+
+Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain's registry. You should monitor the domain status to ascertain when it will become available for registration once again.
+
+{{</Aside>}}
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+---
+
+## Domain deletions
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Why am I unable to delete my Registrar domain?" >}}
+
+{{<faq-answer>}}
+
+A domain can only be deleted if all the following conditions are met:
+
+* The user initiating the action is a Super Admin or Read/Write Administrator.
+* The domain is not delete locked at the registry with either `clientDeleteProhibited` or `serverDeleteProhibited`.
+* The domain is not already in `pendingDelete`, `redemptionPeriod`, or in `pendingTransfer`.
+* The domain has not been administratively locked by Cloudflare.  This typically occurs for legal reasons such as a UDRP filing or court order, but may also be the result of an abuse or payment investigation.
+* The domain is NOT a .UK domain. .UK domains currently cannot be deleted at the registry.
+
+If any of the above conditions are not met, the domain cannot be deleted.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Who has permission to delete a domain registration?" >}}
+{{<faq-answer>}}
+
+Only Super Admins and Administrators with Read/Write access can initiate the deletion of a domain.  Note that only Super Admins will receive the email with the delete token.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Will I receive a refund for my deleted domain registration?" >}}
+
+{{<faq-answer>}}
+No. Refunds will not be issued for costs incurred by a domain registration.
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=3 text="How do I get the domain deletion token?" >}}
+
+{{<faq-answer>}}
+
+The delete token is only sent to the Super Admins of the account. If the user requesting the deletion is not a Super Admin they will need to obtain the delete token from one of the Super Admins of the account.
+
+{{</faq-answer>}}
+{{</faq-item>}}
 
 
+{{<faq-item>}}
+{{<faq-question level=3 text="How long is the domain deletion token valid for?" >}}
+
+{{<faq-answer>}}
+
+The delete token is valid for 30 minutes. After the 30 minutes the code will expire and the user must restart the process.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+
+{{<faq-item>}}
+{{<faq-question level=3 text="Will the domain be deleted immediately from my account?" >}}
+
+{{<faq-answer>}}
+
+If the domain is within 5 days of the initial registration, the domain will be immediately released by the registry and made available for re-registration. In this scenario the domain will be immediately removed from the registrar section of the account. You may need to refresh the page to force an update of the data.
+
+If the domain is more than 5 days old, it will enter the redemption period and will remain in account until the redemption period expires and the registry releases the domain.
+
+{{</faq-answer>}}
 {{</faq-item>}}
 
 ---

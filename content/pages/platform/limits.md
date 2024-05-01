@@ -1,17 +1,14 @@
 ---
 pcx_content_type: concept
 title: Limits
+weight: 1
 ---
 
 # Limits
 
 Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
-
-{{</Aside>}}
+{{<render file="_limits_increase.md" productFolder="workers">}}
 
 ## Builds
 
@@ -41,20 +38,22 @@ The maximum file size for a single Cloudflare Pages site asset is 25 MiB.
 
 A `_headers` file can have a maximum of 100 header rules.
 
+An individual header in a `_headers` file can have a maximum of 2,000 characters. For managing larger headers, it is recommended to implement [Pages Functions](/pages/functions/).
+
 ## Preview deployments
 
-You can have an unlimited number of [preview deployments](/pages/platform/preview-deployments/) active on your project at a time.
+You can have an unlimited number of [preview deployments](/pages/configuration/preview-deployments/) active on your project at a time.
 
 ## Redirects
 
-A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/platform/redirects/#surpass-_redirects-limits) when you have a need for more than the `_redirects` file supports.
+A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/configuration/redirects/#surpass-_redirects-limits) when you have a need for more than the `_redirects` file supports.
 
 ## Users
 
 Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via  without impacting your Pages site.
 
-## Sites
+## Projects
 
-Cloudflare Pages supports deploying 100 sites to your account. If you need to raise this limit, contact your Cloudflare account team.
+Cloudflare Pages has a soft limit of 100 projects within your account in order to prevent abuse. If you need this limit raised, contact your Cloudflare account team or use the Limit Increase Request Form at the top of this page.
 
-In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Email workers-support@cloudflare.com if you need this restriction removed.
+In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Contact support if you need this limit increased.

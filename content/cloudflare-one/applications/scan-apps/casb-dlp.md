@@ -1,8 +1,7 @@
 ---
 pcx_content_type: concept
 title: Scan for sensitive data
-weight: 5
-layout: single
+weight: 3
 ---
 
 # Scan SaaS applications with DLP
@@ -16,9 +15,27 @@ Requires Cloudflare CASB and Cloudflare DLP.
 You can use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to discover if files stored in your SaaS application contain sensitive data.
 To perform DLP scans in a SaaS app, first configure a DLP profile with the data patterns you want to detect, then enable those profiles in a CASB integration.
 
+## Supported integrations
+
+{{<render file="casb/_casb-dlp-integrations.md">}}
+
 ## Configure a DLP profile
 
-Refer to the [DLP documentation](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
+You may either use DLP profiles predefined by Cloudflare, or create your own custom profiles based on regex, predefined detection entries, and DLP datasets.
+
+### Configure a predefined profile
+
+{{<render file="data-loss-prevention/_predefined-profile.md">}}
+
+Your DLP profile is now ready to use with CASB.
+
+### Build a custom profile
+
+{{<render file="data-loss-prevention/_custom-profile.md">}}
+
+Your DLP profile is now ready to use with CASB.
+
+For more information, refer to [Configure a DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
 
 ## Enable DLP scans in CASB
 
@@ -48,14 +65,9 @@ If you enable a DLP profile from the **Manage integrations** page, CASB will onl
 
 In order to scan historical data, you must enable the DLP profile during the [integration setup flow](#add-a-new-integration).
 
-## Supported integrations
-
-- [Google Drive](/cloudflare-one/applications/scan-apps/casb-integrations/google-workspace/google-drive/)
-
 ## Limitations
 
 DLP will only scan:
 
-- Files that are visible to anyone on the Internet.
 - [Text-based files](/cloudflare-one/policies/data-loss-prevention/#supported-file-types) such as documents, spreadsheets, and PDFs. Images are not supported.
 - Files ≤ 100 MB.

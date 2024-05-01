@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Custom builds
+meta:
+  description: Customize how your code is compiled, before being processed by Wrangler.
 ---
 
 # Custom builds

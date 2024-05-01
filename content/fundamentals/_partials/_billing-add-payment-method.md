@@ -45,3 +45,5 @@ Because some countries charge tax goods and services on personal accounts, you m
 7. To finish, select **Confirm**.
 
 Ensure your new payment method now appears in the **Payment Method** section.
+
+Enterprise customers must email ar@cloudflare.com with the last four digits of the credit card and its expiration date.

@@ -20,11 +20,11 @@ After your call with Cloudflare, complete the [prerequisites](/magic-transit/pre
 
 ## 3. Run pre-flight checks
 
-After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, Letter of Authorization (LOA), Internet Routing Registry (IRR), and maximum segment size (MSS) configurations.
+After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, {{<glossary-tooltip term_id="letter of agency">}}Letter of Agency (LOA){{</glossary-tooltip>}}, Internet Routing Registry (IRR), and {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} configurations.
 
 ## 4. Advertise prefixes
 
-Once Cloudflare’s pre-flight checks have passed and your account team verifies the date to complete the change, the process of onboarding your prefixes to Cloudflare’s global network network begins.
+Once Cloudflare’s pre-flight checks have passed and your account team verifies the date to complete the change, the process of onboarding your {{<glossary-tooltip term_id="prefix">}}prefixes{{</glossary-tooltip>}} to Cloudflare’s global network network begins.
 
 To configure our global network, Cloudflare routes traffic sourced from Cloudflare’s network and attracts traffic from the broader Internet by advertising your customer-owned prefixes.
 

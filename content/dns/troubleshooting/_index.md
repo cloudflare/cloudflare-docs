@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Troubleshooting
 weight: 20
-hideChildren: true
+layout: wide
 ---
 
 # Troubleshooting

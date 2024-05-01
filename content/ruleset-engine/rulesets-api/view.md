@@ -3,7 +3,7 @@ title: List and view rulesets
 pcx_content_type: reference
 type: overview
 weight: 4
-layout: list
+layout: wide
 ---
 
 # List and view rulesets
@@ -38,25 +38,20 @@ Not all zone-level phases support all types of rulesets, even if they are presen
 
 {{</Aside>}}
 
-The result does not include the list of rules in the ruleset. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
+The result does not include the list of rules in the ruleset. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -77,8 +72,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific ruleset
 
@@ -100,7 +94,7 @@ Use one of the following API endpoints:
 
 {{<Aside type="warning" header="Important">}}
 
-Note: You can only use the _Get a zone ruleset_ operation for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
+You can only use the _Get a zone ruleset_ operation for zone-level phase entry points (entry points where `kind` is set to `zone`).
 
 {{</Aside>}}
 
@@ -111,21 +105,16 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -156,8 +145,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## List all versions of a ruleset
 
@@ -177,27 +165,22 @@ Use one of the following API endpoints:
 [lev-account]: /api/operations/listAccountEntrypointRulesetVersions
 [lev-zone]: /api/operations/listZoneEntrypointRulesetVersions
 
-The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
+The result contains the ruleset properties of each version, but it does not include the list of rules. Refer to [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) for instructions on obtaining this information.
 
 When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -227,8 +210,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## View a specific version of a ruleset
 
@@ -252,21 +234,16 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number} \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -297,8 +274,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 {{<Aside type="note" header="Note">}}
 
@@ -318,21 +294,16 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 
 ### Example
 
-<details open>
-<summary>Request</summary>
-<div>
+{{<details header="Request" open="true">}}
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details open>
-<summary>Response</summary>
-<div>
+{{<details header="Response" open="true">}}
 
 ```json
 {
@@ -381,5 +352,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 }
 ```
 
-</div>
-</details>
+{{</details>}}

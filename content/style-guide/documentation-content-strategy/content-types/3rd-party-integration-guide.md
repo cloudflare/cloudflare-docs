@@ -161,4 +161,4 @@ We publish with the expectation of maintenance. If you want to publish something
 
 + [Workers](/workers/tutorials/)
 + [Zero Trust](/cloudflare-one/identity/idp-integration/)
-+ [Analytics](/fundamentals/data-products/analytics-integrations/)
++ [Analytics](/analytics/analytics-integrations/)

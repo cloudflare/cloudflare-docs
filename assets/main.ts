@@ -21,4 +21,5 @@ declare global {
   events.toggleSidebar();
   events.activeTab();
   events.tabs();
+  events.zarazTrackDocEvents();
 })();

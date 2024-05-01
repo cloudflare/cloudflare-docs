@@ -5,6 +5,9 @@ summary: Block other websites from linking to your content. This is useful for
 tags:
   - Security
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Hot-link protection
 weight: 1001
@@ -46,8 +49,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/";
     const PROTECTED_TYPE = "image/";
 
@@ -70,9 +73,7 @@ const handler: ExportedHandler = {
     // Everything is fine, return the response normally.
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

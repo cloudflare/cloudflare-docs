@@ -5,7 +5,6 @@
   "repository": "cloudflare/cloudflare-docs",
   "description": "Cloudflare Developer Docs",
   "scripts": {
-    "algolia-crawl": "node bin/algolia-crawl.js",
     "crawl-api-links": "node bin/crawl-api-links.js",
     "dev:hugo": "hugo --environment development -D -w",
     "dev:wrangler": "wrangler pages dev -- vite",
@@ -20,13 +19,15 @@
     "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
+    "algoliasearch": "^4.22.1",
     "fromnow": "3.0.1",
-    "mermaid": "9.1.7",
+    "instantsearch.js": "^4.64.0",
+    "mermaid": "9.4.3",
     "node-html-parser": "6.1.6",
     "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.17.0",
+    "@cloudflare/workers-types": "4.20240208.0",
     "@types/glob": "^8.0.1",
     "@types/mermaid": "^9.2.0",
     "@types/node": "^18.11.12",
@@ -37,14 +38,25 @@
     "concurrently": "^7.6.0",
     "glob": "^8.1.0",
     "html-rewriter-wasm": "^0.4.1",
+    "lz-string": "^1.5.0",
     "parse-numeric-range": "^1.3.0",
     "prettier": "2.5.1",
     "prismjs": "^1.29.0",
     "tsm": "2.2.2",
     "typescript": "~4.7.4",
-    "vite": "^4.0.0",
+    "vite": "^4.5.3",
     "vue-tsc": "^1.0.12",
-    "wrangler": "^3.1.1"
+    "wrangler": "3.28.0"
+  },
+  "overrides": {
+    "mermaid": {
+      "cytoscape": "3.28.1"
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "cytoscape": "3.28.1"
+    }
   },
   "volta": {
     "node": "18.10.0"

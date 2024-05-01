@@ -28,7 +28,7 @@ Adjust the URI path, query string, and HTTP headers of requests and responses on
 Modify the URLs of incoming requests so that they conform to a consistent formatting standard.
 {{</feature>}}
 
-{{<feature header="URL forwarding" href="/rules/url-forwarding/">}}
+{{<feature header="Redirects" href="/rules/url-forwarding/">}}
 Redirect visitors from a source URL to a target URL with a specific HTTP status code. Use Single Redirects or Bulk Redirects depending on your use case.
 {{</feature>}}
 
@@ -52,7 +52,7 @@ Customize the behavior of your website or application using short pieces of Java
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
 
-{{<feature header="Page Rules" href="/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/">}}
+{{<feature header="Page Rules" href="/rules/page-rules/">}}
 Trigger certain actions when a request matches a URL pattern.
 {{</feature>}}
 

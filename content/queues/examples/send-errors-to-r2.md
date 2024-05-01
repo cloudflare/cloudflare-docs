@@ -32,7 +32,7 @@ name = "my-worker"
 
 ```ts
 ---
-filename: worker.ts
+filename: index.ts
 ---
 type Environment = {
 	readonly ERROR_QUEUE: Queue<Error>;
@@ -40,7 +40,7 @@ type Environment = {
 };
 
 export default {
-  async fetch(req: Request, env: Environment): Promise<Response> {
+  async fetch(req, env): Promise<Response> {
     try {
       return doRequest(req);
     } catch (error) {
@@ -48,7 +48,7 @@ export default {
       return new Response(error.message, { status: 500 });
     }
   },
-  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+  async queue(batch, env): Promise<void> {
     let file = '';
     for (const message of batch.messages) {
       const error = message.body;
@@ -57,7 +57,7 @@ export default {
     }
     await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
   },
-};
+} satisfies ExportedHandler<Environment, Error>;
 
 function doRequest(request: Request): Promise<Response> {
   if (Math.random() > 0.5) {

@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: Filters
 weight: 40
-layout: list
+layout: wide
 ---
 
 # Filters

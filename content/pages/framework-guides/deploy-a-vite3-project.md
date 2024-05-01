@@ -47,7 +47,6 @@ To deploy your site to Pages:
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 3. Select your new GitHub repository.
 4. In the **Set up builds and deployments**, set `npm run build` as the **Build command**, and `dist` as the **Build output directory**.
-5. Select **Environment variables (advanced)** > **+ Add variable** > configure a `NODE_VERSION` variable with a value of any version of Node greater than `14.18` -- this example uses `16`:
 
 After completing configuration, select **Save and Deploy**.
 
@@ -55,6 +54,6 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Vite 3">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Vite 3">}}

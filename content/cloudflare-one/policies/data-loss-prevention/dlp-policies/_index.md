@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Scan HTTP traffic
 weight: 1
-layout: single
 ---
 
 # Scan HTTP traffic with DLP
@@ -11,7 +10,9 @@ You can scan HTTP traffic for sensitive data through Secure Web Gateway policies
 
 ## Prerequisites
 
-Enable [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
+- Set up [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
+  - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP traffic.
+- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-tls-decryption).
 
 ## 1. Configure a DLP profile
 
@@ -25,7 +26,7 @@ DLP scans will not start until you [create a DLP policy](#2-create-a-dlp-policy)
 
 DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/). To start logging or blocking traffic, create a policy for DLP:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies**. Select **HTTP**.
 2. Select **Add a policy**.
 3. Build an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) using the [DLP Profile](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
@@ -36,7 +37,7 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 
 4. Select **Create policy**.
 
-DLP scanning is now enabled.
+DLP scanning is now turned on.
 
 ## 3. Test DLP policy
 
@@ -60,7 +61,7 @@ Different sites will send requests in different ways. For example, some sites wi
 
 You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
 
-{{<beta heading="h3">}}Report false positives{{</beta>}}
+### Report false positives
 
 1. Select the log you want to report.
 2. Select **Report DLP false positive** under **DLP details**.

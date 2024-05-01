@@ -1,5 +1,5 @@
 {{- $product := .Page.Params.changelog_file_name -}}
-{{- $changelogData := index (index (index .Site.Data "changelogs") $product) "entries" -}}
+{{- $changelogData := index (index (partial "full-changelog-data.html") $product) "entries" -}}
 {{- $changelogData = sort $changelogData "publish_date" "desc" -}}
 {{- $changelogDates := slice -}}
 
@@ -22,7 +22,8 @@
 
 {{- end -}}
 
-{{ .description | $.Page.RenderString }}
+{{ $opts := dict "display" "block" }}
+{{ .description | $.Page.RenderString $opts }}
 
 {{- end -}}
 {{- end -}}

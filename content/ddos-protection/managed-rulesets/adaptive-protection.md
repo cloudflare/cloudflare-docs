@@ -10,10 +10,10 @@ Adaptive DDoS Protection learns your unique traffic patterns and adapts to them 
 
 Adaptive DDoS Protection provides the following types of protection:
 
-* **Origin-aware DDoS Protection**: Detects and mitigates traffic that deviates from your site's origin errors profile.
-* **User-agent-aware DDoS Protection**: Detects and mitigates traffic that deviates from the top User Agents seen by Cloudflare on the network. The User Agent profile is built from the entire Cloudflare network and not only from the customer's zone.
-* **Location-aware DDoS Protection**: Detects and mitigates traffic that deviates from your site’s geo-distribution profile. The profile is calculated from the rate for every client country and region, using the rates from the past seven days.
-* **Protocol-aware DDoS Protection**: Detects and mitigates traffic that deviates from your traffic’s IP protocol profile. The profile is calculated as a global rate for each of your prefixes.
+* **Adaptive DDoS Protection for Origins**: Detects and mitigates traffic that deviates from your site's origin errors profile.
+* **Adaptive DDoS Protection for User-Agents**: Detects and mitigates traffic that deviates from the top User Agents seen by Cloudflare on the network. The User Agent profile is built from the entire Cloudflare network and not only from the customer's zone.
+* **Adaptive DDoS Protection for Locations**: Detects and mitigates traffic that deviates from your site’s geo-distribution profile. The profile is calculated from the rate for every client country and region, using the rates from the past seven days.
+* **Adaptive DDoS Protection for Protocols**: Detects and mitigates traffic that deviates from your traffic’s IP protocol profile. The profile is calculated as a global rate for each of your prefixes.
 
 ## Availability
 
@@ -23,12 +23,14 @@ Cloudflare Adaptive DDoS Protection is available to Enterprise customers accordi
 
 Feature | Profiling dimension  | WAF/CDN<sup>1</sup> | Magic Transit /<br/>Spectrum BYOIP<sup>2</sup>
 --------|----------------------|:--------------------:|:------------------------------------------:
-**HTTP Adaptive DDoS Protection** |                           |     |
-Origin-aware     | Origin errors                              | Yes | —
-User-agent-aware | User Agent<br/>(entire Cloudflare network) | Yes | —
-Location-aware   | Client IP country and region               | Yes | —
-**L3/4 Adaptive DDoS Protection** |                           |     |
-Protocol-aware   | IP protocol                                | —   | Yes
+**HTTP Adaptive DDoS Protection** |                          |     |
+For Origins     | Origin errors                              | Yes | —
+For User-Agents | User Agent<br/>(entire Cloudflare network) | Yes | —
+For Locations   | Client IP country and region               | Yes | —
+**L3/4 Adaptive DDoS Protection** |                          |     |
+For Protocols   | IP protocol                                | —   | Yes
+For Protocols   | Client IP country and Region for UDP       | —   | Yes
+
 
 {{</table-wrap>}}
 
@@ -78,7 +80,7 @@ To configure a rule, refer to the instructions in the following pages:
 
 For more information on the available configuration parameters, refer to the following pages:
 
-* For the Origin-aware, User-agent-aware, and Location-aware (L7) DDoS Protection rules:<br>
+* For the (L7) DDoS protection rules for Origins, User-Agents, and Locations:<br>
   [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/)
-* For the Protocol-aware DDoS Protection rule:<br>
+* For the (L3/4) DDoS protection rules for Protocols:<br>
   [Network-layer DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/network/override-parameters/)

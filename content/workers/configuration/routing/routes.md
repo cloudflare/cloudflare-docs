@@ -43,7 +43,7 @@ To set up a route in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Workers & Pages** and in **Overview**, select your Worker.
-3. Go to **Triggers** > **Routes** > **Add route**.
+3. Go to **Settings** > **Triggers** > **Routes** > **Add route**.
 4. Enter the route and select the zone it applies to.
 5. Select **Add route**.
 
@@ -76,17 +76,9 @@ routes = [
 The `zone_id` and `zone_name` options are interchangeable. However, if using Cloudflare for SaaS with a `*/*` pattern, use the `zone_name` option to avoid errors. Currently, [publishing `*/*` routes with a `zone_id` option fails with an `Invalid URL` error](https://github.com/cloudflare/workers-sdk/issues/2953).
 {{</Aside>}}
 
-## Routes with `*.workers.dev`
+## Routes with `workers.dev`
 
-Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers without attaching your domain as a Cloudflare zone. Refer to the [`workers.dev` blog announcement](https://blog.cloudflare.com/announcing-workers-dev/) for more information.
-
-To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. Select **Change** next to **Your subdomain**. The `name` field in your Worker configuration is used as the preview subdomain for the deployed Worker, (for example, `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.`).
-
-When you create your Worker, the `workers.dev` route is automatically set up. Review this in your Worker > **Triggers** > **Routes**.
+When you create your Worker, a [`workers.dev`](/workers/configuration/routing/workers-dev/) route is automatically set up. Review your `workers.dev` route in your Worker > **Triggers** > **Routes**.
 
 To disable the `workers.dev` route, include the following in your Worker's `wrangler.toml` file:
 
@@ -95,6 +87,8 @@ workers_dev = false
 ```
 
 When you redeploy your Worker with this change, the `workers.dev` route will be disabled.
+
+If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your `wrangler.toml`, the value of `workers_dev` will be inferred as `false` on the next deploy.
 
 {{<Aside type="warning">}}
 If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `workers_dev = false`, the `workers.dev` route will re-enable the next time you publish your Worker.
@@ -127,7 +121,11 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
-- Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
+- The path component of route patterns is case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
+
+- For routes created before October 15th, 2023, the host component of route patterns is case sensitive, for example, `example.com/*` and `Example.com/*` are two distinct routes.
+
+- For routes created on or after October 15th, 2023, the host component of route patterns is not case sensitive, for example, `example.com/*` and `Example.com/*` are equivalent routes.
 
 A route can be specified without being associated with a Worker. This will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 

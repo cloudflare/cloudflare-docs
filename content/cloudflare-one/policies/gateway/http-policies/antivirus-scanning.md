@@ -16,13 +16,11 @@ AV scanning of files requires organizations to go to **Settings** > **Network** 
 
 To enable AV scanning:
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+2. In **Firewall**, enable **AV inspection**.
+3. Choose whether to scan files for malicious payloads during uploads, downloads, or both. You can also block requests containing [non-scannable files](#non-scannable-files).
 
-1.  In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
-
-When a file is blocked due to the presence of malware, it is logged as a Block decision:
-
-![Example of a blocked action in the Gateway Activity Logs tab.](/images/cloudflare-one/policies/blocked-decision.png)
+When a request is blocked due to the presence of malware, Gateway will log the match as a Block decision in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
 
 ## How Gateway determines if a file should be scanned
 
@@ -58,9 +56,9 @@ The following files cannot be scanned and will be blocked or allowed based on wh
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. All [HTTP selectors](/cloudflare-one/policies/gateway/http-policies/#selectors) can be used to opt HTTP traffic out from AV scanning using the Do Not Scan action. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
-| Selector | Operator      | Value           | Action      |
-| -------- | ------------- | --------------- | ----------- |
-| Hostname | Matches Regex | `.*example.com` | Do Not Scan |
+| Selector | Operator      | Value         | Action      |
+| -------- | ------------- | ------------- | ----------- |
+| Hostname | matches regex | `example.com` | Do Not Scan |
 
 Opting out of AV scanning applies to both uploads and downloads of files (i.e., it matches the global AV scanning setting). If an admin has chosen, for example, to only globally scan uploads, then opting out of AV scanning only applies to uploads.
 
@@ -68,48 +66,47 @@ When traffic matches a Do Not Scan rule, nothing is scanned, regardless of file 
 
 ## Supported compressed file types
 
-In addition to standard object files like PDFs, the following archive types are supported for AV scanning:
+In addition to standard object files like PDFs, Zero Trust supports AV scanning for the following archive types:
 
-- ARJ
-- ZIP
-- GZIP compressed files
-- TAR
-- Self-extracting ARJ
-- Self-extracting ZIP
-- UUE and XXE compressed files
-- LZH/LHA
-- Self-extracting LZH/LHA
-- ZOO
-- MIME base64
-- Microsoft TNEF
-- MSCOMPRESS
-- Microsoft CAB
-- Self-extracting CA
-- RAR
-- Self-extracting RAR
-- Java ARchive
-- Binhex (Mac)
-- BZ2
-- ACE
-- ACE SFX
-- BASE64
-- PGP signed message, document, etc.
-- MacBinary
-- CHM Help Files
-- CPIO SVR4
-- RPM
-- NSIS Nullsoft Installer
 - 7-Zip
 - 7-Zip SFX
-- AutoIt
-- SAPCar
-- Inno Setup
-- eXtensible ARchive format (XAR)
-- XZ file format
+- ACE
+- ACE SFX
 - AutoHotkey
-- Smart Install Maker
+- AutoIt
+- BASE64
+- BZ2
+- CHM Help Files
+- CPIO SVR4
 - Chrome Extension (CRX) Package Format
-- Office Legacy XML
-- Indigo Rose Setup Factory
+- eXtensible ARchive format (XAR)
+- GZIP compressed files
 - ISO 9660
+- Inno Setup
+- Indigo Rose Setup Factory
+- Java ARchive
+- LZH/LHA
+- MacBinary
+- MIME base64
+- MSCOMPRESS
+- Microsoft CAB
+- Microsoft TNEF
+- NSIS Nullsoft Installer
+- Office Legacy XML
+- PGP signed message, document, etc.
+- RPM
+- RAR
+- SAPCar
+- Self-extracting ARJ
+- Self-extracting CA
+- Self-extracting LZH/LHA
+- Self-extracting RAR
+- Self-extracting ZIP
+- Smart Install Maker
+- TAR
+- UUE and XXE compressed files
 - Windows Imaging File (WIM)
+- XE compressed files (UUE and XXE)
+- XZ file format
+- ZIP
+- ZOO

@@ -2,9 +2,6 @@
 pcx_content_type: how-to
 title: Looker
 weight: 102
-layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/looker/
 ---
 
 # Looker
@@ -15,7 +12,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
-This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Bucket and Cloud Function](/fundamentals/data-products/analytics-integrations/google-cloud/) and then import them into Google Big Query.
+This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Bucket and Cloud Function](/analytics/analytics-integrations/google-cloud/) and then import them into Google Big Query.
 
 ### Prerequisites
 

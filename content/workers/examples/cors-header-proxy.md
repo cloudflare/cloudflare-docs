@@ -4,6 +4,9 @@ summary: Add the necessary CORS headers to a third party API response.
 tags:
   - Security
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: CORS header proxy
 weight: 1001
@@ -170,8 +173,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
@@ -234,9 +237,9 @@ const handler: ExportedHandler = {
         for (const [reqName, req] of Object.entries(reqs)) {
           try {
             let data = await req()
-            document.getElementById(reqName).innerHTML = JSON.stringify(data)
+            document.getElementById(reqName).textContent = JSON.stringify(data)
           } catch (e) {
-            document.getElementById(reqName).innerHTML = e
+            document.getElementById(reqName).textContent = e
           }
         }
       })()
@@ -319,9 +322,7 @@ const handler: ExportedHandler = {
       return rawHtmlResponse(DEMO_PAGE);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

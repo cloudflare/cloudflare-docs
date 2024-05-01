@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Connect to databases
 weight: 1
+meta:
+  description: Learn about the different kinds of database integrations Cloudflare supports.
 ---
 
 # Connect to databases
@@ -16,7 +18,7 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 
 | Database                                                                         | Integration |  Library or Driver      | Connection Method      |
 | ------------------------------------------------------------------------------- | ----- | --------- | --------- |
-| [Postgres](/workers/tutorials/postgres/) | - |  [node-postgres](https://node-postgres.com/) | [Workers Socket API](/workers/runtime-apis/tcp-sockets/) |
+| [Postgres](/workers/tutorials/postgres/) | - |  [node-postgres](https://node-postgres.com/) | [Hyperdrive](/hyperdrive/) |
 | [Postgres](/workers/tutorials/postgres/) | - |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) |
 | [MySQL](/workers/tutorials/postgres/) | - | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | No |  [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
@@ -27,6 +29,7 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 | [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/) | [Yes](/workers/databases/native-integrations/neon/) | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library |
 | [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No | API | GraphQL API via fetch() |
 | [Upstash Redis](https://blog.cloudflare.com/cloudflare-workers-database-integration-with-upstash/) | [Yes](/workers/databases/native-integrations/upstash/) | [@upstash/redis](https://github.com/upstash/upstash-redis) | API via client library |
+| [TiDB Cloud](https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare)                      | No                                                       | [@tidbcloud/serverless](https://github.com/tidbcloud/serverless-js)               | API via client library                       |
 
 {{</table-wrap>}}
 
@@ -38,11 +41,12 @@ Once you have installed the necessary packages, use the APIs provided by these p
 
 ## Connect to a database from a Worker
 
-There are three ways to connect to a database from a Worker:
+There are four ways to connect to a database from a Worker:
 
-1. [Database Integrations](/workers/databases/native-integrations/): Simplifies authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
-2. [TCP Socket API](/workers/runtime-apis/tcp-sockets): A direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as [PostgreSQL](/workers/databases/connect-to-postgres/) and MySQL, use for client connectivity.
-3. HTTP- or WebSocket-based serverless drivers: Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
+1. With [Hyperdrive](/hyperdrive/) (recommended), which dramatically speeds up accessing traditional databases. Hyperdrive currently supports PostgreSQL and PostgreSQL-compatible database providers.
+2. [Database Integrations](/workers/databases/native-integrations/): Simplifies authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
+3. [TCP Socket API](/workers/runtime-apis/tcp-sockets): A direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as PostgreSQL and MySQL, use for client connectivity.
+4. HTTP- or WebSocket-based serverless drivers: Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
 
 ## Authentication
 
@@ -60,10 +64,10 @@ const secretValue = env.<SECRET_NAME>;
 
 Use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/bindings/mtls) to present a client certificate.
 
 ## Next steps
 
-* Learn how to connect to [an existing PostgreSQL database](/workers/databases/connect-to-postgres/).
-* Discover [other storage options available](/workers/learning/storage-options/) for use with Workers.
+* Learn how to connect to [an existing PostgreSQL database](/hyperdrive/) with Hyperdrive.
+* Discover [other storage options available](/workers/platform/storage-options/) for use with Workers.
 * [Create your first database](/d1/get-started/) with Cloudflare D1.

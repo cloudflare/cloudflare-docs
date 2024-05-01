@@ -1,13 +1,15 @@
 ---
 pcx_content_type: configuration
 title: Web Crypto
+meta:
+  description: A set of low-level functions for common cryptographic tasks.
 ---
 
 # Web Crypto
 
 ## Background
 
-The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers Runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
+The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
 
 Performing cryptographic operations using the Web Crypto API is significantly faster than performing them purely in JavaScript. If you want to perform CPU-intensive cryptographic operations, you should consider using the Web Crypto API.
 
@@ -29,7 +31,7 @@ console.log(new Uint8Array(myDigest));
 Some common uses include [signing requests](/workers/examples/signing-requests/).
 
 {{<Aside type="warning">}}
-The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
+The Web Crypto API differs significantly from the [Node.js Crypto API](/workers/runtime-apis/nodejs/crypto/). If you are working with code that relies on the Node.js Crypto API, you can use it by enabling the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/).
 {{</Aside>}}
 
 ---
@@ -63,7 +65,7 @@ export default {
   async fetch(req) {
     // Fetch from origin
     const res = await fetch(req);
-    
+
     // We need to read the body twice so we `tee` it (get two instances)
     const [bodyOne, bodyTwo] = res.body.tee();
     // Make a new response so we can set the headers (responses from `fetch` are immutable)
@@ -86,11 +88,11 @@ export default {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-const handler: ExportedHandler = {
-  async fetch(req) {
+export default {
+  async fetch(req): Promise<Response> {
     // Fetch from origin
     const res = await fetch(req);
-    
+
     // We need to read the body twice so we `tee` it (get two instances)
     const [bodyOne, bodyTwo] = res.body.tee();
     // Make a new response so we can set the headers (responses from `fetch` are immutable)
@@ -108,8 +110,7 @@ const handler: ExportedHandler = {
     newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
     return newRes;
   }
-}
-export default handler;
+} satisfies ExportedHandler;
 ```
 {{</tab>}}
 {{</tabs>}}
@@ -259,7 +260,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
     - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
 
   - {{<code>}}data{{</code>}}{{<param-type>}}ArrayBuffer{{</param-type>}}
-  
+
   {{</definitions>}}
 
 ### generateKey
@@ -328,7 +329,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
     - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax)
-  
+
   {{</definitions>}}
 
 ### deriveBits
@@ -354,7 +355,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}length{{</code>}}{{<param-type>}}int{{</param-type>}}
 
     - Length of the bit string to derive.
-  
+
   {{</definitions>}}
 
 ### importKey
@@ -436,7 +437,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}wrapAlgo{{</code>}}{{<param-type>}}object{{</param-type>}}
 
     - Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
-  
+
   {{</definitions>}}
 
 ### unwrapKey
@@ -474,7 +475,7 @@ These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.o
   - {{<code>}}keyUsages{{</code>}}{{<param-type>}}Array{{</param-type>}}
 
     - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
-  
+
   {{</definitions>}}
 
 ### timingSafeEqual

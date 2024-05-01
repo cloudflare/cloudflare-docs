@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>configs</key>
+  <array>
+    <dict>
+      <key>organization</key>
+      <string>your-team-name</string>
+      <key>display_name</key>
+      <string>Company Name</string>
+      <key>auto_connect</key>
+	    <integer>120</integer>
+	    <key>onboarding</key>
+	    <false/>
+    </dict>
+  </array>
+</dict>
+</plist>

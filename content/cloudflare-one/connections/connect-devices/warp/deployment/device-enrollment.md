@@ -10,7 +10,7 @@ Device enrollment permissions determine which users can connect new devices to y
 
 ## Set device enrollment permissions
 
-{{<render file="_device-enrollment.md">}}
+{{<render file="warp/_device-enrollment.md">}}
 
 Users can now [enroll their device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) by logging in to your identity provider. To prevent users from logging out of your organization after they enroll, disable [Allow devices to leave organization](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) in your WARP client settings.
 
@@ -22,7 +22,7 @@ Instead of requiring users to authenticate with their credentials, you can use a
 
 To enroll devices using a service token:
 
-{{<render file="_service-token-enrollment.md">}}
+{{<render file="warp/_service-token-enrollment.md">}}
 
 You can verify which devices have enrolled by going to **My Team** > **Devices**. Devices that enrolled using a service token (or any other Service Auth policy) will have the **Email** field show as `non_identity@<team-name>.cloudflareaccess.com`.
 
@@ -30,17 +30,6 @@ You can verify which devices have enrolled by going to **My Team** > **Devices**
 
 Enterprise customers can enforce [mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) during device enrollment.
 
-To check for an mTLS certificate:
+{{<render file="warp/_device-enrollment-mtls.md">}}
 
-1. [Add an mTLS certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your account. You can generate a sample certificate using the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki).
-
-2. In **Associated hostnames**, enter your Zero Trust [team domain](/cloudflare-one/glossary/#team-domain): `<team-name>.cloudflareaccess.com`
-3. In your [device enrollment permissions](#set-device-enrollment-permissions), add a _Common Name_ or _Valid Certificate_ rule. For example, the following policy requires a client certificate with a specific common name:
-
-    | Selector    | Operator | Value                | Action |
-    | ----------- | -------- | -------------------- | ------ |
-    | Common Name | is       | `<CERT-COMMON-NAME>` | Allow  |
-
-4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
-
-When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) from the WARP client, their device must present a valid client certificate in order to connect.
+When users [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) from the WARP client, their device must present a valid client certificate in order to connect.

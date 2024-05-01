@@ -2,9 +2,7 @@
 title: Endpoints
 pcx_content_type: reference
 weight: 2
-layout: list
-aliases:
-- /fundamentals/global-configurations/lists/lists-api/endpoints/
+layout: wide
 ---
 
 # Endpoints
@@ -15,13 +13,13 @@ To invoke a [Lists API](/api/operations/lists-get-lists) operation, append the e
 
 `https://api.cloudflare.com/client/v4/`
 
-For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
+For authentication instructions, refer to [Cloudflare's API: Getting Started](/fundamentals/api/get-started/).
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
+For help with making API calls and paginating results, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
 {{<Aside type="note">}}
 
-The Lists API endpoints require a value for `<ACCOUNT_ID>`.
+The Lists API endpoints require a value for `{account_id}`.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](/api/operations/accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
@@ -44,19 +42,19 @@ The Lists API supports the operations outlined below. Visit the associated links
   <tbody>
     <tr>
       <td>
-        <a href="/api/operations/lists-create-a-list">Create a list</a>
+        {{<markdown>}}[Create a list](/api/operations/lists-create-a-list){{</markdown>}}
       </td>
       <td>
-        <code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
+        <code class="InlineCode">POST accounts/{account_id}/rules/lists</code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">Creates an empty list.</td>
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-get-lists">Get lists</a>
+        {{<markdown>}}[Get lists](/api/operations/lists-get-lists){{</markdown>}}
       </td>
       <td>
-        <code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
+        <code class="InlineCode">GET accounts/{account_id}/rules/lists</code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
         Fetch all lists for the account. (This request does not fetch the items in the lists.)
@@ -64,43 +62,42 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-get-a-list">Get a list</a>
+        {{<markdown>}}[Get a list](/api/operations/lists-get-a-list){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+          GET accounts/{account_id}/rules/lists/{list_id}
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
-        Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the
+        Fetches a list by its ID. (This request does not display the
         items in the list.)
       </td>
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-update-a-list">Update a list</a>
+        {{<markdown>}}[Update a list](/api/operations/lists-update-a-list){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+          PUT accounts/{account_id}/rules/lists/{list_id}
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
         <p>
           Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.
         </p>
-        <p>
-          To update an item in a list, use the <a href="/api/operations/lists-update-all-list-items">Update all list items</a> operation.
+        {{<markdown>}}To update an item in a list, use the [Update all list items](/api/operations/lists-update-all-list-items) operation.{{</markdown>}}
         </p>
       </td>
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-delete-a-list">Delete a list</a>
+        {{<markdown>}}[Delete a list](/api/operations/lists-delete-a-list){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
+          DELETE accounts/{account_id}/rules/lists/{list_id}
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
@@ -133,26 +130,27 @@ When you make requests to a list while a bulk operation on that list is in progr
   <tbody>
     <tr>
       <td>
-        <a href="/api/operations/lists-get-list-items">Get list items</a>
+        {{<markdown>}}[Get list items](/api/operations/lists-get-list-items){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          GET accounts/{account_id}/rules/lists/{list_id}/items[?search={query}]
         </code>
       </td>
       <td>
-        <p>Fetches all items in a list.</p>
+        <p>Fetches items in a list (all items, by default).</p>
         <p>Items are sorted in ascending order.</p>
-        <p>In the case of IP Lists, CIDRs are sorted by IP address, then by the subnet mask.</p>
+        <p>In the case of IP lists, CIDRs are sorted by IP address, then by the subnet mask.</p>
+        <p>{{<markdown>}}To filter returned items, use the optional `search` query string parameter. For more information, refer to the [Get list items](/api/operations/lists-get-list-items) API operation.{{</markdown>}}
       </td>
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-get-a-list-item">Get a list item</a>
+        {{<markdown>}}[Get a list item](/api/operations/lists-get-a-list-item){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items/&lt;ITEM_ID&gt;
+          GET accounts/{account_id}/rules/lists/{list_id}/items/{item_id}
         </code>
       </td>
       <td>
@@ -161,11 +159,11 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-create-list-items">Create list items</a>
+        {{<markdown>}}[Create list items](/api/operations/lists-create-list-items){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          POST accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>
@@ -181,11 +179,11 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-update-all-list-items">Update all list items</a>
+        {{<markdown>}}[Update all list items](/api/operations/lists-update-all-list-items){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          PUT accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>
@@ -203,11 +201,11 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="/api/operations/lists-delete-list-items">Delete list items</a>
+        {{<markdown>}}[Delete list items](/api/operations/lists-delete-list-items){{</markdown>}}
       </td>
       <td>
         <code class="InlineCode">
-          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
+          DELETE accounts/{account_id}/rules/lists/{list_id}/items
         </code>
       </td>
       <td>

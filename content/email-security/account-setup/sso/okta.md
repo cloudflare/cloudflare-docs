@@ -65,7 +65,7 @@ You will need to manually create an app for Area 1 in Okta.
 13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to  finish configuration in the Area 1 dashboard. The start of the metadata should be similar to the following:
 
     ```txt
-    <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
+    <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
     ```
 
     ![Copy and save the XML metadata to use later in the Area 1 dashboard](/images/email-security/sso/okta/step13-optional.png)

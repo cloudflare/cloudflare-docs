@@ -3,12 +3,6 @@ pcx_content_type: how-to
 title: Protect your origin server
 meta:
   title: Protect your origin server
-aliases:
-- /fundamentals/get-started/task-guides/origin-health/
-- /fundamentals/get-started/task-guides/origin-health/free/
-- /fundamentals/get-started/task-guides/origin-health/pro/
-- /fundamentals/get-started/task-guides/origin-health/business/
-- /fundamentals/get-started/task-guides/origin-health/enterprise/
 ---
 
 # Protect your origin server
@@ -35,7 +29,7 @@ aliases:
 
 ## Monitor origin health
 
-For passive monitoring, [create notifications](/notifications/create-notifications/) for **Origin Error Rate Alerts** to receive alerts when your origin returns 5xx codes above a configurable threshold and **Passive Origin Monitoring** to see when Cloudflare is unable to reach your origin for a few minutes.
+For passive monitoring, [create notifications](/notifications/get-started/#create-a-notification) for **Origin Error Rate Alerts** to receive alerts when your origin returns 5xx codes above a configurable threshold and **Passive Origin Monitoring** to see when Cloudflare is unable to reach your origin for a few minutes.
 
 {{<render file="_origin-health-check.md">}}
 

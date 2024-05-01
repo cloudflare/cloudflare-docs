@@ -2,7 +2,7 @@
 pcx_content_type: tutorial
 title: Migration tutorial
 weight: 5
-meta: 
+meta:
     title: DNSSEC migration tutorial
 updated: 2023-06-20
 ---
@@ -23,7 +23,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 ## 1. Set up Cloudflare
 
-1. [Add your zone to Cloudflare](/fundamentals/get-started/setup/add-site/).
+1. [Add your zone to Cloudflare](/fundamentals/setup/manage-domains/add-site/).
 
     To add your zone using the API, refer to the [Create Zone endpoint](/api/operations/zones-post).
 
@@ -34,20 +34,22 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 3. Go to **DNS** > **Settings**, and select **Enable DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
-curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header 'Content-Type: application/json' \
 --data '{"status": "active"}'
 ```
 
-4. Enable multi-signer DNSSEC using the following request. This step can only be achieved via the [API](/api/operations/dnssec-edit-dnssec-status).
+4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
-$ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \ 
---header 'X-Auth-Email: <EMAIL>' \ 
---header 'X-Auth-Key: <KEY>' \ 
---header 'Content-Type: application/json' \ 
+$ curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <API_KEY>' \
+--header 'Content-Type: application/json' \
 --data '{"dnssec_multi_signer": true}'
 ```
 
@@ -58,14 +60,14 @@ $ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnss
 You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/operations/dns-records-for-a-zone-create-dns-record), as in the following example.
 
 ```bash
-$ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
+--header 'X-Auth-Key: <API_KEY>' \
 --header 'Content-Type: application/json' \
 --data '{
     "type": "DNSKEY",
     "name": "<ZONE_NAME>",
-    "data": { 
+    "data": {
       "flags": 256,
       "protocol": 3,
       "algorithm": 13,
@@ -80,9 +82,9 @@ $ curl --request POST https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_r
 API example:
 
 ```bash
-$ curl --request https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
 --header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>'
+--header 'X-Auth-Key: <API_KEY>'
 ```
 
 Command line query example:
@@ -105,9 +107,7 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer
 
 Both queries should return both ZSKs (identified with tag `256`).
 
-<details>
-<summary>Example</summary>
-<div>
+{{<details header="Example">}}
 
 ```bash
 $ dig multisigner.info dnskey @dns1.p01.nsone.net. +noall +answer
@@ -120,8 +120,8 @@ multisigner.info.    3600    IN    DNSKEY    257 3 13 mdss<bla_bla_bla>eKGQ==
 multisigner.info.    3600    IN    DNSKEY    256 3 13 oJM<bla_bla_bla>XhSA==
 multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
 ```
-</div>
-</details>
+
+{{</details>}}
 
 {{</Aside>}}
 
@@ -144,8 +144,8 @@ You can find out the TTL of your previous provider DS record by running a `dig` 
 
 ```bash
 $ dig multisigner.info ds +noall +answer
-multisigner.info.	3600	IN	DS	2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
-multisigner.info.	3600	IN	DS	48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE
+multisigner.info. 3600 IN DS 2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
+multisigner.info. 3600 IN DS 48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE
 ```
 
 In this example, both DS records have a TTL of `3600` seconds. Cloudflare's DS record always has the key tag set to `2371`, so the second line of the response is the DS record of the other provider.

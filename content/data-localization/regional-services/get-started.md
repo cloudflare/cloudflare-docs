@@ -2,12 +2,18 @@
 title: Get started
 pcx_content_type: get-started
 weight: 1
-layout: list
+layout: wide
 meta:
     title: Get Started — Regional Services
 ---
 
 # Get Started
+
+{{<Aside type="note">}}
+
+Interested customers need to contact their account team to enable DNS Regionalisation.
+
+{{</Aside>}}
 
 You can use Regional Services through the dashboard or via API.
 
@@ -18,7 +24,9 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and domain.
 2. Go to the **DNS** tab.
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
-4. From the **Region** dropdown, select the region you would like to use on your domain. Refer to the table below for the complete list of available regions and their definitions. Note that only Super Administrators can view and edit the DNS Region used for Regional Services.
+4. From the **Region** dropdown, select the region you would like to use on your domain. This value will be applied to all DNS records on the same hostname. This means that if you have two DNS records of the same hostname and change the region for one of them, both records will have the same region.
+
+Refer to the table below for the complete list of available regions and their definitions. Only Super Administrators can view and edit the DNS Region used for Regional Services.
 
 {{<table-wrap style="font-size: 87%">}}
 
@@ -34,6 +42,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 | ISO 27001 Certified European Union | Cloudflare will only use data centers that are physically located within the [European Union](https://european-union.europa.eu/principles-countries-history/country-profiles_en) and that adhere to the ISO 27001 certification. |
 | Germany | Cloudflare will only use data centers that are physically located within Germany to decrypt and service HTTPS traffic. |
 | Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
+| South Korea | Cloudflare will only use data centers that are physically located within South Korea to decrypt and service HTTPS traffic. |
 
 {{</table-wrap>}}
 
@@ -41,9 +50,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 
 You can also use Regional Services via API. These are some examples of API requests.
 
-<details>
-<summary>List all the available regions</summary>
-<div>
+{{<details header="List all the available regions">}}
 
 ```bash
 ---
@@ -76,12 +83,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Create a new regional hostname entry</summary>
-<div>
+{{<details header="Create a new regional hostname entry">}}
 
 ```bash
 ---
@@ -110,12 +114,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>List all regional hostnames for a zone or get a specific one</summary>
-<div>
+{{<details header="List all regional hostnames for a zone or get a specific one">}}
 
 ```bash
 ---
@@ -145,12 +146,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>List all regional hostnames for a specific zone</summary>
-<div>
+{{<details header="List all regional hostnames for a specific zone">}}
 
 ```bash
 ---
@@ -178,12 +176,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Patch the region for a specific hostname</summary>
-<div>
+{{<details header="Patch the region for a specific hostname">}}
 
 ```bash
 ---
@@ -212,12 +207,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Delete the region configuration</summary>
-<div>
+{{<details header="Delete the region configuration">}}
 
 ```bash
 ---
@@ -241,8 +233,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ## Terraform support
 

@@ -4,9 +4,9 @@ hideChildren: true
 pcx_content_type: navigation
 title: Examples
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Examples
 
-{{<list-examples>}}
+{{<list-examples filters="languages,tags,preview">}}

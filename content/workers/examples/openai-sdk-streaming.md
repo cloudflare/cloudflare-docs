@@ -3,6 +3,9 @@ type: example
 summary: Use the OpenAI v4 SDK to stream responses from OpenAI.
 tags:
   - AI
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Stream OpenAI API Responses
 weight: 1001
@@ -12,7 +15,7 @@ layout: example
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		const openai = new OpenAI({
 			apiKey: env.OPENAI_API_KEY
 		});
@@ -35,16 +38,16 @@ export default {
 			console.log(part.choices[0]?.delta?.content || '');
 			writer.write(textEncoder.encode(part.choices[0]?.delta?.content || ''));
 		}
-		
+
 		writer.close();
 
 		// Send readable back to the browser so it can read the stream content
 		return new Response(readable);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 
 In order to run this code, you must install the OpenAI SDK by running `npm i openai`.
 

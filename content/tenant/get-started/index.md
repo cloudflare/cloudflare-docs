@@ -12,7 +12,7 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ### Channel and Alliance partner account setup
 
-Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
+Before using the Tenant API, you need to [create an account](/fundamentals/setup/account/create-account/), [verify your email address](/fundamentals/setup/account/verify-email-address/), and [add your billing information](/fundamentals/subscriptions-and-billing/create-billing-profile/).
 
 After you sign your partner agreement with Cloudflare, Cloudflare will add [certain entitlements](/tenant/structure/) to your account that allow you to provision and manage custom accounts. If you have signed your partner agreement and your account has not yet been enabled, contact `partners@cloudflare.com`.
 
@@ -83,7 +83,7 @@ This means that you will be making API calls to Cloudflare on behalf of your cus
 
 {{<Aside type="note">}}
 
-This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{</Aside>}}
 

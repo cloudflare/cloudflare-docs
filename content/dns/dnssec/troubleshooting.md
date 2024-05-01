@@ -4,24 +4,33 @@ source: https://support.cloudflare.com/hc/en-us/articles/360021111972-Troublesho
 title: Troubleshooting
 weight: 6
 meta:
-    title: Troubleshooting | DNSSEC
+    title: Troubleshooting DNSSEC
 ---
 
 # Troubleshooting DNSSEC
 
 Learn more about how to troubleshoot issues with DNSSEC.
 
-## Testing DNSSEC with Dig
+## Test DNSSEC with Dig
 
-`Dig` is a command-line tool to query a nameserver for DNS records. For instance, `dig` can ask a DNS resolver for the IP address of `www.cloudflare.com` (The option `+short` outputs the result only):
+`Dig` is a command-line tool to query a nameserver for DNS records.
+
+For instance, `dig` can ask a DNS resolver for the IP address of `www.cloudflare.com`:
+
+{{<example>}}
 
 ```sh
 $ dig www.cloudflare.com +short
 198.41.215.162
 198.41.214.162
 ```
+The option `+short` outputs the result only.
 
-Use `dig` to verify DNSSEC records.  In the example below, the last line of output is the `RRSIG` record `RRSIG` is the DNSSEC signature attached to the record. With the `RRSIG`, a DNS resolver determines whether a DNS response is trusted.
+{{</example>}}
+
+Use `+dnssec` to verify that the DNS records are signed:
+
+{{<example>}}
 
 ```sh
 $ dig www.cloudflare.com +dnssec +short
@@ -30,8 +39,13 @@ $ dig www.cloudflare.com +dnssec +short
 A 13 3 300 20180927180434 20180925160434 35273 cloudflare.com. DYYZ/bhHSAIlpvu/HEUsxlzkC9NsswbCQ7dcfcuiNBrbhYV7k3AI8t46 QMnOlfhwT6jqsfN7ePV6Fwpym3B0pg==
 ```
 
-`Dig` also retrieves the public key used to verify the DNS record. A domain's DNS records are all signed with the same public key. Therefore, query for the apex domain's public key, not the subdomain's public key: 
+In this example, the last line of output is the `RRSIG` record. `RRSIG` is the DNSSEC signature attached to the record. With the `RRSIG`, a DNS resolver determines whether a DNS response is trusted.
 
+{{</example>}}
+
+`Dig` can also retrieve the public key used to verify the DNS record, `DNSKEY`:
+
+{{<example>}}
 
 ```sh
 $ dig DNSKEY cloudflare.com +short
@@ -39,19 +53,22 @@ $ dig DNSKEY cloudflare.com +short
 256 3 13 koPbw9wmYZ7ggcjnQ6ayHyhHaDNMYELKTqT+qRGrZpWSccr/lBcrm10Z 1PuQHB3Azhii+sb0PYFkH1ruxLhe5g==
 ```
 
+A domain's DNS records are all signed with the same public key. Therefore, query for the apex domain (`cloudflare.com`) public key, not the subdomain (`www.cloudflare.com`) public key.
+
 The DNS response includes two records:
 
--   `DNSKEY` record **256** is the public key called Zone-signing-key, used to verify the DNS record signatures for `A`, `MX`, `CNAME`, `SRV`, etc.
--   `DNSKEY` record **257** is called the Key-Signing Key, used to verify the signatures of the `DNSKEY`, `CDS`, and `CDNSKEY` records.
+-   `DNSKEY` record **256** is the public key called zone signing key (ZSK). ZSKs are used to verify the DNS record signatures for `A`, `MX`, `CNAME`, `SRV`, etc.
+-   `DNSKEY` record **257** is called the key signing key (KSK). KSKs are used to verify the signatures of the `DNSKEY`, `CDS`, and `CDNSKEY` records.
+
+{{</example>}}
 
 {{<Aside type="note">}}
-Details on how to verify the signatures with the public key are beyond
-the scope of this article.
+Details on how to verify the signatures with the public key are beyond the scope of this article.
 {{</Aside>}}
 
 When not using the `+short` option with `dig`, a DNS response is DNSSEC authenticated if the `ad` flag appears in the response header:
 
-
+{{<example>}}
 ```sh
 $ dig www.cloudflare.com
 [...]
@@ -65,9 +82,10 @@ $ dig www.cloudflare.com
 www.cloudflare.com. 15  IN  A   198.41.215.162
 www.cloudflare.com. 15  IN  A   198.41.214.162
 ```
+{{</example>}}
 ___
 
-## Troubleshooting DNSSEC Validation using DNSViz
+## Troubleshoot DNSSEC validation using DNSViz
 
 {{<Aside type="note">}}
 DNSViz is a public, free online tool to visualize and help discover issues with your DNSSEC configuration and is **not** associated Cloudflare.
@@ -88,11 +106,15 @@ Below is an example of how dnsviz.net will display incorrect delegation when no 
 
 ___
 
-## Viewing the DNSSEC Chain of Trust with Dig
+## View the DNSSEC chain of trust with Dig
 
-Full verification of domain signatures (for example: `cloudflare.com`) involves verifying the key-signing key at the top-level-domain (for example: `.com`).  Similar verification is then performed by checking the key-signing key of `.com` at the root server level. DNSSEC root keys are distributed to DNS clients to complete the trust chain.
+Full verification of domain signatures (for example, `cloudflare.com`) involves verifying the key signing key at the top-level domain (for example, `.com`).  
 
-When DNSSEC is enabled, a `DS` record is required at the registrar's DNS. The `DS` record contains a hash of the public key-signing key as well as metadata about the key.
+Similar verification is then performed by checking the key-signing key of `.com` at the root server level. DNSSEC root keys are distributed to DNS clients to complete the chain of trust.
+
+When DNSSEC is enabled, a `DS` record is required at the registrar's DNS. The `DS` record contains a hash of the public key signing key as well as metadata about the key.
+
+{{<example>}}
 
 Use `dig` to find a `DS` record:
 
@@ -113,14 +135,17 @@ com.            172800  IN  NS  e.gtld-servers.net.
 ;; Received 1213 bytes from 2001:502:1ca1::30#53(e.gtld-servers.net) in 37 ms
 
 ```
+{{</example>}}
 
-An easier alternative to manually running all the steps above is to use the third-party [DNSViz online tool](#troubleshooting-dnssec-validation-using-dnsviz).
+An easier alternative to manually running the steps above is to use the third-party tool [DNSViz](#troubleshoot-dnssec-validation-using-dnsviz).
 
 ___
 
-## Troubleshooting DNSSEC Validation with Dig
+## Troubleshoot DNSSEC validation with Dig
 
 Issues occur if authoritative DNS providers are changed without updating or removing old DNSSEC records at the registrar:
+
+{{<example>}}
 
 ```sh
 $ dig A brokendnssec.net @1.0.0.1
@@ -136,8 +161,9 @@ $ dig A brokendnssec.net @1.0.0.1 +dnssec +cd +short
 104.20.48.61
 ```
 
-In the above example, DNSSEC is misconfigured if a proper DNS response is received when using the _+cd_ option but queries using DNSSEC return a `SERVFAIL` response. This issue often happens when authoritative nameservers are changed but `DS` records are not updated. The issue can also occur if an attacker attempts to forge a response to a query.
+In this example, DNSSEC is misconfigured if a proper DNS response is received when using the `+cd` option but queries using DNSSEC return a `SERVFAIL` response. This issue often happens when authoritative nameservers are changed but `DS` records are not updated. The issue can also occur if an attacker attempts to forge a response to a query.
 
+{{</example>}}
 ___
 
 ## Next steps

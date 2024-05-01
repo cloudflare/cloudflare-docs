@@ -8,7 +8,7 @@ meta:
 
 # Netflow/IPFIX configuration
 
-Magic Network Monitoring supports the NetFlow v5, NetFlow v9, and IPFIX network flow data formats. 
+Magic Network Monitoring supports the NetFlow v5, NetFlow v9, and IPFIX network {{<glossary-tooltip term_id="flow data">}}flow data{{</glossary-tooltip>}} formats. 
 
 1. Log in to your router's configuration application.
 2. Open your router's NetFlow configuration menu.

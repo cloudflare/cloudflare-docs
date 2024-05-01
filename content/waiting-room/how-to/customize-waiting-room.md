@@ -51,7 +51,7 @@ The template text contains [code to display the wait time](#display-wait-time). 
 #### Upload an HTML file
 
 1.  Select **Import** to upload a HTML file from your computer.
-2.  Select the file in the dialog and select **Open**.
+2.  Select the file in the dialog and select **Open**. The HTML file size limit is 1,048,576 bytes (1 MB).
 
 Make further edits in the text box. Include the [code to display the wait time](#display-wait-time) to display the estimated queue time on the waiting room page or create your own custom page using [available variables](#available-variables).
 
@@ -100,7 +100,15 @@ When you create a waiting room with custom HTML, you can have access to several 
 
 #### Multiple-language support
 
-Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTimeMinutes` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
+Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTime` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
+
+If you would like to display different languages within your custom waiting room depending on path or subdomain, you can add JavaScript code to your custom HTML to do so. Below you can find a couple of starter templates that you can use as an example to start from:
+
+* To display a different language based on path, download this [template](/waiting-room/static/index.path.html.txt). The template displays the content in English if the path contains `en` or as a default, Japanese if the path contains `jp`, French if the path contains `fr`, and Spanish if the path contains `es`.
+
+* To display a different language based on subdomain, download this [template](/waiting-room/static/index.subdomain.html.txt). The template displays the content in English as a default or if the subdomain contains `en`, Japanese if the subdomain contains `jp`, French if the subdomain contains `fr`, and Spanish if the subdomain contains `es`.
+
+Download either of these templates and customize them however you would like. Update the path or subdomain to reflect your site’s language selection structure. You may edit these templates to include other languages by adding translations to the `translations` object for each of the locales.
 
 #### Resource hosting
 

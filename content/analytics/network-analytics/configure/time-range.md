@@ -12,7 +12,7 @@ meta:
 
 Use the timeframe drop-down list to change the time range over which Network Analytics displays data. When you select a timeframe, the entire view is updated to reflect your choice.
 
-In Network Analytics v2 dashboard, the range of historical data you can query is 120 days.
+In the Network Analytics dashboard, the range of historical data you can query is 120 days.
 
 When you select _Previous 30 minutes_, the **Network Analytics** card will show the data from the last 30 minutes, refreshing every 20 seconds. A _Live_ notification appears next to the statistic drop-down list to let you know that the view keeps updating automatically:
 

@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Add an HTML form with Formspree
-layout: single
 ---
 
 # Add an HTML form with Formspree

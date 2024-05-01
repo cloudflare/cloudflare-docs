@@ -1,13 +1,12 @@
 ---
 title: Migrating from hCaptcha
 pcx_content_type: migration
-weight: 4
-layout: single
+weight: 2
 ---
 
-# Migrating from hCaptcha
+# Migrate from hCaptcha
 
-Customers using hCaptcha today can switch seamlessly to Cloudflare Turnstile. Follow the step-by-step guide below to assist with the upgrade process.
+If you are using hCaptcha today, you can switch seamlessly to Cloudflare Turnstile by following the step-by-step guide below to assist with the upgrade process.
 
 To complete the migration, you must obtain the [sitekey and secret key](/turnstile/get-started/#get-a-sitekey-and-secret-key).
 
@@ -18,6 +17,9 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 <div>
 
 ```html
+---
+header: Turnstile script snippet
+---
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 ```
 
@@ -28,6 +30,9 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 <div>
 
 ```js
+---
+header: Render
+---
 // before
 hcaptcha.render(element, {
     sitekey: "00000000-0000-0000-0000-000000000000"

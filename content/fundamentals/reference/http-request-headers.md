@@ -1,24 +1,26 @@
 ---
 pcx_content_type: reference
 title: Cloudflare HTTP request headers
-aliases:
-- /fundamentals/get-started/reference/http-request-headers/
 ---
 
 # HTTP request headers
 
 Cloudflare passes all HTTP request headers to your origin web server and adds additional headers as specified below.
 
+{{<Aside type="note">}}
+Cloudflare may remove HTTP request headers with names considered invalid [according to NGINX](https://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers) — for example, header names containing a `.` (dot) character.
+{{</Aside>}}
+
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
 
 ## CF-Connecting-IP
 
 `CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
 This header will only be sent on the traffic from Cloudflare's edge to your origin web server.
 
-For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
+For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
@@ -26,7 +28,7 @@ Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or an
 
 In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
 
-In cross-zone subrequests from one Cloudflare customer zone to another Cloudflare customer zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
+In cross-zone subrequests from one Cloudflare zone to another Cloudflare zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
 
 For Worker subrequests destined for a non-Cloudflare customer zone, the `CF-Connecting-IP` and `x-real-ip` headers will both reflect the client's IP address, with only the `x-real-ip` header able to be altered.
 
@@ -34,9 +36,10 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 ## CF-Connecting-IPv6
 
-Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](https://support.cloudflare.com/hc/en-us/articles/229666767) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+Cloudflare provides [free IPv6 support](/network/ipv6-compatibility/) to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
-If Pseudo IPv4 is set to `Overwrite Headers` - Cloudflare overwrites the existing `Cf-Connecting-IP` and `X-Forwarded-For` headers with a pseudo IPv4 address while preserving the real IPv6 address in `CF-Connecting-IPv6` header.
+{{<render file="_pseudo-ipv4-warning.md">}}
+<br/>
 
 ## CF-EW-Via
 
@@ -44,7 +47,7 @@ This header is used for loop detection, similar to the `CDN-Loop` [header](https
 
 ## CF-Pseudo-IPv4
 
-If Pseudo IPv4 is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
+If [Pseudo IPv4](/network/pseudo-ipv4/) is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
 
 ## True-Client-IP (Enterprise plan only)
 
@@ -86,15 +89,20 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 ## CF-RAY
 
-The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/get-started/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
+The `CF-ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor’s request. For example: `CF-RAY: 230b030023ae2822-SJC`.
 
-Add the [`CF-Ray` header to your origin web server logs](https://support.cloudflare.com/hc/articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) to match requests proxied to Cloudflare to requests in your server logs.
+Add the [`CF-Ray` header to your origin web server logs](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) to match requests proxied to Cloudflare to requests in your server logs.
 
 Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
 
 ## CF-IPCountry
 
-The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country. Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the `XX` country code when the country information is unknown.
+The `CF-IPCountry` header contains a two-character country code of the originating visitor’s country.
+
+Besides the  [ISO-3166-1 alpha-2 codes](https://www.iso.org/iso-3166-country-codes.html), Cloudflare uses the following special country codes:
+
+-   `XX` - Used for clients without country code data.
+-   `T1` - Used for clients using the Tor network.
 
 To add this header to requests, along with other HTTP headers with location information for the visitor's IP address, [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
@@ -116,7 +124,7 @@ Currently, this header is a JSON object, containing only one key called “schem
 
 The `CF-Worker` request header is added to an edge Worker subrequest that identifies the host that spawned the subrequest. This is useful when you want to protect yourself against cross-zone worker subrequests. For example: `CF-Worker: example.com`.
 
-You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](https://support.cloudflare.com/hc//articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
+You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
 
 `CF-Worker` is added to all Worker subrequests sent via `fetch()`. It is set to the name of the zone which owns the Worker making the subrequest. For example, a Worker script on route for `foo.example.com/*` from `example.com` will have all subrequests with the header:
 
@@ -126,7 +134,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 {{<Aside type="note">}}
 
-When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/#standard-fields) dynamic field, which contains the same value and exists for the same purpose.
+When configuring WAF custom rules, do not match on this header. These rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/#field-cf-worker-upstream_zone) dynamic field, which contains the same value and exists for the same purpose.
 
 {{</Aside>}}
 
@@ -141,3 +149,4 @@ When using Spectrum with a TCP application, these headers are not visible at the
 
 - Use an HTTP or HTTPS Spectrum app instead of TCP
 - Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
+

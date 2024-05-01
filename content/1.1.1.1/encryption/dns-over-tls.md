@@ -9,7 +9,7 @@ By default, DNS is sent over a plaintext connection. DNS over TLS (DoT) is one w
 
 ## How it works
 
-Cloudflare supports DNS over TLS (DoT) on `1.1.1.1`, `1.0.0.1`, and the correspsonding IPv6 addresses (`2606:4700:4700::1111` and `2606:4700:4700::1001`) on port `853`. If your DoT client does not support IP addresses, Cloudflare's DoT endpoint can also be reached by hostname on `one.one.one.one`. A stub resolver (the DNS client on a device that talks to the DNS resolver) connects to the resolver over a TLS connection:
+Cloudflare supports DNS over TLS (DoT) on `1.1.1.1`, `1.0.0.1`, and the corresponding IPv6 addresses (`2606:4700:4700::1111` and `2606:4700:4700::1001`) on port `853`. If your DoT client does not support IP addresses, Cloudflare's DoT endpoint can also be reached by hostname on `one.one.one.one`. A stub resolver (the DNS client on a device that talks to the DNS resolver) connects to the resolver over a TLS connection:
 
 1. Before the connection, the DNS stub resolver has stored a base64 encoded SHA256 hash of the TLS certificate from 1.1.1.1 (called SPKI).
 2. DNS stub resolver establishes a TCP connection with `1.1.1.1:853`.

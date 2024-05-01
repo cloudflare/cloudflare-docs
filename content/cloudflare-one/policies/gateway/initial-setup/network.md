@@ -8,6 +8,10 @@ weight: 2
 
 Secure Web Gateway allows you to apply policies at the network level (Layers 3 and 4) to control which websites and non-HTTP applications users can access.
 
+{{<Aside type="note">}}
+For a more detailed guide to filtering network traffic and more for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/) implementation guide.
+{{</Aside>}}
+
 ## 1. Connect to Gateway
 
 ### Connect devices
@@ -15,7 +19,7 @@ Secure Web Gateway allows you to apply policies at the network level (Layers 3 a
 To filter network traffic from a device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
-2. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
+2. In the WARP client Settings, log in to your organization’s {{<glossary-tooltip term_id="team name">}}Zero Trust instance{{</glossary-tooltip>}}.
 3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/gateway/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
 4. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP. Optionally, you can enable the UDP proxy to inspect all port 443 UDP traffic.
 

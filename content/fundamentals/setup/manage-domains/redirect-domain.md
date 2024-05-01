@@ -1,9 +1,6 @@
 ---
 pcx_content_type: reference
 title: Redirect one domain to another
-weight: 4
-aliases:
-- /fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/
 ---
 
 # Redirect one domain to another

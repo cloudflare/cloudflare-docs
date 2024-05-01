@@ -17,7 +17,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 **Before you start**
 
-- [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
+- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 
 **Time to complete:**
 
@@ -42,12 +42,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
-
-```sh
-$ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-$ sudo dpkg -i ./cloudflared-linux-amd64.deb
-```
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and install `cloudflared` on the DigitalOcean machine by following the instructions listed on the [Downloads](/cloudflare-one/connections/connect-networks/downloads/) page.
 
 ## Authenticate `cloudflared`
 
@@ -63,7 +58,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/install-and-setup/tunnel-guide/local/ with the command below.
+Next, create a tunnel with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
@@ -79,7 +74,7 @@ $ cloudflared tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/) to serve traffic.
+You can now [configure the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#4-create-a-configuration-file) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
@@ -105,7 +100,7 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS**.
 
@@ -127,7 +122,7 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 $ cloudflared tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/) that is configured to launch on start.
 
 ## Connect from a client machine
 
@@ -136,7 +131,7 @@ You can now connect from a client machine using `cloudflared`.
 This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command using Homebrew.
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.

@@ -6,4 +6,6 @@ weight: 6
 
 # Configuration
 
-{{<directory-listing>}}
+Configure your Worker project with various features and customizations.
+
+{{<directory-listing showDescriptions="true">}}

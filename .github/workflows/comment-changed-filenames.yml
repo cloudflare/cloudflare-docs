@@ -1,0 +1,87 @@
+name: Flag changed filenames
+
+# **What it does**: Adds or removes a comment if a PR renames or removes a file.
+# **Why we have it**: Highlights when we need redirects covering certain file paths.
+# **Who does it impact**: PCX team, other Cloudflare contributors
+
+on:
+  pull_request:
+    branches:
+      - production
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  flag_changed_filenames:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Renamed or Removed Files from Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          files=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" | \
+            jq -r '.[] | select(.status=="renamed" or .status=="removed") | select (.filename | contains("_partials") | not) | select(.filename | endswith(".md")) | if .status == "renamed" then .previous_filename else .filename end' | \
+            sed -e 's|^content||' -e 's|/_index\.md$|/|' -e 's|/index\.md$|/|' -e 's|\.md$|/|')
+          # Use random delimiter for security reasons
+          delimiter="$(openssl rand -hex 8)"
+          echo "CHANGED_FILES<<${delimiter}" >> "$GITHUB_ENV"
+          echo "${files}" >> "$GITHUB_ENV"
+          echo "${delimiter}" >> "$GITHUB_ENV"
+
+      - name: Comment or Update Comment on PR based on changed files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # If there are no changed files
+          if [ -z "$CHANGED_FILES" ]; then
+            # Fetch the ID of the existing comment, if it exists
+            existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
+              jq '.[] | select(.user.id == 41898282) | select(.body | contains("This PR changes current filenames or deletes current files")) | .id')
+
+            # If the comment exists, delete it
+            if [ ! -z "$existing_comment_id" ]; then
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -X DELETE \
+                "https://api.github.com/repos/${{ github.repository }}/issues/comments/$existing_comment_id"
+            fi
+          else
+            # Construct the comment body for changed files
+            comment_body="This PR changes current filenames or deletes current files. Make sure you have [redirects](https://developers.cloudflare.com/pages/configuration/redirects/) set up to cover the following paths:"
+            for path in $CHANGED_FILES; do
+              clean_path=$(echo $path | sed 's/"//g')  # Remove quotation marks
+              comment_body="$comment_body
+            - [ ] \`$clean_path\`"
+            done
+
+            # Check if a comment already exists
+            existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" | \
+              jq '.[] | select(.user.id == 41898282) | select(.body | contains("This PR changes current filenames or deletes current files")) | .id')
+
+            comment_payload=$(echo '{}' | jq --arg body "$comment_body" '.body = $body')
+
+            # If a comment exists, update it. Otherwise, post a new comment.
+            if [ ! -z "$existing_comment_id" ]; then
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -X PATCH -d "$comment_payload" \
+                "https://api.github.com/repos/${{ github.repository }}/issues/comments/$existing_comment_id"
+            else
+              curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -X POST -d "$comment_payload" \
+                "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+            fi
+          fi

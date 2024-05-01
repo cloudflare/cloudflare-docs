@@ -2,7 +2,6 @@
 title: Enable Google Cloud Storage
 pcx_content_type: how-to
 weight: 61
-layout: single
 meta:
   title: Enable Logpush to Google Cloud Storage
 ---
@@ -49,5 +48,5 @@ To enable Logpush to GCS:
 2. In **Storage** > **Browser** > **Bucket** > **Permissions**, add the member `logpush@cloudflare-data.iam.gserviceaccount.com` with `Storage Object Admin` permission.
 
 {{<Aside type="note" header="Note">}}
-To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/fundamentals/data-products/analytics-integrations/google-cloud/).
+To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/analytics/analytics-integrations/google-cloud/).
 {{</Aside>}}

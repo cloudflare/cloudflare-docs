@@ -13,7 +13,7 @@ title: Neon
 
 To set up an integration with Neon:
 
-1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/tutorial/project-setup#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
+1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/postgres/tutorial-createdb#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
 
 2. Create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
 
@@ -48,7 +48,7 @@ To set up an integration with Neon:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
-    4. Select **Settings** > **Integrations** > **Neon**. 
+    4. Select **Integrations** > **Neon**. 
     5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@neondatabase/serverless` driver to connect to your database and start manipulating data:

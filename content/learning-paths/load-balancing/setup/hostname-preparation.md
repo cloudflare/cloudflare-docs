@@ -7,8 +7,8 @@ layout: learning-unit
 
 Before setting up anything related to your load balancer, make sure your test that production hostnames meet the following criteria:
 
-- Based on the [priority order](/load-balancing/reference/dns-records/#priority-order) of DNS records, they will receive the intended amount of traffic.
-- Each hostname is covered by an [SSL/TLS certificate](/load-balancing/reference/dns-records/#ssltls-coverage).
+- Based on the [priority order](/load-balancing/load-balancers/dns-records/#priority-order) of DNS records, they will receive the intended amount of traffic.
+- Each hostname is covered by an [SSL/TLS certificate](/load-balancing/load-balancers/dns-records/#ssltls-coverage).
 
 After confirming each of these conditions are met, you can proceed with setting up your load balancer.
 

@@ -49,7 +49,13 @@ For example in the WordPress admin UI, you might notice any of the following beh
 -   Inability to drag any widget to a sidebar in **Appearance** \> **Widgets**
 -   Inability to edit menus in **Appearance** \> **Menus**
 
-To understand why this happens, note that WordPress [concatenates JavaScript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
+To understand why this happens, note that WordPress [concatenates JavaScript files](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of `load[]` parameters in the query string, where the order of those parameters is crucial.
+
+{{<Aside type="note">}}
+
+Note that more recent versions of WordPress may not experience this issue, as a patch has been implemented in WordPress since 2019. The patch can be found at [WordPress Core Trac Changeset 45456](https://core.trac.wordpress.org/changeset/45456).
+
+{{</Aside>}}
 
 ### Identify the problem
 
@@ -92,7 +98,7 @@ To minimize problems, consider:
 -   Use Cloudflare **Page Rules** to enable **Query String Sort** for URLs where preserving the query string parameter order is not important.
 -   Alternatively, use Cloudflare **Page Rules** to disable **Query String Sort** for URLs where a specific parameter order is required. For example, disable Query String Sort for `example.com/wp-admin/load-scripts.php*` or any URLs with similar requirements (replace example.com with your domain name).
 
-To learn more about Page Rules, visit [Understanding and Configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
+To learn more about Page Rules, visit [Page Rules](/rules/page-rules/).
 
 ___
 

@@ -13,6 +13,6 @@ For example, if you want to match multiple domains, you could use the pipe symbo
 
 | Selector | Operator      | Value                                  | Action |
 | -------- | ------------- | -------------------------------------- | ------ |
-| Host     | Matches regex | `.\*whispersystems.org\|.\*signal.org` | Block  |
+| Host     | matches regex | `.\*whispersystems.org\|.\*signal.org` | Block  |
 
 To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).

@@ -1,17 +1,18 @@
 ---
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics-v1
-title: Cloudflare Network Analytics v1
+title: Network Analytics v1 (deprecated)
 meta:
-  description: Network Analytics provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
+  title: Cloudflare Network Analytics v1 (deprecated)
+  description: Network Analytics v1 (deprecated) provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks.
 weight: 3
 ---
 
-# Cloudflare Network Analytics v1
+{{<heading-pill style="deprecated">}} Cloudflare Network Analytics v1 {{</heading-pill>}}
 
-{{<Aside type="note" header="Network Analytics v2 is now available">}}
--   For more information on the Network Analytics v2 (NAv2) dashboard, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
--   There is also a new version of the Network Analytics GraphQL API. If you are still using NAv1, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{<Aside type="warning">}}
+- {{<render file="_network-analytics-v1-deprecation.md">}}
+- If you are using the Network Analytics GraphQL API, you should migrate from NAv1 to NAv2 by following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 Access to Network Analytics requires the following:
@@ -231,7 +232,7 @@ ___
 
 ### Export activity log data 
 
-You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a security information and event management system (SIEM).
+You can export up to 500 raw events from the Activity log at a time. This option is useful when you need to combine and analyze Cloudflare data with data stored in a separate system or database, such as a {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}}.
 
 To export log data, select **Export**.
 
@@ -259,7 +260,7 @@ Network Analytics currently has these limitations:
     -   Application layer rules
     -   Gatekeeper and manually applied rules
     -   [flowtrackd](https://blog.cloudflare.com/announcing-flowtrackd/) (Advanced TCP protection) (available in Network Analytics v2)
-    -   WARP traffic and [Orange-clouded traffic](/fundamentals/get-started/concepts/how-cloudflare-works/)
+    -   WARP traffic and [Orange-clouded traffic](/fundamentals/concepts/how-cloudflare-works/)
 
 -   Data from Cloudflare services that proxy traffic, such as CDN, is not available in Network Analytics.
 

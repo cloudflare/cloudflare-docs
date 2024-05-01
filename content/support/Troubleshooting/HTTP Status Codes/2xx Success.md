@@ -46,7 +46,7 @@ A **203** response means that the request was successful but the response did no
 
 Servers use this response to tell a client that this resource has been cached at a proxy.
 
-Cloudflare does not cache 203 responses. For details about Cloudflare handles 203 responses, refer to [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/).
+Cloudflare does not cache 203 responses. For details about Cloudflare handles 203 responses, refer to [HTTP request headers](/fundamentals/reference/http-request-headers/).
 
 ___
 

@@ -12,7 +12,7 @@ For example, if your team uses Okta® but you are collaborating with someone out
 
 ## Set up OTP
 
-{{<render file="_one-time-pin.md">}}
+{{<render file="access/_one-time-pin.md">}}
 
 To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy).
 

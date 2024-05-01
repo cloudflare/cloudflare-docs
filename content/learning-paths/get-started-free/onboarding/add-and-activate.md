@@ -7,7 +7,7 @@ layout: learning-unit
 
 For most customers, adding and activating your domain on Cloudflare is straightforward.
 
-The first step is always the same, to [create a Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+The first step is always the same, to [create a Cloudflare account](/fundamentals/setup/account/create-account/).
 
 Your next steps depend on whether you have a domain name, such as `example.com`.
 
@@ -47,15 +47,15 @@ If you already have a domain, the easiest way to get set up with Cloudflare is t
 
 If you cannot transfer your domain or want to keep your current registrar, your setup has a few more steps:
 
-1. [Add your site](/fundamentals/get-started/setup/add-site/).
-2. (*Optional*) If your domain is sensitive to downtime, you may have a [few additional steps](/fundamentals/get-started/setup/minimize-downtime/).
+1. [Add your site](/fundamentals/setup/manage-domains/add-site/).
+2. (*Optional*) If your domain is sensitive to downtime, you may have a [few additional steps](/fundamentals/basic-tasks/minimize-downtime/).
 3. At your registrar (where you bought your domain name), disable DNSSEC.
     <br/>
     {{<render file="_dnssec-providers.md" productFolder="dns">}}
-4. (*For some*) At your origin server, [allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/).
+4. (*For some*) At your origin server, [allow Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/).
 5. Change your [domain nameservers](/dns/zone-setups/full-setup/setup/).
 6. Wait for your domain to become [Active](/dns/zone-setups/reference/domain-status/) on Cloudflare.
 
 ### Troubleshooting
 
-If you have issues activating your domain on Cloudflare, refer to our troubleshooting guides on [adding sites to Cloudflare](/dns/zone-setups/troubleshooting/cannot-add-domain/) and [changing nameservers](/dns/zone-setups/troubleshooting/nameservers/).
+If you have issues activating your domain on Cloudflare, refer to our troubleshooting guides on [adding sites to Cloudflare](/dns/zone-setups/troubleshooting/cannot-add-domain/) and [changing nameservers](/dns/zone-setups/full-setup/troubleshooting/).

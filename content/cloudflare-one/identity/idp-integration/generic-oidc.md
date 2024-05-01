@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Generic OIDC
-weight: 12
+weight: 1
 ---
 
 # Generic OIDC
@@ -12,11 +12,13 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 1. Visit your identity provider and create a client/app.
 
-2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter the following URL:
 
-   ```txt
-   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-   ```
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 3. Copy the content of these fields:
 
@@ -38,7 +40,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
+9. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
 10. Select **Save**.
 
@@ -52,7 +54,7 @@ OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can 
 
 #### Email claim
 
-You can specify a custom **Email claim** name that Access will use to identify user emails. This is useful if your IdP does not return the standard `email` claim in the OIDC ID token. For example, you may wish to identify Azure AD users based on their `upn` instead of `email`.
+You can specify a custom **Email claim** name that Access will use to identify user emails. This is useful if your IdP does not return the standard `email` claim in the OIDC ID token.
 
 #### Multi-record OIDC claims
 

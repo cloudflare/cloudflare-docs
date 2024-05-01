@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Troubleshooting
-weight: 8
+weight: 9
 meta:
     title: Troubleshooting Optimization issues
 ---

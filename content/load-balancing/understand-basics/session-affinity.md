@@ -44,12 +44,12 @@ If you would like to require all of your configured HTTP headers to be present o
 
 ## Enabling Session Affinity from the Cloudflare dashboard
 
-Enable Session Affinity when you [create or edit a load balancer](/load-balancing/how-to/create-load-balancer/), during the **Hostname** step.
+Enable Session Affinity when you [create or edit a load balancer](/load-balancing/load-balancers/create-load-balancer/), during the **Hostname** step.
 
 If you enable Session Affinity, choose one of the following options:
 
-- **By Cloudflare cookie only**: Sets a `cflib` cookie to track the associated origin web server.
-- **By Cloudflare cookie and Client IP fallback**: Sets a `cflib` cookie, but also uses the client IP address when no session affinity cookie is provided.
+- **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated origin web server.
+- **By Cloudflare cookie and Client IP fallback**: Sets a `__cflb` cookie, but also uses the client IP address when no session affinity cookie is provided.
 - **By HTTP header**.
 
 {{<Aside type="warning" header="Important">}}
@@ -72,7 +72,7 @@ Customize the behavior of session affinity by using the `session_affinity`, `ses
 To enable session affinity by HTTP header, set the `session_affinity` value to `header` and add your
 HTTP header names to `session_affinity_attributes.headers`.
 
-For more details on API commands in context, refer to [Create a load balancer with the API](/load-balancing/how-to/create-load-balancer/).
+For more details on API commands in context, refer to [Create a load balancer with the API](/load-balancing/load-balancers/create-load-balancer/).
 
 ---
 
@@ -88,7 +88,7 @@ Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)]
 
 ## Zero-Downtime Failover
 
-Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
+Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors.
 
 You can enable one of three options:
 

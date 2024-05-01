@@ -6,9 +6,12 @@ weight: 4
 
 # Uptycs
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
+{{<render file="posture/_service-provider-intro.md" withParameters="Uptycs">}}
 
-Device posture with Uptycs requires that the Uptycs agent and the Cloudflare WARP client are deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the check.
+## Prerequisites
+
+- Uptycs agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## 1. Obtain Uptycs Settings
 

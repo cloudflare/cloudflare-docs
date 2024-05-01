@@ -1,10 +1,11 @@
 ---
 pcx_content_type: navigation
-layout: single
 title: Database Integrations (beta)
+meta:
+  description: Connect to a supported third-party database (such as Supabase, Turso and more) directly from the Cloudflare dashboard.
 ---
 
-{{<beta>}} Database Integrations {{</beta>}}
+{{<heading-pill style="beta">}} Database Integrations {{</heading-pill>}}
 
 ## Background
 

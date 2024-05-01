@@ -238,9 +238,9 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
 
 #### `format`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [Image Resizing](/images/image-resizing/url-format/).{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/).{{</Aside>}}
 
-The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. Cloudflare will default to JPEG when possible due to the large size of PNG files.
 
 Workers integration supports:
 - `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
@@ -272,7 +272,7 @@ header: Workers
 cf: {image: {format: "avif"}}
 ```
 
-For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/image-resizing/resize-with-workers/#an-example-worker) for a complete overview of how to set up an Image Resizing Worker.
+For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/transform-images/transform-via-workers/#an-example-worker) for a complete overview of how to set up an image transformation Worker.
 
 ```js
 ---
@@ -396,7 +396,15 @@ cf: {image: {height: 250}}
 
 #### `metadata`
 
-Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect. Options are:
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect.
+
+{{<Aside type="note">}}
+
+Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. For more details, refer to [JFIF Compatibility](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
+
+{{</Aside>}}
+
+Options are:
 
   - `keep`  
   Preserves most of EXIF metadata, including GPS location if present. Example:
@@ -451,7 +459,7 @@ Controls amount of invisible metadata (EXIF data) that should be preserved. Colo
 
 #### `onerror=redirect`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting is ignored by Cloudflare Images.{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/) and does not support resizing with Cloudflare Workers.{{</Aside>}}
 
 In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains. Example:
 
@@ -462,16 +470,9 @@ header: URL format
 onerror=redirect
 ```
 
-```js
----
-header: Workers
----
-cf: {image: {onerror: "redirect"}}
-```
-
 #### `quality`
 
-{{<Aside type="note" header="Note">}}At the moment, this setting is ignored by Cloudflare Images.{{</Aside>}}
+{{<Aside type="note" header="Note">}}At the moment, this setting only works directly with [image transformations](/images/transform-images/).{{</Aside>}}
 
 Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format. Example:
 
@@ -534,7 +535,7 @@ cf: {image: {sharpen: 2}}
 
 #### `trim`
 
-Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For Image Resizing and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left` or via separate values `trim.width`,`trim.height`, `trim.left`,`trim.top`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For image transformations and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left` or via separate values `trim.width`,`trim.height`, `trim.left`,`trim.top`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`. Example:
 
 ```js
 ---

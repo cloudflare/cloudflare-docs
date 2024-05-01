@@ -25,7 +25,7 @@ meta:
 
 7. Under **With the same characteristics**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
-8. (Optional) Enable **Use custom counting expression** to define an expression that specifies the conditions for incrementing the rate counter. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
+8. (Optional) To define an expression that specifies the conditions for incrementing the rate counter, enable **Use custom counting expression** and set the expression. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
 
 9. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the rate.
 
@@ -33,10 +33,12 @@ meta:
 
 11. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests) for requests exceeding the configured rate limit.
 
-12. Under **For duration**, select the mitigation timeout in **Duration**. This is the time period during which Cloudflare applies the select action once the rate is reached.
+12. Select the mitigation timeout in the **Duration** dropdown. This is the time period during which Cloudflare applies the select action once the rate is reached.
+
+    Enterprise customers with a paid add-on can [throttle requests](/waf/rate-limiting-rules/parameters/#with-the-following-behavior) instead of applying the configured action for a selected duration. To throttle requests, under **With the following behavior** select _Throttle requests over the maximum configured rate_.
 
 13. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Configuring a custom response for blocked requests
 
-{{<render file="_custom-response-blocked-requests.md">}}
+{{<render file="_custom-response-blocked-requests.md" withParameters="rate limiting;;429">}}

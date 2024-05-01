@@ -2,7 +2,6 @@
 title: Enable New Relic
 pcx_content_type: how-to
 weight: 64
-layout: single
 meta:
   title: Enable Logpush to New Relic
 ---
@@ -145,5 +144,5 @@ Response:
 ```
 
  {{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/fundamentals/data-products/analytics-integrations/new-relic/).
+To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/analytics/analytics-integrations/new-relic/).
 {{</Aside>}}

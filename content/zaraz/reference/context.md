@@ -12,8 +12,9 @@ System properties, which are automatically collected by Zaraz, provide insights 
 
 ## System properties
 
-{{<table-wrap>}}
+### Page information
 
+{{<table-wrap>}}
 | Property | Type | Description |
 | --- | --- | --- |
 | `system.page.query` | Object | Key-Value object containing all query parameters in the current URL. |
@@ -21,12 +22,29 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.page.url` | URL | [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) Object containing information about the current URL |
 | `system.page.referrer` | String | Current page referrer from `document.referrer`. |
 | `system.page.encoding` | String | Current page character encoding from `document.characterSet`. |
-| `system.cookies` | Object | Key-Value object containg all present cookies. |
+{{</table-wrap>}}
+
+### Cookies
+
+{{<table-wrap>}}
+| Property | Type | Description |
+| ---------------- | ------ | ------------------------------------------------ |
+| `system.cookies` | Object | Key-Value object containing all present cookies. |
+{{</table-wrap>}}
+
+The the keys inside the `system.cookies` are the cookies name. The property `system.cookies.foo` will return the value of the a cookie named `foo`.
+
+### Device information
+
+{{<table-wrap>}}
+| Property | Type | Description |
+| --- | --- | --- |
 | `system.device.ip` | String | Visitor incoming IP address. |
 | `system.device.resolution` | String | Screen resolution for device. |
 | `system.device.viewport` | String | Visible web page area in user’s device. |
 | `system.device.language` | String | Language used in user's device. |
-| `system.device.user-agent.ua` | Object | Browser user agent. |
+| `system.device.location` | Object | All location-related keys from [IncomingRequestCfProperties](/workers/runtime-apis/request/#incomingrequestcfproperties) |
+| `system.device.user-agent.ua` | String | Browser user agent. |
 | `system.device.user-agent.browser.name` | String | Browser name. |
 | `system.device.user-agent.browser.version` | String | Browser version. |
 | `system.device.user-agent.engine.name` | String | Type of browser engine (for example, WebKit). |
@@ -35,19 +53,43 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.device.user-agent.os.version` | String | Version of the operating system. |
 | `system.device.user-agent.device` | String | Type of device used (for example, iPhone). |
 | `system.device.user-agent.cpu` | String | Device’s CPU. |
+{{</table-wrap>}}
+
+### Consent Management
+
+{{<table-wrap>}}
+| Property | Type | Description |
+| --- | --- | --- |
+| `system.consent` | Object | Key-value object containing the current consent status from the Zaraz Consent Manager. |
+{{</table-wrap>}}
+
+The keys inside the `system.consent` object are purpose IDs, and values are `true` for consent, `false` for lack of consent.
+
+### Managed Components
+
+{{<table-wrap>}}
+| Property | Type | Description |
+| --- | --- | --- |
+| `system.clientKV` | Object | Key-value object containing all the KV data from your Managed Components. |
+{{</table-wrap>}}
+
+The keys inside the `system.clientKV` object are formatted as Tool ID, underscore, Key name. Assuming you want to read the value of the `ga4` key used by a tool with ID `abcd`, the path would be `system.clientKV.abcd_ga4`.
+
+### Miscellaneous
+
+{{<table-wrap>}}
+| Property | Type | Description |
+| --- | --- | --- |
 | `system.misc.random` | Number | Random number unique to each request. |
 | `system.misc.timestamp` | Number | Unix time in seconds. |
 | `system.misc.timestampMilliseconds` | Number | Unix time in milliseconds. |
-
 {{</table-wrap>}}
 
 ## Event properties
 
 {{<table-wrap>}}
-
 | Property | Type | Description |
-| --- | --- | --- |
+| --------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `client.__zarazTrack` | String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/track/) for more information. |
 | `client.<KEY_NAME>` | String | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Replace `<KEY_NAME>` with the name of your key. Refer to [Zaraz Track](/zaraz/web-api/track/) for more information. |
-
 {{</table-wrap>}}

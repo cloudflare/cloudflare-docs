@@ -5,8 +5,6 @@ weight: 2
 meta:
     title: Report abuse to Cloudflare
     description: Learn how to report DMCA issues, phishing, trademark infringement, malware sites, child exploitation material, and more to Cloudflare’s Trust and Safety team.
-aliases:
-- /fundamentals/get-started/basic-tasks/report-abuse/
 ---
 
 # Report abuse
@@ -18,6 +16,6 @@ When it comes to reports of abuse on websites that use our services, our ability
 ## Resources
 
 - [Read abuse policy](https://www.cloudflare.com/trust-hub/abuse-approach/)
-- [Review complaint types](/fundamentals/get-started/basic-tasks/report-abuse/complaint-types/)
-- [Providing specific URLs](/fundamentals/get-started/basic-tasks/report-abuse/provide-specific-urls/)
+- [Review complaint types](/fundamentals/reference/report-abuse/complaint-types/)
+- [Providing specific URLs](/fundamentals/reference/report-abuse/provide-specific-urls/)
 - [Submit abuse report](https://www.cloudflare.com/abuse/form)

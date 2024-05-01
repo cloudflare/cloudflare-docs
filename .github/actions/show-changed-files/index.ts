@@ -1,6 +1,91 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
+// Hugo configuration options
+// ==========================
+// removePathAccents: Default is false. Docs: https://gohugo.io/getting-started/configuration/#removepathaccents
+const REMOVE_PATH_ACCENTS: boolean = false;
+// disablePathToLower: Default is false. Docs: https://gohugo.io/getting-started/configuration/#disablepathtolower
+const DISABLE_PATH_TO_LOWER: boolean = false;
+
+function UnicodeSanitize(filePath: string): string {
+  // Adapted from Go source:
+  // https://github.com/gohugoio/hugo/blob/16da1ade7040a401fb704e9fae858a51ff517468/helpers/path.go#L92
+
+  if (REMOVE_PATH_ACCENTS) {
+    //Go version was: return transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+    filePath = filePath
+      .normalize("NFD")
+      .replace(/\p{Mn}/gu, "")
+      .normalize("NFC");
+  }
+
+  let result: string = "";
+  let wasHyphen = false;
+  let prependHyphen = false;
+
+  for (let i = 0; i < filePath.length; i++) {
+    const currChar = filePath[i];
+    let isAllowed: boolean = false;
+
+    isAllowed =
+      currChar == "." ||
+      currChar == "/" ||
+      currChar == "\\" ||
+      currChar == "_" ||
+      currChar == "#" ||
+      currChar == "+" ||
+      currChar == "~" ||
+      currChar == "-" ||
+      currChar == "@";
+
+    isAllowed =
+      isAllowed ||
+      currChar.match(/\p{L}/u) != null ||
+      currChar.match(/\p{Nd}/u) != null ||
+      currChar.match(/\p{M}/u) != null;
+    isAllowed =
+      isAllowed ||
+      (currChar == "%" &&
+        i + 2 < filePath.length &&
+        filePath.substring(i + 1, i + 3).match(/[0-9A-Fa-f]{2}/) != null);
+
+    if (isAllowed) {
+      // track explicit hyphen in input; no need to add a new hyphen if
+      // we just saw one.
+      wasHyphen = currChar == "-";
+
+      if (prependHyphen) {
+        // if currently have a hyphen, don't prepend an extra one
+        if (!wasHyphen) {
+          result = result + "-";
+        }
+        prependHyphen = false;
+      }
+      result = result + currChar;
+    } else if (result.length > 0 && !wasHyphen && IsSpace(currChar)) {
+      prependHyphen = true;
+    }
+  }
+
+  return DISABLE_PATH_TO_LOWER ? result : result.toLowerCase();
+}
+
+function IsSpace(ch: string): boolean {
+  // For Latin1 characters
+  if (ch.charCodeAt(0) <= 255) {
+    // In Go version: case '\t', '\n', '\v', '\f', '\r', ' ', 0x85, 0xA0:
+    if (ch.match(/\t|\n|\v|\f|\r| |\u0085|\u00a0/) != null) {
+      return true;
+    }
+    return false;
+  }
+  // for non-Latin1 characters
+  return (
+    ch.match(/\p{Pattern_White_Space}/u) != null || ch.match(/\p{Z}/u) != null
+  );
+}
+
 async function run(): Promise<void> {
   try {
     const ctx = github.context;
@@ -56,14 +141,24 @@ async function run(): Promise<void> {
       .sort((a, b) => b.changes - a.changes)
       .slice(0, 15) // Limit to 15 entries
       .map((file) => {
-        const removeContentAndMd = (link: string): string =>
-          link.replace(/^content/, '').replace(/_index\.md$/, '').replace(/\.md$/, '/');
+        const filePathToUriPath = (link: string): string => {
+          let path = link
+            .replace(/^content/, "")
+            .replace(/_index\.md$/, "")
+            .replace(/index\.md$/, "")
+            .replace(/\.md$/, "/");
+          if (path.includes(" ") || path.startsWith("/support/")) {
+            return UnicodeSanitize(path);
+          } else {
+            return DISABLE_PATH_TO_LOWER ? path : path.toLowerCase();
+          }
+        };
 
-        const originalLink = `https://developers.cloudflare.com${removeContentAndMd(
+        const originalLink = `https://developers.cloudflare.com${filePathToUriPath(
           file.file.filename
         )}`;
         const updatedLink = previewBaseURL.concat(
-          removeContentAndMd(file.file.filename)
+          filePathToUriPath(file.file.filename)
         );
 
         return { originalLink, updatedLink };

@@ -7,7 +7,7 @@ updated: 2023-08-04
 ---
 # KnowBe4
 
-When Area 1 detects a phishing email, the metadata of the detection can be sent directly to KnowBe4. For this tutorial, you will need a working KnowBe4 account with the SecurityCoach add-on. You will also need to create an organization key to use in Area 1. This organization key will let you integrate KnowBe4 with Area 1. Refer to [KnowBe4 documentation](https://support.knowbe4.com/hc/articles/13129840202643) for more information on this subject.
+When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to KnowBe4. For this tutorial, you will need a working KnowBe4 account with the SecurityCoach add-on. You will also need to create an organization key to use in Area 1. This organization key will let you integrate KnowBe4 with Area 1. Refer to [KnowBe4 documentation](https://support.knowbe4.com/hc/articles/13129840202643) for more information on this subject.
 
 After creating your organization key and authorizing Area 1:
 

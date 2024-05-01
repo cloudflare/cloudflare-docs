@@ -3,8 +3,6 @@ pcx_content_type: reference
 title: Content Security Policies (CSPs)
 meta:
   title: Content Security Policies (CSPs) and Cloudflare
-aliases:
-- /fundamentals/get-started/reference/content-security-policies/
 ---
 
 # Content Security Policies (CSPs) and Cloudflare
@@ -24,9 +22,9 @@ Cloudflare’s [CDN](/cache/) is compatible with CSP.
 
 Cloudflare does not:
 
-* Modify CSP headers from the origin web server.
+* Modify CSP headers from the origin web server (except when using Zaraz, to ensure the [Zaraz script is always running](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).
 * Require changes to acceptable sources for first or third-party content.
-* Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/get-started/reference/cdn-cgi-endpoint/)).
+* Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/reference/cdn-cgi-endpoint/) and [Cloudflare Fonts](/speed/optimization/content/fonts/#cloudflare-fonts) that rewrites Google Fonts urls).
 * Interfere with locations specified in your CSP.
 
 ### Product requirements
@@ -36,9 +34,9 @@ To use certain Cloudflare features, however, you may need to update the headers 
 | Feature(s) | Updated headers |
 | --- | --- |
 | [Rocket Loader](/speed/optimization/content/rocket-loader/), [Mirage](/speed/optimization/images/mirage/) | `script-src 'self' ajax.cloudflare.com;` |
-| [Cloudflare Apps](https://support.cloudflare.com/hc/articles/115000304631), [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036) | `script-src 'self' 'unsafe-inline'`|
+| [Cloudflare Apps](https://cloudflareapps.com/apps/developer/docs/getting-started), [Scrape Shield](/waf/tools/scrape-shield/) | `script-src 'self' 'unsafe-inline'`|
 | [Web Analytics](/analytics/web-analytics) | `script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com` |
 | [Bot products](/bots/) | Refer to [JavaScript detections and CSPs](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp).|
 | [Page Shield](/page-shield/) | Refer to [Page Shield CSP Header format](/page-shield/reference/csp-header/). |
 | [Zaraz](/zaraz/) | No updates required ([details](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).|
-| [Turnstile](/turnstile/) | Refer to [Turnstile FAQ](/turnstile/frequently-asked-questions/#how-does-content-security-policy-need-to-be-configured-for-turnstile).|
+| [Turnstile](/turnstile/) | Refer to [Turnstile CSP](/turnstile/reference/content-security-policy/).|

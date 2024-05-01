@@ -36,6 +36,7 @@ The descriptions below detail the fields available for `firewall_events`.
 | EdgeColoCode | The airport code of the Cloudflare datacenter that served this request. | string |
 | EdgeResponseStatus | HTTP response status code returned to browser. | int |
 | Kind | The kind of event, currently only possible values are: <em>firewall</em>. | string |
+| LeakedCredentialCheckResult | Result of the check for leaked credentials. | string |
 | MatchIndex | Rules match index in the chain. The last matching rule will have MatchIndex <em>0</em>. If another rule matched before the last one, it will have MatchIndex <em>1</em>. The same applies to any other matching rules, which will have a MatchIndex value of <em>2</em>, <em>3</em>, and so on. | int |
 | Metadata | Additional product-specific information. Metadata is organized in key:value pairs. Key and Value formats can vary by Cloudflare security product and can change over time. | object |
 | OriginResponseStatus | HTTP origin response status code returned to browser. | int |
@@ -43,6 +44,6 @@ The descriptions below detail the fields available for `firewall_events`.
 | RayID | The RayID of the request. | string |
 | Ref | The user-defined identifier for the rule triggered by this request. Use refs to label your rules individually alongside the Cloudflare-provided RuleID. You can set refs via the [Rulesets API](/ruleset-engine/rulesets-api/) for some security products. | string |
 | RuleID | The Cloudflare security product-specific RuleID triggered by this request. | string |
-| Source | The Cloudflare security product triggered by this request. <br />Possible sources are <em>unknown</em> \| <em>asn</em> \| <em>country</em> \| <em>ip</em> \| <em>iprange</em> \| <em>securitylevel</em> \| <em>zonelockdown</em> \| <em>waf</em> \| <em>firewallrules</em> \| <em>uablock</em> \| <em>ratelimit</em> \| <em>bic</em> \| <em>hot</em> \| <em>l7ddos</em> \| <em>botfight</em> \| <em>apishield</em> \| <em>botmanagement</em> \| <em>dlp</em> \| <em>firewallmanaged</em> \| <em>firewallcustom</em>. | string |
+| Source | The Cloudflare security product triggered by this request. <br />Possible sources are <em>unknown</em> \| <em>asn</em> \| <em>country</em> \| <em>ip</em> \| <em>iprange</em> \| <em>securitylevel</em> \| <em>zonelockdown</em> \| <em>waf</em> \| <em>firewallrules</em> \| <em>uablock</em> \| <em>ratelimit</em> \| <em>bic</em> \| <em>hot</em> \| <em>l7ddos</em> \| <em>validation</em> \| <em>botfight</em> \| <em>apishield</em> \| <em>botmanagement</em> \| <em>dlp</em> \| <em>firewallmanaged</em> \| <em>firewallcustom</em> \| <em>apishieldschemavalidation</em> \| <em>apishieldtokenvalidation</em> \| <em>apishieldsequencemitigation</em>. | string |
 
 {{</table-wrap>}}

@@ -1,9 +1,11 @@
 ---
 pcx_content_type: navigation
 title: Observability
-weight: 9
+weight: 10
 ---
 
 # Observability
 
-{{<directory-listing>}}
+Understand how your Worker projects are performing via logs, traces, and other data sources.
+
+{{<directory-listing showDescriptions="true">}}

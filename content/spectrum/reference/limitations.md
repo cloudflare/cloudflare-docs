@@ -8,6 +8,10 @@ weight: 0
 
 The following limitations apply to different protocols supported by Spectrum.
 
+## HTTPS
+
+At the moment, HTTPS applications do not support HTTP/3.
+
 ## UDP
 
 At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge.
@@ -15,6 +19,10 @@ At the moment, Cloudflare does not support packet fragmentation for UDP packets.
 ## Minecraft
 
 Minecraft Java Edition is supported but Minecraft Bedrock Edition is not supported.
+
+## Universal SSL
+
+[Universal SSL](/ssl/edge-certificates/universal-ssl/) is not compatible with Cloudflare Spectrum. Use either an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or a [custom certificate](/ssl/edge-certificates/custom-certificates/) instead.
 
 ## Listen on ports configuration
 

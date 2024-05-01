@@ -4,19 +4,20 @@ pcx_content_type: reference
 weight: 4
 meta:
   title: Workers Analytics Engine SQL API
+  description: The SQL API for Workers Analytics Engine
 ---
 
 # Workers Analytics Engine SQL API
 
 The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL queries against your Workers Anaytics Engine datasets.
 
-The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`. 
+The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`.
 
 ## Authentication
 
 Authentication is done via bearer token. An `Authorization: Bearer <token>` header must be supplied with every request to the API.
 
-Use the dashboard to create a token with permssion to read analytics data on your account:
+Use the dashboard to create a token with permission to read analytics data on your account:
 
 1. Visit the [API tokens](https://dash.cloudflare.com/profile/api-tokens) page in the Cloudflare dashboard.
 2. Select **Create Token**.

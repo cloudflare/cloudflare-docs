@@ -3,7 +3,9 @@ type: example
 summary: Send Additional Cache Tags using Workers
 tags:
   - Caching
-  - Cache Tags
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Cache Tags using Workers
 weight: 1001
@@ -59,8 +61,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
     const tags =
@@ -97,9 +99,7 @@ const handler: ExportedHandler = {
         return new Response(JSON.stringify(errorObject), { status: 500 });
       });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

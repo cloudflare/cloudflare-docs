@@ -49,13 +49,15 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 10. Choose _Web application_ as the Application type.
 
-11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
+11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your team domain:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com
     ```
 
-12. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+
+12. Under **Authorized redirect URIs**, in the **URIs** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -63,7 +65,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 13. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should not be shared. Copy both values.
 
-14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.  
+14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.
     ![Location of Trust internal apps setting in the Google Admin dashboard](/images/cloudflare-one/identity/gsuite/trust-internal-apps.png)
 
 15. Enable the **Trust internal, domain-owned apps** option. This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.

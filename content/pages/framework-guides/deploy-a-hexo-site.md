@@ -49,9 +49,9 @@ $ hexo new "hello hexo"
 
 Inside of `hello-hexo.md`, use Markdown to write the content of the article. You can customize the tags, categories or other variables in the article. Refer to the [Front Matter section](https://hexo.io/docs/front-matter) of the [Hexo documentation](https://hexo.io/docs/) for more information.
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
 To deploy your site to Pages:
 
@@ -78,7 +78,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Hexo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Hexo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Using a specific Node.js version
 
@@ -90,4 +90,4 @@ Some Hexo themes or plugins have additional requirements for different Node.js v
 
 ![Follow the instructions above to set up an environment variable in the Pages dashboard](/images/pages/framework-guides/node-version-pages.png)
 
-{{<render file="_learn-more.md" withParameters="Hexo">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hexo">}}

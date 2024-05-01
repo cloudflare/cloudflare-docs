@@ -3,8 +3,8 @@ title: Get started
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Get started with Network Analytics v2
-  description: Learn how to view and use data from Network Analytics v2.
+  title: Get started with Network Analytics
+  description: Learn how to view and use data from Network Analytics.
 ---
 
 # Get started with Network Analytics
@@ -21,8 +21,10 @@ meta:
 
 ## Get Network Analytics data via API
 
-Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the available [Network Analytics v2 nodes](/analytics/graphql-api/features/data-sets/).
+Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the available [Network Analytics nodes](/analytics/graphql-api/features/data-sets/).
 
 ## Send Network Analytics logs to a third-party service
 
-[Create a Logpush job](/logs/get-started/enable-destinations/) that sends Network analytics logs to your storage service, SIEM, or log management provider.
+[Create a Logpush job](/logs/get-started/enable-destinations/) that sends Network analytics logs to your storage service, {{<glossary-tooltip term_id="SIEM">}}SIEM solution{{</glossary-tooltip>}}, or log management provider.
+
+For a video tutorial, refer to [Send Network Analytics Logs to Splunk](/analytics/analytics-integrations/splunk/#video-tutorial-send-network-analytics-logs-to-splunk).

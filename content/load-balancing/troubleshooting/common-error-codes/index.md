@@ -2,7 +2,6 @@
 pcx_content_type: troubleshooting
 title: Common error codes
 weight: 51
-layout: single
 ---
 
 # Common error codes
@@ -168,7 +167,7 @@ Data transmission was not acknowledged and retransmit of data did not succeed.
 
 ### Solution
 
-Confirm whether the SYN-ACK for the handshake takes place at your origin and [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+Confirm whether the SYN-ACK for the handshake takes place at your origin and [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ---
 
@@ -264,7 +263,7 @@ Load Balancing is not enabled for your account or zone.
 
 ### Solution
 
-For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/how-to/enable-load-balancing/).
+For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/get-started/enable-load-balancing/).
 
 ---
 
@@ -300,4 +299,4 @@ If the failure cannot be classified as any other type of failure mentioned above
 
 ### Solution
 
-[Contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+[Contact Cloudflare Support](/support/contacting-cloudflare-support/).

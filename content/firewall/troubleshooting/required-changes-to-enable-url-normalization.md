@@ -6,6 +6,8 @@ title: Required firewall rule changes to enable URL normalization
 
 # Required firewall rule changes to enable URL normalization
 
+{{<render file="_deprecation-notice.md">}}
+
 On 2021-04-08, Cloudflare announced [URL normalization](/rules/normalization/), a feature that protects zones by normalizing HTTP request URI paths.
 
 Malicious users can craft specific URIs that could be interpreted differently by firewall systems and origin systems. When you enable **Normalize incoming URLs**, all rules filtering on the URI path will receive the URL in a canonical form, which provides an extra layer of protection against these malicious users. 
@@ -21,7 +23,7 @@ Cloudflare did not enable URL normalization automatically for zones that would b
 
 ## Why URL normalization is important
 
-Cloudflare strongly recommends that you enable **Normalize incoming URLs** in **Rules** > **Settings** to strengthen your zone's security posture. Not doing so leaves your zone at greater risk of a successful attack. Malicious actors could craft the URL in a way that the rules are not accounting for.
+Cloudflare strongly recommends that you enable **Normalize incoming URLs** in **Rules** > **Settings** to strengthen your zone's security posture. Not doing so leaves your zone at greater risk of a successful attack. Malicious parties could craft the URL in a way that the rules are not accounting for.
 
 For example, a firewall rule with an expression such as `http.request.uri.path contains "/login"` could be bypassed if the malicious actor has encoded the `l` character as `%6C`. In this scenario, and with URL normalization disabled, traffic would not be matched by the firewall rule.
 
@@ -53,7 +55,7 @@ Before enabling URL normalization, you should review the affected firewall rules
 
 Once you have updated the affected firewall rules, enable URL normalization in **Rules** > **Settings**.
 
-A Cloudflare user must have the [Firewall role](/fundamentals/account-and-billing/members/roles/) or one of the Administrator roles to access URL normalization settings in the dashboard.
+A Cloudflare user must have the [Firewall role](/fundamentals/setup/manage-members/roles/) or one of the Administrator roles to access URL normalization settings in the dashboard.
 
 ___
 

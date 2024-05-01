@@ -7,9 +7,7 @@ layout: learning-unit
 
 Since it affect so many other parts of Cloudflare, you should proxy your DNS records through Cloudflare.
 
-<details>
-<summary>What is DNS?</summary>
-<div>
+{{<details header="What is DNS?">}}
 
 DNS stands for Domain Name System.
 
@@ -17,12 +15,9 @@ Without DNS, we would have to remember long strings of numbers to access our fav
 
 For more details on DNS, refer to the [Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>What are DNS records?</summary>
-<div>
+{{<details header="What are DNS records?">}}
 
 DNS records are instructions that live in authoritative DNS servers and provide information about a domain including what IP address is associated with that domain and how to handle requests for that domain.
 
@@ -30,27 +25,23 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 - [DNS records in Cloudflare](/dns/manage-dns-records/reference/dns-record-types/)
 - [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/)
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>What is "proxying my DNS through Cloudflare"?</summary>
-<div>
+{{<details header="What is \"proxying my DNS through Cloudflare\"?">}}
 
 {{<render file="_proxied-records-definition.md" productFolder="dns">}}
 
 - [Reverse proxy (definition)](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)
-- [How Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/)
+- [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/)
 - [DNS record proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
 
-</div>
-</details>
+{{</details>}}
 
 ## Prerequisites
 
 Before proxying your records, review [our guide](/dns/manage-dns-records/reference/proxied-dns-records/) that explains what proxying does and what limitations it has.
 
-You may also need to [allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
+You may also need to [allow Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
 
 ## How to do it
 

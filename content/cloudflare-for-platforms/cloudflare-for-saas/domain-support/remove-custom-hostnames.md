@@ -19,24 +19,24 @@ If they update their [`CNAME` record](/cloudflare-for-platforms/cloudflare-for-s
 - The domain's traffic will not route through your custom hostname.
 - The custom hostname will enter into a **Moved** state.
 
-If the custom hostname is in a **Moved** state for seven days, it will be automatically deleted.
+If the custom hostname is in a **Moved** state for seven days, it will transition into a **Deleted** state.
 
 ## Domains not using Cloudflare
 
 If your customer's domain is not using Cloudflare, you must remove a customer's custom hostname from your zone if they decide to churn.
 
-This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas).
+This is especially important if your end customers are using Cloudflare because if the custom hostname changes the DNS target to point away from your SaaS zone, the custom hostname will continue to route to your service. This is a result of the [custom hostname priority logic](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-cloudflare-for-saas).
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 {{<render file="_delete-custom-hostname-dash.md">}}
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 To delete a custom hostname and any issued certificates using the API, send a [`DELETE` request](/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)).
- 
+
 {{</tab>}}
 {{</tabs>}}
 

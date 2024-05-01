@@ -1,6 +1,6 @@
 {{- $permalink := .Permalink -}}
 {{- $atomLink := print .Permalink "index.xml" -}}
-{{- $changelogData := index .Site.Data "changelogs" -}}
+{{- $changelogData := partial "full-changelog-data.html" -}}
 {{- $changelogRendered := slice -}}
 
 {{- range $index, $product := $changelogData -}}
@@ -18,23 +18,41 @@
     <description>View updates to various Cloudflare products.</description>
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
-    <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
-    {{- range $changelogRendered -}}
+    <lastBuildDate>{{- index (index $changelogRendered 0) "publish_date" | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</lastBuildDate>
+    {{- range $index, $entry := $changelogRendered -}}
     {{- $link := "" -}}
-    {{- $rellink := .url -}}
-    {{- $product := .product -}}
-    {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{- $title := "" -}}
+    {{- $rellink := $entry.url -}}
+    {{- $product := $entry.product -}}
+    {{ $description := $entry.description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
-    {{- with .title -}}
+    {{- with $entry.title -}}
+    {{ $title = printf "%s - %s" $product . }}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
     {{- else -}}
     {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- $title = printf "%s - %s" $product .publish_date -}}
+    {{- end -}}
+    {{- with $entry.link -}}
+    {{- if ne $product "Wrangler" -}}
+    {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- end -}}
+    {{- end -}}
+    {{- with $entry.individual_page -}}
+    {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
+    {{- $description = $result.content -}}
+    {{- $title = printf "%s - %s" $product $result.title }}
+    {{- with $entry.scheduled -}}
+    {{- with $entry.scheduled_date -}}
+    {{- $title = (printf "%s for %s" $title $entry.scheduled_date) -}}
+    {{- end -}}
+    {{- end -}}
     {{- end -}}
     <item>
-    <title>{{- with .title -}}{{ printf "%s · %s" $product . }}{{ else }}{{ printf "%s · %s" $product .publish_date }}{{ end }}</title>
+    <title>{{- $title -}}</title>
     <link>{{ $link }}</link>
-    <description>{{ $description }}</description>
-    <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
+    <description>{{- $description -}}</description>
+    <pubDate>{{ .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST" }}</pubDate>
     <product>{{- $product -}}</product>
     </item>
     {{- end -}}

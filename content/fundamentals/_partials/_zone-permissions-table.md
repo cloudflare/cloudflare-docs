@@ -24,6 +24,8 @@ inputParameters: editWord
 | Cache Rules $1                 | Grants write access to [Cache Rules](/cache/how-to/cache-rules/).                                                                          |
 | Config Rules Read                | Grants read access to [Configuration Rules](/rules/configuration-rules/).                                                                  |
 | Config Rules $1                | Grants write access to [Configuration Rules](/rules/configuration-rules/).                                                                 |
+| Custom Errors Read          | Grants read access to [Custom Errors Phase](/rules/custom-error-responses/create-api/).                                                               |
+| Custom Errors $1          | Grants write access to [Custom Errors Phase](/rules/custom-error-responses/create-api/).                                                               |
 | Custom Error Rules Read          | Grants read access to [Custom Error Rules](/rules/custom-error-responses/).                                                                |
 | Custom Error Rules $1          | Grants write access to [Custom Error Rules](/rules/custom-error-responses/).                                                               |
 | Custom Pages Read                | Grants read access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).  |
@@ -32,8 +34,8 @@ inputParameters: editWord
 | DMARC Management $1            | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
 | DNS Read                         | Grants read access to [DNS](/dns/).                                                                                                        |
 | DNS Write                        | Grants write access to [DNS](/dns/).                                                                                                       |
-| Dynamic Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
-| Dynamic Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
+| Dynamic URL Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
+| Dynamic URL Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
 | Email Routing Rules Read         | Grants read access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                                |
 | Email Routing Rules $1         | Grants write access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                               |
 | Firewall Services Read           | Grants read access to Firewall resources.                                                                                                  |
@@ -50,8 +52,8 @@ inputParameters: editWord
 | Managed Headers $1             | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                                            |
 | Origin Rules Read                | Grants read access to [Origin Rules](/rules/origin-rules/).                                                                                |
 | Origin Rules $1                | Grants write access to [Origin Rules](/rules/origin-rules/).                                                                               |
-| Page Rules Read                  | Grants read access to [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).          |
-| Page Rules $1                  | Grants write access to [Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).         |
+| Page Rules Read                  | Grants read access to [Page Rules](/rules/page-rules/).          |
+| Page Rules $1                  | Grants write access to [Page Rules](/rules/page-rules/).         |
 | Page Shield Read                 | Grants read access to [Page Shield](/page-shield/).                                                                                        |
 | Page Shield $1                 | Grants write access to [Page Shield](/page-shield/).                                                                                       |
 | Response Compression Read        | Grants read access to [Response Compression](/rules/compression-rules/).                                                                   |
@@ -66,8 +68,8 @@ inputParameters: editWord
 | Waiting Room $1                | Grants write access to [Waiting Room](/waiting-room/).                                                                                     |
 | Web3 Hostnames Read              | Grants read access to [Web3 Hostnames](/web3/).                                                                                            |
 | Web3 Hostnames $1              | Grants write access to [Web3 Hostnames](/web3/).                                                                                           |
-| Workers Routes Read              | Grants read access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/workers/runtime-apis/kv/).                                 |
-| Workers Routes $1              | Grants write access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/workers/runtime-apis/kv/).                                |
+| Workers Routes Read              | Grants read access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                 |
+| Workers Routes $1              | Grants write access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                |
 | Zaraz Read                       | Grants read access to [Zaraz](/zaraz/) zone level settings.                                                                                |
 | Zaraz $1                       | Grants write access to [Zaraz](/zaraz/) zone level settings.                                                                               |
 | Zone Read                        | Grants read access to zone management.                                                                                                     |

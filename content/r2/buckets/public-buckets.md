@@ -13,8 +13,14 @@ Public buckets can be set up in either one of two ways:
 - Expose your bucket as a custom domain under your control.
 - Expose your bucket as a Cloudflare-managed subdomain under `https://r2.dev`.
 
-To configure firewall rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
+To configure WAF custom rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
 Using a custom domain does not require enabling `r2.dev`.
+
+{{<Aside type="note">}}
+
+Currently, public buckets do not let you list the bucket contents at the root of your (sub) domain.
+
+{{</Aside>}}
 
 ## Custom domains
 
@@ -33,7 +39,7 @@ By default, only certain file types are cached. To cache all files in your bucke
 To restrict access to your custom domain's bucket, use Cloudflare's existing security products.
 
 - [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates.
-- [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S): Restricts access to documents, files, and media to selected users by providing them with an access token.
+- [Cloudflare WAF Token Authentication](/waf/custom-rules/use-cases/configure-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
 
 {{<Aside type="warning">}}
 
@@ -43,15 +49,15 @@ Disable public access to your [`r2.dev` subdomain](#disable-managed-public-acces
 
 ## Connect a bucket to a custom domain
 
-1. Go to **R2** and select your bucket.
-2. On the bucket page, select **Settings**.
-3. Under **Public access** > **Custom Domains**, select **Connect Domain**.
-5. Enter the domain name you want to connect to and select **Continue**.
-6. Review the new record that will be added to the DNS table and select **Connect Domain**.
+{{<render file="_custom-domain-steps.md">}}
 
-Your domain is now connected. The status takes a few minutes to change from **Initializing** to **Active**, and you may need to refresh to review the status update. If the status has not changed, select the *...* next to your bucket and select **Retry connection**.
+To view the added DNS record, select **...** next to the connected domain and select **Manage DNS**.
 
-To view the added DNS record, select *...* next to the connected domain and select **Manage DNS**.
+{{<Aside type="note">}}
+
+If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain. A zone hold would prevent the custom subdomain from activating.
+
+{{</Aside>}}
 
 ### Restrictions
 
@@ -102,11 +108,10 @@ To enable access management, Cache and bot management features, you must set up 
 
 To enable access through `r2.dev` for your buckets:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > **R2**.
-2. In **R2**, select the bucket you want to modify.
+1. In **R2**, select the bucket you want to modify.
 3. On the bucket page, select **Settings**.
-4. In **Settings**, go to **Bucket Access**.
-5. Under **Bucket Details** > **R2.dev subdomain**, select **Allow Access**.
+4. In **Settings**, go to **Public Access**.
+5. Under **R2.dev subdomain**, select **Allow Access**.
 6. In **Allow Public Access?**, confirm your choice by typing ‘allow’ to confirm and select **Allow**.
 7. You can now access the bucket and its objects using the Public Bucket URL.
 
@@ -123,4 +128,4 @@ To disable public access for your bucket:
 3. Under **Bucket Details** > **R2.dev subdomain**, select **Disallow Access**.
 4. In **Disallow Public Access?**, type ‘disallow’ to confirm and select **Disallow**.
 
-Your bucket and its objects can no longer be accessed using the Public Bucket URL. 
+Your bucket and its objects can no longer be accessed using the Public Bucket URL.

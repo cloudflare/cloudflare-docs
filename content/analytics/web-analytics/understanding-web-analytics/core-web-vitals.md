@@ -26,6 +26,7 @@ To find Vitals Explorer:
 Vitals Explorer is divided into three main sections, each one with information about a specific feature that affects user experience:
 
 - [Largest Contentful Paint (LCP)](https://web.dev/optimize-lcp/): Measures perceived load speed by the user. It returns how long the main content of the page takes to be loaded.
+- [Interaction to Next Paint (INP](https://web.dev/inp/): Measures user interface responsiveness – how quickly a website responds to user interactions like clicks or key presses.
 - [First Input Delay (FID)](https://web.dev/optimize-fid/): Measures how fast a website is to respond to the first user input.
 - [Cumulative Layout Shift (CLS)](https://web.dev/optimize-cls/): Measures visual stability, that is, if there are shifts in the page layout as the various elements are being loaded into view.
 

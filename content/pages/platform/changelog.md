@@ -2,7 +2,8 @@
 pcx_content_type: changelog
 title: Changelog
 layout: changelog
-changelog_file_name: pages
+weight: 3
+changelog_file_name: [pages]
 outputs:
     - html
     - rss

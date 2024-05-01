@@ -6,7 +6,7 @@ weight: 4
 
 # Configure your mobile app or IoT device
 
-This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](/api-shield/).
+This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield](/api-shield/).
 
 ## Scenario details
 
@@ -14,7 +14,7 @@ This walkthrough uses the example of a device that captures temperature readings
 
 To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](/workers/tutorials/build-a-jamstack-app/)).
 
-Temperatures are stored in [Workers KV](/workers/learning/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/), such as the fingerprint.
+Temperatures are stored in [Workers KV](/kv/reference/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/), such as the fingerprint.
 
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
@@ -196,7 +196,7 @@ EOF
 ))
 
 // save the response so we can view it and then extra the certificate
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d “$request_body” https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
+$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d "$request_body" https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
 
 $ cat response.json | jq .
 {
@@ -353,7 +353,7 @@ def readSensor():
     # Takes a reading from a temperature sensor and store it to temp_measurement
 
     dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime(‘%Y-%m-%dT%H:%M:%SZ’)
+    timestampStr = dateTimeObj.strftime('%Y-%m-%dT%H:%M:%SZ')
 
     measurement = {'temperature':str(temp_measurement),'time':timestampStr}
     return measurement

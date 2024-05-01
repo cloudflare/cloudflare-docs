@@ -22,7 +22,7 @@ You can obtain the complete endpoint by appending the [Page Shield API](/api/ope
 https://api.cloudflare.com/client/v4
 ```
 
-The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](/fundamentals/setup/find-account-and-zone-ids/).
 
 The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/operations/page-shield-list-page-shield-scripts) operation for every detected script.
 
@@ -393,7 +393,7 @@ This `POST` request creates a Page Shield policy with _Log_ action, defining the
 
 All other scripts would trigger a policy violation, but those scripts would not be blocked.
 
-For more information on Content Security Policy directives and values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+For more information on {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} directives and values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 
 {{<Aside type="note">}}
 For a list of CSP directives and keywords supported by Page Shield policies, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).

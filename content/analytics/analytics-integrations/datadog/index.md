@@ -2,9 +2,6 @@
 pcx_content_type: how-to
 title: Datadog
 weight: 98
-layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/datadog/
 ---
 
 # Datadog
@@ -37,7 +34,7 @@ To install the Cloudflare App for Datadog:
 
     - **Account name**: (Optional) This can be any value. It has not impact on the site data pulled from Cloudflare.
 
-    - **Email**: This value helps keep your account safe. We recommend creating a dedicated Cloudflare user for analytics with the [_Analytics_ role](/fundamentals/account-and-billing/members/roles/) (read-only). Note that the _Analytics_ role is available to Enterprise customers only.
+    - **Email**: This value helps keep your account safe. We recommend creating a dedicated Cloudflare user for analytics with the [_Analytics_ role](/fundamentals/setup/manage-members/roles/) (read-only). Note that the _Analytics_ role is available to Enterprise customers only.
 
     - **API Key**: Enter your Cloudflare Global API key. For details refer to [API Keys](/fundamentals/api/get-started/keys/).
 

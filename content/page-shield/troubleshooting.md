@@ -9,9 +9,7 @@ weight: 10
 
 ## Why do I not see scripts after I activated Page Shield?
 
-If you recently [activated](/page-shield/get-started/) Page Shield, you may see a delay in reporting.
-
-Cloudflare creates reports based on a sample of your application traffic. These reports need a certain amount of traffic to be statistically valid.
+Page Shield does not collect data on every single page view. Instead, it uses a sampling approach to gather information efficiently. This means that domains with lower traffic might take longer to generate initial reports, as these domains need more page views to accumulate enough samples. To speed up the reporting process, it is recommended that you actively generate traffic to your application after [activating Page Shield](/page-shield/get-started/). This will provide Page Shield with more data to work with, leading to faster report generation.
 
 ## Why do I see scripts that I do not recognize?
 
@@ -21,7 +19,7 @@ But, if you see unexpected scripts on your Script Monitor dashboard, check them 
 
 ## Why do I see warnings in my browser's developer tools related to Content Security Policy (CSP)?
 
-Page Shield uses a Content Security Policy (CSP) report-only directive to gather a list of all scripts running on your application.
+Page Shield uses a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} report-only directive to gather a list of all scripts running on your application.
 
 Some browsers display scripts being reported as warnings in the console pane of their developer tools. For example:
 
@@ -29,7 +27,7 @@ Some browsers display scripts being reported as warnings in the console pane of 
 [Report Only] Refused to execute inline script because it violates
 the following Content Security Policy directive: "script-src 'none'".
 
-Either the 'unsafe-inline' keyword, a hash ('sha256-RFWPLDbv2BY+rCkDzsE+0fr8ylGr2R2faWMhq4lfEQc='), or a nonce ('nonce-...') 
+Either the 'unsafe-inline' keyword, a hash ('sha256-RFWPLDbv2BY+rCkDzsE+0fr8ylGr2R2faWMhq4lfEQc='), or a nonce ('nonce-...')
 is required to enable inline execution.
 ```
 

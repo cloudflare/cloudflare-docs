@@ -8,12 +8,12 @@ meta:
   title: Durable Objects - Use KV within Durable Objects
 ---
 
-The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/workers/learning/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/hibernatable-websockets-api/).
+The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/kv/reference/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/websockets/).
 
 Prerequisites:
 
-* A [KV namespace](/workers/runtime-apis/kv/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
-* A [configured binding](/workers/runtime-apis/kv/#kv-bindings) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
+* A [KV namespace](/kv/api/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
+* A [configured binding](/kv/reference/kv-bindings/) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
 * A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your `wrangler.toml` file as follows:
@@ -31,20 +31,21 @@ kv_namespaces = [
 [durable_objects]
 bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
+]
 ```
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 interface Env {
   YOUR_KV_NAMESPACE: KVNamespace;
-  YOUR_DO_CLASS: DurableObject;
+  YOUR_DO_CLASS: DurableObjectNamespace;
 }
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
-    // We assume each Durable Object is mapped to a roomId in a query parameter
+    // Assume each Durable Object is mapped to a roomId in a query parameter
     // In a production application, this will likely be a roomId defined by your application
     // that you validate (and/or authenticate) first.
     let url = new URL(req.url)
@@ -53,27 +54,27 @@ export default {
     if (roomIdParam) {
       // Create (or get) a Durable Object based on that roomId.
       let durableObjectId = env.YOUR_DO_CLASS.idFromName(roomIdParam);
-      // Get a "stub" that allows us to call that Durable Object
+      // Get a "stub" that allows you to call that Durable Object
       let durableObjectStub = env.YOUR_DO_CLASS.get(durableObjectId);
 
       // Pass the request to that Durable Object and await the response
       // This invokes the constructor once on your Durable Object class (defined further down)
       // on the first initialization, and the fetch method on each request.
       //
-      // We could pass the original Request to the Durable Object's fetch method
+      // You could pass the original Request to the Durable Object's fetch method
       // or a simpler URL with just the roomId.
       let response = await durableObjectStub.fetch(`http://do/${roomId}`);
 
-      // This would return the value we read from KV *within* the Durable Object.
+      // This would return the value you read from KV *within* the Durable Object.
       return response;
     }
   }
 }
 
-export class YourDurableObject implements Durable Object {
+export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
       this.state = state;
-      // Ensure we pass our bindings and environmental variables into
+      // Ensure you pass your bindings and environmental variables into
       // each Durable Object when it is initialized
       this.env = env;
     }
@@ -89,7 +90,6 @@ export class YourDurableObject implements Durable Object {
 
     return Response.json(val)
   }
-}
 ```
 
 

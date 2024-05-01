@@ -93,32 +93,32 @@ Text in this font denotes text or characters that you should enter from the keyb
 
 ### Examples of elements we monospace
 
-+ IP addresses and ranges. Example: Change your system + DNS servers to use `127.0.1.1`.
-+ Port numbers. Example: Requests are redirected through the HTTP service (port `80`).
-+ API commands: Example: The endpoint supports `GET` for JSON format.
-+ Commands. Example: Run the command `wrangler login`.
-+ Attribute names and values. Example: `type`, `name`
-+ Class names. Example: `button-primary`
-+ Command-line utility names. Example: `wrangler`, `npm`, `node`, `cloudflared`
-+ Data types (`string`, `number`, `int64`).
-+ Defined (constant) values for an element or attribute. Example: `<A_BINDING_NAME>`
-+ DNS record types. Example: The bot will default to looking for `A` records. `A`, `CNAME`
-+ Enum (enumerator) names (this depends on the language).
-+ Environment variable names. Example: `<A_BINDING_NAME>`
-+ Element names (XML and HTML). Example: `<div>`, `<form>`, `<input>`, `<code>`
-+ Place angle brackets (<>) around the element name; you might have to escape the angle brackets to make them appear in the document.
-+ Filenames, filename extensions (if used), and paths. Example: `wrangler.toml`
-+ Folders and directories. Example: `functions`, `wrangler.toml`
-+ HTTP verbs. Example: `POST`, `GET`, `HEAD`, `PUT`,`DELETE`
-+ HTTP status codes. Example: `400`, `200`, `500`
-+ HTTP content-type values. Example: `text/html`, `application/javascript; charset=utf-8`
-+ HTTP header names. Example: `Content-Length`
-+ URLs that are used as input or output in commands and code, such as in the following example:
-`VERSION-dot-SERVICE-dot-PROJECT_ID.REGION_ID.r.appspot.com`
-+ IAM role names. Example: `roles/storage.admin`
-+ Language keywords. Example: `in`, `await`
-+ Method and function names. Example: `handleRequest`
-+ Namespace aliases. Example: something like Python would be `numpy`, this is language dependent
-+ Placeholder variables. Example: `2xx` for HTTP status codes or `<YOUR_BUILD_DIR>` for input values
-+ Query parameter names and values. Example: /api/v4/{account_id}, `account_id` is the query/route parameter name
-+ Text input. Example: `"Hello Worker"`
+| Element                                                    | Example                                                            |
+| ---------------------------------------------------------- | ------------------------------------------------------------------ |
+| IP addresses and ranges                                    | Change your system + DNS servers to use `127.0.1.1`.               |
+| Port numbers                                               | Requests are redirected through the HTTP service (port `80`).      |
+| API commands                                               | The endpoint supports `GET` for JSON format.                       |
+| Terminal commands                                          | Run the command `wrangler login`.                                  |
+| Attribute names and values                                 | `type`, `name`                                                     |
+| Class names                                                | `button-primary`                                                   |
+| Command-line utility names                                 | `wrangler`, `npm`, `node`, `cloudflared`                           |
+| Data types                                                 | (`string`, `number`, `int64`)                                      |
+| Defined (constant) values for an element or attribute      | `<A_BINDING_NAME>`                                                 |
+| DNS record types                                           | The bot will default to looking for `AAAA` records.                |
+| Enum (enumerator) names (depending on language)            | `type ContentTypeMapElem`                                          |
+| Environment variable names                                 | `<A_BINDING_NAME>`                                                 |
+| Element names, including angle brackets (XML and HTML).    | `<div>`, `<form>`, `<input>`, `<code>`                             |
+| Filenames, filename extensions (if used), and paths        | `wrangler.toml`                                                    |
+| Folders and directories                                    | `~/Downloads/Cloudflare_CA.crt`                                    |
+| HTTP verbs                                                 | `POST`, `GET`, `HEAD`, `PUT`,`DELETE`                              |
+| HTTP status codes                                          | `400`, `200`, `500`                                                |
+| HTTP content-type values                                   | `text/html`, `application/javascript; charset=utf-8`               |
+| HTTP header names                                          | `Content-Length`                                                   |
+| URLs that are used as input or output in commands and code | `VERSION-dot-SERVICE-dot-PROJECT_ID.REGION_ID.r.appspot.com`       |
+| IAM role names                                             | `roles/storage.admin`                                              |
+| Language keywords                                          | `in`, `await`                                                      |
+| Method and function names                                  | `handleRequest`                                                    |
+| Namespace aliases                                          | `numpy`                                                            |
+| Placeholder variables                                      | `2xx` for HTTP status codes or `<YOUR_BUILD_DIR>` for input values |
+| Query parameter names and values                           | `/api/v4/{account_id}`                                             |
+| Text input                                                 | `"Hello Worker"`                                                   |

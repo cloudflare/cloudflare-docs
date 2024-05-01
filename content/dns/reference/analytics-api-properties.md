@@ -10,6 +10,10 @@ meta:
 
 This page describes API properties that you can use in [API requests for DNS analytics](/api/operations/dns-analytics-table).
 
+{{<Aside type="note">}}
+If you have [Foundation DNS](/dns/foundation-dns/) and advanced nameservers are enabled, analytics for your zone are accessible by [GraphQL](/analytics/graphql-api/). Refer to [GraphQL DNS analytics](/dns/foundation-dns/graphql-analytics/) for details.
+{{</Aside>}}
+
 ## Metrics
 
 A metric is a numerical value based on an attribute of the data, for example a query count.
@@ -57,6 +61,7 @@ In API requests, dimensions are set in the `dimensions` parameter. If you need t
 ## Filters
 
 Filters use the form `dimension operator expression`, where each part corresponds to the following:
+
 - **Dimension**: Specifies the [dimension](#dimensions) to filter on. For example, `queryName`.
 - **Operator**: Defines the type of filter match to use. Operators are specific to dimensions.
 - **Expression**: States the values to include or exclude from the results. Expressions use regular expression (regex) syntax.
@@ -69,23 +74,16 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 {{<render file="_api-combine-filters.md" productFolder="fundamentals">}}
 
-
-<details>
-<summary>Examples using OR</summary>
-<div>
+{{<details header="Examples using OR">}}
 
 - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
 - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
-  
-</div>
-</details>
 
-<details>
-<summary>Examples using AND</summary>
-<div>
-  
+{{</details>}}
+
+{{<details header="Examples using AND">}}
+
 - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
 - `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
 
-</div>
-</details>
+{{</details>}}

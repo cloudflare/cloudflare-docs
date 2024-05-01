@@ -1,13 +1,15 @@
 ---
 pcx_content_type: reference
 title: Certificate authorities
-layout: list
+layout: wide
 weight: 5
+meta:
+  description: For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs features, limitations, and browser compatibility.
 ---
 
 # Certificate authorities
 
-For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations and browser compatibility](#features-limitations-and-browser-compatibility).
+For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs [features, limitations, and browser compatibility](#features-limitations-and-browser-compatibility).
 
 ## Availability per certificate type and encryption algorithm
 
@@ -53,7 +55,7 @@ The main determining factor for whether a platform can validate Let’s Encrypt 
 
 #### Other resources
 
-[Let's Encrypt Root CAs](https://letsencrypt.org/certificates/)
+[Let's Encrypt Root CAs](https://letsencrypt.org/certificates/): For checking compatibility between chain and client. As explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
 
 ---
 
@@ -77,6 +79,8 @@ This section summarizes commonly requested client support information. For the c
 
 Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser. All browsers or operating systems that depend on these root programs are covered.
 In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq-27) may rely on a cross-signature to ensure optimal support across a wide range of devices.
+
+You can use the root CAs list for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
 
 ---
 
@@ -108,7 +112,7 @@ Refer to [DigiCert documentation](https://www.digicert.com/support/resources/faq
 
 [Status page](https://status.digicert.com/)
 
-[DigiCert Root CAs](https://www.digicert.com/kb/digicert-root-certificates.htm)
+[DigiCert Root CAs](https://www.digicert.com/kb/digicert-root-certificates.htm): For checking compatibility between chain and client. As explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
 
 ---
 

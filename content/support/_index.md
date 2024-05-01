@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Support
-weight: 1
+weight: 2
 ---
  
 # Welcome to the Support section

@@ -35,7 +35,7 @@ function getSelectValues(selectElementCollection: HTMLCollectionOf<Element>) {
   return selectedValues;
 }
 
-export function filterResults() {
+function filterResults() {
   const pathGrid = document.getElementById("pathGrid");
   if (pathGrid) {
     const selectorDropdowns = document.getElementsByClassName("selectorFilter");
@@ -73,3 +73,5 @@ export function filterResults() {
     }
   }
 }
+
+filterResults();

@@ -1,28 +1,43 @@
 ---
-pcx_content_type: concept
+pcx_content_type: tutorial
 title: Cloudflare IP addresses
-weight: 3
-aliases:
-- /fundamentals/get-started/concepts/cloudflare-ip-addresses/
+weight: 4
 ---
 
 # Cloudflare IP addresses
 
-Cloudflare has several [IP address ranges](https://www.cloudflare.com/ips/) which are shared by all proxied hostnames.
-
-Together, these IP addresses form the backbone of our [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), helping distribute traffic amongst various edge network servers.
+{{<render file="_cloudflare-ips.md" productFolder="fundamentals">}}
 
 ## Allow Cloudflare IP addresses
 
-Because of [how Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/), all traffic to your origin server will appear to be coming from Cloudflare IP addresses.
+{{<render file="_allow-cloudflare-ips.md" productFolder="fundamentals">}}
 
-To avoid rate limiting or blocking these requests, you will want to [allow Cloudflare IPs](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin server.
+## Configure origin server
 
-## Customize Cloudflare IP addresses
+### Allowlist Cloudflare IP addresses
 
-If they do not want to use Cloudflare IP addresses — which are shared by all proxied hostnames — Enterprise customers have two potential alternatives:
+{{<render file="_allow-cloudflare-ips-tactical.md" productFolder="fundamentals">}}
 
-- [**Bring Your Own IP (BYOIP)**](/byoip/): Cloudflare announces your IPs in all our locations.
-- **Static IP addresses**: Cloudflare sets static IP addresses for your domain. For more details, contact your account team.
+### Block other IP addresses (recommended)
 
-Business and Enterprise customers can also reduce the number of Cloudflare IPs that their domain shares with other Cloudflare customer domains by [uploading a Custom SSL certificate](/ssl/edge-certificates/custom-certificates/).
+{{<render file="_block-cloudflare-ips-tactical.md" productFolder="fundamentals">}}
+
+## Review external tools
+To avoid blocking Cloudflare IP addresses unintentionally, review your external tools to check that:
+
+- Any security plugins — such as those for WordPress — allow Cloudflare IP addresses.
+- The [ModSecurity](https://github.com/SpiderLabs/ModSecurity) plugin is up to date.
+
+### Additional recommendations
+
+#### Further protection
+
+For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/basic-tasks/protect-your-origin-server/).
+
+### Customize Cloudflare IP addresses
+
+{{<render file="_customize-cloudflare-ips.md" productFolder="fundamentals">}}
+
+### IP range updates
+
+Cloudflare's IP ranges do not change frequently. When they do change, they are added to our [list of IP ranges](https://www.cloudflare.com/en-in/ips/) before being put into production. An email notification will be sent out in advance to give you enough time to make configuration changes. You can also use the Cloudflare API to programmatically keep your configuration updated.

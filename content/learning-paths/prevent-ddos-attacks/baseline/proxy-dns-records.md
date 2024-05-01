@@ -29,7 +29,7 @@ This obscurity makes it harder for someone to connect directly to your origin, w
 
 ## How to do it
 
-Before proxying your records, you should likely [allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
+Before proxying your records, you should likely [allow Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
 
 Then, [update your Cloudflare DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so their **Proxy status** is **Proxied**.
 

@@ -2,13 +2,18 @@
 content_type: 📝 Tutorial
 difficulty: Intermediate
 pcx_content_type: tutorial
-layout: single
 title: Build a ChatGPT search plugin with Notion and Pinecone
 updated: 2023-08-14
 weight: 1
 ---
 
 # Build a ChatGPT search plugin with Notion and Pinecone
+
+{{<Aside type="warning" header="Deprecation notice for ChatGPT plugins">}}
+
+Plugins have been replaced in ChatGPT by <a href="https://platform.openai.com/docs/actions">Actions</a>. This tutorial is now deprecated.
+
+{{</Aside>}}
 
 In this tutorial, you will use [Langchain](https://js.langchain.com), a JavaScript package for working with large language models, and [Pinecone](http://pinecone.io/), a vector database, to index a [Notion](https://www.notion.so/) workspace. You will then be able to query your Notion workspace using a custom ChatGPT plugin built with Cloudflare Workers.
 
@@ -170,7 +175,7 @@ filename: src/pinecone.ts
   }
 ```
 
-The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain. 
+The `generatePineconeDocumentsForNotion()` function loads pages from Notion using the Notion API. This produces a number of pages which are then loaded and split using Langchain.
 
 This function is the most complex part of this process, and explaining how it works in detail is out of scope for this tutorial. In short, the function takes the content in Notion and splits it into smaller documents, which are then converted into vector embeddings using OpenAI. These vector embeddings are then stored in Pinecone.
 
@@ -393,7 +398,7 @@ This part exports the router's handle method as a fetch method, which makes this
 
 ## 7. Deploy your Worker application
 
-Once you have created your Worker application and added the required functions, deploy the application. 
+Once you have created your Worker application and added the required functions, deploy the application.
 
 Before you deploy, initialize a number of [secret](/workers/configuration/secrets/) values for your application. For each of the following values, run the [`npx wrangler secret put`](/workers/wrangler/commands/#put-3) command:
 
@@ -448,4 +453,4 @@ In the new modal popup, select **Develop your own plugin**. This will allow you 
 
 To build more with Workers, refer to [Tutorials](/workers/tutorials).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with other developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.

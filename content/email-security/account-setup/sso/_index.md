@@ -1,13 +1,12 @@
 ---
 title: SSO integration
 pcx_content_type: how-to
-layout: single
 weight: 4
 ---
 
 # SSO integration
 
-For added security and convenience, Cloudflare Area 1 offers support for Security Assertion Markup Language based (SAML-based) single sign-on (SSO) logins. Organizations are able to choose between having users access Area 1 with a username and password plus a two-factor authentication (2FA) code, or using an SSO provider, such as OneLogin or Okta.
+For added security and convenience, Cloudflare Area 1 offers support for {{<glossary-tooltip term_id="SAML">}}Security Assertion Markup Language based (SAML-based){{</glossary-tooltip>}} single sign-on (SSO) logins. Organizations are able to choose between having users access Area 1 with a username and password plus a {{<glossary-tooltip term_id="two-factor authentication (2FA)">}}two-factor authentication (2FA){{</glossary-tooltip>}} code, or using an SSO provider, such as OneLogin or Okta.
 
 ## SAML configuration options
 
@@ -21,6 +20,3 @@ Area 1 only supports IDP-initiated SAML setup at this point.
 For more details on setup, refer to the following resources:
 
 {{<directory-listing>}}
-
-You can also integrate Area 1 with Cloudflare Access for SaaS:
-- [Cloudflare Access for SaaS](/cloudflare-one/tutorials/area-1/)

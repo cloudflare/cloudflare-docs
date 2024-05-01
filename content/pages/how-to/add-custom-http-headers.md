@@ -7,7 +7,7 @@ title: Add custom HTTP headers
 
 {{<Aside type="note">}}
 
-Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/platform/headers/) for more information.
+Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/configuration/headers/) for more information.
 
 {{</Aside>}}
 
@@ -15,7 +15,7 @@ More advanced customization of HTTP headers is available through Cloudflare Work
 
 If you have not deployed a Worker before, get started with our [tutorial](/workers/get-started/guide/). For the purpose of this tutorial, accomplish steps one (Sign up for a Workers account) through four (Generate a new project) before returning to this page.
 
-Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/platform/custom-domains/#add-a-custom-domain).
+Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
 ## Writing a Workers function
 
@@ -25,11 +25,8 @@ Workers functions are written in [JavaScript](https://www.cloudflare.com/learnin
 ---
 header: Setting custom headers with a Workers function
 ---
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
+export default {
+  async fetch(request) {
   // This proxies your Pages application under the condition that your Worker script is deployed on the same custom domain as your Pages project
   const response = await fetch(request);
 
@@ -47,7 +44,8 @@ async function handleRequest(request) {
   newResponse.headers.set('x-header-to-change', 'NewValue');
 
   return newResponse;
-}
+  }
+};
 ```
 
 ## Deploying a Workers function in the dashboard
@@ -86,7 +84,7 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
-If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
+If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/setup/find-account-and-zone-ids/).
 
 Once you have configured your `wrangler.toml`, run `npx wrangler deploy` in your terminal to deploy your Worker:
 

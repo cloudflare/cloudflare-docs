@@ -29,7 +29,7 @@ Alternatively, download the client from one of the following links after checkin
 
 |                      |    |
 | ---------------------| ---|
-| **OS version**       | Catalina, Big Sur, Monterey, Ventura|
+| **OS version**       | Catalina+ (10.15+)
 | **OS type**          | 64-bit only |
 | **HD space**         | 75 MB|
 | **Memory**           | 35 MB |
@@ -80,4 +80,4 @@ The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.
 | ---------------------| ---|
 | **OS version**       |Chromebooks manufactured after 2019 |
 
-Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.
+Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, [refer to this list](https://www.chromium.org/chromium-os/chrome-os-systems-supporting-android-apps/) to verify that your device is supported.

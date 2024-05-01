@@ -2,14 +2,15 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-layout: single
 meta:
   title: Cloudflare Firewall Rules
 ---
 
-# Cloudflare Firewall Rules
+{{<heading-pill style="deprecated">}} Cloudflare Firewall Rules {{</heading-pill>}}
 
 Cloudflare Firewall Rules allows you to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
+
+{{<render file="_deprecation-notice.md">}}
 
 ## Main features
 

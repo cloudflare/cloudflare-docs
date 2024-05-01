@@ -126,7 +126,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `zone_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
+  - This is the ID of the zone or domain you want to run your Worker on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
 
 - `workers_dev` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -166,7 +166,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `usage_model` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Specifies the [Usage Model](/workers/platform/pricing/#usage-models) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#worker-limits) and [`unbound`](/workers/platform/limits/#worker-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
+  - Specifies the [Usage Model](/workers/platform/pricing/#workers) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#worker-limits) and [`unbound`](/workers/platform/limits/#worker-limits). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
 - `build` {{<type>}}top level{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -186,7 +186,7 @@ FOO = "some value"
 BAR = "some other string"
 ```
 
-The table keys are available to your script as global variables, which will contain their associated values.
+The table keys are available to your Worker as global variables, which will contain their associated values.
 
 ```js
 // Worker code:
@@ -251,7 +251,7 @@ let value = await FOO.get("keyname");
 
 - `binding` {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/workers/runtime-apis/kv/).
+  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/kv/api/).
 
 - `id` {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -410,7 +410,7 @@ local_protocol = "https"
 
 ### build
 
-A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules` (beta).
+A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules`.
 
 #### Service Workers
 
@@ -462,13 +462,13 @@ format = "service-worker"
 
 {{<Aside type="note">}}
 
-Ensure the `main` field in your `package.json` references the Worker script you want to publish.
+Ensure the `main` field in your `package.json` references the Worker you want to publish.
 
 {{</Aside>}}
 
 #### Modules
 
-Workers now supports the ES Modules syntax. Modules support in Cloudflare Workers is currently in beta. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
+Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
 
 Module Workers `export` their event handlers instead of using `addEventListener` calls.
 
@@ -476,7 +476,7 @@ Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets)
 
 {{<Aside type="note">}}
 
-Refer to the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event) to learn more about the differences between the Service Worker and Module worker formats.
+Refer to the [`fetch()` handler documentation](/workers/runtime-apis/handlers/fetch) to learn more about the differences between the Service Worker and Module worker formats.
 
 {{</Aside>}}
 

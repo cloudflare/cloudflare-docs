@@ -1,7 +1,7 @@
 ---
 title: API
 pcx_content_type: reference
-weight: 7
+weight: 9
 ---
 
 # Magic Network Monitoring API

@@ -2,7 +2,7 @@
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
+layout: wide
 meta:
     title: Scheduled changes — HTTP DDoS
 ---
@@ -24,13 +24,13 @@ meta:
   </thead>
   <tbody>
     <tr>
-      <td>2023-08-24</td>
-      <td>2023-09-04</td>
-      <td>...4a95ba67</td>
-      <td>HTTP requests with unusual HTTP headers or URI path (signature #32).</td>
+      <td>2024-04-19</td>
+      <td>2024-04-29</td>
+      <td>{{<rule-id>}}0a07c24f3cd44a57a5c19b73d2f294d7{{</rule-id>}}</td>
+      <td>HTTP requests trying to impersonate browsers.</td>
       <td>ddos_dynamic</td>
       <td>ddos_dynamic</td>
-      <td>Expand the scope of the rule to catch more attacks</td>
+      <td>Expand rule to catch more attacks</td>
     </tr>
   </tbody>
 </table>

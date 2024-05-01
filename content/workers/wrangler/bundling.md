@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Bundling
+meta:
+  description: Review Wrangler's default bundling.
 ---
 
 # Bundling
@@ -52,15 +54,9 @@ Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packa
 ## Disable bundling
 
 {{<Aside type="warning">}}
-Disabling bundling is not recommended and has a number of major tradeoffs that are detailed below. Most users should be able to ignore this section.
+Disabling bundling is not recommended in most scenarios. Use this option only when deploying code pre-processed by other tooling.
 {{</Aside>}}
 
-Opt out of bundling by using the `--no-bundle` command line flag: `npx wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and a number of features will not be available. You can use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use `wrangler dev` and `npx wrangler deploy`.
+If your build tooling already produces build artifacts suitable for direct deployment to Cloudflare, you can opt out of bundling by using the `--no-bundle` command line flag: `npx wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and some features introduced by Wrangler bundling (for example minification, and polyfills injection) will not be available.
 
-### D1 bindings
-
-During the [beta period for D1](/workers/platform/betas/), D1 bindings will not be available to a Worker deployed with `--no-bundle`.
-
-### Editing via the Cloudflare dashboard
-
-It is not possible to edit your Worker in the Cloudflare dashboard when you use the `--no-bundle` flag. The Cloudflare dashboard does not support Workers with multiple modules. If you use a Custom Build script, which bundles your Worker into a single module, this limitation can be bypassed.
+Use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler deploy`](/workers/wrangler/commands/#deploy).

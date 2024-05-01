@@ -40,7 +40,7 @@ You will need to bind your bucket to a Worker.
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/configuration/environment-variables/) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/kv/reference/kv-namespaces/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/configuration/environment-variables/) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
@@ -121,6 +121,14 @@ export default {
   },
 };
 ```
+
+{{<Aside type="warning" header="Prevent potential errors when accessing request.body">}}
+
+The body of a [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) can only be accessed once. If you previously used `request.formData()` in the same request, you may encounter a TypeError when attempting to access `request.body`.<br><br>
+To avoid errors, create a clone of the Request object with `request.clone()` for each subsequent attempt to access a Request's body.
+Keep in mind that Workers have a [memory limit of 128MB per Worker](https://developers.cloudflare.com/workers/platform/limits#worker-limits) and loading particularly large files into a Worker's memory multiple times may reach this limit. To ensure memory usage does not reach this limit, consider using [Streams](https://developers.cloudflare.com/workers/runtime-apis/streams/).
+
+{{</Aside>}}
 
 ## 5. Bucket access and privacy
 

@@ -3,80 +3,53 @@ type: example
 summary: Protect against timing attacks by safely comparing values using `timingSafeEqual`.
 tags:
   - Security
+  - WebCrypto
+languages:
+  - TypeScript
 pcx_content_type: configuration
 title: Using timingSafeEqual
 weight: 1001
 layout: example
 ---
 
-To avoid timing attacks in your code, you can replace equality checks with the [`crypto.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function in your Workers application.
+The [`crypto.subtle.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function compares two values using a constant-time algorithm. The time taken is independent of the contents of the values. 
 
-To use this function, create a new [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) and encode the string values to instances of `ArrayBuffer` using [`encoder.encode`](/workers/runtime-apis/encoding/#methods). This is needed because `crypto.timingSafeEqual` compares `ArrayBuffer` instances, not strings. With the encoded values, replace the standard JavaScript equality check (`===`) with `crypto.timingSafeEqual`. Note that the strings must be the same length in order to compare to `timingSafeEqual`. The below code shows how to implement string equality checks with `crypto.timingSafeEqual`:
+When strings are compared using the equality operator (`==` or `===`), the comparison will end at the first mismatched character. By using `timingSafeEqual`, an attacker would not be able to use timing to find where at which point in the two strings there is a difference.
 
-{{<tabs labels="js | ts">}}
-{{<tab label="js" default="true">}}
+The `timingSafeEqual` function takes two `ArrayBuffer` or `TypedArray` values to compare. These buffers must be of equal length, otherwise an exception is thrown.
 
-```js
-const encoder = new TextEncoder();
-
-const string1 = new TextEncoder().encode("foo")
-const string2 = new TextEncoder().encode("bar")
-
-if (string1.byteLength !== string2.byteLength) {
-  // Strings must be the same length in order to compare
-  // with crypto.timingSafeEqual
-  return false
-}
-
-// The below code is vulnerable to timing attacks
-// if (string1 === string2) { ... }
-
-// You can replace it with `crypto.timingSafeEqual` by encoding the values
-// you need to compare
-const a = encoder.encode(string1);
-const b = encoder.encode(string2);
-
-let equal = crypto.timingSafeEqual(a, b)
-
-if (equal) {
-  // The values are equal
-} else {
-  // The values are not equal
-}
-```
-
-
-{{</tab>}}
-{{<tab label="ts">}}
+In order to compare two strings, you must use the [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) API. Since the time taken to encode the values may reveal the length of our secret value, you should check the length of the strings before encoding. 
 
 ```ts
-const encoder = new TextEncoder();
-
-const string1 = new TextEncoder().encode("foo")
-const string2 = new TextEncoder().encode("bar")
-
-if (string1.byteLength !== string2.byteLength) {
-  // Strings must be the same length in order to compare
-  // with crypto.timingSafeEqual
-  return false
+interface Environment {
+  MY_SECRET_VALUE?: string;
 }
 
-// The below code is vulnerable to timing attacks
-// if (string1 === string2) { ... }
+export default {
+  async fetch(req: Request, env: Environment) {
+    if (!env.MY_SECRET_VALUE) return new Response("Missing secret binding", { status: 500 });
 
-// You can replace it with `crypto.timingSafeEqual` by encoding the values
-// you need to compare
-const a = encoder.encode(string1);
-const b = encoder.encode(string2);
+    const authToken = req.headers.get("Authorization") || "";
 
-let equal = crypto.timingSafeEqual(a, b)
+    if (authToken.length !== env.MY_SECRET_VALUE.length) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
-if (equal) {
-  // The values are equal
-} else {
-  // The values are not equal
-}
+    const encoder = new TextEncoder();
+
+    const a = encoder.encode(authToken);
+    const b = encoder.encode(env.MY_SECRET_VALUE);
+
+    if (a.byteLength !== b.byteLength) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    if (!crypto.subtle.timingSafeEqual(a, b)) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    return new Response("Welcome!");
+  },
+};
 ```
 
-{{</tab>}}
-{{</tabs>}}

@@ -201,9 +201,9 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**. 
 6. When you are done, select **Save**.
 
-## Final remarks
+## Limitations
 
 * You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
-* The maximum length of custom field data is 8 KB. Any data over this limit will be truncated.
+* The maximum length of custom field data for HTTP request headers, Cookies, and HTTP response headers combined is 8 KB. Any data over this limit will be truncated.
 * For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
 * Currently, Cloudflare only logs original request/response headers. Headers that were modified earlier in the request lifecycle with [Transform Rules](/rules/transform/request-header-modification/examples/) will not be logged.

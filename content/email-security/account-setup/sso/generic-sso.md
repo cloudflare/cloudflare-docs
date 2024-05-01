@@ -8,7 +8,7 @@ meta:
 
 # Generic single sign-on integration guide
 
-Below is a generic guide to successfully set up an identity provider based SAML. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
+Below is a generic guide to successfully set up an identity provider based {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}}. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
 
 ## 1. Identity Provider SAML setup
 
@@ -64,4 +64,4 @@ If you have trouble connecting your SAML provider to Area 1, make sure that:
 - You are using the SHA-1 algorithm.
 - Your encryption is set to 2048 bits.
 
-If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

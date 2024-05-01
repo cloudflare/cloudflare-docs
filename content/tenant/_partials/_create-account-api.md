@@ -4,7 +4,6 @@ _build:
   render: never
   list: never
 ---
-
 {{<definitions>}}
 
 To create an account using the API, make a `POST` request to the `/accounts` endpoint and include the following values:
@@ -18,10 +17,34 @@ To create an account using the API, make a `POST` request to the `/accounts` end
     - Valid values are `standard` (default) and `enterprise`. For self-serve customers, use `standard`. For enterprise customers, use `enterprise`.
 
 - `unit` {{<type>}}object{{</type>}}
-    - Information related to the tenant unit
+    - Information related to the tenant unit.
 
     - `id` {{<type>}}string{{</type>}}
         - (optional) ID of the unit to create this account on. Needs to be specified if user administers multiple tenants. Unit ID is the `unit_tag` from your [tenant details](/tenant/how-to/get-tenant-details/).
+
+### Know-Your-Customer (optional)
+
+All KYC parameters are text fields, have a 120 character limit, and are optional unless enforced by the Tenant.
+
+- `business_name` {{<type>}}string{{</type>}}
+
+    - (optional) The name of the business associated with this account.
+
+- `business_address` {{<type>}}string{{</type>}}
+
+    - (optional) The address of the business associated with this account.
+
+- `business_email` {{<type>}}string{{</type>}}
+
+    - (optional) The email of the business associated with this account.
+
+- `business_phone` {{<type>}}string{{</type>}}
+
+    - (optional) The phone number of the business associated with this account.
+
+- `external_metadata` {{<type>}}string{{</type>}}
+
+    - (optional) External metadata for this account.
 
 {{</definitions>}}
 
@@ -73,6 +96,30 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts' \
 -d '{
     "name": "<ACCOUNT_NAME>",
     "type": "standard",
+    "unit": {
+      "id": "1a2b3c4d5e6f7g8h",
+    }
+    }'
+```
+
+A request with a unit ID and KYC:
+
+```bash
+---
+header: Request
+---
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts' \
+-H 'Content-Type: application/json' \
+-H 'x-auth-email: <EMAIL>' \
+-H 'x-auth-key: <API_KEY>' \
+-d '{
+    "name": "<ACCOUNT_NAME>",
+    "type": "standard",
+    "business_name": "Cloudflare",
+    "business_email": "email@business.com",
+    "business_address": "San Fransisco",
+    "business_phone": "1234567890",
+    "external_metadata": "{'testKey': 'testValue'}",
     "unit": {
       "id": "1a2b3c4d5e6f7g8h",
     }

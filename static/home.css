@@ -473,7 +473,7 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:1200px) {
     .HeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         background-repeat: no-repeat;
@@ -484,39 +484,15 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:1200px) {
     [theme=dark] .HeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
 }
 
-@media (max-width:768px) {
+@media (max-width:1100px) {
     .HeroImage {
-        background-image: none;
-    }
-}
-
-@media (min-width:768px) {
-    .ZTHeroImage {
-        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-        background-repeat: no-repeat;
-        margin: 0 auto;
-        position: relative;
-        box-shadow: 0 0 0px .5px white inset;
-        margin-top: 3em;
-    }
-}
-
-@media (min-width:768px) {
-    [theme=dark] .ZTHeroImage {
-        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-        box-shadow: 0 0 0px .5px #1d1f20 inset;
-    }
-}
-
-@media (max-width:768px) {
-    .ZTHeroImage {
         background-image: none;
     }
 }
@@ -788,7 +764,6 @@ html[is-site-page] .DocsContent {
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-    margin-bottom: 80px;
     justify-content: space-between;
 }
 
@@ -887,6 +862,7 @@ html[is-site-page] .DocsContent {
 .SiteFooter {
     display: flex;
     align-items: stretch;
+    justify-content: center;
     width: 100%;
     flex-wrap: wrap;
     max-width: var(--docs-max-page-width);
@@ -894,6 +870,13 @@ html[is-site-page] .DocsContent {
     margin-right: auto;
     gap: 6em;
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
+}
+
+@media (max-width:1123px) {
+.SiteFooter {
+    justify-content: flex-start;
+}
+
 }
 
 .SiteFooterItem ul,
@@ -928,6 +911,106 @@ a {
     }
 }
 
+@media (min-width: 978px) {
+    .TryOutSection {
+      margin-top: 5em;
+      width: 100%;
+    }
+    .documentation-content pre {
+      margin-bottom: 0em !important;
+    }
+
+    .documentation-container {
+      display: flex;
+      margin-top: 1.8em;
+    }
+  
+    input[type="radio"] {
+      display: none;
+    }
+  
+    .documentation-sidebar {
+      width: 14em;
+      background: #f2f2f2;
+      padding: 20px;
+      box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+  
+    [theme="dark"] .documentation-sidebar {
+      background: #222629;
+    }
+  
+    .documentation-sidebar label {
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      word-wrap: normal;
+    }
+  
+    .documentation-sidebar label:hover {
+      background: rgba(var(--orange-rgb), 0.2);
+    }
+  
+    #section1Content, #section2Content, #section3Content, #section4Content, #section5Content {
+      display: none;
+    }
+  
+    .documentation-content {
+      margin-left: 2em;
+      width: 90%;
+      margin-right: 2em;
+      background: #f2f2f2;
+      border-radius: 20px;
+    }
+
+    [theme="dark"] .documentation-content {
+      background: #222629;
+    }
+  
+    #section1:checked ~ .documentation-content #section1Content,
+    #section2:checked ~ .documentation-content #section2Content,
+    #section3:checked ~ .documentation-content #section3Content,
+    #section4:checked ~ .documentation-content #section4Content,
+    #section5:checked ~ .documentation-content #section5Content
+     {
+      display: block;
+    }
+
+    #section1:checked ~ .documentation-sidebar #section1Label,
+    #section2:checked ~ .documentation-sidebar #section2Label,
+    #section3:checked ~ .documentation-sidebar #section3Label,
+    #section4:checked ~ .documentation-sidebar #section4Label,
+    #section5:checked ~ .documentation-sidebar #section5Label
+     {
+        background: rgba(var(--orange-rgb), 0.2);
+    }
+  
+    .section-label {
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+  }
+  
+  @media (max-width: 978px) {
+    .TryOutSection {
+      display: none;
+    }
+    .ViewProducts {
+      display: none
+    }
+  }
+
+.ViewProducts {
+    margin-top: 2em;
+    margin-left: .3em;
+}
+
 .FeaturedContentSection {
     margin-top: 2em;
 }
@@ -940,7 +1023,7 @@ a {
 }
 
 .FeaturedContentBlock {
-    padding-top: 80px;
+    padding-top: 40px;
 }
 
 .FeatureContentWithImage {
@@ -997,9 +1080,6 @@ a {
 }
 
 @media (max-width:768px) {
-    .FeaturedContentSection {
-        margin-top: 5em;
-    }
 
     .FeatureContentGrid {
         margin-bottom: .8em;
@@ -1043,6 +1123,24 @@ a {
 
 [theme=dark] .subTitle {
     color: #fff;
+}
+
+@media (min-width:570px) {
+    .subTitle {
+        width: 70%;
+    }
+}
+
+@media (min-width:870px) {
+    .subTitle {
+        width: 50%;
+    }
+}
+
+@media (min-width:1180px) {
+    .subTitle {
+        width: 30%;
+    }
 }
 
 .StartHere {
@@ -2423,7 +2521,7 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-    max-width: 692px;
+    max-width: 100%;
     margin-bottom: 1em
 }
 
@@ -3457,6 +3555,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     margin: 0 48px 0 16px;
 }
 
+.DocSearch-Help a {
+    text-decoration: underline;
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
+
+.DocSearch-HitsFooter a {
+    color: var(--docsearch-highlight-color);
+    font-weight: 600;
+}
+
 .DocsMobileHeader {
     position: absolute;
     display: flex;
@@ -3753,11 +3862,11 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     padding-left: .5em
 }
 
-.viewMoreChangesContainer {
+.viewMoreContainer {
     width: 100%;
 }
 
-.viewMoreChangesButton {
+.viewMoreButton {
     margin: auto;
     width: 12em;
     height: 2em;
@@ -3766,7 +3875,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
     cursor: pointer;
 }
 
-.viewMoreChangesButton:hover {
+.viewMoreButton:hover {
     text-decoration: underline;
     transition: text-decoration 0.5s ease-in-out;
 }

@@ -2,14 +2,19 @@
 pcx_content_type: how-to
 title: CrowdStrike
 weight: 4
-layout: single
 ---
 
 # CrowdStrike
 
-{{<render file="posture/_available-for-warp-with-gateway.md">}}
+{{<render file="posture/_service-provider-intro.md" withParameters="Crowdstrike">}}
 
-Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. Our service-to-service posture check identifies devices based on their serial numbers.
+## Prerequisites
+
+Device posture with Crowdstrike requires:
+
+- Falcon Enterprise plan or above
+- Crowdstrike agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## Set up CrowdStrike as a service provider
 

@@ -2,10 +2,9 @@
 pcx_content_type: reference
 title: Datasets (tables)
 weight: 3
-layout: single
 ---
 
-# Datasets (tables)
+# GraphQL datasets (tables)
 
 Cloudflare Analytics offers a range of datasets, including both general and
 product-specific ones. Datasets use a consistent naming scheme that explicitly

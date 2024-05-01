@@ -1,33 +1,63 @@
-{{- $product := $.Params.changelog_file_name -}}
-{{- $changelogData := index (index .Site.Data "changelogs") $product -}}
-{{- $title := printf "%s · %s" .Title $changelogData.productName -}}
-{{- $atomLink := print .Permalink "index.xml" -}}
-{{- $changelogDataEntries := index $changelogData "entries" -}}
-{{- $changelogDataEntries = sort $changelogDataEntries "date" "desc" -}}
+{{- $files := $.Params.changelog_file_name -}}
+{{- $changelogData := slice -}}
+{{- $changelogDataEntries := slice -}}
+
+{{- range $files -}}
+{{- $changelogData = $changelogData | append (index (partial "full-changelog-data.html") .) }}
+{{- end -}}
+
+{{- range $changelogData -}}
+{{- $changelogDataEntries = $changelogDataEntries | append (index . "entries") }}
+{{- end -}}
+
+{{- $changelogDataEntries = sort $changelogDataEntries "publish_date" "desc" -}}
+
 {{- $permalink := .Permalink -}}
+{{- $atomLink := print $permalink "index.xml" -}}
+
+{{- $product := default (index (index $changelogData 0) "productName") ($.Params.changelog_name) }}
+{{- $mainTitle := printf "%s · %s" .Title $product -}}
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ $title }}</title>
+    <title>{{ $mainTitle }}</title>
     <link>{{ $permalink }}</link>
-    <description>Updates to Cloudflare's {{$changelogData.productName}} product.</description>
+    <description>Updates to Cloudflare's {{$product}} product.</description>
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
-    <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Monday, Jan 2, 2006" -}}</lastBuildDate>
-    {{- range $changelogDataEntries -}}
+    <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</lastBuildDate>
+    {{- range $index, $entry := $changelogDataEntries -}}
     {{- $link := "" -}}
-    {{ $description := .description | $.Page.RenderString | htmlUnescape }}
+    {{- $title := "" -}}
+    {{ $description := $entry.description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
-    {{- with .title -}}
+    {{- with $entry.title -}}
     {{- $link = print $permalink "#" (urlize .) -}}
+    {{- $title = . -}}
     {{- else -}}
-    {{- $link = print $permalink "#" (urlize .publish_date) -}}
+    {{- $link = print $permalink "#" (urlize $entry.publish_date) -}}
+    {{- $title = $entry.publish_date -}}
+    {{- end -}}
+    {{- with $entry.link -}}
+    {{- if ne $product "Wrangler" -}}
+    {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- end -}}
+    {{- end -}}
+    {{- with $entry.individual_page -}}
+    {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
+    {{- $description = $result.content -}}
+    {{- $title = $result.title }}
+    {{- with $entry.scheduled -}}
+    {{- with $entry.scheduled_date -}}
+    {{- $title = (printf "%s for %s" $title $entry.scheduled_date) -}}
+    {{- end -}}
+    {{- end -}}
     {{- end -}}
     <item>
-    <title>{{- with .title -}}{{ . }}{{ else }}{{ .publish_date }}{{ end }}</title>
-    <link>{{ $link }}</link>
-    <description>{{ $description }}</description>
-    <pubDate>{{ .publish_date | time.Format "Monday, Jan 2, 2006" }}</pubDate>
+    <title>{{- $title -}}</title>
+    <link>{{- $link -}}</link>
+    <description>{{- $description -}}</description>
+    <pubDate>{{- .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</pubDate>
     </item>
     {{- end -}}
   </channel>

@@ -293,7 +293,7 @@ Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for m
 
 ## Create a SYN flood filter
 
-This example `POST` request creates a SYN flood filter setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
+This example `POST` request creates a SYN flood [filter](/ddos-protection/tcp-protection/concepts/#filter), setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
 
 ```bash
 ---
@@ -330,7 +330,7 @@ Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for m
 
 ## Create an out-of-state TCP filter
 
-This example `POST` request creates an out-of-state TCP filter disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
+This example `POST` request creates an out-of-state TCP [filter](/ddos-protection/tcp-protection/concepts/#filter), disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
 
 ```bash
 ---

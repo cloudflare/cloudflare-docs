@@ -12,57 +12,151 @@ A single term and corresponding definition in the glossary.
 
 ## Used in
 
-Glossary
+Glossary, documentation pages, tooltips.
 
 ## Structure
 
-H2 term and paragraph definition.
+### Data
 
-### Required components
+The data underlying our glossary lives with YAML files in the [`/data/glossary/*`](https://github.com/cloudflare/cloudflare-docs/tree/production/data/glossary) folder.
 
-**Term**: Fully spell out the term with any acronym following in parentheses. Use lower case, except for proper nouns.
+Each file should be structured similar to the following:
 
-**Definition**: Use full sentences. Follow format of “A [term] is [explanation clause]" where applicable.
+```yaml
+---
+header: dns.yaml
+---
+---
+productName: DNS
+entries:
+- term: active zone
+  general_definition: |-
+    a DNS zone that is active on Cloudflare requires changing its nameservers to Cloudflare's for management.
+  associated_products:
+    - Cloudflare One
 
-### Optional components
+- term: apex domain
+  general_definition: |-
+    apex domain is used to refer to a domain that does not contain a subdomain part, such as `example.com` (without `www.`). It is also known as "root domain" or "naked domain".
 
-**Related terms**: This is not needed for every term. List other terms defined in the glossary that will help with this term’s understanding, especially those that should be understood first.
+- term: DNS over HTTPS
+  general_definition: |-
+    DNS over HTTPS (DoH) is a standard for encrypting DNS traffic, preventing tracking and spoofing of DNS queries.
+  associated_products:
+    - 1.1.1.1
+    - Cloudflare One
 
-**Relevant links**: Link other pages relevant to the defined term. This is limited to:
-
-+ Product documentation specific to the term.
-+ External pages (elsewhere in Cloudflare Docs, Help Center, Learning Center, etc.): Further explain a concept or provide additional details.
-
-## Template
-
-```
-## [term]
-
-[definition]
-
-**Related terms:** term  
-
-**Relevant links:** [Description/title of link](https://www.example.com)
-```
-
-{{<Aside type="note">}}
-If you add both **related terms** and **relevant links** to an entry, include two spaces after `**Related terms:**` to create a line break (not paragraph break).
-{{</Aside>}}
-
-## Examples
-
-Full example entry (including optional components)
-
-```
-## distributed denial-of-service (DDoS) attack
-
-A malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
-
-**Related terms:** DoS attack  
-
-**Relevant links:** [What is a DDoS attack?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
+- term: DNS over TLS
+  general_definition: |-
+    DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (853) and TLS encryption.
+  associated_products:
+    - 1.1.1.1
+    - Cloudflare One
 ```
 
-Other component examples
+Relevant values include the following:
 
-Word: Domain Name System (DNS) record
+{{<definitions>}}
+- `productName` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+    - Core product associated with this file. Should always match the same formatting / styling used in `associated_products`.
+
+- `entries` {{<type>}}object{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+    - `term` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+        - The glossary term itself.
+
+     - `general_definition` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+        - Definition of the term. Should be general enough to apply to multiple products. Should also start with a lowercase letter unless starting with a proper noun.
+
+     - `associated_products` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+        - If the term is associated with other products. Any names used should correspond to the `productName` of that associated file.
+
+{{</definitions>}}
+
+### Usage
+
+Because of the [structured data](#data) associated with our glossaries, we can pull these terms into multiple places.
+
+#### Product-level glossary
+
+A product-level glossary includes all terms associated with a particular product, which will pull in terms directly in that product's glossary file and any terms that include the product in its `associated_products`.
+
+```md
+---
+header: /dns/glossary.md
+---
+
+---
+title: Glossary
+pcx_content_type: glossary
+layout: wide
+---
+
+# Glossary
+
+Review the definitions for terms used across Cloudflare's DNS documentation.
+
+{{</*glossary product="DNS"*/>}}
+
+```
+
+#### Glossary definition
+
+Pull glossary definitions directly into your Markdown by using the `{{</*glossary-definition*/>}}` component.
+
+> {{<glossary-definition term_id="active zone" prepend="An active zone is ">}}
+
+Is a quoted definition that comes from:
+
+```md
+{{</*glossary-definition term_id="active zone" prepend="An active zone is "*/>}}
+```
+
+Properties are:
+
+{{<definitions>}}
+- `term_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+    - Should match a term within an existing glossary YAML file.
+
+- `prepend` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+    - Text to add before a definition.
+
+- `length` {{<type>}}string{{</type>}} {{<prop-meta>}}default: `long`{{</prop-meta>}}
+
+    - If specified as `short`, will only pull the definition text before the first line break in the definition.
+
+{{</definitions>}}
+
+#### Glossary tooltip
+
+Pull component definitions into a focusable tooltip for a specific phrase by using the `{{</*glossary-tooltip*/>}}` component.
+
+Here's a {{<glossary-tooltip term_id="active zone">}}tooltip{{</glossary-tooltip>}} example.
+
+```md
+Here's a {{</*glossary-tooltip term_id="active zone">}}tooltip{{</glossary-tooltip*/>}} example.
+```
+
+Properties are:
+
+{{<definitions>}}
+- `term_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+    - Should match a term within an existing glossary YAML file.
+
+- `prepend` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+    - Text to add before a definition.
+
+- `link` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+    - Wraps the inner text in a markdown link, similar to normal markdown formatting.
+
+{{</definitions>}}
+
+Because of space limitations, the tooltip will always default to the short definition of a term, meaning the definition text before the first line break.

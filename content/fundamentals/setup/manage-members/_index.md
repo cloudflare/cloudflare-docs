@@ -4,8 +4,6 @@ title: Manage members
 weight: 2
 meta:
     title: Account members
-aliases:
-- /fundamentals/account-and-billing/members/
 ---
 
 # Account members

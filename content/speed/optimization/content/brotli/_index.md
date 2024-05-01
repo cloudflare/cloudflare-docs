@@ -2,7 +2,7 @@
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/200168396-What-will-Cloudflare-compress-
 title: Brotli compression
-weight: 1
+weight: 3
 ---
 
 # Brotli compression

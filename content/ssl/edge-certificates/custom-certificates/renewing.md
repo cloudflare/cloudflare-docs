@@ -12,7 +12,7 @@ meta:
 
 Since Cloudflare cannot renew uploaded certificates, you should ensure that you replace or [update](/ssl/edge-certificates/custom-certificates/uploading/#update-an-existing-custom-certificate) an expiring custom certificate before it expires, otherwise your visitors may not be able to connect.
 
-Cloudflare automatically sends email notifications 30 and 14 days before your custom certificate expires. The email is sent to users who have the SSL/TLS, Administrator, or Super Administrator [roles](/fundamentals/account-and-billing/members/roles/).
+Cloudflare automatically sends email notifications 30 and 14 days before your custom certificate expires. The email is sent to users who have the SSL/TLS, Administrator, or Super Administrator [roles](/fundamentals/setup/manage-members/roles/).
 
 {{<Aside type="note">}}
 When renewing a custom certificate, you can reuse a [previously generated CSR](/ssl/edge-certificates/additional-options/certificate-signing-requests/).
@@ -22,7 +22,7 @@ If you are on an Enterprise plan and want to renew a custom (modern) certificate
 
 ## Expired certificates
 
-If a valid replacement - covering some or all of the [SANs](/fundamentals/reference/glossary/#subject-alternative-name-san) in the expiring custom certificate - is already available, Cloudflare will remove the expiring custom certificate in the 24 hours before expiration. There is no expected downtime due to certificate transition.
+If a valid replacement - covering some or all of the {{<glossary-tooltip term_id="Subject Alternative Names (SANs)">}}SANs{{</glossary-tooltip>}} in the expiring custom certificate - is already available, Cloudflare will remove the expiring custom certificate in the 24 hours before expiration. There is no expected downtime due to certificate transition.
 
 If no valid replacement is available, Cloudflare will remove the custom certificate after it expires.
 

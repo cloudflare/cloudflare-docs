@@ -1,9 +1,6 @@
 ---
 pcx_content_type: reference
 title: Pause Cloudflare
-weight: 5
-aliases:
-- /fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/
 ---
 
 # Pause Cloudflare

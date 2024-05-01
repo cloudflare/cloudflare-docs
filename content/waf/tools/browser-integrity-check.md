@@ -2,8 +2,6 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200170086-Understanding-the-Cloudflare-Browser-Integrity-Check
 title: Browser Integrity Check
-aliases:
-- /fundamentals/security/browser-integrity-check/
 ---
 
 # Browser Integrity Check

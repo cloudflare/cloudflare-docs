@@ -14,15 +14,15 @@ Hono is a fast web framework for building API-first applications, and it include
 
 When using Workers:
 
-- Ensure you have configured [`wrangler.toml`](/d1/get-started/#3-bind-your-worker-to-your-d1-database) to bind your D1 database to your Worker.
-- You can access your D1 databases via Hono's [`Context`](https://hono.dev/api/context) parameter: [bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) are exposed on `context.env`. If you configured a [binding](/pages/platform/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/platform/client-api/#query-statement-methods) methods via `c.env.DB`.
+- Ensure you have configured [`wrangler.toml`](/d1/get-started/#4-bind-your-worker-to-your-d1-database) to bind your D1 database to your Worker.
+- You can access your D1 databases via Hono's [`Context`](https://hono.dev/api/context) parameter: [bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) are exposed on `context.env`. If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/build-with-d1/d1-client-api/#query-statement-methods) methods via `c.env.DB`.
 - Refer to the Hono documentation for [Cloudflare Workers](https://hono.dev/getting-started/cloudflare-workers).
 
-If you are using [Pages Functions](/pages/platform/functions/):
+If you are using [Pages Functions](/pages/functions/):
 
-- Bind a D1 database to your [Pages Function](/pages/platform/functions/bindings/#d1-databases).
-- Pass the `--d1=BINDING_NAME` flag when developing locally. `BINDING_NAME` should match what call in your code: for example, `--d1=DB`.
-- Refer to the Hono guide for [Cloudflare Pages](https://hono.dev/getting-started/cloudflare-pages).
+1. Bind a D1 database to your [Pages Function](/pages/functions/bindings/#d1-databases).
+2. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your wrangler.toml: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
+3. Refer to the Hono guide for [Cloudflare Pages](https://hono.dev/getting-started/cloudflare-pages).
 
 The following examples show how to access a D1 database bound to `DB` from both a Workers script and a Pages Function:
 
@@ -31,7 +31,7 @@ The following examples show how to access a D1 database bound to `DB` from both 
 
 ```ts
 ---
-filename: src/worker.ts
+filename: src/index.ts
 ---
 import { Hono } from 'hono'
 

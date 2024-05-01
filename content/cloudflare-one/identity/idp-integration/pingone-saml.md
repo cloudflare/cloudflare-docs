@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: PingOne® (SAML)
-weight: 7
+weight: 23
 ---
 
 # PingOne®
@@ -24,7 +24,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
    ```
 
-   where `<your-team-name>` is your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-domain).
+   where `<your-team-name>` is your Cloudflare Zero Trust {{<glossary-tooltip term_id="team domain">}}team name{{</glossary-tooltip>}}.
 
    3. Select **Import**.
    4. **Save** the configuration.
@@ -48,4 +48,4 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 14. Enable [**Sign SAML authentication request**](/cloudflare-one/identity/idp-integration/generic-saml/#sign-saml-authentication-request).
 15. Select **Save**.
 
-You can now [test your connection](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method and SAML attributes.
+You can now [test your connection](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method and SAML attributes.

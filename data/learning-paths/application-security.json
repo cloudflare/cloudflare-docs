@@ -62,28 +62,28 @@
         "estimated_time": 15,
         "pages": [
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/verify-email-address/",
+            "url_path": "/fundamentals/setup/account/verify-email-address/",
             "link_title": "Verify your email address"
           },
           {
             "external_link": true,
-            "url_path": "/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/",
+            "url_path": "/fundamentals/setup/account/account-security/2fa/",
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/members/manage/",
+            "url_path": "/fundamentals/setup/manage-members/manage/",
             "link_title": "Manage account access"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/manage-active-sessions/",
+            "url_path": "/fundamentals/setup/account/account-security/manage-active-sessions/",
             "link_title": "Review active sessions (if needed)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/review-audit-logs/",
+            "url_path": "/fundamentals/setup/account/account-security/review-audit-logs/",
             "link_title": "Review audit logs (if needed)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-security/securing-a-compromised-account/",
+            "url_path": "/fundamentals/setup/account/account-security/secure-a-compromised-account/",
             "link_title": "Secure a compromised account (if needed)"
           }
         ]
@@ -106,7 +106,7 @@
           {
             "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
             "link_title": "Proxy your DNS records",
-            "additional_description": "As long as your traffic is <a href='/fundamentals/get-started/concepts/how-cloudflare-works/'>proxied by Cloudflare</a>, Cloudflare automatically protects your application from <a href='/ddos-protection/'>DDoS attacks</a>."
+            "additional_description": "As long as your traffic is <a href='/fundamentals/concepts/how-cloudflare-works/'>proxied by Cloudflare</a>, Cloudflare automatically protects your application from <a href='/ddos-protection/'>DDoS attacks</a>."
           },
           {
             "url_path": "/dns/dnssec/",
@@ -122,18 +122,18 @@
       {
         "type": "module",
         "title": "Customize Web Application Firewall (WAF)",
-        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/security-events/'>detailed analysis</a> of your application traffic.",
+        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/analytics/security-events/'>detailed analysis</a> of your application traffic.",
         "estimated_time": 120,
         "pages": [
           {
             "url_path": "/waf/managed-rules/waf-exceptions/",
-            "link_title": "WAF Exceptions",
+            "link_title": "Exceptions",
             "additional_description": "Skip the execution of WAF managed rulesets or some of their rules."
           },
           {
-            "url_path": "/firewall/cf-firewall-rules/",
-            "link_title": "Firewall Rules",
-            "additional_description": "Block, challenge, or allow requests based on <a href='/ruleset-engine/rules-language/fields/'>several characteristics</a> (user agents, cookies, referrer, and more)."
+            "url_path": "/waf/custom-rules/",
+            "link_title": "Custom Rules",
+            "additional_description": "Block, challenge, or skip security features for specific requests based on <a href='/ruleset-engine/rules-language/fields/'>several characteristics</a> (user agent, cookies, referrer, and more)."
           },
           {
             "url_path": "/waf/rate-limiting-rules/",
@@ -160,7 +160,7 @@
       {
         "type": "module",
         "title": "Customize other security settings",
-        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/security-events/'>detailed analysis</a> of your application traffic.",
+        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/analytics/security-events/'>detailed analysis</a> of your application traffic.",
         "estimated_time": 120,
         "pages": [
           {
@@ -174,12 +174,12 @@
           },
           {
             "external_link": true,
-            "url_path": "/fundamentals/security/security-level/",
+            "url_path": "/waf/tools/security-level/",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/firewall/cf-firewall-rules/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/waf/reference/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
-            "url_path": "/fundamentals/security/challenge-passage/",
+            "url_path": "/waf/tools/challenge-passage/",
             "link_title": "Customize challenge passage",
             "additional_description": "Specify the length of time that a visitor can access your website after completing a security challenge."
           },
@@ -190,7 +190,7 @@
             "additional_description": "Reduce the number of challenges presented to visitors using the <strong>Privacy Pass</strong> browser extension."
           },
           {
-            "url_path": "/fundamentals/security/browser-integrity-check/",
+            "url_path": "/waf/tools/browser-integrity-check/",
             "link_title": "Browser Integrity Check",
             "additional_description": "Browser Integrity Check evaluates incoming HTTP headers based on known threats — such as requests with a missing or non-standard user agent — and present a challenge page if needed."
           },
@@ -252,7 +252,7 @@
         "title": "Next steps",
         "pages": [
           {
-            "url_path": "/fundamentals/get-started/task-guides/origin-health/",
+            "url_path": "/fundamentals/basic-tasks/protect-your-origin-server/",
             "link_title": "Protect your origin server"
           }
         ]

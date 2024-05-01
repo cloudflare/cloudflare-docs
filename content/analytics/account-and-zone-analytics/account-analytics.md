@@ -10,7 +10,7 @@ weight: 2
 Cloudflare account analytics lets you access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
 {{<Aside type="note">}}
-For general information about all of Cloudflare's analytics offerings, refer to [About Cloudflare Analytics](/fundamentals/data-products/about-analytics/).
+For general information about all of Cloudflare's analytics offerings, refer to [About Cloudflare Analytics](/analytics/faq/about-analytics/).
 {{</Aside>}}
 
 ___

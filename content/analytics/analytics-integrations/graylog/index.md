@@ -2,9 +2,6 @@
 pcx_content_type: how-to
 title: Graylog
 weight: 102
-layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/graylog/
 ---
 
 # Graylog
@@ -27,7 +24,7 @@ Before sending your Cloudflare log data to Graylog, make sure that you:
 
 {{<Aside type="note" header="Note">}}
 
-Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. All timestamp formats are supported by Graylog.
+Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as UNIX nanosecond integers. All timestamp formats are supported by Graylog.
 
 {{</Aside>}}
 
@@ -194,7 +191,7 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 {{<Aside type="note" header="Note">}}
 
-To get bot requests identified correctly, use only one firewall rule, configured with the action _Interactive Challenge_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one WAF custom rule (or firewall rule), configured with the action _Interactive Challenge_. To learn more about custom rules, refer to the [WAF documentation](/waf/custom-rules/).
 
 {{</Aside>}}
 

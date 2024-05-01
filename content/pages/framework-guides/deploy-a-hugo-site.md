@@ -11,7 +11,7 @@ In this guide, you will create a new Hugo application and deploy it using Cloudf
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-Go to [Deploying with Cloudflare Pages](#deploy-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/guide/#connect-your-git-provider-to-pages).
+Go to [Deploy with Cloudflare Pages](#deploy-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/git-integration/).
 
 ## Install Hugo
 
@@ -68,87 +68,9 @@ $ hugo new site my-hugo-site
 Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, use the [Terminal theme](https://themes.gohugo.io/hugo-theme-terminal/) by running the following commands in your terminal:
 
 ```sh
-$ cd my-hugo-site
 $ git init
-$ git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal
-$ git submodule update --init --recursive
-```
-
-You should also copy the default configuration provided by the theme into the `config.toml` file in your project's directory. Take the following information and customize it per your site's needs:
-
-```toml
-baseurl = "/"
-languageCode = "en-us"
-theme = "terminal"
-paginate = 5
-
-[params]
-  # dir name of your main content (default is `content/posts`).
-  # the list of set content will show up on your index page (baseurl).
-  contentTypeName = "posts"
-
-  # ["orange", "blue", "red", "green", "pink"]
-  themeColor = "orange"
-
-  # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 2
-
-  # show selector to switch language
-  showLanguageSelector = false
-
-  # set theme to full screen width
-  fullWidthTheme = false
-
-  # center theme with default width
-  centerTheme = false
-
-  # set a custom favicon (default is a `themeColor` square)
-  # favicon = "favicon.ico"
-
-  # set post to show the last updated
-  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
-  showLastUpdated = false
-  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
-  # updatedDatePrefix = "Updated"
-
-  # set all headings to their default size (depending on browser settings)
-  # it's set to `true` by default
-  # oneHeadingSize = false
-
-[params.twitter]
-  # set Twitter handles for Twitter cards
-  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
-  # do not include @
-  creator = ""
-  site = ""
-
-[languages]
-  [languages.en]
-    languageName = "English"
-    title = "Terminal"
-    subtitle = "A simple, retro theme for Hugo"
-    owner = ""
-    keywords = ""
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
-    missingContentMessage = "Page not found..."
-    missingBackButtonLabel = "Back to home page"
-
-    [languages.en.params.logo]
-      logoText = "Terminal"
-      logoHomeLink = "/"
-
-    [languages.en.menu]
-      [[languages.en.menu.main]]
-        identifier = "about"
-        name = "About"
-        url = "/about"
-      [[languages.en.menu.main]]
-        identifier = "showcase"
-        name = "Showcase"
-        url = "/showcase"
+$ git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+$ echo "theme = 'ananke'" >> hugo.toml
 ```
 
 ## Create a post
@@ -156,12 +78,12 @@ paginate = 5
 Create a new post to give your Hugo site some initial content. Run the `hugo new` command in your terminal to generate a new post:
 
 ```sh
-$ hugo new posts/hello-world.md
+$ hugo new content posts/hello-world.md
 ```
 
 Inside of `hello-world.md`, add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -185,7 +107,7 @@ $ hugo -b $CF_PAGES_URL
 
 {{</Aside>}}
 
-After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
+After completing deployment configuration, select the **Save and Deploy**. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
 
 {{<Aside type="note">}}
 
@@ -194,18 +116,18 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Use a specific Hugo version
+## Use a specific or newer Hugo version
 
-To use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases), create the `HUGO_VERSION` environment variable in your Pages project > **Settings** > **Environment variables**. Set the value as the Hugo version you want to specify.
+To use a [specific or newer version of Hugo](https://github.com/gohugoio/hugo/releases), create the `HUGO_VERSION` environment variable in your Pages project > **Settings** > **Environment variables**. Set the value as the Hugo version you want to specify (v0.112.0 or later is recommended for newer versions).
 
-For example, `HUGO_VERSION`: `0.110.0`.
+For example, `HUGO_VERSION`: `0.115.4`.
 
 {{<Aside type="note">}}
 
-If you plan to use [preview deployments](/pages/platform/preview-deployments/), make sure you also add environment variables to your **Preview** environment.
+If you plan to use [preview deployments](/pages/configuration/preview-deployments/), make sure you also add environment variables to your **Preview** environment.
 
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Hugo">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hugo">}}

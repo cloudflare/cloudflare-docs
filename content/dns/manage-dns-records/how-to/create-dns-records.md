@@ -42,11 +42,9 @@ To create a DNS record in the dashboard:
 
 {{<tab label="api" no-code="true">}}
 
-To create records with the API, use a [POST request](/api/operations/dns-records-for-a-zone-create-dns-record).
+To create records with the API, use a [POST request](/api/operations/dns-records-for-a-zone-create-dns-record). For field definitions, select a record type under the request body specification.
 
 For specific API examples, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
-
-{{<render file="_api-field-definitions.md">}}
 
 {{</tab>}}
 {{</tabs>}}

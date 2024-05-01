@@ -1,7 +1,7 @@
 ---
 title: Deploy in the dashboard for a zone
 pcx_content_type: how-to
-weight: 5
+weight: 1
 meta:
   title: Deploy a managed ruleset in the dashboard for a zone
 ---
@@ -16,28 +16,31 @@ To deploy a managed ruleset for several Enterprise domains in your account, refe
 
 ## Deploy a managed ruleset
 
-To deploy a managed ruleset with the default configuration, under **Managed Rulesets** select **Deploy** next to a managed ruleset. This operation will deploy the managed ruleset for the current zone.
+To deploy a managed ruleset with the default configuration:
 
-When you deploy a managed ruleset, the WAF adds an _Execute_ rule, displayed in **Managed rules**, that deploys the managed ruleset.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-## Enable or disable a managed ruleset
+2. Go to **Security** > **WAF** > **Managed rules**.
 
-Select the **Enabled** toggle next to a managed ruleset to enable or disable it.
+3. Under **Managed Rulesets**, select **Deploy** next to a managed ruleset.
+
+This operation will deploy the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
+
+## Turn on or off a managed ruleset
+
+Select the **Enabled** toggle next to a managed ruleset to turn it on or off.
 
 ## Configure a managed ruleset
 
 Configure a managed ruleset to:
 
-- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare).
-- Disable one or more rules.
 - Specify a custom filter expression to apply the rules in the ruleset to a subset of incoming requests.
+- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare), or turn off those rules.
 
-To skip one or more rules, or entire WAF managed rulesets, [add a WAF exception](/waf/managed-rules/waf-exceptions/).
+To skip one or more rules — or even entire WAF managed rulesets — for specific incoming requests, [add an exception](/waf/managed-rules/waf-exceptions/).
 
 {{<Aside type="note">}}
-
 Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan.
-
 {{</Aside>}}
 
 ### Configure field values for all the rules
@@ -48,58 +51,38 @@ To configure rule field values for all the rules in a managed ruleset:
 
 2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Next to the _Execute_ rule that deploys the managed ruleset you want to configure, select the managed ruleset name.
+3. Next to the _Execute_ rule deploying the managed ruleset you want to configure, select the managed ruleset name.<br> If you have not deployed the managed ruleset yet, select the managed ruleset name under **Managed Rulesets**.
 
-4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
+4. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+
+5. In the ruleset configuration section, define settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
 
     For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
 
     ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](/images/waf/waf-configure-ruleset.png)
 
-5. (Optional) To apply the rules in the ruleset to a subset of incoming requests instead of all requests, [set the scope using a custom filter expression](#specify-a-custom-expression-for-the-ruleset).
-
-6. Select **Save**.
-
-### View the rules of a managed ruleset
-
-You can browse the available rules in a managed ruleset and search for individual rules or tags.
-
-Use the available filters in the Browse Managed Ruleset interface.
-
-To view the rules of a managed ruleset:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Managed rules**.
-
-3. Next to the _Execute_ rule that deploys the managed ruleset you want to browse, select the managed ruleset name.
-
-4. Select **Browse rules**.
-
-    ![The Browse rules page displaying the list of rules in the Cloudflare Managed Ruleset](/images/waf/waf-browse-rules.png)
-
-### Configure a single rule in a managed ruleset
-
-{{<render file="_managed-ruleset-configure-single-rule.md">}}
+6. If you are editing a deployed managed ruleset, select **Save**. If you have not deployed the managed ruleset yet, select **Deploy** to deploy the ruleset immediately, or **Save as Draft** to save your deployment settings for later.
 
 ### Configure rules in bulk in a managed ruleset
 
+{{<render file="_managed-rules-browse-zone.md">}}
+
 {{<render file="_managed-ruleset-configure-rules-in-bulk.md">}}
 
-### Specify a custom expression for the ruleset
+### Configure a single rule in a managed ruleset
 
-To apply the rules in the ruleset to a subset of incoming requests, specify a custom filter expression for the rule that executes the managed ruleset.
+{{<render file="_managed-rules-browse-zone.md">}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+{{<render file="_managed-ruleset-configure-single-rule.md">}}
 
+### Browse the rules of a managed ruleset
+
+You can browse the available rules in a managed ruleset and search for individual rules or tags.
+
+{{<render file="_managed-rules-browse-zone.md">}}
+
+### Delete a managed ruleset deployment rule or an exception
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules**.
-
-3. Next to the _Execute_ rule that deploys the managed ruleset, select the managed ruleset name.
-
-4. Select **Edit scope**.
-
-5. Under **Set Scope**, select **Custom filter expression**.
-
-6. Under **When incoming requests match**, define the scope for all the rules in the ruleset using a custom filter expression. Use the Expression Builder or the Expression Editor for defining the expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
-
-7. Select **Next**, and then select **Save**.
+3. Next to the rule or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.

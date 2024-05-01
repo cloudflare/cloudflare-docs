@@ -55,30 +55,19 @@ The Rules language supports these transformation functions:
 
   - Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
-  - <em>Example:</em>
-    <br />
-
-    `concat("String1"," ","String",2) == "String1 String2"`
+  - For example, `concat("String1", " ", "String", 2)` will return `"String1 String2"`.
 
 - <code id="function-ends_with">{{<name>}}ends_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
-  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
-  - *Example:*<br />
-    If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
-
-{{<Aside type="warning">}}
-The `ends_with()` function is not available in [firewall rules](/firewall/).
-{{</Aside>}}
+  - For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
 - <code id="function-len">{{<name>}}len{{</name>}}({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
   - Returns the byte length of a String or Bytes field.
 
-  - <em>Example:</em>
-    <br />
-
-    `len(http.host)`
+  - For example, if `http.host` is `"example.com"`, then `len(http.host)` will return `11`.
 
 - <code id="function-lookup_json_integer">{{<name>}}lookup_json_integer{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}Integer{{</type>}}
 
@@ -91,28 +80,23 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
     `{ "record_id": "aed53a", "version": 2 }`<br/>
-    The following function call will return `2`:<br/>
-    `lookup_json_integer(http.request.body.raw, "version") == 2`
+    Then `lookup_json_integer(http.request.body.raw, "version")` will return `2`.
 
     B) Given the following nested object:<br/>
     `{ "product": { "id": 356 } }`<br/>
-    The following function call will return `356`:<br/>
-    `lookup_json_integer(http.request.body.raw, "product", "id") == 356`
+    Then `lookup_json_integer(http.request.body.raw, "product", "id")` will return `356`.
 
     C) Given the following JSON array at the root level:<br/>
     `["first_item", -234]`<br/>
-    The following function call will return `-234`:<br/>
-    `lookup_json_integer(http.request.body.raw, 1) == -234`
+    Then `lookup_json_integer(http.request.body.raw, 1)` will return `-234`.
 
     D) Given the following array in a JSON object attribute:<br/>
     `{ "network_ids": [123, 456] }`<br/>
-    The following function call will return `123`:<br/>
-    `lookup_json_integer(http.request.body.raw, "network_ids", 0) == 123`
+    Then `lookup_json_integer(http.request.body.raw, "network_ids", 0)` will return `123`.
 
     E) Given the following root-level array of JSON objects:<br/>
     `[{ "product_id": 123 }, { "product_id": 456 }]`<br/>
-    The following function call will return `456`:<br/>
-    `lookup_json_integer(http.request.body.raw, 1, "product_id") == 456`
+    Then `lookup_json_integer(http.request.body.raw, 1, "product_id")` will return `456`.
 
 - <code id="function-lookup_json_string">{{<name>}}lookup_json_string{{</name>}}(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String | Integer{{</param-type>}} [, key{{<param-type>}}String | Integer{{</param-type>}}, ...])</code> {{<type>}}String{{</type>}}
 
@@ -124,43 +108,35 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
 
     A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
     `{ "company": "cloudflare", "product": "rulesets" }`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, "company") == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, "company") == "cloudflare"` will return `true`.
 
     B) Given the following nested object:<br/>
     `{ "network": { "name": "cloudflare" } }`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"` will return `true`.
 
     C) Given the following JSON array at the root level:<br/>
     `["other_company", "cloudflare"]`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, 1) == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, 1) == "cloudflare"` will return `true`.
 
     D) Given the following array in a JSON object attribute:<br/>
     `{ "networks": ["other_company", "cloudflare"] }`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"` will return `true`.
 
     E) Given the following root-level array of JSON objects:<br/>
     `[{ "network": "other_company" }, { "network": "cloudflare" }]`<br/>
-    The following expression will return `true`:<br/>
-    `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"`
+    Then `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"` will return `true`.
 
 - <code id="function-lower">{{<name>}}lower{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
-  - <em>Example:</em>
-    <br />
-
-    `lower(http.host) == "www.cloudflare.com"`
+  - For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) == "www.cloudflare.com"` will return `true`.
 
 - <code id="function-regex_replace">{{<name>}}regex_replace{{</name>}}(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
     - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
-    - *Examples:*
+    - _Examples:_
 
       Literal match replace:<br />
       `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
@@ -190,29 +166,13 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
   - Returns a new byte array with all the occurrences of the given bytes removed.
 
-  - <em>Example:</em>
-
-    ```txt
-    // With http.host = "www.cloudflare.com":
-
-    remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"
-    ```
+  - For example, if `http.host` is `"www.cloudflare.com"`, then `remove_bytes(http.host, "\x2e\x77")` will return `"cloudflarecom"`.
 
 - <code id="function-starts_with">{{<name>}}starts_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
-  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
-  - *Example:*
-
-    ```txt
-    // With http.request.uri.path = "/blog/first-post":
-
-    starts_with(http.request.uri.path, "/blog") == true
-    ```
-
-{{<Aside type="warning">}}
-The `starts_with()` function is not available in [firewall rules](/firewall/).
-{{</Aside>}}
+  - For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
 - <code id="function-substring">{{<name>}}substring{{</name>}}(field{{<param-type>}}String | Bytes{{</param-type>}}, start{{<param-type>}}Integer{{</param-type>}} [, end{{<param-type>}}Integer{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
@@ -223,11 +183,11 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
   - *Examples:*
 
     ```txt
-    // With http.request.body.raw = "asdfghjk":
+    // If http.request.body.raw is "asdfghjk":
 
-    substring(http.request.body.raw, 2, 5) == "dfg"
-    substring(http.request.body.raw, 2) == "dfghjk"
-    substring(http.request.body.raw, -2) == "jk"
+    substring(http.request.body.raw, 2, 5)   will return "dfg"
+    substring(http.request.body.raw, 2)      will return "dfghjk"
+    substring(http.request.body.raw, -2)     will return "jk"
     ```
 
 - <code id="function-to_string">{{<name>}}to_string{{</name>}}({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
@@ -237,8 +197,11 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
   - *Examples:*
 
     ```txt
-    to_string(cf.bot_management.score) == "5"
-    to_string(ssl) == "true"
+    // If cf.bot_management.score is 5:
+    to_string(cf.bot_management.score)   will return "5"
+
+    // If ssl is true:
+    to_string(ssl)                       will return "true"
     ```
 
 {{<Aside type="warning">}}
@@ -249,10 +212,7 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
   - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
-  - <em>Example:</em>
-    <br />
-
-    <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
+  - For example, if `http.host` is`"www.cloudflare.com"`, then `upper(http.host)` will return `"WWW.CLOUDFLARE.COM"`.
 
 - <code id="function-url_decode">{{<name>}}url_decode{{</name>}}(source{{<param-type>}}String{{</param-type>}}[, options{{<param-type>}}String{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
@@ -262,21 +222,23 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
     - `%E4%BD` decodes to `ä½`.
 
+  - The `source` must be a field, that is, it cannot be a literal string.
+
   - The `options` parameter is optional. You must provide any options as a single string wrapped in quotes, such as `"r"` or `"ur"`. The available options are the following:
 
       - `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
-      - `u`: Enables Unicode percent decoding. For example, `%E2%98%81%EF%B8%8F` will be decoded to a cloud emoji (`☁️`).
+      - `u`: Enables Unicode percent decoding. The result will be encoded in UTF-8. For example, `"%u2601"` would be decoded to a cloud emoji (`☁️`) encoded in UTF-8 (`"\xe2\x98\x81"`, with a size of 3 bytes).
 
   - <em>Examples:</em>
     <br />
 
     ```txt
-    url_decode("John%20Doe") == "John Doe"
-    url_decode("John+Doe") == "John Doe"
-    url_decode("%2520") == "%20"
-    url_decode("%2520", "r") == " "
+    url_decode("John%20Doe")   will return "John Doe"
+    url_decode("John+Doe")     will return "John Doe"
+    url_decode("%2520")        will return "%20"
+    url_decode("%2520", "r")   will return " "
 
-    // With the any() function:
+    // Using url_decode() with the any() function:
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     ```
 
@@ -284,9 +246,7 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
   - Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/#field-cf-random_seed) field.
 
-  - <em>Example:</em>
-    <br />
-    `uuidv4(cf.random_seed)` returns a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`
+  - For example, `uuidv4(cf.random_seed)` will return a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`.
 
 {{<Aside type="warning">}}
 You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
@@ -296,7 +256,17 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
 
 ## Magic Firewall Functions
 
-{{<render file="_magic-firewall-functions.md" productFolder="magic-firewall">}}
+{{<definitions>}}
+
+- <code id="function-bit_slice">{{<name>}}bit_slice{{</name>}}(protocol {{<type>}}String{{</type>}}, offset_start {{<type>}}Number{{</type>}}, offset_end {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
+
+  - This function looks for matches on a given slice of bits.
+  - The offset starts on the given protocol header. For example, to match on the first bit of payload for a UDP packet, you must set `offset_start` to `64`.
+  - This is primarily intended for use with `ip`, `udp`, and `tcp`.
+  - The slice (`offset_end` — `offset_start`) cannot be longer than 32 bits, but multiple calls can be joined together via logical expressions.
+  - The `bit_slice` offset cannot exceed 2,040 bits.
+
+{{</definitions>}}
 
 ## HMAC validation
 
@@ -357,14 +327,14 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the `message` and the `timestamp` regions of the MessageMAC. When the generated MAC matches the `mac` region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
 
-For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
+For example, the following expression matches requests to `downloads.example.com` that do not include valid HMAC tokens:
 
 ```java
-http.host == "download.example.com"
+http.host == "downloads.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-For examples of rules that use HMAC validation, refer to [Require a valid HMAC token](/waf/custom-rules/use-cases/require-valid-hmac-token/) in the WAF documentation.
+For examples of rules that use HMAC validation, refer to [Configure token authentication](/waf/custom-rules/use-cases/configure-token-authentication/) in the WAF documentation.
 
 ### MessageMAC
 
@@ -409,7 +379,7 @@ and is composed of these parentheses-delimited expressions:
   </tbody>
 </table>
 
-For details on generating a MessageMAC, refer to [Implement token creation](/support/firewall/learn-more/configuring-token-authentication/#implement-token-creation).
+For details on generating a MessageMAC, refer to [HMAC token generation](/waf/custom-rules/use-cases/configure-token-authentication/#hmac-token-generation).
 
 ## HMAC validation examples
 

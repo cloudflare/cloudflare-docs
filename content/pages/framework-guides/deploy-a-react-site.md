@@ -11,13 +11,17 @@ In this guide, you will create a new React application and deploy it using Cloud
 
 ## Setting up a new project
 
-Create a new project using `npx`, giving it the title `my-react-app` in your terminal.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate React's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new React project, run the following command:
 
 ```sh
-$ npx create-react-app my-react-app
+$ npm create cloudflare@latest my-react-app -- --framework=react
 ```
 
-And move into the application's directory via:
+`create-cloudflare` will install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the Cloudflare Pages adapter, and ask you setup questions.
+
+Go to the application's directory:
 
 ```sh
 $ cd my-react-app
@@ -31,11 +35,13 @@ $ npm start
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository_no_init.md">}}
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
+{{<render file="_deploy-via-c3.md" withParameters="React">}}
+
+### Deploy via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
@@ -56,12 +62,12 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 {{<Aside type="note" header="SPA rendering">}}
 
-By default, Cloudflare Pages assumes you are developing a single-page application. Refer to [Serving Pages](/pages/platform/serving-pages/#single-page-application-spa-rendering) for more information.
+By default, Cloudflare Pages assumes you are developing a single-page application. Refer to [Serving Pages](/pages/configuration/serving-pages/#single-page-application-spa-rendering) for more information.
 
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="React">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="React">}}

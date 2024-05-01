@@ -4,7 +4,10 @@ summary: Cache POST requests using the Cache API.
 tags:
   - Middleware
   - Caching
-  - Cache API
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Cache POST requests
 weight: 1001
@@ -63,8 +66,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request, env, ctx) {
+interface Env {}
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
     async function sha256(message) {
       // encode as UTF-8
       const msgBuffer = await new TextEncoder().encode(message);
@@ -104,9 +108,7 @@ const handler: ExportedHandler = {
       return new Response("Error thrown " + e.message);
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

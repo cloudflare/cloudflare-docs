@@ -31,7 +31,7 @@ There are a number of VNC versions, deployments, and instances. This tutorial fo
 
 ## Before you start
 
-1. [Add a website to Cloudflare.](/fundamentals/get-started/setup/add-site/)
+1. [Add a website to Cloudflare.](/fundamentals/setup/manage-domains/add-site/)
 2. [Enable Cloudflare Zero Trust on your account.](/cloudflare-one/setup/)
 3. [Connect your identity provider to Cloudflare Zero Trust.](/cloudflare-one/identity/idp-integration/)
 
@@ -137,7 +137,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
    $ cloudflared tunnel --config path/config.yaml run <NAME>
    ```
 
-8. Follow [this guide](/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
+8. Follow [this guide](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
 At this point you have a running VNC server and a Cloudflare Tunnel on your machine ready to accept inbound VNC requests.
 
@@ -145,7 +145,7 @@ At this point you have a running VNC server and a Cloudflare Tunnel on your mach
 
 The last step is to create a Zero Trust application to run your VNC server in the Browser.
 
-1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application** and choose **Self-hosted**.
 

@@ -48,15 +48,11 @@ This means that you need to add a CNAME record to Cloudflare in your authoritati
 
 This process may involve a few minutes of downtime.
 
-<details>
-<summary>What happens after you create your records</summary>
-<div>
+{{<details header="What happens after you create your records">}}
 
 {{<render file="_cname-cert-verification.md">}}
 
-</div>
-
-</details>
+{{</details>}}
 
 {{<render file="_acm-validate-cert.md">}}
 

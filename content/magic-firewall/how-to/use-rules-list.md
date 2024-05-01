@@ -1,16 +1,22 @@
 ---
-title: Use IP Lists
+title: Use IP lists
 weight: 3
 pcx_content_type: how-to
 meta:
-  title: Define an IP List
+  title: Define an IP list
 ---
 
-# Define an IP List
+# Define an IP list
 
-[IP Lists](/fundamentals/global-configurations/lists/ip-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
+[IP lists](/waf/tools/lists/custom-lists/#ip-lists) are a part of Cloudflare's custom lists. Custom lists contain one or more items of the same type — IP addresses, hostnames or ASNs — that you can reference in rule expressions.
 
-To use this feature first [create a new IP list](/api/operations/lists-create-a-list).
+IP lists are defined at the account level and can be used to match against `ip.src` and `ip.dst` fields. Currently, Magic Firewall only supports IPv4 addresses in these lists, not IPv6.
+
+To use this feature:
+
+## 1. Create a [new IP list](/api/operations/lists-create-a-list).
+
+For example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
@@ -24,9 +30,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
 }'
 ```
 
-## Add IPs to the List
+## 2. Add IPs to the list
 
-Next [create list items](/api/operations/lists-create-list-items). This will add elements to the current list.
+Next, [create list items](/api/operations/lists-create-list-items). This will add elements to the current list.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \
@@ -39,9 +45,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{lis
 ]'
 ```
 
-## Use the List in a Rule
+## 3. Use the list in a rule
 
-Finally add a Magic Firewall rule referencing the List into an existing ruleset:
+Finally, add a Magic Firewall rule referencing the list into an existing ruleset:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules \
@@ -63,7 +69,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 
 {{<Aside type="note">}}Available for customers with a Magic Firewall Advanced plan.{{</Aside>}}
 
-You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/waf/tools/lists/ip-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
+You can create rules with managed lists. Managed IP Lists are [lists of IP addresses](/waf/tools/lists/managed-lists/#managed-ip-lists) maintained by Cloudflare and updated frequently.
 
 You can access these managed lists when you create rules with either _IP destination address_ or _IP source address_ in the **Field** dropdown, and _is in list_ or _is not in list_ in the **Operator** dropdown.
 

@@ -9,7 +9,10 @@ meta:
 
 # ERR_SSL_VERSION_OR_CIPHER_MISMATCH
 
-After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) errors.
+After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
+- `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome)
+- `Unsupported protocol The client and server don’t support a common SSL protocol version or cipher suite` (Chrome)
+- `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox)
 
 This error occurs when your domain or subdomain is not covered by an SSL/TLS certificate, which is usually caused by:
 
@@ -52,7 +55,7 @@ If the **Status** is anything other than **Active**, you can either wait a bit l
 
 ### Solutions
 
-If you need to immediately resolve this error, [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+If you need to immediately resolve this error, [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 
 Since Universal certificates can take up to 24 hours to be issued, wait and [monitor the certificate's status](/ssl/reference/certificate-statuses/#ssltls). Once your certificate becomes **Active**, unpause Cloudflare using whichever method you used previously.
 

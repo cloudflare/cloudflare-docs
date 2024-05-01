@@ -3,6 +3,9 @@ type: example
 summary: Set a Cron Trigger for your Worker.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Setting Cron Triggers
 weight: 1001
@@ -24,12 +27,12 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async scheduled(event, env, ctx) {
+interface Env {}
+export default {
+  async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {
     console.log("cron processed");
   },
 };
-export default handler;
 ```
 
 {{</tab>}}
@@ -37,7 +40,7 @@ export default handler;
 
 ## Set Cron Triggers in Wrangler
 
-Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more information on how to add a Cron Trigger. 
+Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more information on how to add a Cron Trigger.
 
 If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your `wrangler.toml` file:
 
@@ -64,7 +67,7 @@ The recommended way of testing Cron Triggers is using Wrangler.
 Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
-$ wrangler dev --test-scheduled
+$ npx wrangler dev --test-scheduled
 
 $ curl "http://localhost:8787/__scheduled?cron=0+*+*+*+*"
 ```

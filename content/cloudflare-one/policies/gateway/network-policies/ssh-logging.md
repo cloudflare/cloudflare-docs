@@ -19,7 +19,7 @@ You can create network policies to manage and monitor SSH access to your applica
 
 Cloudflare Gateway will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure.
 
-{{<render file="_ssh-usernames.md">}}
+{{<render file="ssh/_usernames.md">}}
 
 ## 2. Generate a Gateway SSH proxy CA
 
@@ -45,11 +45,11 @@ To generate a Gateway SSH proxy CA and get its public key:
 
 1. Copy the `public_key` value returned by the API request in Step 2.
 
-{{<render file="_ssh-public-key.md">}}
+{{<render file="ssh/_public-key.md">}}
 
 ## 4. Modify your SSHD config
 
-{{<render file="_ssh-modify-sshd.md">}}
+{{<render file="ssh/_modify-sshd.md">}}
 
 ## 5. Check your SSH port number
 
@@ -61,7 +61,7 @@ $ cat /etc/ssh/sshd_config
 
 ## 6. Restart your SSH server
 
-{{<render file="_ssh-restart-server.md">}}
+{{<render file="ssh/_restart-server.md">}}
 
 ## 7. Create an Audit SSH policy
 
@@ -69,9 +69,9 @@ $ cat /etc/ssh/sshd_config
 
 2. In the **Network** tab, create a new network policy.
 
-3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) for your origin server. 
+3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) for your origin server.
 
-   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/connect-private-networks/).
+   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
 
 4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
 
@@ -111,7 +111,7 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
    ```sh
    $ ./ssh-log-cli generate-key-pair -o sshkey
    $ ls
-   README.md	ssh-log-cli	sshkey	sshkey.pub
+   README.md    ssh-log-cli    sshkey    sshkey.pub
    ```
 
    This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.

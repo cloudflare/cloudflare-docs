@@ -2,46 +2,53 @@
 pcx_content_type: concept
 title: How Cloudflare works
 weight: 2
-aliases:
-- /fundamentals/get-started/concepts/how-cloudflare-works/
 ---
 
 # How Cloudflare works
 
-Fundamentally, Cloudflare is a [large network of servers](/fundamentals/get-started/concepts/what-is-cloudflare/) that can improve the security, performance, and reliability of anything connected to the Internet.
+The [Cloudflare global network](https://www.cloudflare.com/network/) can improve the security, performance, reliability, and privacy of anything connected to the Internet, such as your website, SaaS application, or corporate network.
 
-Cloudflare does this by serving as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) for your web traffic. All requests to and from your origin flow through Cloudflare and — as these requests pass through our network — we can apply various rules and optimizations to improve security, performance, and reliability.
+## Application Services
 
-## Life of a request
+To optimize your website or web application, Cloudflare acts as a [DNS provider](https://www.cloudflare.com/learning/dns/what-is-dns/) for your domain, and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) for your web traffic. 
 
-Even though it feels pretty instantaneous, there's a lot happening when you type `www.example.com` into your browser.
+### How Cloudflare works as a DNS provider
 
-A website's content does not technically live at a URL like `www.example.com`, but rather at an IP address like `192.0.2.1`. It's similar to how we say that Cloudflare's headquarters is 101 Townsend St., San Francisco, CA 94107, but really that address is just a placeholder for latitude and longitude coordinates (37.780259, -122.390519). URLs and street addresses are much easier for humans to remember.
+We support a few different [setups](/dns/zone-setups/) for using Cloudflare as a DNS provider. A [full DNS setup](/dns/zone-setups/full-setup/) is the most common, where Cloudflare becomes the primary authoritative DNS provider for your domain, after you [connect your domain to Cloudflare](/fundamentals/setup/manage-domains/connect-your-domain/). This means we respond to DNS queries for your domain, and you [manage its DNS records](/dns/manage-dns-records/how-to/create-dns-records/) via the Cloudflare dashboard or API.
 
-The process of converting a human-readable URL (`www.example.com`) into a machine-friendly address (`192.0.2.1`) is known as a [DNS lookup](https://www.cloudflare.com/learning/dns/what-is-dns/).
+When Cloudflare receives a DNS query for your domain, our response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the value of the record, the record's [proxy eligibility](/dns/manage-dns-records/reference/proxied-dns-records/#proxy-eligibility), and its [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/). 
 
-{{<render file="_proxy-status-effects.md">}}
+If the [domain's status](/dns/zone-setups/reference/domain-status/) is active and the queried DNS record is set to `proxied`, then Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), **instead of** the value defined in your DNS table. This effectively re-routes the `HTTP/HTTPS` requests to the Cloudflare network, instead of directly reaching the targeted the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
-## Benefits
+In contrast, if the queried DNS record is set to `DNS only`, meaning the proxy is off, then Cloudflare responds with the value defined in your DNS table (that is, an IP address or CNAME record). This means `HTTP/HTTPS` requests route directly to the origin server and are not processed or protected by Cloudflare.
 
-When your traffic is proxied through Cloudflare before reaching your origin server, your application gets additional security, performance, and reliability benefits.
+### How Cloudflare works as a reverse proxy
 
-### Security
+All DNS records in your DNS table have a [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/), indicating whether or not `HTTP/HTTPS` traffic for that record will route through Cloudflare on its way between the client and the origin server. If the [domain's status](/dns/zone-setups/reference/domain-status/) is active, all `HTTP/HTTPS` requests for [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) route through Cloudflare.
 
-Beyond hiding your origin's IP address from potential attackers, Cloudflare also stops malicious traffic before it reaches your origin web server.
+As these requests pass through our network, they are processed according to your [configuration](/fundamentals/setup/manage-domains/connect-your-domain/#domain-configurations). Subsequently, legitimate requests are forwarded to the origin server. 
 
-Cloudflare automatically mitigates security risks using our [WAF](/waf/about/) and [DDoS protection](/ddos-protection/).
+Refer to our [Load Balancing reference architecture](/reference-architecture/architectures/load-balancing/) to learn more about advanced ways to forward traffic to your origins, as well as our [CDN reference architecture](/reference-architecture/architectures/cdn/) to learn more about how Cloudflare processes and optimizes your web traffic.
 
-For additional details on security, refer to our guide on how to [Secure your website](/learning-paths/application-security/).
+{{<Aside type="note">}}
+Proxying is on by default for records that serve `HTTP/HTTPS` traffic (`A`, `AAAA`, and `CNAME` records). To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
+{{</Aside>}}
 
-### Performance
+In the Cloudflare dashboard, find out which DNS records are proxied by selecting your domain and navigating to the **DNS records** tab.
 
-For proxied traffic, Cloudflare also serves as a [Content Delivery Network (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/), caching static resources and otherwise optimizing asset delivery.
+#### Example DNS table 
 
-For additional details on performance, refer to our guides on [Optimizing Site Speed](/learning-paths/optimize-site-speed/) and [Caching](/cache/get-started/).
+| Type | Name | Content | Proxy status | TTL | Actions |
+| :---: |  :---: |  :---: |  :---: |  :---: |  ---: |
+| `A` | `blog` | `192.0.2.1` | `Proxied` | `Auto` | `Edit` | 
+| `A` | `shop` | `192.0.2.2` | `DNS only` | `Auto` | `Edit` | 
 
-### Reliability
+In the example DNS table above, there are two DNS records. The record with the name `blog` has the proxy on, while the record named `shop` has the proxy off (that is, `DNS only`).
 
-Cloudflare’s globally distributed [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routes visitor requests to the nearest Cloudflare data center.
+#### Proxied DNS record example
 
-Combined together with our [CDN](https://www.cloudflare.com/learning/cdn/cdn-load-balance-reliability/) and [DDoS protection](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), our network helps keep your application online.
+When the browser initiates a `HTTP/HTTPS` request to `blog.example.com`, a DNS resolver will convert the hostname into an IP address. Since this domain is using Cloudflare as its Authoritative DNS provider, the DNS query will be routed to Cloudflare; and because the proxy is on, Cloudflare will answer with an anycast IP address. Subsequently, the browser initiates a `HTTP/HTTPS` request back to Cloudflare. When Cloudflare receives this request, it performs a lookup to find the matching domain and account configuration and processes the request accordingly. Cloudflare forwards it to the configured origin server, which is `192.0.2.1`.
+
+#### DNS only record example
+
+When the browser initiates a `HTTP/HTTPS` request to `shop.example.com`, a DNS resolver will convert the hostname into an IP address. Since this domain is using Cloudflare as its Authoritative DNS provider, the DNS query will be routed to Cloudflare; but since the proxy is off (that is, `DNS only`), Cloudflare will answer with `192.0.2.2`. Finally, the browser initiates a `HTTP/HTTPS` request to the server hosted at `192.0.2.2`.

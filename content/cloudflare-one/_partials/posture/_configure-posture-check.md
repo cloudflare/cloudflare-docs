@@ -12,4 +12,4 @@ inputParameters: param1
 4. Configure a [device posture check](#device-posture-attributes) and enter any name.
 5. Select **Save**.
 
-Next, go to **Logs** > **Posture** and [verify](/cloudflare-one/insights/logs/posture-logs) that the service provider posture check is returning the expected results.
+Next, go to **Logs** > **Posture** and verify that the service provider posture check is returning the expected results.

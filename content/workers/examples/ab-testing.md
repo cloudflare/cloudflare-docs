@@ -3,15 +3,17 @@ type: example
 summary: Set up an A/B test by controlling what response is served based on
   cookies. This version supports passing the request through to test and control
   on the origin, bypassing random assignment.
-tags:
-  - Originless
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: A/B testing with same-URL direct access
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -58,8 +60,8 @@ export default {
 ```ts
 const NAME = "myExampleWorkersABTest";
 
-const handler: ExportedHandler = {
-  async fetch(req) {
+export default {
+  async fetch(req): Promise<Response> {
     const url = new URL(req.url);
     // Enable Passthrough to allow direct access to control and test routes.
     if (url.pathname.startsWith("/control") || url.pathname.startsWith("/test"))
@@ -87,9 +89,51 @@ const handler: ExportedHandler = {
     }
     return fetch(url);
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import random
+from urllib.parse import urlparse, urlunparse
+from js import Response, Headers, fetch
+
+NAME = "myExampleWorkersABTest"
+
+async def on_fetch(request):
+    url = urlparse(request.url)
+    # Uncomment below when testing locally
+    # url = url._replace(netloc="example.com") if "localhost" in url.netloc else url
+
+    # Enable Passthrough to allow direct access to control and test routes.
+    if url.path.startswith("/control") or url.path.startswith("/test"):
+        return fetch(urlunparse(url))
+
+    # Determine which group this requester is in.
+    cookie = request.headers.get("cookie")
+
+    if cookie and f'{NAME}=control' in cookie:
+        url = url._replace(path="/control" + url.path)
+    elif cookie and f'{NAME}=test' in cookie:
+        url = url._replace(path="/test" + url.path)
+    else:
+        # If there is no cookie, this is a new client. Choose a group and set the cookie.
+        group = "test" if random.random() < 0.5 else "control"
+        if group == "control":
+            url = url._replace(path="/control" + url.path)
+        else:
+            url = url._replace(path="/test" + url.path)
+
+        # Reconstruct response to avoid immutability
+        res = await fetch(urlunparse(url))
+        headers = dict(res.headers)
+        headers["Set-Cookie"] = f'{NAME}={group}; path=/'
+        headers  = Headers.new(headers.items())
+        return Response.new(res.body, headers=headers)
+
+    return fetch(urlunparse(url))
 ```
 
 {{</tab>}}

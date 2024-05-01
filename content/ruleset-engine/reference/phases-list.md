@@ -6,6 +6,8 @@ weight: 1
 
 # Phases list
 
+The following tables list the [phases](/ruleset-engine/about/phases/) of Cloudflare products powered by the Ruleset Engine, in the order those phases are executed. Some products such as the Cloudflare Web Application Firewall have more than one associated phase.
+
 ## Network layer
 
 Network-layer phases apply to packets received on the Cloudflare global network.
@@ -15,7 +17,7 @@ Network-layer phases apply to packets received on the Cloudflare global network.
 Phase name       | Used in product/feature
 -----------------|-------------------------------------
 `ddos_l4`        | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/configure-api/)
-`magic_transit`  | [Magic Firewall](/magic-firewall/reference/examples/)
+`magic_transit`  | [Magic Firewall](/magic-firewall/how-to/add-rules/)
 `mt_managed`     | [Magic Firewall managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/)
 `mt_ids_managed` | [Magic Firewall Intrusion Detection System (IDS)](/magic-firewall/about/ids/)
 

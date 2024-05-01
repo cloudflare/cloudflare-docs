@@ -31,7 +31,7 @@ To set up an integration with PlanetScale:
 
     ```sql
     INSERT INTO products (name, image_url, category_id)
-    VALUES  ('Ballpoint pen', 'https://example.com/500x500', '1');
+    VALUES ('Ballpoint pen', 'https://example.com/500x500', '1');
     ```
 
 4. Add the PlanetScale integration to your Worker:
@@ -39,7 +39,7 @@ To set up an integration with PlanetScale:
     1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
     2. In **Account Home**, select **Workers & Pages**.
     3. In **Overview**, select your Worker.
-    4. Select **Settings** > **Integrations** > **PlanetScale**. 
+    4. Select **Integrations** > **PlanetScale**. 
     5. Follow the setup flow, selecting the database created in step 1.
 
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
@@ -59,9 +59,10 @@ To set up an integration with PlanetScale:
           host: env.DATABASE_HOST,
           username: env.DATABASE_USERNAME,
           password: env.DATABASE_PASSWORD,
-			      fetch: (url, init) => {
-				    delete (init)["cache"];
-				    return fetch(url, init);
+          // see https://github.com/cloudflare/workerd/issues/698
+          fetch: (url, init) => {
+            delete (init)["cache"];
+            return fetch(url, init);
           }
         }
         

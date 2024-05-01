@@ -5,30 +5,23 @@ _build:
   list: never
 ---
 
-<details>
-<summary>Mozilla Firefox</summary>
-<div>
+{{<details header="Mozilla Firefox">}}
 
 1. In Firefox, go to **Settings**.
-2. In the General menu, scroll down to **Network Settings**.
-3. Select **Settings**.
-4. Select **Enable DNS over HTTPS**.
-5. In the **Use Provider** drop-down menu, select _Custom_.
-6. In the **Custom** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
-7. Select **OK**.
+2. In **Privacy & Security**, go to **DNS over HTTPS**.
+3. Under **Enable secure DNS using**, select _Max Protection_.
+4. In **Choose provider**, choose _Custom_.
+5. In the field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
+
+Firefox is now configured to use your DoH endpoint. For more information on configuring DoH settings in Firefox, refer to [Mozilla's documentation](https://support.mozilla.org/kb/dns-over-https).
 
 {{<Aside type="note">}}
-
-If you want to disable DoH for your organization so that Gateway can be enforced, create a policy to block [this canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet).
-
+If you want to enforce DNS policies through WARP instead of over DoH, you can disable DoH for your organization by blocking the [Firefox DoH canary domain](https://support.mozilla.org/kb/canary-domain-use-application-dnsnet).
 {{</Aside>}}
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Google Chrome</summary>
-<div>
+{{<details header="Google Chrome">}}
 
 1. In Chrome, go to **Settings** > **Privacy and security** > **Security**.
 2. Scroll down and turn on **Use secure DNS**.
@@ -37,12 +30,9 @@ If you want to disable DoH for your organization so that Gateway can be enforced
 
 Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Microsoft Edge</summary>
-<div>
+{{<details header="Microsoft Edge">}}
 
 1. In Microsoft Edge, go to **Settings**.
 2. Select **Privacy, Search, and Services**, and scroll down to **Security**.
@@ -50,24 +40,17 @@ Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dn
 4. Select **Choose a service provider**.
 5. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Brave</summary>
-<div>
+{{<details header="Brave">}}
 
 1. In Brave, go to **Settings** > **Security and Privacy** > **Security**.
 2. Turn on **Use secure DNS**.
 3. Select **With Custom**.
 4. In the **Enter custom provider** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Safari</summary>
-<div>
-As of today, Safari does not support DNS over HTTPS.
-</div>
-</details>
+{{<details header="Safari">}}
+Currently, Safari does not support DNS over HTTPS.
+{{</details>}}

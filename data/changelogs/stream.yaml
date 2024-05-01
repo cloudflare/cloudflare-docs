@@ -2,6 +2,28 @@
 link: "/stream/changelog/"
 productName: Stream
 entries:
+- publish_date: '2024-04-11'
+  title: Live Instant Clipping for live broadcasts and recordings
+  description: |-
+    Clipping is now available in open beta for live broadcasts and recordings. For more information, refer to [Live instant clipping](/stream/stream-live/live-instant-clipping/) documentation.
+- publish_date: '2024-02-16'
+  title: Tonemapping impovements for HDR content
+  description: |-
+    In certain cases, videos uploaded with an HDR colorspace (such as footage from certain mobile devices) appeared washed out or desaturated when played back. This issue is resolved for new uploads.
+- publish_date: '2023-11-07'
+  title: HLS improvements for on-demand TS output
+  description: |-
+    HLS output from Cloudflare Stream on-demand videos that use Transport Stream file format now includes a 10 second offset to timestamps. This will have no impact on most customers. A small percentage of customers will see improved playback stability. Caption files were also adjusted accordingly.
+- publish_date: '2023-10-10'
+  title: SRT Audio Improvements
+  description: |-
+    In some cases, playback via SRT protocol was missing an audio track regardless of existence of audio in the broadcast. This issue is now resolved.
+- publish_date: '2023-09-25'
+  title: LL-HLS Beta
+  description: |-
+    Low-Latency HTTP Live Streaming (LL-HLS) is now in open beta. Enable LL-HLS on your [live input](/stream/stream-live/start-stream-live/) for automatic low-latency playback using the Stream built-in player where supported.
+
+    For more information, refer to [live input](/stream/stream-live/start-stream-live/) and [custom player](/stream/viewing-videos/using-own-player/) docs.
 - publish_date: '2023-08-08'
   title: Scheduled Deletion
   description: |-
@@ -92,7 +114,7 @@ entries:
   description: |-
     Cloudflare Stream now supports playback of live videos and live recordings using the [AV1 codec](https://aomedia.org/av1/), which uses 46% less bandwidth than H.264.
 
-    For more, read the [blog post](https://blog.cloudflare.com/av1-cloudflare-stream-beta) or the get started with the [docs](/stream/viewing-videos/av1-playback).
+    For more, read the [blog post](https://blog.cloudflare.com/av1-cloudflare-stream-beta).
 - publish_date: '2022-09-27'
   title: WebRTC live streaming and playback (beta)
   description: |-

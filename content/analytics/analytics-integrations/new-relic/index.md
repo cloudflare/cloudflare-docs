@@ -2,9 +2,6 @@
 pcx_content_type: how-to
 title: New Relic
 weight: 103
-layout: single
-aliases:
-- /fundamentals/data-products/analytics-integrations/new-relic/
 ---
 
 # New Relic

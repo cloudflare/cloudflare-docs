@@ -14,7 +14,7 @@ This guide will get you started with creating and managing configured Health Che
 2. Go to **Traffic** > **Health Checks**.
 3. Select **Create** and fill out the form, paying special attention to: 
     * The values for **Interval** and **Check regions**, because decreasing the **Interval** and increasing **Check regions** may increase the load on your origin server.
-    * **Health change thresholds**, which specify the number of consecutive passed or failed checks before an origin changes status.
+    * **Retries**, which specify the number of retries to attempt in case of a timeout before marking the origin as unhealthy.
 4. Select **Save and Deploy**.
 
 ## Manage Health Checks

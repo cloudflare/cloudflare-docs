@@ -140,7 +140,7 @@ These occur for actions triggered from users based on the configuration for a sp
 
 ## Firewall Rules
 
-Cloudflare Firewall Rules triggers actions based on matching customer-defined rules.
+Cloudflare Firewall Rules (deprecated) triggers actions based on matching customer-defined rules.
 
 {{<table-wrap>}}
 
@@ -227,7 +227,7 @@ The macro stage is comprised of many different paths. They are categorized by th
 | `mob`             | IP is explicitly allowlisted and categorized as Mobile Proxy Service.                                                                                                                                                                  | `wl`          | `macro`        |
 | `se`              | IP is explicitly allowlisted as it belongs to a search engine crawler and no action is taken.                                                                                                                                          | `wl`          | `macro`        |             |
 | `grey`            | IP is greylisted (suspected to be bad) but the request was either for a favicon or security is turned off and as such, it is allowlisted.                                                                                              | `wl`          | `macro`        |
-| `bad_ok`          | The reputation score of the IP is bad (or is a TOR IP) but the request was either for a favicon or security is turned off and as such, it is allowlisted. Alternatively, the threat score of the IP is in the accepted security level. | `wl`          | `macro`        |
+| `bad_ok`          | The reputation score of the IP is bad (or is a TOR IP) but the request was either for a favicon or security is turned off and as such, it is allowlisted. Alternatively, the {{<glossary-tooltip term_id="threat score">}}threat score{{</glossary-tooltip>}} of the IP is in the accepted security level. | `wl`          | `macro`        |
 | `unknown`         | The `pathing_status` is unknown and the request is being processed as normal.                                                                                                                                                          | `wl`          | `macro`        |
 
 {{</table-wrap>}}

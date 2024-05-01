@@ -8,7 +8,9 @@ weight: 1
 
 A firewall rule has two main attributes: an [expression](/ruleset-engine/rules-language/expressions/) and an [action](/firewall/cf-firewall-rules/actions/).
 
-When an incoming HTTP request matches a firewall rule expression, Cloudflare performs the specified action.
+{{<render file="_deprecation-notice.md">}}
+
+When an incoming HTTP request matches a firewall rule expression, Cloudflare performs the specified action. For more information, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/).
 
 {{<Aside type="note">}}
 

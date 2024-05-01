@@ -25,4 +25,4 @@ Take the following into account when entering filter values:
 
 To adjust report duration, select the desired duration from the dropdown in **Security Events**.
 
-The available report duration values depend on your Cloudflare plan. Refer to [Availability](/waf/security-events/#availability) for details.
+The available report duration values depend on your Cloudflare plan. Refer to [Availability](/waf/analytics/security-events/#availability) for details.

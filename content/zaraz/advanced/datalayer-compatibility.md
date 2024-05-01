@@ -37,8 +37,8 @@ Because Zaraz converts the `dataLayer.push()` call to `zaraz.track()`, creating 
 
 | Rule type    | Variable name               | Match operation | Match string |
 | ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_                | _Equals_        | `purchase`   |
+| _Match rule_ | _Event Name_                | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
 
-We do not recommend using `dataLayer`. However, as many websites employ it, Cloudflare Zaras has this automatic translation layer that converts it to `zaraz.track()`.
+We do not recommend using `dataLayer`. However, as many websites employ it, Cloudflare Zaraz has this automatic translation layer that converts it to `zaraz.track()`.

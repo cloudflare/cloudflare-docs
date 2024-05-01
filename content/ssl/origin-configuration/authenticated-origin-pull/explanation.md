@@ -14,9 +14,13 @@ When visitors request content from your domain, Cloudflare first attempts to ser
 
 Authenticated Origin Pulls makes sure that all of these `origin pulls` come from Cloudflare. Put another way, Authenticated Origin Pulls ensures that any HTTPS requests outside of Cloudflare will not receive a response from your origin.
 
-{{<Aside type="note" >}}
-
 This block also applies for requests to [unproxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) in Cloudflare.
+
+{{<Aside type="warning">}}
+
+Note that the certificate Cloudflare provides for you to [set up Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) is not exclusive to your account, only guaranteeing that a request is coming from the Cloudflare network.
+
+For more strict security, you should set up Authenticated Origin Pulls with your own certificate and consider [other security measures for your origin](/fundamentals/basic-tasks/protect-your-origin-server/).
 
 {{</Aside>}}
 
@@ -48,20 +52,20 @@ This is true even if you have [**Full**](/ssl/origin-configuration/ssl-modes/ful
 ```mermaid
     flowchart TD
       accTitle: Connection diagram without Authenticated Origin Pulls
-      A[End user query for <code>example.com</code>] --Standard TLS Handshake--> B[Cloudflare edge]
+      A[End user query for <code>example.com</code>] --Standard TLS Handshake--> B[Cloudflare network]
       B --Standard TLS Handshake--> C[Origin server]
       D[External device] --Standard TLS Handshake ----> C
 ```
 <br/>
 
-This lack of authentication means that - even if your origin is [protected behind Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/) - attackers with your origin's IP address will still receive a response from your origin for HTTPS requests.
+This lack of authentication means that - even if your origin is [protected behind Cloudflare](/fundamentals/concepts/how-cloudflare-works/) - attackers with your origin's IP address will still receive a response from your origin for HTTPS requests.
 
 With Authenticated Origin Pulls, Cloudflare performs standard TLS handshakes between a client device and Cloudflare, but a client-authenticated TLS handshake between Cloudflare and your origin.
 
 ```mermaid
     flowchart TD
       accTitle: Connection diagram with Authenticated Origin Pulls
-      A[End user query for <code>example.com</code>] --Standard TLS Handshake--> B[Cloudflare edge]
+      A[End user query for <code>example.com</code>] --Standard TLS Handshake--> B[Cloudflare network]
       B --Client authenticated TLS Handshake--> C[Origin server]
       D[External device] --Standard TLS Handshake -----x C
 ```

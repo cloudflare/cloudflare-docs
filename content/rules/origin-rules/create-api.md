@@ -26,9 +26,7 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 ## Example requests
 
-<details>
-<summary>Example: Add a rule that overrides the HTTP <code>Host</code> header</summary>
-<div>
+{{<details header="Example: Add a rule that overrides the HTTP `Host` header">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the HTTP `Host` header — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -90,12 +88,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Add a rule that overrides the SNI value of incoming requests</summary>
-<div>
+{{<details header="Example: Add a rule that overrides the SNI value of incoming requests">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -123,12 +118,9 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Add a rule that overrides the resolved DNS record and the <code>Host</code> header of incoming requests</summary>
-<div>
+{{<details header="Example: Add a rule that overrides the resolved DNS record and the `Host` header of incoming requests">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -196,12 +188,9 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Add a rule that overrides the port of incoming requests</summary>
-<div>
+{{<details header="Example: Add a rule that overrides the port of incoming requests">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the port of incoming requests — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
 
@@ -267,8 +256,7 @@ header: Response
 }
 ```
 
-</div>
-</details>
+{{</details>}}
 
 ---
 

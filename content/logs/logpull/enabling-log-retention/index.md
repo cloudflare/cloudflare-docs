@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Enabling log retention
 weight: 13
-layout: single
 ---
 
 # Enable log retention
@@ -45,9 +44,19 @@ $ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api
 
 ### Turn on log retention:
 
+On Linux or macOS:
+
 ```bash
 curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
 ```
+
+On Windows in Command Prompt:
+
+```
+curl.exe -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d "{""flag"":true}"
+```
+
+For further help with API calls on Windows, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).
 
 #### Parameters
 
@@ -68,4 +77,4 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.
 
 ## Audit
 
-Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/#access-audit-logs).
+Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/#access-audit-logs).

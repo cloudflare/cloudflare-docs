@@ -25,7 +25,7 @@ Before you begin, you should be familiar with using the command line and running
 
 ## Prerequisite: Create a Cloudflare account
 
-In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, you can skip this step.
+In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/setup/account/). If you already have an account, you can skip this step.
 
 ## 1. Enable Pub/Sub
 
@@ -43,15 +43,7 @@ Installing `wrangler`, the Workers command-line interface (CLI), allows you to [
 
 To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
-```sh
-$ npm install -g wrangler
-```
-
-or install with `yarn`:
-
-```sh
-$ yarn global add wrangler
-```
+{{<render file="_install_wrangler.md" productFolder="workers" >}}
 
 Validate that you have a version of `wrangler` that supports Pub/Sub:
 
@@ -228,20 +220,49 @@ $ export DEFAULT_NAMESPACE="TheNamespaceYouCreated"
 $ export BROKER_NAME="TheBrokerYouCreated"
 ```
 
-Generate a credential and store it in the `BROKER_TOKEN` environmental variable so the MQTT client can access it.
+We can now generate an access token for Pub/Sub. We will need both the client ID and the token (a JSON Web Token) itself to authenticate from our MQTT client:
 
-```console
-export BROKER_TOKEN=$(curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/${DEFAULT_NAMESPACE}/brokers/${BROKER_NAME}/credentials?type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0].value')
+```sh
+$ curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pubsub/namespaces/namespace/brokers/is-it-broken/credentials?type=TOKEN&topicAcl=#" | jq '.result | to_entries | .[0]'
 ```
 
-Create a file called `index.js ` and make sure to update the `brokerEndpoint` with the address of your Pub/Sub broker.
+This will output a `key` representing the `clientId`, and a `value` representing our (secret) access token, resembling the following:
+
+```json
+{
+  "key": "01HDQFD5Y8HWBFGFBBZPSWQ22M",
+  "value": "eyJhbGciOiJFZERTQSIsImtpZCI6IjU1X29UODVqQndJbjlFYnY0V3dzanRucG9ycTBtalFlb1VvbFZRZDIxeEUifQ....NVpToBedVYGGhzHJZmpEG1aG_xPBWrE-PgG1AFYcTPEBpZ_wtN6ApeAUM0JIuJdVMkoIC9mUg4vPtXM8jLGgBw"
+}
+```
+
+Copy the `value` field and set it as the `BROKER_TOKEN` environmental variable:
+
+```sh
+$ export BROKER_TOKEN="<VALUE>"
+```
+
+Create a file called `index.js `, making sure that:
+
+* `brokerEndpoint` is set to the address of your Pub/Sub broker.
+* `clientId` is the `key` from your newly created access token
+* The `BROKER_TOKEN` environmental variable populated with your access token.
+
+{{<Aside type="note">}}
+
+Your `BROKER_TOKEN` is sensitive, and should be kept secret to avoid unintended access to your Pub/Sub broker. Avoid committing it to source code.
+
+{{</Aside>}}
 
 ```js
 const mqtt = require('mqtt')
 
 const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
+const clientId = "01HDQFD5Y8HWBFGFBBZPSWQ22M" // Replace this with your client ID
+
 const options = {
   port: 8883,
+  username: clientId, // MQTT.js requires this, but Pub/Sub does not
+  clientId: clientId, // Required by Pub/Sub
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
 }
@@ -259,14 +280,14 @@ Run the example. You should see the output written to your terminal (stdout).
 
 ```sh
 $ node index.js
-> received message on example-topic: hello from 01G2MFECWBR5WD8WSBE3AMMVVY at 1652102228
+> received message on example-topic: hello from 01HDQFD5Y8HWBFGFBBZPSWQ22M at 1652102228
 ```
 
 Your client ID and timestamp will be different from above, but you should see a very similar message. You can also try subscribing to multiple topics and publishing to them by passing the same topic name to `client.publish`. Provided they have permission to, clients can publish to multiple topics at once or as needed.
 
 If you do not see the message you published, or you are receiving error messages, ensure that:
 
-- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN`  in your terminal.
+- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN` in your terminal.
 - You updated the `brokerEndpoint` to match the broker you created. The **Endpoint** field of your broker will show this address and port.
 - You correctly [installed MQTT.js](https://github.com/mqttjs/MQTT.js#install).
 

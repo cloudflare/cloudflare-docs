@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Okta (SAML)
-weight: 13
+weight: 18
 ---
 
 # Okta (SAML)
@@ -22,12 +22,13 @@ To set up SAML with Okta as your identity provider:
 
    ![Entering your Zero Trust callback URL into Okta](/images/cloudflare-one/identity/okta-saml/okta-saml-1.png)
 
-5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. In the **Single sign on URL** and the **Audience URI (SP Entity ID)** fields, enter the following URL:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 6. In the **Attribute Statements** section, enter the following information:
 
    - **Name**: Enter `email`.
@@ -88,20 +89,20 @@ SAML attributes are only refreshed during authentications with the Okta identity
 
 ```json
 {
-    "config": {
-        "issuer_url": "http://www.okta.com/exkbhqj29iGxT7GwT0h7",
-        "sso_target_url": "https://dev-abc123.oktapreview.com/app/myapp/exkbhqj29iGxT7GwT0h7/sso/saml",
-        "attributes": [
-            "email",
-            "group",
-        ],
-        "email_attribute_name": "",
-        "sign_request": false,
-        "idp_public_certs": [
-            "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-        ]
-    },
-    "type": "saml",
-    "name": "okta saml example"
+  "config": {
+      "issuer_url": "http://www.okta.com/exkbhqj29iGxT7GwT0h7",
+      "sso_target_url": "https://dev-abc123.oktapreview.com/app/myapp/exkbhqj29iGxT7GwT0h7/sso/saml",
+      "attributes": [
+          "email",
+          "group",
+      ],
+      "email_attribute_name": "",
+      "sign_request": false,
+      "idp_public_certs": [
+          "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+      ]
+  },
+  "type": "saml",
+  "name": "okta saml example"
 }
 ```

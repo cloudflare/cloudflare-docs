@@ -11,9 +11,9 @@ meta:
 
 Using load balancing analytics, you can:
 
-*   Evaluate traffic flow.
-*   Assess the health status of origin servers in your pools.
-*   Review changes in pools and pool health over time.
+* Evaluate traffic flow.
+* Assess the health status of origin servers in your pools.
+* Review changes in pools and pool health over time.
 
 {{<Aside type="note">}}
 
@@ -29,9 +29,9 @@ To view **Overview** metrics for your load balancer, go to **Traffic** > **Load 
 
 These metrics show the number of requests routed to specific pools within a load balancer, helping you:
 
-*   Evaluate the effects of adding or removing a pool.
-*   Decide when to create new origin pools.
-*   Plan for peak traffic demands and future infrastructure needs.
+* Evaluate the effects of adding or removing a pool.
+* Decide when to create new origin pools.
+* Plan for peak traffic demands and future infrastructure needs.
 
 Add additional filters for specific pools, times, regions, and origins.
 
@@ -59,9 +59,7 @@ For more flexibility, get load balancing metrics directly from the [GraphQL Anal
 
 Get started with a sample query:
 
-<details>
-<summary>Requests per pool</summary>
-<div>
+{{<details header="Requests per pool">}}
 
 This query shows the number of requests each pool receives from each location in Cloudflare's global network.
 
@@ -72,14 +70,14 @@ header: Query
 {
   viewer {
     zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdaptiveGroups( 
-            limit: 100, 
-            filter: {   
-                datetime_geq: "2021-06-26T00:00:00Z", 
+         loadBalancingRequestsAdaptiveGroups(
+            limit: 100,
+            filter: {
+                datetime_geq: "2021-06-26T00:00:00Z",
                 datetime_leq: "2021-06-26T03:00:00Z",
                 lbName:"lb.example.com"
             },
-            orderBy: [datetimeFifteenMinutes_DESC] 
+            orderBy: [datetimeFifteenMinutes_DESC]
         ) {
           count
           dimensions {
@@ -120,15 +118,15 @@ header: Response (truncated)
 }
 ```
 
-</div>
+{{</details>}}
 
-</details>
+{{<details header="Requests per data center">}}
 
-<details>
-<summary>Requests per data center</summary>
-<div>
+This query shows the weighted, round-trip time (RTT) measurement (`avgRttMs`) for monitor requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
 
-This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
+{{<Aside type="warning">}}
+Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. `avgRttMs` is different from the raw RTT for individual requests that reach the Cloudflare network.
+{{</Aside>}}
 
 ```graphql
 ---
@@ -137,15 +135,15 @@ header: Query
 {
   viewer {
     zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdaptive( 
-            limit: 100, 
-            filter: { 
-                datetime_geq: "2021-06-26T00:00:00Z", 
+         loadBalancingRequestsAdaptive(
+            limit: 100,
+            filter: {
+                datetime_geq: "2021-06-26T00:00:00Z",
                 datetime_leq: "2021-06-26T03:00:00Z",
                 lbName:"lb.example.com",
                 coloCode: "SIN"
             },
-            orderBy: [datetime_DESC] 
+            orderBy: [datetime_DESC]
         ) {
         selectedPoolName
         pools {
@@ -202,6 +200,4 @@ header: Response (truncated)
 }
 ```
 
-</div>
-
-</details>
+{{</details>}}

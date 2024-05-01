@@ -90,9 +90,9 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 - **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
 
-   - Remove any spaces between the words
-   - Replace `&` with `and`
-   - Lowercase all letters
+  - Remove any spaces between the words
+  - Replace `&` with `and`
+  - Lowercase all letters
 
 #### Common test domains
 
@@ -177,19 +177,14 @@ Modern web browsers and operating systems are designed to cache DNS records for 
 
 To clear your DNS cache:
 
-<details>
-<summary>ChromeOS</summary>
-<div>
+{{<details header="ChromeOS">}}
 
 1. Go to `chrome://net-internals/#dns`.
 2. Select **Clear host cache**.
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Windows</summary>
-<div>
+{{<details header="Windows">}}
 
 1. Open the admin command prompt or PowerShell.
 2. Run the following command:
@@ -198,12 +193,9 @@ To clear your DNS cache:
 ipconfig /flushdns
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>macOS</summary>
-<div>
+{{<details header="macOS">}}
 
 1. Open Terminal.
 2. Run the following commands:
@@ -214,5 +206,4 @@ $ sudo killall mDNSResponderHelper
 $ sudo dscacheutil -flushcache
 ```
 
-</div>
-</details>
+{{</details>}}
