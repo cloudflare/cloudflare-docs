@@ -48,7 +48,7 @@ It is important that you provide complete and accurate contact information. If y
 
 {{</Aside>}}
 
-7. In **Payment**, select which type of payment you which to use. If you already have a billing profile, Cloudflare uses this information to automatically fill the form. If there is no billing profile, you need to enter your payment information.
+7. In **Payment**, select which type of payment you wish to use. If you already have a billing profile, Cloudflare uses this information to automatically fill the form. If there is no billing profile, you need to enter your payment information.
 
 8. Review the terms and conditions, including the Domain Registration Agreement, Self-serve Subscription Agreement, and the Privacy Policy. 
 
