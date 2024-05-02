@@ -120,6 +120,10 @@
 /content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
 
+# Migration guides
+/content/migration-guides/ @kimj15 @crwaters16 @cloudflare/pcx-technical-writing
+/assets/images/migration-guides/ @kimj15 @crwaters16 @cloudflare/pcx-technical-writing
+
 # Performance products
 /content/argo-smart-routing/ @dcpena @cloudflare/pcx-technical-writing
 /content/automatic-platform-optimization/ @kodster28 @cloudflare/pcx-technical-writing
