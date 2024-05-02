@@ -427,7 +427,7 @@ http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf 
 
 To extract the original client IP for your Envoy Gateway, set a [Client Traffic Policy](https://gateway.envoyproxy.io/latest/tasks/traffic/client-traffic-policy/#configure-client-ip-detection) to look for the custom [`CF-Connecting-IP` header](/fundamentals/reference/http-request-headers/#cf-connecting-ip).
 
-```bash
+```txt
 ---
 header: Truncated Client Traffic Policy example
 ---
