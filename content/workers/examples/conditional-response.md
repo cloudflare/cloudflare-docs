@@ -4,6 +4,9 @@ summary: Return a response based on the incoming request's URL, HTTP method,
   User Agent, IP address, ASN or device type.
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Conditional response
 weight: 1001

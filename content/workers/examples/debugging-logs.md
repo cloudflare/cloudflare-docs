@@ -3,7 +3,9 @@ type: example
 summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
-  - Logging
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Debugging logs
 weight: 1001

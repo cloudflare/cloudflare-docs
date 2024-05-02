@@ -4,6 +4,9 @@ summary: Protect sensitive data to prevent data loss, and send alerts to a
   webhooks server in the event of a data breach.
 tags:
   - Security
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Data loss prevention
 weight: 1001

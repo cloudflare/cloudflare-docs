@@ -17,25 +17,4 @@ You can only launch DDoS attacks against your own Internet properties — your z
 
 You do not have to obtain permission from Cloudflare to launch a DDoS attack simulation against your own Internet properties. However, before launching the simulated attack, you must [open a Support ticket](/support/contacting-cloudflare-support/) and provide the information below. All fields are mandatory.
 
-### For WAF/CDN customers
-
-- Attack origin region
-- Attack duration
-- Attack date & timeframe
-- Attack method
-- Bandwidth size or range
-- Target IPs/range/zones
-- Contact in case of emergency
-
-### For Magic Transit and Spectrum customers
-
-- Attack origin region
-- Attack duration
-- Attack date & timeframe
-- Attack method
-- Bandwidth size or range
-- Target IPs/range/zones
-- Target Ports
-- Protocol
-- Max packet/bit rate
-- Contact in case of emergency
+{{<render file="_support-ticket-information" productFolder="fundamentals" withParameters="Attack">}}
