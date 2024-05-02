@@ -766,6 +766,10 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to listen to requests on.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
