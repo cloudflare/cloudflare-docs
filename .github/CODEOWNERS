@@ -91,7 +91,7 @@
 /data/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
 /content/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
 /assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing
-/data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing @irvinebroque @admah
+/data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @deadlypants1973 @cloudflare/pcx-technical-writing @irvinebroque
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @deadlypants1973 @cloudflare/pcx-technical-writing
