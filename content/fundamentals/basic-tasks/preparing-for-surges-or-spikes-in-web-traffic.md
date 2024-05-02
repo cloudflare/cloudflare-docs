@@ -1,44 +1,41 @@
 ---
 pcx_content_type: how-to
-title: Preparing for surges or spikes in web traffic
+title: Prepare for surges or spikes in web traffic
 ---
 
-# Preparing for surges or spikes in web traffic
+# Prepare for surges or spikes in web traffic
 
 ## Use Cloudflare Cache features to optimize caching
 
-By default, Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) such as images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
+By default, Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) such as images, CSS and JavaScript. However, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
 
 ### Cache more requests
 
-1. Log in to your Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 
-2. Go to **Cache** > **Cache Rules** and select **Create Rule**.
+2. Go to **Caching** > **Cache Rules** and select **Create rule**.
 
-3. For `When incoming requests match…`, enter either your entire website or a specific path on your application, based on the **Hostname** or **URI Path**. Refer to the [available fields here](/cache/how-to/cache-rules/settings/#fields)
+3. For **When incoming requests match**, enter either your entire website or a specific path on your application, based on the **Hostname** or **URI Path**. Refer to the [available fields](/cache/how-to/cache-rules/settings/#fields).
 
-4. For `Cache eligibility`, define how these requests should be cached and for how long. Refer to [available cache eligibility settings here](/cache/how-to/cache-rules/settings/#eligible-for-cache-settings)
+4. For **Cache eligibility**, define how these requests should be cached and for how long. Refer to the available [cache eligibility settings](/cache/how-to/cache-rules/settings/#eligible-for-cache-settings).
 
-5. You can then monitor the effectiveness of your cache settings using [Cache Analytics](/cache/performance-review/cache-analytics/) and update according to our [Cache performance guide](/cache/performance-review/cache-performance/).
+5. You can then monitor the effectiveness of your cache settings using [Cache Analytics](/cache/performance-review/cache-analytics/) and update your configuration according to our [Cache performance guide](/cache/performance-review/cache-performance/).
 
-Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information), see our [Cache HTML selectively article here](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains)
-
+Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information). For more information, refer to [Cache HTML selectively](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains).
 
 ### Advanced cache optimizations
 
 - [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set the cacheability setting for any resource.
 
-- [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the `Cache-Control` headers tell Cloudflare how to handle content from the origin. 
-
+- [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the `Cache-Control` headers tell Cloudflare how to handle content from the origin server. 
 
 ### Use Tiered Cache
 
-[Tiered Cache](/cache/how-to/tiered-cache/) uses the size of Cloudflare’s network to reduce requests to customer origins by dramatically increasing cache hit ratios.
+[Tiered Cache](/cache/how-to/tiered-cache/) uses the size of Cloudflare's network to reduce requests to customer origin servers by dramatically increasing cache hit ratios.
 
-It works by dividing Cloudflare’s data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier requests an upper-tier for the content. If the upper-tier does not have the content, only the upper-tier will initiate a request to the origin. This practice improves bandwidth efficiency by limiting the number of Cloudflare data centers that can ask the origin for content.
+It works by dividing Cloudflare's data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier requests an upper-tier for the content. If the upper-tier does not have the content, only the upper-tier will initiate a request to the origin. This practice improves bandwidth efficiency by limiting the number of Cloudflare data centers that can ask the origin for content.
 
 Refer to [Enable Tiered Cache](/cache/how-to/tiered-cache/#enable-tiered-cache) to get started.
-
 
 ### Use Cache Reserve 
 
@@ -66,13 +63,13 @@ Take action to prevent attacks to your application during peak season by configu
 
 Refer to [Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) for more information.
 
-## Monitor traffic in your Cloudflare Dashboard
+## Monitor traffic in your Cloudflare dashboard
 
-You can use the Cloudflare Dashboard to closely monitor the traffic on your domain and fine-tune your cache and security settings accordingly.
+You can use the Cloudflare dashboard to closely monitor the traffic on your domain and fine-tune your cache and security settings accordingly.
 
 ### Zone and Account analytics
 
-The [Cloudflare zone analytics](/analytics/account-and-zone-analytics/zone-analytics/) is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
+[Cloudflare zone analytics](/analytics/account-and-zone-analytics/zone-analytics/) gives you access to a wide range of metrics, collected at the website or domain level.
 
 [Cloudflare account analytics](/analytics/account-and-zone-analytics/account-analytics/) lets you access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
