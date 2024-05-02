@@ -4,7 +4,8 @@ difficulty: Beginner
 content_type: 🎥 Video
 pcx_content_type: tutorial
 title: Learn Cloudflare Workers - Full Course for Beginners
-redirect: https://www.youtube.com/watch?v=H7Qe96fqg1M
+external_link: https://www.youtube.com/watch?v=H7Qe96fqg1M
+_build:
+  publishResources: false
+  render: never
 ---
-
-# Learn Cloudflare Workers - Full Course for Beginners
