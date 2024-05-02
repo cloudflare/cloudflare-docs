@@ -37,7 +37,7 @@ While this document examines Cloudflare at a technical level, it does not offer 
 
 ## Integration of Cloudflare with Microsoft
 
-Cloudflare's [Zero Trust Network Access]([/zero-trust/products/access/](https://www.cloudflare.com/zero-trust/products/access/)) (ZTNA) provides a faster and safer alternative to traditional VPNs. It replaces on-premises VPN infrastructure and protects any application, regardless of whether it is hosted in an on-premises network, public cloud, or as Software as a Service (SaaS). By integrating with Microsoft Intune and Microsoft Entra ID (formerly Azure Active Directory), Cloudflare's ZTNA service enables organizations to enforce default-deny, Zero Trust rules and provide conditional access to internal resources based on user identity and device posture.
+Cloudflare's [Zero Trust Network Access](https://www.cloudflare.com/zero-trust/products/access/) (ZTNA) provides a faster and safer alternative to traditional VPNs. It replaces on-premises VPN infrastructure and protects any application, regardless of whether it is hosted in an on-premises network, public cloud, or as Software as a Service (SaaS). By integrating with Microsoft Intune and Microsoft Entra ID (formerly Azure Active Directory), Cloudflare's ZTNA service enables organizations to enforce default-deny, Zero Trust rules and provide conditional access to internal resources based on user identity and device posture.
 
 Microsoft and Cloudflare can be integrated in the following ways.
 
