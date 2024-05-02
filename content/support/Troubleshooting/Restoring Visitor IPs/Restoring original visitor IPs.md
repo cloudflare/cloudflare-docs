@@ -431,7 +431,6 @@ To extract the original client IP for your Envoy Gateway, set a [Client Traffic 
 ---
 header: Truncated Client Traffic Policy example
 ---
-...
 clientIPDetection:
     customHeader:
         name: CF-Connecting-IP
