@@ -6,7 +6,7 @@ languages:
 preview:
   - true
 pcx_content_type: configuration
-title: Price-scraping
+title: Price scraping
 weight: 4
 layout: example
 demo: https://pricing.httpmachine.com/
