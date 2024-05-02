@@ -16,8 +16,11 @@ The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAsse
 
 All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) supported by the current Google Chrome stable release are supported, with a few notable exceptions:
 
-- `eval()` is not allowed for security reasons.
-- `new Function` is not allowed for security reasons.
+- For security reasons, the following are not allowed:
+  - `eval()`
+  - `new Function`
+  - `WebAssembly.compile`
+  - `WebAssembly.instantiat` with a [buffer parameter](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate_static#primary_overload_%E2%80%94_taking_wasm_binary_code)
 - `Date.now()` returns the time of the last I/O; it does not advance during code execution.
 
 ---
