@@ -16,13 +16,6 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 
 ## Projects
 
-### Backup/export tools
-
-Two community tools are available for creating backups/exports of D1 databases as `.sql` files. D1 exports can be restored using Wrangler.
-
-* [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](/api/operations/cloudflare-d1-query-database) (slower but simpler.)
-* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](/workers/runtime-apis/bindings/) (faster but more complex.)
-
 ### Prisma ORM
 
 [Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
