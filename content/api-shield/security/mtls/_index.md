@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Mutual TLS (mTLS)
-weight: 5
+weight: 7
 ---
 
 # Mutual TLS (mTLS)
