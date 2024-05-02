@@ -15,7 +15,7 @@ meta:
 Quickstarts are GitHub repositories that are designed to be a starting point for building a new Cloudflare Workers project. To start any of the projects below, run:
 
 ```sh
-$ npm create cloudflare@latest <NEW_PROJECT_NAME> -- --template [<GITHUB_REPO_URL>]
+$ npm create cloudflare@latest <NEW_PROJECT_NAME> -- --template <GITHUB_REPO_URL>
 ```
 
 
