@@ -170,6 +170,8 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Same as the option to `get()`, above.
 
+### transaction
+
 - {{<code>}}transaction(closure{{<param-type>}}Function(txn){{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.

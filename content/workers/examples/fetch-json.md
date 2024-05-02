@@ -2,10 +2,14 @@
 type: example
 summary: Send a GET request and read in JSON from the response. Use to fetch
   external data.
-tags:
-  - Originless
 pcx_content_type: configuration
 title: Fetch JSON
+tags:
+  - JSON
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 weight: 4
 layout: example
 ---
@@ -41,8 +45,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env, ctx): Promise<Response> {
     const url = "https://jsonplaceholder.typicode.com/todos/1";
 
     // gatherResponse returns both content-type & response body as a string
@@ -61,7 +66,7 @@ export default {
     const options = { headers: { "content-type": contentType } };
     return new Response(result, options);
   },
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

@@ -1,28 +1,19 @@
 ---
-title: Deploy a Workers AI project
+title: CLI
 pcx_content_type: get-started
 weight: 1
 meta:
-  description: Deploy your first Workers AI project using Cloudflare Workers.
+  title: Get started - CLI
+  description: Deploy your first Cloudflare Workers AI project using the CLI.
 ---
 
-# Get started with Workers
+# Get started with the CLI
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
 {{<render file="/_workers-learning-path.md" productFolder="/workers/" >}}
 
 {{<render file="_prereqs.md" productFolder="/workers/" >}}
-
-## Get started in the dashboard
-
-This guide uses the command line. To instead create your Workers AI application using the Cloudflare dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Create application**.
-3. Under **Create using a template**, select **LLM App**. After you select your template, an AI binding will be created for you in the dashboard.
-4. Review the pregenerated code and select **Deploy**.
-5. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
 
 ## 1. Create a Worker project
 
@@ -90,7 +81,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
         prompt: "What is the origin of the phrase Hello, World"
       }
@@ -98,7 +89,7 @@ export default {
 
     return new Response(JSON.stringify(response));
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 2 model. You can now test your project locally before you deploy globally.

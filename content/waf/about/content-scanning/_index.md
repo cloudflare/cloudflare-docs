@@ -20,7 +20,7 @@ Once enabled, content scanning will run for all incoming traffic, identifying {{
 
 For every request with one or more detected content objects, the content scanner connects to an antivirus (AV) scanner to perform a thorough analysis of the content objects. Using the results of the scan, the WAF will populate several fields you can use in rule expressions. For example, you can create a basic rule to block requests containing malicious files, or a more complex rule where the expression matches specific file sizes, file types, or URI paths.
 
-Cloudflare uses a third-party scanner for WAF content scanning and for the [AV scanner in Zero Trust](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/).
+Cloudflare uses the same [anti-virus (AV) scanner used in Cloudflare Zero Trust](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/) for WAF content scanning.
 
 {{<Aside type="warning" header="Warning">}}
 Content scanning will not apply any mitigation actions to requests with content objects considered malicious. It only provides a signal that you can use to define your attack mitigation strategy. You must create rules — [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) — to perform actions based on detected signals.
@@ -48,9 +48,13 @@ Content scanning can check the following content objects for malicious content:
 - Portions of the request body for multipart requests encoded as `multipart/form-data` or `multipart/mixed`
 - Specific JSON properties in the request body (containing, for example, files encoded in Base64) according to the [custom scan expressions](#custom-scan-expressions) you provide
 
-All content objects in an incoming request will be scanned, namely for requests with multiple uploaded files (for example, a submitted HTML form with several file inputs).
+All content objects in an incoming request will be checked, namely for requests with multiple uploaded files (for example, a submitted HTML form with several file inputs).
 
 The content scanner will fully check content objects with a size up to 15 MB. For larger content objects, the scanner will analyze the first 15 MB and provide scan results based on that portion of the object.
+
+{{<Aside type="warning" header="Warning">}}
+The AV scanner will not scan some particular types of files, namely encrypted or password-protected files. Refer to [Non-scannable files](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/#non-scannable-files) for a list of AV scanning limitations.
+{{</Aside>}}
 
 ## Custom scan expressions
 

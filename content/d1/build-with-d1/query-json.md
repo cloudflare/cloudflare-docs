@@ -83,7 +83,7 @@ For example, to define a column based on a value within a larger JSON object, us
 ```sql
 CREATE TABLE some_table (
     -- other columns omitted
-    -- JSON: {"measurement":{"aqi":[21,42,58],"wind_mph":"13","location":"US-NY"}}
+    raw_data TEXT -- JSON: {"measurement":{"aqi":[21,42,58],"wind_mph":"13","location":"US-NY"}}
     location AS (json_extract(raw_data, '$.measurement.location')) STORED
 )
 ```
@@ -133,8 +133,8 @@ sensor_reading -\-> '$.measurement.o3' -- returns '[18, 500]' as TEXT
 
 You can get the length of a JSON array in two ways:
 
-1. By calling `json_array(value)` directly
-2. By calling `json_array(value, path)` to specify the path to an array within an object or outer array.
+1. By calling `json_array_length(value)` directly
+2. By calling `json_array_length(value, path)` to specify the path to an array within an object or outer array.
 
 For example, given the following JSON object stored in a column called `login_history`, you could get a count of the last logins directly:
 
@@ -146,10 +146,10 @@ For example, given the following JSON object stored in a column called `login_hi
 ```
 
 ```sql
-json_array(login_history, '$.previous_logins') --> returns 3 as an INTEGER
+json_array_length(login_history, '$.previous_logins') --> returns 3 as an INTEGER
 ```
 
-You can also use `json_array` as a predicate in a more complex query - for example, `WHERE json_array(some_column, '$.path.to.value') >= 5`.
+You can also use `json_array_length` as a predicate in a more complex query - for example, `WHERE json_array_length(some_column, '$.path.to.value') >= 5`.
 
 ### Insert a value into an existing object
 

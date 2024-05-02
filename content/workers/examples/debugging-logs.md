@@ -3,7 +3,9 @@ type: example
 summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
-  - Logging
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Debugging logs
 weight: 1001
@@ -60,8 +62,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+interface Env {}
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env, ctx): Promise<Response> {
     // Service configured to receive logs
     const LOG_URL = "https://log-service.example.com/";
 
@@ -99,7 +102,7 @@ export default {
     }
     return response;
   },
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

@@ -182,6 +182,29 @@ header: API configuration example
 
 {{</details>}}
 
+## Fonts
+
+[Cloudflare Fonts](/speed/optimization/content/fonts/) rewrites Google Fonts to be delivered from a website's own origin, eliminating the need to rely on third-party font providers.
+
+Use this setting to turn on or off Cloudflare Fonts for matching requests.
+
+{{<details header="API information">}}
+
+API configuration property name: `"fonts"` (boolean).
+
+```json
+---
+header: API configuration example
+---
+"action_parameters": {
+  "fonts": false
+}
+```
+
+{{<render file="_configuration-rule-link-to-examples.md">}}
+
+{{</details>}}
+
 ## Mirage
 
 [Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.

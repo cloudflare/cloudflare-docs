@@ -1158,15 +1158,15 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
+          "summary": "Available on paid plans",
+          "free": "No",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
         "rules": {
           "title": "Number of snippets",
-          "free": 5,
+          "free": 0,
           "pro": 10,
           "biz": 25,
           "ent": 50
@@ -1846,7 +1846,7 @@
       }
     },
     "server_side_excludes": {
-      "title": "Server-side Excludes",
+      "title": "Server-side Excludes (deprecated)",
       "link": "/waf/tools/scrape-shield/server-side-excludes/",
       "properties": {
         "availability": {

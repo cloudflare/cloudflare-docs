@@ -2,8 +2,10 @@
 type: example
 summary: Personalize website styling based on localized user time.
 tags:
-  - Originless
   - Geolocation
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: "Geolocation: Custom Styling"
 weight: 1001
@@ -186,7 +188,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     let grads = [
       [
         { color: "00000c", position: 0 },

@@ -24,11 +24,19 @@ ___
 
 ## Step 2 - Add a subdomain in Cloudflare DNS
 
-Below, you will need to add DNS records for a subdomain and the apex domain (also known as "root domain"). Learn how to [Managing DNS records in Cloudflare](https://support.cloudflare.com/hc/articles/360019093151).
+Below, you will need to add DNS records for a subdomain and the apex domain (also known as "root domain"). Learn how to [Managing DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/).
 
 ### Step 2a - Add a subdomain
 
 To start, log in to your Cloudflare account, navigate to the **DNS** app and add a 'www' _CNAME_ record that points to the custom domain (also known as _DNS target_) that you obtained in Step 1 above for your subdomain.
+
+{{<example>}}
+
+| Type | Name  | Target | Proxy status |
+| ---- | ----- | ------------ | ------------ |
+| `CNAME`    | `www` | `{example-domain}.herokudns.com`  | Proxied      |
+
+{{</example>}}
 
 ### Step 2b - Add your root domain
 
@@ -36,7 +44,15 @@ Adding a root or apex domain on Heroku also requires using a CNAME record pointe
 
 Fortunately, Cloudflare offers [CNAME flattening](/dns/cname-flattening/) to resolve requests for your root domain.
 
-Add a CNAME record for your root (e.g. example.com) and point it to DNS target you obtained in Step 1 above for your domain.
+Add a CNAME record for your root and point it to DNS target you obtained in Step 1 above for your domain.
+
+{{<example>}}
+
+| Type | Name  | Target | Proxy status |
+| ---- | ----- | ------------ | ------------ |
+| `CNAME`    | `@` | `{example-domain}.herokudns.com`  | Proxied      |
+
+{{</example>}}
 
 ___
 

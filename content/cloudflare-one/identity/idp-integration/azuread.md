@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure AD®
-weight: 4
+weight: 6
 ---
 
 # Microsoft Azure AD®
@@ -107,7 +107,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 ## Synchronize users and groups
 

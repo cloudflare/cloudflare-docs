@@ -97,7 +97,7 @@ const SECONDS = 1000;
 export class AlarmExample {
   constructor(ctx, env) {
     this.ctx = ctx;
-    this.storage = state.storage;
+    this.storage = ctx.storage;
   }
   async fetch(request) {
     // If there is no alarm currently set, set one for 10 seconds from now

@@ -83,7 +83,13 @@ filename: package.json
 {{</tab>}}
 {{</tabs>}}
 
-In the above example, `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
+Then, run the following command.
+
+```sh
+$ npm install npm-run-all --save-dev
+```
+
+Installing `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
 
 ## Run in local dev
 

@@ -20,7 +20,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const response = await env.AI.run("{{ .Params.model.name }}", {
       prompt: "tell me a story",
@@ -29,7 +29,7 @@ export default {
     });
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -61,7 +61,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -80,7 +80,7 @@ export default {
       headers: { "content-type": "text/event-stream" },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -94,7 +94,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -107,7 +107,7 @@ export default {
 
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -124,7 +124,7 @@ AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
 
 prompt = "Tell me all about PEP-8"
 response = requests.post(
-  f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{{ .Params.model.name}}",
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Params.model.name}}",
     headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
     json={
       "messages": [

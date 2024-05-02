@@ -5,6 +5,12 @@ summary: Respond to the Worker request with the response from another website
 demo: https://respond-with-another-site.workers-sites-examples.workers.dev
 tags:
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Respond with another site
 weight: 12
@@ -21,7 +27,7 @@ layout: example
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     async function MethodNotAllowed(request) {
       return new Response(`Method ${request.method} not allowed.`, {
         status: 405,

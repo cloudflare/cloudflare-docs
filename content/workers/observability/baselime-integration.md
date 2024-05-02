@@ -43,6 +43,9 @@ To add the Baselime integration to your Worker:
 
 Once installed, the integration will automatically start forwarding events to Baselime. To learn more about Baselime, refer to [Baselime's official documentation](https://baselime.io/docs/).
 
+
+{{<render file="_wrangler-tail-warning.md">}}
+
 {{<Aside type="warning">}}
 
 Note that automatic distributed tracing is not yet supported via the Baselime integration. To add tracing, follow the [Baselime documentation](https://baselime.io/docs/sending-data/platforms/cloudflare/traces/).

@@ -292,7 +292,7 @@ Review the examples below to learn which directives to use with the `Cache-Contr
 
 {{</details>}}
 
-{{<details header="Ensure a secret asset is never cache.">}}
+{{<details header="Ensure a secret asset is never cached.">}}
 
 `Cache-Control: no-store`
   

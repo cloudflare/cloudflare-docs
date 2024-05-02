@@ -5257,7 +5257,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   padding: 0.5em 0 0.5em 0;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1180px) {
   .selectorDropdowns {
     flex-direction: column;
   }

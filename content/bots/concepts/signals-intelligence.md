@@ -33,3 +33,5 @@ Signals Intelligence fields show observations about a particular JA4 that Cloudf
 | `cache_ratio_1h` | The ratio of cacheable responses for the JA4 fingerprint in the last hour. Higher values suggest a higher proportion of responses that can be cached. |
 | `ips_rank_1h` | The rank of the JA4 fingerprint based on the number of unique client IP addresses across all fingerprints in the last hour. Lower values indicate a higher number of distinct client IPs associated with the fingerprint. |
 | `ips_quantile_1h` | The quantile position of the JA4 fingerprint based on the number of unique client IP addresses across all fingerprints in the last hour. Higher values indicate a relatively higher number of distinct client IPs compared to other fingerprints. |
+
+{{<render file="_signals-intelligence-and-ja4.md">}}
