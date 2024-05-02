@@ -159,6 +159,7 @@ To resolve the issue, you will need to edit two Windows registry keys:
     Value: EnableActiveProbing
     Data: 1
     ```
+If you continue to have issues, with Microsoft 365 applications, please also consider enabling [Directly route Microsoft 365 traffic](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).  
 
 ## I see Storage Partitioned Error.
 
