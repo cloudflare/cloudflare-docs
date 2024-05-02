@@ -196,9 +196,9 @@ DenyAllButCloudFlare
 /IfModule
 ```
 
-### NGINX
+### Nginx
 
-Use the [`ngx_http_realip_module` NGINX module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and the following configuration parameters:
+Use the [`ngx_http_realip_module` Nginx module](http://nginx.org/en/docs/http/ngx_http_realip_module.html) and the following configuration parameters:
 
 ```
 set_real_ip_from 192.0.2.1 (example IP address)
@@ -237,7 +237,7 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 4.  At the very end add:`CloudflareRemoteIPTrustedProxy {LOOPBACK_ADDRESS}` So, if your server is located at 127.0.0.1, it will look like:`CloudflareRemoteIPTrustedProxy 127.0.0.1`
 5.  If you have more than one server to add to the trusted proxy list, you can add them at the end: CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2
 
-### Lightpd
+### Lighttpd
 
 To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.
 
