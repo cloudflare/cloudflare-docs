@@ -1,6 +1,5 @@
 ---
 type: overview
-hideChildren: true
 pcx_content_type: navigation
 title: Workers templates
 weight: 3
