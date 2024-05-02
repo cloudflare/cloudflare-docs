@@ -2,7 +2,7 @@
 pcx_content_type: concept
 type: overview
 title: Volumetric Abuse Detection
-weight: 3
+weight: 2
 layout: wide
 ---
 

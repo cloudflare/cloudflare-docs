@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Schema Validation
-weight: 5
+weight: 8
 ---
 
 # Schema Validation

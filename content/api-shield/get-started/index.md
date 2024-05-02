@@ -12,22 +12,13 @@ This guide will help you set up API Shield to identify and address API security 
 Enabling API Shield features will have no impact on your traffic until you choose to move a setting from `log` to `block` mode.
 {{</Aside>}}
 
-## Set up session identifiers
+## Session identifiers
 
-While not strictly required, it is recommended that you configure your {{<glossary-tooltip term_id="session identifier">}}session identifiers{{</glossary-tooltip>}} when getting started with API Shield. When Cloudflare inspects your API traffic for individual sessions, we can offer more tools for visibility, management, and control.
-
-If you are unsure of the session identifiers that your API uses, consult with your development team. A common session identifier for API traffic is the **Authorization** header.
+{{<render file="_session-identifiers.md">}}
 
 ### To set up session identifiers
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Select **Settings**.
-4. On **Endpoint settings**, select **Manage identifiers**.
-5. Enter the necessary information.
-6. Select **Save**. 
-
-After setting up session identifiers and allowing some time for Cloudflare to learn your traffic patterns, you can view your per endpoint and per session rate limiting recommendations, as well as enforce per endpoint and per session rate limits by creating new rules. Session identifiers will allow you to view API Discovery results from session ID-based discovery and session traffic patterns in Sequence Analytics.
+{{<render file="_set-up-session-identifiers.md">}}
 
 ## Upload a schema using Schema Validation (optional)
 

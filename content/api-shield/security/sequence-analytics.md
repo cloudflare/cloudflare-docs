@@ -2,7 +2,7 @@
 pcx_content_type: concept
 type: overview
 title: Sequence Analytics
-weight: 4
+weight: 3
 layout: wide
 ---
 
