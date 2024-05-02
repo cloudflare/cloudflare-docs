@@ -8,6 +8,6 @@ layout: wide
 
 # Workers templates
 
-Refer to the templates below to integrate Turnstile with Cloudflare Workers:
+Refer to the templates below to integrate Turnstile with [Cloudflare Workers](/workers/):
 
 {{<list-examples directory="/turnstile/reference/workers-templates/">}}
