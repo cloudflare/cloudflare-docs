@@ -13,7 +13,7 @@ This guide will instruct you on configuring a binding for your Pages Function. Y
 
 {{<Aside>}}
 
-Note that Pages Functions does not support all [bindings](/workers/runtime-apis/bindings/) but a subset of them and that only the bindings noted in this page are officially supported by Pages Functions.
+Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bindings/), which are listed on this page.
 
 {{</Aside>}}
 
