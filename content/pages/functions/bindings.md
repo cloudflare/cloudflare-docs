@@ -10,6 +10,13 @@ A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to int
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a Cloudflare Developer Platform resource set up to continue.
 
+
+{{<Aside>}}
+
+Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bindings/), which are listed on this page.
+
+{{</Aside>}}
+
 ## KV namespaces
 
 [Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution.
