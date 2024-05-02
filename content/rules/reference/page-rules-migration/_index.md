@@ -75,8 +75,8 @@ Browser Integrity Check | Configuration Rules          | [Migrate Browser Integr
 
 You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL** `*example.com/*`
-* **Setting**: Always Use HTTPS
+- **URL** `*example.com/*`
+- **Setting**: Always Use HTTPS
 
 **How to migrate**:
 
@@ -124,13 +124,13 @@ TODO
 
 You configured a Page Rule turning on Auto Minify for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Auto Minify
-* **Apply to**: _CSS_, _JS_
+- **URL**: `*example.com/*`
+- **Setting**: Auto Minify
+- **Apply to**: _CSS_, _JS_
 
 **How to migrate**:
 
-1. Create a [configuration rule](/rules/configuration-rules/) to always apply minification to CSS and JavaScript assets for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to always apply minification to CSS and JavaScript assets for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -173,12 +173,12 @@ TODO
 
 You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Automatic HTTPS Rewrites
+- **URL**: `*example.com/*`
+- **Setting**: Automatic HTTPS Rewrites
 
 **How to migrate**:
 
-1. Create a [configuration rule](/rules/configuration-rules/) to always rewrite HTTP links to HTTPS for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to always rewrite HTTP links to HTTPS for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -220,13 +220,13 @@ TODO
 
 You configured a Page Rule adjusting browser cache TTL to one day for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Browser Cache TTL
-* **Enter Browser Cache TTL**: a day
+- **URL**: `*example.com/*`
+- **Setting**: Browser Cache TTL
+- **Enter Browser Cache TTL**: a day
 
 **How to migrate**:
 
-1. Create a [cache rule](/cache/how-to/cache-rules/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -270,12 +270,12 @@ TODO
 
 You configured a Page Rule turning on Browser Integrity Check for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Browser Integrity Check
+- **URL**: `*example.com/*`
+- **Setting**: Browser Integrity Check
 
 **How to migrate**:
 
-1. Create a [configuration rule](/rules/configuration-rules/) to turn on Browser Integrity Check for protecting against bots and threats for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn on Browser Integrity Check for protecting against bots and threats for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
