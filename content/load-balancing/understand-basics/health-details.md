@@ -43,7 +43,6 @@ For greater accuracy and consistency when changing origin health status, you can
 When an [individual origin becomes unhealthy](#how-an-origin-becomes-unhealthy), that may affect the health status of any associated origin pools (visible in the dashboard):
 
 - **Healthy**: All origins are healthy.
-- **Degraded**: At least one origin is unhealthy, but the pool is still considered healthy and could be receiving traffic.
 - **Critical**: The pool has fallen below the number of available origins specified in its **Health Threshold** and will not receive traffic from your load balancer (unless other pools are also unhealthy and this pool is marked as the [**Fallback Pool**](#fallback-pools)).
 - **Health unknown**: There are either no monitors attached to pool origins or the monitors have not yet determined origin health.
 - **No health**: Reserved for your load balancer's [**Fallback Pool**](#fallback-pools).
