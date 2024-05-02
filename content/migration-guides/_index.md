@@ -19,7 +19,7 @@ This section is still in work. Expect more guides soon.
 
 {{<resource-group>}}
  
-{{<resource header="Reference architectures" href="/reference-architectures/" icon="learning-center-book">}}
+{{<resource header="Reference architectures" href="/reference-architecture/" icon="learning-center-book">}}
 High-level overviews of Cloudflare's network and platform.
 {{</resource>}}
 
