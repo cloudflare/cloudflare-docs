@@ -71,7 +71,7 @@ To enable email sending from other addresses on your domain, navigate to `Sender
 
 Next, you’re presented with a list of DNS records to add to your Cloudflare domain. On your Cloudflare dashboard, select the domain you entered earlier and navigate to `DNS` > `Records`. Copy/paste the DNS records (DKIM, and Return-Path) from Postmark to your Cloudflare domain.
 
-![Image of adding DNS records to a Cloudflare domain](/images/workers/tutorials/postmark/add_dns_records.png)
+![Image of adding DNS records to a Cloudflare domain](/images/workers/tutorials/postmarkapp/add_dns_records.png)
 
 {{<Aside type="note">}}
 If you need more help adding DNS records in Cloudflare, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
@@ -80,7 +80,7 @@ If you need more help adding DNS records in Cloudflare, refer to [Manage DNS rec
 
 When that’s done, head back to Postmark and click on the `Verify` buttons. If all records are properly configured, your domain status should be updated to `Verified`.
 
-![Image of domain verification on the Postmark dashboard](/images/workers/tutorials/postmark/verified_domain.png)
+![Image of domain verification on the Postmark dashboard](/images/workers/tutorials/postmarkapp/verified_domain.png)
 
 To grab your API token, navigate to the `Servers` tab, then `My First Server` > `API Tokens`, then copy your API key to a safe place.
 
