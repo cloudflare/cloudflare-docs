@@ -1,9 +1,9 @@
 ---
-title: Architecture using Cloudflare SASE with Microsoft
-pcx_content_type: reference-architecture-diagram
+title: Cloudflare SASE with Microsoft
+pcx_content_type: reference-architecture
 weight: 1
 meta:
-  title: "Reference Architecture Diagram: Architecture using Cloudflare SASE with Microsoft"
+  title: "Reference Architecture: Architecture using Cloudflare SASE with Microsoft"
 ---
 
 # Architecture using Cloudflare SASE with Microsoft
@@ -15,6 +15,25 @@ As organizations migrate to hybrid and multi-cloud environments, they often face
 To overcome these challenges and achieve greater security outcomes, organizations can benefit from partnering with Cloudflare, a leading provider of cloud security and performance solutions. Cloudflare offers seamless integration with Microsoft's cloud ecosystem, enabling customers to eliminate security gaps, enhance performance, and ensure reliability across their hybrid work environments.
 
 In this reference architecture diagram, we will explore how the combination of Cloudflare's Secure Access Service Edge (SASE) platform and Microsoft's cloud applications and services can help you attain a Zero Trust security posture and accelerate cloud modernization and productivity while providing comprehensive security for hybrid work. By leveraging Cloudflare's secure network access, risky user isolation, and application and data visibility, organizations can consolidate management through a unified interface and enable secure access to any resource, regardless of location.
+
+### Who is this document for and what will you learn?
+
+This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization's Microsoft deployments. It is designed to help you understand the different ways in which Microsoft and Cloudflare can be integrated together in terms of your Zero Trust and SASE programs.
+
+To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
+
+{{<render file="_what-is-cloudflare-link.md">}}
+- Solution Brief: [Cloudflare One](https://cfl.re/SASE-SSE-platform-brief) (3 minute read)
+- Whitepaper: [Reference Architecture for Internet-Native Transformation](https://cfl.re/internet-native-transformation-wp) (10 minute read)
+- Blog: [Zero Trust, SASE, and SSE: foundational concepts for your next-generation network](https://blog.cloudflare.com/zero-trust-sase-and-sse-foundational-concepts-for-your-next-generation-network/) (14 minute read)
+
+Those who read this reference architecture will learn:
+
+- How Cloudflare and Microsoft can be integrated together to protect users, devices, applications and networks from a Zero Trust perspective
+
+This document is also accompanied by a reference architecture with a more indepth look at [Cloudflare and SASE](/reference-architecture/architectures/sase/).
+
+While this document examines Cloudflare at a technical level, it does not offer fine detail about every product in the platform. Visit the [developer documentation](https://developers.cloudflare.com/) for further information specific to a product area or use case.
 
 ## Integration of Cloudflare with Microsoft
 
