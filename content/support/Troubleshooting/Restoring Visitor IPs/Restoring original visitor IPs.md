@@ -202,7 +202,6 @@ Use the [`ngx_http_realip_module` NGINX module](http://nginx.org/en/docs/http/ng
 
 ```
 set_real_ip_from 192.0.2.1 (example IP address)
-(repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 
 #use any of the following two
 
@@ -251,8 +250,6 @@ $HTTP["remoteip"] == "192.2.0.1 (example IP address)"
 extforward.forwarder = ( "all" => "trust" )
 extforward.headers = ("CF-Connecting-IP")
 }
-
-(repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
 
 {{<Aside type="note">}}
