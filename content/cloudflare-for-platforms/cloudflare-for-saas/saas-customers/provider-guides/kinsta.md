@@ -34,7 +34,7 @@ To enable O2O for a specific hostname within a Cloudflare zone, [create](/dns/ma
 
 ## Additional support
 
-{{<render file="_provider-guide-help" withParameters="Salesforce Commerce Cloud">}}
+{{<render file="_provider-guide-help" withParameters="Kinsta">}}
 
 ### Resolving SSL errors using Cloudflare Managed Certificates
 
