@@ -46,7 +46,7 @@ Use VLAN ID `0` when:
 - Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
 - Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.
 
-You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID `1` - `4094`).
+You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID `1`–`4094`).
 
 Refer to [VMWare's documentation](https://kb.vmware.com/s/article/1003825) for more information.{{</Aside>}}
 
