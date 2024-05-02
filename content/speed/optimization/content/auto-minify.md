@@ -8,15 +8,14 @@ learning_center:
     link: https://www.cloudflare.com/learning/performance/why-minify-javascript-code/
 ---
 
-{{<heading-pill style="deprecated">}}Auto Minifiy{{</heading-pill>}}
+{{<heading-pill style="deprecated">}}Auto Minify{{</heading-pill>}}
 
-Cloudflare Auto Minifiy improves website performance by dynamically removing all unnecessary characters from HTML, CSS and JavaScript files.
+Cloudflare Auto Minify improves website performance by dynamically removing all unnecessary characters from HTML, CSS and JavaScript files.
 
 {{<Aside type="warning" header="Deprecation notice">}}
 Auto Minify is deprecated and will be removed on 2024-08-05. After this date, Auto Minify will no longer be available via the Cloudflare dashboard, API, or Terraform.
 
-We recommend to minify at the origin during the build phase.
-Minification is included in most modern web development frameworks.
+We recommend that you minify at the origin during the build phase. Minification is included in most modern web development frameworks.
 {{</Aside>}}
 
 HTML files are minified dynamically by removing comments and unnecessary empty lines only. It does not require files to be cached. CSS and JS minification operates on cached CSS and JS files only. Once Cloudflare returns a cache `HIT` for the file it will be returned to browsers in minified form. This allows us to deliver a more complete minification result. If you need to enable or disable minification for CSS and JS files, you need to [purge your Cloudflare cache](/cache/how-to/purge-cache/).
