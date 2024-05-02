@@ -67,18 +67,18 @@ In your project directory, C3 has generated the following:
 In addition to creating new projects from C3 templates, C3 also supports creating new projects from Git repositories. To create a new project from a Git repository, open your terminal and run:
 
 ```sh
-$ npm create-cloudflare@latest -- --template [<SOURCE>]
+$ npm create cloudflare@latest -- --template [<SOURCE>]
 ```
 
 `[<SOURCE>]` may be any of the following:
 
-- user/repo
+- user/repo (GitHub)
 - git@github.com:user/repo
 - https://github.com/user/repo
 - user/repo/some-template (subdirectories)
 - user/repo#canary (branches)
 - user/repo#1234abcd (commit hash)
-- bitbucket:user/repo (BitBucket)
+- bitbucket:user/repo (Bitbucket)
 - gitlab:user/repo (GitLab)
 
 At a minimum, template folders must contain the following:
