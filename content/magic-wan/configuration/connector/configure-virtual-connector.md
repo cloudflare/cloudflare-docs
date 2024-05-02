@@ -40,7 +40,7 @@ The following instructions assume you already have VMware ESXi hypervisor instal
     - A null, or unused, port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `Null port group`, and a **VLAN ID** of `999`.
 
 {{<Aside type="note" header="VLAN tagging">}}
-Virtual Connector supports creating subinterfaces through the use of [802.1q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
+Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
 
 Use VLAN ID `0` when:
 - Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
