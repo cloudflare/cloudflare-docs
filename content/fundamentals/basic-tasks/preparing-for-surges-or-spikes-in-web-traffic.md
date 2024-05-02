@@ -7,7 +7,7 @@ title: Prepare for surges or spikes in web traffic
 
 ## Use Cloudflare Cache features to optimize caching
 
-By default, Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) such as images, CSS and JavaScript. However, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
+By default, Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) such as images, CSS, and JavaScript. However, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
 
 ### Cache more requests
 
@@ -88,25 +88,4 @@ Cache Analytics helps determine if resources are missing from cache, expired, or
 
 Before the high traffic event occurs, you must [open a Support ticket](/support/contacting-cloudflare-support/) and provide the information below.
 
-**For WAF/CDN customers**
-
--   Traffic origin region
--   Traffic duration
--   Traffic window (UTC)
--   Traffic method
--   Traffic size in both requests per second (rps) and bandwidth (Gbps/Mbps/MBps)
--   Target IPs/range/zones/hostnames/full URLs
--   Contact in case of emergency
-
-[****](/ddos-protection/reference/simulate-ddos-attack/#for-magic-transit-and-spectrum-customers)**For Magic Transit and Spectrum customers**
-
--   Traffic origin region
--   Traffic duration
--   Traffic window (UTC)
--   Traffic method
--   Bandwidth size or range
--   Target IPs/range/zones
--   Target Ports
--   Protocol
--   Max packet/bit rate
--   Contact in case of emergency
+{{<render file="_support-ticket-information" withParameters="Traffic">}}
