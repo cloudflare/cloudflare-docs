@@ -61,6 +61,9 @@ The following table summarizes how different Page Rules settings will be migrate
 Page Rules setting | New implementation uses...        | Migration/Replacement instructions
 -------------------|-----------------------------------|------------------------------------------------------
 Always Use HTTPS   | Redirect Rules (dynamic redirect) | [Migrate Always Use HTTPS](#migrate-always-use-https)
+Auto Minify        | Configuration Rules               | [Migrate Auto Minify](#migrate-auto-minify)
+Browser Cache TTL  | Cache Rules                       | [Migrate Browser Cache TTL](#migrate-browser-cache-ttl)
+Browser Integrity Check | Configuration Rules          | [Migrate Browser Integrity Check](#migrate-browser-integrity-check)
 (...)              | (...)                             | (...)
 
 ### Migrate Always Use HTTPS
@@ -70,14 +73,14 @@ Always Use HTTPS   | Redirect Rules (dynamic redirect) | [Migrate Always Use HTT
 
 **Context:**
 
-You configured a Page Rule to enable automatic redirect from HTTP to HTTPS for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL** (required): `*example.com/*`
+* **URL** `*example.com/*`
 * **Setting**: Always Use HTTPS
 
 **How to migrate**:
 
-1. Create a dynamic redirect to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
+1. Create a [dynamic redirect](/rules/url-forwarding/single-redirects/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -94,15 +97,15 @@ You configured a Page Rule to enable automatic redirect from HTTP to HTTPS for a
 
     </div>
 
-2. Disable your existing Page Rule and validate the behavior of the redirect you created.
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 3. If your tests succeed, delete the existing Page Rule.
 
 {{</tab>}}
 {{<tab label="visual guide" no-code="true">}}
 
 Page Rules configuration | Migrate to a dynamic redirect
--------------------------|-----------------------------------
-![Page Rule with 'Always Use HTTPS' enabled](/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Dynamic redirect matching the 'Always Use HTTPS' setting of Page Rules](/images/rules/reference/page-rules-migration/pr-always-use-https-new.png)
+-------------------------|------------------------------
+![Page Rule with 'Always Use HTTPS' enabled](/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Dynamic redirect matching the 'Always Use HTTPS' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-always-use-https-new.png)
 
 {{</tab>}}
 {{<tab label="terraform" no-code="true">}}
@@ -111,3 +114,263 @@ TODO
 
 {{</tab>}}
 {{</tabs>}}
+
+### Migrate Auto Minify
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning on Auto Minify for all subdomains of `example.com` and the `example.com` domain itself:
+
+* **URL**: `*example.com/*`
+* **Setting**: Auto Minify
+* **Apply to**: _CSS_, _JS_
+
+**How to migrate**:
+
+1. Create a [configuration rule](/rules/configuration-rules/) to always apply minification to CSS and JavaScript assets for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: Auto Minify
+        - **File extensions to minify automatically**: _CSS_, _JS_
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Page Rule with 'Auto Minify' enabled](/images/rules/reference/page-rules-migration/pr-auto-minify.png) | ![Configuration rule matching the 'Auto Minify' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-auto-minify-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
+### Migrate Automatic HTTPS Rewrites
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomains of `example.com` and the `example.com` domain itself:
+
+* **URL**: `*example.com/*`
+* **Setting**: Automatic HTTPS Rewrites
+
+**How to migrate**:
+
+1. Create a [configuration rule](/rules/configuration-rules/) to always rewrite HTTP links to HTTPS for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: Automatic HTTPS Rewrites
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Page Rule with 'Automatic HTTPS Rewrites' enabled](/images/rules/reference/page-rules-migration/pr-auto-minify.png) | ![Configuration rule matching the 'Automatic HTTPS Rewrites' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-auto-minify-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
+### Migrate Browser Cache TTL
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule adjusting browser cache TTL to one day for all subdomains of `example.com` and the `example.com` domain itself:
+
+* **URL**: `*example.com/*`
+* **Setting**: Browser Cache TTL
+* **Enter Browser Cache TTL**: a day
+
+**How to migrate**:
+
+1. Create a [cache rule](/cache/how-to/cache-rules/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then**:
+        - **Cache eligibility**: Eligible for cache
+        - **Browser TTL**: Override origin and use this TTL
+        - **Input time-to-live (TTL)**: 1 day
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a cache rule
+-------------------------|------------------------
+![Page Rule with 'Browser Cache TTL' enabled](/images/rules/reference/page-rules-migration/pr-browser-cache-ttl.png) | ![Cache rule matching the 'Browser Cache TTL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-browser-cache-ttl-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
+### Migrate Browser Integrity Check
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning on Browser Integrity Check for all subdomains of `example.com` and the `example.com` domain itself:
+
+* **URL**: `*example.com/*`
+* **Setting**: Browser Integrity Check
+
+**How to migrate**:
+
+1. Create a [configuration rule](/rules/configuration-rules/) to turn on Browser Integrity Check for protecting against bots and threats for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: Browser Integrity Check
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Page Rule with 'Browser Integrity Check' enabled](/images/rules/reference/page-rules-migration/pr-browser-integrity-check.png) | ![Configuration rule matching the 'Browser Integrity Check' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-browser-integrity-check-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
+
+### Migrate Bypass Cache on Cookie
+### Migrate Cache By Device Type
+### Migrate Cache Deception Armor
+### Migrate Cache Level
+### Migrate Cache on Cookie
+### Migrate Cache TTL by status code
+### Migrate Custom Cache Key
+### Migrate Disable Apps
+### Replace Disable Performance
+### Replace Disable Security
+### Migrate Disable Zaraz
+### Migrate Edge Cache TTL
+### Migrate Email Obfuscation
+### Migrate Forwarding URL
+### Migrate Host Header Override
+### Migrate IP Geolocation Header
+### Migrate Mirage
+### Migrate Opportunistic Encryption
+### Migrate Origin Cache Control
+### Migrate Origin Error Page Pass-thru
+### Migrate Polish
+### Migrate Query String Sort
+### Migrate Resolve Override
+### Migrate Respect Strong ETags
+### Migrate Rocket Loader
+### Migrate Security Level
+### Migrate True Client IP
+### Migrate SSL
+
+
+
+
+
+Migrate Auto Minify
+Migrate Automatic HTTPS Rewrites
+Migrate Browser Cache TTL
+Migrate Browser Integrity Check
+Migrate Bypass Cache on Cookie
+Migrate Cache By Device Type
+Migrate Cache Deception Armor
+Migrate Cache Level
+Migrate Cache on Cookie
+Migrate Cache TTL by status code
+Migrate Custom Cache Key
+Migrate Disable Apps
+Replace Disable Performance
+Replace Disable Security
+Migrate Disable Zaraz
+Migrate Edge Cache TTL
+Migrate Email Obfuscation
+Migrate Forwarding URL
+Migrate Host Header Override
+Migrate IP Geolocation Header
+Migrate Mirage
+Migrate Opportunistic Encryption
+Migrate Origin Cache Control
+Migrate Origin Error Page Pass-thru
+Migrate Polish
+Migrate Query String Sort
+Migrate Resolve Override
+Migrate Respect Strong ETags
+Migrate Rocket Loader
+Migrate Security Level
+Migrate True Client IP
+Migrate SSL
