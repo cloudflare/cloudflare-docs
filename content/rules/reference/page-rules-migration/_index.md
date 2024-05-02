@@ -6,7 +6,7 @@ weight: 3
 
 # Page Rules migration guide
 
-**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to the full calendar below). For existing accounts and zones, Page Rules will switch to read-only mode on 2025-01-06, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the Cloudflare API, and the Cloudflare Terraform provider.
+**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, Page Rules will switch to read-only mode on 2025-01-06, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the Cloudflare API, and the Cloudflare Terraform provider.
 
 Cloudflare recommends that you start transitioning from Page Rules to our new Rules features immediately by following the recommendations in this migration guide.
 
