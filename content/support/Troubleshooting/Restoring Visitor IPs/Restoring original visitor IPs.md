@@ -423,6 +423,23 @@ acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
 http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
 ```
 
+### Envoy Gateway
+
+To extract the original client IP for your Envoy Gateway, set a [Client Traffic Policy](https://gateway.envoyproxy.io/latest/tasks/traffic/client-traffic-policy/#configure-client-ip-detection) to look for the custom [`CF-Connecting-IP` header](/fundamentals/reference/http-request-headers/#cf-connecting-ip).
+
+```bash
+---
+header: Truncated Client Traffic Policy example
+---
+...
+clientIPDetection:
+    customHeader:
+        name: CF-Connecting-IP
+        failClosed: true
+```
+
+For more details, refer to [Custom header original IP detection extension](https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/http/original_ip_detection/custom_header/v3/custom_header.proto).
+
 ___
 
 ## Related Resources
