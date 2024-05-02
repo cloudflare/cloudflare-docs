@@ -3,14 +3,12 @@ updated: 2024-04-21
 pcx_content_type: tutorial
 difficulty: Beginner
 content_type: 📝 Tutorial
-title: Create a sitemap for a headless CMS with Workers
+title: Create a sitemap from Sanity CMS with Workers
 ---
 
-# Create a sitemap for a headless CMS with Workers
+# Create a sitemap from Sanity CMS with Workers
 
-In this tutorial, you will put together a Cloudflare Worker that creates and serves a sitemap using data from your headless CMS.
-
-While this tutorial is CMS agnostic, you may need to adjust some of the code to work with the query language and schema of your CMS.
+In this tutorial, you will put together a Cloudflare Worker that creates and serves a sitemap using data from Sanity.io, a headless CMS. If you use something different, you will need to modify the configuration.
 
 Here is a high-level overview of how this will work:
 
@@ -27,7 +25,6 @@ Here is a high-level overview of how this will work:
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Use Cloudflare DNS.
 3. Install [npm](https://docs.npmjs.com/getting-started) and [Node.js](https://nodejs.org/en/).
-5. Knowledge of installing node packages and importing them into code (necessary for importing the client library for your CMS).
 {{</tutorial-prereqs>}}
 
 {{<tutorial-step title="Create a new Worker">}}
@@ -60,6 +57,27 @@ $ yarn create cloudflare@latest
 In this tutorial, the Worker will be named `cms-sitemap`.
 
 Choose the options in the CLI that work best for you such as JavasScript or TypeScript. The starter template you choose does not matter as this tutorial provides code to paste in.
+
+Next, require the `@sanity/client` package.
+
+{{<tabs labels="pnpm | npm | yarn">}}
+{{<tab label="pnpm" default="true">}}
+```sh
+$ pnpm i @sanity/client
+```
+{{</tab>}}
+{{<tab label="npm">}}
+```sh
+$ npm i @sanity/client
+```
+{{</tab>}}
+{{<tab label="yarn">}}
+```sh
+$ yarn add @sanity/client
+```
+{{</tab>}}
+{{</tabs>}}
+
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Configure wrangler.toml">}}
@@ -83,13 +101,11 @@ minify = true
 [vars]
 # The CMS will return relative URLs, so we need to know the base URL of the site.
 SITEMAP_BASE = "https://example.com"
-# Add whatever info you need to call your CMS API.
+# Modify to match your project ID.
 SANITY_PROJECT_ID = "5z5j5z5j"
 SANITY_DATASET = "production"
 ```
 The `[vars]` section needs to be updated to match your needs. See the inline comments to understand their purposes.
-
-The headless CMS in this example is Sanity, however, any CMS can be used. Add, remove, or modify the variables to meet the requirements of calling your CMS's API.
 
 {{<Aside type="warning" title="Warning">}}
 
@@ -160,7 +176,6 @@ Next, create a new file named `Sitemap.ts|js` and paste in the following code:
 ---
 filename: src/Sitemap.ts
 ---
-// Remove this if you are not using Sanity and add your own CMS client.
 import { createClient, SanityClient } from '@sanity/client'
 
 export class Sitemap {
@@ -174,13 +189,13 @@ export class Sitemap {
 	}
 
 	async fetch(): Promise<Response> {
-		// Modify the query to use your CMS's API/syntax.
+		// Modify the query to use your CMS's schema.
 		//
 		// Request these:
 		// - "slug": The slug of the post.
 		// - "lastmod": When the post was updated.
 		//
-		// Notes: 
+		// Notes:
 		// - The slugs are prefixed to help form the full relative URL in the sitemap.
 		// - Order the slugs to ensure the sitemap is in a consistent order.
 		const query = `*[defined(postFields.slug.current)] {
@@ -204,7 +219,7 @@ export class Sitemap {
 			console.error('Error fetching data for sitemap', JSON.stringify(dataForSitemap));
 			return new Response('Error fetching data for sitemap', { status: 500 });
 		}
-	
+
 		const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 		  ${dataForSitemap.filter(Boolean).map((item: any) => `
@@ -214,7 +229,7 @@ export class Sitemap {
 			</url>
 		  `).join('')}
 		</urlset>`;
-	
+
 		return new Response(sitemapXml, {
 			headers: {
 				'content-type': 'application/xml',
@@ -223,7 +238,6 @@ export class Sitemap {
 	}
 
 	private async fetchCmsData(query: string) {
-		// Replace this with your own CMS client.
 		const client: SanityClient = createClient({
             projectId: this.env.SANITY_PROJECT_ID,
             dataset: this.env.SANITY_DATASET,
@@ -232,7 +246,6 @@ export class Sitemap {
         });
 
 		try {
-			// Replace this if the client API is different.
 			const data = await client.fetch(query);
 			return data;
 		}
@@ -243,12 +256,6 @@ export class Sitemap {
 };
 ```
 
-At this point in the tutorial, you need to modify the API client if you are using anything but Sanity.
-
-The client is referenced in the following places:
-
-- The import statement.
-- The `fetchCmsData` method (initializing the client and calling the client).
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Query CMS data">}}
@@ -256,9 +263,9 @@ The client is referenced in the following places:
 
 Now it is time to retrieve the data from the CMS.
 
-The query will depend on your schema and the headless CMS you are using, but here are important considerations:
+The query will depend on your schema, but here are important considerations:
 
-1. The query must return two properties: slug and lastmod, as those properties are referenced when creating the sitemap. Many CMSs support GraphQL, which enables naming properties (e.g., `"lastmod": _updatedAt`). However, if you are using REST, then you may need to adjust the Worker code to use the exact properties the API returns.
+1. The query must return two properties: slug and lastmod, as those properties are referenced when creating the sitemap. GraphQL and GROQ enable naming properties (e.g., `"lastmod": _updatedAt`), allowing you to map custom field names to the required properties.
 2. You will likely need to prefix each slug with the base path so, for `www.example.com/posts/my-post`, the slug returned is `my-post`, but the base path (`/posts/`) is what needs to be prefixed (the domain is automatically added).
 3. Add a sort to the query to provide a consistent order.
 
@@ -269,8 +276,6 @@ Once the query is running, its data is used to generate an XML sitemap.
 ## 5. Create the sitemap from the CMS data
 
 The sitemap is automatically generated from the results of the query.
-
-If you were able to name the slug and lastmod accordingly, no additional work is needed. However, as mentioned above, if you cannot name the properties, then modify the `sitemapXml` constant to use your properties (e.g., from `item.lastmod` to `item._updatedAt`).
 
 The URL and when it was updated are the only two properties added to the sitemap because [according to Google](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap#additional-notes-about-xml-sitemaps), they ignore other properties such as `priority` and `changefreq`.
 
