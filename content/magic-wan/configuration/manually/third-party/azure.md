@@ -149,12 +149,12 @@ curl https://ipinfo.io
 
 1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
 2. For each tunnel, make sure that you have the following settings:
-    1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 4 of the Configure Azure section](#4_configure_local_network_gateway_for_magic_ipsec_tunnel_health_checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels) for more details.
+    1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 4 of the Configure Azure section](#4-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
     2. **Customer endpoint**: The Public IP associated with your Azure VNG. For example, `40.xxx.xxx.xxx`.
     3. **Cloudflare endpoint**: Use the Cloudflare Anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
     4. **Health check rate**: Leave the default option (Medium) selected.
     5. **Health check type**: Leave the default option (Reply) selected.
-    6. **Health check direction**: Leave default option. This will be configured later in [Tunnel Health Checks](#tunnel-health-checks).
+    6. **Health check direction**: Leave default option. This will be configured later in [Tunnel Health Checks](#tunnel-health-check-and-azure).
     7. **Add pre-shared key later**: Select this option to create a PSK that will be used later in Azure.
     8. **Replay protection**: **Enable**.
 3. Create static routes for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
@@ -346,7 +346,7 @@ curl --location --request PUT 'https://management.azure.com/subscriptions/{{subs
 
 We have identified cases where the IPsec Tunnels configured on the Azure Virtual Network Gateway need to be restarted one time before the tunnel health checks start passing.
 
-### Azure - Restart Tunnels
+### Restart Azure tunnels
 
 1. Open the Virtual Network Gateway.
 2. Go to **Settings** > **Connections**.
@@ -354,8 +354,6 @@ We have identified cases where the IPsec Tunnels configured on the Azure Virtual
 4. Go to **Help** > **Reset**.
 5. Select the **Reset** button.
 
-It may take several minutes for the tunnels to reset from the Azure side.
-
-Monitor the Tunnel Health Checks section in the Cloudflare Dashboard to determine the status.
+It may take several minutes for the tunnels to reset from the Azure side. Monitor the [tunnel health checks section](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) in the Cloudflare Dashboard to determine the status.
 
 {{<Aside type="note">}}Tunnel Health Check percentages are calculated over a one hour period.{{</Aside>}}
