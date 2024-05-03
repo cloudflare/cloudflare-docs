@@ -122,8 +122,8 @@ async def on_fetch(request):
     options = {"cf": {"cacheTags": tags}}
 
     result = await fetch(url, options)
-    cache_status = result.headers.get("cf-cache-status")
-    last_modified = result.headers.get("last-modified")
+    cache_status = result.headers["cf-cache-status"]
+    last_modified = result.headers["last-modified"]
 
     response = json.dumps({"cache": cache_status, "lastModified": last_modified})
     return Response.json(JSON.parse(response), status=result.status)
