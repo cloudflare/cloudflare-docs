@@ -6,6 +6,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Cache Tags using Workers
 weight: 1001
@@ -106,27 +107,30 @@ export default {
 {{<tab label="py">}}
 
 ```py
-import json
-from js import Response, URL, JSON, fetch
+from pyodide.ffi import to_js as _to_js
+from js import Response, URL, Object, fetch
+
+def to_js(x):
+    return _to_js(x, dict_converter=Object.fromEntries)
 
 async def on_fetch(request):
     request_url = URL.new(request.url)
     params = request_url.searchParams
-    tags = params["tags"].split(",") if "tags" in params
-    url = params["uri"] or ""
+    tags = params["tags"].split(",") if "tags" in params else []
+    url = params["uri"] or None
 
     if url is None:
-        error = json.dumps({"error": "URL cannot be empty"})
-        return Response.json(JSON.parse(error), status=400)
+        error = {"error": "URL cannot be empty"}
+        return Response.json(to_js(error), status=400)
 
     options = {"cf": {"cacheTags": tags}}
+    result = await fetch(url, to_js(options))
 
-    result = await fetch(url, options)
     cache_status = result.headers["cf-cache-status"]
     last_modified = result.headers["last-modified"]
+    response = {"cache": cache_status, "lastModified": last_modified}
 
-    response = json.dumps({"cache": cache_status, "lastModified": last_modified})
-    return Response.json(JSON.parse(response), status=result.status)
+    return Response.json(to_js(response), status=result.status)
 ```
 
 {{</tab>}}
