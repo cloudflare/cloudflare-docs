@@ -63,6 +63,15 @@ export default {
 
 This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the `env.MYBROWSER` browser, opens a [new page](https://pptr.dev/api/puppeteer.browser.newpage), [goes to](https://pptr.dev/api/puppeteer.page.goto) https://example.com/, gets the page load [metrics](https://pptr.dev/api/puppeteer.page.metrics), [closes](https://pptr.dev/api/puppeteer.browser.close) the browser and prints metrics in JSON.
 
+### Keep Alive
+
+If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](../../get-started/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+
+```
+const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
+```
+
+Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
 ## Session management
 
