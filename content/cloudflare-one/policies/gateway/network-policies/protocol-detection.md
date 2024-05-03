@@ -10,6 +10,8 @@ weight: 2
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
+Protocol detection only applies to devices connected to Zero Trust via the WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
+
 ## Turn on protocol detection
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Firewall**.
@@ -37,4 +39,4 @@ You can create network policies that filter traffic based on protocol detections
 
 | Selector          | Operator | Value | Action |
 | ----------------- | -------- | ----- | ------ |
-| Detected Protocol | in       | SSH   | Block  |
+| Detected Protocol | in       | _SSH_ | Block  |
