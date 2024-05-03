@@ -92,7 +92,7 @@ Respect Strong ETags        | Cache Rules                          | [Migrate Re
 Response Buffering          | N/A (deprecated)                     | N/A
 Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)
 Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)
-True Client IP              | Transform Rules (Managed Transforms) | [Migrate True Client IP](#migrate-true-client-ip)
+True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)
 Server Side Excludes        | N/A (deprecated)                     | N/A
 SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)
 Web Application Firewall    | N/A (deprecated)                     | N/A
@@ -1597,5 +1597,85 @@ TODO
 {{</tab>}}
 {{</tabs>}}
 
-### Migrate True Client IP
+### Migrate True Client IP Header
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule adding a `True-Client-IP` HTTP header for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: True Client IP Header
+- **Value**: On
+
+**How to migrate**:
+
+1. [Turn on the **Add "True-Client-IP" header** Managed Transform](/rules/transform/managed-transforms/configure/) — a Transform Rules feature — to add the `True-Client-IP` header to all requests.
+2. Turn off your existing Page Rule and validate the behavior of the Managed Transform.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a Managed Transform
+-------------------------|-------------------------------
+![Example Page Rule with 'True Client IP Header' setting](/images/rules/reference/page-rules-migration/pr-true-client-ip-header.png) | ![The 'Add "True-Client-IP" header' Managed Transform matching the 'True Client IP Header' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-true-client-ip-header-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate SSL
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule setting SSL to _Strict_ for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: SSL
+- **Select SSL/TLS encryption mode**: Strict
+
+**How to migrate**:
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set SSL to _Strict_, for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: SSL
+        - **Select SSL/TLS encryption mode**: Strict
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Example Page Rule with 'SSL' setting](/images/rules/reference/page-rules-migration/pr-ssl.png) | ![Configuration rule matching the "SSL" setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-ssl-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
