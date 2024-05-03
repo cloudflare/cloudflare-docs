@@ -1559,7 +1559,7 @@ You configured a Page Rule setting Security Level to _I'm Under Attack_ for all 
 
 - **URL**: `*example.com/*`
 - **Setting**: Security Level
-- **Value**: I'm Under Attack
+- **Select Security Level**: I'm Under Attack
 
 **How to migrate**:
 
