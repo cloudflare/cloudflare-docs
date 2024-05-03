@@ -154,7 +154,7 @@ curl https://ipinfo.io
     3. **Cloudflare endpoint**: Use the Cloudflare Anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
     4. **Health check rate**: Leave the default option (Medium) selected.
     5. **Health check type**: Leave the default option (Reply) selected.
-    6. **Health check direction**: Leave default option. This will be configured later in [Tunnel Health Checks](#tunnel-health-check-and-azure).
+    6. **Health check direction**: Leave default option. This will be configured later in [Tunnel health checks and Azure](#tunnel-health-checks-and-azure).
     7. **Add pre-shared key later**: Select this option to create a PSK that will be used later in Azure.
     8. **Replay protection**: **Enable**.
 3. Create static routes for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
@@ -342,7 +342,7 @@ curl --location --request PUT 'https://management.azure.com/subscriptions/{{subs
 
 6. Leave the replay protection setting checked in the Cloudflare dashboard, and wait several minutes before validating connectivity again.
 
-## Tunnel health check and Azure
+## Tunnel health checks and Azure
 
 We have identified cases where the IPsec Tunnels configured on the Azure Virtual Network Gateway need to be restarted one time before the tunnel health checks start passing.
 
