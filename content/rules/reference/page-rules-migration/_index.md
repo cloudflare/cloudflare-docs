@@ -1219,7 +1219,7 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
 **How to migrate**:
 
-1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust edge cache behavior for any hostname containing `example.com`:
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to determine edge cache behavior for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -1254,6 +1254,54 @@ TODO
 {{</tabs>}}
 
 ### Migrate Origin Error Page Pass-thru
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning on Origin Error Page Pass-thru for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Origin Error Page Pass-thru
+- **Value**: On
+
+**How to migrate**:
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to determine edge cache behavior for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then**:
+        - **Cache eligibility**: Eligible for cache
+        - **Origin error page pass-thru** > **Use Origin error page pass-thru**: On
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a cache rule
+-------------------------|------------------------
+![Example Page Rule with 'Origin Error Page Pass-thru' setting](/images/rules/reference/page-rules-migration/pr-origin-error-page-pass-thru.png) | ![Cache rule matching the 'Origin Error Page Pass-thru > On' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-origin-error-page-pass-thru-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate Polish
 ### Migrate Query String Sort
 ### Migrate Resolve Override
