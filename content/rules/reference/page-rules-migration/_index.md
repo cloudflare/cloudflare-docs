@@ -109,7 +109,7 @@ Web Application Firewall    | N/A (deprecated)                     | N/A
 You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL** `*example.com/*`
-- **Setting**: Always Use HTTPS
+- **Setting**: _Always Use HTTPS_
 
 **How to migrate**:
 
@@ -158,7 +158,8 @@ TODO
 You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Automatic HTTPS Rewrites
+- **Setting**: _Automatic HTTPS Rewrites_
+- **Value**: On
 
 **How to migrate**:
 
@@ -173,7 +174,8 @@ You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomain
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Automatic HTTPS Rewrites
+        - **Setting**: Automatic HTTPS Rewrites
+        - **Value**: On
 
     </div>
 
@@ -185,7 +187,7 @@ You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomain
 
 Page Rules configuration | Migrate to a configuration rule
 -------------------------|--------------------------------
-![Example Page Rule with 'Automatic HTTPS Rewrites' setting](/images/rules/reference/page-rules-migration/pr-auto-minify.png) | ![Configuration rule matching the 'Automatic HTTPS Rewrites' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-auto-minify-new.png)
+![Example Page Rule with 'Automatic HTTPS Rewrites' setting](/images/rules/reference/page-rules-migration/pr-automatic-https-rewrites.png) | ![Configuration rule matching the 'Automatic HTTPS Rewrites' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-automatic-https-rewrites-new.png)
 
 {{</tab>}}
 {{<tab label="terraform" no-code="true">}}
@@ -205,7 +207,7 @@ TODO
 You configured a Page Rule adjusting browser cache TTL to one day for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Browser Cache TTL
+- **Setting**: _Browser Cache TTL_
 - **Enter Browser Cache TTL**: _a day_
 
 **How to migrate**:
@@ -223,7 +225,7 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
     - **Then**:
         - **Cache eligibility**: Eligible for cache
         - **Browser TTL**: Override origin and use this TTL
-        - **Input time-to-live (TTL)**: 1 day
+        - **Input time-to-live (TTL)**: _1 day_
 
     </div>
 
@@ -255,7 +257,8 @@ TODO
 You configured a Page Rule turning on Browser Integrity Check for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Browser Integrity Check
+- **Setting**: _Browser Integrity Check_
+- **Value**: On
 
 **How to migrate**:
 
@@ -270,7 +273,8 @@ You configured a Page Rule turning on Browser Integrity Check for all subdomains
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Browser Integrity Check
+        - **Setting**: Browser Integrity Check
+        - **Value**: On
 
     </div>
 
@@ -302,7 +306,7 @@ TODO
 You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Bypass Cache on Cookie
+- **Setting**: _Bypass Cache on Cookie_
 - **Enter value**: `test_cookie`
 
 **How to migrate**:
@@ -350,7 +354,8 @@ TODO
 You configured a Page Rule turning on Cache By Device Type for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Cache By Device Type
+- **Setting**: _Cache By Device Type_
+- **Value**: On
 
 **How to migrate**:
 
@@ -366,7 +371,8 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Cache key**: Cache by device type
+        - **Setting**: Cache key
+            - **Cache by device type**: On
 
     </div>
 
@@ -414,7 +420,8 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Cache key**: Cache deception armor
+        - **Setting**: Cache key
+            - **Cache deception armor**: On
 
     </div>
 
@@ -446,7 +453,7 @@ TODO
 You configured a Page Rule turning on caching of all assets for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Cache Level
+- **Setting**: _Cache Level_
 - **Select Cache Level**: _Cache Everything_
 
 **How to migrate**:
@@ -494,7 +501,7 @@ TODO
 You configured a Page Rule turning on caching for responses that contained cookie `test-cookie` for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Cache on Cookie
+- **Setting**: _Cache on Cookie_
 - **Enter value**: `test-cookie`
 
 **How to migrate**:
@@ -542,7 +549,7 @@ TODO
 You configured a Page Rule turning on caching of every response with status code between `200` and `599` for one day, for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Cache TTL by status code
+- **Setting**: _Cache TTL by status code_
 - **Status code or enter range**: `200-599`
 - **Select option**: _a day_
 
@@ -560,13 +567,13 @@ You configured a Page Rule turning on caching of every response with status code
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Edge TTL**: Use cache-control header if present, use default Cloudflare caching behavior if not
-        - **Status code TTL**:
-
-            - **Scope**: _Range_
-            - **From**: _200_
-            - **To**: _599_
-            - **Duration**: _1 day_
+        - **Setting**: Edge TTL
+            - Use cache-control header if present, use default Cloudflare caching behavior if not
+            - **Status code TTL**:
+                - **Scope**: _Range_
+                - **From**: _200_
+                - **To**: _599_
+                - **Duration**: _1 day_
     </div>
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
@@ -597,8 +604,8 @@ TODO
 You configured a Page Rule setting a custom cache key for all query string parameters, for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Custom Cache Key
-- **Query String**: All query string parameters
+- **Setting**: _Custom Cache Key_
+    - **Query String**: All query string parameters
 
 **How to migrate**:
 
@@ -614,8 +621,7 @@ You configured a Page Rule setting a custom cache key for all query string param
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Cache key**:
-
+        - **Setting**: Cache key
             - **Query string**: All query string parameters
     </div>
 
@@ -647,7 +653,7 @@ TODO
 You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Disable Apps
+- **Setting**: _Disable Apps_
 
 **How to migrate**:
 
@@ -662,7 +668,7 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Disable Apps
+        - **Setting**: Disable Apps
 
     </div>
 
@@ -690,7 +696,7 @@ TODO
 The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
 {{</Aside>}}
 
-This Page Rules setting turned off Auto Minify (deprecated), Mirage, Rocket Loader, and Polish. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
+This Page Rules setting turned off Auto Minify (deprecated), Mirage, Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
 
 {{<tabs labels="Dashboard | Visual guide | Terraform">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -700,13 +706,11 @@ This Page Rules setting turned off Auto Minify (deprecated), Mirage, Rocket Load
 You configured a Page Rule with **Disable Performance** (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Disable Performance
+- **Setting**: _Disable Performance_
 
 **How to replace**:
 
-1. [Turn off Auto Minify (deprecated)](/speed/optimization/content/auto-minify/) globally for your zone, and [create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn it on for specific requests.
-
-2. Create a second configuration rule to disable Mirage, Rocket Loader, and Polish for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Mirage, Polish, and Rocket Loader for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -718,20 +722,20 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 
     - **Then the settings are**:
         - **Mirage**: Off
+        - **Polish**: _Off_
         - **Rocket Loader**: Off
-        - **Polish**: Off
 
     </div>
 
-3. Turn off your existing Page Rule and validate the behavior of the configuration rules you created.
+3. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
 4. If your tests succeed, delete the existing Page Rule.
 
 {{</tab>}}
 {{<tab label="visual guide" no-code="true">}}
 
-Page Rules configuration | Migrate to configuration rules
+Page Rules configuration | Migrate to a configuration rule
 -------------------------|--------------------------------
-![Example Page Rule with 'Disable Performance' setting](/images/rules/reference/page-rules-migration/pr-disable-apps.png) | ![Configuration rule partially matching the 'Disable Performance' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-disable-apps-new.png)
+![Example Page Rule with 'Disable Performance' setting](/images/rules/reference/page-rules-migration/pr-disable-performance.png) | ![Configuration rule partially matching the 'Disable Performance' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-disable-performance-new.png)
 
 {{</tab>}}
 {{<tab label="terraform" no-code="true">}}
@@ -754,28 +758,31 @@ This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous ver
 
 **Context:**
 
-You configured a Page Rule with **Disable Security** for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule with **Disable Security** (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Disable Security
+- **Setting**: _Disable Security_
 
 This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version).
 
 **How to replace**:
 
-1. Create a configuration rule to turn off one or more security features:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
 
-    - Email Obfuscation (part of Scrape Shield)
-    - Server Side Excludes (part of Scrape Shield)
-    - Hotlink Protection (part of Scrape Shield)
+    - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
+    - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
+    - Hotlink Protection (part of Cloudflare Scrape Shield)
 
-2. If required, create a WAF custom rule to block requests from IP addresses not present in an allowlist of IPs and CIDR ranges (recommended instead of using Zone Lockdown).
+2. If required, [create a WAF custom rule](/waf/custom-rules/create-dashboard/) to block requests from IP addresses not present in an allowlist of IPs and CIDR ranges (recommended instead of using Zone Lockdown).
 
-3. If you are still using WAF managed rules (previous version) or Rate Limiting (previous version), consider migrating to the new versions of these products. It is not possible to turn off these older products using modern Rules features.
+3. Turn off your existing Page Rule and validate the behavior of the rules you created.
 
-4. Turn off your existing Page Rule and validate the behavior of the rules you created.
+4. If your tests succeed, delete the existing Page Rule.
 
-5. If your tests succeed, delete the existing Page Rule.
+{{<Aside type="warning">}}
+If you are still using WAF managed rules (previous version) or Rate Limiting (previous version), consider migrating to the new versions of these products. It is not possible to turn off these older products using modern Rules features. Refer to the [WAF's migration guides](/waf/reference/migration-guides/) for more information.
+{{</Aside>}}
+
 
 {{</tab>}}
 {{</tabs>}}
@@ -787,10 +794,10 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
 
 **Context:**
 
-You configured a Page Rule turning off Zaraz for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Disable Zaraz
+- **Setting**: _Disable Zaraz_
 
 **How to migrate**:
 
@@ -805,7 +812,7 @@ You configured a Page Rule turning off Zaraz for all subdomains of `example.com`
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Disable Zaraz
+        - **Setting**: Disable Zaraz
 
     </div>
 
@@ -837,7 +844,7 @@ TODO
 You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Edge Cache TTL
+- **Setting**: _Edge Cache TTL_
 - **Enter Edge Cache TTL**: _a day_
 
 **How to migrate**:
@@ -854,7 +861,8 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Edge TTL**: Ignore cache-control header and use this TTL
+        - **Setting**: Edge TTL
+            - Ignore cache-control header and use this TTL
             - **Input time-to-live (TTL)**: _1 day_
     </div>
 
@@ -883,10 +891,10 @@ TODO
 
 **Context:**
 
-You configured a Page Rule turning off Email Obfuscation for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Email Obfuscation
+- **Setting**: _Email Obfuscation_
 - **Value**: Off
 
 **How to migrate**:
@@ -902,8 +910,8 @@ You configured a Page Rule turning off Email Obfuscation for all subdomains of `
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Email Obfuscation
-        - **Value**: Off
+        - **Setting**: Email Obfuscation
+            - **Value**: Off
 
     </div>
 
@@ -935,8 +943,8 @@ TODO
 You configured a Page Rule permanently redirecting `www.example.com` to `example.com` on all URI paths:
 
 - **URL**: `www.example.com/*`
-- **Setting**: Forwarding URL
-- **Select Status code**: 301 - Permanent Redirect
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
 - **Destination URL**: `https://example.com/$1`
 
 **How to migrate**:
@@ -986,7 +994,7 @@ TODO
 You configured a Page Rule changing the `Host` HTTP header to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Host Header Override
+- **Setting**: _Host Header Override_
 - **Enter value**: `example.saas-provider.com`
 
 **How to migrate**:
@@ -1035,7 +1043,7 @@ TODO
 You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: IP Geolocation Header
+- **Setting**: _IP Geolocation Header_
 - **Value**: On
 
 **How to migrate**:
@@ -1069,7 +1077,7 @@ TODO
 You configured a Page Rule turning off Mirage for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Mirage
+- **Setting**: _Mirage_
 - **Value**: Off
 
 **How to migrate**:
@@ -1085,8 +1093,8 @@ You configured a Page Rule turning off Mirage for all subdomains of `example.com
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Mirage
-        - **Value**: Off
+        - **Setting**: Mirage
+            - **Value**: Off
 
     </div>
 
@@ -1118,7 +1126,7 @@ TODO
 You configured a Page Rule turning off Opportunistic Encryption for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Opportunistic Encryption
+- **Setting**: _Opportunistic Encryption_
 - **Value**: Off
 
 **How to migrate**:
@@ -1134,8 +1142,8 @@ You configured a Page Rule turning off Opportunistic Encryption for all subdomai
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Opportunistic Encryption
-        - **Value**: Off
+        - **Setting**: Opportunistic Encryption
+            - **Value**: Off
 
     </div>
 
@@ -1184,7 +1192,8 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Origin Cache Control** > **Enable Origin Cache Control**: Off
+        - **Setting**: Origin Cache Control
+            - **Enable Origin Cache Control**: Off
 
     </div>
 
@@ -1216,7 +1225,7 @@ TODO
 You configured a Page Rule turning on Origin Error Page Pass-thru for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Origin Error Page Pass-thru
+- **Setting**: _Origin Error Page Pass-thru_
 - **Value**: On
 
 **How to migrate**:
@@ -1233,7 +1242,8 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Origin error page pass-thru** > **Use Origin error page pass-thru**: On
+        - **Setting**: Origin error page pass-thru
+            - **Use Origin error page pass-thru**: On
 
     </div>
 
@@ -1262,7 +1272,7 @@ TODO
 
 **Context:**
 
-You configured a Page Rule turning off Polish for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule turning off [Polish](/images/polish/) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
 - **Setting**: Polish
@@ -1281,8 +1291,8 @@ You configured a Page Rule turning off Polish for all subdomains of `example.com
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Polish
-        - **Value**: Off
+        - **Setting**: Polish
+            - **Select value**: _Off_
 
     </div>
 
@@ -1315,7 +1325,7 @@ TODO
 You configured a Page Rule turning on Query String Sort for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Query String Sort
+- **Setting**: _Query String Sort_
 - **Value**: On
 
 **How to migrate**:
@@ -1332,7 +1342,8 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Cache key** > **Sort query string**: On
+        - **Setting**: Cache key
+            - **Sort query string**: On
 
     </div>
 
@@ -1364,7 +1375,7 @@ TODO
 You configured a Page Rule changing the origin to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Resolve Override
+- **Setting**: _Resolve Override_
 - **Enter value**: `example.saas-provider.com`
 
 **How to migrate**:
@@ -1380,8 +1391,7 @@ You configured a Page Rule changing the origin to `example.saas-provider.com`, f
             `(http.host contains "example.com")`
 
     - **Then**:
-        - **Set origin parameters**:
-            - **DNS Record** > **Override to**: `example.saas-provider.com`
+        - **DNS Record** > **Override to**: `example.saas-provider.com`
 
     </div>
 
@@ -1413,7 +1423,7 @@ TODO
 You configured a Page Rule turning on byte-for-byte equivalency checks for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Respect Strong ETags
+- **Setting**: _Respect Strong ETags_
 - **Value**: On
 
 **How to migrate**:
@@ -1430,7 +1440,8 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
 
     - **Then**:
         - **Cache eligibility**: Eligible for cache
-        - **Respect strong ETags** > **Use strong ETag headers**: On
+        - **Setting**: Respect strong ETags
+            - **Use strong ETag headers**: On
 
     </div>
 
@@ -1462,7 +1473,7 @@ TODO
 You configured a Page Rule turning off Rocket Loader for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Rocket Loader
+- **Setting**: _Rocket Loader_
 - **Value**: Off
 
 **How to migrate**:
@@ -1478,8 +1489,8 @@ You configured a Page Rule turning off Rocket Loader for all subdomains of `exam
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Rocket Loader
-        - **Value**: Off
+        - **Setting**: Rocket Loader
+            - **Value**: Off
 
     </div>
 
@@ -1511,8 +1522,8 @@ TODO
 You configured a Page Rule setting Security Level to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: Security Level
-- **Select Security Level**: I'm Under Attack
+- **Setting**: _Security Level_
+- **Select Security Level**: _I'm Under Attack_
 
 **How to migrate**:
 
@@ -1527,8 +1538,8 @@ You configured a Page Rule setting Security Level to _I'm Under Attack_ for all 
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: Security Level
-        - **Select Security Level**: I'm Under Attack
+        - **Setting**: Security Level
+            - **Select Security Level**: _I'm Under Attack_
 
     </div>
 
@@ -1560,7 +1571,7 @@ TODO
 You configured a Page Rule adding a `True-Client-IP` HTTP header for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: True Client IP Header
+- **Setting**: _True Client IP Header_
 - **Value**: On
 
 **How to migrate**:
@@ -1594,8 +1605,8 @@ TODO
 You configured a Page Rule setting SSL to _Strict_ for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
-- **Setting**: SSL
-- **Select SSL/TLS encryption mode**: Strict
+- **Setting**: _SSL_
+- **Select SSL/TLS encryption mode**: _Strict_
 
 **How to migrate**:
 
@@ -1610,8 +1621,8 @@ You configured a Page Rule setting SSL to _Strict_ for all subdomains of `exampl
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Type**: SSL
-        - **Select SSL/TLS encryption mode**: Strict
+        - **Setting**: SSL
+            - **Select SSL/TLS encryption mode**: _Strict_
 
     </div>
 
