@@ -66,9 +66,12 @@ export default {
       body: JSON.stringify(requestData)
     })
 
-    const data = await response.json();
-
-    return new Response(JSON.stringify(response));
+    if (response.ok && response.headers.get('content-type').includes('application/json')) {
+      const data = await response.json();
+      return new Response(JSON.stringify(response));
+    } else {
+      return new Response("Invalid response", { status: 500 });
+    }
   },
 };
 ```
