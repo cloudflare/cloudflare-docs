@@ -6,7 +6,7 @@ weight: 3
 
 # Page Rules migration guide
 
-**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, the creation of new Page Rules will no longer be available from 2025-01-06 onward, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the Cloudflare API, and the Cloudflare Terraform provider.
+**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, the creation of new Page Rules will no longer be available from 2025-01-06 onward, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the [Cloudflare API](/api/), and the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/).
 
 Cloudflare recommends that you start transitioning from Page Rules to our new Rules features immediately by following the recommendations in this migration guide.
 
@@ -22,13 +22,13 @@ Cloudflare recommends that you start transitioning from Page Rules to our new Ru
 
 Cloudflare Page Rules has several fundamental limitations, such as triggering solely based on URL patterns and being limited to 125 rules per zone for performance reasons. These rules are also complex to debug when multiple page rules apply to the same incoming request.
 
-In 2022, we announced in our blog “The future of Page Rules” that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — Configuration Rules, Compression Rules, Origin Rules, Redirects, and Transform Rules — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
+In 2022, we announced in our blog [“The future of Page Rules”](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
 
 ## Main differences
 
-- **New engine**: New Rules features are powered by the Ruleset Engine, which offers versatile configuration with a robust language that supports many HTTP request and response fields.
+- **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
 
-- **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas: Enterprise plans have access to a minimum of 500 rules per zone, Business plan zones go from 50 to 200 rules per zone, Pro plans go from 20 to 100,  and Free plans go from 3 to 40 rules per zone.
+- **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas: Enterprise plans have access to a minimum of 500 rules (across all rule types) per zone, Business plan zones go from 50 to 200 rules per zone, Pro plans go from 20 to 100,  and Free plans go from 3 to 40 rules per zone.
 
 - **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, Cloudflare Trace helps understand rule interactions.
 
@@ -44,6 +44,7 @@ This migration guide will be updated in the following months with more informati
 
 The following Page Rules settings will not be migrated to other types of rules:
 
+- **Auto Minify** (this setting is deprecated)
 - **Disable Performance** (this setting is deprecated)
 - **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
 - **Disable Security** (this setting is deprecated)
@@ -59,11 +60,10 @@ All other Page Rules settings will be migrated during 2025.
 
 The following table summarizes how different Page Rules settings will be migrated to other Rules features. You can refer to this table and the next sections to learn more about the new way of implementing a given Page Rules setting, and also to learn how you can manually migrate your existing Page Rules.
 
-
 Page Rules setting          | New implementation uses...           | Migration/Replacement instructions
 ----------------------------|--------------------------------------|--------------------------------------------------------------------
-Always Use HTTPS            | Redirect Rules (dynamic redirect)    | [Migrate Always Use HTTPS](#migrate-always-use-https)
-Auto Minify                 | Configuration Rules                  | [Migrate Auto Minify](#migrate-auto-minify)
+Always Use HTTPS            | Redirect Rules (dynamic redirects)   | [Migrate Always Use HTTPS](#migrate-always-use-https)
+Auto Minify                 | N/A (deprecated)                     | N/A
 Browser Cache TTL           | Cache Rules                          | [Migrate Browser Cache TTL](#migrate-browser-cache-ttl)
 Browser Integrity Check     | Configuration Rules                  | [Migrate Browser Integrity Check](#migrate-browser-integrity-check)
 Bypass Cache on Cookie      | Cache Rules                          | [Migrate Bypass Cache on Cookie](#migrate-bypass-cache-on-cookie)
@@ -113,7 +113,7 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 **How to migrate**:
 
-1. Create a [dynamic redirect](/rules/url-forwarding/single-redirects/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
+1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS for any hostname that contains `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -139,55 +139,6 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 Page Rules configuration | Migrate to a dynamic redirect
 -------------------------|------------------------------
 ![Example Page Rule with 'Always Use HTTPS' setting](/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Dynamic redirect matching the 'Always Use HTTPS' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-always-use-https-new.png)
-
-{{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
-{{</tabs>}}
-
-### Migrate Auto Minify
-
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
-{{<tab label="dashboard" no-code="true">}}
-
-**Context:**
-
-You configured a Page Rule turning on Auto Minify for all subdomains of `example.com` and the `example.com` domain itself:
-
-- **URL**: `*example.com/*`
-- **Setting**: Auto Minify
-- **Apply to**: _CSS_, _JS_
-
-**How to migrate**:
-
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to always apply minification to CSS and JavaScript assets for any hostname containing `example.com`:
-
-    <div class="DocsMarkdown--example">
-
-    - **When incoming requests match**: Custom filter expression
-        - Using the Expression Builder:<br>
-            `Hostname contains "example.com"`
-        - Using the Expression Editor:<br>
-            `(http.host contains "example.com")`
-
-    - **Then the settings are**:
-        - **Type**: Auto Minify
-        - **File extensions to minify automatically**: _CSS_, _JS_
-
-    </div>
-
-2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
-3. If your tests succeed, delete the existing Page Rule.
-
-{{</tab>}}
-{{<tab label="visual guide" no-code="true">}}
-
-Page Rules configuration | Migrate to a configuration rule
--------------------------|--------------------------------
-![Example Page Rule with 'Auto Minify' setting](/images/rules/reference/page-rules-migration/pr-auto-minify.png) | ![Configuration rule matching the 'Auto Minify' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-auto-minify-new.png)
 
 {{</tab>}}
 {{<tab label="terraform" no-code="true">}}
@@ -990,7 +941,7 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 **How to migrate**:
 
-1. Create a [dynamic redirect](/rules/url-forwarding/single-redirects/) to permanently redirect requests from `www.example.com` to `example.com`:
+1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `www.example.com` to `example.com`:
 
     <div class="DocsMarkdown--example">
 
