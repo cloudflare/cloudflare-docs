@@ -10,7 +10,7 @@ weight: 2
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
-Protocol detection only applies to devices connected to Zero Trust via the WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
+Protocol detection only applies to devices connected to Zero Trust via the WARP client in [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode.
 
 ## Turn on protocol detection
 
