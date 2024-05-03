@@ -112,8 +112,8 @@ from js import Response, URL, JSON, fetch
 async def on_fetch(request):
     request_url = URL.new(request.url)
     params = request_url.searchParams
-    tags = params.get("tags").split(",") if params and params.has("tags") else []
-    url = params.get("uri") if params and params.has("uri") else ""
+    tags = params["tags"].split(",") if "tags" in params
+    url = params["uri"] or ""
 
     if url is None:
         error = json.dumps({"error": "URL cannot be empty"})
