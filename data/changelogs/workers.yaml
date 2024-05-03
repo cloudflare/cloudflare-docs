@@ -2,6 +2,11 @@
 link: "/workers/platform/changelog/"
 productName: Workers
 entries:
+- publish_date: '2024-05-03'
+  description: |-
+    - Fixed RPC to/from Durable Objects not honoring the output gate.
+    - The `internal_stream_byob_return_view` compatibility flag can be used to improve the standards compliance of the `ReadableStreamBYOBReader` implementation when working with BYOB streams provided by the runtime (like in `response.body` or `request.body`). The flag ensures that the final read result will always include a `value` field whose value is set to an empty `Uint8Array` whose underlying `ArrayBuffer` is the same memory allocation as the one passed in on the call to `read()`.
+    - The Web platform standard `reportError(err)` global API is now available in workers. The reported error will first be emitted as an 'error' event on the global scope then reported in both the console output and tail worker exceptions by default.
 - publish_date: '2024-04-26'
   description: |-
     - Updated v8 to version 12.4.
