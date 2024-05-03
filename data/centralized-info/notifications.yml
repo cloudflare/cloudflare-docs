@@ -361,8 +361,8 @@ entries:
     * You can search and add domains from your list of domains.
     * You can filter alerts by **edge status code**, **origin status code**, and the **IP Address**.
     * You can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
-    
-    You can also toggle Alert Grouping to receive separate alerts for your domain, edge status code, and/or origin status code. 
+
+    You can also toggle Alert Grouping to receive separate alerts for your domain, edge status code, and/or origin status code.
   limitations: |-
     Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -446,6 +446,45 @@ entries:
   associatedProducts: Tunnel
   nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/).
   otherFilters: None.
+
+- name: Device connectivity anomaly
+  audience: Zero Trust customers who want to be alerted when the number of devices connected to WARP increases or decreases significantly. For more information, refer to [DEX notifications](/cloudflare-docs/content/cloudflare-one/insights/dex/notifications/).
+  availability: All Cloudflare Zero Trust plans.
+  associatedProducts: DEX
+  nextSteps: Review your [fleet status](/cloudflare-one/insights/dex/fleet-status/) to investigate why the spike or drop occurred and which devices are impacted.
+  otherFilters: |-
+    - **Alert configuration**: Choose when to trigger a notification. Available options are _Connectivity spike_, _Connectivity drop_, and _Connectivity spike or drop_.
+    - Filters:
+      - **Colo**: Cloudflare data center that the device is connected to.
+      - **Platform**: Operating system of the device.
+      - **Version**: WARP client version (for example, `2024.3.409.0`).
+      - **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
+
+- name: DEX test latency
+  audience: Zero Trust customers who wish to receive alerts when application latency increases or decreases significantly. Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).
+  availability: All Cloudflare Zero Trust plans.
+  associatedProducts: DEX
+  nextSteps: View your [test results](/cloudflare-one/insights/dex/tests/view-results/) to investigate why the spike occurred.
+  otherFilters: |-
+    - **Alert configuration**: Choose when to trigger a notification. Available options are _Latency spike_, _Latency drop, and _Latency spike or drop_
+    - Filters:
+      - **Colo**: Cloudflare data center that the device is connected to.
+      - **Platform**: Operating system of the device.
+      - **Version**: WARP client version (for example, `2024.3.409.0`).
+      - **Test name**: Choose which DEX test the alert should monitor.
+
+- name: DEX test low availability
+  audience: Zero Trust customers who wish to receive alerts when application availability drops below the selected service-level objective (SLO). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).
+  availability: All Cloudflare Zero Trust plans.
+  associatedProducts: DEX
+  nextSteps: View your [test results](/cloudflare-one/insights/dex/tests/view-results/) to investigate why the degradation occurred.
+  otherFilters: |-
+    - **Service Level Objective (SLO)**: Specify the availability threshold that will trigger an alert. Enter a percentage in `xx.x` format (for example, `98.0`).
+    - Filters:
+      - **Colo**: Cloudflare data center that the device is connected to.
+      - **Platform**: Operating system of the device.
+      - **Version**: WARP client version (for example, `2024.3.409.0`).
+      - **Test name**: Choose which DEX test the alert should monitor.
 
 - name: Advanced Security Events Alert
   audience: Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
