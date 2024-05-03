@@ -11,57 +11,64 @@ When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east
 
 With Bedrock, you'll need to sign the URL before you make requests to AI Gateway. You can try using the [aws4fetch](https://github.com/mhart/aws4fetch) sdk like below.
 
-```javascript
+```typescript
 import { AwsClient } from 'aws4fetch'
 
+inferface Env {
+  const accessKey: string;
+  const secretAccessKey: string;
+}
+
 export default {
-    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 
-        // replace with your configuration
-        const endpoint = 'https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID/GATEWAY/aws-bedrock/bedrock-runtime/REGION/model/amazon.titan-embed-text-v1/invoke';
-        const accessKey = 'removed';
-        const secretKey = 'removed';
-        const region = 'us-east-1';
+    // replace with your configuration
+    const cfAccountId = "ACCOUNT_ID";
+    const gatewayName = "GATEWAY_NAME";
+    const region = 'us-east-1';
 
-        const requestData = {
-                inputText: "What does ethereal mean?"
-        };
+    // added as secrets (https://developers.cloudflare.com/workers/configuration/secrets/)
+    const accessKey = env.accessKey;
+    const secretKey = env.secretAccessKey;
 
-        const headers = {
-                'Content-Type': 'application/json'
-        };
+    const requestData = {
+      inputText: "What does ethereal mean?"
+    };
 
+    const headers = {
+      'Content-Type': 'application/json'
+    };
 
-        // sign the original request
-        const stock_url = new URL("https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-embed-text-v1/invoke")
+    // sign the original request
+    const stockUrl = new URL("https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-embed-text-v1/invoke")
 
-        const awsClient = new AwsClient({
-                accessKeyId: accessKey,
-                secretAccessKey: secretKey,
-                region: region,
-                service: "bedrock"
-        })
+    const awsClient = new AwsClient({
+      accessKeyId: accessKey,
+      secretAccessKey: secretKey,
+      region: region,
+      service: "bedrock"
+    });
 
-        const presigned_request = await awsClient.sign(stock_url.toString(), {
-                method: "POST",
-                headers: headers
-        });
+    const presignedRequest = await awsClient.sign(stockUrl.toString(), {
+      method: "POST",
+      headers: headers
+    });
 
-        // change the signed request's host to AI Gateway 
-        const stock_url_signed = new URL(presigned_request.url);
-        stock_url_signed.host = "gateway.ai.cloudflare.com"
-        stock_url_signed.pathname = "/v1/ACCOUNT_ID/GATEWAY/aws-bedrock/bedrock-runtime/REGION/model/amazon.titan-embed-text-v1/invoke"
+    // change the signed request's host to AI Gateway
+    const stockUrlSigned = new URL(presignedRequest.url);
+    stockUrlSigned.host = "gateway.ai.cloudflare.com"
+    stockUrlSigned.pathname = `/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/amazon.titan-embed-text-v1/invoke`
 
-        // make request
-        const response = await fetch(stock_url_signed, {
-            method: 'POST',
-            headers: presigned_request.headers,
-            body: JSON.stringify(requestData)
-        })
+    // make request
+    const response = await fetch(stockUrlSigned, {
+      method: 'POST',
+      headers: presignedRequest.headers,
+      body: JSON.stringify(requestData)
+    })
 
-        const data = await response.json();
+    const data = await response.json();
 
-        return new Response(data);
-    },
+    return new Response(JSON.stringify(response));
+  },
 };
 ```
