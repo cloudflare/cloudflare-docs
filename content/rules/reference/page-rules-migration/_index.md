@@ -6,7 +6,7 @@ weight: 3
 
 # Page Rules migration guide
 
-**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, the creation of new Page Rules will no longer be available from 2025-01-06 onward, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the [Cloudflare API](/api/), and the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/).
+**Cloudflare Page Rules are being deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, the creation of new Page Rules will no longer be available from 2025-01-06 onward, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the [Cloudflare API](/api/), and the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/).
 
 Cloudflare recommends that you start transitioning from Page Rules to our new Rules features immediately by following the recommendations in this migration guide.
 
@@ -22,7 +22,7 @@ Cloudflare recommends that you start transitioning from Page Rules to our new Ru
 
 Cloudflare Page Rules has several fundamental limitations, such as triggering solely based on URL patterns and being limited to 125 rules per zone for performance reasons. These rules are also complex to debug when multiple page rules apply to the same incoming request.
 
-In 2022, we announced in our blog [“The future of Page Rules”](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
+In 2022, we announced in our blog post [The future of Page Rules](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
 
 ## Main differences
 
