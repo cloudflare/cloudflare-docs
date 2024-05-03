@@ -974,9 +974,187 @@ TODO
 
 ### Migrate Forwarding URL
 
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule permanently redirecting `www.example.com` to `example.com` on all URI paths:
+
+- **URL**: `www.example.com/*`
+- **Setting**: Forwarding URL
+- **Select Status code**: 301 - Permanent Redirect
+- **Destination URL**: `https://example.com/$1`
+
+**How to migrate**:
+
+1. Create a [dynamic redirect](/rules/url-forwarding/single-redirects/) to permanently redirect requests from `www.example.com` to `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname equals "www.example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host eq "www.example.com")`
+
+    - **Then**:
+        - **Type**: _Dynamic_
+        - **Expression**: `concat("https://example.com", http.request.uri.path)`
+        - **Status code**: _301_
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a dynamic redirect
+-------------------------|------------------------------
+![Example Page Rule with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate Host Header Override
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule changing the `Host` HTTP header to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Host Header Override
+- **Enter value**: `example.saas-provider.com`
+
+**How to migrate**:
+
+1. [Create an origin rule](/rules/origin-rules/create-dashboard/) change the `Host` header to `example.saas-provider.com` for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then**:
+        - **Set origin parameters**:
+            - **Host Header** > **Rewrite to**: `example.saas-provider.com`
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the origin rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to an origin rule
+-------------------------|--------------------------------
+![Example Page Rule with 'Host Header Override' setting](/images/rules/reference/page-rules-migration/pr-host-header-override.png) | ![Origin rule matching the 'Host Header Override' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-host-header-override-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate IP Geolocation Header
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: IP Geolocation Header
+- **Value**: On
+
+**How to migrate**:
+
+1. [Turn on the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/) — a Transform Rules feature — to add the `CF-IPCountry` and other location headers to all requests.
+2. Turn off your existing Page Rule and validate the behavior of the Managed Transform.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a Managed Transform
+-------------------------|-------------------------------
+![Example Page Rule with 'IP Geolocation Header' setting](/images/rules/reference/page-rules-migration/pr-ip-geolocation-header.png) | ![The 'Add visitor location headers' Managed Transform matching the 'IP Geolocation Header' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-ip-geolocation-header-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate Mirage
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning off Mirage for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Mirage
+- **Value**: Off
+
+**How to migrate**:
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Mirage for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: Mirage
+        - **Value**: Off
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Example Page Rule with 'Mirage' setting](/images/rules/reference/page-rules-migration/pr-mirage.png) | ![Configuration rule matching the 'Mirage > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-mirage-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate Opportunistic Encryption
 ### Migrate Origin Cache Control
 ### Migrate Origin Error Page Pass-thru
