@@ -71,10 +71,10 @@ interface Env {
 }
 
 export default {
-    async fetch(request: Request, environment: Env) {
+    async fetch(request, environment): Promise<Response> {
         return await environment.MY_CERT.fetch("https://a-secured-origin.com")
     }
-}
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}

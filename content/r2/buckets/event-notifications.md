@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Event notifications
 
-Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/reference/pull-consumers/) from outside of Cloudflare Workers. 
+Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers. 
 
 
 {{<Aside type="note" header="Open Beta">}}
@@ -21,7 +21,7 @@ The event notifications feature is currently in open beta. To report bugs or req
 Before getting started, you will need:
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
 - An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
-- A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/reference/pull-consumers/) enabled on your Queue.
+- A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/configuration/pull-consumers/) enabled on your Queue.
 
 ### Set up Wrangler
 
@@ -84,7 +84,7 @@ For a more complete step-by-step example, refer to the [Log and store upload eve
 
 ## Message format
 
-Queue consumers receive notifications as [Messages](/queues/reference/javascript-apis/#message). The following is an example of the body of a message that a consumer Worker will receive:
+Queue consumers receive notifications as [Messages](/queues/configuration/javascript-apis/#message). The following is an example of the body of a message that a consumer Worker will receive:
 
 ```json
 {

@@ -2,6 +2,8 @@
 title: Test APIs
 pcx_content_type: reference
 weight: 5
+meta:
+  description: Runtime helpers for writing tests, exported from the `cloudflare:test` module.
 ---
 
 # Test APIs
@@ -157,7 +159,7 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 - {{<code>}}createMessageBatch(queueName:{{<param-type>}}string{{</param-type>}}, messages:{{<param-type>}}ServiceBindingQueueMessage[]{{</param-type>}}){{</code>}}: {{<type>}}MessageBatch{{</type>}}
 
-  - Creates an instance of `MessageBatch` for use as the first argument to modules-format [`queue()`](/queues/reference/javascript-apis/#consumer) exported handlers.
+  - Creates an instance of `MessageBatch` for use as the first argument to modules-format [`queue()`](/queues/configuration/javascript-apis/#consumer) exported handlers.
 
 - {{<code>}}getQueueResult(batch:{{<param-type>}}MessageBatch{{</param-type>}}, ctx:{{<param-type>}}ExecutionContext{{</param-type>}}){{</code>}}: {{<type>}}Promise\<FetcherQueueResult>{{</type>}}
 

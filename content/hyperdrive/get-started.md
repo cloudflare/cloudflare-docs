@@ -1,7 +1,7 @@
 ---
-weight: 2
 title: Get started
 pcx_content_type: get-started
+weight: 2
 ---
 
 # Get started
@@ -54,16 +54,15 @@ Refer to [How Workers works](/workers/reference/how-workers-works/) to learn abo
 Create a new project named `hyperdrive-tutorial` by running:
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare@latest hyperdrive-tutorial
 ```
 
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
-- Name your directory `hyperdrive-tutorial`.
-- Choose `"Hello World" Worker` for the type of application.
-- Select `yes` to using TypeScript.
-- Select `yes` to using Git.
-- Select `no` to deploying.
+1. Choose `"Hello World" Worker` for the type of application.
+2. Select `yes` to using TypeScript.
+3. Select `yes` to using Git.
+4. Select `no` to deploying.
 
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
@@ -156,7 +155,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/observability/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -219,7 +218,7 @@ export interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+	async fetch(request, env, ctx): Promise<Response> {
 		console.log(JSON.stringify(env))
 		// Create a database client that connects to your database via Hyperdrive
 		// Hyperdrive generates a unique connection string you can pass to
@@ -229,7 +228,7 @@ export default {
       host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
 			password: env.HYPERDRIVE.password,
-			port: Number(env.HYPERDRIVE.port),
+			port: env.HYPERDRIVE.port,
 			database: env.HYPERDRIVE.database
 		})
 
@@ -247,7 +246,7 @@ export default {
 			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 In the code above, you have:
@@ -276,6 +275,6 @@ By finishing this tutorial, you have created a Hyperdrive configuration, a Worke
 
 - Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
 - How to [configure query caching](/hyperdrive/configuration/query-caching/).
-- [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
+- [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

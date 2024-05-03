@@ -3,7 +3,9 @@ type: example
 summary: Set up custom domain for Images using a Worker or serve images using a prefix path and Cloudflare registered domain.
 tags:
   - Images
-  - Workers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Custom Domain with Images
 weight: 1001
@@ -41,7 +43,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     // You can find this in the dashboard, it should look something like this: ZWd9g1K7eljCn_KDTu_MWA
     const accountHash = "";
 

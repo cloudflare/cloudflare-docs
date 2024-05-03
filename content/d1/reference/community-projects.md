@@ -16,13 +16,6 @@ Community projects are not maintained by the Cloudflare D1 team. They are manage
 
 ## Projects
 
-### Backup/export tools
-
-Two community tools are available for creating backups/exports of D1 databases as `.sql` files. D1 exports can be restored using Wrangler.
-
-* [Cretezy/cloudflare-d1-backup](https://github.com/Cretezy/cloudflare-d1-backup) which runs in your command line using the [D1 API](/api/operations/cloudflare-d1-query-database) (slower but simpler.)
-* [nora-soderlund/cloudflare-d1-backups](https://github.com/nora-soderlund/cloudflare-d1-backups) which runs in deployed Workers using [D1 Bindings](/workers/runtime-apis/bindings/) (faster but more complex.)
-
 ### Prisma ORM
 
 [Prisma ORM](https://www.prisma.io/orm) is a next-generation JavaScript and TypeScript ORM that unlocks a new level of developer experience when working with databases thanks to its intuitive data model, automated migrations, type-safety and auto-completion.
@@ -46,12 +39,11 @@ The `feathers-kysely` database adapter follows the FeathersJS Query Syntax stand
 * [feathers-kysely on GitHub](https://github.com/marshallswain/feathers-kysely)
 
 ### Drizzle ORM
+Drizzle is a headless TypeScript ORM with a head which runs on Node, Bun and Deno. Drizzle ORM lives on the Edge and it is a JavaScript ORM too. It comes with a drizzle-kit CLI companion for automatic SQL migrations generation. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
 
-Drizzle ORM is a TypeScript ORM for SQL databases designed with maximum type safety in mind. It also comes with an automatic migrations generation tool. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
-
+* [Docs](https://orm.drizzle.team/docs)
 * [GitHub](https://github.com/drizzle-team/drizzle-orm)
-* [D1 example](https://github.com/drizzle-team/drizzle-orm/tree/main/examples/cloudflare-d1)
-* [SQLite API surface](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/sqlite-core/README.md)
+* [D1 example](https://orm.drizzle.team/docs/get-started-sqlite#cloudflare-d1)
 
 ### d1-orm
 

@@ -1,7 +1,6 @@
-
 ---
 title: Cloudflare Workers KV
-weight: xx
+weight: 1
 layout: overview
 pcx_content_type: overview
 ---

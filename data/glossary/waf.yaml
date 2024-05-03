@@ -41,7 +41,7 @@ entries:
 
 - term: paranoia level
   general_definition: |-
-    classifies rules of the OWASP managed ruleset according to their agressiveness.
+    classifies rules of the OWASP managed ruleset according to their aggressiveness.
 
 - term: rate limiting
   general_definition: |-

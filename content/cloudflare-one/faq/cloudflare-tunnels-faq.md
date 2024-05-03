@@ -111,6 +111,8 @@ To log external visitor IPs, you will need to [configure an alternative method](
 
 Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to Argo Tunnel to match. Once we no longer required users to purchase Argo to create Tunnels, we renamed Argo Tunnel to Cloudflare Tunnel.
 
+For more information about migrating from Argo Tunnel, refer to [Migrate legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/).
+
 {{</faq-answer>}}
 {{</faq-item>}}
 

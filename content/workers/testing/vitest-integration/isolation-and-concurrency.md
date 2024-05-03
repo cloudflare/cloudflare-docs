@@ -2,6 +2,8 @@
 title: Isolation and concurrency
 pcx_content_type: concept
 weight: 6
+meta:
+  description: Review how the Workers Vitest integration runs your tests, how it isolates tests from each other, and how it imports modules.
 ---
 
 # Isolation and concurrency

@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: OneLogin OIDC
-weight: 12
+title: OneLogin
+weight: 19
 ---
 
-# OneLogin OIDC
+# OneLogin
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC identity provider.
 
@@ -23,7 +23,7 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
-    
+
     You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 6. Select **Save**.

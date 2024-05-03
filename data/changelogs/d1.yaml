@@ -2,6 +2,13 @@
 link: "/d1/platform/changelog/"
 productName: D1
 entries:
+  - publish_date: "2024-04-30"
+    title: D1 alpha databases will stop accepting live SQL queries on August 1, 2024
+    description: |-
+      Previously [deprecated alpha](/d1/platform/changelog/#2024-04-05) D1 databases need to be migrated by August 1, 2024 to accept new queries. 
+
+      Refer to [alpha database migration guide](/d1/platform/alpha-migration/) to migrate to the new, generally available, database architecture.
+
   - publish_date: "2024-04-12"
     title: HTTP API now returns a HTTP 400 error for invalid queries
     description: |-
@@ -10,9 +17,9 @@ entries:
       D1's [Workers API](/d1/build-with-d1/d1-client-api/) is unaffected by this change. 
 
   - publish_date: "2024-04-05"
-    title: D1 alpha databases will stop accepting live SQL queries on July 1, 2024
+    title: D1 alpha databases are deprecated
     description: |-
-      Now that D1 is generally available and production ready, alpha D1 databases are deprecated and need to be migrated by July 1, 2024 to accept new queries. 
+      Now that D1 is generally available and production ready, alpha D1 databases are deprecated and should be migrated for better performance, reliability, and ongoing support. 
 
       Refer to [alpha database migration guide](/d1/platform/alpha-migration/) to migrate to the new, generally available, database architecture.
 

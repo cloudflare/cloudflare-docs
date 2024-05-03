@@ -4,6 +4,13 @@ summary: Redirect requests from one URL to another or from one set of URLs to
   another set.
 tags:
   - Middleware
+  - Redirects
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Redirect
 weight: 6
@@ -22,7 +29,7 @@ layout: example
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const destinationURL = "https://example.com";
     const statusCode = 301;
     return Response.redirect(destinationURL, statusCode);
@@ -72,7 +79,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     const base = "https://example.com";
     const statusCode = 301;
 

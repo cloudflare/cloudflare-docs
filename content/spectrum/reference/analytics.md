@@ -86,3 +86,6 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analy
    -H "X-Auth-Key: 0000" \
    -H "Content-Type: application/json"
 ```
+
+Refer to the [Spectrum API documentation](/api/operations/spectrum-aggregate-analytics-get-current-aggregated-analytics) for more examples of API requests.
+

@@ -21,8 +21,8 @@
     <link rel="preload" href="{{$littlefootJS}}" as="script" />
     <link rel="stylesheet" href="{{$littlefootCSS}}" />
 
-    
-    {{- block "styles" . -}}{{- end -}} 
+
+    {{- block "styles" . -}}{{- end -}}
 
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
     {{- partial "script" (dict "src" "main.ts" "defer" true) -}}
@@ -35,7 +35,7 @@
   </head>
   <body>
     {{- block "main" . -}}{{- end -}}
-    <script defer src="{{$littlefootJS}}" type="application/javascript" ></script> 
+    <script defer src="{{$littlefootJS}}" type="application/javascript" ></script>
     <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
   </body>
 </html>
