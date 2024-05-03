@@ -1500,6 +1500,54 @@ TODO
 {{</tabs>}}
 
 ### Migrate Rocket Loader
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning off Rocket Loader for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Rocket Loader
+- **Value**: Off
+
+**How to migrate**:
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Rocket Loader for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: Rocket Loader
+        - **Value**: Off
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Example Page Rule with 'Rocket Loader' setting](/images/rules/reference/page-rules-migration/pr-rocket-loader.png) | ![Configuration rule matching the 'Rocket Loader > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-rocket-loader-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate Security Level
 ### Migrate True Client IP
 ### Migrate SSL
