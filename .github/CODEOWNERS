@@ -47,6 +47,7 @@
 /content/cloudflare-one/policies/browser-isolation/ @maxvp @cloudflare/pcx-technical-writing
 /content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /content/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
 
 # Consumer products
 /content/1.1.1.1/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
