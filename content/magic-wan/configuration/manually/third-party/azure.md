@@ -43,9 +43,9 @@ The local network gateway typically refers to your on-premises location. In this
 
 ### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
-Magic WAN uses [Tunnel Health Checks](/magic-wan/reference/tunnel-health-checks/) to ensure the tunnel is up and running.
+Magic WAN uses [tunnel health checks](/magic-wan/reference/tunnel-health-checks/) to ensure the tunnel is up and running.
 
-When configuring Magic IPsec Tunnels, Cloudflare typically allows customers to select an IP address ([RFC1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) with either a `/30` or `/31` subnet and will automatically determine the IP address of the remote tunnel endpoint.
+When configuring Magic IPsec Tunnels, Cloudflare typically allows customers to select an IP address ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) with either a `/30` or `/31` subnet and will automatically determine the IP address of the remote tunnel endpoint.
 
 Due to the nature of how the Azure Local Network Gateway requires specifying a subnet as opposed to a remote tunnel endpoint, we recommend using a `/31` subnet (RFC 3021, using 31-bit prefixes on [IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021)).
 
@@ -352,8 +352,8 @@ We have identified cases where the IPsec Tunnels configured on the Azure Virtual
 2. Go to **Settings** > **Connections**.
 3. Open the properties of the tunnel.
 4. Go to **Help** > **Reset**.
-5. Select the **Reset** button.
+5. Select **Reset**.
 
-It may take several minutes for the tunnels to reset from the Azure side. Monitor the [tunnel health checks section](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) in the Cloudflare Dashboard to determine the status.
+It may take several minutes for the tunnels to reset from the Azure side. Monitor the [tunnel health checks section](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) in the Cloudflare dashboard to determine the status.
 
 {{<Aside type="note">}}Tunnel Health Check percentages are calculated over a one hour period.{{</Aside>}}
