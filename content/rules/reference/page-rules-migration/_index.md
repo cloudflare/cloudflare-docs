@@ -6,7 +6,7 @@ weight: 3
 
 # Page Rules migration guide
 
-**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, Page Rules will switch to read-only mode on 2025-01-06, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the Cloudflare API, and the Cloudflare Terraform provider.
+**Cloudflare Page Rules is now deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, the creation of new Page Rules will no longer be available from 2025-01-06 onward, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the Cloudflare API, and the Cloudflare Terraform provider.
 
 Cloudflare recommends that you start transitioning from Page Rules to our new Rules features immediately by following the recommendations in this migration guide.
 
@@ -15,8 +15,8 @@ Cloudflare recommends that you start transitioning from Page Rules to our new Ru
 - **2024-07-01** – Page Rules no longer available for new Cloudflare accounts and zones on a Free plan.
 - **2024-08-01** – Page Rules no longer available for new Cloudflare accounts and zones on a Pro or Business plan.
 - **2024-10-01** – Page Rules no longer available for new Cloudflare accounts and zones on an Enterprise plan.
-- **2025-01-06** – For existing accounts and zones on any plan, you can no longer create or edit Page Rules (read-only mode).
-- **2025 (all year)** – Migration of existing Page Rules to modern Rules features.
+- **2025-01-06** – For existing accounts and zones on any plan, you can no longer create new Page Rules (maintenance mode).
+- **2025 (all year)** – Migration of existing Page Rules to modern Rules features. You cannot edit any existing Page Rules eligible for migration during this migration period.
 
 ## Context
 
@@ -52,6 +52,8 @@ The following Page Rules settings will not be migrated to other types of rules:
 - **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
 
 If you have a use case for these settings and you intend to keep their behavior, you will need to implement it yourself using new Rules features, since these settings will not be migrated.
+
+All other Page Rules settings will be migrated during 2025.
 
 ## Feature correspondence table
 
@@ -1679,3 +1681,9 @@ TODO
 
 {{</tab>}}
 {{</tabs>}}
+
+---
+
+## More resources
+
+If you have feedback to share, visit our [community thread](#).
