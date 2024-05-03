@@ -66,7 +66,7 @@ export default {
       body: JSON.stringify(requestData)
     })
 
-    if (response.ok && response.headers.get('content-type').includes('application/json')) {
+    if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
       const data = await response.json();
       return new Response(JSON.stringify(response));
     } else {
