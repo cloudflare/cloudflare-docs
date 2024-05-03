@@ -1353,7 +1353,104 @@ TODO
 
 
 ### Migrate Query String Sort
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning on Query String Sort for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Query String Sort
+- **Value**: On
+
+**How to migrate**:
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to sort query string parameters for caching purposes, for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then**:
+        - **Cache eligibility**: Eligible for cache
+        - **Cache key** > **Sort query string**: On
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a cache rule
+-------------------------|------------------------
+![Example Page Rule with 'Query String Sort' setting](/images/rules/reference/page-rules-migration/pr-query-string-sort.png) | ![Cache rule matching the 'Query String Sort > On' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-query-string-sort-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
 ### Migrate Resolve Override
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule changing the origin to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Resolve Override
+- **Enter value**: `example.saas-provider.com`
+
+**How to migrate**:
+
+1. [Create an origin rule](/rules/origin-rules/create-dashboard/) overriding the origin to `example.saas-provider.com` for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then**:
+        - **Set origin parameters**:
+            - **DNS Record** > **Override to**: `example.saas-provider.com`
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the origin rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to an origin rule
+-------------------------|--------------------------------
+![Example Page Rule with 'Resolve Override' setting](/images/rules/reference/page-rules-migration/pr-resolve-override.png) | ![Origin rule matching the 'Resolve Override' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-resolve-override-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
+
 ### Migrate Respect Strong ETags
 ### Migrate Rocket Loader
 ### Migrate Security Level
