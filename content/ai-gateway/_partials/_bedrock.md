@@ -15,8 +15,8 @@ With Bedrock, you'll need to sign the URL before you make requests to AI Gateway
 import { AwsClient } from 'aws4fetch'
 
 inferface Env {
-  const accessKey: string;
-  const secretAccessKey: string;
+  accessKey: string;
+  secretAccessKey: string;
 }
 
 export default {
