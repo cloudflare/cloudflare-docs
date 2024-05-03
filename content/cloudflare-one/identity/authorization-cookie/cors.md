@@ -47,14 +47,14 @@ There are three ways you can resolve this error:
 
 ### Bypass OPTIONS requests to origin
 
-Cloudflare Access can be configured to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
+You can configure Cloudflare to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
 3. In the **Settings** tab, scroll down to **CORS settings**.
-4. Enable the **Bypass options requests to origin** toggle. This will remove all existing CORS settings for this application.
+4. Turn on **Bypass options requests to origin**. This will remove all existing CORS settings for this application.
 
-It is still important to enforce CORS for the Access JWT, this option should only be used if you have CORS enforcement established in your origin server.
+It is still important to enforce CORS for the Access JWT -- this option should only be used if you have CORS enforcement established in your origin server.
 
 ### Configure response to preflight requests
 
