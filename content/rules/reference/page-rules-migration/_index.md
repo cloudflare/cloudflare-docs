@@ -1303,6 +1303,55 @@ TODO
 {{</tabs>}}
 
 ### Migrate Polish
+
+{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule turning off Polish for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Polish
+- **Value**: Off
+
+**How to migrate**:
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Polish for any hostname containing `example.com`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname contains "example.com"`
+        - Using the Expression Editor:<br>
+            `(http.host contains "example.com")`
+
+    - **Then the settings are**:
+        - **Type**: Polish
+        - **Value**: Off
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a configuration rule
+-------------------------|--------------------------------
+![Example Page Rule with 'Polish' setting](/images/rules/reference/page-rules-migration/pr-polish.png) | ![Configuration rule matching the 'Polish > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-polish-new.png)
+
+{{</tab>}}
+{{<tab label="terraform" no-code="true">}}
+
+TODO
+
+{{</tab>}}
+{{</tabs>}}
+
+
 ### Migrate Query String Sort
 ### Migrate Resolve Override
 ### Migrate Respect Strong ETags
