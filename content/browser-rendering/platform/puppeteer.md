@@ -67,7 +67,7 @@ This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the 
 
 If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](../../get-started/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
-```
+```js
 const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
 ```
 
