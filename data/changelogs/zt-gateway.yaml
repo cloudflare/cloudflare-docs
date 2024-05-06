@@ -5,4 +5,4 @@ entries:
 - publish_date: '2024-04-05'
   title: Gateway file type control improvements
   description: |-
-    Gateway now offers a more extensive, categorized [list of files](https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) to control uploads and downloads.
+    Gateway now offers a more extensive, categorized [list of files](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) to control uploads and downloads.

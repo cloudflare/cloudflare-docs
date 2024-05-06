@@ -5,4 +5,4 @@ entries:
 - publish_date: '2024-04-16'
   title: Optical character recognition
   description: |-
-    DLP can now [detect sensitive data](https://developers.cloudflare.com/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#optical-character-recognition-ocr) in jpeg, jpg, and pgn files. This helps companies prevent the leak of sensitive data in images, such as screenshots.
+    DLP can now [detect sensitive data](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#optical-character-recognition-ocr) in jpeg, jpg, and pgn files. This helps companies prevent the leak of sensitive data in images, such as screenshots.
