@@ -10,9 +10,13 @@ _build:
 3. Select **Settings**.
 4. On **Endpoint settings**, select **Manage identifiers**.
 5. Choose the type of session identifier (cookie, HTTP header, or JWT claim).
-  * If using a JWT claim, choose the Token Configuration that will verify the JWT. 
-{{<Aside type="Note">}} Token configurations are required to use JWT claims as session identifiers. Refer to [JWT Validation](/api-shield/security/jwt-validation/) for more information. 
+
+{{<Aside type="note">}}
+If you are using a JWT claim, choose the [Token Configuration](/api-shield/security/jwt-validation/configure/#token-configurations) that will verify the JWT. Token Configurations are required to use JWT claims as session identifiers. 
+
+Refer to [JWT Validation](/api-shield/security/jwt-validation/) for more information. 
 {{</Aside>}}
+
 6. Enter the name of the session identifier
 7. Select **Save**. 
 
