@@ -45,6 +45,11 @@ Drizzle is a headless TypeScript ORM with a head which runs on Node, Bun and Den
 * [GitHub](https://github.com/drizzle-team/drizzle-orm)
 * [D1 example](https://orm.drizzle.team/docs/get-started-sqlite#cloudflare-d1)
 
+### Flyweight
+Flyweight is an ORM designed specifically for databases related to SQLite. It has first-class D1 support that includes the ability to batch queries and integrate with the wrangler migration system.
+
+* [GitHub](https://github.com/thebinarysearchtree/flyweight)
+
 ### d1-orm
 
 Object Relational Mapping (ORM) is a technique to query and manipulate data by using JavaScript. Created by a Cloudflare Discord Community Champion, the `d1-orm` seeks to provide a strictly typed experience while using D1.
