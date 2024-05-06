@@ -23,9 +23,9 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-04-22</td>
-      <td>2024-04-29</td>
-      <td>Block</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
       <td>100532_BETA</td>
       <td>{{<rule-id>}}048dc8c7995f44b5871eed98554f9705{{</rule-id>}}</td>
       <td>Vulnerability scanner - Activity Beta</td>
