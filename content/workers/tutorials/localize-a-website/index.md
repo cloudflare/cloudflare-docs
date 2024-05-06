@@ -1,5 +1,5 @@
 ---
-updated: 2020-08-03
+updated: 2024-05-06
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -8,27 +8,27 @@ title: Localize a website with HTMLRewriter
 
 # Localize a website with HTMLRewriter
 
-{{<render file="_tutorials-wrangler-v1-warning.md">}}
-
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 
 The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML on the Cloudflare global network. This gives developers the ability to efficiently and transparently customize their Workers applications.
 
-In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
+In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based on your visitors’ location in the world.
 
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
 
-## Setup
+## Prerequisites
 
 This tutorial is designed to use an existing website. To simplify this process, you will use a free HTML5 template from [HTML5 UP](https://html5up.net). With this website as the base, you will use the `HTMLRewriter` functionality in the Workers platform to overlay an i18n layer, automatically translating the site based on the user’s language.
 
-If you would like to deploy your own version of the site, you can find the source [on GitHub](https://github.com/signalnerve/i18n-example-workers). Instructions on how to deploy this application can be found in the project’s README.
+If you would like to deploy your own version of the site, you can find the source [on GitHub](https://github.com/lauragift21/i18n-example-workers). Instructions on how to deploy this application can be found in the project’s README.
 
-## Create a project
+## Create a new application
 
-Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
+Create a new application by using the create-cloudflare  
+
+cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
 
 ```sh
 ~/ $ npx wrangler generate i18n-example worker-sites
@@ -36,19 +36,17 @@ Create a new project by cloning the [Workers Sites](https://github.com/cloudflar
 ~/i18n-example $
 ```
 
-The `--site` flag tells Wrangler that you want to build a [Workers Sites](/workers/configuration/sites/start-from-scratch) project. This means that there will be both a Workers script and a static site component, which includes any HTML and page assets that you want to serve to the user. Inside the Worker, you can customize the HTML response using `HTMLRewriter`.
-
-The newly generated `i18n-example` project will contain two folders: `public`, which is your static HTML, and `workers-site`:
+The newly generated `i18n-example` project will contain two folders: `public`, which is your static HTML, and `functions`:
 
 ```sh
 $ ~/i18n-example
 ls
-public workers-site wrangler.toml
+functions public wrangler.toml
 ```
 
 Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
 
-With the static HTML for this project updated, you can focus on the Workers script inside of the `workers-site` folder, at `index.js`.
+With the static HTML for this project updated, you can focus on the script inside of the `functions` folder, at `index.js`.
 
 ## Understanding `data-i18n-key`
 
@@ -80,19 +78,31 @@ Another feature of this project is based on the `Accept-Language` header, which 
 
 ## Using the HTML Rewriter API
 
-Begin with the `workers-site/index.js` file. Your Workers application in this tutorial will live entirely in this file.
+Begin with the `functions/index.js` file. Your application in this tutorial will live entirely in this file.
 
-Inside of this file, the default code for running a [Workers Site](/workers/configuration/sites/start-from-scratch) has been provided. The crucial part of the generated code lives in the `handleEvent` function. The `getAssetFromKV` function retrieves a website asset uploaded from your local `./public` folder, makes it live on Workers KV, and returns it to the user. For now, ignore `getAssetFromKV` (though if you would like to learn more, refer to [the Workers sites documentation](/workers/configuration/sites/start-from-worker/).
-
-To implement translations on the site, take the HTML response retrieved from KV and pass it into a new instance of `HTMLRewriter`. When instantiating `HTMLRewriter`, you can attach handlers using the `on` function. For this tutorial, you will use the `[data-i18n-key]` selector (refer to the [HTMLRewriter documentation](/workers/runtime-apis/html-rewriter/) for more advanced usage) to locate all elements with the `data-i18n-key` attribute, which means that they must be translated. Any matching element will be passed to an instance of your `ElementHandler` class, which will contain the translation logic. With the created instance of `HTMLRewriter`, the `transform` function takes a `response` and can be returned to the client:
+Inside of this file, start by adding the default code for running a [Pages Function](/pages/functions/get-started/#create-a-function). 
 
 ```js
 ---
-filename: workers-site/index.js
+filename: functions/index.js
 ---
-async function handleEvent(event) {
-  const response = await getAssetFromKV(event);
-  return new HTMLRewriter().on('[data-i18n-key]', new ElementHandler()).transform(response);
+export function onRequest(context) {
+  return new Response("Hello, world!")
+}
+```
+
+The important part of the code lives in the `onRequest` function. To implement translations on the site, take the HTML response retrieved from `env.ASSETS.fetch(request)` this allows you to fetch a static asset from your Pages project and pass it into a new instance of `HTMLRewriter`. When instantiating `HTMLRewriter`, you can attach handlers using the `on` function. For this tutorial, you will use the `[data-i18n-key]` selector (refer to the [HTMLRewriter documentation](/workers/runtime-apis/html-rewriter/) for more advanced usage) to locate all elements with the `data-i18n-key` attribute, which means that they must be translated. Any matching element will be passed to an instance of your `ElementHandler` class, which will contain the translation logic. With the created instance of `HTMLRewriter`, the `transform` function takes a `response` and can be returned to the client:
+
+```js
+---
+filename: functions/index.js
+---
+export async function onRequest(context) {
+  const { request, env } = context;
+  const response = await env.ASSETS.fetch(request)
+  return new HTMLRewriter()
+    .on('[data-i18n-key]', new ElementHandler(countryStrings))
+    .transform(response)
 }
 ```
 
@@ -104,7 +114,7 @@ In [How it works](#understanding-data-i18n-key), the documentation describes `da
 
 ```js
 ---
-filename: workers-site/index.js
+filename: functions/index.js
 ---
 class ElementHandler {
   element(element) {
@@ -117,11 +127,13 @@ With `i18nKey` defined, you can use it to search for a corresponding translated 
 
 ```js
 ---
-filename: workers-site/index.js
-highlight: [1,2,3,8]
+filename: functions/index.js
+highlight: [1,2,3,4,5,10]
 ---
 const strings = {
-  headline: 'Beispielseite',
+  de: {
+    headline: 'Beispielseite',
+  }
 };
 
 class ElementHandler {
@@ -136,11 +148,13 @@ Take your translated `string` and insert it into the original element, using the
 
 ```js
 ---
-filename: workers-site/index.js
-highlight: [9,10,11]
+filename: functions/index.js
+highlight: [11, 12, 13]
 ---
 const strings = {
-  headline: 'Beispielseite',
+  de: {
+    headline: 'Beispielseite',
+  }
 };
 
 class ElementHandler {
@@ -154,7 +168,7 @@ class ElementHandler {
 }
 ```
 
-To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler dev`](/workers/wrangler/commands/#dev) to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
+To review that everything looks as expected, use the preview functionality built into Wrangler. Call [`wrangler pages dev ./public`](/workers/wrangler/commands/#dev) to open up a live preview of your project. The command is refreshed after every code change that you make.
 
 You can expand on this translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user’s home language, provided that it is defined in `strings`.
 
@@ -173,21 +187,17 @@ theme: dark
 ~/i18n-example $ npm i accept-language-parser
 ```
 
-Once imported into your code, use the package to parse the most relevant language for a client based on `Accept-Language` header, and pass it to `ElementHandler`. Your final code for the project, with an included sample translation for Germany (using Google Translate) looks like this:
+Once imported into your code, use the package to parse the most relevant language for a client based on `Accept-Language` header, and pass it to `ElementHandler`. Your final code for the project, with an included sample translation for Germany and Japan (using Google Translate) looks like this:
 
 ```js
 ---
-filename: workers-site/index.js
-highlight: [24,25,26,31,50,51,52,53,54,55,56]
+filename: functions/index.js
+highlight: [34,35,36,41,61,62,63,64]
 ---
-import { getAssetFromKV, defaultKeyModifier } from '@cloudflare/kv-asset-handler';
-import parser from 'accept-language-parser';
+import parser from 'accept-language-parser'
 
-const DEBUG = false;
-
-addEventListener('fetch', event => {
-  event.respondWith(handleEvent(event));
-});
+// do not set to true in production!
+const DEBUG = false
 
 const strings = {
   de: {
@@ -197,56 +207,65 @@ const strings = {
       'Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.',
     disclaimer:
       'Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!',
-    tutorial: 'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
+    tutorial:
+      'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
     copyright: 'Design von HTML5 UP.',
   },
-};
+  ja: {
+    title: 'サンプルサイト',
+    headline: 'サンプルサイト',
+    subtitle:
+      'これは私の例のサイトです。 このサイトにアクセスする世界の場所に応じて、このテキストは対応する言語に翻訳されます。',
+    disclaimer:
+      '免責事項：最初の翻訳はGoogle翻訳からのものですので、完璧ではないかもしれません！',
+    tutorial:
+      'Cloudflare Workersのドキュメントでこのプロジェクトのチュートリアルを見つけてください。',
+    copyright: 'HTML5 UPによる設計。',
+  },
+}
 
 class ElementHandler {
   constructor(countryStrings) {
-    this.countryStrings = countryStrings;
+    this.countryStrings = countryStrings
   }
 
   element(element) {
-    const i18nKey = element.getAttribute('data-i18n-key');
+    const i18nKey = element.getAttribute('data-i18n-key')
     if (i18nKey) {
-      const translation = this.countryStrings[i18nKey];
+      const translation = this.countryStrings[i18nKey]
       if (translation) {
-        element.setInnerContent(translation);
+        element.setInnerContent(translation)
       }
     }
   }
 }
 
-async function handleEvent(event) {
-  const url = new URL(event.request.url);
+export async function onRequest(context) {
+  const { request, env } = context;
   try {
-    let options = {};
+    let options = {}
     if (DEBUG) {
       options = {
         cacheControl: {
           bypassCache: true,
         },
-      };
+      }
     }
-    const languageHeader = event.request.headers.get('Accept-Language');
-    const language = parser.pick(['de'], languageHeader);
-    const countryStrings = strings[language] || {};
+    const languageHeader = request.headers.get('Accept-Language')
+    const language = parser.pick(['de', 'ja'], languageHeader)
+    const countryStrings = strings[language] || {}
 
-    const response = await getAssetFromKV(event, options);
-
+    const response = await env.ASSETS.fetch(request)
     return new HTMLRewriter()
       .on('[data-i18n-key]', new ElementHandler(countryStrings))
-      .transform(response);
+      .transform(response)
   } catch (e) {
     if (DEBUG) {
       return new Response(e.message || e.toString(), {
         status: 404,
-      });
+      })
     } else {
-      return new Response(`"${defaultKeyModifier(url.pathname)}" not found`, {
-        status: 404,
-      });
+      return env.ASSETS.fetch(request)
     }
   }
 }
@@ -254,9 +273,9 @@ async function handleEvent(event) {
 
 ## Deploy
 
-Your i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
+Your i18n tool built on Cloudflare Pages is complete and it is time to deploy it to your domain.
 
-To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/). Set this ID at the top part of your project’s `wrangler.toml` file:
+To deploy your application to a `*.pages.dev` subdomain, you need to specify a directory of static assets to serve, configure the `pages_build_output_dir` in your project’s `wrangler.toml` file and set the value to `./public`:
 
 ```toml
 ---
@@ -264,27 +283,21 @@ filename: wrangler.toml
 highlight: [2]
 ---
 name = "i18n-example"
-account_id = "6de123.."
-workers_dot_dev = true
+pages_build_output_dir = "./public"
+compatibility_date = "2024-01-29"
 ```
 
-The `[site]` section at the bottom of your `wrangler.toml` file tells Wrangler how to deploy your Workers Site. The `bucket` key tells Wrangler where to find your static assets: by default set to the `public` folder, where you placed your HTML code at the beginning of this tutorial. The `entry-point` key indicates where your Workers script is located and, like `bucket`, the default of `workers-site` should already be correctly configured for your application.
+Next, you need to configure a deploy script in `package.json` file in your project.  Add a deploy script with the value `wrangler pages deploy`:
 
-The final version of your project’s `wrangler.toml` file should look like:
-
-```toml
+```json
 ---
-filename: wrangler.toml
-highlight: [6, 7, 8]
+filename: package.json
+highlight: [3]
 ---
-name = "i18n-example"
-type = "webpack"
-account_id = "6de123.."
-workers_dot_dev = true
-
-[site]
-bucket = "./public"
-entry-point = "workers-site"
+"scripts": {
+  "dev": "wrangler pages dev",
+  "deploy": "wrangler pages deploy"
+}
 ```
 
 Using `wrangler`, deploy to Cloudflare’s network, using the `deploy` command:
@@ -293,13 +306,13 @@ Using `wrangler`, deploy to Cloudflare’s network, using the `deploy` command:
 ---
 theme: dark
 ---
-~/i18n-example $ npx wrangler deploy
+~/i18n-example $ npm run deploy
 ```
 
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
 
 ## Related resources
 
-In this tutorial, you built and deployed an i18n tool using `HTMLRewriter`. To review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/i18n-example-workers).
+In this tutorial, you built and deployed an i18n tool using `HTMLRewriter`. To review the full source code for this application, refer to the [repository on GitHub](https://github.com/lauragift21/i18n-example-workers).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).
