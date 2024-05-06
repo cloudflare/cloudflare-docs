@@ -98,6 +98,8 @@ When editing an Access application, selecting **Revoke existing tokens** revokes
 
 An alert can be configured to notify a week before a service token expires to allow an administrator to invoke a token refresh.
 
+{{<available-notifications product="Cloudflare Access">}}
+
 To configure a service token expiration alert:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Notifications** tab.
