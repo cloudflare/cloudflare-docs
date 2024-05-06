@@ -61,7 +61,7 @@ Changes uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy), v
 
 To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
 
-Versions created in this way can then be deployed all at once or gradually deployed using the [wranger versions deploy --experimental-versions](/workers/wrangler/commands/#deploy-2) command or via the Cloudflare dashboard under the **Deployments** tab.
+Versions created in this way can then be deployed all at once or gradually deployed using the [`wrangler versions deploy --experimental-versions`](/workers/wrangler/commands/#deploy-2) command or via the Cloudflare dashboard under the **Deployments** tab.
 
 {{<Aside type="note">}}
 
