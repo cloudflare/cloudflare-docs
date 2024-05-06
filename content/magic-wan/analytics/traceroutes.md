@@ -6,4 +6,4 @@ weight: 3
 
 # Traceroutes
 
-{{<render file="analytics/_traceroutes.md" withParameters="Magic WAN">}}
+{{<render file="analytics/_traceroutes.md" withParameters="WAN">}}
