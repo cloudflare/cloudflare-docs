@@ -39,7 +39,7 @@ Buckets created with jurisdictions must be accessed via jurisdiction-specific `e
 
 {{<Aside type="warning">}}
 
-Jurisdictional buckets can only be accessed via the corresponding jurisdictional endpoint. Most S3 clients will not let you configure multiple `endpoint`s, so you'll generally have to initialize one client per jurisdiction.
+Jurisdictional buckets can only be accessed via the corresponding jurisdictional endpoint. Most S3 clients will not let you configure multiple `endpoints`, so you'll generally have to initialize one client per jurisdiction.
 
 {{</Aside>}}
 
