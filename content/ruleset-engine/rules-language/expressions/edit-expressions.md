@@ -14,7 +14,7 @@ In the Cloudflare dashboard, there are two options for editing [expressions](/ru
 * **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
 * **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
 
-In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions).
+In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions) or the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax).
 
 ## Expression Builder
 
@@ -28,6 +28,8 @@ The **Expression Preview** displays the expression in text:
 (ip.geoip.country ne "GB")
 ```
 
+The Expression Builder will [automatically escape](#escape-special-characters) the backslash (`\`) and double quote (`"`) special characters in string literals.
+
 ## Expression Editor
 
 The **Expression Editor** is a text-only interface for defining rule expressions that supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language/), including parentheses as grouping symbols.
@@ -39,6 +41,14 @@ To access the Expression Editor, select **Edit expression** next to the **Expres
 ![Selecting Edit expression in the Create custom rule page to switch to the Expression Editor](/images/ruleset-engine/language/expression-builder.png)
 
 To switch back from the Expression Editor to the Expression Builder, select **Use expression builder**.
+
+### Escape special characters
+
+In expressions using the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax), all backslash (`\`) and double quote (`"`) characters in string literals must be escaped. The visual Expression Builder will automatically escape these special characters by prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+
+Expressions built using the Expression Builder currently use the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax). When entering regular expressions following this syntax, you may need to perform additional escaping — refer to [Quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax) in the Ruleset Engine documentation for details.
+
+To specify complex regular expressions, Cloudflare recommends that you use the Expression Editor and enter your expression using the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax), which has less escaping rules.
 
 ### Create nested expressions
 
