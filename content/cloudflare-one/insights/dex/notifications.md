@@ -6,7 +6,7 @@ weight: 3
 
 # DEX notifications
 
-Administrators can receive alerts when end users experience connectivity issues with the WARP client. Notifications can be delivered via email, webhook, and third-party services.
+Administrators can receive alerts when Cloudflare detects connectivity issues with the WARP client or degraded application performance. Notifications can be delivered via email, webhook, and third-party services.
 
 ## Manage notifications
 
