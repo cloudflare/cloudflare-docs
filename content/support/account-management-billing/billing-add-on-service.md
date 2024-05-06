@@ -23,12 +23,10 @@ ___
 To monitor the usage of Cloudflare add-ons, you can enable email notifications. When enabled, you will receive a notification to the billing email address on file when the traffic, queries, requests, or minutes watched exceed your desired threshold.
 
 {{<Aside type="note">}}
-The email notifications are for informational purposes only. Actual
-usage and billing may vary. Your monthly invoice is the most reliable
-source for billing information.
+The email notifications are for informational purposes only. Actual usage and billing may vary. Your monthly invoice is the most reliable source for billing information.
 {{</Aside>}}
 
-For help creating usage-based billing alerts, refer to our [Notifications documentation](/notifications/). For the _Event Type_ of your notification, you would select **Usage-Based Billing**.
+{{<available-notifications product="Billing">}}
 
 ---
 
