@@ -8,9 +8,9 @@ weight: 10
 
 R2 charges based on the total volume of data stored, along with two classes of operations on that data:
 
-1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state. 
+1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state.
 2. [Class B operations](#class-b-operations) which tend to read existing state.
- 
+
 There are no charges for egress bandwidth.
 
 All included usage is on a monthly basis.
@@ -68,7 +68,7 @@ To learn about potential cost savings from using R2, refer to the [R2 pricing ca
 
 ## R2 billing examples
 
-#### Data storage
+### Data storage
 
 If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB and requests each 1,000 times per month, the estimated cost for the month would be:
 
@@ -81,9 +81,9 @@ If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB an
 | **TOTAL**          |                                            |              |                   | **$14.85** |
 {{</table-wrap>}}
 
-#### Asset hosting
+### Asset hosting
 
-If a user writes 100,000 files with an average size of 100 KB object and reads 10,000,000 objects per day, the estimated cost in a month would be: 
+If a user writes 100,000 files with an average size of 100 KB object and reads 10,000,000 objects per day, the estimated cost in a month would be:
 
 {{<table-wrap>}}
 |                    | Usage                                               | Free Tier    | Billable Quantity | Price       |
@@ -100,6 +100,6 @@ To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/s
 
 ## Frequently asked questions
 
-#### Will I be charged for unauthorized requests to my R2 bucket?
+### Will I be charged for unauthorized requests to my R2 bucket?
 
 No. You are not charged for operations when the caller does not have permission to make the request (HTTP 401 `Unauthorized` response status code).

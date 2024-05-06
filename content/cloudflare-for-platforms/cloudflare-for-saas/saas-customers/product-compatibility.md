@@ -5,6 +5,7 @@ layout: wide
 weight: 3
 meta:
     title: Product compatibility | Orange-to-Orange zones
+layout: wide
 ---
 
 # Product compatibility
