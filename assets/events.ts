@@ -341,7 +341,7 @@ export function zarazTrackDocEvents() {
           title: codeBlockElement.getAttribute('title') ?? 'title not set',
           language: codeBlockElement.getAttribute('language') ?? 'language not set',});
       });
-  }
+    }
   }
   });
 }
