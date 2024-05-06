@@ -338,8 +338,8 @@ export function zarazTrackDocEvents() {
       copyButton.addEventListener("click", () => {
         const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
         zaraz.track('copy button link click', {
-          title: codeBlockElement.getAttribute('title') ? codeBlockElement.getAttribute('title') : 'title not set',
-          language: codeBlockElement.getAttribute('language') ? codeBlockElement.getAttribute('language') : 'language not set',});
+          title: codeBlockElement.getAttribute('title') ?? 'title not set',
+          language: codeBlockElement.getAttribute('language') ?? 'language not set',});
       });
   }
   }
