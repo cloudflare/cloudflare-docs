@@ -26,9 +26,7 @@ If you would like to deploy your own version of the site, you can find the sourc
 
 ## Create a new application
 
-Create a new application by using the create-cloudflare  
-
-cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
+Create a new application by cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
 
 ```sh
 ~/ $ npx wrangler generate i18n-example worker-sites
@@ -192,7 +190,7 @@ Once imported into your code, use the package to parse the most relevant languag
 ```js
 ---
 filename: functions/index.js
-highlight: [34,35,36,41,61,62,63,64]
+highlight: [32,33,34,39,61,62,63,64]
 ---
 import parser from 'accept-language-parser'
 
