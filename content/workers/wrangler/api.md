@@ -264,7 +264,7 @@ const platform = await getPlatformProxy(options);
 
     *   Optional options object containing preferences for the bindings:
 
-        * `env` {{<type>}}string{{</type>}}
+        * `environment` {{<type>}}string{{</type>}}
 
           The environment to use.
 
