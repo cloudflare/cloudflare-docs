@@ -92,12 +92,14 @@ Once you have run the above command, you will need to edit the output SQL file t
 2. Remove the following table creation statement (if present):
    ```sql
    CREATE TABLE _cf_KV (
-		key TEXT PRIMARY KEY,
-		value BLOB
+   	key TEXT PRIMARY KEY,
+   	value BLOB
    ) WITHOUT ROWID;
    ```
 
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
+
+##
 
 ## Foreign key constraints
 
@@ -105,27 +107,30 @@ When importing data, you may need to temporarily disable [foreign key constraint
 
 Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys and D1.
 
-
 ## Export an existing D1 database
 
 In addition to importing existing SQLite databases, you might want to export a D1 database for local development or testing. You can export a D1 database to a `.sql` file using [wrangler d1 export](/workers/wrangler/commands/#export) and then execute (import) with `d1 execute --file`.
 
 To export full D1 database schema and data:
+
 ```sh
 npx wrangler d1 export <database_name> --remote --output=./database.sql
 ```
 
 To export single table schema and data:
+
 ```sh
 npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./table.sql
 ```
 
 To export only D1 database schema:
+
 ```sh
 npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data=true
 ```
 
 To export only D1 table schema:
+
 ```sh
 npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data=true
 ```
@@ -144,8 +149,39 @@ If you receive an error when trying to import an existing schema and/or dataset 
 - If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You cannot refer to a table that does not yet exist.
 - If you receive a `"cannot start a transaction within a transaction"` error, make sure you have removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
 
+### Resolving "Statement too long" error:
+
+If you encounter a "Statement too long" error when trying to import a large SQL file into D1, it means that one of the SQL statements in your file exceeds the maximum allowed length. To resolve this issue, you can try one of the following approaches:
+
+Convert a single large INSERT statement into multiple smaller INSERT statements. For example, if you have a statement like:
+
+```
+INSERT INTO users (id, full_name, created_on)
+VALUES
+  ('01GREFXCN9519NRVXWTPG0V0BF', 'Catlaina Harbar', '2022-08-20 05:39:52'),
+  ('01GREFXCNBYBGX2GC6ZGY9FMP4', 'Hube Bilverstone', '2022-12-15 21:56:13'),
+  ...
+  ('01GREFXCNF67KV7FPPSEJVJMEW', 'Riane Zamora', '2022-12-24 06:49:04');
+```
+
+Break it into multiple INSERT statements:
+
+```
+INSERT INTO users (id, full_name, created_on)
+VALUES
+('01GREFXCN9519NRVXWTPG0V0BF', 'Catlaina Harbar', '2022-08-20 05:39:52');
+
+INSERT INTO users (id, full_name, created_on)
+VALUES
+('01GREFXCNBYBGX2GC6ZGY9FMP4', 'Hube Bilverstone', '2022-12-15 21:56:13');
+```
+
+If you have a single large INSERT statement with many rows, break it into smaller chunks. For example, instead of inserting 1000 rows in one statement, try splitting that into 250 rows.
+
+By breaking down large SQL statements into smaller ones, you can avoid the "Statement too long" error and successfully import your data into D1.
+
 ## Next Steps
 
-* Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
-* Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
-* Understand how [database migrations work](/d1/reference/migrations/) with D1.
+- Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
+- Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
+- Understand how [database migrations work](/d1/reference/migrations/) with D1.
