@@ -15,7 +15,7 @@ Source/destination tunnel data in Network Analytics includes:
 - A list of your top tunnels by traffic volume.
 - Source and destination {{<glossary-tooltip term_id="IP address">}}IP addresses{{</glossary-tooltip>}}, ports, and protocols of tunnel traffic.
 - Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare’s network.
-- Mitigations applied (DDoS, Magic Firewall, etc.) to traffic entering Cloudflare.
+- Mitigations applied (such as DDoS and Magic Firewall) to traffic entering Cloudflare.
 
 ## Access Magic Tunnel analytics
 

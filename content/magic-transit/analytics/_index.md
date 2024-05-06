@@ -10,7 +10,7 @@ meta:
 
 Magic Transit customers can follow the troubleshooting steps listed below to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
 
-- Analyze network traffic data overtime in [Magic Transit Network Analytics](#magic-transit-network-analytics)
+- Analyze network traffic data over time in [Magic Transit Network Analytics](#magic-transit-network-analytics)
 - Perform more detailed troubleshooting with:
     - [Traceroutes](#traceroutes)
     - [Packet captures](#packet-captures)
@@ -23,13 +23,13 @@ Refer to [Magic Transit Network Analytics](/magic-transit/analytics/network-anal
 
 ## Traceroutes
 
-Traceroutes provide a hop by hop breakdown of the Internet path network traffic follows as it traverses from Cloudflare’s network to a customer’s network.
+Traceroutes provide a hop by hop breakdown of the Internet path network traffic follows as it traverses from Cloudflare's network to a customer's network.
 
 Refer to [traceroutes](/magic-transit/analytics/traceroutes/) to learn more.
 
 ## Packet captures
 
-Packet captures allow customers to analyze the raw packet data that a customer is sending and receiving from Cloudflare’s network.
+Packet captures allow customers to analyze the raw packet data that a customer is sending and receiving from Cloudflare's network.
 
 Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
 
