@@ -9,7 +9,7 @@ _build:
 
 When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east-1.amazonaws.com/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/aws-bedrock/bedrock-runtime/us-east-1/`, then add the model you want to run at the end of the URL.
 
-With Bedrock, you'll need to sign the URL before you make requests to AI Gateway. You can try using the [aws4fetch](https://github.com/mhart/aws4fetch) sdk like below.
+With Bedrock, you will need to sign the URL before you make requests to AI Gateway. You can try using the [`aws4fetch`](https://github.com/mhart/aws4fetch) SDK. For example:
 
 ```typescript
 import { AwsClient } from 'aws4fetch'
