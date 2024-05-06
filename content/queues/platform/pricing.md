@@ -4,7 +4,6 @@ title: Pricing
 weight: 1
 meta:
   title: Cloudflare Queues - Pricing
-layout: wide
 ---
 
 # Pricing
