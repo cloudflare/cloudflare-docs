@@ -5,7 +5,7 @@ meta:
     title: Gateway Changelog
     description: Review recent changes to Cloudflare Gateway.
 layout: changelog
-changelog_file_name: [zt-gateway]
+changelog_file_name: [gateway]
 outputs:
     - html
     - rss
