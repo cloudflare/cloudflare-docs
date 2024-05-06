@@ -1,7 +1,7 @@
 ---
 title: Network Analytics
 pcx_content_type: how-to
-weight: 1
+weight: 2
 meta:
   title: Magic Transit Network Analytics
 ---

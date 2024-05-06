@@ -1,6 +1,7 @@
 ---
 title: Analytics
 pcx_content_type: how-to
+weight: 7
 meta:
     description: Use Magic Transit's different analytic options for an overview of the performance of your sites, or to troubleshoot potential issues.
 ---
