@@ -22,7 +22,7 @@ Consent Mode v2 specifies a "default" consent status that is usually set when th
 
 Often websites will want to set a default consent status that denies all categories. You can do that with no code at all by checking the **Set Google Consent Mode v2 state** in the Zaraz **Settings** page.
 
-If that is not what your website needs, and instead you want to granually set the default consent status, use the reserved `google_consent_default` property:
+If that is not what your website needs, and instead you want to set the default consent status in a more granular way, use the reserved `google_consent_default` property:
 
 ```js
 zaraz.set("google_consent_default",  {
