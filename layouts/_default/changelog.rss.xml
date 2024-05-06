@@ -52,12 +52,19 @@
     {{- $title = (printf "%s for %s" $title $entry.scheduled_date) -}}
     {{- end -}}
     {{- end -}}
+    {{- else -}}
+    {{- if ne $entry.product $product -}}
+    {{- $title = print $entry.product " - " $title -}}
+    {{- end -}}
     {{- end -}}
     <item>
     <title>{{- $title -}}</title>
     <link>{{- $link -}}</link>
     <description>{{- $description -}}</description>
     <pubDate>{{- .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</pubDate>
+    {{- if ne $entry.product $product -}}
+    <product>{{- $entry.product -}}</product>
+    {{- end -}}
     </item>
     {{- end -}}
   </channel>

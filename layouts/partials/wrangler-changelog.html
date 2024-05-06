@@ -23,9 +23,9 @@
 
 {{- range $index, $item := $data -}}
 {{- if (in $item.tag_name "wrangler@") -}}
-{{- $item_dict := (dict "publish_date" ($item.published_at | time.Format "2006-01-02") 
-"title" (replaceRE `wrangler@` "" $item.name) "link" $item.html_url 
-"description" (replaceRE `###[^-]+` "" $item.body)) -}}
+{{- $item_dict := (dict "publish_date" ($item.published_at | time.Format "2006-01-02")
+"title" (replaceRE `wrangler@` "" $item.name) "link" $item.html_url
+"description" (replaceRE `###[^-]+` "" $item.body) "product" "Wrangler") -}}
 {{- $results = $results | append $item_dict -}}
 {{- end -}}
 {{- end -}}

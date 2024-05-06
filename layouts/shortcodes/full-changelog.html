@@ -1,12 +1,23 @@
+
+
 {{- $changelogData := partial "full-changelog-data.html" -}}
-{{- $changelogRendered := slice -}} 
-{{- $products := slice -}} 
-{{- range $index, $product := $changelogData -}} 
+{{- $changelogRendered := slice -}}
+{{- $products := slice -}}
+
+{{- range $index, $product := $changelogData -}}
+
+<!-- Used for product group rollup pages. Skips pages not specified in the fronmatter. -->
+{{- with $.Page.Params.changelog_file_name -}}
+{{- if not (in . $index)}}
+{{- continue -}}
+{{- end -}}
+{{- end -}}
+
 {{- $products = $products | append $product.productName -}}
-{{- range $index2, $item := $product.entries -}} 
-{{- $placeholderDict := (dict "product" $product.productName "link" $product.link) -}}
+{{- range $index2, $item := $product.entries -}}
+{{- $placeholderDict := dict -}}
 {{- with $product.topLevelLink -}}
-{{- $placeholderDict = (dict "product" $product.productName "link" $product.topLevelLink) -}}
+{{- $placeholderDict = (dict "link" $product.topLevelLink) -}}
 {{- end -}}
 {{- with $item.individual_page -}}
 {{- $title := "" -}}
@@ -24,13 +35,13 @@
 {{- end -}}
 {{- $placeholderDict = merge $placeholderDict (dict "title" $title "description" $description) -}}
 {{- end -}}
-{{- $changelogRendered = $changelogRendered 
-  | append (merge $item $placeholderDict) -}} 
-{{- end -}} 
+{{- $changelogRendered = $changelogRendered
+  | append (merge $item $placeholderDict) -}}
+{{- end -}}
 {{- end -}}
 
 <!-- Order and remove dupe values -->
-{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}} 
+{{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
 {{- $products = sort ($products | uniq) . "asc" -}}
 
 <div class="selectorDropdowns">
@@ -114,7 +125,6 @@
   }
 
   // Function to update description text
-
   function updateDescriptionText() {
     let productName = "Changelog";
     let changelogLink = "/changelog/index.xml";
@@ -137,7 +147,10 @@
   // Function to filter and show/hide rows
   function updateTable() {
     updateURLParams();
+
+    {{ with .Get "topLevel" }}
     updateDescriptionText();
+    {{- end -}}
 
     let visibleRowCount = 0;
 

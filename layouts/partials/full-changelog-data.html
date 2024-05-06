@@ -1,4 +1,15 @@
-{{- $changelogData := index site.Data "changelogs" -}} 
+{{- $changelogData := dict -}}
+{{- $changelogRaw := index site.Data "changelogs" -}}
+
+{{- range $key, $product := $changelogRaw -}}
+{{- $productEntries := slice -}}
+{{- range $index2, $item := $product.entries -}}
+{{- $productEntries = $productEntries | append (merge $item (dict "product" $product.productName "url" $product.link )) -}}
+{{- end -}}
+{{- $productData := merge $product (dict "entries" $productEntries) -}}
+{{- $changelogData = merge $changelogData (dict $key $productData)}}
+{{- end -}}
+
 {{- $wrangler := partial "wrangler-changelog.html" -}}
 {{- $changelogData = merge $changelogData $wrangler -}}
 {{- return $changelogData -}}

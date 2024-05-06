@@ -5,7 +5,7 @@
 
 {{- range $index, $product := $changelogData -}}
 {{- range $index2, $item := $product.entries -}}
-{{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName "url" $product.link )) -}}
+{{- $changelogRendered = $changelogRendered | append $item -}}
 {{- end -}}
 {{- end -}}
 

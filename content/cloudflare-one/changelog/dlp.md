@@ -13,6 +13,6 @@ outputs:
 
 # DLP Changelog
 
-<!-- All changelog entries live in /data/changelogs/access.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+<!-- All changelog entries live in /data/changelogs/dlp.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
 {{<product-changelog>}}
