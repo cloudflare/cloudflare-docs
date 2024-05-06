@@ -83,7 +83,6 @@ In speed, latency, and jitter rankings, only countries where users run speed tes
 
 Cloudflare Speed Test measures latency multiple times over the course of the test. Measurements taken before a download or upload begins are aggregated into idle latency and jitter, while measurements taken while a download or upload is in progress are aggregated as loaded latency and jitter.
 
-
 ## Content Categories
 
 Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
@@ -138,7 +137,6 @@ The Mobile Operating Systems graph shows the distribution of mobile device reque
 
 [Top-level domains, also known as TLDs](https://www.cloudflare.com/learning/dns/top-level-domain/), are found in the right-most portion of a hostname. As of February 2024, there are nearly 1600 Top Level Domains listed in the [IANA Root Zone Database](https://www.iana.org/domains/root/db). On Radar, we are sharing our own perspective on these TLDs, highlighting those with the largest shares of spam and malicious emails. The analysis is based on the sending domain’s TLD, found in the `From:` header of an email message. Data for this metric comes from Cloudflare’s cloud email security service.
 
-
 ## Network-level DDoS Attacks
 
 Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
@@ -146,6 +144,10 @@ Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention syste
 Industry categories include business types grouped by their primary activities, such as information technology and services, retail, or telecommunications. Vertical categories are high-level groupings that incorporate related industries, such as the "Internet and Telecom" vertical, which includes industries such as "Internet" and "Telecommunications".
 
 Network-level DDoS attacks graphs are based on traffic measured in bytes.
+
+## Post-Quantum Encryption Adoption
+
+The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
 
 ## TCP Connection Tampering
 
