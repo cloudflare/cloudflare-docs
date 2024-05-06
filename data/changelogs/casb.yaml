@@ -1,0 +1,8 @@
+---
+link: "/cloudflare-one/changelog/casb/"
+productName: CASB
+entries:
+- publish_date: '2024-04-16'
+  title: Export CASB findings to CSV
+  description: |-
+    You can now export all top-level CASB findings or every instance of your findings to CSV. 
