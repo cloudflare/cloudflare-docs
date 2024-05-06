@@ -79,7 +79,11 @@ The methods `stmt.all()` and `db.batch()` return a typed `D1Result` object that 
   meta: {
     duration: number, // duration of the operation in milliseconds
     rows_read: number, // the number of rows read (scanned) by this query
-    rows_written: number // the number of rows written by this query
+    rows_written: number, // the number of rows (including extra indices) written by this query
+    changes: number, // the number of data rows (excluding extra indices) changed by this query
+    changed_db: boolean, // whether the db was changed by this query
+    size_after: number, // the db size after executing this query
+    last_row_id: number // ToDo
   }
 }
 ```
