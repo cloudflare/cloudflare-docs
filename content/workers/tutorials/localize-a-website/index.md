@@ -26,25 +26,39 @@ If you would like to deploy your own version of the site, you can find the sourc
 
 ## Create a new application
 
-Create a new application by cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
+Create a new application using the [`create-cloudflare`](/pages/get-started/c3), a CLI for creating and deploying new applications to Cloudflare.
 
 ```sh
-~/ $ npx wrangler generate i18n-example worker-sites
-~/ $ cd i18n-example
-~/i18n-example $
+~/ $ npm create cloudflare@latest
 ```
 
-The newly generated `i18n-example` project will contain two folders: `public`, which is your static HTML, and `functions`:
+For setup, select the following options:
+
+Where do you want to create your application?: Input i18n-example.
+What type of application do you want to create?: Select "Website or web app".
+Which development framework do you want to use? Select "React"
+Do you want to use TypeScript?: Select No.
+Do you want to deploy your application?: Select No.
+
+The newly generated `i18n-example` project will contain two folders: `public` and `src` these contain files for a React application:
 
 ```sh
 $ ~/i18n-example
 ls
-functions public wrangler.toml
+public src package.json
 ```
 
-Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
+We have to make a few adjustments to the generated project, first we want to the replace the content inside of the `public` directory, with the default generated HTML code for the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
 
-With the static HTML for this project updated, you can focus on the script inside of the `functions` folder, at `index.js`.
+Next, let's create a functions directory with an `index.js` file, this will be where the logic of the application will be written. 
+
+```sh
+$ ~/i18n-example
+mkdir functions
+touch index.js
+```
+
+Additionally, we'll remove the `src/` directory since its content isn't necessary for this project. With the static HTML for this project updated, you can focus on the script inside of the `functions` folder, at `index.js`.
 
 ## Understanding `data-i18n-key`
 
@@ -190,7 +204,7 @@ Once imported into your code, use the package to parse the most relevant languag
 ```js
 ---
 filename: functions/index.js
-highlight: [32,33,34,39,61,62,63,64]
+highlight: [32,33,34,39,62,63,64,65]
 ---
 import parser from 'accept-language-parser'
 
