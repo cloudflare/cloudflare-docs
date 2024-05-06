@@ -14,23 +14,7 @@ DEX notifications are configured on the [Cloudflare dashboard](https://dash.clou
 
 ## Available notifications
 
-### Device connectivity anomaly
-
-Receive a notification when Cloudflare detects a spike or drop in the number of devices connected to WARP.
-
-For information on the alert logic, refer to [Z-score](#z-score).
-
-### DEX test latency
-
-Receive a notification when there is a significant increase or decrease in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results).
-
-For information on the alert logic, refer to [Z-score](#z-score).
-
-### DEX test low availability
-
-Receive an alert when the percentage of successful HTTP or traceroute requests to an application drops below the selected threshold.
-
-For information on the alert logic, refer to [SLO](#slo).
+---placeholder for notification dropdowns---
 
 ## ​​Alert logic
 
@@ -42,6 +26,4 @@ To trigger an alert, the z-score value must be above 3.5 or less than -3.5, and 
 
 ### SLO
 
-The [service-level objective (SLO)](https://sre.google/workbook/alerting-on-slos/) is defined as (x / y) * 100 where x = the number of good events and y = the number of valid events for a given time period.
-
-Cloudflare computes the SLO over both a short time period (five minutes) and a long time period (one hour). This ensures that you are quickly alerted when an outage is detected within a short window, while simultaneously preventing too many false positives since the long window must also be triggered.
+A service-level objective (SLO) is defined as (x / y) * 100 where x = the number of good events and y = the number of valid events for a given time period. When you set an SLO value, Cloudflare determines the rate at which bad events are allowed to occur over time, known as the burn rate. We use the multi-window, multi-burn rate approach described in [Section 6 of Alerting on SLOs](https://sre.google/workbook/alerting-on-slos/) to alert when bad events are occurring more frequently than the allowed burn rate. We look at both a short time period (five minutes) and a long time period (one hour) -- this ensures that you are quickly alerted when an outage is detected within a short window, while simultaneously preventing too many false positives since the long window must also be triggered.
