@@ -37,16 +37,16 @@ To connect for the very first time:
 
 You can use `warp-cli set-mode --help` to get a list of the modes to switch between. For example:
 
-- **DNS only mode via DoH:** `warp-cli set-mode doh`.
-- **WARP with DoH:** `warp-cli set-mode warp+doh`.
+- **DNS only mode via DoH:** `warp-cli mode doh`.
+- **WARP with DoH:** `warp-cli mode warp+doh`.
 
 ### Using 1.1.1.1 for Families
 
 The Linux client supports all 1.1.1.1 for Families modes, in either WARP on DNS-only mode:
 
-- **Families mode off:** `warp-cli set-families-mode off`
-- **Malware protection:** `warp-cli set-families-mode malware`
-- **Malware and adult content:** `warp-cli set-families-mode full`
+- **Families mode off:** `warp-cli dns families off`
+- **Malware protection:** `warp-cli dns families malware`
+- **Malware and adult content:** `warp-cli dns families full`
 
 ### Additional commands
 
