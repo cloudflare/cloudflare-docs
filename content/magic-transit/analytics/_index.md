@@ -25,7 +25,7 @@ Refer to [Magic Transit Network Analytics](/magic-transit/analytics/network-anal
 
 Traceroutes provide a hop by hop breakdown of the Internet path network traffic follows as it traverses from Cloudflare's network to a customer's network.
 
-Refer to [traceroutes](/magic-transit/analytics/traceroutes/) to learn more.
+Refer to [Traceroutes](/magic-transit/analytics/traceroutes/) to learn more.
 
 ## Packet captures
 
