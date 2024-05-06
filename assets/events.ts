@@ -361,6 +361,7 @@ function $zarazGlossaryTooltipEvent(term: string) {
 export function zarazTrackHomepageLinks() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
   const playgroundLinks = document.getElementsByClassName("playground-link")
+  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
@@ -375,6 +376,16 @@ export function zarazTrackHomepageLinks() {
           $zarazLinkEvent('playground link click', playgroundLink);
         });
     }
+    }
+    if (copyCodeBlockButtons.length > 0) {
+      for (const copyButton of copyCodeBlockButtons as any) {
+        copyButton.addEventListener("click", () => {
+          const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
+          zaraz.track('copy button link click', {
+            title: codeBlockElement.getAttribute('title') ?? 'title not set',
+            language: codeBlockElement.getAttribute('language') ?? 'language not set',});
+        });
+      }
     }
   });
 }
