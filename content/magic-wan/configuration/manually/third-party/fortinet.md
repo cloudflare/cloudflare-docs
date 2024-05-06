@@ -124,6 +124,7 @@ fortigate # config vpn ipsec phase1-interface
         set net-device enable
         set proposal aes256gcm-prfsha512 aes256gcm-prfsha384 aes256gcm-prfsha256
         set localid "f1473dXXXXXXX72e33.49561179.ipsec.cloudflare.com"
+        set dhgrp 14
         set nattraversal disable
         set remote-gw 162.159.67.210
         set add-gw-route enable
