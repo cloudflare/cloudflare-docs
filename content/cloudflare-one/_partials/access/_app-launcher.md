@@ -55,6 +55,10 @@ If you are having issues specifying a custom logo, check that the image is serve
 
 ## Customize App Launcher appearance
 
+{{<Aside type="note">}}
+Only available on Pay-as-you-go and Enterprise plans.
+{{</Aside>}}
+
 You can display your own branding, messages, and links to users when they open the App Launcher.
 
 To customize the App Launcher appearance:
