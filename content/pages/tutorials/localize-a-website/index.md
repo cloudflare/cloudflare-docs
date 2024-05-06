@@ -29,23 +29,23 @@ If you would like to deploy your own version of the site, you can find the sourc
 Create a new application using the [`create-cloudflare`](/pages/get-started/c3), a CLI for creating and deploying new applications to Cloudflare.
 
 ```sh
-~/ $ npm create cloudflare@latest
+$ npm create cloudflare@latest
 ```
 
 For setup, select the following options:
 
-Where do you want to create your application?: Input i18n-example.
-What type of application do you want to create?: Select "Website or web app".
-Which development framework do you want to use? Select "React"
-Do you want to use TypeScript?: Select No.
-Do you want to deploy your application?: Select No.
+- Where do you want to create your application?: Input i18n-example.
+- What type of application do you want to create?: Select "Website or web app".
+- Which development framework do you want to use? Select "React"
+- Do you want to use TypeScript?: Select No.
+- Do you want to deploy your application?: Select No.
 
 The newly generated `i18n-example` project will contain two folders: `public` and `src` these contain files for a React application:
 
 ```sh
-$ ~/i18n-example
-ls
-public src package.json
+$ cd i18n-example
+$ ls
+$ public src package.json
 ```
 
 We have to make a few adjustments to the generated project, first we want to the replace the content inside of the `public` directory, with the default generated HTML code for the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
@@ -53,9 +53,8 @@ We have to make a few adjustments to the generated project, first we want to the
 Next, let's create a functions directory with an `index.js` file, this will be where the logic of the application will be written. 
 
 ```sh
-$ ~/i18n-example
-mkdir functions
-touch index.js
+$ mkdir functions
+$ touch index.js
 ```
 
 Additionally, we'll remove the `src/` directory since its content isn't necessary for this project. With the static HTML for this project updated, you can focus on the script inside of the `functions` folder, at `index.js`.
@@ -196,7 +195,7 @@ To parse the `Accept-Language` header, install the [`accept-language-parser`](ht
 ---
 theme: dark
 ---
-~/i18n-example $ npm i accept-language-parser
+$ npm i accept-language-parser
 ```
 
 Once imported into your code, use the package to parse the most relevant language for a client based on `Accept-Language` header, and pass it to `ElementHandler`. Your final code for the project, with an included sample translation for Germany and Japan (using Google Translate) looks like this:
@@ -318,7 +317,7 @@ Using `wrangler`, deploy to Cloudflare’s network, using the `deploy` command:
 ---
 theme: dark
 ---
-~/i18n-example $ npm run deploy
+$ npm run deploy
 ```
 
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)

@@ -507,5 +507,5 @@ async function handle(request) {
 ## Related resources
 
 - [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
-- [Tutorial: Localize a Website](/workers/tutorials/localize-a-website/)
+- [Tutorial: Localize a Website](/pages/tutorials/localize-a-website/)
 - [Example: rewrite links](/workers/examples/rewrite-links/)
