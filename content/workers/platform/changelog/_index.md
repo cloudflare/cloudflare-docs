@@ -3,9 +3,10 @@ pcx_content_type: changelog
 title: Changelog
 weight: 4
 meta:
-    description: Review recent changes to Cloudflare Workers.
+    description: Review recent changes to the Cloudflare Developer Platform.
 layout: changelog
 changelog_file_name: [ai-gateway,d1,durable-objects,hyperdrive,pages,queues,r2,stream,vectorize,workers-ai,workers,wrangler,zaraz]
+changelog_name: Cloudflare Developer Platform
 outputs:
     - html
     - rss
