@@ -16,13 +16,13 @@ DEX notifications are configured on the [Cloudflare dashboard](https://dash.clou
 
 ### Device connectivity anomaly
 
-Receive an alert when there is a significant increase or decrease in the number of devices connected to WARP.
+Receive a notification when Cloudflare detects a spike or drop in the number of devices connected to WARP.
 
 For information on the alert logic, refer to [Z-score](#z-score).
 
 ### DEX test latency
 
-Receive an alert when there is a significant increase or decrease in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results).
+Receive a notification when there is a significant increase or decrease in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results).
 
 For information on the alert logic, refer to [Z-score](#z-score).
 

@@ -448,7 +448,7 @@ entries:
   otherFilters: None.
 
 - name: Device connectivity anomaly
-  audience: Zero Trust customers who want to be alerted when the number of devices connected to WARP increases or decreases significantly. For more information, refer to [DEX notifications](/cloudflare-docs/content/cloudflare-one/insights/dex/notifications/).
+  audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in devices connected to the WARP client. For more information, refer to [DEX notifications](/cloudflare-docs/content/cloudflare-one/insights/dex/notifications/).
   availability: All Cloudflare Zero Trust plans.
   associatedProducts: DEX
   nextSteps: Review your [fleet status](/cloudflare-one/insights/dex/fleet-status/) to investigate why the spike or drop occurred and which devices are impacted.
