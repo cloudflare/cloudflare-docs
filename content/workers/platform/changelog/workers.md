@@ -1,6 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Workers
+weight: 2
 meta:
     title: Workers Changelog
     description: Review recent changes to Cloudflare Workers.

@@ -37,7 +37,13 @@ entries:
     description: |-
       Vectorize now supports [metadata filtering](/vectorize/reference/metadata-filtering) with equals (`$eq`) and not equals (`$neq`) operators. Metadata filtering limits `query()` results to only vectors that fulfill new `filter` property.
       ```ts
-      let metadataMatches = await env.YOUR_INDEX.query(queryVector, { topK: 3, filter: { streaming_platform: "netflix" }, returnValues: true, returnMetadata: true } )
+      let metadataMatches = await env.YOUR_INDEX.query(queryVector,
+        {
+          topK: 3,
+          filter: { streaming_platform: "netflix" },
+          returnValues: true,
+          returnMetadata: true
+        })
       ```
 
       Only new indexes created on or after 2023-12-06 support metadata filtering. Currently, there is no way to migrate previously created indexes to work with metadata filtering.

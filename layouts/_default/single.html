@@ -13,10 +13,14 @@
       {{ partial "sidebar.toc" . }}
 
       <div id="docs-content" data-reach-skip-nav-content></div>
+      {{- with .Params.changelog_product_area_name -}}
+      <!-- empty block to avoid rendering -->
+      {{- else -}}
       {{- partial "breadcrumbs" . -}}
+      {{- end -}}
 
       <div class="DocsContent" id="main" page-type="document">
-        
+
         <article class="DocsMarkdown">
           {{- .Content -}}
         </article>

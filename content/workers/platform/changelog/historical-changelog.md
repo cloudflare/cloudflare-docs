@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
-title: Historical
-weight: 4
+title: Workers (Historic)
+weight: 8
 meta:
     title: Historical changelog
     description: Review pre-2023 changes to Cloudflare Workers.
