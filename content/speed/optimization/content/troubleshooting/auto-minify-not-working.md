@@ -6,6 +6,12 @@ title: Auto Minify is not working
 
 # Auto Minify is not working
 
+{{<Aside type="warning" header="Deprecation notice">}}
+Auto Minify is deprecated and will be removed on 2024-08-05. After this date, Auto Minify will no longer be available via the Cloudflare dashboard, API, or Terraform.
+
+We recommend that you minify at the origin during the build phase. Minification is included in most modern web development frameworks.
+{{</Aside>}}
+
 Once enabled, Cloudflare's Auto Minify will minify your HTML and your cached CSS and JS files. If you view the source of your files in your web browser or via a command line tool (such as cURL) and you do not see the code being minified, here are some things you should check:
 
 - Cloudflare only minifies files served by hostnames with [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) (code on third-party domains not using Cloudflare will not be minified).
