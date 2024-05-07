@@ -17,7 +17,7 @@ If you are using a JWT claim, choose the [Token Configuration](/api-shield/secur
 Refer to [JWT Validation](/api-shield/security/jwt-validation/) for more information. 
 {{</Aside>}}
 
-6. Enter the name of the session identifier
+6. Enter the name of the session identifier.
 7. Select **Save**. 
 
 After setting up session identifiers and allowing some time for Cloudflare to learn your traffic patterns, you can view your per endpoint and per session rate limiting recommendations, as well as enforce per endpoint and per session rate limits by creating new rules. Session identifiers will allow you to view API Discovery results from session ID-based discovery and session traffic patterns in Sequence Analytics.
