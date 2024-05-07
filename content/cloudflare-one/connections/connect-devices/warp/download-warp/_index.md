@@ -25,7 +25,7 @@ Alternatively, download the client from one of the following links after checkin
 
 **[Windows Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta)**
 
-**[Altnernate Download Link](https://one.one.one.one)**
+**[Alternate download link](https://one.one.one.one)**
 
 ## macOS
 
@@ -41,7 +41,7 @@ Alternatively, download the client from one of the following links after checkin
 
 **[macOS Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)**
 
-**[Altnernate Download Link](https://one.one.one.one)**
+**[Alternate download link](https://one.one.one.one)**
 
 ## Linux
 |                      |    |
