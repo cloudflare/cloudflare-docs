@@ -29,5 +29,6 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [OVH](https://help.ovhcloud.com/csm/en-dns-secure-domain-dnssec?id=kb_article_view&sysparm_article=KB0051637)
 - [registro.br](https://registro.br/tecnologia/dnssec.html?secao=tutoriais-dns)
 - [Porkbun](https://kb.porkbun.com/article/93-how-to-install-dnssec) (do not fill out **keyData**).
+- [TransIP](https://www.transip.eu/knowledgebase/entry/150-secure-domains-custom-nameservers-dnssec/)
 
 {{</details>}}
