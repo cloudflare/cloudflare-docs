@@ -58,7 +58,7 @@
         "pages": [
           {
             "url_path": "/speed/optimization/content/auto-minify/",
-            "link_title": "Auto Minify",
+            "link_title": "Auto Minify (deprecated)",
             "additional_description": "Remove unnecessary characters from HTML, JavaScript, and CSS files."
           },
           {
