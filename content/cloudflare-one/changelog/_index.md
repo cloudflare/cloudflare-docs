@@ -6,7 +6,7 @@ meta:
 weight: 15
 layout: changelog
 changelog_name: Cloudflare Zero Trust
-changelog_file_name: [access, casb, dlp, gateway]
+changelog_product_area_name: Zero Trust
 outputs:
     - html
     - rss

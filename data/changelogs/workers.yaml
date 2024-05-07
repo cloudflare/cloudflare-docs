@@ -1,6 +1,8 @@
 ---
-link: "/workers/platform/changelog/"
+link: "/workers/platform/changelog/workers/"
 productName: Workers
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
 - publish_date: '2024-05-03'
   description: |-

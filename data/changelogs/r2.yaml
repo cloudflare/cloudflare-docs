@@ -1,10 +1,12 @@
 ---
 link: "/r2/reference/changelog/"
 productName: R2
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
 - publish_date: '2023-07-05'
   description: |-
-      - Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than 
+      - Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than
       ranged reads on smaller files. Performance should now be consistently good independent of filesize.
 - publish_date: '2023-06-21'
   description: |-

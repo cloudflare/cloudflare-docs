@@ -1,6 +1,8 @@
 ---
 link: "/vectorize/platform/changelog/"
 productName: Vectorize
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
   - publish_date: "2024-01-17"
     title: HTTP API query vectors request and response format change

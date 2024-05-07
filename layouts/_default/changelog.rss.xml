@@ -1,13 +1,20 @@
 {{- $files := $.Params.changelog_file_name -}}
-{{- $changelogData := slice -}}
+{{- $productArea := $.Params.changelog_product_area_name -}}
+{{- $changelogData := partial "full-changelog-data.html" -}}
 {{- $changelogDataEntries := slice -}}
 
-{{- range $files -}}
-{{- $changelogData = $changelogData | append (index (partial "full-changelog-data.html") .) }}
+{{- range $index, $productFile := $changelogData -}}
+{{- with $files -}}
+{{- if (in $files $index) -}}
+{{- $changelogDataEntries = $changelogDataEntries | append (index $productFile "entries") -}}
 {{- end -}}
-
-{{- range $changelogData -}}
-{{- $changelogDataEntries = $changelogDataEntries | append (index . "entries") }}
+{{- else -}}
+{{- with $productArea -}}
+{{- if eq $productFile.productArea . -}}
+{{- $changelogDataEntries = $changelogDataEntries | append (index $productFile "entries") -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
 {{- end -}}
 
 {{- $changelogDataEntries = sort $changelogDataEntries "publish_date" "desc" -}}
@@ -15,14 +22,14 @@
 {{- $permalink := .Permalink -}}
 {{- $atomLink := print $permalink "index.xml" -}}
 
-{{- $product := default (index (index $changelogData 0) "productName") ($.Params.changelog_name) }}
+{{- $product := default (index (index $changelogDataEntries 0) "product") ($.Params.changelog_name) }}
 {{- $mainTitle := printf "%s · %s" .Title $product -}}
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{{ $mainTitle }}</title>
     <link>{{ $permalink }}</link>
-    <description>Updates to Cloudflare's {{$product}} product.</description>
+    <description>Updates to Cloudflare's {{$product}}</description>
     <language>en-us</language>
     <atom:link href="{{$atomLink}}" rel="self" />
     <lastBuildDate>{{- index (index $changelogDataEntries 0) "publish_date" | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</lastBuildDate>
@@ -53,16 +60,16 @@
     {{- end -}}
     {{- end -}}
     {{- else -}}
-    {{- if ne $entry.product $product -}}
-    {{- $title = print $entry.product " - " $title -}}
     {{- end -}}
+    {{- with $productArea -}}
+    {{- $title = print $entry.product " - " $title -}}
     {{- end -}}
     <item>
     <title>{{- $title -}}</title>
     <link>{{- $link -}}</link>
     <description>{{- $description -}}</description>
     <pubDate>{{- .publish_date | time.Format "Mon, 02 Jan 2006 08:00:00 EST" -}}</pubDate>
-    {{- if ne $entry.product $product -}}
+    {{- with $productArea -}}
     <product>{{- $entry.product -}}</product>
     {{- end -}}
     </item>

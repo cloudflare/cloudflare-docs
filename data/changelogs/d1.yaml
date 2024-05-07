@@ -1,11 +1,13 @@
 ---
 link: "/d1/platform/changelog/"
 productName: D1
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
   - publish_date: "2024-04-30"
     title: D1 alpha databases will stop accepting live SQL queries on August 1, 2024
     description: |-
-      Previously [deprecated alpha](/d1/platform/changelog/#2024-04-05) D1 databases need to be migrated by August 1, 2024 to accept new queries. 
+      Previously [deprecated alpha](/d1/platform/changelog/#2024-04-05) D1 databases need to be migrated by August 1, 2024 to accept new queries.
 
       Refer to [alpha database migration guide](/d1/platform/alpha-migration/) to migrate to the new, generally available, database architecture.
 
@@ -13,13 +15,13 @@ entries:
     title: HTTP API now returns a HTTP 400 error for invalid queries
     description: |-
       Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for an invalid query. An invalid SQL query now correctly returns a `HTTP 400 Bad Request` error.
-      
-      D1's [Workers API](/d1/build-with-d1/d1-client-api/) is unaffected by this change. 
+
+      D1's [Workers API](/d1/build-with-d1/d1-client-api/) is unaffected by this change.
 
   - publish_date: "2024-04-05"
     title: D1 alpha databases are deprecated
     description: |-
-      Now that D1 is generally available and production ready, alpha D1 databases are deprecated and should be migrated for better performance, reliability, and ongoing support. 
+      Now that D1 is generally available and production ready, alpha D1 databases are deprecated and should be migrated for better performance, reliability, and ongoing support.
 
       Refer to [alpha database migration guide](/d1/platform/alpha-migration/) to migrate to the new, generally available, database architecture.
 
@@ -44,7 +46,7 @@ entries:
     description: |-
       As of 2024-03-05, D1 usage will start to be counted and may incur charges for an account's future billing cycle.
 
-      Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](/d1/platform/pricing). 
+      Developers on the Workers Paid plan with D1 usage beyond [included limits](/d1/platform/pricing/#billing-metrics) will incur charges according to [D1's pricing](/d1/platform/pricing).
 
       Developers on the Workers Free plan can use up to the included limits. Usage beyond the limits below requires signing up for the $5/month Workers Paid plan.
 
@@ -54,7 +56,7 @@ entries:
     title: API changes to `run()`
     description: |-
       A previous change (made on 2024-02-13) to the `run()` [query statement method](/d1/build-with-d1/d1-client-api/#await-stmtrun) has been reverted.
-      
+
       `run()` now returns a `D1Result`, including the result rows, matching its original behaviour prior to the change on 2024-02-13.
 
       Future change to `run()` to return a [`D1ExecResult`](/d1/build-with-d1/d1-client-api/#return-object), as originally intended and documented, will be gated behind a [compatibility date](/workers/configuration/compatibility-dates/) as to avoid breaking existing Workers relying on the way `run()` currently works.
@@ -63,11 +65,11 @@ entries:
     title: API changes to `raw()`, `all()` and `run()`
     description: |-
       D1's `raw()`, `all()` and `run()` [query statement methods](/d1/build-with-d1/d1-client-api/#query-statement-methods) have been updated to reflect their intended behaviour and improve compatibility with ORM libraries.
-      
+
       `raw()` now correctly returns results as an array of arrays, allowing the correct handling of duplicate column names (such as when joining tables), as compared to `all()`, which is unchanged and returns an array of objects. To include an array of column names in the results when using `raw()`, use `raw({columnNames: true})`.
-      
+
       `run()` no longer incorrectly returns a `D1Result` and instead returns a [`D1ExecResult`](/d1/build-with-d1/d1-client-api/#return-object) as originally intended and documented.
-      
+
       This may be a breaking change for some applications that expected `raw()` to return an array of objects.
 
       Refer to [D1 client API](/d1/build-with-d1/d1-client-api/) to review D1's query methods, return types and TypeScript support in detail.
@@ -103,7 +105,7 @@ entries:
       * Developers with a Workers Paid plan now have a 2 GB per-database limit (up from 500 MB) and can create 25 databases per account (up from 10). These limits will continue to increase automatically during the public beta.
       * Developers with a Workers Free plan retain the 500 MB per-database limit and can create up to 10 databases per account.
 
-      Databases must be using D1's [new storage subsystem](/d1/platform/changelog/#new-default-storage-subsystem) to benefit from the increased database limits. 
+      Databases must be using D1's [new storage subsystem](/d1/platform/changelog/#new-default-storage-subsystem) to benefit from the increased database limits.
 
       Read the [announcement blog](https://blog.cloudflare.com/d1-open-beta-is-here/) for more details about what is new in the beta and what is coming in the future for D1.
 

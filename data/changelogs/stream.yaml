@@ -1,6 +1,8 @@
 ---
 link: "/stream/changelog/"
 productName: Stream
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
 - publish_date: '2024-04-11'
   title: Live Instant Clipping for live broadcasts and recordings

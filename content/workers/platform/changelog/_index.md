@@ -5,8 +5,8 @@ weight: 4
 meta:
     description: Review recent changes to the Cloudflare Developer Platform.
 layout: changelog
-changelog_file_name: [ai-gateway,d1,durable-objects,hyperdrive,pages,queues,r2,stream,vectorize,workers-ai,workers,wrangler,zaraz]
-changelog_name: Cloudflare Developer Platform
+changelog_name: Developer Platform
+changelog_product_area_name: Developer platform
 outputs:
     - html
     - rss

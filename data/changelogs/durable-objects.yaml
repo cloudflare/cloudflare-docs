@@ -1,6 +1,8 @@
 ---
 link: "/durable-objects/platform/changelog/"
 productName: Durable Objects
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
   - publish_date: "2024-04-03"
     title: Durable Objects support for Oceania region

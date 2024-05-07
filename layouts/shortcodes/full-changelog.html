@@ -1,14 +1,13 @@
-
-
 {{- $changelogData := partial "full-changelog-data.html" -}}
 {{- $changelogRendered := slice -}}
 {{- $products := slice -}}
+{{- $productArea := $.Page.Params.changelog_product_area_name -}}
 
 {{- range $index, $product := $changelogData -}}
 
 <!-- Used for product group rollup pages. Skips pages not specified in the fronmatter. -->
-{{- with $.Page.Params.changelog_file_name -}}
-{{- if not (in . $index)}}
+{{- with $productArea -}}
+{{- if ne $product.productArea . -}}
 {{- continue -}}
 {{- end -}}
 {{- end -}}
