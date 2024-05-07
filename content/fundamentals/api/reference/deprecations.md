@@ -8,10 +8,10 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
-## Auto Minify API
+## Auto Minify
 **End of life date: August 5th, 2024**
 
-The Auto Minify APIs are deprecated, since the Auto Minify feature was deprecated.
+The Auto Minify API endpoints are deprecated, since the Auto Minify feature was deprecated.
 
 Deprecated APIs:
 - GET /zones/:zone_id/settings/minify
@@ -28,10 +28,10 @@ Deprecated API:
 
 Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
 
-## Brotli API
+## Brotli
 **End of life date: June 14th, 2024**
 
-The Brotli setting is deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
+The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
 
 Deprecated APIs:
 - GET /zones/:zone_id/settings/brotli
@@ -39,10 +39,10 @@ Deprecated APIs:
 
 Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
-## Server-side Excludes API
+## Server-side Excludes
 **End of life date: June 14th, 2024**
 
-The Server-side Excludes API is deprecated, since the Server-side Excludes feature is also deprecated.
+The Server-side Excludes feature and its API endpoints are deprecated.
 
 Deprecated APIs:
 - GET /zones/:zone_id/settings/server_side_exclude
