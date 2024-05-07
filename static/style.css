@@ -5341,7 +5341,20 @@ code.ruleID:hover {
 }
 
 code.ruleID:active {
-background: orange;
-color: white;
+  background: orange;
+  color: white;
 }
 
+/* Changelog-specific overrides for product areas */
+
+@media (min-width: 972px) {
+  #changelogContent {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .sticky-date-header {
+    top: 0px;
+  }
+}

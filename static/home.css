@@ -924,11 +924,11 @@ a {
       display: flex;
       margin-top: 1.8em;
     }
-  
+
     input[type="radio"] {
       display: none;
     }
-  
+
     .documentation-sidebar {
       width: 14em;
       background: #f2f2f2;
@@ -936,11 +936,11 @@ a {
       box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
     }
-  
+
     [theme="dark"] .documentation-sidebar {
       background: #222629;
     }
-  
+
     .documentation-sidebar label {
       display: block;
       cursor: pointer;
@@ -949,15 +949,15 @@ a {
       border-radius: 5px;
       word-wrap: normal;
     }
-  
+
     .documentation-sidebar label:hover {
       background: rgba(var(--orange-rgb), 0.2);
     }
-  
+
     #section1Content, #section2Content, #section3Content, #section4Content, #section5Content {
       display: none;
     }
-  
+
     .documentation-content {
       margin-left: 2em;
       width: 90%;
@@ -969,7 +969,7 @@ a {
     [theme="dark"] .documentation-content {
       background: #222629;
     }
-  
+
     #section1:checked ~ .documentation-content #section1Content,
     #section2:checked ~ .documentation-content #section2Content,
     #section3:checked ~ .documentation-content #section3Content,
@@ -987,7 +987,7 @@ a {
      {
         background: rgba(var(--orange-rgb), 0.2);
     }
-  
+
     .section-label {
       display: block;
       cursor: pointer;
@@ -996,7 +996,7 @@ a {
       border-radius: 5px;
     }
   }
-  
+
   @media (max-width: 978px) {
     .TryOutSection {
       display: none;
@@ -3909,4 +3909,20 @@ td>code,
 
 .changelogDate {
     width: 8em;
+}
+
+/* Changelog-specific overrides for main page */
+
+.sticky-date-header {
+  top: 45px;
+}
+
+@media (min-width: 972px) {
+  #changelogContent {
+    max-width: 80%;
+  }
+
+  .sticky-date-header {
+    top: 55px !important;
+  }
 }
