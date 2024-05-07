@@ -39,6 +39,15 @@ Deprecated APIs:
 
 Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
+## Server-side Excludes API
+**End of life date: June 14th, 2024**
+
+The Server-side Excludes API is deprecated, since the Server-side Excludes feature is also deprecated.
+
+Deprecated APIs:
+- GET /zones/:zone_id/settings/server_side_exclude
+- PATCH /zones/:zone_id/settings/server_side_exclude
+
 ## Name-Related Data Fields on SRV (DNS) Records
 **End of life date: May 31st, 2024**
 
