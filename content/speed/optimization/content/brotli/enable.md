@@ -8,6 +8,14 @@ meta:
 
 # Enable Brotli
 
+{{<Aside type="warning" header="Deprecation notice">}}
+
+The Brotli setting is deprecated and will be removed on 2024-06-14. After this date, Brotli compression will be enabled by default for all zones.
+
+Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
+
+{{</Aside>}}
+
 By default, Brotli compression is enabled for domains on Free and Pro plans and disabled for domains on Business and Enterprise plans.
 
 To enable Brotli compression:
