@@ -27,39 +27,6 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 ## Example requests
 
-{{<details header="Example: Add a rule that enables Auto Minify for CSS files and enables Hotlink Protection">}}
-
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Auto Minify for CSS files and Hotlink Protection for the `assets.example.com` hostname — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
-
-```bash
----
-header: Request
----
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "http.host eq \"assets.example.com\"",
-      "description": "Minifies CSS files and enables Hotlink Protection for assets.example.com",
-      "action": "set_config",
-      "action_parameters": {
-        "autominify": {
-          "html": false,
-          "css": true,
-          "js": false
-        },
-        "hotlink_protection": true
-      }
-    }
-  ]
-}'
-```
-
-{{</details>}}
-
 {{<details header="Example: Add a rule that enables Email Obfuscation and Browser Integrity Check">}}
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
