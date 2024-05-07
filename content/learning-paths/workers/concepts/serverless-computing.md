@@ -11,7 +11,7 @@ Workers is a serverless computing provider. [Serverless computing](https://www.c
 
 ## Cloud computing
 
-[Cloud computing](https://www.cloudflare.com/learning/cloud/what-is-the-cloud/) is defined as hosting computing resources (such as virtual machines, storage, databases, and networking services) on third-party servers. Cloud computing service providers include Amazon Web Services, Microsoft Azure, Gooogle Cloud Platform, and Cloudflare.
+[Cloud computing](https://www.cloudflare.com/learning/cloud/what-is-the-cloud/) is defined as hosting computing resources (such as virtual machines, storage, databases, and networking services) on third-party servers. Cloud computing service providers include Amazon Web Services, Microsoft Azure, Google Cloud Platform, and Cloudflare.
 
 ### Serverless computing
 
