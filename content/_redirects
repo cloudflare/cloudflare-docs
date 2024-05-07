@@ -585,6 +585,8 @@
 /learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
 /learning-paths/workers/test/ /learning-paths/workers/get-started/ 301
 /learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-api/ /learning-paths/cybersafe/area1-onboarding/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-connection-methods/ /learning-paths/cybersafe/area1-onboarding/area1-inline/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301

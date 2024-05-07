@@ -63,7 +63,7 @@ These code alterations only occur on the cacheable objects found at Cloudflare's
 
 Review the list of Cloudflare features that function in this manner:
 
-- [Auto Minify](/speed/optimization/content/auto-minify/)
+- [Auto Minify](/speed/optimization/content/auto-minify/) (deprecated)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
 - [Mirage](/speed/optimization/images/mirage/)
