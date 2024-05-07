@@ -74,9 +74,9 @@ If you are not using Functions or have reviewed that your Functions configuratio
 
 ## Differences between `pages.dev` and custom domains
 
-If your custom domain is proxied (orange-clouded) through Cloudflare, your zone's settings such as Auto Minify and caching will apply.
+If your custom domain is proxied (orange-clouded) through Cloudflare, your zone's settings such as Auto Minify (deprecated) and caching will apply.
 
-If you are experiencing issues with a framework, like Nuxt.js, only on the custom domain, review if Auto Minify is enabled (log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Speed** > **Optimization** > **Content Optimization** > **Auto Minify**) for HTML and disable it.
+If you are experiencing issues with a framework, like Nuxt.js, only on the custom domain, review if Auto Minify (deprecated) is enabled (log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Speed** > **Optimization** > **Content Optimization** > **Auto Minify**) for HTML and disable it.
 
 If you are experiencing issues with new content not being shown, go to **Rules** > **Page Rules** in the Cloudflare dashboard and check for a Page Rule with **Cache Everything** enabled. If present, remove this rule as Pages handles its own cache.
 

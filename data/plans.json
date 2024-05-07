@@ -1962,7 +1962,7 @@
       }
     },
     "auto_minify": {
-      "title": "Auto Minify",
+      "title": "Auto Minify (deprecated)",
       "link": "/speed/optimization/content/auto-minify/",
       "properties": {
         "availability": {
