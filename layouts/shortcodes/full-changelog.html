@@ -142,7 +142,7 @@
       params.set("product", productsDropdown.value);
     }
     if (productAreaDropdown.value !== "all") {
-      params.set("product", productAreaDropdown.value);
+      params.set("product-area", productAreaDropdown.value);
     }
     history.replaceState(null, "", "?" + params.toString());
   }
@@ -240,11 +240,11 @@
       }
     }
   }
-  const productAreaFilter = urlParams.get("data-product-area-link");
+  const productAreaFilter = urlParams.get("product-area");
   if (productAreaFilter) {
-    for (const option of productsDropdown) {
-      if (option.value === productFilter.toLowerCase()) {
-        productsDropdown.value = productFilter.toLowerCase();
+    for (const productArea of productAreaDropdown) {
+      if (productArea.value === productAreaFilter.toLowerCase()) {
+        productAreaDropdown.value = productAreaFilter.toLowerCase();
       }
     }
   }
