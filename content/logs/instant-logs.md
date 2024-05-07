@@ -12,29 +12,27 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 {{<feature-table id="analytics.instant_logs">}}
 
-## Instant Logs on the Cloudflare dashboard
+## Instant Logs via Cloudflare Dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Select the [zone](/fundamentals/setup/accounts-and-zones/#zones) you want to use with Instant Logs.
 
-2. Select the domain you want to use with Instant Logs.
+2. Go to **Analytics** > **Instant Logs**.
 
-3. Go to **Analytics** > **Instant Logs**.
+3. Click **Start streaming**.
 
-4. Select **Start streaming**.
+4. (optional) Click **Add filter** to narrow down the events to be shown.
 
-5. Select **Add filters** to narrow down the events shown.
+Fields supported in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
 
-The filters you can add are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**. If you would like to filter on additional criteria, leave us feedback on the form linked on the Instant Logs page.
+*Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dashboard.*
 
-Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dash.
-
-## Instant Logs on the CLI
+## Instant Logs via CLI
 
 ### 1. Create an Instant Logs Job
 
 Create a session by sending a `POST` request to our Instant Logs job endpoint with the following parameters:
 
-- **Fields** - List any field available in our [HTTP request dataset](/logs/reference/log-fields/zone/http_requests/).
+- **Fields** - List any field available in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/).
 
 - **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 
@@ -44,34 +42,24 @@ Instant Logs has a maximum data rate supported. For high volume domains, we samp
 
 {{</Aside>}}
 
-- **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **Client ASN**, **CacheCacheStatus**, **ClientCountry**, **ClientIP**, **ClientRequestHost**, **ClientRequestMethod**, **ClientRequestPath**, **EdgeResponseStatus**, **SecurityActions**, and **SecurityRuleIDs**.
+- **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value.
 
-This is the list of the supported operators that we have available:
-
-| **Name**                 | **Op**         |
-| ------------------------ | -------------- |
-| Equals                   | `"eq"`         |
-| Not Equals               | `"neq"`        |
-| Greater Than             | `"gt"`         |
-| Greater Than or Equal to | `"geq"`        |
-| Less Than                | `"lt"`         |
-| Less Than or Equal to    | `"leq"`        |
-| Starts with              | `"startsWith"` |
-| Ends with                | `"endsWith"`   |
-| Contains                 | `"contains"`   |
-| Is in                    | `"In"`         |
+All supported operators can be found at our [Filters](/logs/reference/filters/) page.
 
 Below we have three examples of filters:
 
 ```bash
+# Filter when client IP country is not Canada:
 "filter":"{\"where\":{\"and\":[{\"key\":\"ClientCountry\",\"operator\":\"neq\",\"value\":\"ca\"}]}}"
 ```
 
 ```bash
+# Filter when the status code returned from Cloudflare is either 200 or 201:
 "filter":"{\"where\":{\"and\":[{\"key\":\"EdgeResponseStatus\",\"operator\":\"in\",\"value\":\"200,201\"}]}}"
 ```
 
 ```bash
+# Filter when the request path contains "/static" and the request hostname is "theburritobot.com":
 "filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"}, {\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"theburritobot.com\"}]}}"
 ```
 
@@ -143,11 +131,11 @@ Response:
 
 ## Datasets available
 
-For the moment, HTTP requests is the only dataset available. In the future, we will expand to other datasets.
+For the moment, `HTTP requests` is the only dataset supported. In the future, we will expand to other datasets.
 
 ## Export
 
-You can download the table of logs that appears in your dash using the **Export** button. The data will be downloaded in JSON format.
+You can download the table of logs that appears in your dash using the **Export** button. The data will be in JSON format.
 
 ## Limits
 
