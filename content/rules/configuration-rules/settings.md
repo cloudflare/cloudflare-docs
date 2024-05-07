@@ -33,7 +33,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Auto Minify (deprecated)
+## Auto Minify (deprecated) { #auto-minify }
 
 [Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
