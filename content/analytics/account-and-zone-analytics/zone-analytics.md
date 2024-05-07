@@ -40,8 +40,8 @@ ___
 
 This section outlines the metrics available under each Analytics app tab. Before proceeding, note that each tab may contain:
 
--   One or more panels to further categorize the underlying metrics, and
--   a dropdown (on the panel’s top right) to filter metrics for a specific time period.  The time period you can select may vary based on the Cloudflare plan that your domain is associated with.
+-   One or more panels to further categorize the underlying metrics.
+-   A dropdown (on the panel’s top right) to filter metrics for a specific time period. The time period you can select may vary based on the Cloudflare plan that your domain is associated with.
 
 Below is a summary of each Analytics app tab.
 
@@ -51,7 +51,7 @@ Below is a summary of each Analytics app tab.
 
 These metrics include legitimate user requests as well as crawlers and threats. The Traffic tab features the following panels: 
 
--   **Web Traffic** - Displays metrics for _Requests_, _Bandwidth_, _Unique Visitors_, and [_Status Codes_](/analytics/account-and-zone-analytics/status-codes/). Note that if you use Cloudflare Workers, subrequest analytics are available under the **Workers** tab.
+-   **Web Traffic** - Displays metrics for _Requests_, _Bandwidth_, _Unique Visitors_, and [_Status Codes_](/analytics/account-and-zone-analytics/status-codes/). If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
 -   **Web Traffic Requests by Country** - Is an interactive map that breaks down the number of requests by country.  This panel also includes a data table for **Top Traffic Countries / Regions** that display the countries with the most number of requests (up to five, if the data exists).
 -   **Share Your Stats -** Lets you share actual site statistics on social media (Twitter) for: _Bytes saved,_ _SSL requests served_, and _attacks blocked_.
 
@@ -66,7 +66,7 @@ Analytics are based on Cloudflare’s edge logs, with no need for third party sc
 
 -   **Visits** - A visit is defined as a page view that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views. 
 -   **Page views** - A page view is defined as a successful HTTP response with a content-type of HTML. 
--   **Requests** - An HTTP request. A typical page view requires many requests.
+-   **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
 -   **Data Transfer** - Total HTTP data transferred in requests.
 
 To receive more detailed metrics, **Add filter**. You can also filter each metric by **Referer**, **Host**, **Country**, **Path**, **Status code**, **Origin status code**, **Browser**, **Operating system**, or **Device type**. 

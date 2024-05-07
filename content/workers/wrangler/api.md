@@ -264,6 +264,10 @@ const platform = await getPlatformProxy(options);
 
     *   Optional options object containing preferences for the bindings:
 
+        * `environment` {{<type>}}string{{</type>}}
+
+          The environment to use.
+
         * `configPath` {{<type>}}string{{</type>}}
 
           The path to the configuration object to use (default `wrangler.toml`).
@@ -350,6 +354,25 @@ The bindings supported by `getPlatformProxy` are:
  * [KV namespace bindings](/kv/api/)
 
  * [Durable Object bindings](/durable-objects/api/)
+
+     * To use a Durable Object binding with `getPlatformProxy`, always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
+
+        For example, you might have the following file read by `getPlatformProxy`.
+
+        ```toml
+        ---
+        filename: wrangler.toml
+        ---
+        [[durable_objects.bindings]]
+        name = "MyDurableObject"
+        class_name = "MyDurableObject"
+        script_name = "my-worker"
+        ```
+
+        In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
+        with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
+        separately via `wrangler dev`.
+
 
  * [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 

@@ -8,7 +8,7 @@
 
 You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [installation instructions](https://gohugo.io/installation/) for your operating system to get started.
 
-> **Important:** This project is built with version `0.123.5+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
+> **Important:** This project is built with version `0.125.6+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
 
 You must also have a recent version of Node.js (18+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
 

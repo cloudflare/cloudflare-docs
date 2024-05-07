@@ -55,6 +55,17 @@ Identify files and folders that have been shared in a potentially insecure fashi
 | Dropbox folder shared company-wide                                    | Medium   |
 | Dropbox shared link create policy set to default 'Team-wide'          | Low      |
 
+### Data Loss Prevention (optional)
+
+{{<render file="casb/_data-loss-prevention.md">}}
+
+| Finding                                                        | Severity | Description                                                                           |
+| -------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------- |
+| File Publicly Accessible Read and Write with DLP Profile match | Critical | A Dropbox file contains sensitive data that anyone on the Internet can read or write. |
+| File Publicly Accessible Read Only with DLP Profile match      | Critical | A Dropbox file contains sensitive data that anyone on the Internet can read.          |
+| File Shared Company Wide Read and Write with DLP Profile match | Medium   | A Dropbox file is shared with the entire company with read and write permissions.     |
+| File Shared Company Wide Read Only with DLP Profile match      | Medium   | A Dropbox file is shared with the entire company with read permissions.               |
+
 ### Suspicious applications
 
 Detect when suspicious Dropbox applications are linked by members.

@@ -19,13 +19,14 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 | Queues                                             | 10,000 per account <sup>beta</sup>      |
 | Message size                                       | 128 KB <sup>1</sup>                     |
 | Message retries                                    | 100                                     |
-| Batch size                                         | 100 messages <sup>beta</sup>            |
+| Maximum consumer batch size                                         | 100 messages <sup>beta</sup>            |
+| Maximum messages per `sendBatch` call | 100 (or 256KB in total) |
 | Batch wait time                                    | 60 seconds                              |
 | Per-queue message throughput <sup>2</sup>          | 400 messages per second <sup>3</sup>    |
-| Message retention period <sup>4</sup>              | 4 days (96 hours)                       | 
-| Per-queue backlog size <sup>5</sup>                | 25GB                                    | 
-| Concurrent consumer invocations                    | 20 <sup>push-based only</sup>           | 
-| Consumer invocation duration                       | 15 minutes <sup>6</sup>                 | 
+| Message retention period <sup>4</sup>              | 4 days (96 hours)                       |
+| Per-queue backlog size <sup>5</sup>                | 25GB                                    |
+| Concurrent consumer invocations                    | 20 <sup>push-based only</sup>           |
+| Consumer invocation duration                       | 15 minutes <sup>6</sup>                 |
 | `visibilityTimeout` (pull-based queues)            | 12 hours                                |
 | `delaySeconds` (when sending or retrying)          | 12 hours                                |
 | Requests to the Queues API (incl. pulls/acks)      | [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |

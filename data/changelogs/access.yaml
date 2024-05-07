@@ -2,6 +2,10 @@
 link: "/cloudflare-one/changelog/access/"
 productName: Access
 entries:
+- publish_date: '2024-04-28'
+  title: Add option to bypass CORS to origin server 
+  description: |-
+    Access admins can [defer all CORS enforcement to their origin server](/cloudflare-one/identity/authorization-cookie/cors/#bypass-options-requests-to-origin) for specific Access applications.
 - publish_date: '2024-04-15'
   title: Zero Trust User identity audit logs
   description: |-

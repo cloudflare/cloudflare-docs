@@ -124,7 +124,7 @@ AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
 
 prompt = "Tell me all about PEP-8"
 response = requests.post(
-  f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{{ .Params.model.name}}",
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Params.model.name}}",
     headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
     json={
       "messages": [

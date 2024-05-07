@@ -10,6 +10,13 @@ A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to int
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a Cloudflare Developer Platform resource set up to continue.
 
+
+{{<Aside>}}
+
+Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bindings/), which are listed on this page.
+
+{{</Aside>}}
+
 ## KV namespaces
 
 [Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution.
@@ -376,6 +383,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 To bind Workers AI to your Pages Function, you can configure a Workers AI binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#workers-ai) or the Cloudflare dashboard.
 
+When developing locally using Wrangler, you can define an AI binding using the `--ai` flag. Start Wrangler in development mode by running [`wrangler pages dev --ai AI`](/workers/wrangler/commands/#dev) to expose the `context.env.AI` binding.
+
 To configure a Workers AI binding via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -674,7 +683,7 @@ To add secrets to your Pages project:
 5. Select **Encrypt** to create your secret.
 6. Select **Save**.
 
-You use secrets the same way as environment variables. For more guidance, refer to [Environment variables](#environment-variables).
+You use secrets the same way as environment variables. When setting secrets with Wrangler or in the Cloudflare dashboard, it needs to be done before a deployment that uses those secrets. For more guidance, refer to [Environment variables](#environment-variables).
 
 ### Interact with your secrets locally
 

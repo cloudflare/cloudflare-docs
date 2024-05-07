@@ -14,7 +14,7 @@ When making requests to Azure OpenAI, you will need:
 - Azure OpenAI resource name
 - Azure OpenAI deployment name (aka model name)
 
-Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/azure-openai/RESOURCE_NAME/MODEL_NAME`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
+Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/azure-openai/RESOURCE_NAME/DEPLOYMENT_NAME`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
 
 
 ```bash
@@ -23,7 +23,7 @@ header: Example fetch request
 ---
 
 curl --request POST \
-  --url 'https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/azure-openai/RESOURCE_NAME/MODEL_NAME/chat/completions?api-version=2023-05-15' \
+  --url 'https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/azure-openai/RESOURCE_NAME/DEPLOYMENT_NAME/chat/completions?api-version=2023-05-15' \
   --header 'Content-Type: application/json' \
   --header 'api-key: KEY' \
   --data '{

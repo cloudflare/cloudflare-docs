@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Pricing
 weight: 1
+layout: wide
 ---
 
 # Pricing
@@ -20,9 +21,9 @@ The Workers for Platforms Paid plan is **$25** monthly and comes with the follow
 
 {{</table-wrap>}}
 <sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker. <br />
-<sup>2</sup>  Workers for Platforms only charges for 1 request across the chain of [dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) -> [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) -> [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/). CPU time is charged across these Workers.   
+<sup>2</sup>  Workers for Platforms only charges for 1 request across the chain of [dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) -> [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) -> [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/). CPU time is charged across these Workers.
 
-### Example pricing:
+## Example pricing:
 
 A Workers for Platforms project that serves 100 million requests per month, uses an average of 10 milliseconds (ms) of CPU time per request and uses 1200 scripts would have the following estimated costs:
 

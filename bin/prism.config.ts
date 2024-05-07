@@ -304,7 +304,9 @@ export async function highlight(
     '<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally';
 
   if (theme === "light") output += " CodeBlock-is-light-in-light-theme";
-  output += ` CodeBlock--language-${lang}" language="${lang}">`;
+  output += ` CodeBlock--language-${lang}" language="${lang}"`;
+  if (frontmatter.header) output += ` title="${frontmatter.header}">`;
+  else output += ">"
 
   if (frontmatter.header)
     output += `<span class="CodeBlock--header">${frontmatter.header}</span>`;

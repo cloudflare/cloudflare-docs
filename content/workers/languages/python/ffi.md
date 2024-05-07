@@ -19,7 +19,7 @@ The details of Pyodide's Foreign Function Interface are documented [here](https:
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform. When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket.
 
-For example, to accesss a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [`wrangler.toml`](/workers/wrangler/configuration/):
+For example, to access a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [`wrangler.toml`](/workers/wrangler/configuration/):
 
 ```toml
 ---

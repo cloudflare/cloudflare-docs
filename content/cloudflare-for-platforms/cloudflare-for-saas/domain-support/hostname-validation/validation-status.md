@@ -4,6 +4,7 @@ title: Validation status
 weight: 5
 meta:
     title: Validation status - Custom Hostname Validation
+layout: wide
 ---
 
 # Validation status

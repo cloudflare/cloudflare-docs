@@ -16,16 +16,24 @@ D1's open beta launched in October 2023, and newly created databases use a diffe
 
 This guide will instruct you to recreate alpha D1 databases on our production-ready system.
 
-## 1. Verify that the database is alpha
+## 1. Verify that a database is alpha
 
 ```sh
 $ npx wrangler d1 info <database_name>
 ```
 
+If the database is alpha, the output of the command will include `version` set to `alpha`:
+
+```
+...
+│ version           │ alpha                                 │
+...
+```
+
 ## 2. Create a manual backup
 
 ```sh
-$ npx wrangler d1 backup create <database_name>
+$ npx wrangler d1 backup create <alpha_database_name>
 ```
 
 ## 3. Download the manual backup
@@ -33,7 +41,7 @@ $ npx wrangler d1 backup create <database_name>
 The command below will download the manual backup of the alpha database as `.sqlite3` file:
 
 ```sh
-$ npx wrangler d1 backup download <database_name> <backup_id> # See available backups with wrangler d1 backup list <database_name>
+$ npx wrangler d1 backup download <alpha_database_name> <backup_id> # See available backups with wrangler d1 backup list <database_name>
 ```
 
 ## 4. Convert the manual backup into SQL statements
@@ -72,11 +80,11 @@ $ npx wrangler d1 create <new_database_name>
 $ npx wrangler d1 execute <new_database_name> --remote --file=./db.sql
 ```
 
-## 7. Delete your database
+## 7. Delete your alpha database
 
-To delete your database, run:
+To delete your previous alpha database, run:
 
 ```sh
-$ npx wrangler d1 delete <database_name>
+$ npx wrangler d1 delete <alpha_database_name>
 ```
 

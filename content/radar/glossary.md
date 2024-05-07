@@ -83,7 +83,6 @@ In speed, latency, and jitter rankings, only countries where users run speed tes
 
 Cloudflare Speed Test measures latency multiple times over the course of the test. Measurements taken before a download or upload begins are aggregated into idle latency and jitter, while measurements taken while a download or upload is in progress are aggregated as loaded latency and jitter.
 
-
 ## Content Categories
 
 Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
@@ -138,7 +137,6 @@ The Mobile Operating Systems graph shows the distribution of mobile device reque
 
 [Top-level domains, also known as TLDs](https://www.cloudflare.com/learning/dns/top-level-domain/), are found in the right-most portion of a hostname. As of February 2024, there are nearly 1600 Top Level Domains listed in the [IANA Root Zone Database](https://www.iana.org/domains/root/db). On Radar, we are sharing our own perspective on these TLDs, highlighting those with the largest shares of spam and malicious emails. The analysis is based on the sending domain’s TLD, found in the `From:` header of an email message. Data for this metric comes from Cloudflare’s cloud email security service.
 
-
 ## Network-level DDoS Attacks
 
 Attacks mitigated by our Level 3 and 4 Denial of Service Attack prevention systems. We show the most used attack vectors as well as the change in attack volume over the selected time range. Selected location is the location of the data center(s) where the attacks were mitigated. Target industry and vertical categories are associated with the customers being attacked.
@@ -147,13 +145,17 @@ Industry categories include business types grouped by their primary activities, 
 
 Network-level DDoS attacks graphs are based on traffic measured in bytes.
 
+## Post-Quantum Encryption Adoption
+
+The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
+
 ## TCP Connection Tampering
 
 A complete TCP connection consists of a 3-way handshake initiated by a client with a SYN packet to the server, then typically a data exchange moderated with ACK and PSH flags in the data packets, and finally a graceful close initiated from either side with a FIN packet. A TCP close is ungraceful or unexpected when triggered by a timeout, or by a RST packet. More details about the TCP protocol can be found in [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293#section-3.6).
 
 Timeouts can be triggered, for example, by shutting down applications or devices before they can close connections. Timeouts also can be caused by third-party applications or devices seeking to prevent or break the connection. The RST packet is reserved for use by an endpoint to signal a fatal error or failure of some kind, but it can also inappropriately be transmitted by middleboxes to force endpoints to close their connections (see RFC 3360).
 
-Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in "[Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)").
+Both timeouts and RSTs are indicative of a connection failure that, when matching certain signatures and patterns, are indicative of tampering by middleboxes (further technical details available in [Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/)).
 
 On Cloudflare Radar's Security & Attacks page, you can view connection tampering statistics derived from a sample of connections to Cloudflare's servers. The plot lines are defined as follows:
 * **Mid-handshake (Post-SYN)**: Connections matching signatures for tampering after the receipt of only a single SYN packet, and before the handshake completes. Tampering at this stage is likely triggered by the destination IP address, as SYN packets typically do not contain application-layer data.
