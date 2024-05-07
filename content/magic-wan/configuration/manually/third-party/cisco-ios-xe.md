@@ -203,7 +203,7 @@ Peer: 172.64.###.### port 500 fvrf: (none) ivrf: (none)
 
 ## Troubleshooting
 
-If you notice connectivity issues after rebooting your Cisco router, your IPsec Security Associations (SAs) might be out of sync. Cisco recommends that you enable the invalid Security Parameter Index (SPI) recovery feature to solve this issue. To do so, add the following lines to your configuration file:
+If you notice connectivity issues after rebooting your Cisco router, your IPsec Security Associations (SAs) might be out of sync. Cisco recommends that you enable the Invalid Security Parameter Index (SPI) recovery feature to solve this issue. To do so, add the following lines to your configuration file:
 
 ```txt
 conf t
