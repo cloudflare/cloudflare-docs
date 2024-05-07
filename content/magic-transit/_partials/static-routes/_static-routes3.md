@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: createPath;;tunnelEndpoints;;mWANcfTunnel
+inputParameters: createPath;;tunnelEndpoints;;ipRanges
 ---
 
 ## Scoped routes for Anycast GRE or IPsec tunnels
