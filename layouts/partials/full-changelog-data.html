@@ -3,8 +3,16 @@
 
 {{- range $key, $product := $changelogRaw -}}
 {{- $productEntries := slice -}}
+{{- $productArea := "" -}}
+{{- $productAreaLink := "" -}}
+{{- with $product.productArea -}}
+{{- $productArea = . -}}
+{{- end -}}
+{{- with $product.productAreaLink -}}
+{{- $productAreaLink = . -}}
+{{- end -}}
 {{- range $index2, $item := $product.entries -}}
-{{- $productEntries = $productEntries | append (merge $item (dict "product" $product.productName "url" $product.link )) -}}
+{{- $productEntries = $productEntries | append (merge $item (dict "product" $product.productName "url" $product.link "productArea" $productArea "productAreaLink" $productAreaLink)) -}}
 {{- end -}}
 {{- $productData := merge $product (dict "entries" $productEntries) -}}
 {{- $changelogData = merge $changelogData (dict $key $productData)}}

@@ -1,8 +1,14 @@
+<!-- Get data from other places -->
+
+{{- $productArea := $.Page.Params.changelog_product_area_name -}}
 {{- $changelogData := partial "full-changelog-data.html" -}}
+
+<!-- Define arrays to populate -->
 {{- $changelogRendered := slice -}}
 {{- $products := slice -}}
-{{- $productArea := $.Page.Params.changelog_product_area_name -}}
+{{- $productAreas := slice -}}
 
+<!-- Loop through the changelog data to build out the appropriate entries + filters -->
 {{- range $index, $product := $changelogData -}}
 
 <!-- Used for product group rollup pages. Skips pages not specified in the fronmatter. -->
@@ -13,6 +19,7 @@
 {{- end -}}
 
 {{- $products = $products | append $product.productName -}}
+{{- $productAreas = $productAreas | append $product.productArea -}}
 {{- range $index2, $item := $product.entries -}}
 {{- $placeholderDict := dict -}}
 {{- with $product.topLevelLink -}}
@@ -42,6 +49,7 @@
 <!-- Order and remove dupe values -->
 {{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
 {{- $products = sort ($products | uniq) . "asc" -}}
+{{- $productAreas = sort ($productAreas | uniq) . "asc" -}}
 
 <div class="selectorDropdowns">
   <div>
@@ -53,6 +61,17 @@
       {{- end -}}
     </select>
   </div>
+  <div>
+    <label for="productArea">Product area</label>
+    <select class="selectorFilter" name="data-product-area" id="productArea">
+      <option value="all">Select...</option>
+      {{- range $productAreas -}}
+      {{- with . }}
+      <option value="{{ . | lower }}">{{.}}</option>
+      {{- end -}}
+      {{- end -}}
+    </select>
+  </div>
   <div class="searchInput">
     <label for="searchInput">Text search</label>
     <input type="text" id="searchInput" placeholder="Search..." />
@@ -60,14 +79,14 @@
 </div>
 
 <div id="changelogContent">
-{{- range $changelogRendered -}}
+{{- range $index, $entry := $changelogRendered -}}
 
-<div class="data-row" data-product="{{.product | lower}}" data-changelog="{{- print .link "index.xml" -}}" data-date="{{ .publish_date | time.Format "January 2, 2006" }}">
-  <h3>{{- .product -}}</h3>
-  {{- with .title -}}
+<div class="data-row" data-product="{{$entry.product | lower}}" data-product-area="{{$entry.productArea | lower}}" data-product-area-link="{{- print $entry.productAreaLink "index.xml" -}}" data-changelog="{{- print $entry.url "index.xml" -}}" data-date="{{ $entry.publish_date | time.Format "January 2, 2006" }}">
+  <h3>{{- $entry.product -}}</h3>
+  {{- with $entry.title -}}
   <p><strong>{{ . | $.Page.RenderString }}</strong></td>
   {{- end -}}
-  <p>{{ .description | $.Page.RenderString }}</td>
+  <p>{{ $entry.description | $.Page.RenderString }}</td>
 </div>
 {{- end -}}
 
@@ -83,10 +102,12 @@
 
 <script>
   const productsDropdown = document.getElementById("product");
+  const productAreaDropdown = document.getElementById("productArea");
   const searchInput = document.getElementById("searchInput");
   const dataRows = document.querySelectorAll(".data-row");
   const showAllButton = document.getElementById("showAllButton");
-  let descriptionText = document.getElementById("description");
+  let productRSSDescriptionText = document.getElementById("productDescription");
+  let productAreaRSSDescriptionText = document.getElementById("productAreaDescription");
 
   let MAX_VISIBLE_ROWS = 50;
 
@@ -120,27 +141,43 @@
     if (productsDropdown.value !== "all") {
       params.set("product", productsDropdown.value);
     }
+    if (productAreaDropdown.value !== "all") {
+      params.set("product", productAreaDropdown.value);
+    }
     history.replaceState(null, "", "?" + params.toString());
   }
 
   // Function to update description text
   function updateDescriptionText() {
     let productName = "Changelog";
+    let productAreaName = "Changelog";
     let changelogLink = "/changelog/index.xml";
+    let areaChangelogLink = "/changelog/index.xml";
     const regexPattern = `developers\.cloudflare\.com(.*?)#`;
+    productAreaRSSDescriptionText.style.display = "none"
     for (const dropdown of productsDropdown) {
       if (dropdown.selected === true && dropdown.value !== "all") {
         productName = dropdown.label;
-        while (changelogLink === "/changelog/index.xml") {
-          dataRows.forEach((row) => {
+        dataRows.forEach((row) => {
             if (row.getAttribute("data-product") === productName.toLowerCase()) {
               changelogLink = row.getAttribute("data-changelog");
               }
           });
-        }
       }
     }
-    descriptionText.innerHTML = `Subscribe to all ${productName} posts via <a class='rssLink' target="_blank" href=${changelogLink}>RSS</a>.`;
+    for (const areaDropdown of productAreaDropdown) {
+      if (areaDropdown.selected === true && areaDropdown.value !== "all") {
+        productAreaName = areaDropdown.label;
+        dataRows.forEach((row) => {
+          if (row.getAttribute("data-product-area") === productAreaName.toLowerCase()) {
+              areaChangelogLink = row.getAttribute("data-product-area-link");
+              }
+          });
+          productAreaRSSDescriptionText.style.display = "block"
+      }
+    }
+    productRSSDescriptionText.innerHTML = `Subscribe to all ${productName} posts via <a class='rssLink' target="_blank" href=${changelogLink}>RSS</a>.`;
+    productAreaRSSDescriptionText.innerHTML = `Subscribe to all ${productAreaName} posts via <a class='rssLink' target="_blank" href=${areaChangelogLink}>RSS</a>.`;
   }
 
   // Function to filter and show/hide rows
@@ -158,6 +195,10 @@
         productsDropdown.value === "all" ||
         row.getAttribute("data-product").toLowerCase() ===
           productsDropdown.value.toLowerCase();
+      const productAreaMatch =
+        productAreaDropdown.value === "all" ||
+        row.getAttribute("data-product-area").toLowerCase() ===
+          productAreaDropdown.value.toLowerCase();
       const searchMatch =
         searchInput.value.trim() === "" ||
         Array.from(row.children).some((cell) =>
@@ -165,7 +206,7 @@
             .toLowerCase()
             .includes(searchInput.value.trim().toLowerCase())
         );
-      if (productMatch && searchMatch) {
+      if (productMatch && searchMatch && productAreaMatch) {
         row.style.display = "table-row";
         visibleRowCount++;
         if (visibleRowCount > MAX_VISIBLE_ROWS) {
@@ -193,6 +234,14 @@
   const urlParams = new URLSearchParams(window.location.search);
   const productFilter = urlParams.get("product");
   if (productFilter) {
+    for (const option of productsDropdown) {
+      if (option.value === productFilter.toLowerCase()) {
+        productsDropdown.value = productFilter.toLowerCase();
+      }
+    }
+  }
+  const productAreaFilter = urlParams.get("data-product-area-link");
+  if (productAreaFilter) {
     for (const option of productsDropdown) {
       if (option.value === productFilter.toLowerCase()) {
         productsDropdown.value = productFilter.toLowerCase();
@@ -231,6 +280,7 @@
 
   // Event listeners
   productsDropdown.addEventListener("change", updateTable);
+  productAreaDropdown.addEventListener("change", updateTable);
   searchInput.addEventListener("input", updateTable);
   showAllButton.addEventListener("click", showAllEntries);
 </script>
