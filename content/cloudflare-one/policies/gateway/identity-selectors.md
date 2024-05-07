@@ -73,7 +73,7 @@ Use this selector to create identity-based Gateway rules based on an IdP group n
 
 | UI name          | API example                             |
 | ---------------- | --------------------------------------- |
-| User Group Email | `identity.groups.name == "\"finance\""` |
+| User Group Names | `identity.groups.name == "\"finance\""` |
 
 ### User Name
 
