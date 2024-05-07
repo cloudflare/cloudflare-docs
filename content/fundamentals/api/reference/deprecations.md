@@ -31,7 +31,7 @@ Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
 ## Brotli API
 **End of life date: June 14th, 2024**
 
-The Brotli setting is deprecated. After the end of life date, Brotli compression will be enabled by default for zones on all Cloudflare plans.
+The Brotli setting is deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
 
 Deprecated APIs:
 - GET /zones/:zone_id/settings/brotli
