@@ -338,7 +338,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Server Side Excludes
+## Server Side Excludes (deprecated) { #server-side-excludes }
 
 [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 
