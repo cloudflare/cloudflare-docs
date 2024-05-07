@@ -21,6 +21,8 @@ The `cache.put` method is not compatible with tiered caching. Refer to [Cache AP
 
 However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
 
+The Cache API **is available** on `*.pages.dev` for [Pages Functions](/pages/functions) unlike Workers.
+
 {{<Aside type="note">}}
 
 This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the cache works](/workers/reference/how-the-cache-works/).
