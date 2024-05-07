@@ -211,4 +211,4 @@ crypto isakmp invalid-spi-recovery
 exit
 ```
 
-Refer to [Cisco documentation](https://www.cisco.com/c/en/us/support/docs/security-vpn/ipsec-negotiation-ike-protocols/115801-technote-iosvpn-00.html) for more information.
+Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/security-vpn/ipsec-negotiation-ike-protocols/115801-technote-iosvpn-00.html) for more information.
