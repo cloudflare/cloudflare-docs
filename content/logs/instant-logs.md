@@ -44,7 +44,7 @@ Instant Logs has a maximum data rate supported. For high volume domains, we samp
 
 - **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value.
 
-All supported operators can be found at our [Filters](/logs/reference/filters/) page.
+All supported operators can be found in the [Filters](/logs/reference/filters/) page.
 
 Below we have three examples of filters:
 
