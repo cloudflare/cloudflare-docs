@@ -14,7 +14,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -70,6 +70,41 @@ export default {
     return response;
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from pyodide.ffi import to_js as _to_js
+from js import Response, URL, Object, fetch
+
+def to_js(x):
+    return _to_js(x, dict_converter=Object.fromEntries)
+
+async def on_fetch(request):
+    url = URL.new(request.url)
+
+    # Only use the path for the cache key, removing query strings
+    # and always store using HTTPS, for example, https://www.example.com/file-uri-here
+    some_custom_key = f'https://{url.hostname}{url.pathname}'
+
+    response = await fetch(request, to_js({"cf": {
+        # Always cache this fetch regardless of content type
+        # for a max of 5 seconds before revalidating the resource
+        "cacheTtl": 5,
+        "cacheEverything": True,
+        # Enterprise only feature, see Cache API for other plans
+        "cacheKey": some_custom_key,
+        }}))
+
+    # Reconstruct the Response object to make its headers mutable
+    response = Response.new(response.body, response)
+
+    # Set cache control headers to cache on browser for 25 minutes
+    response.headers.set("Cache-Control", "max-age=1500")
+
+    return response
 ```
 
 {{</tab>}}
