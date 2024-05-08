@@ -243,7 +243,7 @@ export default {
 			return Response.json({ result: result });
 		} catch (e) {
 			console.log(e);
-			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
+			return Response.json({ error: e.message }, { status: 500 });
 		}
 	},
 } satisfies ExportedHandler<Env>;
