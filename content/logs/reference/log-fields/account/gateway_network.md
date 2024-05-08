@@ -22,9 +22,9 @@ The descriptions below detail the fields available for `gateway_network`.
 | DetectedProtocol | Detected traffic protocol of the network session. | string |
 | DeviceID | UUID of the device where the network session originated from. | string |
 | DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
-| Email | Email associated with the user identity where the network sesion originated from. | string |
-| OverrideIP | Overriden IP of the network session, if any. | string |
-| OverridePort | Overriden port of the network session, if any. | int |
+| Email | Email associated with the user identity where the network session originated from. | string |
+| OverrideIP | Overridden IP of the network session, if any. | string |
+| OverridePort | Overridden port of the network session, if any. | int |
 | PolicyID | Identifier of the policy/rule that was applied, if any. | string |
 | PolicyName | The name of the gateway policy applied to the request, if any. | string |
 | SNI | Content of the SNI for the TLS network session, if any. | string |
