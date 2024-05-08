@@ -14,16 +14,16 @@ Dedicated egress IPs are static IP addresses that can be used to allowlist traff
 
 An account can have any number of additional dedicated egress IPs. To request additional dedicated egress IPs, contact your account team to schedule a service window.
 
-## Enable egress IPs
+## Turn on egress IPs
 
 To start routing traffic through dedicated egress IPs:
 
 1. Contact your account team to obtain a dedicated egress IP.
 2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-3. Enable **Proxy** for TCP.
+3. Turn on **Proxy** for TCP.
 4. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
 
-Dedicated egress IPs are now enabled for all network and HTTP traffic proxied by Gateway. To selectively enable dedicated egress IPs for a subset of your traffic, refer to [egress policies](/cloudflare-one/policies/gateway/egress-policies/).
+Dedicated egress IPs are now turned on for all network and HTTP traffic proxied by Gateway. To selectively turn on dedicated egress IPs for a subset of your traffic, refer to [egress policies](/cloudflare-one/policies/gateway/egress-policies/).
 
 ## Verify egress IPs
 
@@ -37,10 +37,6 @@ To check if your device is using the correct dedicated egress IP:
 When testing against another origin, you may see either an IPv4 or IPv6 address. Gateway has no control over whether connections are made over IPv4 or IPv6. Some origins are only available over IPv4, while others are only available over IPv6. When both protocols are supported, the decision is made by the operating system and browser on the client device. For example, Windows will by default [favor IPv6](https://docs.microsoft.com/en-us/troubleshoot/windows-server/networking/configure-ipv6-in-windows) over IPv4.
 
 ## Limitations
-
-- [DNS queries and tunnel-backed origins](#unsupported-traffic) do not use dedicated egress IPs.
-- [IP geolocation](#ip-geolocation) will take at least six weeks to update.
-- [Physical egress location](#egress-location) varies depending on whether the connection is over IPv4 or IPv6.
 
 ### Unsupported traffic
 
@@ -60,9 +56,13 @@ When creating egress policies with dedicated egress IPs, set your secondary IPv4
 
 ### IP geolocation
 
+{{<Aside type="note">}}
+IP geolocation will take at least six weeks to update.
+{{</Aside>}}
+
 Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
 
-When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process will take at least six weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
+When you turn on dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites, such as Google Search, will check the MaxMind database to geolocate a user's source IP. For example, if your users are in India, Google will direct them to the United States Google landing page instead of the India landing page until Google recognizes the updated IP geolocation.
 
 We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
 
@@ -72,12 +72,16 @@ To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](
 
 ### Egress location
 
-| Destination IP | Destination proxied by Cloudflare | Physical egress location                      | IP geolocation              |
-| -------------- | --------------------------------- | --------------------------------------------- | --------------------------- |
-| IPv4           | No                                | Egresses data center with dedicated egress IP | Matches dedicated egress IP |
-| IPv4           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
-| IPv6           | No                                | Egresses locally connected data center        | Matches dedicated egress IP |
-| IPv6           | Yes                               | Egresses locally connected data center        | Matches dedicated egress IP |
+Your users' physical egress location will vary depending on whether their connection is over IPv4 or IPv6.
+
+| Destination IP | Destination proxied by Cloudflare | Physical egress location                      |
+| -------------- | --------------------------------- | --------------------------------------------- |
+| IPv4           | No                                | Egresses data center with dedicated egress IP |
+| IPv4           | Yes                               | Egresses locally connected data center        |
+| IPv6           | No                                | Egresses locally connected data center        |
+| IPv6           | Yes                               | Egresses locally connected data center        |
+
+Regardless of egress location, the IP geolocation will match the assigned dedicated egress IP.
 
 #### IPv4
 
@@ -91,7 +95,7 @@ For example, assume you have a primary dedicated egress IP in Los Angeles and a 
 
 Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected data center but logically egress with one of your dedicated IP geolocations. In the example above, the Las Vegas user would egress from Las Vegas but IP geolocate from Los Angeles.
 
-## FAQ
+## Frequently asked questions (FAQ)
 
 ### Can I provision the same egress IP address to multiple data centers?
 
@@ -105,7 +109,7 @@ No, traffic will only egress from the data center where the egress IP is provisi
 
 Yes, your users will egress via their provisioned IP address.
 
-### What happens when I enable dedicated egress IPs with [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/)?
+### What happens when I use dedicated egress IPs with [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/)?
 
 Your users will connect to the nearest data center, where the remote browser session will load. The remote browser will then egress via the data center with their provisioned egress IP.
 
