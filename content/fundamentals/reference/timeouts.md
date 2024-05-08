@@ -11,8 +11,8 @@ When `HTTP/HTTPS` traffic is [proxied through cloudflare](/fundamentals/concepts
 
 | Type  | Limit (seconds) | Error at limit | Configurable | 
 | ---  | --- | --- | --- | 
-| Connection Keep-Alive HTTP/1.1 |  400 | 499 | No |
-| Connection Idle HTTP/2 | 400 | 499 | No |
+| Connection Keep-Alive HTTP/1.1 |  400 | [499](/support/troubleshooting/http-status-codes/4xx-client-error/#499-client-close-request) | No |
+| Connection Idle HTTP/2 | 400 | [499](/support/troubleshooting/http-status-codes/4xx-client-error/#499-client-close-request) | No |
 
 
 ## Between Cloudflare and origin
