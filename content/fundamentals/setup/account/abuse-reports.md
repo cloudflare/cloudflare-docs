@@ -4,7 +4,7 @@ title: Submit abuse reports
 weight: 5
 ---
 
-# Submit abuse reports
+# Customer abuse report obligations
 
 Cloudflare permits any interested party to submit abuse reports directly to Cloudflare via [abuse.cloudflare.com](https://abuse.cloudflare.com/). 
 
