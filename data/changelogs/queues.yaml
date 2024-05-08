@@ -1,6 +1,8 @@
 ---
 link: "/queues/platform/changelog/"
 productName: Queues
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
 - publish_date: '2024-03-26'
   title: Delay messages published to a queue

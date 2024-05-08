@@ -1,6 +1,8 @@
 ---
 link: "/pages/platform/changelog/"
 productName: Pages
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
 - publish_date: '2023-09-13'
   title: Support for D1's new storage subsystem and build error message improvements
