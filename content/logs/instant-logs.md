@@ -24,7 +24,7 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 Fields supported in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
 
-*Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dashboard.*
+Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dashboard.
 
 ## Instant Logs via CLI
 
