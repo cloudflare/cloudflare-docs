@@ -27,7 +27,7 @@ If you are using [Pages Functions](/pages/functions/):
 The following examples show how to access a D1 database bound to `DB` from both a Workers script and a Pages Function:
 
 {{<tabs labels="Workers | Pages">}}
-{{<tab label="Workers" default="true">}}
+{{<tab label="workers">}}
 
 ```ts
 ---
@@ -59,7 +59,7 @@ export default app
 ```
 
 {{</tab>}}
-{{<tab label="Pages">}}
+{{<tab label="pages">}}
 
 ```ts
 ---
