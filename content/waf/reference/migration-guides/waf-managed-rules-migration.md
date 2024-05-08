@@ -69,7 +69,7 @@ The following OWASP settings will be migrated:
     Low             | PL1             | Medium – 40 or higher
     Default         | PL2             | Medium – 40 or higher
 
-* **Action**: The action in the previous OWASP ruleset has an almost direct mapping in the new OWASP managed ruleset, except for the _Simulate_ action which will be migrated as _Log_.
+* **Action**: The action in the previous OWASP ruleset has an almost direct mapping in the new OWASP managed ruleset, except for the _Simulate_ action which will be migrated to _Log_.
 
 The following OWASP settings will **not** be migrated, since there is no direct equivalence between rules in the two versions:
 * OWASP group overrides
