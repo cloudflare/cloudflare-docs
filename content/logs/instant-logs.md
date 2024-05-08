@@ -20,7 +20,7 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 3. Select **Start streaming**.
 
-4. (optional) Click **Add filter** to narrow down the events to be shown.
+4. (optional) Select **Add filter** to narrow down the events to be shown.
 
 Fields supported in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
 
