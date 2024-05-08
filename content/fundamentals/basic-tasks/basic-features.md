@@ -1,15 +1,15 @@
 ---
 pcx_content_type: reference
-title: Enable features in bulk
+title: Enable basic features in bulk
 ---
 
-# Enable features in bulk
+# Enable basic features in bulk
 
-Use the **Basic Features** toggle to activate 10 core speed and security features included in your plan.
+Use the **Basic Features** toggle to activate 10 core speed and security features included in your domain plan.
 
 ## Included features
 
-The following features can be enabled from **Basic Features**:
+The following features can be activated from **Basic Features**:
 
 - [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/)
 - [HTTP/3 (with QUIC)](/speed/optimization/protocol/http3/)
@@ -24,11 +24,11 @@ The following features can be enabled from **Basic Features**:
 
 ## Activate basic features
 
-To enable several key features in bulk:
+To enable several basic features in bulk:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. On the zone homepage, go to **Quick Actions**.
+2. Select your account and domain.
+3. On the selected domain's **Overview** page, go to **Quick Actions**.
 4. For **Basic Features**, select **Activate**.
-5. Choose which features you want to be enabled.
+5. Choose which features you want to be activated.
 6. Select **Activate selections**.
