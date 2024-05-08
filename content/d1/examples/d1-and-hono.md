@@ -33,29 +33,33 @@ The following examples show how to access a D1 database bound to `DB` from both 
 ---
 filename: src/index.ts
 ---
-import { Hono } from 'hono'
+import { Hono } from "hono";
 
 // This ensures c.env.DB is correctly typed
 type Bindings = {
-  DB: D1Database
-}
+  DB: D1Database;
+};
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<{ Bindings: Bindings }>();
 
 // Accessing D1 is via the c.env.YOUR_BINDING property
 app.get("/query/users/:id", async (c) => {
-  const userId= c.req.param("id")
+  const userId = c.req.param("id");
   try {
-    let { results } = await c.env.DB.prepare("SELECT * FROM users WHERE user_id = ?").bind(userId).all()
-    return c.json(results)
+    let { results } = await c.env.DB.prepare(
+      "SELECT * FROM users WHERE user_id = ?",
+    )
+      .bind(userId)
+      .all();
+    return c.json(results);
   } catch (e) {
-    return c.json({err: e}, 500)
+    return c.json({ err: e.message }, 500);
   }
-})
+});
 
 // Export our Hono app: Hono automatically exports a
 // Workers 'fetch' handler for you
-export default app
+export default app;
 ```
 
 {{</tab>}}
@@ -65,24 +69,28 @@ export default app
 ---
 filename: functions/api/[[route]].ts
 ---
-import { Hono } from 'hono'
-import { handle } from 'hono/cloudflare-pages'
+import { Hono } from "hono";
+import { handle } from "hono/cloudflare-pages";
 
-const app = new Hono().basePath('/api')
+const app = new Hono().basePath("/api");
 
 // Accessing D1 is via the c.env.YOUR_BINDING property
 app.get("/query/users/:id", async (c) => {
-  const userId= c.req.param("id")
+  const userId = c.req.param("id");
   try {
-    let { results } = await c.env.DB.prepare("SELECT * FROM users WHERE user_id = ?").bind(userId).all()
-    return c.json(results)
+    let { results } = await c.env.DB.prepare(
+      "SELECT * FROM users WHERE user_id = ?",
+    )
+      .bind(userId)
+      .all();
+    return c.json(results);
   } catch (e) {
-    return c.json({err: e}, 500)
+    return c.json({ err: e.message }, 500);
   }
-})
+});
 
 // Export the Hono instance as a Pages onRequest function
-export const onRequest = handle(app)
+export const onRequest = handle(app);
 ```
 
 {{</tab>}}
