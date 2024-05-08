@@ -138,3 +138,31 @@ entries:
     a request is a message that is sent between a client, or web browser, to a server. Each request that has been processed through the Cloudflare network generates a record.
   associated_products:
     - Logs
+
+- term: TCP Keep-Alive
+  general_definition: |-
+    a TCP keep-alive is used to maintain a connection between two endpoints by sending packets to check if the connection is still active. This helps prevent idle connections from being prematurely closed. If a response is not received after a defined period, the connection is terminated. 
+
+- term: TCP RST (reset) 
+  general_definition: |-
+     a TCP Reset (RST) packet is used by a TCP sender to close a connection
+
+- term: TCP Fast Open (TFO)
+  general_definition: |-  
+    TCP Fast Open (TFO) is a protocol extension that can significantly improve the speed of establishing TCP connections by allowing data to be sent in the initial SYN packet, rather than requiring a separate handshake before data transmission begins.
+
+- term: TCP three-way handshake
+  general_definition: |-  
+    TCP uses a three-way handshake to establish a reliable connection (SYN, SYN-ACK, ACK) over an IP based connection. SYN is short for synchronize. ACK is short for Acknowledgement.
+
+- term: Idle connection
+  general_definition: |-  
+    When a TCP connection is in an idle state, it means that the connection has been established, but neither endpoint is sending any data. In the context of HTTP, an idle connection is when an established connection between a client and a server is not currently transmitting any HTTP requests or responses.
+
+- term: Proxy read timeout
+  general_definition: |-  
+    A proxy read timeout is the maximum amount of time a proxy server waits for a response from the origin server before terminating the connection.
+
+- term: Proxy write timeout
+  general_definition: |-  
+    A proxy write timeout is the maximum amount of time a proxy server allows for sending data to the client before terminating the connection.

@@ -5,7 +5,7 @@ title: TCP connections
 
 # TCP connections
 
-The following section explains how Cloudflare directs traffic efficiently with Anycast routing and serves as an intermediary between users and origin servers. The second part covers TCP connections and keepalives for performance optimization, and lastly, TCP Fast Open (TFO), a protocol extension that enhances the speed of TCP connections.
+The following section explains how Cloudflare directs traffic efficiently with Anycast routing and serves as an intermediary between users and origin servers. The second part covers TCP connections and keep-alives for performance optimization, and lastly, TCP Fast Open (TFO), a protocol extension that enhances the speed of TCP connections.
 
 ## How Cloudflare connects user to origin
 
@@ -20,21 +20,21 @@ A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[
 
 User traffic is routed to the nearest Cloudflare data center based on the shortest [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) path, thanks to [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routing. Cloudflare then processes the request. In case a request is not served from Cloudflare’s data centers, Cloudflare will open a connection to the origin server to forward the request.
 
-## TCP connections and keepalives
+## TCP connections and keep-alives
 
 HTTP (Hypertext Transfer Protocol) is a [Layer 7](https://en.wikipedia.org/wiki/OSI_model) application protocol that operates over TCP. By default, HTTP opens a new TCP connection for each request-response cycle, which can lead to performance overhead due to the repeated connection establishment and teardown. 
 
-Keepalives are a mechanism that bridges TCP and HTTP, and allow a single TCP connection to remain open for multiple HTTP requests and responses. This minimizes the connection overhead and latency associated with establishing new TCP connections for each web resource. Keepalives improve the efficiency and responsiveness of web applications by facilitating the reuse of existing connections, reducing network traffic, and enhancing user experience.
+Keep-Alives are a mechanism that bridges TCP and HTTP, and allow a single TCP connection to remain open for multiple HTTP requests and responses. This minimizes the connection overhead and latency associated with establishing new TCP connections for each web resource. Keep-Alives improve the efficiency and responsiveness of web applications by facilitating the reuse of existing connections, reducing network traffic, and enhancing user experience.
 
-TCP connections can persist even after HTTP requests have concluded. However, to manage resources efficiently, idle connections are typically terminated after a certain period of inactivity. To enhance connection reuse and minimize connection overhead, keepalives are employed. These mechanisms collectively optimize the performance and reliability of web applications while conserving network resources.
+TCP connections can persist even after HTTP requests have concluded. However, to manage resources efficiently, idle connections are typically terminated after a certain period of inactivity. To enhance connection reuse and minimize connection overhead, keep-alives are employed. These mechanisms collectively optimize the performance and reliability of web applications while conserving network resources.
 
-If either a user or an origin does not respond to two keepalives, Cloudflare will sever the connection by sending a TCP Reset (RST) packet.
+If either a user or an origin does not respond to two keep-alives, Cloudflare will sever the connection by sending a TCP Reset (RST) packet.
 
-For connections to users, Cloudflare has a default idle timeout of 300 seconds. After the 300 seconds, Cloudflare will start sending keepalive probes every 75 seconds. If nine consecutive probes are unanswered, Cloudflare will sever the connection by sending an RST packet.
+For connections to users, Cloudflare has a default idle timeout of 400 seconds. After the 400 seconds, Cloudflare will start sending keep-alive probes every 75 seconds. If nine consecutive probes are unanswered, Cloudflare will sever the connection by sending an RST packet.
 
 {{<Aside type="note">}}
 
-Be aware that even if there are keepalives, Cloudflare cannot guarantee to keep a connection, since besides idleness, there are other reasons, like capacity balancing, data center maintenance or node restarts that can cause disconnections. Having this in mind, applications should be structured to handle disconnections gracefully.  
+Be aware that even if there are keep-alives, Cloudflare cannot guarantee to keep a connection, since besides idleness, there are other reasons, like capacity balancing, data center maintenance or node restarts that can cause disconnections. Having this in mind, applications should be structured to handle disconnections gracefully.  
 
 {{</Aside>}}
 
