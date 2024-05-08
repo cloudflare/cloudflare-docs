@@ -30,9 +30,9 @@ Once a filter is selected and the stream has started, only log lines that match 
 
 ### 1. Create an Instant Logs Job
 
-Create a session by sending a `POST` request to our Instant Logs job endpoint with the following parameters:
+Create a session by sending a `POST` request to the Instant Logs job endpoint with the following parameters:
 
-- **Fields** - List any field available in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/).
+- **Fields** - List any field available in the [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/).
 
 - **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 
@@ -135,7 +135,7 @@ For the moment, `HTTP requests` is the only dataset supported. In the future, we
 
 ## Export
 
-You can download the table of logs that appears in your dash using the **Export** button. The data will be in JSON format.
+You can download the table of logs that appears in the dashboard, in JSON format via the **Export** button.
 
 ## Limits
 
