@@ -7,7 +7,7 @@ meta:
 
 # Examples
 
-### Return a custom status code and/or response headers
+## Return a custom status code and/or response headers
 
 ```python
 ---
@@ -22,7 +22,7 @@ async def on_fetch(request, env):
   return Response.new("Hello world!", status=404, headers=headers)
 ```
 
-### Parse an incoming request URL
+## Parse an incoming request URL
 
 ```python
 ---
@@ -48,7 +48,7 @@ async def on_fetch(request, env):
     return Response.new("Hello world!")
 ```
 
-### Parse JSON from the incoming request
+## Parse JSON from the incoming request
 
 ```python
 ---
@@ -61,7 +61,7 @@ async def on_fetch(request):
     return Response.new("Hello, {name}".format(name=name))
 ```
 
-### Emit logs from your Python Worker
+## Emit logs from your Python Worker
 
 ```python
 ---
@@ -92,7 +92,7 @@ async def on_fetch(request):
     return Response.new("We're testing logging!")
 ```
 
-### Respond with JSON
+## Respond with JSON
 
 ```python
 ---
@@ -109,7 +109,7 @@ async def on_fetch(request):
     return Response.new(payload, headers=headers)
 ```
 
-### Publish to a Queue
+## Publish to a Queue
 
 ```python
 ---
@@ -136,7 +136,7 @@ async def on_fetch(request, env):
     return Response.json(to_js({"write": "success"}))
 ```
 
-### Query a D1 Database
+## Query a D1 Database
 
 ```python
 ---
