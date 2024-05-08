@@ -61,7 +61,7 @@
       {{- end -}}
     </select>
   </div>
-  <div>
+  <div {{ with $productArea }}style="display:none"{{ end }}>
     <label for="productArea">Product area</label>
     <select class="selectorFilter" name="data-product-area" id="productArea">
       <option value="all">Select...</option>
