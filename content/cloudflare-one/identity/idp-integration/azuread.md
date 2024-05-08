@@ -111,9 +111,7 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 
 ## Synchronize users and groups
 
-The Azure AD integration supports the [System for Cross-domain Identity Management (SCIM)](https://www.rfc-editor.org/rfc/rfc7642.txt) protocol. With SCIM, Cloudflare Access can automatically deprovision users after they are deactivated in the identity provider and display synchronized group names in the Access policy builder.
-
-To synchronize users and groups between Access and Azure:
+The Azure AD integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/). To enable SCIM provisioning between Access and Azure AD:
 
 ### 1. Enable SCIM in Zero Trust
 
