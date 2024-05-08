@@ -9,7 +9,7 @@
 {{- $productAreas := slice -}}
 
 <!-- Loop through the changelog data to build out the appropriate entries + filters -->
-{{- range $index, $product := $changelogData -}}
+{{- range $product := $changelogData -}}
 
 <!-- Used for product group rollup pages. Skips pages not specified in the fronmatter. -->
 {{- with $productArea -}}
@@ -20,7 +20,7 @@
 
 {{- $products = $products | append $product.productName -}}
 {{- $productAreas = $productAreas | append $product.productArea -}}
-{{- range $index2, $item := $product.entries -}}
+{{- range $item := $product.entries -}}
 {{- $placeholderDict := dict -}}
 {{- with $product.topLevelLink -}}
 {{- $placeholderDict = (dict "link" $product.topLevelLink) -}}
@@ -79,7 +79,7 @@
 </div>
 
 <div id="changelogContent">
-{{- range $index, $entry := $changelogRendered -}}
+{{- range $entry := $changelogRendered -}}
 
 <div class="data-row" data-product="{{$entry.product | lower}}" data-product-area="{{$entry.productArea | lower}}" data-product-area-link="{{- print $entry.productAreaLink "index.xml" -}}" data-changelog="{{- print $entry.url "index.xml" -}}" data-date="{{ $entry.publish_date | time.Format "January 2, 2006" }}">
   <h3>{{- $entry.product -}}</h3>
@@ -154,7 +154,7 @@
     let changelogLink = "/changelog/index.xml";
     let areaChangelogLink = "/changelog/index.xml";
     const regexPattern = `developers\.cloudflare\.com(.*?)#`;
-    productAreaRSSDescriptionText.style.display = "none"
+    productAreaRSSDescriptionText.style.display = "none";
     for (const dropdown of productsDropdown) {
       if (dropdown.selected === true && dropdown.value !== "all") {
         productName = dropdown.label;
@@ -173,7 +173,7 @@
               areaChangelogLink = row.getAttribute("data-product-area-link");
               }
           });
-          productAreaRSSDescriptionText.style.display = "block"
+          productAreaRSSDescriptionText.style.display = "block";
       }
     }
     productRSSDescriptionText.innerHTML = `Subscribe to all ${productName} posts via <a class='rssLink' target="_blank" href=${changelogLink}>RSS</a>.`;
@@ -237,6 +237,7 @@
     for (const option of productsDropdown) {
       if (option.value === productFilter.toLowerCase()) {
         productsDropdown.value = productFilter.toLowerCase();
+        break;
       }
     }
   }
@@ -245,6 +246,7 @@
     for (const productArea of productAreaDropdown) {
       if (productArea.value === productAreaFilter.toLowerCase()) {
         productAreaDropdown.value = productAreaFilter.toLowerCase();
+        break;
       }
     }
   }
