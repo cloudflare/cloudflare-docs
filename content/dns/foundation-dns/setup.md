@@ -12,7 +12,9 @@ Having advanced namservers configured is a requirement for you to have access to
 
 ## Enable on a zone
 
-To enable advanced nameservers on an existing or new zone:
+To enable advanced nameservers on an existing zone:
+
+1. Opt for advanced nameservers on your zone:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -21,9 +23,6 @@ To enable advanced nameservers on an existing or new zone:
 2. Go to **DNS** > **Records**.
 3. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
 4. After you refresh the page, the card will display the values for your advanced nameservers `NS` records.
-5. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
-    - If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your nameservers updated.
-    - If you are using a different registrar or if your zone is delegated to a parent zone, [manually update your nameservers](/dns/nameservers/update-nameservers/#specific-processes).
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -40,9 +39,14 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 }'
 ```
 
+The response body will contain your assigned namservers  in the `nameservers` object. You will use these nameservers in the next step.
 
 {{</tab>}}
 {{</tabs>}}
+
+2. Update the authoritative nameservers at your registrar. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
+    - If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your nameservers updated.
+    - If you are using a different registrar or if your zone is delegated to a parent zone, [manually update your nameservers](/dns/nameservers/update-nameservers/#specific-processes).
 
 {{<Aside type="warning">}}
 Make sure the values for your assigned nameservers are copied exactly.
