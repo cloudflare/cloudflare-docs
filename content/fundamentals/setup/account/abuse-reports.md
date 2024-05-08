@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Submit abuse reports
+title: Abuse contact & reports
 weight: 5
 ---
 
