@@ -12,6 +12,8 @@ outputs:
 
 # Historical changelog
 
+This page tracks changes made to Cloudflare Workers before 2023. For a view of more recent updates, refer to the [current changelog](/workers/platform/changelog/workers/).
+
 ## 2022-12-16
 
 - Conditional `PUT` requests have been fixed in the R2 bindings API.
