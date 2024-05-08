@@ -1,0 +1,10 @@
+---
+link: "/cloudflare-one/changelog/warp/"
+productName: WARP
+productArea: Zero Trust
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-05-08'
+  title: Crowdstrike posture checks for online status
+  description: |-
+    The [Crowdstrike posture check](/cloudflare-one/identity/devices/service-providers/crowdstrike/) can now report the device state and the elapsed time since the device was last seen.
