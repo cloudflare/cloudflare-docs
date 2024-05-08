@@ -1,6 +1,8 @@
 ---
 link: "/workers-ai/changelog/"
 productName: Workers AI
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/
 entries:
 - publish_date: '2024-04-11'
   title: Add AI native binding

@@ -5,7 +5,7 @@ title: Git integration
 
 # Git integration
 
-Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab repositories to look for new changes to your project.
+Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab repositories to look for new changes to your project. Pages does not currently support self-hosted instances of GitHub or GitLab.
 
 ## Custom branches
 
