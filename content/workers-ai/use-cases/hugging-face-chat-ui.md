@@ -32,11 +32,11 @@ When setting up your models, specify the `cloudflare` endpoint.
   },
   "endpoints" : [
     {
-      "type" : "cloudflare"
-      <!-- optionally specify these
+      "type": "cloudflare",
+      // optionally specify these if not included in .env.local
       "accountId": "your-account-id",
-      "authToken": "your-api-token"
-      -->
+      "apiToken": "your-api-token"
+      //
     }
   ]
 }
