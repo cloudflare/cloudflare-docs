@@ -34,8 +34,6 @@ To add a site:
 
 Create a `POST` request [using the API](/api/operations/magic-sites-create-site) to create a site.
 
-The parameter `"ha_mode": true` enables [high availability](#about-high-availability-configurations). You cannot enable high availability for a site after it has been created. To add high availability to an existing site, you need to delete the site and start again.
-
 Example:
 
 ```bash
