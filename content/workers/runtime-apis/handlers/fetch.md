@@ -41,6 +41,6 @@ The Workers runtime does not support `XMLHttpRequest` (XHR). Learn the differenc
 
 - {{<code>}}ctx.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passThroughOnException).
+  - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception).
 
 {{</definitions>}}
