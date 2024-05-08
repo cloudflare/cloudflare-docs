@@ -18,7 +18,7 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 2. Go to **Analytics** > **Instant Logs**.
 
-3. Click **Start streaming**.
+3. Select **Start streaming**.
 
 4. (optional) Click **Add filter** to narrow down the events to be shown.
 
