@@ -128,7 +128,19 @@ It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-
 
 Using the information from your secondary DNS provider, [create `NS` records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) on your zone apex listing your secondary nameservers.
 
-By default, Cloudflare ignores `NS` records that are added to the zone apex. By sending the following API call, you can enable the usage of apex NS records and Cloudflare nameservers will respond with them alongside the assigned Cloudflare nameservers of the zone.
+By default, Cloudflare ignores `NS` records that are added to the zone apex. To modify this behaviour, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
+
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Select your account and zone.
+3. Go to **DNS** > **Settings**.
+4. Enable **Multi-provider DNS**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 ```bash
 curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings/use_apex_ns' \
@@ -141,11 +153,8 @@ curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings
 }'
 ```
 
-{{<Aside type="note">}}
-
-Cloudflare is actively working to support this setting within the dashboard.
-
-{{</Aside>}}
+{{</tab>}}
+{{</tabs>}}
 
 ## Step 7 - Enable outgoing zone transfers
 

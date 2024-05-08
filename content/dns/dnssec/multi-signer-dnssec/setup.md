@@ -72,7 +72,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_re
 }'
 ```
 
-4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
+4. Enable the usage of the nameservers you added in the previous step by using the API request below. Alternatively, go to [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) and enable **Multi-provider DNS**.
 
 {{<Aside type="warning">}}
 This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, Cloudflare will ignore any `NS` records created on the zone apex. This means that responses to DNS queries made to the zone apex and requesting `NS` records will only contain Cloudflare nameservers.
