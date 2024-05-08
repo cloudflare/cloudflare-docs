@@ -65,9 +65,15 @@ To view traffic flagged by HTTP Adaptive DDoS Protection rules:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 2. Go to **Security** > **Events**.
-3. Filter by `Service equals HTTP DDoS` and by the rule ID.
+3. Filter by `Service equals HTTP DDoS` and by rule ID.
 
-For L3/4 Adaptive DDoS Protection rules, currently you must use [Logpush](/logs/about/) or the [GraphQL API](/analytics/graphql-api/) to view the flagged traffic.
+To view traffic flagged by L3/4 Adaptive DDoS Protection rules:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+3. Filter by `Ruleset ID equals 3b64149bfa6e4220bbbc2bd6db589552` (the ID of the Network-layer DDoS Attack Protection managed ruleset) and by rule ID.
+
+You may also obtain information about flagged traffic through [Logpush](/logs/about/) or the [GraphQL API](/analytics/graphql-api/).
 
 ## Configure the rules
 
