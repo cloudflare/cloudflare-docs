@@ -28,7 +28,7 @@ async def on_fetch(request, env):
 ---
 filename: src/entry.py
 ---
-from js import Response, Headers
+from js import Response
 from urllib.parse import urlparse, parse_qs
 
 async def on_fetch(request, env):
@@ -68,7 +68,7 @@ async def on_fetch(request):
 filename: src/entry.py
 ---
 # To use the JavaScript console APIs
-from js import console
+from js import console, Response
 # To use the native Python logging
 import logging
 
