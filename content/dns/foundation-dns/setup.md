@@ -14,6 +14,9 @@ Having advanced namservers configured is a requirement for you to have access to
 
 To enable advanced nameservers on an existing or new zone:
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Records**.
 3. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
@@ -21,6 +24,25 @@ To enable advanced nameservers on an existing or new zone:
 5. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
     - If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your nameservers updated.
     - If you are using a different registrar or if your zone is delegated to a parent zone, [manually update your nameservers](/dns/nameservers/update-nameservers/#specific-processes).
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint to send a PATCH request like the following:
+
+```bash
+$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'X-Auth-Key: <KEY>' \
+--header 'Content-Type: application/json' \
+--data '{
+  "foundation_dns": true
+}'
+```
+
+
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="warning">}}
 Make sure the values for your assigned nameservers are copied exactly.
