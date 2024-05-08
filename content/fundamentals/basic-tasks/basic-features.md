@@ -14,7 +14,7 @@ The following features can be enabled from **Basic Features**:
 - [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/)
 - [HTTP/3 (with QUIC)](/speed/optimization/protocol/http3/)
 - [0-RTT Connection Resumption](/speed/optimization/protocol/0-rtt-connection-resumption/)
-- [Always Use HTTPs](/ssl/edge-certificates/additional-options/always-use-https/)
+- [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
 - [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
 - [Normalize incoming URLs](/rules/normalization/)
 - [WebSockets](/network/websockets/)
