@@ -145,7 +145,7 @@ entries:
 
 - term: TCP RST (reset) 
   general_definition: |-
-     a TCP Reset (RST) packet is used by a TCP sender to close a connection
+     a TCP Reset (RST) packet is used by a TCP sender to close a connection.
 
 - term: TCP Fast Open (TFO)
   general_definition: |-  
@@ -153,16 +153,16 @@ entries:
 
 - term: TCP three-way handshake
   general_definition: |-  
-    TCP uses a three-way handshake to establish a reliable connection (SYN, SYN-ACK, ACK) over an IP based connection. SYN is short for synchronize. ACK is short for Acknowledgement.
+    TCP uses a three-way handshake to establish a reliable connection (SYN, SYN-ACK, ACK) over an IP based connection. SYN is short for synchronize, and ACK is short for acknowledgement.
 
-- term: Idle connection
+- term: idle connection
   general_definition: |-  
-    When a TCP connection is in an idle state, it means that the connection has been established, but neither endpoint is sending any data. In the context of HTTP, an idle connection is when an established connection between a client and a server is not currently transmitting any HTTP requests or responses.
+    when a TCP connection is in an idle state, it means that the connection has been established, but neither endpoint is sending any data. In the context of HTTP, an idle connection is when an established connection between a client and a server is not currently transmitting any HTTP requests or responses.
 
-- term: Proxy read timeout
+- term: proxy read timeout
   general_definition: |-  
-    A proxy read timeout is the maximum amount of time a proxy server waits for a response from the origin server before terminating the connection.
+    a proxy read timeout is the maximum amount of time a proxy server waits for a response from the origin server before terminating the connection.
 
-- term: Proxy write timeout
+- term: proxy write timeout
   general_definition: |-  
-    A proxy write timeout is the maximum amount of time a proxy server allows for sending data to the client before terminating the connection.
+    a proxy write timeout is the maximum amount of time a proxy server allows for sending data to the client before terminating the connection.
