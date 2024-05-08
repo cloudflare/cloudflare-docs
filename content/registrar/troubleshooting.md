@@ -36,6 +36,11 @@ Some registrars may prohibit transfer requests if you have WHOIS privacy service
 
 ## Restart your transfer
 
-1.  Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2.  In the **Overview** app for your domain, scroll down to **Domain Registration.**
-3.  Select **Cancel and Retry**. Once you initiate the retry, reenter your auth code and confirm your WHOIS information.
+{{<Aside type="note">}}
+This does not apply to .uk domains.
+{{</Aside>}}
+
+1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Select **Domain Registration** > **Manage Domains**.
+3. On the right of the domain name, select **Manage**.
+4. Select **Cancel Transfer and Retry**. After you initiate the retry, you must re-enter your auth code and confirm your WHOIS information.
