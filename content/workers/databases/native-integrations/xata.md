@@ -7,6 +7,8 @@ title: Xata
 
 [Xata](https://xata.io) is a serverless data platform powered by PostgreSQL. Xata uniquely combines multiple types of stores (relational databases, search engines, analytics engines) into a single service, accessible through a consistent REST API.
 
+TEST 
+
 {{<render file="_database_integrations_definition.md">}}
 
 ## Set up an integration with Xata
