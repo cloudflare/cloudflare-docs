@@ -38,6 +38,10 @@ When testing against another origin, you may see either an IPv4 or IPv6 address.
 
 ## Limitations
 
+### Concurrent connections
+
+Each dedicated egress IP assigned to your organization supports 40,000 concurrent connections per origin. You can configure multiple origins for each combination of dedicated egress IP and source port.
+
 ### Unsupported traffic
 
 Dedicated egress IPs do not apply to:
