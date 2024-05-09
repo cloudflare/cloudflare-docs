@@ -56,6 +56,6 @@ For a list of endpoints that override a monitor's `Host` header:
 
 1.  On a monitor, select **Edit**.
 2.  Select **Advanced health monitor settings**.
-3.  If you have endpoint overrides, you will see **Origin host header overrides**.
+3.  If you have endpoint overrides, you will see **Endpoint host header overrides**.
 
 ![Example configuration of endpoint host header overrides](/images/load-balancing/origin-host-header-override.png)
