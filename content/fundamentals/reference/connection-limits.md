@@ -11,8 +11,8 @@ When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/h
 
 | Type  | Limit (seconds) | Error at limit | Configurable | 
 | ---  | --- | --- | --- | 
-| Connection Keep-Alive HTTP/1.1 |  400 | [499](/support/troubleshooting/http-status-codes/4xx-client-error/#499-client-close-request) | No |
-| Connection Idle HTTP/2 | 400 | [499](/support/troubleshooting/http-status-codes/4xx-client-error/#499-client-close-request) | No |
+| Connection Keep-Alive HTTP/1.1 |  400 | TCP Connection Closed | No |
+| Connection Idle HTTP/2 | 400 | TCP Connection Closed | No |
 
 
 ## Between Cloudflare and origin server
@@ -29,7 +29,7 @@ If you are using [Cloudflare tunnels](/cloudflare-one/connections/connect-networ
 | {{<glossary-tooltip term_id="idle connection">}}Proxy Idle{{</glossary-tooltip>}} Timeout | 900 | [520](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-520-web-server-returns-an-unknown-error) | No | 
 | {{<glossary-tooltip term_id="proxy read timeout">}}Proxy Read Timeout{{</glossary-tooltip>}} | 100 | [524](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-524-a-timeout-occurred) | Yes | 
 | {{<glossary-tooltip term_id="proxy write timeout">}}Proxy Write Timeout{{</glossary-tooltip>}} | 30 | [524](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-524-a-timeout-occurred) | No | 
-| HTTP/2 Pings to Origin | Off | N/A | Yes | 
+| HTTP/2 Pings to Origin | Off | - | Yes | 
 | {{<glossary-tooltip term_id="idle connection">}}HTTP/2 Connection Idle{{</glossary-tooltip>}} | 900 |  No | No | 
 
 ## Configurable limits
