@@ -12,7 +12,7 @@ outputs:
 
 # Historical changelog
 
-This page tracks changes made to Cloudflare Workers before 2023. For a view of more recent updates, refer to the [current changelog](/workers/platform/changelog/workers/).
+This page tracks changes made to Cloudflare Workers before 2023. For a view of more recent updates, refer to the [current changelog](/workers/platform/changelog/).
 
 ## 2022-12-16
 
