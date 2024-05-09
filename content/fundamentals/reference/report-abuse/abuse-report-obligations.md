@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
-title: Abuse contact & reports
-weight: 5
+title: Customer abuse report obligations
+weight: 4
 ---
 
 # Customer abuse report obligations
