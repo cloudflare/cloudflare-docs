@@ -2,7 +2,7 @@
 link: "/d1/platform/changelog/"
 productName: D1
 productArea: Developer platform
-productAreaLink: /workers/platform/changelog/
+productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-04-30"
     title: D1 alpha databases will stop accepting live SQL queries on August 1, 2024
