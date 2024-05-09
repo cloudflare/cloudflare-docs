@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Submit abuse reports
-weight: 5
+title: Customer abuse report obligations
+weight: 4
 ---
 
-# Submit abuse reports
+# Customer abuse report obligations
 
 Cloudflare permits any interested party to submit abuse reports directly to Cloudflare via [abuse.cloudflare.com](https://abuse.cloudflare.com/). 
 
