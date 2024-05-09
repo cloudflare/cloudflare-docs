@@ -34,11 +34,11 @@ Endpoint drain is only available for [proxied load balancers (orange-clouded)](/
 
 With [session-based load balancing](/load-balancing/understand-basics/session-affinity/), it is important to direct all requests from a particular end user to a specific endpoint. Otherwise, information about the user session — such as items in their shopping cart — may be lost and lead to negative business outcomes.
 
-To remove an endpoint from rotation while still preserving session continuity, set up **Origin drain** on a load balancer:
+To remove an endpoint from rotation while still preserving session continuity, set up **Endpoint drain** on a load balancer:
 
 1.  On a new or existing load balancer, go to the **Hostname** step.
 2.  Make sure you have enabled **Session Affinity**.
-3.  For **Origin drain duration**, enter a time in seconds. If this value is less than the **Session TTL** value, you will affect existing sessions.
+3.  For **Endpoint drain duration**, enter a time in seconds. If this value is less than the **Session TTL** value, you will affect existing sessions.
     ![Example configuration of session affinity with endpoint drain](/images/load-balancing/session-affinity-3.png)
 4.  Save your changes to the load balancer.
 5.  Click **Manage Pools**.
