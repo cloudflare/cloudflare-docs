@@ -47,3 +47,11 @@ If you had set up logging on your origin during [step 2](#2-configure-origin-to-
 ##  5. Enforce validation check on your origin
 
 {{<render file="_aop-enforce-validation.md">}}
+
+---
+
+## Alerts
+
+You can configure alerts to receive notifications before your AOP certificates expire.
+
+{{<available-notifications product="SSL/TLS" notificationName="Zone-level Authenticated Origin Pulls Certificate Expiration Alert">}}
