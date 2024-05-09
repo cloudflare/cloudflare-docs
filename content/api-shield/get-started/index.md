@@ -9,25 +9,16 @@ weight: 2
 This guide will help you set up API Shield to identify and address API security best practices.
 
 {{<Aside type="note">}}
-Enabling API Shield features will have no impact on your traffic.
+Enabling API Shield features will have no impact on your traffic until you choose to move a setting from `log` to `block` mode.
 {{</Aside>}}
 
-## Set up session identifiers
+## Session identifiers
 
-While not strictly required, it is recommended that you configure your {{<glossary-tooltip term_id="session identifier">}}session identifiers{{</glossary-tooltip>}} when getting started with API Shield. When Cloudflare inspects your API traffic for individual sessions, we can offer more tools for visibility, management, and control.
-
-If you are unsure of the session identifiers that your API uses, consult with your development team. A common session identifier for API traffic is the **Authorization** header.
+{{<render file="_session-identifiers.md">}}
 
 ### To set up session identifiers
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Select **Settings**.
-4. On **Endpoint settings**, select **Manage identifiers**.
-5. Enter the necessary information.
-6. Select **Save**. 
-
-After setting up session identifiers and allowing some time for Cloudflare to learn your traffic patterns, you can view your per endpoint and per session rate limiting recommendations, as well as enforce per endpoint and per session rate limits by creating new rules. Session identifiers will allow you to view API Discovery results from session ID-based discovery and session traffic patterns in Sequence Analytics.
+{{<render file="_set-up-session-identifiers.md">}}
 
 ## Upload a schema using Schema Validation (optional)
 
@@ -56,7 +47,7 @@ You can identify endpoints returning sensitive data by selecting the icon next t
 Cloudflare’s machine learning models have already inspected your existing traffic for the presence of API endpoints. By adding endpoints from API Discovery to Endpoint Management, you can unlock further security, visibility, and management features of the platform. Endpoint Management monitors the health of your API endpoints by saving, updating, and monitoring performance metrics. 
 
 {{<Aside type="note">}}
-Schema Validation, Schema Learning, JWT Validation, Sequence Analytics, and rate limit recommendations only run on endpoints saved to Endpoint Management.
+Schema Validation, Schema Learning, JWT Validation, Sequence Analytics, Sequence Mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management.
 {{</Aside>}}
 
 You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema Validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) by method, path, and host.
@@ -119,8 +110,10 @@ If your origin uses GraphQL, you may consider setting limits on GraphQL query si
 
 [GraphQL malicious query protection](/api-shield/security/graphql-protection/configure/) scans your GraphQL traffic for queries that could overload your origin and result in a denial of service. Customers can build rules that limit the query depth and size of incoming GraphQL queries in order to block suspiciously large or complex queries.
 
+For more information, refer to the [blog post](https://blog.cloudflare.com/protecting-graphql-apis-from-malicious-queries/).
+
 ### Mutual TLS (mTLS) authentication
 
-If you operate an API that requires or would benefit from an extra layer of protection, you may consider using {{<glossary-tooltip term_id="mTLS (mutual TLS)">}}Mutual TLS (mTLS){{</glossary-tooltip>}}.
+If you operate an API that requires or would benefit from an extra layer of protection, you may consider using Mutual TLS (mTLS).
 
 [Mutual TLS (mTLS) authentication](/api-shield/security/mtls/) uses client certificates to ensure traffic between client and server is bidirectionally secure and trusted. mTLS also allows requests that do not authenticate via an identity provider, such as Internet-of-things (IoT) devices, to demonstrate they can reach a given resource.

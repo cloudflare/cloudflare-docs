@@ -24,10 +24,6 @@ meta:
 
 {{<render file="_bots-heuristics.md">}}
 
-#### Account takeover detections
-
-{{<render file="_account-takeover-detections.md">}}
-
 ### Machine learning
 
 {{<render file="_bots-ml.md">}}

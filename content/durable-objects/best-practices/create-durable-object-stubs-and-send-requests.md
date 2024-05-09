@@ -12,7 +12,7 @@ A Durable Object stub is a client Object used to send requests to a remote Durab
 
 Durable Objects implement E-order semantics. When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier.
 
-However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/reference/troubleshooting/).
+However, due to random network disruptions or other transient issues, a Durable Object stub may become disconnected from its remote Durable Object. A disconnected stub is permanently broken. In this scenario, all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/).
 
 To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new Durable Object stub. There are no ordering guarantees between requests to the new stub compared to the old one. If ordering is not a concern, you can create a new Durable Object for every request.
 
@@ -48,7 +48,7 @@ let durableObjectStub = OBJECT_NAMESPACE.get(id);
 You can call a Durable Object by:
 
 - [Sending HTTP requests](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#send-http-requests) to a Durable Object's `fetch()` handler.
-- Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#remote-procedure-call-rpc)).
+- Invoking [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a Durable Object class (available for Workers with a [compatibility date greater than or equal to `2024-04-03`](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc)).
 - Using the [WebSocket API](/durable-objects/reference/websockets/).
 
 ### Call RPC methods
@@ -77,7 +77,7 @@ let response = await durableObjectStub.increment();
 
 {{<Aside type="note">}}
 
-When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#remote-procedure-call-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
+When you write a Worker that does not extend the [`DurableObject` class](/workers/configuration/compatibility-dates/#durable-object-stubs-and-service-bindings-support-rpc), the `ctx` object in your Durable Object is instead called `state`, and is provided as the first argument to the constructor, but not set as a property of your class.
 
 With RPC, the `DurableObject` superclass defines `ctx` and `env` as class properties. What was previously called `state` is now called `ctx` when you extend the `DurableObject` class.
 
@@ -114,7 +114,7 @@ let resp = await durableObjectStub.fetch(`http://do/write?userId=${userId}`)
 
 {{<Aside type="note">}}
 
-To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/reference/error-handling/) documentation.
+To understand how exceptions are thrown from within a Durable Object, refer to the [Error handling](/durable-objects/best-practices/error-handling/) documentation.
 
 {{</Aside>}}
 

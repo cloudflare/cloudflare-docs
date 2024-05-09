@@ -5257,7 +5257,7 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   padding: 0.5em 0 0.5em 0;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1180px) {
   .selectorDropdowns {
     flex-direction: column;
   }
@@ -5341,7 +5341,26 @@ code.ruleID:hover {
 }
 
 code.ruleID:active {
-background: orange;
-color: white;
+  background: orange;
+  color: white;
 }
 
+/* Changelog-specific overrides for product areas */
+
+@media (min-width: 972px) {
+  #changelogContent {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .sticky-date-header {
+    top: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sticky-date-header {
+    top: 45px;
+  }
+}

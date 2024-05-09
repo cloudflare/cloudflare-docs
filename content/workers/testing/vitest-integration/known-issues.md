@@ -2,11 +2,13 @@
 title: Known issues
 pcx_content_type: concept
 weight: 7
+meta:
+  description: Explore the known issues associated with the Workers Vitest integration.
 ---
 
 # Known issues
 
-The Workers Vitest pool is currently in open-beta. These are issues Cloudflare is aware of and fixing:
+The Workers Vitest pool is currently in open beta. The following are issues Cloudflare is aware of and fixing:
 
 ### Coverage
 

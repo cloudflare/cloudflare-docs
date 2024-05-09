@@ -7,7 +7,7 @@ meta:
 
 {{<heading-pill style="beta">}}Version metadata binding{{</heading-pill>}}
 
-The version metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime. 
+The version metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime.
 
 Worker version ID and version tag are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version.
 
@@ -52,7 +52,7 @@ interface Environment {
 }
 
 export default {
-  async fetch(request: Request, env: Environment, ctx: ExecutionContext) {
+  async fetch(request, env, ctx) {
     const { id: versionId, tag: versionTag } = env.CF_VERSION_METADATA;
     env.WAE.writeDataPoint({
       indexes: [versionId],
@@ -61,7 +61,7 @@ export default {
     });
     //...
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

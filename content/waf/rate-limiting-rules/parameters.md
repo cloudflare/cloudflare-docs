@@ -57,7 +57,6 @@ Use one or more of the following characteristics:
       <td>
         <ul>
           <li><a href="#incompatible-characteristics">Incompatible with <strong>IP with NAT support</strong></a></li>
-          <li><a href="#ipv6-address-handling">IPv6 address handling</strong></a></li>
         </ul>
       </td>
     </tr>
@@ -67,7 +66,6 @@ Use one or more of the following characteristics:
       <td>
         <ul>
           <li><a href="#incompatible-characteristics">Incompatible with <strong>IP</strong></a></li>
-          <li><a href="#ipv6-address-handling">IPv6 address handling</strong></a></li>
         </ul>
       </td>
     </tr>
@@ -239,7 +237,40 @@ The available API values are: `10`, `60` (one minute), `120` (two minutes), `300
 
 Action to perform when the rate specified in the rule is reached.
 
-Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+Use one of the following values in the API: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+
+If you select the _Block_ action, you can define a custom response using the following parameters:
+
+- [**With response type**](#with-response-type)
+- [**With response code**](#with-response-code)
+- [**Response body**](#response-body)
+
+#### With response type (for _Block_ action) { #with-response-type }
+
+- Data type: `String`.
+- Field name in the API: `response` > `content_type` (optional).
+
+Defines the content type of a custom response when blocking a request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
+
+#### With response code (for _Block_ action)  { #with-response-code }
+
+- Data type: `Integer`.
+- Field name in the API: `response` > `status_code` (optional).
+
+Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
+
+#### Response body (for _Block_ action) { #response-body }
+
+- Data type: `String`.
+- Field name in the API: `response` > `content` (optional).
+
+Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+The maximum field size is 30 KB.
 
 ### For duration
 
@@ -282,38 +313,7 @@ The action behavior can be one of the following:
 
     ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
 
-### With response type
-
-- Data type: `String`.
-- Field name in the API: `response` > `content_type` (optional).
-
-Defines the content type of a custom response when blocking a request due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
-
-### With response code
-
-- Data type: `Integer`.
-- Field name in the API: `response` > `status_code` (optional).
-
-Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
-
-### Response body
-
-- Data type: `String`.
-- Field name in the API: `response` > `content` (optional).
-
-Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-The maximum field size is 30 KB.
-
 ## Notes about rate limiting characteristics
-
-### IPv6 address handling
-
-Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
 
 ### Use cases of IP with NAT support
 
@@ -354,6 +354,6 @@ If you use **Cookie value of** as a rate limiting rule characteristic, follow th
 
 ## Configuration restrictions
 
-* If the rule expression includes [IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
 * The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.

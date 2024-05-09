@@ -9,7 +9,7 @@ title: Configure Workers for Platforms
 # Configure Workers for Platforms
 
 
-## Prerequisites: 
+## Prerequisites:
 
 ### Enable Workers for Platforms
 
@@ -28,7 +28,7 @@ First, create a [user Workers](/cloudflare-for-platforms/workers-for-platforms/r
 
 User Workers can be created using C3. C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
-Open a terminal window and run C3 to create your Worker project. This example creates a user Worker called `customer-worker-1`. 
+Open a terminal window and run C3 to create your Worker project. This example creates a user Worker called `customer-worker-1`.
 
 
 ```sh
@@ -40,9 +40,9 @@ When following the interactive prompts, answer the questions as below:
 - Select `no` to using TypeScript.
 - **Select `no` to deploying your application.**
 
-### 2. Create a dispatch namespace 
+### 2. Create a dispatch namespace
 
-Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). A dispatch namespace is made up of a collection of [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers). 
+Create a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). A dispatch namespace is made up of a collection of [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers).
 
 This example creates a dispatch namespace called `testing`. To create a dispatch namespace, run:
 
@@ -66,7 +66,7 @@ $ npx wrangler deploy --dispatch-namespace testing
 
 ### 4. Create a dispatch Worker
 
-[Dispatch Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worke) are used to execute user Workers from the dispatch namespace. You will now create a dispatch Worker and add logic it needs to route to the user Worker created in step 2.
+[Dispatch Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) are used to execute user Workers from the dispatch namespace. You will now create a dispatch Worker and add logic it needs to route to the user Worker created in step 2.
 
 
 Navigate up a level from your user Worker's project directory:
@@ -74,7 +74,7 @@ Navigate up a level from your user Worker's project directory:
 $ cd ..
 ```
 
-Create your dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`. 
+Create your dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`.
 
 ```sh
 $ npm create cloudflare@latest my-dispatcher
@@ -100,7 +100,7 @@ filename: wrangler.toml
 
 [[dispatch_namespaces]]
 binding = "DISPATCHER"
-namespace = "testing" 
+namespace = "testing"
 ```
 
 Add the followinng to the index.js file:

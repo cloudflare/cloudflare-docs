@@ -13,7 +13,7 @@ The following example shows you how to write a Worker script to publish to [Clou
 Prerequisites:
 
 * A [queue created](/queues/get-started/#3-create-a-queue) via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
-* A [configured **producer** binding](/queues/reference/configuration/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
+* A [configured **producer** binding](/queues/configuration/configure-queues/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
 * A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your `wrangler.toml` file as follows:
@@ -40,7 +40,7 @@ The following Worker script:
 2. Passes request data to the Durable Object.
 3. Publishes to a queue from within the Durable Object.
 
-The `constructor()` in the Durable Object makes your `Environment` available (in scope) on `this.env` to the [`fetch()` handler](/durable-objects/best-practices/access-durable-objects-from-a-worker/#3-use-fetch-handler-method/) in the Durable Object.
+The `constructor()` in the Durable Object makes your `Environment` available (in scope) on `this.env` to the [`fetch()` handler](/durable-objects/best-practices/access-durable-objects-from-a-worker/#3-use-fetch-handler-method) in the Durable Object.
 
 ```ts
 ---

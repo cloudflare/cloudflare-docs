@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 type: overview
 title: API Routing
-weight: 3
+weight: 2
 ---
 
 # API Routing

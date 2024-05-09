@@ -33,6 +33,12 @@ Create your first D1 database, establish a schema, import data and query D1 dire
 
 {{</feature>}}
 
+{{<feature header="SQLite" href="/d1/build-with-d1/d1-client-api/" cta="Execute SQL queries">}}
+
+Execute SQL with SQLite's SQL compatibility and D1 Client API.
+
+{{</feature>}}
+
 {{<feature header="Time Travel" href="/d1/reference/time-travel/" cta="Learn about Time Travel">}}
 
 Time Travel is D1’s approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.

@@ -13,7 +13,6 @@ This example shows you how Durable Objects are stateful, meaning in-memory state
 
 ```js
 // Worker
-
 export default {
   async fetch(request, env) {
     return await handleRequest(request, env);

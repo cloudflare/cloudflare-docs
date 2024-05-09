@@ -75,6 +75,8 @@ inputParameters: editWord;;editProduct;;cloudflareName
 | Constellation $1                                           | Grants write access to [Constellation](/constellation/).                                                                                                 |
 | D1 Read                                                      | Grants read access to [D1](/d1/).                                                                                                                        |
 | D1 $1                                                      | Grants write access to [D1](/d1/).                                                                                                                       |
+| DDoS Botnet Feed Read                                       | Grants read access to Botnet Feed reports.                                                                                              |
+| DDoS Botnet Feed $1                                       | Grants write access to Botnet Feed configuration.                                                                                              |
 | DDoS Protection Read                                         | Grants read access to [DDoS protection](/ddos-protection/).                                                                                              |
 | DDoS Protection $1                                         | Grants write access to [DDoS protection](/ddos-protection/).                                                                                             |
 | DNS Firewall Read                                            | Grants read access to [DNS Firewall](/dns/dns-firewall/).                                                                                                |
@@ -126,6 +128,7 @@ inputParameters: editWord;;editProduct;;cloudflareName
 | Vectorize Read | Grants read access to [Vectorize](/vectorize/). |
 | Vectorize $1 | Grants write access to [Vectorize](/vectorize/). |
 | Workers AI Read | Grants read access to [Workers AI](/workers-ai/). |
+| Workers AI $1 | Grants write access to [Workers AI](/workers-ai/). |
 | Workers KV Storage Read                                      | Grants read access to [Cloudflare Workers KV Storage](/kv/api/).                                                                        |
 | Workers KV Storage $1                                      | Grants write access to [Cloudflare Workers KV Storage](/kv/api/).                                                                       |
 | Workers R2 Storage Read                                      | Grants read access to [Cloudflare R2 Storage](/r2/).                                                                                                     |

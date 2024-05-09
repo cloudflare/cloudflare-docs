@@ -11,7 +11,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     // Picture of a dog
     const exampleInputImage = await fetch(
@@ -34,7 +34,7 @@ export default {
       },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>

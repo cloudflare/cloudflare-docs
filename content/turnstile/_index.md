@@ -15,7 +15,7 @@ Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into a
 
 {{<render file="_challenge-behavior.md">}}
 
-Rather than try to unilaterally deprecate and replace CAPTCHA with a single alternative, we built a platform to test many alternatives and rotate new challenges in and out as they become more or less effective. 
+Rather than try to unilaterally deprecate and replace CAPTCHA with a single alternative, we built a platform to test many alternatives and rotate new challenges in and out as they become more or less effective.
 
 With Turnstile, we adapt the actual challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges gathering more signals about the visitor/browser environment. Those challenges include, proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid ever showing a visual puzzle to a user.
 
@@ -39,20 +39,36 @@ Turnstile [widget types](/turnstile/concepts/widget-types/) include:
 
 ## Accessibility
 
-Turnstile is WCAG 2.1 AA compliant. 
+Turnstile is WCAG 2.1 AA compliant.
+
+---
+
+## Availability
+
+Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.
+
+---
+
+## Get started
+
+{{<button-group>}}
+{{<button type="primary" href="/turnstile/get-started/">}}Get started{{</button>}}
+{{<button type="secondary" href="/turnstile/migration/">}}Migration guides{{</button>}}
+{{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank">}}Dashboard{{</button>}}
+{{</button-group>}}
 
 ---
 
 ## Features
- 
+
 {{<feature header="Turnstile analytics" href="/turnstile/turnstile-analytics/">}}
 Assess the number of challenges issued, evaluate the challenge solve rate, and view the metrics of issued challenges.
 {{</feature>}}
- 
+
 ---
 
 ## Related products
- 
+
 {{<related header="Bots" href="/bots/" product="bots">}}
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 {{</related>}}
@@ -60,9 +76,3 @@ Cloudflare bot solutions identify and mitigate automated traffic to protect your
 {{<related header="WAF" href="/waf/" product="waf">}}
 Get automatic protection from vulnerabilities and the flexibility to create custom rules.
 {{</related>}}
-
----
-
-## Availability
-
-Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.

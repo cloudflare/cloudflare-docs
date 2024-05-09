@@ -158,6 +158,8 @@ fortigate # config vpn ipsec phase2-interface
         set dhgrp 14
         set replay disable
         set keylifeseconds 3600
+        set auto-negotiate enable
+        set keepalive enable
     next
     edit "MWAN_IPsec_Tun2"
         set phase1name "MWAN_IPsec_Tun2"
@@ -165,6 +167,8 @@ fortigate # config vpn ipsec phase2-interface
         set dhgrp 14
         set replay disable
         set keylifeseconds 3600
+        set auto-negotiate enable
+        set keepalive enable
     next
 end
 ```

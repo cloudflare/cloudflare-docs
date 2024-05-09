@@ -118,7 +118,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finet
     -H 'Authorization: Bearer {API_TOKEN}' \
     -H 'Content-Type: multipart/form-data' \
     -F 'file_name=adapter_model.safetensors' \
-    -F 'file=@{PATH/TO/adapter_model.safetensors}' \
+    -F 'file=@{PATH/TO/adapter_model.safetensors}'
 ```
 
 #### List fine-tunes in your account
@@ -135,7 +135,7 @@ header: cURL
 ## Output: success true/false
 
 curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
-    -H 'Authorization: Bearer {API_TOKEN}' \
+    -H 'Authorization: Bearer {API_TOKEN}'
 ```
 {{</tab>}}
 {{<tab label="json output" no-code="true">}}

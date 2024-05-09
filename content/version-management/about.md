@@ -62,6 +62,6 @@ To send traffic to specific environments, send requests to that environment that
 
 When your version is ready, you would then test and promote it through various environments until it reaches **Production** (or whatever your final environment is).
 
-You can create a new version at any time by choosing to [**Clone**](/version-management/how-to/versions/#create-version) an existing version, which automatically copies over configuration settings from an existing version.
+You can create a new version at any time by choosing to [**Clone**](/version-management/how-to/versions/#create-version) an existing version, which automatically copies over configurations from an existing version.
 
-Version settings are applied to zone traffic when you when you [promote a version](/version-management/how-to/environments/#promote-a-version) to a new environment and then send traffic to that environment that matches the pattern specified in its [traffic filters](/version-management/reference/traffic-filters/).
+Version configurations are applied to zone traffic when you when you [promote a version](/version-management/how-to/environments/#promote-a-version) to a new environment and then send traffic to that environment that matches the pattern specified in its [traffic filters](/version-management/reference/traffic-filters/).

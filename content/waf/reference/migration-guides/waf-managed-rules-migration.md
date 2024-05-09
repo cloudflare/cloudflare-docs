@@ -52,13 +52,30 @@ The update process will create an equivalent configuration for the following set
 - Page Rules configured with _Disable Security_.
 - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On_.
 
+The OWASP ruleset configuration will be partially migrated. Refer to the next section for details.
+
 ### Configurations that will be lost in the update process
 
-The update process will not migrate most settings of the OWASP ModSecurity Core Rule Set available in the previous version of WAF managed rules, including the sensitivity and any group/rule overrides. The OWASP versions in the two WAF implementations (old and new) are quite different, and there is no direct equivalence between rules in the two versions.
+The update process will partially migrate the settings of the OWASP ModSecurity Core Rule Set available in the previous version of WAF managed rules.
 
-The only setting that will be migrated is the configured action, which has a direct mapping to the OWASP action in the new WAF Managed Rules implementation (the _Simulate_ action is migrated as _Log_).
+The following OWASP settings will be migrated:
 
-Since most settings will not be migrated, you will need to configure the Cloudflare OWASP Core Ruleset in WAF Managed Rules again according to your needs, namely the score threshold, the paranoia level, and any tag/rule overrides. For more information on configuring this managed ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
+* **Sensitivity**: The [old sensitivity values](/waf/reference/legacy/old-waf-managed-rules/#owasp-modsecurity-core-rule-set) will be migrated to the following [paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level) (PL) and [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold) combinations in the new OWASP ruleset:
+
+    Old sensitivity | PL in new OWASP | Score threshold in new OWASP
+    ----------------|-----------------|-----------------------------
+    High            | PL2             | Medium – 40 or higher
+    Medium          | PL1             | High – 25 or higher
+    Low             | PL1             | Medium – 40 or higher
+    Default         | PL2             | Medium – 40 or higher
+
+* **Action**: The action in the previous OWASP ruleset has an almost direct mapping in the new OWASP managed ruleset, except for the _Simulate_ action which will be migrated to _Log_.
+
+The following OWASP settings will **not** be migrated, since there is no direct equivalence between rules in the two versions:
+* OWASP group overrides
+* OWASP rule overrides
+
+To replace these settings you will need to configure the Cloudflare OWASP Core Ruleset in WAF Managed Rules again according to your needs, namely any tag/rule overrides. For more information on configuring the new OWASP Core Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
 
 ### Configurations that will prevent you from updating
 
@@ -256,8 +273,8 @@ The update process can take up to an hour. During this period you may observe se
 
 The returned configuration in the example above, which would match the existing configuration for the previous WAF version, contains:
 
-- A rule that executes the Cloudflare Managed Ruleset (ruleset with ID `efb7b8c949ac4650a09736fc376e9aee`).
-- A single override for the rule "Apache Struts - Open Redirect - CVE:CVE-2013-2248" (rule with ID `23ee7cebe6e8443e99ecf932ab579455`) in the same ruleset, setting the action to `log` and disabling the rule.
+- A rule that executes the Cloudflare Managed Ruleset (ruleset ID {{<rule-id>}}efb7b8c949ac4650a09736fc376e9aee{{</rule-id>}}).
+- A single override for the rule `Apache Struts - Open Redirect - CVE:CVE-2013-2248` (rule ID {{<rule-id>}}23ee7cebe6e8443e99ecf932ab579455{{</rule-id>}}) in the same ruleset, setting the action to `log` and disabling the rule.
 
 3. (Optional, for Enterprise customers only) If you are migrating an Enterprise zone to WAF Managed Rules, you can enter validation mode before finishing the migration. In this mode, both WAF implementations will be enabled. Use the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, making sure you include the `waf_migration=validation&phase_two=1` query string parameters:
 

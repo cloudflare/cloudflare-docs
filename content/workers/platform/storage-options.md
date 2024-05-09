@@ -42,18 +42,23 @@ The following table highlights the performance and consistency characteristics o
 
 | Feature                           | Workers KV                                       | R2                                    | Durable Objects                  | D1                                                  |
 | --------------------------------- | ------------------------------------------------ | ------------------------------------- | -------------------------------- | --------------------------------------------------- |
-| Maximum storage per account       | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 50GiB <sup>3</sup><sup>beta</sup>                   |
+| Maximum storage per account       | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 250GiB <sup>3</sup>                                 |
 | Storage grouping name<sup>2</sup> | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
-| Maximum size per value            | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 2 GiB per database                                  |
-| Consistency model                 | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>4</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
+| Maximum size per value            | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 10 GiB per database <sup>4</sup>                    |
+| Consistency model                 | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>5</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
 | Supported APIs                    | Workers, HTTP/REST API                           | Workers, S3 compatible                | Workers                          | Workers, HTTP/REST API                              |
 
 {{</table-wrap>}}
 
 <sup>1</sup> Free accounts are limited to 1 GiB of KV storage.
+
 <sup>2</sup> Free accounts are limited to 10 GiB of R2 storage.
+
 <sup>3</sup> Free accounts are limited to 5 GiB of database storage.
-<sup>4</sup> Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
+
+<sup>4</sup> Free accounts are limited to 500 MiB per database.
+
+<sup>5</sup> Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
 
 {{<render file="_limits_increase.md">}}
 

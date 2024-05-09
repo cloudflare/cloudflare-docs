@@ -1,15 +1,18 @@
 ---
-title: Price scraping
+type: example
+summary: You can use the templates below for a demo application in Workers where product details are shown, but pricing information is not revealed until the Turnstile widget is solved.
+languages:
+  - JavaScript
+preview:
+  - true
 pcx_content_type: configuration
+title: Price scraping
+weight: 4
+layout: example
 demo: https://pricing.httpmachine.com/
-weight: 1
 ---
 
-# Price scraping template
-
-You can use the templates below to provide your users with a demo application in [Workers](/workers/) where product details are shown, but pricing information is not revealed until the Turnstile widget is solved.
-
-## Worker scripts
+# Worker scripts
 
 The script below is applied on the root path `<YOUR-HOSTNAME-HERE>/ }}` and serves a page where the Turnstile widget will be embedded.
 

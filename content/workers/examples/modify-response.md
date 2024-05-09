@@ -5,6 +5,9 @@ summary: Fetch and modify response properties which are immutable by creating a
 tags:
   - Middleware
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Modify response
 weight: 1001
@@ -67,7 +70,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     /**
      * @param {string} headerNameSrc Header to get the new value from
      * @param {string} headerNameDst Header to set based off of value in src

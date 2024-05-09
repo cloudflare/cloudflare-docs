@@ -79,7 +79,7 @@ Vector dimensions describe the width of a vector embedding. The width of a vecto
 
 The number of dimensions are defined by the machine learning model used to generate the vector embeddings, and how it represents input features based on its internal model and complexity. More dimensions ("wider" vectors) may provide more accuracy at the cost of compute and memory resources, as well as latency (speed) of vector search.
 
-Refer to the [dimensions](/vectorize/configuration/create-indexes/#dimensions) documentation to learn how to configure the accepted vector dimension size when creating a Vectorize index.
+Refer to the [dimensions](/vectorize/best-practices/create-indexes/#dimensions) documentation to learn how to configure the accepted vector dimension size when creating a Vectorize index.
 
 ### Distance metrics
 
@@ -90,4 +90,4 @@ The distance metric is an index used for vector search. It defines how it determ
 - The machine learning model and type of embedding you use will determine which distance metric is best suited for your use-case.
 - Different metrics determine different scoring characteristics. For example, the `cosine` distance metric is well suited to text, sentence similarity and/or document search use-cases. `euclidean` can be better suited for image or speech recognition use-cases.
 
-Refer to the [distance metrics](/vectorize/configuration/create-indexes/#distance-metrics) documentation to learn how to configure a distance metric when creating a Vectorize index.
+Refer to the [distance metrics](/vectorize/best-practices/create-indexes/#distance-metrics) documentation to learn how to configure a distance metric when creating a Vectorize index.

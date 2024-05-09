@@ -8,7 +8,7 @@ title: Build a Staff Directory Application
 
 # Build a Staff Directory with D1, Cloudflare Pages and HonoX
 
-In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app. 
+In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app.
 To do this, you will first need to set up a [D1 database](/d1/get-started/) to manage data seamlessly, then you will develop and deploy your application using the [HonoX Framework](https://github.com/honojs/honox) and [Cloudflare Pages](/pages).
 
 ## Prerequisites
@@ -22,7 +22,7 @@ If you do not want to go through with the setup now, [view the completed code](h
 
 ## 1. Install HonoX
 
-In this tutorial, you will use [HonoX](https://github.com/honojs/honox), a meta-framework for creating full-stack websites and Web APIs to build your application. To use HonoX in your project, run the `hono-create` command. 
+In this tutorial, you will use [HonoX](https://github.com/honojs/honox), a meta-framework for creating full-stack websites and Web APIs to build your application. To use HonoX in your project, run the `hono-create` command.
 
 To get started, run the following command:
 
@@ -63,7 +63,7 @@ To create a database for your project, use the Cloudflare CLI tool, [Wrangler](/
 $ npx wrangler d1 create staff-directory
 ```
 
-After creating your database, you will need to set up a [binding](/workers/configuration/bindings/) in the Wrangler configuration file to integrate your database with your application. 
+After creating your database, you will need to set up a [binding](/workers/runtime-apis/bindings/) in the Wrangler configuration file to integrate your database with your application.
 
 This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
 
@@ -122,7 +122,7 @@ To interact with your D1 database, you can directly issue SQL commands using the
 $ wrangler d1 execute staff-directory --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 ```
 
-The command above allows you to run queries or operations directly from the command line. 
+The command above allows you to run queries or operations directly from the command line.
 
 For operations such as initial data seeding or batch processing, you can pass a SQL file with your commands. To do this, create a `schema.sql` file in the root directory of your project and insert your SQL queries into this file:
 
@@ -176,7 +176,7 @@ filename: db.ts
 ---
 export const findAllEmployees = async (db: D1Database) => {
   const query = `
-      SELECT employees.*, locations.location_name, departments.department_name 
+      SELECT employees.*, locations.location_name, departments.department_name
       FROM employees
       JOIN locations ON employees.location_id = locations.location_id
       JOIN departments ON employees.department_id = departments.department_id
@@ -208,7 +208,7 @@ export const createEmployee = async (db: D1Database, employee: Employee) => {
 
 For a complete list of all the queries used in the application, refer to the [db.ts](https://github.com/lauragift21/staff-directory/blob/main/app/db.ts) file in the codebase.
 
-## 6. Develop the UI 
+## 6. Develop the UI
 
 The application uses `hono/jsx` for rendering. You can set up a Renderer  in `app/routes/_renderer.tsx` using the JSX-rendered middleware, serving as the entry point for your application:
 
@@ -347,7 +347,7 @@ export const POST = createRoute(async (c) => {
     const formData = await c.req.formData();
     const imageFile = formData.get('image_file');
     let imageUrl = '';
-    
+
     // TODO: process image url with R2
 
     const employeeData: Employee = {
@@ -361,7 +361,7 @@ export const POST = createRoute(async (c) => {
       location_name: '',
       department_name: ''
     };
-  
+
     await createEmployee(c.env.DB, employeeData);
     return c.redirect('/', 303);
   } catch (error) {
@@ -372,7 +372,7 @@ export const POST = createRoute(async (c) => {
 
 ### Store images in R2
 
-During the process of creating a new employee, the image uploaded can be stored in an R2 bucket prior to being added to the database. 
+During the process of creating a new employee, the image uploaded can be stored in an R2 bucket prior to being added to the database.
 
 To store an image in an R2 bucket:
 
@@ -422,7 +422,7 @@ To store the uploaded image in the R2 bucket, you can use the `put()` method pro
 filename: admin/create.tsx
 ---
 
-if (imageFile instanceof File) { 
+if (imageFile instanceof File) {
   const key = `${new Date().getTime()}-${imageFile.name}`;
   const fileBuffer = await imageFile.arrayBuffer();
 
@@ -436,7 +436,7 @@ if (imageFile instanceof File) {
 }
 ```
 
-[Refer to GitHub](https://github.com/lauragift21/staff-directory) for the full codebase. 
+[Refer to GitHub](https://github.com/lauragift21/staff-directory) for the full codebase.
 
 ## 7. Deploy your HonoX application
 

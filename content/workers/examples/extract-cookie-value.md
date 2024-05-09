@@ -4,6 +4,9 @@ summary: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
 tags:
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Cookie parsing
 weight: 1001
@@ -35,7 +38,7 @@ export default {
 ```ts
 import { parse } from "cookie";
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     // The name of the cookie
     const COOKIE_NAME = "__uid";
     const cookie = parse(request.headers.get("Cookie") || "");

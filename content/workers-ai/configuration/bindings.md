@@ -12,7 +12,7 @@ meta:
 
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones.
 
-To use Workers AI with Workers, you must create a [Workers AI binding](/workers/configuration/bindings/#workers-ai-bindings). Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform. You create bindings on the Cloudflare dashboard or by updating your [`wrangler.toml` file](/workers/wrangler/configuration/).
+To use Workers AI with Workers, you must create a Workers AI [binding](/workers/runtime-apis/bindings/). Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform. You create bindings on the Cloudflare dashboard or by updating your [`wrangler.toml` file](/workers/wrangler/configuration/).
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 

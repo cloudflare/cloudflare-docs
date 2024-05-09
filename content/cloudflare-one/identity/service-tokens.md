@@ -63,6 +63,10 @@ $ curl -H "cf-access-token=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
 
 All requests with this cookie will succeed until the JWT expires.
 
+{{<Aside type="note">}}
+If your Access application only has Service Auth policies, you must send the service token on every subsequent request. You can only use the JWT if the application has at least one Allow policy.
+{{</Aside>}}
+
 ## Renew service tokens
 
 Service tokens expire according to the token duration you selected when you created the token.
