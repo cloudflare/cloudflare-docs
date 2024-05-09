@@ -7,4 +7,4 @@ entries:
 - publish_date: '2024-05-09'
   title: Crowdstrike posture checks for online status
   description: |-
-    Two new Crowdstrike attributes, **Last Seen** and **State**, are now available to be used as selectors in the [Crowdstrike S2S integration](/cloudflare-one/identity/devices/service-providers/crowdstrike/).
+    Two new Crowdstrike attributes, _Last Seen_ and _State_, are now available to be used as selectors in the [Crowdstrike service provider integration](/cloudflare-one/identity/devices/service-providers/crowdstrike/).
