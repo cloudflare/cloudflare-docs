@@ -39,7 +39,7 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 }'
 ```
 
-The response body will contain your assigned namservers  in the `nameservers` object. You will use these nameservers in the next step.
+The response body will contain your assigned namservers in the `nameservers` object. You will use these nameservers in the next step.
 
 {{</tab>}}
 {{</tabs>}}

@@ -130,7 +130,6 @@ Using the information from your secondary DNS provider, [create `NS` records](/d
 
 By default, Cloudflare ignores `NS` records that are added to the zone apex. To modify this behaviour, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
 
-
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
