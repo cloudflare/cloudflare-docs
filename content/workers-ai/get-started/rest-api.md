@@ -21,7 +21,7 @@ You need your API token and Account ID to use the REST API.
 
 To get these values:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **AI** > **Workers AI**.
 3. Select **Using the Workers AI API**.
 4. Get your API token:

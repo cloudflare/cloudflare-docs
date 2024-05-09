@@ -19,7 +19,7 @@ Before you get started, make sure you have a [Cloudflare account](https://dash.c
 
 To set up an AI Gateway in the dashboard:
 
-1. Log into your [Cloudflare account](https://dash.cloudflare.com/).
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **AI** > **AI Gateway**.
 3. Select **Create Gateway**.
   ![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
