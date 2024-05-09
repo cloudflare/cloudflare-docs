@@ -14,7 +14,7 @@ You can create a pool within the [load balancer workflow](/load-balancing/load-b
 3.  For your pool, enter the following information:
     *   A name (must be unique)
     *   A description to provide more detail on the name
-    *   A choice for [**Origin Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/), which affects how your pool routes traffic to each endpoint
+    *   A choice for [**Endpoint Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/), which affects how your pool routes traffic to each endpoint
 
 4.  For each endpoint, enter the following information:
     *   A name (must be unique)
