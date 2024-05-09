@@ -78,7 +78,7 @@ For more details on API commands in context, refer to [Create a load balancer wi
 
 ## Endpoint Drain
 
-Drain or remove all traffic from an endpoint without affecting any active customers using endpoint Drain. For more details on endpoint drain, refer to [Performing planned maintenance](/load-balancing/additional-options/planned-maintenance/#gradual-rotation).
+Drain or remove all traffic from an endpoint without affecting any active customers using endpoint drain. For more details on endpoint drain, refer to [Performing planned maintenance](/load-balancing/additional-options/planned-maintenance/#gradual-rotation).
 
 {{<Aside type="warning" header="Important">}}
 

@@ -14,7 +14,7 @@ To confirm pool health using the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 2.  Select **Manage Pools**.
-3.  For pools and individual endpoints, review the values in the **Health** and **Origin Health** columns.
+3.  For pools and individual endpoints, review the values in the **Health** and **Endpoint Health** columns.
 
 For more information on pool and endpoint health statuses, refer to [How a pool becomes unhealthy](/load-balancing/understand-basics/health-details/#how-a-pool-becomes-unhealthy).
 

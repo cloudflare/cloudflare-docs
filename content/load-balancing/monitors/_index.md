@@ -50,7 +50,7 @@ The host headers used on health monitor requests can be configured either [on th
 
 When a host header is specified both on the monitor and on the endpoint, the host header configured on the endpoint takes precedence over the host header configured on the monitor.
 
-When no host header is specified, Cloudflare uses the **Origin Address** configured on the endpoints as the host header for the health monitor requests.
+When no host header is specified, Cloudflare uses the **Endpoint Address** configured on the endpoints as the host header for the health monitor requests.
 
 For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 
