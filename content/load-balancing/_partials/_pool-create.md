@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You can create a pool within the [load balancer workflow](/load-balancing/load-balancers/create-load-balancer/) or in the **Origin Pools** section of the dashboard:
+You can create a pool within the [load balancer workflow](/load-balancing/load-balancers/create-load-balancer/) or in the **Pools** section of the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 

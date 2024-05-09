@@ -34,7 +34,7 @@ The exact settings will vary depending on your use case. Refer to the following 
     *   Keep the orange cloud icon enabled, meaning the load balancer is proxied. This refers to the [proxy mode](/load-balancing/understand-basics/proxy-modes/) and, with Spectrum, traffic is always proxied.
     *   Keep **Session Affinity** and **Failover across pools** disabled as these features are not supported with Spectrum.
 
-4.  On the **Add an Origin Pool** page, define the settings presented and select **Next**.
+4.  On the **Add a Pool** page, define the settings presented and select **Next**.
     *   Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool) [^1].
     *   If needed, update the [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools) [^2].
 
