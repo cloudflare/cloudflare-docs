@@ -4,9 +4,15 @@ pcx_content_type: tutorial
 difficulty: Beginner
 content_type: 📝 Tutorial
 title: Create a sitemap from Sanity CMS with Workers
+spotlight:
+  author: John Siciliano
+  author_bio_link: https://www.linkedin.com/in/johnsicili/
+  author_bio_source: LinkedIn
 ---
 
 # Create a sitemap from Sanity CMS with Workers
+
+{{<spotlight-author>}}
 
 In this tutorial, you will put together a Cloudflare Worker that creates and serves a sitemap using data from [Sanity.io](https://www.sanity.io), a headless CMS.
 
