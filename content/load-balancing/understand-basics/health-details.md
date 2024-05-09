@@ -70,3 +70,9 @@ If a load balancer reaches **Critical** health and the pool serving as your fall
 
 - If Cloudflare proxies your hostname, you will see a 530 HTTP/1016 Origin DNS failure.
 - If Cloudflare does not proxy your hostname, you will see the SOA record.
+
+### Alerts
+
+You can configure alerts to receive notifications for changes in the health status of your pools or origins. 
+
+{{<available-notifications product="Load Balancing" notificationName="Load Balancing Health Alert">}}
