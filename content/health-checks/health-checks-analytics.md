@@ -19,6 +19,20 @@ You can evaluate origin uptime, latency, failure reason, and specific event logs
 - **Event Log**: Shows individual health check data. 
   - Select each record for additional details on **Round trip time**, the **Failure Reason**, the **Average Waterfall** (showing chronological data about request stages), **Response status code**, and more.
 
+## Alerts
+
+You can configure alerts to notify you of any changes in your health check status.
+
+{{<available-notifications product="Health Checks">}}
+
+To set up a health check alert:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. 
+2. Go to **Notifications**. 
+3. Select **Add** > **Health Checks**
+4. Fill out the necessary information and select the notification trigger. 
+5. Select **Create**.
+
 ## Common error codes
 
 ### TCP connection failed
