@@ -384,6 +384,7 @@
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
+/fundamentals/setup/account/abuse-reports/ /fundamentals/reference/report-abuse/abuse-report-obligations/ 301
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/setup/manage-domains/add-multiple-sites-automation/ 301
 /support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/setup/account/account-security/2fa/ 301
 /support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/setup/account/account-security/multi-factor-email-authentication/ 301
@@ -585,6 +586,8 @@
 /learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
 /learning-paths/workers/test/ /learning-paths/workers/get-started/ 301
 /learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-api/ /learning-paths/cybersafe/area1-onboarding/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-connection-methods/ /learning-paths/cybersafe/area1-onboarding/area1-inline/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301

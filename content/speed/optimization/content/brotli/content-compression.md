@@ -105,10 +105,6 @@ Smaller responses will not be compressed, regardless of their content type.
 
 ## Content compression from origin servers to the Cloudflare network
 
-{{<Aside type="note">}}
-Brotli support is scheduled to be gradually rolled out beginning February 1st, 2024. Until then, only Gzip compression is supported between Cloudflare and your origin.
-{{</Aside>}}
-
 When requesting content from your origin server, Cloudflare supports Gzip compression, Brotli compression, or no compression.
 
 ```mermaid

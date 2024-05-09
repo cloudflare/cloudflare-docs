@@ -40,8 +40,8 @@ export default {
 
       // This example will refer to the same Durable Object instance,
       // since the name "foo" is hardcoded.
-      let id = env.WEBSOCKET_SERVER.idFromName("foo");
-      let stub = env.WEBSOCKET_SERVER.get(id);
+      let id = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
+      let stub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
 
       return stub.fetch(request);
     }
@@ -57,7 +57,7 @@ export default {
 };
 
 // Durable Object
-export class WebSocketServer extends DurableObject {
+export class WebSocketHibernationServer extends DurableObject {
 
   async fetch(request) {
     // Creates two ends of a WebSocket connection.
@@ -106,7 +106,7 @@ filename: index.ts
 import { DurableObject } from "cloudflare:workers";
 
 export interface Env {
-  WEBSOCKET_SERVER: DurableObjectNamespace<WebSocketServer>;
+  WEBSOCKET_HIBERNATION_SERVER: DurableObjectNamespace<WebSocketHibernationServer>;
 }
 
 // Worker
@@ -122,8 +122,8 @@ export default {
 
       // This example will refer to the same Durable Object instance,
       // since the name "foo" is hardcoded.
-      let id = env.WEBSOCKET_SERVER.idFromName("foo");
-      let stub = env.WEBSOCKET_SERVER.get(id);
+      let id = env.WEBSOCKET_HIBERNATION_SERVER.idFromName("foo");
+      let stub = env.WEBSOCKET_HIBERNATION_SERVER.get(id);
 
       return stub.fetch(request);
     }
@@ -139,7 +139,7 @@ export default {
 };
 
 // Durable Object
-export class WebSocketServer extends DurableObject {
+export class WebSocketHibernationServer extends DurableObject {
 
   async fetch(request: Request): Promise<Response> {
     // Creates two ends of a WebSocket connection.

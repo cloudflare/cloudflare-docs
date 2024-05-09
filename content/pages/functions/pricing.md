@@ -16,7 +16,7 @@ Pages supports the [Standard usage model](/workers/platform/pricing/#example-pri
 
 {{<Aside type="note">}}
 
-Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your Customer Success Manager (CSM). Some Workers Enterprise customers maintain the ability to [change usage models](/workers/platform/pricing/#how-to-switch-the-usage-model).
+Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your Customer Success Manager (CSM). Some Workers Enterprise customers maintain the ability to [change usage models](/workers/platform/pricing/#how-to-switch-usage-models).
 
 {{</Aside>}}
 

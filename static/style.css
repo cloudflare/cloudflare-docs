@@ -5341,7 +5341,35 @@ code.ruleID:hover {
 }
 
 code.ruleID:active {
-background: orange;
-color: white;
+  background: orange;
+  color: white;
 }
 
+/* Changelog-specific overrides for product areas */
+
+@media (min-width: 972px) {
+  #changelogContent {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .sticky-date-header {
+    top: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sticky-date-header {
+    top: 45px;
+  }
+}
+
+/* Developer Spotlight author credit components*/
+.author-container {
+  margin-bottom: 20px;
+}
+
+.author-details{
+  font-weight: bold;
+}
