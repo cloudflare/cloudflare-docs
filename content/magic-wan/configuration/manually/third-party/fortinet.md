@@ -124,6 +124,7 @@ fortigate # config vpn ipsec phase1-interface
         set net-device enable
         set proposal aes256gcm-prfsha512 aes256gcm-prfsha384 aes256gcm-prfsha256
         set localid "f1473dXXXXXXX72e33.49561179.ipsec.cloudflare.com"
+        set dhgrp 14
         set nattraversal disable
         set remote-gw 162.159.67.210
         set add-gw-route enable
@@ -174,32 +175,6 @@ end
 ```
 
 ### Network interfaces
-
-#### Loopback interfaces
-
-Create two loopback interfaces to bind the bidirectional health check Anycast IPs to the FortiGate firewall. This allows you to specify the respective IP addresses when adding the firewall policy and policy-based routing configuration settings.
-
-Add two loopback interfaces one corresponding to each of the two bidirectional health check Anycast IPs (`172.64.240.253` and `172.64.240.254` respectively):
-
-```txt
-fortigate # config system interface
-    edit "loopback1"
-        set vdom "root"
-        set ip 172.64.240.253 255.255.255.255
-        set allowaccess ping
-        set type loopback
-        set alias "MWAN_Tun_01"
-        set snmp-index 19
-    next
-    edit "loopback2"
-        set vdom "root"
-        set ip 172.64.240.254 255.255.255.255
-        set allowaccess ping
-        set type loopback
-        set alias "MWAN_Tun_02"
-        set snmp-index 20
-end
-```
 
 #### Virtual tunnel interfaces
 
@@ -404,7 +379,6 @@ config firewall policy
         set name "CF_Magic_Health_Checks"
         set uuid 80eb76ce-3033-51ee-c5e5-d5a670dff3b3
         set srcintf "Cloudflare_Zone"
-        set dstintf "loopback1" "loopback2"
         set action accept
         set srcaddr "Cloudflare_IPv4_Nets"
         set dstaddr "Bidirect_HC_Endpoint_01" "Bidirect_HC_Endpoint_02"
@@ -413,7 +387,6 @@ config firewall policy
         set logtraffic all
     next
 end
-
 ```
 
 ### Policy-based routing
