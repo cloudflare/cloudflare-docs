@@ -41,3 +41,9 @@ export default {
 ```
 
 You can think of a binding as a permission and an API in one piece. With bindings, you never have to add secret keys or tokens to your Worker in order to access resources on your Cloudflare account — the permission is embedded within the API itself. The underlying secret is never exposed to your Worker's code, and therefore can't be accidentally leaked.
+
+## Making changes to bindings
+
+When creating a new Worker [version or deployment](/workers/configuration/versions-and-deployments/) and you only include changes to bindings (i.e. you don't change the code of the Worker), be aware that the any currently running Worker isolates may stay "hot" for a potentially long time if they continue to receive traffic. This is an optimization of our platform, allowing Workers to run with a dynamic set of bindings without needing to start a new isolate with every change to bindings. Broadly, this means you can expect better performance when rolling out non-code changes to your Worker.
+
+However, this does mean that you must be careful when "polluting" global scope with derivatives of your bindings. For example, if you create an external client instance which uses a secret API key on `env`, you must ensure that you don't place this client instance in a global scope. If you do, the client instance might continue to exist despite making changes to the secret which is likely undesirable. Instead of polluting global scope, you should create a new client instance for each request, or, if you have more advanced needs, you may want to explore the [AsyncLocalStorage API](/workers/runtime-apis/nodejs/asynclocalstorage/) which provides another mechanism for exposing values down to child execution handlers.
