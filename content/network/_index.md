@@ -10,7 +10,7 @@ weight: 1
 
 {{<plan type="all">}}
 
-Testing a merge conflict.
+Testing a merge conflict thingy.
 
 ---
 
