@@ -1,5 +1,6 @@
 {{- $productArea := "Developer platform" -}}
 {{- $productAreaLink := "/workers/platform/changelog/platform/" -}}
+{{- $productChangelogLink := "/workers/platform/changelog/wrangler/" -}}
 
 {{ $localToken := resources.Get "secrets/github_token.txt" }}
 {{ $opts := dict }}
@@ -28,12 +29,13 @@
 {{- if (in $item.tag_name "wrangler@") -}}
 {{- $item_dict := (dict "publish_date" ($item.published_at | time.Format "2006-01-02")
 "title" (replaceRE `wrangler@` "" $item.name) "link" $item.html_url
-"description" (replaceRE `###[^-]+` "" $item.body) "product" "Wrangler") -}}
+"description" (replaceRE `###[^-]+` "" $item.body) "url" $productChangelogLink
+"product" "Wrangler" "productArea" $productArea "productAreaLink" $productAreaLink) -}}
 {{- $results = $results | append $item_dict -}}
 {{- end -}}
 {{- end -}}
 
-{{- $combinedResult := (dict "wrangler" (dict "link" "/workers/platform/changelog/wrangler/" "productName" "Wrangler" "productArea" $productArea
+{{- $combinedResult := (dict "wrangler" (dict "link" $productChangelogLink "productName" "Wrangler" "productArea" $productArea
 "productAreaLink" $productAreaLink "external" true
 "entries" $results))}}
 
