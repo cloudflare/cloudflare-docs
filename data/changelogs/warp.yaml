@@ -4,7 +4,17 @@ productName: Zero Trust WARP Client
 productArea: Zero Trust
 productAreaLink: /cloudflare-one/changelog/
 entries:
+- publish_date: '2024-05-10'
+  title: Cloudflare One Agent for Android (version 1.7)
+  description: |-
+    A new GA release for the Android Cloudflare One Agent is now available in the [Google Play Store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent). This release fixes an issue where the user was not prompted to select the client certificate in the browser during Access registration.
+
 - publish_date: '2024-05-09'
   title: Crowdstrike posture checks for online status
   description: |-
     Two new Crowdstrike attributes, _Last Seen_ and _State_, are now available to be used as selectors in the [Crowdstrike service provider integration](/cloudflare-one/identity/devices/service-providers/crowdstrike/).
+
+- publish_date: '2024-05-08'
+  title: WARP client for macOS (version 2024.3.444.0)
+  description: |-
+    A new GA release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release). This releases fixes an issue with how the WARP client sets macOS firewall rules and addresses the TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)) vulnerability.
