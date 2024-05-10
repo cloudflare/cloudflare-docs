@@ -34,8 +34,10 @@
     {{- $title = printf "%s - %s" $product .publish_date -}}
     {{- end -}}
     {{- with $entry.link -}}
-    {{- if ne $product "Wrangler" -}}
+    {{- if ne $entry.product "Wrangler" -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- else -}}
+    {{- $link = $entry.link -}}
     {{- end -}}
     {{- end -}}
     {{- with $entry.individual_page -}}
