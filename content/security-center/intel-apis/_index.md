@@ -19,7 +19,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 | [Passive DNS by IP](/api/operations/passive-dns-by-ip-get-passive-dns-by-ip) | Provides a list of all the domains, including first seen and last seen dates, that have resolved to a specific IP address. |
 | [Phishing Intelligence](/api/operations/phishing-url-information-get-results-for-a-url-scan) | Provides phishing details about a URL.  |
 | [Miscategorization Intelligence](/api/operations/miscategorization-create-miscategorization) | Enables users to submit requests for modifying a domain's category, subsequently undergoing review by the Cloudflare Intelligence team. |
-| [Priority Intelligence Requirements](/api/operations/cloudforce-one-priority-new) | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organising them into categories. |
+| [Priority Intelligence Requirements](/api/operations/cloudforce-one-priority-new) | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organizing them into categories. |
 | [Request for Information](/api/operations/cloudforce-one-request-new) | Creates a targeted inquiry for specific intelligence insights to help organisations understand and respond to imminent security threats and vulnerabilities  |
 | [WHOIS](/api/operations/whois-record-get-whois-record) | Provides the WHOIS registration information for a specific domain. |
 
