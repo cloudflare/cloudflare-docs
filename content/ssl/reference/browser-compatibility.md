@@ -32,6 +32,6 @@ To support non-SNI requests, you can:
 
 * [Upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) and specify a value of `Legacy` for its client support.
 
-  Note that this configuration is not compatible with [BYOIP](/byoip/) and that, unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for [custom certificates](/ssl/edge-certificates/custom-certificates/).
+  Note that `Legacy` custom certificates are not compatible with [BYOIP](/byoip/) and that, unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for [custom certificates](/ssl/edge-certificates/custom-certificates/).
 
 * (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.
