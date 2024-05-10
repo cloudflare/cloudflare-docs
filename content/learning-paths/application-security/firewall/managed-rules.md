@@ -1,7 +1,7 @@
 ---
-title: WAF Managed Rules
+title: Managed Rules
 pcx_content_type: overview
-weight: 8
+weight: 2
 layout: learning-unit
 ---
 

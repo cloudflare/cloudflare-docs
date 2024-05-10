@@ -1,0 +1,17 @@
+---
+title: Security Center
+pcx_content_type: overview
+weight: 7
+layout: learning-module
+---
+
+# Security Center
+
+{{<render file="_security-center-definition.md" productFolder="security-center">}}
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- Understand the various Security Center features
+- Review and manage potential security risks associated with your infrastructure

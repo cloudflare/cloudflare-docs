@@ -1,7 +1,7 @@
 ---
-title: Rules
+title: Custom Rules
 pcx_content_type: overview
-weight: 6
+weight: 3
 layout: learning-unit
 ---
 
