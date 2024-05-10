@@ -28,9 +28,9 @@
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with $entry.title -}}
     {{ $title = printf "%s - %s" $product . }}
-    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (anchorize .) -}}
     {{- else -}}
-    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (anchorize .publish_date) -}}
     {{- $title = printf "%s - %s" $product .publish_date -}}
     {{- end -}}
     {{- with $entry.link -}}
