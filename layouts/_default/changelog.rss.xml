@@ -21,6 +21,9 @@
 
 {{- $permalink := .Permalink -}}
 {{- $atomLink := print $permalink "index.xml" -}}
+{{- if in $permalink "index.xml"}}
+{{- $atomLink = $permalink -}}
+{{- end -}}
 
 {{- $product := default (index (index $changelogDataEntries 0) "product") ($.Params.changelog_name) }}
 {{- $mainTitle := printf "%s · %s" .Title $product -}}
