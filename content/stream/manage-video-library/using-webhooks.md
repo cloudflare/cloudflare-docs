@@ -10,6 +10,8 @@ Webhooks notify your service when videos successfully finish processing and are 
 
 ## Subscribe to webhook notifications
 
+{{<available-notifications product="Stream">}}
+
 To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens).
 
 The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
