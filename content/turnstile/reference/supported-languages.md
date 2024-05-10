@@ -48,3 +48,7 @@ Turnstile supports `auto` (default), which uses the visitor's browser language i
 | `vi-vn` | `vi` | Vietnamese (Vietnam) |
 | `zh-cn` | `zh` | Chinese (Simplified, China) |
 | `zh-tw` | -- | Chinese (Traditional, Taiwan) |
+
+{{<Aside type="note">}}
+To request Turnstile support for a language not listed below or submit feedback on a translation error, you can fill out [this form](link).
+{{</Aside>}} 
