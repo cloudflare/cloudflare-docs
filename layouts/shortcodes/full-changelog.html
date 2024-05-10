@@ -3,6 +3,10 @@
 {{- $productArea := $.Page.Params.changelog_product_area_name -}}
 {{- $changelogData := partial "full-changelog-data.html" -}}
 
+<script>
+  console.log({{$changelogData}})
+</script>
+
 <!-- Define arrays to populate -->
 {{- $changelogRendered := slice -}}
 {{- $products := slice -}}

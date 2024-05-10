@@ -36,14 +36,15 @@
     {{- range $index, $entry := $changelogDataEntries -}}
     {{- $link := "" -}}
     {{- $title := "" -}}
+    {{- $rellink := $entry.url -}}
     {{ $description := $entry.description | $.Page.RenderString | htmlUnescape }}
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with $entry.title -}}
-    {{- $link = print $permalink "#" (urlize .) -}}
     {{- $title = . -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
     {{- else -}}
-    {{- $link = print $permalink "#" (urlize $entry.publish_date) -}}
-    {{- $title = $entry.publish_date -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- $title = printf "%s - %s" $product .publish_date -}}
     {{- end -}}
     {{- with $entry.link -}}
     {{- if ne $product "Wrangler" -}}
@@ -53,13 +54,12 @@
     {{- with $entry.individual_page -}}
     {{- $result := partial "changelog-entry.html" (dict "link" $entry.link) -}}
     {{- $description = $result.content -}}
-    {{- $title = $result.title }}
+    {{- $title = printf "%s - %s" $product $result.title }}
     {{- with $entry.scheduled -}}
     {{- with $entry.scheduled_date -}}
     {{- $title = (printf "%s for %s" $title $entry.scheduled_date) -}}
     {{- end -}}
     {{- end -}}
-    {{- else -}}
     {{- end -}}
     {{- with $productArea -}}
     {{- $title = print $entry.product " - " $title -}}
