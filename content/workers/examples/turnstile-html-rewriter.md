@@ -1,8 +1,11 @@
 ---
 type: example
-summary: Inject Turnstile implicitly into HTML elements using the HTMLRewriter runtime API.
+summary: Inject [Turnstile](/turnstile/) implicitly into HTML elements using the HTMLRewriter runtime API.
 tags:
-  - Originless
+  - HTMLRewriter
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Turnstile with Workers
 weight: 1001
@@ -48,8 +51,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-	async fetch(request: Request, env: Env) {
+export default {
+	async fetch(request, env): Promise<Response> {
 		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
 
@@ -76,9 +79,7 @@ const handler: ExportedHandler = {
 			.transform(res);
 		return newRes
 	}
-}
-
-export default handler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}
@@ -88,8 +89,8 @@ export default handler;
 This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 {{</Aside>}}
 
-
 {{<tab label="js" default="true">}}
+
 ```js
 async function handlePost(request) {
     const body = await request.formData();
@@ -153,4 +154,5 @@ export default {
 	}
 }
 ```
+
 {{</tab>}}

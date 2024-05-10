@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Security model
-layout: single
 ---
 
 # Security model

@@ -4,6 +4,7 @@ import { defineConfig, type PluginOption } from "vite";
 import glob from "glob";
 import { highlight } from "./bin/prism.config";
 import vue from "@vitejs/plugin-vue";
+
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -61,6 +62,58 @@ const hydrateVueComponents = (): PluginOption => {
   };
 };
 
+const renderPlaygroundLink = (): PluginOption => {
+  return {
+    name: "render-playground-link",
+    async transformIndexHtml(html: string) {
+      let playgroundUrl: string | undefined;
+      await rewrite(html, [
+        [
+          "a",
+          {
+            element: (element) => {
+              if (element.getAttribute("class") === "playground-link") {
+                playgroundUrl = element.getAttribute("href")!;
+              }
+            },
+          },
+        ],
+      ]);
+      return await rewrite(html, [
+        [
+          "workers-playground-link",
+          {
+            element: (element) => {
+              if (playgroundUrl !== undefined) {
+                element.replace(
+                  /*html*/ `
+      <div class="DocsMarkdown--content-column">
+        <a href="${playgroundUrl}" class="DocsMarkdown--link" target="_blank" rel="noopener">
+          <span class="DocsMarkdown--link-content">Try in Workers Playground</span>
+          <span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+              <title id="title-4744738674102027">External link icon</title>
+              <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+            </svg>
+            <span is-visually-hidden>Open external link</span>
+          </span>
+        </a>
+      </div>`,
+                  {
+                    html: true,
+                  }
+                );
+              } else {
+                element.remove();
+              }
+            },
+          },
+        ],
+      ]);
+    },
+  };
+};
+
 const renderCodeBlock = (): PluginOption => {
   return {
     name: "render-code-block",
@@ -71,7 +124,7 @@ const renderCodeBlock = (): PluginOption => {
         [
           "unparsed-codeblock",
           {
-            element: (element) => {
+            element: async (element) => {
               const data = element
                 .getAttribute("data-code")!
                 // Hugo's url encoding is ...odd
@@ -83,7 +136,11 @@ const renderCodeBlock = (): PluginOption => {
               const decoded = decodeURIComponent(data);
               const code = decoded + "\n";
               element.replace(
-                highlight(code, element.getAttribute("data-language")!, ""),
+                await highlight(
+                  code,
+                  element.getAttribute("data-language")!,
+                  ""
+                ),
                 {
                   html: true,
                 }
@@ -97,7 +154,12 @@ const renderCodeBlock = (): PluginOption => {
 };
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [renderCodeBlock(), hydrateVueComponents(), vue()],
+  plugins: [
+    renderCodeBlock(),
+    renderPlaygroundLink(),
+    hydrateVueComponents(),
+    vue(),
+  ],
   root: "public",
   resolve: {
     alias: {

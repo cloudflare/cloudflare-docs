@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Cloudflare as Secondary
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Secondary DNS - Incoming Zone Transfers

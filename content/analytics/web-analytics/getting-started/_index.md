@@ -1,7 +1,6 @@
 ---
 title: Get started
 pcx_content_type: get-started
-layout: single
 weight: 3
 meta:
   title: Enabling Cloudflare Web Analytics
@@ -22,7 +21,7 @@ meta:
 
 Web analytics is now set up on your website, but it may take a few minutes for Web Analytics data to appear.
 
-Repeat steps 3-7 for all the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from Web Analytics. In **Web Analytics Sites**, select **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
+Repeat steps 3-7 for all the websites you want to track with Web Analytics by selecting **Add a site** from Web Analytics. In **Web Analytics Sites**, select **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
 
 For more information on how many sites you can track, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
 
@@ -32,7 +31,7 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 
 {{<render file="_web-analytics-proxied-setup.md">}}
 
-Your website is now using Web Analytics through the automatic setup, which is enabled by default. 
+Your website is now using Web Analytics through the automatic setup, which is enabled by default.
 
 To set up Web Analytics manually:
 1. After step 4 (above), expand **Advanced options**.

@@ -17,14 +17,15 @@
 .CoveoSearchInterface .magic-box .magic-box-input,
 .CoveoSearchInterface .magic-box .magic-box-clear,
 .CoveoDynamicFacet,
-.CoveoDynamicFacetRange, 
+.CoveoDynamicFacetRange,
 .CoveoDynamicHierarchicalFacet,
 .CoveoSearchInterface input,
 .CoveoSearchInterface.coveo-small-facets .coveo-facet-dropdown-header {
   background: transparent !important;
 }
 
-.CoveoSearchInterface, .CoveoSearchInterface input[type=text],
+.CoveoSearchInterface,
+.CoveoSearchInterface input[type="text"],
 .CoveoSearchInterface .magic-box,
 .CoveoSearchInterface .magic-box-clear-svg,
 .CoveoSearchInterface .coveo-search-button-svg,
@@ -35,10 +36,8 @@
 .coveo-dynamic-facet-header-title,
 .coveo-dynamic-facet-header-btn,
 .coveo-dynamic-facet-show-more,
-
 .coveo-dynamic-facet-breadcrumb-collapse,
-.coveo-dynamic-facet-breadcrumb-value
-{
+.coveo-dynamic-facet-breadcrumb-value {
   color: inherit !important;
 }
 
@@ -65,8 +64,8 @@
   border-radius: 25px !important;
 }
 
-[theme=dark] .CoveoResult {
-  background: #242628
+[theme="dark"] .CoveoResult {
+  background: #242628;
 }
 
 .coveo-result-frame {
@@ -74,14 +73,14 @@
 }
 
 .tutorialHeading {
-  font-size:1.25em;
+  font-size: 1.25em;
   color: #0051c3;
   padding-bottom: 1em;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 }
 
-[theme=dark] .tutorialHeading {
-  color: #F6821F;
+[theme="dark"] .tutorialHeading {
+  color: #f6821f;
 }
 
 .coveo-card-layout.CoveoResult .CoveoResultLink {
@@ -90,15 +89,13 @@
   line-height: 1.25em !important;
 }
 
-[theme="dark"] .CoveoResult a.CoveoResultLink, 
-[theme="dark"] .CoveoResultLink, 
+[theme="dark"] .CoveoResult a.CoveoResultLink,
+[theme="dark"] .CoveoResultLink,
 [theme="dark"] a.CoveoResultLink,
-[theme="dark"] .coveo-accessible-button.coveo-clickable
-{
+[theme="dark"] .coveo-accessible-button.coveo-clickable {
   --background-color-alpha: 0.03 !important;
   --border-bottom-color-rgb: var(--orange-rgb) !important;
   --border-bottom-color-alpha: 0.35 !important;
-  
 }
 
 .DocsMarkdown ul {
@@ -124,5 +121,5 @@
 }
 
 .CoveoFieldValue {
-  font-size:1.25em;
+  font-size: 1.25em;
 }

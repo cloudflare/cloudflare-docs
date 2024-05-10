@@ -13,19 +13,26 @@ HTTP is a well established protocol that has several versions, and each version 
 
 {{<feature-table id="speed.http2_to_origin">}}
 
-## Enable HTTP/2 to Origin
+## Disable HTTP/2 to Origin
 
-At Cloudflare, HTTP/2 connection is enabled by default for Free, Pro and Business customers. Enterprise customers will need to enable this behavior, if they want to use HTTP/2. Please follow these steps to enable it:
+At Cloudflare, HTTP/2 connection to the origin is enabled by default.
+
+If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
 1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2.  Choose the domain that will use HTTP/2 to Origin.
 3.  Select **Speed > Optimization**.
-4.  Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to On.
+4.  Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
 
-If the toggle is disabled, or the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
+## Protocol compatibility
+
+Note that if the origin does not support HTTP/2, Cloudflare will initiate an HTTP/1.1 connection.
+We connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). 
+
+If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)). 
 
 {{<Aside type="note" header="Note">}}
-
 At the moment, connection multiplexing is not supported by our implementation but will soon be available.
-
 {{</Aside>}}
+
+

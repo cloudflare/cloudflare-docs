@@ -2,8 +2,12 @@
 type: example
 summary: Get all geolocation data fields and display them in HTML.
 tags:
-  - Originless
   - Geolocation
+languages:
+  - JavaScript
+  - TypeScript
+preview:
+  - true
 pcx_content_type: configuration
 title: "Geolocation: Hello World"
 weight: 1001
@@ -14,6 +18,9 @@ layout: example
 {{<tab label="js" default="true">}}
 
 ```js
+---
+playground: true
+---
 export default {
   async fetch(request) {
     let html_content = "";
@@ -56,8 +63,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     let html_content = "";
     let html_style =
       "body{padding:6em; font-family: sans-serif;} h1{color:#f6821f;}";
@@ -91,9 +98,7 @@ const handler: ExportedHandler = {
       },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}

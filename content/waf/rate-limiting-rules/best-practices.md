@@ -300,7 +300,7 @@ Action                   | Block
 
 _These example rules require Advanced Rate Limiting and Bot Management._
 
-If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/concepts/ja3-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/bots/get-started/bm-subscription/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
+If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/concepts/ja3-ja4-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/bots/get-started/bm-subscription/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
 
 {{<table-wrap>}}
 Setting                  | Value

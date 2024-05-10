@@ -41,7 +41,7 @@ $ npm run astro add cloudflare
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -110,7 +110,7 @@ export default defineConfig({
 
 ## Use bindings in your Astro application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 Use bindings in Astro components and API routes by using `context.local` from [Astro Middleware](https://docs.astro.build/en/guides/middleware/) to access the Cloudflare runtime which amongst other fields contains the Cloudflare's environment and consecutively any bindings set for your application.
 
@@ -174,4 +174,4 @@ const value = await myKV.get("key");
 
 To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
-{{<render file="_learn-more.md" withParameters="Astro">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Astro">}}

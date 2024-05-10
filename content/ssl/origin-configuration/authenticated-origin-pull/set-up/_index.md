@@ -2,7 +2,6 @@
 pcx_content_type: how-to
 title: Setup
 weight: 2
-layout: single
 meta:
     title: Set up Authenticated Origin Pulls
 ---

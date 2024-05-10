@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Handle form submissions with Airtable
-layout: single
 ---
 
 # Handle form submissions with Airtable
@@ -93,7 +92,7 @@ $ npm create cloudflare@latest airtable-form-handler
 
 When configuring your Worker:
 
-* Choose `"Hello World" script` for the type of application you would like to create.
+* Choose `"Hello World" Worker` for the type of application you would like to create.
 * Select `No` to using TypeScript.
 * Select `No` to deploying your Worker.
 

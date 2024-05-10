@@ -30,4 +30,4 @@ When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being g
 
 {{<render file="_mix-proxied-and-unproxied.md" productFolder="DNS">}}
 
-In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) requests to your application.
+In addition to potentially exposing your origin IP addresses to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), leaving your records as **DNS-only** means that Cloudflare cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) requests to your application or provide analytics on those requests.

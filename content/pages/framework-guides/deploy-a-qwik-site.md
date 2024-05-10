@@ -31,7 +31,7 @@ $ npm start
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -58,7 +58,7 @@ Every time you commit new code to your Qwik site, Cloudflare Pages will automati
 
 ## Use bindings in your Qwik application
 
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/learning/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](/kv/reference/how-kv-works/), [Durable Object](/durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 In QwikCity, add server-side code via [routeLoaders](https://qwik.builder.io/qwikcity/route-loader/) and [actions](https://qwik.builder.io/qwikcity/action/). Then access bindings set for your application via the `platform` object provided by the framework.
 
@@ -73,7 +73,7 @@ highlight: [4, 5]
 
 export const useGetServerTime = routeLoader$(({ platform }) => {
   // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (platform as { MY_KV: KVNamespace }));
+  const { MY_KV } = (platform.env as { MY_KV: KVNamespace }));
 
   return {
     // ....
@@ -81,4 +81,4 @@ export const useGetServerTime = routeLoader$(({ platform }) => {
 });
 ```
 
-{{<render file="_learn-more.md" withParameters="Qwik">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Qwik">}}

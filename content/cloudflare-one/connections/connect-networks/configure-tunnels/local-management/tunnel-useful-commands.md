@@ -6,7 +6,9 @@ weight: 6
 
 # Useful commands
 
-Use these commands to manage local tunnels through the CLI.
+This page lists the most commonly used commands for managing local tunnels.
+
+To view all CLI commands, refer to the CLI help text in your terminal. For example, to view all options for the `cloudflared tunnel` subcommand, type `cloudflared tunnel help`.
 
 ## Manage tunnels
 
@@ -38,4 +40,4 @@ Use these commands to manage local tunnels through the CLI.
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cloudflared update`  | Looks for a new version on the official download server. If a new version exists, it updates the agent binary and quits. Otherwise, no action is performed. This command only works if `cloudflared` was installed from GitHub binaries or from source. For more information, refer to the [update instructions](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/).|
 | `cloudflared version` | Prints the `cloudflared` version number and build date.                                                                                                                                                                                                                                                                                                  |
-| `cloudflared help`    | Shows a list of commands or help for `cloudflared`.                                                                                                                                                                                                                                                                                                      |
+| `cloudflared help`    | Shows a list of all top-level commands for `cloudflared`.                                                                                                                                                                                                                                                                                                      |

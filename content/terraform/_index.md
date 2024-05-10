@@ -4,7 +4,6 @@ pcx_content_type: overview
 weight: 1
 meta:
   title: Cloudflare Terraform
-layout: single
 ---
 
 # Cloudflare Terraform

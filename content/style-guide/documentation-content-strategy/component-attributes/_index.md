@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Component attributes
-weight: 
+weight: 3
 
 ---
 

@@ -92,23 +92,3 @@ deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks in the surrounding inline array are acceptable.
 
 {{</Aside>}}
-
-### Durable Object migrations through Wrangler CLI
-
-It is possible to define a migration through extra arguments to the [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) command. When taking this route, any migrations listed in the [`wrangler.toml`](/workers/wrangler/configuration/#migrations) configuration file are ignored.
-
-You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `npx wrangler deploy` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value.
-
-The list of CLI migration arguments that can be added to `npx wrangler deploy` is as follows:
-
-```bash
---old-tag <tag name> # Optional if your Worker code does not have a migration tag set yet.
---new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
-
-# Each of the migration directives can be specified multiple times if you are
-# creating/deleting/renaming/transferring multiple classes at once.
---new-class <class name>
---delete-class <class name>
---rename-class <from class> <to class>
---transfer-class <from script> <from class> <to class>
-```

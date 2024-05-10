@@ -1,10 +1,12 @@
 ---
 link: "/r2/reference/changelog/"
 productName: R2
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2023-07-05'
   description: |-
-      - Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than 
+      - Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than
       ranged reads on smaller files. Performance should now be consistently good independent of filesize.
 - publish_date: '2023-06-21'
   description: |-
@@ -20,7 +22,7 @@ entries:
 - publish_date: '2023-04-01'
   description: |-
     - [GetBucket](/api/operations/r2-get-bucket) is now available for use through the Cloudflare API.
-    - [Location hints](https://developers.cloudflare.com/r2/buckets/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
+    - [Location hints](https://developers.cloudflare.com/r2/reference/data-location/) can now be set when creating a bucket, both through the S3 API, and the dashboard.
 - publish_date: '2023-03-16'
   description: |-
     - The ListParts API has been implemented and is available for use.

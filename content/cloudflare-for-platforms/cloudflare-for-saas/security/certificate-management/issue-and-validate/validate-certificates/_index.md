@@ -2,7 +2,6 @@
 pcx_content_type: navigation
 title: Validate
 weight: 2
-layout: single
 meta:
     title: Validate certificates
     description: Learn which methods you should use to validate Cloudflare for SaaS certificates.
@@ -20,7 +19,7 @@ With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custo
 {{</Aside>}}
 
 ## DCV situations
- 
+
 ### Non-wildcard certificates
 
 {{<render file="_http-dcv-situation.md">}}

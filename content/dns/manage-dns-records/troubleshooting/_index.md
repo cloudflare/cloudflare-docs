@@ -9,3 +9,4 @@ meta:
 # Troubleshooting — DNS records
 
 {{<directory-listing>}}
+- [Delete all DNS records](/dns/zone-setups/troubleshooting/delete-all-records/)

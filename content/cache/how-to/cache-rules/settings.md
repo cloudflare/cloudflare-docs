@@ -67,7 +67,7 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with Image Resizing. Cache Rules will not be applied to Image Resizing requests. Page Rules are supported.
+Currently, Cache Rules are not compatible with image transformations . Cache Rules will not be applied to image transformation requests. Page Rules are supported.
 {{</Aside>}}
 
 #### Edge TTL 
@@ -316,7 +316,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Serve stale content while revalidating
 
-Defines if Cloudflare will serve stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
+Defines if Cloudflare will serve stale content while updating the latest content from the origin server. If serving stale content is disabled, Cloudflare will not serve stale content while getting the latest content from the origin.
 
 {{<details header="API information">}}
 

@@ -10,10 +10,7 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 ## Enable TLS decryption
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
-2. Scroll down to **Firewall**.
-3. Turn on **TLS decryption**.
-4. (Optional) Select [**Enable only cipher suites and TLS versions compliant with FIPS 140-2**](#fips-compliance).
+{{<render file="gateway/_enable-tls-decryption.md" productFolder="cloudflare-one">}}
 
 ## Limitations
 
@@ -53,25 +50,34 @@ You can still apply all [network policy filters](/cloudflare-one/policies/gatewa
 
 By default, TLS decryption can use both TLS version 1.2 and 1.3. However, some environments such as FedRAMP may require cipher suites and TLS versions compliant with FIPS 140-2. FIPS compliance currently requires TLS version 1.2.
 
+### Enable FIPS compliance
+
+{{<render file="gateway/_enable-tls-decryption.md" productFolder="cloudflare-one">}}
+3. Select [**Enable only cipher suites and TLS versions compliant with FIPS 140-2**](#fips-compliance).
+
 ### Limitations
 
-When [FIPS compliance is enabled](#enable-tls-decryption), Gateway will only choose [FIPS-compliant cipher suites](#cipher-suites) when connecting to the origin. If the origin does not support FIPS-compliant ciphers, the request will fail.
+When FIPS compliance is enabled, Gateway will only choose [FIPS-compliant cipher suites](#cipher-suites) when connecting to the origin. If the origin does not support FIPS-compliant ciphers, the request will fail.
 
 FIPS-compliant traffic defaults to HTTP/3. Gateway does not inspect HTTP/3 traffic from most browsers, including Chrome, Firefox, and Safari. To enforce your HTTP policies for this HTTP/3 traffic, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#prevent-inspection-bypass) in your users' browsers.
 
 ### Cipher suites
 
-The following table lists the cipher suites Gateway uses for TLS decryption.
+{{<glossary-definition term_id="cipher suite" prepend="A cipher suite is ">}}
 
-| Cipher suite                  | Default | FIPS-compliant |
-| ----------------------------- | ------- | -------------- |
-| ECDHE-ECDSA-AES128-GCM-SHA256 | ✅      | ✅             |
-| ECDHE-ECDSA-AES256-GCM-SHA384 | ✅      | ✅             |
-| ECDHE-RSA-AES128-GCM-SHA256   | ✅      | ✅             |
-| ECDHE-RSA-AES256-GCM-SHA384   | ✅      | ✅             |
-| ECDHE-RSA-AES128-SHA          | ✅      | ❌             |
-| ECDHE-RSA-AES256-SHA384       | ✅      | ✅             |
-| AES128-GCM-SHA256             | ✅      | ✅             |
-| AES256-GCM-SHA384             | ✅      | ✅             |
-| AES128-SHA                    | ✅      | ❌             |
-| AES256-SHA                    | ✅      | ❌             |
+The following table lists the default cipher suites Gateway uses for TLS decryption.
+
+| Name (OpenSSL)                | Name (IANA)                             | FIPS-compliant |
+| ----------------------------- | --------------------------------------- | -------------- |
+| ECDHE-ECDSA-AES128-GCM-SHA256 | TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 | ✅             |
+| ECDHE-ECDSA-AES256-GCM-SHA384 | TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 | ✅             |
+| ECDHE-RSA-AES128-GCM-SHA256   | TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256   | ✅             |
+| ECDHE-RSA-AES256-GCM-SHA384   | TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384   | ✅             |
+| ECDHE-RSA-AES128-SHA          | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256   | ❌             |
+| ECDHE-RSA-AES256-SHA384       | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384   | ✅             |
+| AES128-GCM-SHA256             | TLS_RSA_WITH_AES_128_GCM_SHA256         | ✅             |
+| AES256-GCM-SHA384             | TLS_RSA_WITH_AES_256_GCM_SHA384         | ✅             |
+| AES128-SHA                    | TLS_RSA_WITH_AES_128_CBC_SHA            | ❌             |
+| AES256-SHA                    | TLS_RSA_WITH_AES_256_CBC_SHA            | ❌             |
+
+For more information on cipher suites, refer to [Cipher suites](/ssl/reference/cipher-suites/).

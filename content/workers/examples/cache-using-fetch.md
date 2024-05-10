@@ -4,8 +4,10 @@ summary: Determine how to cache a resource by setting TTLs, custom cache keys,
   and cache headers in a fetch request.
 tags:
   - Caching
-  - Cache API
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Cache using fetch
 weight: 1001
@@ -45,8 +47,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const url = new URL(request.url);
     // Only use the path for the cache key, removing query strings
     // and always store using HTTPS, for example, https://www.example.com/file-uri-here
@@ -67,9 +69,7 @@ const handler: ExportedHandler = {
     response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -131,8 +131,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     let url = new URL(request.url);
 
     if (Math.random() < 0.5) {
@@ -146,9 +146,7 @@ const handler: ExportedHandler = {
       cf: { cacheKey: request.url },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -168,7 +166,7 @@ fetch(request, {
 });
 ```
 
-This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#requestinitcfproperties).
+This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties).
 
 {{</content-column>}}
 
@@ -224,11 +222,11 @@ export default {
                       '400-499': cache.clientError,
                       '500-599': cache.serverError
                       },
-                  cacheTags: [ 
+                  cacheTags: [
                       'static'
                       ]
               },
-          
+
           })
 
   const response = new Response(newResponse.body, newResponse)
@@ -239,6 +237,7 @@ export default {
   }
 }
 ```
+
 {{</tab>}}
 {{<tab label="js/sw">}}
 
@@ -285,11 +284,11 @@ const newResponse = await fetch(request,
                     '400-499': cache.clientError,
                     '500-599': cache.serverError
                     },
-                cacheTags: [ 
+                cacheTags: [
                     'static'
                     ]
             },
-        
+
         })
 
 const response = new Response(newResponse.body, newResponse)
@@ -299,5 +298,6 @@ response.headers.set('debug', JSON.stringify(cache))
 return response
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}

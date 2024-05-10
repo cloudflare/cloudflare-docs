@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Cron Triggers
-layout: single
 meta:
   description: Enable your Worker to be executed on a schedule.
 ---
@@ -59,7 +58,7 @@ To add Cron Triggers in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Triggers** > **Cron Triggers**.
+3. In **Overview**, select your Worker > **Settings** > **Triggers** > **Cron Triggers**.
 
 ## Supported cron expressions
 

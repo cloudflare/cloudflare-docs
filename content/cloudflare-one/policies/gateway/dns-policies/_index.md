@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: DNS policies
-layout: single
 weight: 2
 ---
 
@@ -20,10 +19,6 @@ A DNS policy consists of an **Action** as well as a logical expression that dete
 When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. Unless a more specific selector is configured in a policy (for example, _User Email_ or _Source IP_), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 
 {{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
-
-{{<Aside type="note">}}
-If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
-{{</Aside>}}
 
 {{<Aside type="warning">}}
 Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
@@ -105,7 +100,7 @@ Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Rest
 
 | Selector   | Operator | Value         | Action             |
 | ---------- | -------- | ------------- | ------------------ |
-| DNS Domain | Is       | `youtube.com` | YouTube Restricted |
+| DNS Domain | is       | `youtube.com` | YouTube Restricted |
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
 

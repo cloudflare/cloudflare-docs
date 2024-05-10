@@ -6,7 +6,7 @@ weight: 5
 
 # Webhook data definitions
 
-When you [create a webhook notification](/notifications/create-notifications/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
+When you [create a webhook notification](/notifications/get-started/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
 
 The following section details the data Cloudflare sends to a webhook destination.
 

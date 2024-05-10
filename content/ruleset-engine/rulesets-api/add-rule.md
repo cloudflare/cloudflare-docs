@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Add rule to ruleset
 weight: 7
-layout: list
+layout: wide
 ---
 
 # Add rule to ruleset
@@ -88,3 +88,11 @@ The response includes the complete ruleset after adding the rule.
 ```
 
 {{</details>}}
+
+## Define the rule position in the ruleset
+
+To define the position of the new rule in the ruleset, include a `position` object in the request, containing one of the following:
+
+{{<render file="_rule-position-values.md">}}
+
+For examples of using a `position` object, refer to [Update a rule in a ruleset](/ruleset-engine/rulesets-api/update-rule/#examples).

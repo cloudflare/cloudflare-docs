@@ -6,6 +6,8 @@ weight: 7
 
 # Change nameservers
 
+After you [confirm your DNS records](/automatic-platform-optimization/get-started/change-nameservers/), change your nameservers.
+
 Updating your domain to use Cloudflare's nameservers is a critical step to ensure Cloudflare can optimize and protect your site. Nameservers are your primary DNS controller and identify the location of your domain on the Internet.
 
 Domain registrars can take up to 24 hours to process the nameserver updates. You will receive an email from Cloudflare once your site is activated.

@@ -14,7 +14,7 @@ Before you begin, ensure you have [installed Terraform](/terraform/installing/).
 
 ## 1. Define your first Terraform config file
 
-Create an initial Terraform config file, filling in your own values for the [API token](/fundamentals/api/get-started/create-token/), [zone ID](/fundamentals/setup/find-account-and-zone-ids/), [account ID](/fundamentals/setup/find-account-and-zone-ids/), and [domain](/fundamentals/setup/account-setup/add-site/).
+Create an initial Terraform config file, filling in your own values for the [API token](/fundamentals/api/get-started/create-token/), [zone ID](/fundamentals/setup/find-account-and-zone-ids/), [account ID](/fundamentals/setup/find-account-and-zone-ids/), and [domain](/fundamentals/setup/manage-domains/add-site/).
 
 Terraform will process any files with a `.tf` extension. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
 

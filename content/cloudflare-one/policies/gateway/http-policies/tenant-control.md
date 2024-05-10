@@ -13,31 +13,31 @@ You can create Gateway HTTP policies to control access to your corporate SaaS ap
 Not all SaaS applications support tenant control. Examples of common applications that do support tenant control through the injection of HTTP headers are:
 
 - Microsoft 365
+- Google Workspace
 - Slack
-- GSuite
 - Dropbox
 
-## Add custom headers for a SaaS application (Microsoft 365 example)
+## Add custom headers for a SaaS application
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies**. Select **HTTP**.
 
 2. Add a policy with the following values:
 
-    - Action: `Allow`
-    - Selector: `Application`
-    - Operator: `In`
-    - Value: select the application you would like to inject custom headers for.
+   | Selector    | Operator | Value               | Action |
+   | ----------- | -------- | ------------------- | ------ |
+   | Application | in       | Microsoft Office365 | Allow  |
 
 3. Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
 
-    - Custom Header Name: Restrict-Access-To-Tenants
-    - Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
+    | Custom header name           | Custom header value                                                        |
+    | ---------------------------- | -------------------------------------------------------------------------- |
+    | `Restrict-Access-To-Tenants` | `contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4` |
 
 4. Select **Create policy**.
 
-Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to an Office 365 application with a personal account, authentication will fail.
+Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to a Microsoft 365 application with a personal account, authentication will fail.
 
 ## Common policy configurations
 
@@ -45,43 +45,27 @@ This section covers policy configurations for common SaaS applications.
 
 ### Microsoft 365
 
-{{<table-wrap>}}
-
 | Selector    | Operator | Value               | Action | Header name                                             |
 | ----------- | -------- | ------------------- | ------ | ------------------------------------------------------- |
-| Application | In       | Microsoft Office365 | Allow  | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
-
-{{</table-wrap>}}
+| Application | in       | Microsoft Office365 | Allow  | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
 
 ### Slack
 
-{{<table-wrap>}}
-
 | Selector    | Operator | Value | Action | Header name                                                          |
 | ----------- | -------- | ----- | ------ | -------------------------------------------------------------------- |
-| Application | In       | Slack | Allow  | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
-
-{{</table-wrap>}}
+| Application | in       | Slack | Allow  | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
 
 ### G Suite
 
-{{<table-wrap>}}
-
 | Selector    | Operator | Value            | Action | Header name                  |
 | ----------- | -------- | ---------------- | ------ | ---------------------------- |
-| Application | In       | Google Workspace | Allow  | `X-GooGApps-Allowed-Domains` |
-
-{{</table-wrap>}}
+| Application | in       | Google Workspace | Allow  | `X-GooGApps-Allowed-Domains` |
 
 ### Dropbox
 
-{{<table-wrap>}}
-
 | Selector    | Operator | Value   | Action | Header name                  |
 | ----------- | -------- | ------- | ------ | ---------------------------- |
-| Application | In       | Dropbox | Allow  | `X-Dropbox-allowed-Team-Ids` |
-
-{{</table-wrap>}}
+| Application | in       | Dropbox | Allow  | `X-Dropbox-allowed-Team-Ids` |
 
 ## Using Tenant Control with Browser Isolation
 
@@ -93,25 +77,17 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 
 #### 1. Create an Isolate policy
 
-- **Name**: Isolate HTTPBIN
-- **Description**: Isolates the `httpbin.org` website.
-- **Action**: Isolate
-
-| Selector | Operator | Value       |
-| -------- | -------- | ----------- |
-| Domain   | in       | httpbin.org |
+| Selector | Operator | Value         | Action  |
+| -------- | -------- | ------------- | ------- |
+| Domain   | in       | `httpbin.org` | Isolate |
 
 ![Results that will appear when configuring the example isolation policy.](/images/cloudflare-one/policies/httpbin-policy-1.png)
 
 #### 2. Create an Allow policy with a Custom Header
 
-- **Name**: Inject custom request header for HTTPBIN
-- **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
-- **Action**: Allow
-
-| Selector | Operator | Value       |
-| -------- | -------- | ----------- |
-| Domain   | in       | httpbin.org |
+| Selector | Operator | Value         | Action |
+| -------- | -------- | ------------- | ------ |
+| Domain   | in       | `httpbin.org` | Allow  |
 
 ![Results that will appear when configuring the example allow policy.](/images/cloudflare-one/policies/httpbin-policy.png)
 

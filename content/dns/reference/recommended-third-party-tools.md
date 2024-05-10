@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Recommended third-party tools
 weight: 3
 meta:
-    description: List of recommended thrid-party tools for DNS testing and troubleshooting.
+    description: List of recommended third-party tools for DNS testing and troubleshooting.
 ---
 
 # Recommended third-party tools

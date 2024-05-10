@@ -16,6 +16,8 @@ Cache rules affect requests differently from Page Rules. This is how they are ap
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design.
 
+4. Cache rules can be more specific than website-wide settings in the cache configuration tab, so they take precedence over website-wide settings on requests they match against. For example, if browser cache TTL is set to 4 hours for the entire website `example.com` and there is a cache rule matching requests with a path of `/feed` setting browser cache TTL to 10 seconds, the cache rule will override the website-wide setting for requests to `https://example.com/feed`.
+
 ## Execution order of Rules products
 
 {{<render file="_product_execution_order.md" productFolder="rules">}}

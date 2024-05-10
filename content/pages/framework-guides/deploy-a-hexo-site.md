@@ -49,7 +49,7 @@ $ hexo new "hello hexo"
 
 Inside of `hello-hexo.md`, use Markdown to write the content of the article. You can customize the tags, categories or other variables in the article. Refer to the [Front Matter section](https://hexo.io/docs/front-matter) of the [Hexo documentation](https://hexo.io/docs/) for more information.
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -90,4 +90,4 @@ Some Hexo themes or plugins have additional requirements for different Node.js v
 
 ![Follow the instructions above to set up an environment variable in the Pages dashboard](/images/pages/framework-guides/node-version-pages.png)
 
-{{<render file="_learn-more.md" withParameters="Hexo">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hexo">}}

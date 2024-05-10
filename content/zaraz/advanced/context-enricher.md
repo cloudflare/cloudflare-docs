@@ -8,9 +8,6 @@ weight: 10
 
 The Zaraz Context Enricher is a tool to modify or enrich [the context](/zaraz/reference/context/) that is being used across Zaraz using a Cloudflare Worker. The Context Enricher allows you access to the client and system variables.
 
-{{<Aside type="note">}}
-The Context Enricher is only available for accounts on a [Workers Paid plan](/workers/platform/pricing/).
-{{</Aside>}}
 
 ## Creating a Worker
 
@@ -41,7 +38,7 @@ export default {
 };
 ```
 
-See below for more complete examples of different use cases. To see the documentation for the Zaraz Context object, click [here](/zaraz/reference/context/).
+Keep reading for more complete examples of different use cases or refer to [Zaraz Context](/zaraz/reference/context/).
 
 ## Configuring your Context Enricher
 

@@ -36,7 +36,7 @@ For more details on these errors and how to fix them, refer to the following res
 - [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
 - [Add a record on the zone apex](/dns/manage-dns-records/how-to/create-zone-apex/)
 - [Add a subdomain](/dns/manage-dns-records/how-to/create-subdomain/)
-- [Allow Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/)
+- [Allow Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/)
 
 ## Does your domain's email still work?
 

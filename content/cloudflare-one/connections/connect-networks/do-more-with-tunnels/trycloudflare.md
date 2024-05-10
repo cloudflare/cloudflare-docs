@@ -38,6 +38,12 @@ TryCloudflare quick tunnels are currently not supported if a `config.yaml` confi
 - Cloudflare’s features historically require you to own a domain, set that domain’s DNS to Cloudflare’s nameservers, and configure its DNS records before you can begin to use any services. We hope to make more and more of our products available to trial without that burden.
 - We don’t guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
 
+### Limits
+
+Quick Tunnels are subject to a hard limit on the number of concurrent requests that can be proxied at any point in time. Currently, this limit is 200 in-flight requests. If a Quick Tunnel hits this limit, the HTTP response will return a `429` status code.
+
+This limit only applies to Quick Tunnels. To avoid this limit, [sign up](https://dash.cloudflare.com/sign-up) for a Cloudflare account and [create a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/get-started/).
+
 ### Legal
 
 Your installation of cloudflared software constitutes a symbol of your signature indicating that you accept the terms of the [Cloudflare License](/cloudflare-one/connections/connect-networks/downloads/license/), [Terms](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/).

@@ -12,7 +12,7 @@ Cloudflare signs the token with a key pair unique to your account. You should va
 
 ## Access signing keys
 
-The public key for the signing key pair is located at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
+The public key for the signing key pair is located at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`, where `<your-team-name>` is your Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
 
 By default, Access rotates the signing key every 6 weeks. This means you will need to programmatically or manually update your keys as they rotate. Previous keys remain valid for 7 days after rotation to allow time for you to make the update.
 
@@ -83,7 +83,7 @@ To verify the token manually:
 
 6. Get your public key:
 
-   1. Go to `https://<your-team-name>/cdn-cgi/access/certs`.
+   1. Go to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
    2. Under `public_certs`, locate the entry with the `kid` value you found in Step 5.
    3. Copy the `cert` value.
 

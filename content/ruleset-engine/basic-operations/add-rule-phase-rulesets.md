@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: Add rules to phase entry point rulesets
 weight: 3
-layout: list
+layout: wide
 ---
 
 # Add rules to phase entry point rulesets

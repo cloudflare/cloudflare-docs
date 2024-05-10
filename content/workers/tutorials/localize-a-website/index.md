@@ -4,7 +4,6 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Localize a website with HTMLRewriter
-layout: single
 ---
 
 # Localize a website with HTMLRewriter

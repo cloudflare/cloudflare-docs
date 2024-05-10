@@ -14,13 +14,13 @@ jobs:
     name: Compiles
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.1
-      
+          node-version: 20
+
       - name: Install dependencies
         run: npm install @actions/core puppeteer
 
@@ -39,5 +39,5 @@ jobs:
             "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
             -d "{\"title\": \"Broken API docs links\", \"body\": \"The following API doc links are broken: ${EXPORTED_VARIABLE}\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
 
-            
+
 

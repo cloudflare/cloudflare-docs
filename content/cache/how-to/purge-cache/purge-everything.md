@@ -14,3 +14,7 @@ Purging everything immediately clears all resources from your CDN cache in all C
 2. Select **Caching** > **Configuration**.
 3. Under **Purge Cache**, select **Purge Everything**. A warning window appears.
 4. If you agree, select **Purge Everything**.
+
+## Resulting cache status
+
+Purge Everything invalidates the resource, resulting in the `CF-Cache-Status` header indicating [`EXPIRED`](/cache/concepts/cache-responses/#expired) for subsequent requests.

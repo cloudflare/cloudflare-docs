@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Rate limiting rules
 weight: 6
-layout: list
+layout: wide
 ---
 
 # Rate limiting rules

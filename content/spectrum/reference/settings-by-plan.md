@@ -3,7 +3,7 @@ type: overview
 pcx_content_type: reference
 title: Settings by plan
 weight: 0
-layout: list
+layout: wide
 ---
 
 # Settings by plan

@@ -4,7 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m13.5
 product:
   title: Magic Firewall
   url: /magic-firewall/
-  group: Network security
+  group: Cloudflare One
+  additional_groups: [Network security]
 
 meta:
   title: Cloudflare Magic Firewall docs

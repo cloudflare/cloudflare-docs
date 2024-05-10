@@ -2,7 +2,7 @@
 title: Endpoints
 pcx_content_type: reference
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Endpoints

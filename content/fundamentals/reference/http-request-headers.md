@@ -13,10 +13,7 @@ Cloudflare may remove HTTP request headers with names considered invalid [accord
 
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
-
-[^1]: Brotli support between Cloudflare and the origin will be available across all plans by the end of Q4 2023.
-
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
 
 ## CF-Connecting-IP
 
@@ -31,7 +28,7 @@ Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or an
 
 In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
 
-In cross-zone subrequests from one Cloudflare customer zone to another Cloudflare customer zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
+In cross-zone subrequests from one Cloudflare zone to another Cloudflare zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
 
 For Worker subrequests destined for a non-Cloudflare customer zone, the `CF-Connecting-IP` and `x-real-ip` headers will both reflect the client's IP address, with only the `x-real-ip` header able to be altered.
 

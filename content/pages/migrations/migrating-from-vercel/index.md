@@ -2,7 +2,6 @@
 updated: 2020-09-23
 difficulty: Beginner
 pcx_content_type: tutorial
-layout: single
 title: Migrating from Vercel to Pages
 ---
 
@@ -24,7 +23,7 @@ In your Vercel Dashboard, find the project that you want to deploy. It should be
 
 ![Selecting a site in the Vercel Dashboard](/images/pages/migrations/vercel-deploy-1.png)
 
-Inside of your site dashboard, select **Settings**.
+Inside of your site dashboard, select **Settings**, then **General**.
 
 ![Selecting Site Settings in site dashboard](/images/pages/migrations/vercel-deploy-2.png)
 
@@ -38,7 +37,17 @@ After you have found your build directory and build command, you can move your p
 
 The [Get started guide](/pages/get-started/) will instruct you how to add your GitHub project to Cloudflare Pages.
 
-If you choose to use a custom domain for your Pages, you can set it to the same custom domain as your currently deployed Vercel application. When Pages finishes the initial deploy of your site, you will need to delete the Workers application to start sending requests to Cloudflare Pages.
+## Adding a custom domain
+
+To use a custom domain for your Pages project, [add a custom domain](/pages/configuration/custom-domains/) that is the same custom domain as your currently deployed Vercel application. When Pages finishes the initial deploy of your site, you will need to delete the Vercel application to start sending requests to Cloudflare Pages.
+
+{{<Aside type="note">}}
+
+Cloudflare does not provide IP addresses for your Pages project because we do not require `A` or `AAAA` records to link your domain to your project. Instead, Cloudflare uses `CNAME` records.
+
+For more details, refer to [Custom domains](/pages/configuration/custom-domains/).
+
+{{</Aside>}}
 
 ## Cleaning up your old application and assigning the domain
 

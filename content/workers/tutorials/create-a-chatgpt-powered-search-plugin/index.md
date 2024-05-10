@@ -2,13 +2,18 @@
 content_type: 📝 Tutorial
 difficulty: Intermediate
 pcx_content_type: tutorial
-layout: single
 title: Build a ChatGPT search plugin with Notion and Pinecone
 updated: 2023-08-14
 weight: 1
 ---
 
 # Build a ChatGPT search plugin with Notion and Pinecone
+
+{{<Aside type="warning" header="Deprecation notice for ChatGPT plugins">}}
+
+Plugins have been replaced in ChatGPT by <a href="https://platform.openai.com/docs/actions">Actions</a>. This tutorial is now deprecated.
+
+{{</Aside>}}
 
 In this tutorial, you will use [Langchain](https://js.langchain.com), a JavaScript package for working with large language models, and [Pinecone](http://pinecone.io/), a vector database, to index a [Notion](https://www.notion.so/) workspace. You will then be able to query your Notion workspace using a custom ChatGPT plugin built with Cloudflare Workers.
 
@@ -448,4 +453,4 @@ In the new modal popup, select **Develop your own plugin**. This will allow you 
 
 To build more with Workers, refer to [Tutorials](/workers/tutorials).
 
-If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.gg/cloudflaredev) to connect with other developers and the Cloudflare team.
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.

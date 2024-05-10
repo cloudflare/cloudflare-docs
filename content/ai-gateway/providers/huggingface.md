@@ -1,7 +1,7 @@
 ---
 title: HuggingFace
 pcx_content_type: get-started
-weight: 4
+weight: 7
 ---
 
 # HuggingFace

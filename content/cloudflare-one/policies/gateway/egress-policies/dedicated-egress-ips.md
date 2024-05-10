@@ -1,14 +1,13 @@
 ---
 pcx_content_type: concept
 title: Dedicated egress IPs
-layout: single
 weight: 1
 ---
 
 # Dedicated egress IPs
 
 {{<Aside type="note">}}
-Only available on Enterprise plans.
+Only available as an add-on to Zero Trust Enterprise plans.
 {{</Aside>}}
 
 Dedicated egress IPs are static IP addresses that can be used to allowlist traffic from your organization. These IPs are unique to your account and are not used by any other customers routing traffic through Cloudflare’s network. Each dedicated egress IP consists of an IPv4 address and an IPv6 range that are assigned to a specific Cloudflare data center. At minimum, Cloudflare will provision your account with two dedicated egress IPs corresponding to data centers in two different cities.
@@ -49,6 +48,7 @@ Dedicated egress IPs do not apply to:
 
 - DNS queries resolved through Gateway
 - Zero Trust networks connected via Cloudflare Tunnel or Magic WAN
+- ICMP traffic (such as `ping`)
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
 

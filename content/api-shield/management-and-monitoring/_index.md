@@ -27,7 +27,7 @@ When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will
 
 ## Add endpoints from API Discovery
 
-There are two ways to add API endpoints from Discovery. 
+There are two ways to add API endpoints from Discovery.
 
 ### Add from the Endpoint Management Tab
 
@@ -43,7 +43,7 @@ There are two ways to add API endpoints from Discovery.
 
 ## Add endpoints from Schema Validation
 
-1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/configure/).
+1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/).
 2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
 3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published.
 
@@ -63,13 +63,13 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
 {{</Aside>}}
 
-When adding a path manually, you can specify variable fields by enclosing them in braces, `/api/user/{var1}/details`. 
+When adding an endpoint manually, you can specify variable fields in the path or host by enclosing them in braces, `/api/user/{var1}/details` or `{var1}.example.com`.
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
 ## Endpoint schema learning
 
-Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters. 
+Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters.
 
 To protect your API with a learned schema, refer to [Schema Validation](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname).
 
@@ -82,7 +82,7 @@ To protect your API with a learned schema, refer to [Schema Validation](/api-shi
 5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
 6. Select **Export schema** and choose a location to save the file.
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
 The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
 {{</Aside>}}
 
@@ -119,7 +119,7 @@ You can interact with Endpoint Management through the Cloudflare API. Refer to [
 
 Sensitive data comprises various personally identifiable information and financial data. Cloudflare created this ruleset to address common data loss threats, and the WAF can search for this data in HTTP response bodies from your origin.
 
-API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/).
+API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/#managed-rulesets).
 
 Sensitive Data Detection is currently available in beta to Enterprise customers on our Advanced application security plan.
 

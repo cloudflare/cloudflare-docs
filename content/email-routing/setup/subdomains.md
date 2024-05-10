@@ -6,7 +6,7 @@ weight: 5
 
 # Subdomains
 
-Email Routing is a [zone-level](/fundamentals/concepts/accounts-and-zones/#zones) feature. A zone has a top-level domain (the same as the zone name) and it can have subdomains (managed under the DNS feature.) As an example, you can have the `example.com` zone, and then the `mail.example.com` and `corp.example.com` sub-domains under it.
+Email Routing is a [zone-level](/fundamentals/setup/accounts-and-zones/#zones) feature. A zone has a top-level domain (the same as the zone name) and it can have subdomains (managed under the DNS feature.) As an example, you can have the `example.com` zone, and then the `mail.example.com` and `corp.example.com` sub-domains under it.
 
 You can use Email Routing with any subdomain of any zone in your account. Follow these steps to add Email Routing features to a new subdomain:
 

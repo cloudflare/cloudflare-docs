@@ -28,7 +28,7 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 {{<render file="gateway/_doh-instructions.md">}}
 
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/gateway/dns-policies/#dns-location) selector.
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) selector.
 
 ### Configure operating system for DoH
 
@@ -38,13 +38,13 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
    1. Run the following command to obtain your `A` record values:
 
-   ```bash
+   ```powershell
    nslookup -type=A <your-subdomain>.cloudflare-gateway.com
    ```
 
    2. Obtain your `AAAA` record values.
 
-   ```bash
+   ```powershell
    nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
    ```
 
@@ -54,13 +54,13 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 
    1. Run the following command for each address:
 
-   ```bash
+   ```powershell
    Add-DnsClientDohServerAddress -ServerAddress <IP-address> -DohTemplate https://<your-subdomain>.cloudflare-gateway.com/dns-query -AllowFallbackToUdp $False -AutoUpgrade $False
    ```
 
    2. Confirm the addresses were added.
 
-   ```bash
+   ```powershell
    Get-DnsClientDohServerAddress
    ```
 
@@ -80,13 +80,13 @@ Obtain the `A` and `AAAA` record values associated with your location's DoH endp
 
 1. Run the following command to obtain your `A` record values:
 
-```bash
+```powershell
 nslookup -type=A <your-subdomain>.cloudflare-gateway.com
 ```
 
 2. Obtain your `AAAA` record values.
 
-```bash
+```powershell
 nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 ```
 
@@ -102,7 +102,7 @@ For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.c
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
 
-Currently, authentication tokens can only be generated through the API. You can run this [interactive Python script](/cloudflare-one/static/documentation/connections/authenticated-doh.py) which automates the setup procedure, or follow the steps described below.
+Currently, authentication tokens can only be generated through the API. You can run this [interactive Python script](/cloudflare-one/static/authenticated-doh.py) which automates the setup procedure, or follow the steps described below.
 
 ### 1. Create a service token for the account
 

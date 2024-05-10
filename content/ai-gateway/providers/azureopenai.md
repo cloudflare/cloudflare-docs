@@ -1,7 +1,7 @@
 ---
 title: Azure OpenAI
 pcx_content_type: get-started
-weight: 3
+weight: 5
 ---
 
 # Azure OpenAI

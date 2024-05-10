@@ -1,0 +1,12 @@
+---
+_build:
+  publishResources: false
+  render: never
+  list: never
+---
+
+{{<Aside type="note">}}
+
+For more pricing details, refer to the [Web3 product page](https://www.cloudflare.com/application-services/products/web3/).
+
+{{</Aside>}}

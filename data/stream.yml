@@ -5,7 +5,7 @@ product:
   title: Stream
   url: /stream/
   group: Developer platform
-  additional_groups: [Application performance]
+  additional_groups: [Media]
   preview_tryout: true
 
 meta:

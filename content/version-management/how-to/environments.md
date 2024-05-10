@@ -33,7 +33,7 @@ To create a new environment:
 
 {{<Aside type="note">}}
 
-You can only adjust the [**Read-only Environment** setting](/version-management/reference/read-only-environments/) after an environment has been created.
+You can only adjust the [**Read-only Environment**](/version-management/reference/read-only-environments/) configuration after an environment has been created.
 
 {{</Aside>}}
 

@@ -3,7 +3,7 @@ type: overview
 pcx_content_type: navigation
 title: Examples
 weight: 8
-layout: list
+layout: wide
 ---
 
 # Examples

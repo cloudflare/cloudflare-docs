@@ -23,7 +23,7 @@ Once this is done, a scaffolded documentation site will be created in the `docs`
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -45,4 +45,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your VuePress project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="VuePress">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="VuePress">}}

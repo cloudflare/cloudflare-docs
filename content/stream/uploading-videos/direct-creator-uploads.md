@@ -171,11 +171,12 @@ You can apply the [same constraints](/api/operations/stream-videos-upload-videos
 
 Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, _not_ an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
-In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
+In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes, uploaded prior to the expiry timestamp, and to make this video private:
 
-`'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'`
+`'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls,expiry MjAyNC0wMi0yN1QwNzoyMDo1MFo='`
 
-_NjAw_ is the base64 encoded value for "600" (or 10 minutes).
+`NjAw` is the base64 encoded value for "600" (or 10 minutes).
+`MjAyNC0wMi0yN1QwNzoyMDo1MFo=` is the base64 encoded value for "2024-02-27T07:20:50Z" (an RFC3339 format timestamp)
 
 ## Tracking user upload progress
 
