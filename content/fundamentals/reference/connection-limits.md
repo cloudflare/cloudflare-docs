@@ -40,4 +40,4 @@ Some TCP connections can be customized for Enterprise customers. Reach out to yo
 
 Cloudflare maintains keep-alive connections to improve performance and reduce cost of recurring TCP connects in the request transaction as Cloudflare proxies customer traffic from its global network to the site's origin server.
 
-Ensure HTTP keep-alive connections are enabled on your origin. Cloudflare reuses open TCP connections for up to 15 minutes (900 seconds) after the last HTTP request. Origin web servers close TCP connections if too many are open. HTTP keep-alive helps avoid connection resets for requests proxied by Cloudflare.
+Ensure HTTP keep-alive connections are enabled on your origin. Cloudflare reuses open TCP connections up to the `Proxy Idle Timeout` limit after the last HTTP request. Origin web servers close TCP connections if too many are open. HTTP keep-alive helps avoid connection resets for requests proxied by Cloudflare.
