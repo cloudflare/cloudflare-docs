@@ -54,6 +54,7 @@ Next, let's create a functions directory with an `index.js` file, this will be w
 
 ```sh
 $ mkdir functions
+$ cd functions
 $ touch index.js
 ```
 
@@ -142,9 +143,7 @@ filename: functions/index.js
 highlight: [1,2,3,4,5,10]
 ---
 const strings = {
-  de: {
-    headline: 'Beispielseite',
-  }
+  headline: 'Beispielseite',
 };
 
 class ElementHandler {
@@ -163,9 +162,7 @@ filename: functions/index.js
 highlight: [11, 12, 13]
 ---
 const strings = {
-  de: {
-    headline: 'Beispielseite',
-  }
+  headline: 'Beispielseite',
 };
 
 class ElementHandler {
