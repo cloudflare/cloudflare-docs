@@ -10,6 +10,51 @@ meta:
 
 The following examples cover common patterns for configuring compression rules.
 
+## Disable Brotli compression for all requests of a zone
+
+The following example rule will disable Brotli compression for all incoming requests of a given zone. The only available compression algorithm will be Gzip.
+
+{{<example>}}
+
+**When incoming requests match**
+
+- All incoming requests
+
+**Then**
+
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Gzip`
+
+{{</example>}}
+
+If the client does not support Gzip compression, the response will be uncompressed.
+
+{{<details header="Example API request">}}
+
+The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "expression": "true",
+      "action": "compress_response",
+      "action_parameters": {
+        "algorithms": [
+          { "name": "gzip" }
+        ]
+      }
+    }
+  ]
+}'
+```
+
+{{</details>}}
+
 ## Do not apply compression to AVIF images
 
 The following example rule will disable compression for AVIF images, based on either the content type or the file extension specified in the request.
@@ -18,8 +63,10 @@ The following example rule will disable compression for AVIF images, based on ei
 
 **When incoming requests match**
 
-- _Media Type_ _equals_ `image/avif` **OR**
-- _File extension_ _equals_ `avif`
+- Custom filter expression:
+
+    - _Media Type_ _equals_ `image/avif` **OR**
+    - _File extension_ _equals_ `avif`
 
 **Then**
 
@@ -53,19 +100,22 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 {{</details>}}
 
-## Use GZIP compression for CSV files or other algorithm if not available
+## Use Gzip compression for CSV files or other algorithm if not available
 
-The following example rule will configure GZIP compression as the preferred compression method for CSV files. If the visitor does not support this algorithm, Cloudflare will try to compress the response using a different algorithm supported by the visitor.
+The following example rule will configure Gzip compression as the preferred compression method for CSV files. If the visitor does not support this algorithm, Cloudflare will try to compress the response using a different algorithm supported by the visitor.
 
 {{<example>}}
 
 **When incoming requests match**
 
-- _File extension_ _equals_ `csv`
+- Custom filter expression:
+
+    - _File extension_ _equals_ `csv`
 
 **Then**
 
-- **Compression options** > _Custom_ > `Gzip`, `Auto`
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Gzip`, `Auto`
 
 {{</example>}}
 
@@ -104,11 +154,14 @@ The following example rule will configure only Brotli compression for a specific
 
 **When incoming requests match**
 
-- _URI Path_ _equals_ `/download/assets.tar`
+- Custom filter expression:
+
+    - _URI Path_ _equals_ `/download/assets.tar`
 
 **Then**
 
-- **Compression options** > _Custom_ > `Brotli`
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Brotli`
 
 {{</example>}}
 
