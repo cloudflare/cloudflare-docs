@@ -81,6 +81,3 @@ At this time, you can only use ASCII characters for contact data. If the default
 
 When you register a domain with Cloudflare, your personal information is redacted when permitted by the registry. Refer to [WHOIS redaction](/registrar/account-options/whois-redaction/) for more information. 
 
-## Next steps
-
-To improve the security of your domain, enable [Domain Name System Security Extensions](/registrar/get-started/enable-dnssec/) to create a secure layer with a cryptographic signature.
