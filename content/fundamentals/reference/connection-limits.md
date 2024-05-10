@@ -9,7 +9,7 @@ When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/h
 
 ## Between client and Cloudflare
 
-| Type  | Limit (seconds) | Error at limit | Configurable | 
+| Type  | Limit (seconds) | HTTP status code at limit | Configurable | 
 | ---  | --- | --- | --- | 
 | Connection Keep-Alive HTTP/1.1 |  400 | TCP Connection Closed | No |
 | Connection Idle HTTP/2 | 400 | TCP Connection Closed | No |
@@ -21,7 +21,7 @@ When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/h
 If you are using [Cloudflare tunnels](/cloudflare-one/connections/connect-networks/), refer to [Origin configuration](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/) to view or modify your connection settings. 
 {{</Aside>}}
 
-| Type  | Limit (seconds) | Error at limit | [Configurable](/fundamentals/reference/timeouts/#configurable-limits) | 
+| Type  | Limit (seconds) | HTTP status code at limit | [Configurable](/fundamentals/reference/timeouts/#configurable-limits) | 
 | ---  | --- | --- | --- | 
 | {{<glossary-tooltip term_id="TCP three-way handshake">}}Complete TCP Connection{{</glossary-tooltip>}} | 15 | [522](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-522-connection-timed-out) | No | 
 | {{<glossary-tooltip term_id="ACK (Acknowledge)">}}TCP ACK{{</glossary-tooltip>}} Timeout | 90 | [522](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-522-connection-timed-out) | No | 
