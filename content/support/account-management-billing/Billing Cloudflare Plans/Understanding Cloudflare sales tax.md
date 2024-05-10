@@ -69,7 +69,7 @@ ___
 
 ## Japan (CT)
 
-Cloudflare Inc. is currently registered in Japan as from October 1st, 2023. Due to some constraints, Cloudflare will be only able to start collecting tax from PAYGO customers on April 1st, 2024.
+Cloudflare Inc. is currently registered in Japan as of October 1st, 2023. Due to some constraints, Cloudflare will be only able to start collecting tax from PAYGO customers on April 1st, 2024.
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 ## India (GST)
 
-Cloudflare Inc. is registered for Goods and Services Tax (GST) purposes in India as of 2023-10-01.
+Cloudflare Inc. is registered for Goods and Services Tax (GST) purposes in India as of October 1st, 2023.
 
 An email communication, in both English and Hindi, was shared at the end of October and the beginning of November with all Indian customers to inform and request them to update addresses and GST IDs accordingly. 
 
