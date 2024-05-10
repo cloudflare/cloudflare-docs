@@ -4,7 +4,7 @@ title: Notifications
 weight: 3
 ---
 
-# DEX notifications
+{{<heading-pill style="beta">}}DEX notifications{{</heading-pill>}}
 
 Administrators can receive alerts when Cloudflare detects connectivity issues with the WARP client or degraded application performance. Notifications can be delivered via email, webhook, and third-party services.
 
@@ -14,7 +14,7 @@ DEX notifications are configured on the [Cloudflare dashboard](https://dash.clou
 
 ## Available notifications
 
----placeholder for notification dropdowns---
+{{<available-notifications product="DEX">}}
 
 ## ​​Alert logic
 
