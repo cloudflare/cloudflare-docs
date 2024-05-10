@@ -5,6 +5,9 @@ summary: Create a modified request with edited properties based off of an
 tags:
   - Middleware
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Modify request property
 weight: 1001

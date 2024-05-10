@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Schema Validation
-weight: 5
+weight: 8
 ---
 
 # Schema Validation
@@ -16,7 +16,9 @@ You can migrate to Schema Validation 2.0 manually by uploading your schemas to t
 
 ## Process
 
-{{<glossary-tooltip term_id="API endpoint">}}Endpoints{{</glossary-tooltip>}} must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. Uploading a schema will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
+{{<glossary-tooltip term_id="API endpoint">}}Endpoints{{</glossary-tooltip>}} must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. Uploading a schema via the Cloudflare dashboard will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/). 
+
+If you are uploading a schema via the API or Terraform, you must parse the schema and add your endpoints manually. 
 
 {{<glossary-definition term_id="API endpoint">}}
 

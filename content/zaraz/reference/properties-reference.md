@@ -13,7 +13,7 @@ Cloudflare Zaraz offers properties that you can use when configuring the product
 
 Property               | Description
 ---------------------- | -----------
-_Track Name_           | Returns the name of the event sent using the Track method of the Web API. Refer to the [Track method](/zaraz/web-api/track/) for more information.
+_Event Name_           | Returns the name of the event sent using the Track method of the Web API. Refer to the [Track method](/zaraz/web-api/track/) for more information.
 _Track Property name:_ | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Set the name of your key here. Refer to the [Set method](/zaraz/web-api/set/) for more information.
 
 {{</table-wrap>}}

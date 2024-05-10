@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: JSON Web Tokens Validation
-weight: 5
+weight: 6
 ---
 
 # JSON Web Tokens Validation

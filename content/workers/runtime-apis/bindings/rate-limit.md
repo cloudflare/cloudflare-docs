@@ -176,3 +176,7 @@ You are not waiting on a network request. You can use the Rate Limiting API with
 The above also means that the Rate Limiting API is permissive, eventually consistent, and intentionally designed to not be used as an accurate accounting system.
 
 For example, if many requests come in to your Worker in a single Cloudflare location, all rate limited on the same key, the [isolate](/workers/reference/how-workers-works) that serves each request will check against its locally cached value of the rate limit. Very quickly, but not immediately, these requests will count towards the rate limit within that Cloudflare location.
+
+## Examples
+
+- [`@elithrar/workers-hono-rate-limit`](https://github.com/elithrar/workers-hono-rate-limit) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application.

@@ -33,7 +33,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Auto Minify
+## Auto Minify (deprecated) { #auto-minify }
 
 [Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
@@ -182,6 +182,29 @@ header: API configuration example
 
 {{</details>}}
 
+## Fonts
+
+[Cloudflare Fonts](/speed/optimization/content/fonts/) rewrites Google Fonts to be delivered from a website's own origin, eliminating the need to rely on third-party font providers.
+
+Use this setting to turn on or off Cloudflare Fonts for matching requests.
+
+{{<details header="API information">}}
+
+API configuration property name: `"fonts"` (boolean).
+
+```json
+---
+header: API configuration example
+---
+"action_parameters": {
+  "fonts": false
+}
+```
+
+{{<render file="_configuration-rule-link-to-examples.md">}}
+
+{{</details>}}
+
 ## Mirage
 
 [Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.
@@ -315,7 +338,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Server Side Excludes
+## Server Side Excludes (deprecated) { #server-side-excludes }
 
 [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 

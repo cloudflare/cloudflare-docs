@@ -4,8 +4,10 @@ summary: Determine how to cache a resource by setting TTLs, custom cache keys,
   and cache headers in a fetch request.
 tags:
   - Caching
-  - Cache API
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Cache using fetch
 weight: 1001

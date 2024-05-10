@@ -1,7 +1,17 @@
 ---
 link: "/zaraz/changelog/"
 productName: Zaraz
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-05-03'
+  title:
+  description: |-
+    * **Dashboard**: Add setting for Google Consent mode default
+    * **Bugfix**: Cookie values are now decoded
+    * **Bugfix**: Ensure context enricher worker can access the `context.system.consent` object
+    * **Google Ads Managed Component**: Add conversion linker on pageviews without sending a pageview event
+    * **Pinterest Conversion Api Managed Component**: Bugfix handling of partial e-commerce event payloads
 - publish_date: '2024-04-19'
   title:
   description: |-

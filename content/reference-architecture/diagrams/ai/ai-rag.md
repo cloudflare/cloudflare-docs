@@ -26,7 +26,7 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 4. **Embedding generation**: Generate embedding vectors by calling [Workers AI](/workers-ai/) [text embedding models](/workers-ai/models/#text-embeddings) for the documents.
 5. **Vector storage**: Insert the embedding vectors to [Vectorize](/vectorize/).
 6. **Document storage**: Insert documents to [D1](/d1/) for persistent storage.
-7. **Ack/Retry mechanism**: Signal success/error by using the [Queues Runtime API](/queues/reference/javascript-apis/#message) in the consumer for each document. [Queues](/queues/) will schedule retries, if needed.
+7. **Ack/Retry mechanism**: Signal success/error by using the [Queues Runtime API](/queues/configuration/javascript-apis/#message) in the consumer for each document. [Queues](/queues/) will schedule retries, if needed.
 
 ## Knowledge Queries
 

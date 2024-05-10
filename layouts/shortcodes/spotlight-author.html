@@ -1,0 +1,11 @@
+{{- $author := .Page.Params.spotlight.author -}}
+{{- $link := .Page.Params.spotlight.author_bio_link -}}
+{{- $source := .Page.Params.spotlight.author_bio_source -}}
+
+<div class="author-container">
+  <div class="author-details">Developer Spotlight community contribution</div>
+  <div>
+      <span class="author-details">Written by: </span>{{- $author -}}</span>
+  </div>
+      <p><span class="author-details">Profile: </span>{{ (printf "[%s](%s)" $source $link ) | .Page.RenderString }}</p>
+</div>

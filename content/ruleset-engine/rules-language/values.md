@@ -30,7 +30,7 @@ Regular expression matching is performed using the Rust regular expression engin
 
 ### Quoted string syntax
 
-When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively. Additionally, if you use a string literal as a function argument you must use double escaping for the `\` (backslash) character.
+When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively.
 
 The quoted string syntax has the following additional escaping requirements:
 
@@ -47,10 +47,23 @@ http.request.uri.path matches "a\"b"
 # Test if URI path contains 'a"#b'
 http.request.uri.path matches "a\"#b"
 
-# Replace '\' (backslash) with 'a'
-# String literals in function arguments require double escaping in quoted strings
+# Replace 'a' with '\' (backslash)
+regex_replace(http.host, "a", "\\")
+```
+
+{{<Aside type="warning" header="Warning">}}
+In some situations you will need to double-escape a string — for example, when using the [`regex_replace()`](/ruleset-engine/rules-language/functions/#function-regex_replace) function with a regular expression matching a backslash (`\`).
+
+In this case, you must do the basic escaping required by strings as function parameters (using `\\` for each `\` character) and also the regex escaping (using `\\` for each `\` character), since the backslash has a special meaning in regular expressions.
+
+Therefore, to replace a backslash (`\`) with the `a` character using `regex_replace()` you would use the following expression:
+
+```txt
 regex_replace(http.host, "\\\\", "a")
 ```
+
+To avoid this situation, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax) for specifying regular expressions.
+{{</Aside>}}
 
 ### Raw string syntax
 

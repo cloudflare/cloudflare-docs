@@ -28,9 +28,7 @@ Wrangler provides a [`dev`](/workers/wrangler/commands/#dev) command that starts
 $ npx wrangler dev
 ```
 
-`wrangler dev` will run the preview of the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
-
-Resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect live production or preview data. Wrangler will automatically create local versions of bindings found in `wrangler.toml`. These will not have data in them initially, so you will need to add data manually.
+`wrangler dev` will run the Worker directly on your local machine. `wrangler dev` uses a combination of `workerd` and [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare), a simulator that allows you to test your Worker against additional resources like KV, Durable Objects, WebSockets, and more.
 
 ### Supported resource bindings in different environments
 
@@ -55,29 +53,66 @@ With any bindings that are not supported locally, you will need to use the `--re
 
 [^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
 
-### Clear Wrangler's local storage
+## Work with local data
 
-Wrangler will store all locally created resources and storage in a `.wrangler` folder inside your Worker directory. This folder should be added to your `.gitignore` file.
+When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources. 
 
-If you need to clear local storage, delete the `.wrangler/state` folder. It will be recreated the next time you run `wrangler dev`.
+### Use bindings in `wrangler.toml`
 
-### Develop locally using remote resources and bindings
+[Wrangler](/workers/wrangler/) will automatically create local versions of bindings found in the `wrangler.toml` [configuration file](/workers/wrangler/configuration/). These local resources will not have data in them initially, so you will need to add data manually via Wrangler commands and the [`--local` flag](/workers/testing/local-development/#use---local-flag).
+
+When you run `wrangler dev` Wrangler stores local resources in a `.wrangler/state` folder, which is automatically created.
+
+If you prefer to specify a directory, you can use the [`--persist-to`](/workers/wrangler/commands/#dev) flag with `wrangler dev` like this:
+
+```sh
+$ npx wrangler dev --persist-to <DIRECTORY>
+```
+
+Using this will write all local storage and cache to the specified directory instead of `.wrangler`.
 
 {{<Aside type="note">}}
 
-Developing against remote resources will count towards billable usage. `wrangler dev --remote` will leverage remote production resources specified in your `wrangler.toml`. These resources will use production data, and will count towards account usage for billing purposes.
+This local persistence folder should be added to your `.gitignore` file.
 
 {{</Aside>}}
 
-`wrangler dev` runs locally by default. This means that all resources and bindings are simulated locally as well. However, there may be times you need to develop against remote resources and bindings. To run `wrangler dev` remotely, add the `--remote` flag:
+### Use `--local` flag
+
+The following [Wrangler commands](/workers/wrangler/commands/) have a `--local` flag which allows you to create, update, and delete local data during development:
+
+| Command                                    |
+| ----------------------------------------------------|
+| [`d1 execute`](/workers/wrangler/commands/#execute) |
+| [`kv:key](/workers/wrangler/commands/#kvkey) |
+| [`kv:bulk`](/workers/wrangler/commands/#kvbulk) |
+| [`r2 object`](/workers/wrangler/commands/#r2-object) |
+
+If using `--persist-to` to specify a custom folder with `wrangler dev` you should also add `--persist-to` with the same directory name along with the `--local` flag when running the commands above. For example, to put a custom KV key into a local namespace via the CLI you would run:
+
+```sh
+$ npx wrangler kv:key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
+```
+
+Running `wrangler kv:key put` will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in `wrangler.toml`. This example command sets the local persistence directory to `worker-local` using `--persist-to`, to ensure that the data is created in the correct location. If `--persist-to` was not set, it would create the data in the `.wrangler` folder.
+
+### Clear Wrangler's local storage
+
+If you need to clear local storage entirely, delete the `.wrangler/state` folder. You can also be more fine-grained and delete specific resource folders within `.wrangler/state`.
+
+Any deleted folders will be created automatically the next time you run `wrangler dev`.
+
+## Develop using remote resources and bindings
+
+There may be times you want to develop against remote resources and bindings. To run `wrangler dev` in remote mode, add the `--remote` flag, which will run both your code and resources remotely:
 
 ```sh
 $ npx wrangler dev --remote
 ```
 
-Remote resources to use during `wrangler dev --remote` are specified with preview ID/names such as `preview_id` or `preview_bucket name`. Preview resources can be resources separate from production resources to prevent changing production data in development. `wrangler dev --remote` only supports preview ID/names for storage resources such as KV, R2, and D1. To change production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of the production resource.
+For some products like KV and R2, remote resources used for `wrangler dev --remote` must be specified with preview ID/names in `wrangler.toml` such as `preview_id` for KV or `preview_bucket name` for R2. Resources used for remote mode (preview) can be different from resources used for production to prevent changing production data during development. To use production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of your production resource.
 
-### Customize `wrangler dev`
+## Customize `wrangler dev`
 
 You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.
 
@@ -89,4 +124,5 @@ There is a bug associated with how outgoing requests are handled when using `wra
 
 ## Related resources
 
+* [D1 local development](/d1/build-with-d1/local-development/) - The official D1 guide to local development and testing.
 * [Debugging tools](/workers/testing/debugging-tools) - Tools to help you diagnose issues and gain insight into your Workers.

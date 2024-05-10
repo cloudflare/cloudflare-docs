@@ -2,8 +2,13 @@
 type: example
 summary: Deliver an HTML page from an HTML string directly inside the Worker script.
 demo: https://returning-html.workers-sites-examples.workers.dev
-tags:
-  - Originless
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+playground-link: true
 pcx_content_type: configuration
 title: Return small HTML page
 weight: 1

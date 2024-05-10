@@ -68,87 +68,9 @@ $ hugo new site my-hugo-site
 Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, use the [Terminal theme](https://themes.gohugo.io/hugo-theme-terminal/) by running the following commands in your terminal:
 
 ```sh
-$ cd my-hugo-site
 $ git init
-$ git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal
-$ git submodule update --init --recursive
-```
-
-You should also copy the default configuration provided by the theme into the `config.toml` file in your project's directory. Take the following information and customize it per your site's needs:
-
-```toml
-baseurl = "/"
-languageCode = "en-us"
-theme = "terminal"
-paginate = 5
-
-[params]
-  # dir name of your main content (default is `content/posts`).
-  # the list of set content will show up on your index page (baseurl).
-  contentTypeName = "posts"
-
-  # ["orange", "blue", "red", "green", "pink"]
-  themeColor = "orange"
-
-  # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 2
-
-  # show selector to switch language
-  showLanguageSelector = false
-
-  # set theme to full screen width
-  fullWidthTheme = false
-
-  # center theme with default width
-  centerTheme = false
-
-  # set a custom favicon (default is a `themeColor` square)
-  # favicon = "favicon.ico"
-
-  # set post to show the last updated
-  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
-  showLastUpdated = false
-  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
-  # updatedDatePrefix = "Updated"
-
-  # set all headings to their default size (depending on browser settings)
-  # it's set to `true` by default
-  # oneHeadingSize = false
-
-[params.twitter]
-  # set Twitter handles for Twitter cards
-  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
-  # do not include @
-  creator = ""
-  site = ""
-
-[languages]
-  [languages.en]
-    languageName = "English"
-    title = "Terminal"
-    subtitle = "A simple, retro theme for Hugo"
-    owner = ""
-    keywords = ""
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
-    missingContentMessage = "Page not found..."
-    missingBackButtonLabel = "Back to home page"
-
-    [languages.en.params.logo]
-      logoText = "Terminal"
-      logoHomeLink = "/"
-
-    [languages.en.menu]
-      [[languages.en.menu.main]]
-        identifier = "about"
-        name = "About"
-        url = "/about"
-      [[languages.en.menu.main]]
-        identifier = "showcase"
-        name = "Showcase"
-        url = "/showcase"
+$ git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+$ echo "theme = 'ananke'" >> hugo.toml
 ```
 
 ## Create a post
@@ -156,7 +78,7 @@ paginate = 5
 Create a new post to give your Hugo site some initial content. Run the `hugo new` command in your terminal to generate a new post:
 
 ```sh
-$ hugo new posts/hello-world.md
+$ hugo new content posts/hello-world.md
 ```
 
 Inside of `hello-world.md`, add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.

@@ -21,7 +21,7 @@ Using gradual deployments, you can:
 
 Gradual deployments are in **beta and under active development**. Review [Limits](/workers/configuration/versions-and-deployments//gradual-deployments/#limits) associated with rollbacks before using this feature.
 
-Provide your feeback on the rollbacks feature through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
+Provide your feedback on the rollbacks feature through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
 
 {{</Aside>}}
 

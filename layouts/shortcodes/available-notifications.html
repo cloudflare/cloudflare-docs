@@ -1,12 +1,18 @@
 {{- $yamlData := index (index (index site.Data "centralized-info") "notifications") "entries" -}}
 {{- $productFilter := .Get "product" -}}
-{{- $products := slice -}} 
+{{- $notificationFilter := .Get "notificationName" -}}
+{{- $products := slice -}}
 {{- $filteredData := slice -}}
 
 {{- with $productFilter -}}
 
-{{- range $index, $entry := $yamlData -}} 
+{{- range $index, $entry := $yamlData -}}
 {{- if eq $productFilter $entry.associatedProducts -}}
+{{- with $notificationFilter -}}
+{{- if ne $entry.name . -}}
+{{- continue -}}
+{{- end -}}
+{{- end -}}
 {{- $filteredData = $filteredData | append $entry -}}
 {{- end -}}
 {{- end -}}
@@ -17,7 +23,7 @@
 
 {{- end -}}
 
-{{- range $index, $entry := $filteredData -}} 
+{{- range $index, $entry := $filteredData -}}
 {{- $products = $products | append $entry.associatedProducts -}}
 {{- end -}}
 {{- $products = sort ($products | uniq) . "asc" -}}
@@ -45,11 +51,15 @@
     {{ $notification.audience }}
     <p><strong>Other options / filters</strong></p>
     {{ $notification.otherFilters }}
-    
+
     <p><strong>Included with</strong></p>
     {{ $notification.availability }}
     <p><strong>What should you do if you receive one?</strong></p>
     {{ $notification.nextSteps }}
+    {{- with $notification.additional_information -}}
+    <p><strong>Additional information</strong></p>
+    {{ . }}
+    {{- end -}}
     {{- with $notification.limitations -}}
     <p><strong>Limitations</strong></p>
     {{ . }}

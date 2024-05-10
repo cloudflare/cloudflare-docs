@@ -2,8 +2,10 @@
 type: example
 summary: Personalize website styling based on localized user time.
 tags:
-  - Originless
   - Geolocation
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: "Geolocation: Custom Styling"
 weight: 1001

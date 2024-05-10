@@ -5,7 +5,7 @@
 
 {{- range $index, $product := $changelogData -}}
 {{- range $index2, $item := $product.entries -}}
-{{- $changelogRendered = $changelogRendered | append (merge $item (dict "product" $product.productName "url" $product.link )) -}}
+{{- $changelogRendered = $changelogRendered | append $item -}}
 {{- end -}}
 {{- end -}}
 
@@ -28,14 +28,16 @@
     {{ $description = replaceRE `Open external link` "" $description -}}
     {{- with $entry.title -}}
     {{ $title = printf "%s - %s" $product . }}
-    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .) -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (anchorize .) -}}
     {{- else -}}
-    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (urlize .publish_date) -}}
+    {{- $link = print "https://developers.cloudflare.com" $rellink "#" (anchorize .publish_date) -}}
     {{- $title = printf "%s - %s" $product .publish_date -}}
     {{- end -}}
     {{- with $entry.link -}}
-    {{- if ne $product "Wrangler" -}}
+    {{- if ne $entry.product "Wrangler" -}}
     {{ $link = print "https://developers.cloudflare.com" . }}
+    {{- else -}}
+    {{- $link = $entry.link -}}
     {{- end -}}
     {{- end -}}
     {{- with $entry.individual_page -}}

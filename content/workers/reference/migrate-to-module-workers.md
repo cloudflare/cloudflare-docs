@@ -268,9 +268,9 @@ Below is an example of the request response workflow:
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
 
-    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/handlers/fetch/) to handle unexpected exceptions and operations that may complete after a response is returned.
 
-Learn more about [the lifecycle methods of the `fetch()` handler](/workers/runtime-apis/handlers/fetch/#lifecycle-methods).
+Learn more about [the lifecycle methods of the `fetch()` handler](/workers/runtime-apis/rpc/lifecycle/).
 
 
 ### Supported `FetchEvent` properties

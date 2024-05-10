@@ -6,6 +6,9 @@ summary: Set common security headers (X-XSS-Protection, X-Frame-Options,
 tags:
   - Security
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Set security headers
 weight: 1001

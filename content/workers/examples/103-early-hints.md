@@ -4,6 +4,10 @@ summary: Allow a client to request static assets while waiting for the HTML resp
 tags:
   - Middleware
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: 103 Early Hints
 weight: 1001

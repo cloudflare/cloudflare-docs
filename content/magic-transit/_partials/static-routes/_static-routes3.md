@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: createPath;;tunnelEndpoints
+inputParameters: createPath;;tunnelEndpoints;;ipRanges
 ---
 
 ## Scoped routes for Anycast GRE or IPsec tunnels
@@ -42,6 +42,16 @@ _WEUR_        | Western Europe
 _WNAM_        | Western North America
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information.
+
+## Allowed IP ranges
+
+By default, you can only add static routes with [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP prefixes like:
+- `10.0.0.0/8`
+- `172.16.0.0/12`
+- `192.168.0.0/16`
+
+$3
+If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare customer service manager.
 
 ## ​​Create a static route
 
