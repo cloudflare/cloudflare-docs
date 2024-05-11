@@ -49,3 +49,5 @@ If you want to trigger a build for any changes, but want to exclude changes to a
 If you want to trigger a build for a specific file or specific filetype, for example all files ending in `.md`.
 * Include paths: `*.md`
 * Exclude paths: ``
+
+For the API options to Pages Project, refer to our [Cloudflare API Documentation](/fundamentals/api/)
