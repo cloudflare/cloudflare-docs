@@ -142,7 +142,7 @@ import type { LoaderFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader = ({ context, params }: LoaderFunctionArgs) => {
+export const loader: LoaderFunction = async ({ context, params }) => {
   const { env, cf, ctx } = context.cloudflare;
   let { results } = await env.DB.prepare(
     "SELECT * FROM products where id = ?1"
