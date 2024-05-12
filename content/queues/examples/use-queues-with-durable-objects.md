@@ -74,6 +74,7 @@ export default {
       // This would return "wrote to queue", but you could return any response.
       return response;
     }
+		return new Response("userId must be provided", { status: 400 });
   }
 }
 
