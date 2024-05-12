@@ -1,16 +1,16 @@
 ---
-updated: 2024-04-25
+updated: 2024-05-12
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Cloudflare Workers - Building a Serverless API using Drizzle ORM, Hono & Neon
+title: Cloudflare Workers - Build a serverless API using Drizzle ORM, Hono and Neon
 ---
 
-# Cloudflare Workers - Building a Serverless API using Drizzle ORM, Hono & Neon
+# Cloudflare Workers - Build a serverless API using Drizzle ORM, Hono and Neon
 
 ## Prerequisites
 
-To successfully complete this guide, you will need:
+To successfully complete this tutorial, you will need:
 
 - [A Cloudflare account](https://dash.cloudflare.com/sign-up)
 - [A Neon account](https://console.neon.tech)
@@ -34,15 +34,15 @@ $ npm create cloudflare@latest
 
 To configure your Worker:
 
-- Choose `Website or web app` for the type of application you would like to create.
-- Choose `Hono` to `Which development framework do you want to use?`
-- Answer `Yes` to `Do you want to use git for version control?`
-- Answer `No` to `Do you want to deploy your application?`
+1. Choose `Website or web app` for the type of application you would like to create.
+2. Choose `Hono` to `Which development framework do you want to use?`
+3. Answer `Yes` to `Do you want to use git for version control?`
+4. Answer `No` to `Do you want to deploy your application?`
 
 ![Choose Website or web app](./cf1.png)
 ![Choose Hono](./cf2.png)
 
-Now wait for a bit to finish the setup. It should look similar to this:
+Once you complete your setup, you should receive the following output:
 
 ```sh
 ➜  ~ npm create cloudflare@latest
@@ -132,7 +132,10 @@ Get started with: cd polished-term-27ba
 To get started, run the following command in your project to add Hono as a dependency:
 
 ```sh
-npm install hono
+---
+header: Install Hono
+---
+$ npm install hono
 ```
 
 Next, go to your `src/index.ts` file and replace the existing code with the code provided below:
@@ -160,11 +163,11 @@ export default app;
 
 ## 3. Create a Neon project
 
-Go ahead and create an account if you do not have one already. Next, create a new project. Choose `16` as the Postgres version, pick the region closest to where you want to deploy your app and pick a size for your compute endpoint (you can change this later).
+Go ahead and create an account if you do not have one already. Next, create a new project. Choose `16` as the Postgres version, select the region closest to where you want to deploy your app and select a size for your compute endpoint (you can change this later).
 
 ![Create a Neon project](./create-neon-project.png)
 
-After you create the project, you get a connection string that you can use to connect to your database. In the root of your project, create a .dev.vars file and add the connection string as an environment variable. It should be formatted like a dotenv file, such as KEY=VALUE.
+After creating your project, you will get a connection string used to connect to your database. In the root of your project, create a `.dev.vars` file and add the connection string as an environment variable. It should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
 ```text
 ---
@@ -178,17 +181,20 @@ DATABASE_URL="postgresql://<username>:<password>@ep-dry-violet-a5iayyaq.us-east-
 To add Drizzle to your project, run the following commands:
 
 ```sh
-npm i drizzle-orm @neondatabase/serverless
-npm i -D drizzle-kit postgres dotenv tsx
+---
+header: Install Drizzle ORM and Kit
+---
+$ npm i drizzle-orm @neondatabase/serverless
+$ npm i -D drizzle-kit postgres dotenv tsx
 ```
 
 The first command installs `drizzle-orm` along with `@neondatabase/serverless`. This enables you to connect to Neon from serverless environments.
 
-You are then installing `drizzle-kit` for generating migrations, `postgres.js` to establish a connection when running migrations, `dotenv` for loading environment variables, and `tsx` for executing TypeScript files.
+Then, install `drizzle-kit` for generating migrations, `postgres.js` to establish a connection when running migrations, `dotenv` for loading environment variables, and `tsx` for executing TypeScript files.
 
 ## 5. Define the schema using TypeScript
 
-In your src directory, create a new `db/schema.ts` file. This file will contain the database schema definition in TypeScript. Add the following code to the file you just created:
+In your source directory (i.e. `src`), create a new `db/schema.ts` file. This file will contain the database schema definition in TypeScript. Add the following code to the file you just created:
 
 ```ts
 ---
@@ -206,7 +212,7 @@ export const products = pgTable('products', {
 
 ## 6. Generate database migrations
 
-In the project’s root directory, create a `drizzle.config.ts` file and add the following code to it:
+In the project’s root directory, create a `drizzle.config.ts` file and add the following code:
 
 ```ts
 ---
@@ -220,9 +226,9 @@ export default {
 } satisfies Config;
 ```
 
-In this config file, you will specify the location of your schema as well as the output directory, which will contain the generated migrations. In our case, the output directory is called drizzle and will be located in the project’s root directory.
+In this config file, you will specify the location of your schema as well as the output directory, which will contain the generated migrations. In this tutorial, the output directory is called drizzle and will be located in the project’s root directory.
 
-The next step is to generate the database migrations. To do that, modify your `package.json` file and add a new `db:generate` command in the scripts object:
+The next step is to generate the database migrations. Modify your `package.json` file and add a new `db:generate` command in the scripts object:
 
 ```json
 ---
@@ -235,7 +241,7 @@ filename: package.json
 ...
 ```
 
-Now if you run the command npm run db:generate, you will see a newly generated SQL migration file in the `/drizzle` directory. The final step is to apply the migration to the database.
+Now if you run the command `npm run db:generate`, you will see a newly generated SQL migration file in the `/drizzle` directory. The final step is to apply the migration to the database.
 
 ## 7. Apply migrations to the database
 
@@ -268,7 +274,7 @@ const main = async () => {
 main();
 ```
 
-Finally, to be able to execute this `migrate.ts` file, modify your package.json file and add a new `db:migrate` script in the scripts object:
+Finally, to be able to execute this `migrate.ts` file, modify your `package.json` file and add a new `db:migrate` script in the scripts object:
 
 ```json
 ---
@@ -285,7 +291,7 @@ filename: package.json
 You can test it by running the following command, which applies the migration to your database:
 
 ```sh
-npm run db:migrate
+$ npm run db:migrate
 ```
 
 You can check that the tables have been created successfully by going to the “Tables” page in the Neon console.
@@ -294,7 +300,7 @@ You can check that the tables have been created successfully by going to the “
 
 ## 8. Add data using Neon’s SQL editor
 
-Right now, the products table you created is empty. In the Neon console, go to the SQL editor and run the following SQL query to add data to the products table.
+Until this step, the `products` table you created has been empty. In the Neon console, go to the SQL editor and run the following SQL query to add data to the products table by executing following SQL query:
 
 ```sql
 INSERT INTO products (name, price, description) VALUES
@@ -307,11 +313,11 @@ INSERT INTO products (name, price, description) VALUES
 
 ![SQL Editor](./sql-editor.png)
 
-The next step is to connect to the database from the worker.
+The next step is to connect to the database from the Worker.
 
-## 9. Connect to Neon from the worker
+## 9. Connect to Neon from the Worker
 
-Navigate to your `src/index.ts` and add the following code:
+Add the following code to your `src/index.ts` file:
 
 ```ts
 ---
@@ -343,17 +349,17 @@ app.onError((error, c) => {
 export default app;
 ```
 
-Now, if you start your development server and go to `http://localhost:8787`, you will be able to see data being returned as JSON.
+If you start your development server and go to `http://localhost:8787`, your browser will display data being returned as JSON.
 
 ![Ouput demo](./output.png)
 
-## 10. Deploy the worker using wrangler
+## 10. Deploy your Worker using Wrangler
 
 To deploy your app, you must first log into your Cloudflare account. To do that, run `npx wrangler login`. You will be redirected to Cloudflare, where you can connect the CLI to your account.
 
 ![Wrangler](./wrangler.png)
 
-Once logged in, you can run `npx wrangler deploy`, which deploys your worker. If you try to visit the deployed version, you will run into an error because you have not included the `DATABASE_URL` environment variable. To do that, you will leverage the Neon integration on Cloudflare.
+Once logged in, run `npx wrangler deploy`, which deploys your Worker. If you try to visit the deployed version, you will run into an error because you have not included the `DATABASE_URL` environment variable. To do that, you will leverage the Neon integration on Cloudflare.
 
 ```sh
 ---
@@ -364,16 +370,16 @@ $ npx wrangler deploy
 
 ## 11. Credential management using Cloudflare's Neon integration
 
-Log into the Cloudflare dashboard, select “Workers & Pages” from the sidebar, and then “Overview”.
+Log into the Cloudflare dashboard, select **Workers & Pages** from the sidebar, and then **Overview**.
 
-Next, choose the Worker you deployed, go to the “Settings” tab, choose “Integrations”, and select “Neon”. After accepting the terms, you will be redirected to an OAuth consent screen where you can authorize Cloudflare. Finally, select your project, branch, database, and role to finish setting up the integration.
+Next, choose the Worker you deployed, go to the **Settings** tab, choose **Integrations**, and select **Neon**. After accepting the terms, you will be redirected to an OAuth consent screen where you can authorize Cloudflare. Finally, select your project, branch, database, and role to finish setting up the integration.
 
 ![Neon integration](./integration.png)
 
-Adding the integration automatically redeploys your worker. So now, when you visit the deployed worker, you will be able to see data returned from the database as JSON.
+Adding the integration automatically redeploys your Worker. When you visit the deployed Worker, your browser will display data returned from the database as JSON.
 
 ## Related resources
 
-In this guide, you learned about Cloudflare workers, Hono, Drizzle ORM, Neon, and how you can use them together to create a serverless API.
+In this guide, you learned about [Cloudflare Workers](/workers/), Hono, Drizzle ORM, Neon, and how you can use them together to create a serverless API.
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).
