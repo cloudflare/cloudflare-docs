@@ -78,13 +78,7 @@ export default {
 }
 
 export class YourDurableObject implements DurableObject {
-  constructor(public state: DurableObjectState, env: Env) {
-      this.state = state;
-      // Ensure you pass your bindings and environment variables into
-      // each Durable Object when it is initialized
-      this.env = env;
-    }
-  }
+  constructor(public state: DurableObjectState, public env: Env) {}
 
   async fetch(request: Request) {
     // Error handling elided for brevity.
