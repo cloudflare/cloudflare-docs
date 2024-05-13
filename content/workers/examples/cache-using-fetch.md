@@ -103,7 +103,7 @@ async def on_fetch(request):
     response = Response.new(response.body, response)
 
     # Set cache control headers to cache on browser for 25 minutes
-    response.headers.set("Cache-Control", "max-age=1500")
+    response.headers["Cache-Control"] = "max-age=1500"
 
     return response
 ```
