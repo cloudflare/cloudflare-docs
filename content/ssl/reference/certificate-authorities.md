@@ -79,10 +79,11 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser. All browsers or operating systems that depend on these root programs are covered.
-In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq-27) may rely on a cross-signature to ensure optimal support across a wide range of devices.
+By cross-signing with a [GlobalSign root CA](https://valid.r1.roots.globalsign.com/) that has been installed in client devices for more than 20 years, Google Trust Services can ensure optimal support across a wide range of devices.
 
-You can use the root CAs list for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
+Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser, all browsers or operating systems that depend on these root programs are covered.
+
+You can use the [root CAs list]((https://pki.goog/faq/#faq-27)) for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
 
 ---
 
