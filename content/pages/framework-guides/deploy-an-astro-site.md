@@ -80,7 +80,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ### Local runtime
 
-Local runtime support is configured via the platformProxy option:
+Local runtime support is configured via the `platformProxy` option:
 
 ```js
 ---
