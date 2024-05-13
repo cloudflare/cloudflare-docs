@@ -19,7 +19,6 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 {{<render file="_what-is-cloudflare-link.md">}}
 - What is a CDN? | [Website](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (5 minute read)
-- Whitepaper: [Cloudflare CDN](https://cfl.re/CDN-whitepaper) (3 minute read)
 - Analyst Report: [Cloudflare named Leader in 2024 GigaOm Radar for Content Delivery Networks](https://www.cloudflare.com/lp/gigaom-radar-cdn/) (20 minute read)
 
 Those who read this reference architecture will learn:
