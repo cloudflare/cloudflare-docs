@@ -117,12 +117,12 @@ Next, you can create a policy for your application that requires the group, and 
 
 ## Selectors
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.
+When you add a rule to your policy, you will be asked to specify the criteria/attributes you want users to meet. These attributes are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications.
 
-These criteria are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications. Identity-based attributes are only checked when a user authenticates, whereas other attributes are polled continuously for changes during the session.
+Identity-based attributes are only checked when a user authenticates to Access, whereas non-identity attributes are polled continuously for changes during the [user session](/cloudflare-one/identity/users/session-management/). If you have configured [SCIM provisioning](/cloudflare-one/identity/users/scim/), you can force a user to re-attest all attributes with Access whenever you revoke the user in the IdP or update their IdP group membership.
 
 {{<table-wrap>}}
-| Selector | Description  | Checked at login | Checked continuously |
+| Selector | Description  | Checked at login| Checked continuously<sup>1</sup>  |
 | -------- | ------------ | ---------------- | -------------------- |
 | Emails   | `you@company.com`  | ✅ | ❌ |
 | Emails ending in | `@company.com`| ✅ | ❌ |
@@ -143,6 +143,8 @@ These criteria are available for all Access application types, including [SaaS](
 | Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
 | Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
 {{</table-wrap>}}
+
+<sup>1</sup> For SaaS applications, Access can only enforce policies at the time of initial sign on and when reissuing the SaaS session. Once the user has authenticated to the SaaS app, session management falls solely within the purview of the SaaS app.
 
 ## Order of execution
 

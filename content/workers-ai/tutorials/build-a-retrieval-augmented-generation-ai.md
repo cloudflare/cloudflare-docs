@@ -21,7 +21,7 @@ C3 (`create-cloudflare-cli`) is a command-line tool designed to help you setup a
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<tabs labels="npm | yarn">}}
+{{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
 
 ```sh
@@ -33,6 +33,13 @@ $ npm create cloudflare@latest
 
 ```sh
 $ yarn create cloudflare@latest
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm create cloudflare@latest
 ```
 
 {{</tab>}}

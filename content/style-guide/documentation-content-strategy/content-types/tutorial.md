@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Tutorial
-
 ---
 
 # Tutorial
@@ -24,11 +23,11 @@ Guiding, straightforward, educational, authoritative
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
 
-**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to Context for more information.
+**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to [Context](/style-guide/documentation-content-strategy/component-attributes/context/) for more information.
 
 **Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
 
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): Numbered steps that complete a task. Refer to Steps/Tasks/Procedures for more information.
+[**Steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): Numbered steps that complete a task. Refer to [Steps/tasks/procedures](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/) for more information.
 
 ### Optional components
 
@@ -79,11 +78,11 @@ header: Tutorial example
 pcx_content_type: tutorial
 updated: 2023-06-30
 ---
- 
+
 # Second-person imperative verb phrase that reflects user goal or job-to-be-done
- 
+
 Context for tutorial, intended audience (optional)
- 
+
 {{</*tutorial*/>}}
 
 {{</*tutorial-prereqs*/>}}

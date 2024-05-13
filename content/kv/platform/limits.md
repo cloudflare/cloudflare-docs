@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Limits
 weight: 2
+layout: wide
 ---
 
 # Limits

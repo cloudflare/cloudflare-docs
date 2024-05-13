@@ -25,9 +25,8 @@ By default, Cloudflare Workers is capable of streaming responses using the [Stre
 
 {{</Aside>}}
 
-The two primitives developers use to perform active streaming are [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`ReadableStream.pipeTo()`](/workers/runtime-apis/streams/readablestream/#methods) method.
-
-A basic pass-through usage of streams:
+The worker can create a `Response` object using a `ReadableStream` as the body. Any data provided through the
+`ReadableStream` will be streamed to the client as it becomes available.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
@@ -38,9 +37,47 @@ export default {
     // Fetch from origin server.
     let response = await fetch(request);
 
-    // Create an identity TransformStream (a.k.a. a pipe).
-    // The readable side will become our new response body.
-    let { readable, writable } = new TransformStream();
+    // ... and deliver our Response while that’s running.
+    return new Response(response.body, response);
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
+
+```js
+addEventListener('fetch', event => {
+  event.respondWith(fetchAndStream(event.request));
+});
+
+async function fetchAndStream(request) {
+  // Fetch from origin server.
+  let response = await fetch(request);
+
+  // ... and deliver our Response while that’s running.
+  return new Response(readable.body, response);
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
+A [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`ReadableStream.pipeTo()`](/workers/runtime-apis/streams/readablestream/#methods) method can be used to modify the response body as it is being streamed:
+
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    // Fetch from origin server.
+    let response = await fetch(request);
+
+    let { readable, writable } = new TransformStream({
+      transform(chunk, controller) {
+        controller.enqueue(modifyChunkSomehow(chunk));
+      }
+    });
 
     // Start pumping the body. NOTE: No await!
     response.body.pipeTo(writable);
@@ -63,9 +100,11 @@ async function fetchAndStream(request) {
   // Fetch from origin server.
   let response = await fetch(request);
 
-  // Create an identity TransformStream (a.k.a. a pipe).
-  // The readable side will become our new response body.
-  let { readable, writable } = new TransformStream();
+  let { readable, writable } = new TransformStream({
+    transform(chunk, controller) {
+      controller.enqueue(modifyChunkSomehow(chunk));
+    }
+  });
 
   // Start pumping the body. NOTE: No await!
   response.body.pipeTo(writable);

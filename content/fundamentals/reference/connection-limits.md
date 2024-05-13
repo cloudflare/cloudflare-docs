@@ -14,7 +14,6 @@ When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/h
 | Connection Keep-Alive HTTP/1.1 |  400 | TCP connection closed | No |
 | Connection Idle HTTP/2 | 400 | TCP connection closed | No |
 
-
 ## Between Cloudflare and origin server
 
 {{<Aside type="note">}}

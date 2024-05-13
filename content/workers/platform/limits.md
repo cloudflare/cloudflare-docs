@@ -192,7 +192,7 @@ When the client disconnects, all tasks associated with that client’s request a
 
 ## Simultaneous open connections
 
-While handling a request, each Worker is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
+You can open up to six connections simultaneously, for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
@@ -201,7 +201,7 @@ While handling a request, each Worker is allowed to have up to six connections o
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
 - Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
-Once a Worker has six connections open, it can still attempt to open additional connections.
+Once an invocation has six connections open, it can still attempt to open additional connections.
 
 * These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
 * Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
