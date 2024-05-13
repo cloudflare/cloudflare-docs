@@ -38,7 +38,7 @@ In 2022, we announced in our blog post [The future of Page Rules](https://blog.c
 
 Cloudflare plans to migrate your existing Page Rules during 2025. However, it is strongly recommended that you understand the correspondence between the different Page Rules settings and new Rules features ahead of the migration, and learn how you can implement the new types of rules in your Cloudflare account.
 
-This migration guide will be updated in the following months with more information on the migration process that will occur during 2025. Cloudflare users will receive email updates about the migration of the Page Rules configured on their Cloudflare account before the migration occurs.
+This migration guide will be updated in the following months with additional information about the Page Rules migration. Cloudflare users will receive email updates about the migration of the Page Rules configured on their Cloudflare account before the migration occurs.
 
 ### Settings that will not be migrated
 
@@ -101,7 +101,7 @@ Web Application Firewall    | N/A (deprecated)                     | N/A
 
 ### Migrate Always Use HTTPS
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -141,16 +141,11 @@ Page Rules configuration | Migrate to a dynamic redirect
 ![Example Page Rule with 'Always Use HTTPS' setting](/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Dynamic redirect matching the 'Always Use HTTPS' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-always-use-https-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Automatic HTTPS Rewrites
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -190,16 +185,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Automatic HTTPS Rewrites' setting](/images/rules/reference/page-rules-migration/pr-automatic-https-rewrites.png) | ![Configuration rule matching the 'Automatic HTTPS Rewrites' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-automatic-https-rewrites-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Browser Cache TTL
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -240,16 +230,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Browser Cache TTL' setting](/images/rules/reference/page-rules-migration/pr-browser-cache-ttl.png) | ![Cache rule matching the 'Browser Cache TTL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-browser-cache-ttl-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Browser Integrity Check
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -289,16 +274,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Browser Integrity Check' setting](/images/rules/reference/page-rules-migration/pr-browser-integrity-check.png) | ![Configuration rule matching the 'Browser Integrity Check' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-browser-integrity-check-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Bypass Cache on Cookie
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -337,16 +317,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Bypass Cache on Cookie' setting](/images/rules/reference/page-rules-migration/pr-bypass-cache-on-cookie.png) | ![Cache rule matching the 'Bypass Cache on Cookie' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-bypass-cache-on-cookie-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Cache By Device Type
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -387,16 +362,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Cache By Device Type' setting](/images/rules/reference/page-rules-migration/pr-cache-by-device-type.png) | ![Cache rule matching the 'Cache By Device Type' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-cache-by-device-type-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Cache Deception Armor
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -436,16 +406,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Cache Deception Armor' setting](/images/rules/reference/page-rules-migration/pr-cache-deception-armor.png) | ![Cache rule matching the 'Cache Deception Armor' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-cache-deception-armor-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Cache Level (Cache Everything) { #migrate-cache-level }
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -484,16 +449,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Cache Level' set to 'Cache Everything'](/images/rules/reference/page-rules-migration/pr-cache-level-everything.png) | ![Cache rule matching the 'Cache Level: Cache Everything' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-cache-level-everything-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Cache on Cookie
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -532,16 +492,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Cache on Cookie' setting](/images/rules/reference/page-rules-migration/pr-cache-on-cookie.png) | ![Cache rule matching the 'Cache on Cookie' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-cache-on-cookie-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Cache TTL by status code
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -587,16 +542,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with the 'Cache TTL by status code' setting](/images/rules/reference/page-rules-migration/pr-cache-ttl-by-status-code.png) | ![Cache rule matching the 'Cache TTL by status code' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-cache-ttl-by-status-code-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Custom Cache Key
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -636,16 +586,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with the 'Custom Cache Key' setting](/images/rules/reference/page-rules-migration/pr-custom-cache-key.png) | ![Cache rule matching the 'Custom Cache Key' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-custom-cache-key-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Disable Apps
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -683,11 +628,6 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Disable Apps' setting](/images/rules/reference/page-rules-migration/pr-disable-apps.png) | ![Configuration rule matching the 'Disable Apps' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-disable-apps-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Replace Disable Performance
@@ -698,7 +638,7 @@ The **Disable Performance** setting is deprecated. Any Page Rules with this sett
 
 This Page Rules setting turned off Auto Minify (deprecated), Mirage, Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -738,11 +678,6 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Disable Performance' setting](/images/rules/reference/page-rules-migration/pr-disable-performance.png) | ![Configuration rule partially matching the 'Disable Performance' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-disable-performance-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Replace Disable Security
@@ -773,7 +708,7 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
     - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
     - Hotlink Protection (part of Cloudflare Scrape Shield)
 
-2. If required, [create a WAF custom rule](/waf/custom-rules/create-dashboard/) to block requests from IP addresses not present in an allowlist of IPs and CIDR ranges (recommended instead of using Zone Lockdown).
+2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
 
 3. Turn off your existing Page Rule and validate the behavior of the rules you created.
 
@@ -783,13 +718,12 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
 If you are still using WAF managed rules (previous version) or Rate Limiting (previous version), consider migrating to the new versions of these products. It is not possible to turn off these older products using modern Rules features. Refer to the [WAF's migration guides](/waf/reference/migration-guides/) for more information.
 {{</Aside>}}
 
-
 {{</tab>}}
 {{</tabs>}}
 
 ### Migrate Disable Zaraz
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -827,16 +761,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Disable Zaraz' setting](/images/rules/reference/page-rules-migration/pr-disable-zaraz.png) | ![Configuration rule matching the 'Disable Zaraz' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-disable-zaraz-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Edge Cache TTL
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -877,16 +806,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with the 'Edge Cache TTL' setting](/images/rules/reference/page-rules-migration/pr-edge-cache-ttl.png) | ![Cache rule matching the 'Edge Cache TTL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-edge-cache-ttl-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Email Obfuscation
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -926,16 +850,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Email Obfuscation' setting](/images/rules/reference/page-rules-migration/pr-email-obfuscation.png) | ![Configuration rule matching the 'Email Obfuscation > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-email-obfuscation-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Forwarding URL
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -977,16 +896,11 @@ Page Rules configuration | Migrate to a dynamic redirect
 ![Example Page Rule with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Host Header Override
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1026,16 +940,11 @@ Page Rules configuration | Migrate to an origin rule
 ![Example Page Rule with 'Host Header Override' setting](/images/rules/reference/page-rules-migration/pr-host-header-override.png) | ![Origin rule matching the 'Host Header Override' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-host-header-override-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate IP Geolocation Header
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1060,16 +969,11 @@ Page Rules configuration | Migrate to a Managed Transform
 ![Example Page Rule with 'IP Geolocation Header' setting](/images/rules/reference/page-rules-migration/pr-ip-geolocation-header.png) | ![The 'Add visitor location headers' Managed Transform matching the 'IP Geolocation Header' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-ip-geolocation-header-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Mirage
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1109,16 +1013,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Mirage' setting](/images/rules/reference/page-rules-migration/pr-mirage.png) | ![Configuration rule matching the 'Mirage > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-mirage-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Opportunistic Encryption
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1158,16 +1057,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Opportunistic Encryption' setting](/images/rules/reference/page-rules-migration/pr-opportunistic-encryption.png) | ![Configuration rule matching the 'Opportunistic Encryption > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-opportunistic-encryption-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Origin Cache Control
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1208,16 +1102,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Origin Cache Control' setting](/images/rules/reference/page-rules-migration/pr-origin-cache-control.png) | ![Cache rule matching the 'Origin Cache Control' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-origin-cache-control-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Origin Error Page Pass-thru
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1258,16 +1147,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Origin Error Page Pass-thru' setting](/images/rules/reference/page-rules-migration/pr-origin-error-page-pass-thru.png) | ![Cache rule matching the 'Origin Error Page Pass-thru > On' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-origin-error-page-pass-thru-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Polish
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1307,17 +1191,12 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Polish' setting](/images/rules/reference/page-rules-migration/pr-polish.png) | ![Configuration rule matching the 'Polish > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-polish-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 
 ### Migrate Query String Sort
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1358,16 +1237,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Query String Sort' setting](/images/rules/reference/page-rules-migration/pr-query-string-sort.png) | ![Cache rule matching the 'Query String Sort > On' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-query-string-sort-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Resolve Override
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1406,16 +1280,11 @@ Page Rules configuration | Migrate to an origin rule
 ![Example Page Rule with 'Resolve Override' setting](/images/rules/reference/page-rules-migration/pr-resolve-override.png) | ![Origin rule matching the 'Resolve Override' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-resolve-override-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Respect Strong ETags
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1456,16 +1325,11 @@ Page Rules configuration | Migrate to a cache rule
 ![Example Page Rule with 'Respect Strong ETags' setting](/images/rules/reference/page-rules-migration/pr-respect-strong-etags.png) | ![Cache rule matching the 'Respect Strong ETags > On' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-respect-strong-etags-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Rocket Loader
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1505,16 +1369,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Rocket Loader' setting](/images/rules/reference/page-rules-migration/pr-rocket-loader.png) | ![Configuration rule matching the 'Rocket Loader > Off' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-rocket-loader-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate Security Level
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1554,16 +1413,11 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'Security Level' setting](/images/rules/reference/page-rules-migration/pr-security-level.png) | ![Configuration rule matching the "Security Level > I'm Under Attack" setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-security-level-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate True Client IP Header
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1588,16 +1442,11 @@ Page Rules configuration | Migrate to a Managed Transform
 ![Example Page Rule with 'True Client IP Header' setting](/images/rules/reference/page-rules-migration/pr-true-client-ip-header.png) | ![The 'Add "True-Client-IP" header' Managed Transform matching the 'True Client IP Header' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-true-client-ip-header-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
 
 ### Migrate SSL
 
-{{<tabs labels="Dashboard | Visual guide | Terraform">}}
+{{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
@@ -1637,15 +1486,4 @@ Page Rules configuration | Migrate to a configuration rule
 ![Example Page Rule with 'SSL' setting](/images/rules/reference/page-rules-migration/pr-ssl.png) | ![Configuration rule matching the "SSL" setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-ssl-new.png)
 
 {{</tab>}}
-{{<tab label="terraform" no-code="true">}}
-
-TODO
-
-{{</tab>}}
 {{</tabs>}}
-
----
-
-## More resources
-
-If you have feedback to share, visit our [community thread](#).
