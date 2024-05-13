@@ -51,7 +51,7 @@ However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in
 
 1.  Your domain name
 2.  The time and timezone of the 500 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 500 error was observed (replace _www.example.com_ with your actual domain and hostname)
+3.  The output of `www.example.com/cdn-cgi/trace` from the browser where the 500 error was observed (replace `www.example.com` with your actual domain and hostname)
 
 {{<Aside type="note">}}
 If you observe blank or white pages when visiting your website, confirm
@@ -93,6 +93,9 @@ A 502 or 504 error originating from Cloudflare appears as follows:
 
 If the error does not mention `cloudflare`, contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
 
+This error can be returned in case of a compression issue at the origin, for example the origin server is serving gzip encoded compressed content but is not updating the `content-length` header, or the origin is serving broken gzip compressed content.
+You can try to disable compression at your origin to confirm if this is the root cause of the errors.
+
 Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic. 
 In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
 These traffic adjustments are mostly seamless and take only a few seconds. 
@@ -123,7 +126,7 @@ HTTP error 503 occurs when your origin web server is overloaded. There are two p
 
 1.  Your domain name
 2.  The time and timezone of the 503 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 503 error was observed (replace _www.example.com_ with your actual domain and hostname)
+3.  The output of `www.example.com/cdn-cgi/trace` from the browser where the 503 error was observed (replace `www.example.com` with your actual domain and hostname)
 
 ___
 
