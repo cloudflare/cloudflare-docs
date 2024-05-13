@@ -34,7 +34,7 @@ For connections to users, Cloudflare has a default idle timeout of 400 seconds. 
 
 {{<Aside type="note">}}
 
-Be aware that even if there are keep-alives, Cloudflare cannot guarantee to keep a connection, since besides idleness, there are other reasons, like capacity balancing, data center maintenance or node restarts that can cause disconnections. Having this in mind, applications should be structured to handle disconnections gracefully.  
+Be aware that even if there are keep-alives, Cloudflare cannot guarantee to keep a connection, since besides idleness, there are other reasons, like capacity balancing, data center maintenance or node restarts that can cause disconnections. Having this in mind, applications should be structured to handle disconnections gracefully.
 
 {{</Aside>}}
 
