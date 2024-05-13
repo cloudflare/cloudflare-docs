@@ -85,7 +85,6 @@ The high availability (HA) feature is being rolled out  in phases. The present v
 - HA is run in preempt mode, which means the primary node always comes up as the active node.
 {{</Aside>}}
 
-
 ### ​​Create a high availability configuration
 
 You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
