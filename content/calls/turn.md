@@ -98,7 +98,7 @@ The JSON response below can then be passed on to your front-end application:
 Use `username` and `credential` as follows when instantiating the `RTCPeerConnection`:
 
 ```js
-let myPeerConnection = new RTCPeerConnection({
+const myPeerConnection = new RTCPeerConnection({
   iceServers: [
     {
       urls: "stun:stun.cloudflare.com:3478",
