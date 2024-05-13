@@ -30,7 +30,7 @@ In 2022, we announced in our blog post [The future of Page Rules](https://blog.c
 
 - **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
 
-- **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, Cloudflare Trace helps understand rule interactions.
+- **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
 
 - **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
 
