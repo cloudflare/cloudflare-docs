@@ -1,0 +1,13 @@
+---
+link: "/cloudflare-one/changelog/dex/"
+productName: Digital Experience Monitoring
+productArea: Zero Trust
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-05-13'
+  title: DEX Alerts
+  description: |-
+    Admins can now set [DEX Alerts](/cloudflare-one/insights/dex/notifications/) via [Cloudflare Notifications](/notifications/). Three new DEX alert types:
+    - Device connectivity anomaly
+    - Test latency
+    - Test low availability
