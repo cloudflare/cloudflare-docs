@@ -1,6 +1,8 @@
 ---
 link: "/rules/changelog/"
 productName: Rules
+productArea: Application performance
+productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
 
 - publish_date: '2024-05-13'
