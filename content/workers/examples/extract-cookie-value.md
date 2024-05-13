@@ -64,11 +64,10 @@ async def on_fetch(request):
     cookie_name = "__uid"
 
     cookies = SimpleCookie(request.headers["Cookie"] or "")
-    cookies = {k: v.value for k, v in cookies.items()}
 
     if cookie_name in cookies:
         # Respond with cookie value
-        return Response.new(cookies[cookie_name])
+        return Response.new(cookies[cookie_name].value)
 
     return Response.new("No cookie with name: " + cookie_name)
 ```
