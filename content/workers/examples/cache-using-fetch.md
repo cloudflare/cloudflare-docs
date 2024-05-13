@@ -88,16 +88,19 @@ async def on_fetch(request):
 
     # Only use the path for the cache key, removing query strings
     # and always store using HTTPS, for example, https://www.example.com/file-uri-here
-    some_custom_key = f'https://{url.hostname}{url.pathname}'
+    some_custom_key = f"https://{url.hostname}{url.pathname}"
 
-    response = await fetch(request, to_js({"cf": {
-        # Always cache this fetch regardless of content type
-        # for a max of 5 seconds before revalidating the resource
-        "cacheTtl": 5,
-        "cacheEverything": True,
-        # Enterprise only feature, see Cache API for other plans
-        "cacheKey": some_custom_key,
-        }}))
+    response = await fetch(
+        request,
+        cf=to_js({
+            # Always cache this fetch regardless of content type
+            # for a max of 5 seconds before revalidating the resource
+            "cacheTtl": 5,
+            "cacheEverything": True,
+            # Enterprise only feature, see Cache API for other plans
+            "cacheKey": some_custom_key,
+        }),
+    )
 
     # Reconstruct the Response object to make its headers mutable
     response = Response.new(response.body, response)
