@@ -49,7 +49,14 @@
 <!-- Order and remove dupe values -->
 {{- $changelogRendered = sort $changelogRendered "publish_date" "desc" -}}
 {{- $products = sort ($products | uniq) . "asc" -}}
-{{- $productAreas = sort ($productAreas | uniq) . "asc" -}}
+{{- $productAreas = (sort ($productAreas | uniq) . "desc") | collections.Reverse -}}
+
+<script>
+  console.log({{$productAreas}})
+</script>
+<script>
+  console.log({{$products}})
+</script>
 
 <div class="selectorDropdowns">
   <div>

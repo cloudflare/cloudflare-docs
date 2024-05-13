@@ -15,3 +15,5 @@ Rules are only available for sites proxied through Cloudflare. For more informat
 4. Select **Advanced options** > **Add rule**.
 5. Select the **Action** and fill in the hostname and path(s) you want to add a rule for.
 6. If you want to add additional rules, select **Add rule**. Otherwise select **Update** to save the rule.
+
+{{<render productFolder="rules" file="_configuration-rule-wins-over-rum-rule.md" withParameters="[Configuration rules](/rules/configuration-rules/);;Web Analytics rules">}}

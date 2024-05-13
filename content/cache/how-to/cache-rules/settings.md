@@ -294,7 +294,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Proxy Read Timeout (Enterprise-only)
 
-Define a timeout value between two successive read operations to your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce `HTTP 524` errors because of timeouts from an origin server, try increasing this timeout value.
+Defines a timeout value between two successive read operations to your origin server. The default value can be found in the [Connection limits](/fundamentals/reference/connection-limits/) table. If you are attempting to reduce [`HTTP 524`](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-524-a-timeout-occurred) errors because of timeouts from an origin server, try increasing this timeout value using the API endpoint below.
 
 {{<details header="API information">}}
 
