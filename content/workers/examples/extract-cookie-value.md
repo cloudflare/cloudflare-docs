@@ -63,8 +63,7 @@ async def on_fetch(request):
     # Name of the cookie
     cookie_name = "__uid"
 
-    cookies = SimpleCookie()
-    cookies.load(request.headers["Cookie"] or "")
+    cookies = SimpleCookie(request.headers["Cookie"] or "")
     cookies = {k: v.value for k, v in cookies.items()}
 
     if cookie_name in cookies:
