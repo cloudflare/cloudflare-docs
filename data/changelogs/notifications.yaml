@@ -1,9 +1,11 @@
 ---
 link: "/notifications/changelog/"
 productName: Notifications
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
 - publish_date: '2023-10-06'
-  title: 
+  title:
   description: |-
     * Added **Traffic Anomalies Alerts** to notify customers when traffic to their domain has an unexpected spike or drop.
 - publish_date: '2023-09-28'
@@ -11,18 +13,18 @@ entries:
   description: |-
     * Added **[Incident Alerts](https://blog.cloudflare.com/incident-alerts/)**.
 - publish_date: '2023-08-23'
-  title: 
+  title:
   description: |-
     * Added **Logo Match Alert**.
 - publish_date: '2023-04-19'
-  title: 
+  title:
   description: |-
     * Added **Maintenance Notification Alerts**.
 - publish_date: '2023-03-13'
-  title: 
+  title:
   description: |-
     * Added **Pages Alerts**.
 - publish_date: '2023-03-02'
-  title: 
+  title:
   description: |-
     * Added **Brand Protection Alerts**.
