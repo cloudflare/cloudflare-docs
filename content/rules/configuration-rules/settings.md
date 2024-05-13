@@ -119,10 +119,7 @@ header: API configuration example
 
 Use this setting to turn off Web Analytics for matching requests.
 
-{{<Aside type="warning" header="Warning">}}
-Configuration rules have precedence over any [Web Analytics rules](/analytics/web-analytics/configuring-web-analytics/rules/). If you configure a rule in Web Analytics to enable the feature and a configuration rule to disable it, the configuration rule will win.
-{{</Aside>}}
-
+{{<render file="_configuration-rule-wins-over-rum-rule.md" withParameters="Configuration rules;;[Web Analytics rules](/analytics/web-analytics/configuring-web-analytics/rules/)">}}
 
 {{<details header="API information">}}
 
