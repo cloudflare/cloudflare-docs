@@ -708,7 +708,7 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
     - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
     - Hotlink Protection (part of Cloudflare Scrape Shield)
 
-2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
+2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
 
 3. Turn off your existing Page Rule and validate the behavior of the rules you created.
 
