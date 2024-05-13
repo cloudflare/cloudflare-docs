@@ -465,6 +465,10 @@ entries:
     * You can search for and add domains from your list of Enterprise zones.
     * You can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
     * You can filter events by a targeted action.
+  additional_information: |-
+   The mean time to detection is five minutes.
+
+    This alert will look for spikes across all services that generate log entries in [security/firewall events](/logs/reference/log-fields/zone/firewall_events/).
   limitations: |-
     Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -480,6 +484,10 @@ entries:
 
     * You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.
     * You can filter events by a targeted action.
+  additional_information: |-
+    The mean time to detection is two hours.
+
+    When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.
   limitations: |-
     Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
