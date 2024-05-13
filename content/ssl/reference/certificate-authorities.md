@@ -51,7 +51,9 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate. You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
+The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts the self-signed “ISRG Root X1” certificate. As Let's Encrypt announced a change in its chain of trust for 2024, devices that only trust the cross-signed version of the “ISRG Root X1” certificate will be impacted. Refer to [Let's Encrypt chain update](/ssl/reference/migration-guides/lets-encrypt-chain/) for details.
+
+You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
 
 #### Other resources
 
