@@ -4,12 +4,12 @@ productName: Rules
 entries:
 
 - publish_date: '2024-05-13'
-  title: New configuration rule setting for Web Analytics (RUM)
+  title: New Configuration Rules setting for Web Analytics (RUM)
   description: |-
     You can now turn off Cloudflare Web Analytics, also known as Real User Monitoring (RUM), for specific requests using a configuration rule.
 
 - publish_date: '2024-04-29'
-  title: New configuration rule setting for Cloudflare Fonts
+  title: New Configuration Rules setting for Cloudflare Fonts
   description: |-
     You can now turn on or off Cloudflare Fonts for specific requests using a configuration rule.
 
