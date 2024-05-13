@@ -79,7 +79,7 @@ Because Connectors in high availability configurations share a single site, you 
 Make sure all IPs are part of the same subnet.
 
 {{<Aside type="note" header="Limitations">}}
-The high availability (HA) feature is being rolled out  in phases. The present version has the following limitations:
+The high availability (HA) feature is being rolled out in phases. The present version has the following limitations:
 - Only node failover is detected as a failure condition to trigger a failover. Other failure conditions, such as link status and tunnel health, are not yet enabled to trigger failovers.
 - When DHCP server is enabled on a LAN interface, the DHCP leases are not yet synced between the active and the standby Connector. For this reason, it is recommended you enable DHCP reservations when using DHCP server.
 - HA is run in preempt mode, which means the primary node always comes up as the active node.
