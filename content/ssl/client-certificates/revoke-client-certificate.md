@@ -20,3 +20,9 @@ After revoking a certificate, you must update any mTLS rules that check for the 
 For more information, refer to [Check for revoked certificates](/api-shield/security/mtls/configure/#check-for-revoked-certificates).
 
 {{</Aside>}}
+
+{{<Aside type="warning">}}
+
+It's not possible to delete a client certificate.
+
+{{</Aside>}}
