@@ -3,7 +3,7 @@ pcx_content_type: changelog
 title: Changelog
 weight: 4
 meta:
-    description: Review recent changes to the Cloudflare's Application Performance products.
+    description: Review recent changes to Cloudflare's Application Performance products.
 layout: changelog
 changelog_name: Application performance
 changelog_product_area_name: Application performance
