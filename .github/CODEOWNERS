@@ -120,6 +120,7 @@
 /content/magic-firewall/ @arges @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Migration guides
 /content/migration-guides/ @kimj15 @crwaters16 @cloudflare/pcx-technical-writing
