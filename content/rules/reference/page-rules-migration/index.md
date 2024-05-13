@@ -28,7 +28,7 @@ In 2022, we announced in our blog post [The future of Page Rules](https://blog.c
 
 - **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
 
-- **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas: Enterprise plans have access to a minimum of 500 rules (across all rule types) per zone, Business plan zones go from 50 to 200 rules per zone, Pro plans go from 20 to 100,  and Free plans go from 3 to 40 rules per zone.
+- **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
 
 - **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, Cloudflare Trace helps understand rule interactions.
 
