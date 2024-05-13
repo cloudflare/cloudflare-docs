@@ -230,6 +230,7 @@ entries:
   associatedProducts: Page Shield
   nextSteps: Investigate to confirm that it is an expected change.
   otherFilters: None.
+  additional_information: Triggered daily.
 
 - name: Page Shield New Domain Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from new host domains appear in their domain."
@@ -237,6 +238,8 @@ entries:
   associatedProducts: Page Shield
   nextSteps: Investigate to confirm that it is an expected change.
   otherFilters: None.
+  additional_information: Triggered hourly.
+
 
 - name: Page Shield New Malicious Domain Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
@@ -274,6 +277,7 @@ entries:
   associatedProducts: Page Shield
   nextSteps: Investigate to confirm that it is an expected change.
   otherFilters: None.
+  additional_information: Triggered daily.
 
 - name: Page Shield New Resource Exceeds Max URL Length Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when a resource's URL exceeds the maximum allowed length."
