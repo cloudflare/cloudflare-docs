@@ -39,9 +39,8 @@ let response = new Response(body, init);
 
 Valid options for the `options` object include: {{<definitions>}}
 
-<!-- Does `cf` do anything in a Response? -->
 - `cf` {{<type>}}any | null{{</type>}}
-  - An object that contains Cloudflare-specific information. This object is not part of the Fetch API standard and is only available in Cloudflare Workers.
+  - An object that contains Cloudflare-specific information. This object is not part of the Fetch API standard and is only available in Cloudflare Workers. This field is only used by consumers of the Response for informational purposes and does not have any impact on Workers behavior.
 - `encodeBody` {{<type>}}string{{</type>}}
   - Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"automatic"`.
 - `headers` {{<type-link href="/runtime-apis/request#parameters">}}Headers{{</type-link>}} | {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">}}ByteString{{</type-link>}}
