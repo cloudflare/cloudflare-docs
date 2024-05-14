@@ -1487,3 +1487,7 @@ Page Rules configuration | Migrate to a configuration rule
 
 {{</tab>}}
 {{</tabs>}}
+
+## More resources
+
+If you have feedback to share, refer to our [Community thread](https://community.cloudflare.com/t/important-page-rules-deprecation/656021).
