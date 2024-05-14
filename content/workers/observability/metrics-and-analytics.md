@@ -73,7 +73,7 @@ Worker invocation statuses indicate whether a Worker executed successfully or fa
 | ---------------------- | ---------------------------------------------------------------------------- | ------------------ | ---------------------- |
 | Success                | Worker executed successfully                                                 |                    | `success`              |
 | Client disconnected    | HTTP client (that is, the browser) disconnected before the request completed |                    | `clientDisconnected`   |
-| Script threw exception | Worker threw an unhandled JavaScript exception                               | 1101               | `scriptThrewException` |
+| Worker threw exception | Worker threw an unhandled JavaScript exception                               | 1101               | `scriptThrewException` |
 | Exceeded resources¹    | Worker exceeded runtime limits                                               | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                         |                    | `internalError`        |
 
