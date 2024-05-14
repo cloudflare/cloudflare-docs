@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
-title: Page Rules
+title: Page Rules (deprecated)
 weight: 19
 ---
 
@@ -9,9 +9,7 @@ weight: 19
 
 Page rules trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
-{{<Aside type="warning">}}
-**Page Rules are deprecated.** You should consider alternative [Rules](/rules/) options due to their enhanced configurability. Refer to the [migration guide](/rules/reference/page-rules-migration/) for details.
-{{</Aside>}}
+{{<render file="_page-rules-deprecation.md">}}
 
 ## Availability
 
