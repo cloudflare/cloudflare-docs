@@ -82,10 +82,4 @@ You can also use the [Security Events](/waf/analytics/security-events/) to revie
 ### Cache Analytics
 
 You can use [Cache Analytics](/cache/performance-review/cache-analytics/) to improve site performance or reduce origin web server traffic. 
-Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching. 
-
-## Best Practices working with Cloudflare Support
-
-Before the high traffic event occurs, you must [open a Support ticket](/support/contacting-cloudflare-support/) and provide the information below.
-
-{{<render file="_support-ticket-information" withParameters="Traffic">}}
+Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching.
