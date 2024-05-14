@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Caching
+weight: 2
 meta:
   description: Override caching settings on a per-request basis.
 ---
