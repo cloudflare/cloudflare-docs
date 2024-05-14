@@ -12,19 +12,7 @@ meta:
 
 ## If I run out of Page Rules, can I buy more?
 
-Yes. Refer to the [Plans](https://www.cloudflare.com/plans/) page for information about pricing.
-
-If you need more Page Rules as an Enterprise customer, contact Sales.
-
-## How do I buy additional Page Rules (Free, Pro, or Business Plans)?
-
-1. In the Cloudflare dashboard, go to **Rules** > [**Page Rules**](http://dash.cloudflare.com/?to=/:account/:zone/rules).
-
-2. Select **Buy More Page Rules**.
-
-3. Select the number of additional page rules.
-
-4. Add or confirm your payment information. To change your current payment method, go to [billing settings](http://dash.cloudflare.com/?to=/:account/billing).
+No, you cannot buy additional Page Rules since they are deprecated. You will need to [migrate to modern Rules features](/rules/reference/page-rules-migration/) to benefit from increased quotas.
 
 ## How do I cancel my Page Rules purchase?
 

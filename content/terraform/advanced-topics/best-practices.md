@@ -31,7 +31,7 @@ example-tf/
 │   │   │   ├── dns.tf              # `<subject>.tf` (dns.tf) is for managing the individual resources
 │   │   │   ├── provider.tf         # `provider.tf` is for configuring the providers
 │   │   │   └── vars.tf             # manage all variables for this component
-│   │   └── page_rules              # ... same as above but for page rules
+│   │   └── page_rules              # ... same as above but for page rules (deprecated)
 │   │       ├── page_rules.tf
 │   │       ├── provider.tf
 │   │       └── vars.tf
@@ -187,7 +187,7 @@ resource "cloudflare_page_rule" "example_page_rule" {
 }
 ```
 
-While convenient, this setup can cause unanticipated issues. If this module is shared and then changes internally, the module may have resources out of sync or recreated. 
+While convenient, this setup can cause unanticipated issues. If this module is shared and then changes internally, the module may have resources out of sync or recreated.
 
 Using modules also increases the difficulty of debugging or reproducing issues as you must then factor in potential logic bugs outside of Terraform core and the Cloudflare provider.
 
