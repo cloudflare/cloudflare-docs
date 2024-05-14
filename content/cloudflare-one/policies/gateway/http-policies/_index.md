@@ -235,6 +235,10 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 
 {{<render file="gateway/selectors/_device-posture.md">}}
 
+### Proxy Endpoint
+
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
+
 ### Security Risks
 
 | UI name        | API example                                |
