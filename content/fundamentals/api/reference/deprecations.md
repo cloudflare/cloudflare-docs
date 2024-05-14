@@ -8,6 +8,21 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Page Rules
+**End of life date: Jan 6th, 2025**
+
+The Page Rules API endpoints are deprecated, since Page Rules were deprecated.
+
+Deprecated APIs:
+- GET /zones/:zone_id/pagerules
+- POST /zones/:zone_id/pagerules
+- DELETE /zones/:zone_id/pagerules/:pagerule_id
+- GET /zones/:zone_id/pagerules/:pagerule_id
+- PATCH /zones/:zone_id/pagerules/:pagerule_id
+- PUT /zones/:zone_id/pagerules/:pagerule_id
+
+Refer to the [migration guide](/rules/reference/page-rules-migration/) for more information on the Rules features that are replacing Page Rules.
+
 ## Auto Minify
 **End of life date: August 5th, 2024**
 
