@@ -36,7 +36,7 @@ The Cache API is not compatible with tiered caching. To take advantage of tiered
 
 When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
 
-As far as cache is concerned, the asset in the `fetch` request (`https://notexample.com/hello`) is the asset that is cached (`https://notexample.com/hello`). To purge it, you need to purge `https://notexample.com/hello`. 
+As far as cache is concerned, the asset in the `fetch` request (`https://notexample.com/hello`) is the asset that is cached (`https://notexample.com/hello`). To purge it, you need to purge `https://notexample.com/hello`.
 
 Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
 
@@ -69,9 +69,9 @@ Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) ope
 
   - All assets on a zone can be purged by using the [Purge Everything](/cache/how-to/purge-cache/purge-everything/) cache operation. This purge will remove all assets associated with a Cloudflare zone from cache in all data centers regardless of the method set.
 
-  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/purge-by-tags/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone. 
+  - Available to Enterprise Customers, [Cache Tags](/cache/how-to/purge-cache/purge-by-tags/#add-cache-tag-http-response-headers) can be added to requests dynamically in a Worker by calling `response.headers.append()` and appending `Cache-Tag` values dynamically to that request. Once set, those tags can be used to selectively purge assets from cache without invalidating all cached assets on a zone.
 
-- Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/cache-keys/#create-custom-cache-keys). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
+- Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created via Cache Rules](/cache/how-to/cache-rules/settings/#cache-key). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
 ## Edge versus browser caching
 
