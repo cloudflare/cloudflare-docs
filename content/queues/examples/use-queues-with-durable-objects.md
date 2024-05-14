@@ -79,7 +79,7 @@ export default {
 }
 
 export class YourDurableObject implements DurableObject {
-  constructor(public state: DurableObjectState, public env: Env) {}
+  constructor(private state: DurableObjectState, private env: Env) {}
 
   async fetch(request: Request) {
     // Error handling elided for brevity.
