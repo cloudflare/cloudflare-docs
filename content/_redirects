@@ -722,6 +722,7 @@
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
+/pages/framework-guides/deploy-a-vuepress-site/ /pages/framework-guides/deploy-a-vitepress-site/ 301
 /pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site/ 301
 /pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301

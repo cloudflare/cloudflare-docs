@@ -4,67 +4,99 @@ title: Deploy a VitePress site
 ---
 
 # Deploy a VitePress site
-From [VitePress](https://vitepress.dev/):
 
-> VitePress is a [Static Site Generator](https://en.wikipedia.org/wiki/Static_site_generator) (SSG) designed for building fast, content-centric websites. In a nutshell, VitePress takes your source content written in [Markdown](https://en.wikipedia.org/wiki/Markdown), applies a theme to it, and generates static HTML pages that can be easily deployed anywhere.
+[VitePress](https://vitepress.dev/) is a [Static Site Generator](https://en.wikipedia.org/wiki/Static_site_generator) (SSG) designed for building fast, content-centric websites. VitePress takes your source content written in [Markdown](https://en.wikipedia.org/wiki/Markdown), applies a theme to it, and generates static HTML pages that can be easily deployed anywhere.
 
-In this guide, you will create a new VitePress project and deploy it using Cloudflare Pages. 
+In this guide, you will create a new VitePress project and deploy it using Cloudflare Pages.
+
+## Install VitePress
+
+{{<tabs labels="npm | pnpm | yarn | bun">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npm add -D vitepress
+```
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm add -D vitepress
+```
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn add -D vitepress
+```
+{{</tab>}}
+{{<tab label="bun">}}
+
+```sh
+$ bun add -D vitepress
+```
+{{</tab>}}
+{{</tabs>}}
+
+{{<Aside type="note">}}
+
+If you encounter errors, make sure your local machine meets the [Prerequisites for VitePress](https://vitepress.dev/guide/getting-started#prerequisites).
+
+{{</Aside>}}
 
 ## Set up a new project
 
-1. Initialize your git repository.
-2. Scaffold your VitePress site by first adding VitePress locally and then using the bootstrapping tool.
+VitePress ships with a command line setup wizard that will help you scaffold a basic project.
+
+{{<tabs labels="npm | pnpm | yarn | bun">}}
+{{<tab label="npm" default="true">}}
 
 ```sh
-npm add -D vitepress
-
-npx vitepress init
+$ npx vitepress init
 ```
+{{</tab>}}
+{{<tab label="pnpm">}}
 
-The command will interactively prompt for details to configure your VuePress site’s metadata: 
-
+```sh
+$ pnpm vitepress init
 ```
-┌  Welcome to VitePress!
-│
-◇  Where should VitePress initialize the config?
-│  ./
-│
-◇  Site title:
-│  My Awesome VitePress site
-│
-◇  Site description:
-│  All the cool kids are doing it
-│
-◇  Theme:
-│  Default Theme
-│
-◇  Use TypeScript for config and theme files?
-│  Yes
-│
-◇  Add VitePress npm scripts to package.json?
-│  Yes
-│
-└  Done! Now run npm run docs:dev and start writing.
+{{</tab>}}
+{{<tab label="yarn">}}
 
-Tips:
-
-- Make sure to add .vitepress/dist and .vitepress/cache to your .gitignore file.
+```sh
+$ yarn vitepress init
 ```
+{{</tab>}}
+{{<tab label="bun">}}
 
-## Deploy your site
+```sh
+$ bun vitepress init
+```
+{{</tab>}}
+{{</tabs>}}
 
-1. Push a commit to your repository with the changes.
-1. From the account home page, go to _Workers & Pages_
-1. Click _Create Application_. 
-1. On the following page, click the _Pages_ tab
-1. Click _Connect to Git._ 
-1. Connect your repository vendor and then select a repository. 
-1. Click _Begin Setup_.
-1. Fill in the _Project name_ which you will use later when setting up DNS.
-1. Select the _Production branch_ of your repository. It can be any branch you wish. When you publish to this branch, your production site will be updated.
-1. Under _Build settings_ select _None_ for a _Framework preset_. Alternatively, select VuePress and make edits since the setup is practically identical.
-1. Enter `npx vitepress build` for _Build command_.
-1. Enter `/.vitepress/dist` for the _Build output directory_.
-1. Click _Save and deploy_.
+{{<render file="_tutorials-before-you-start.md">}}
+
+{{<render file="/_framework-guides/_create-github-repository.md">}}
+
+## Deploy with Cloudflare Pages
+
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, the following information will be provided:
+
+{{<pages-build-preset framework="vitepress">}}
+
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `vitepress`, your project dependencies, and building your site, before deploying it.
+
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
+
+{{</Aside>}}
+
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your VitePress project, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes to your site look before deploying them to production.
+
+{{<render file="/_framework-guides/_learn-more.md" withParameters="VitePress">}}
