@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 # Customize cache
 
-Some possible combinations of origin web server settings and Cloudflare [Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) include:
+Some possible combinations of origin web server settings and Cloudflare [Page Rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/) (deprecated) include:
 
 - Create a directory for static content at your origin web server. For example, create a `/static/` subdirectory at your origin web server and a Cache Everything Page Rule matching the `*example.com/static/*` URL pattern.
 - Append a unique file extension to static pages. For example, create a `.shtml` file extension for resources at your origin web server and a Cache Everything Page Rule matching the `*example.com/*.shtml` URL pattern.

@@ -7,11 +7,11 @@ pcx_content_type: concept
 
 ## Edge Cache TTL
 
-Edge Cache TTL (Time to Live) specifies the maximum time to cache a resource in the Cloudflare edge network. Edge Cache TTL is not visible in response headers and the minimum Edge Cache TTL depends on plan type.
+Edge Cache TTL (Time to Live) specifies the maximum time to cache a resource in the Cloudflare global network. Edge Cache TTL is not visible in response headers and the minimum Edge Cache TTL depends on plan type.
 
 {{<feature-table id="cache.edge_cache_ttl">}}
 
-For more information on creating page rules, refer to [Create page rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/).
+For more information on creating page rules (deprecated), refer to [Create page rules](/cache/how-to/edge-browser-cache-ttl/create-page-rules/).
 
 ## Browser Cache TTL
 
