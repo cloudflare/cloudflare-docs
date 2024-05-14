@@ -10,7 +10,7 @@ Some other type of errors might be returned to visitors for proxied requests dep
 
 {{<Aside type="warning">}}
 
-As the root cause of these errors is not Cloudflare, this document is only designed to provide investigation avenues to help troubelshooting.
+As the root cause of these errors is not Cloudflare, this document is only designed to provide investigation avenues to help troubleshooting.
 
 {{</Aside>}}
 
