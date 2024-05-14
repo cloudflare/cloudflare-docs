@@ -5,13 +5,12 @@ title: Page Rules
 weight: 19
 ---
 
-# Page Rules
+{{<heading-pill style="deprecated">}}Page Rules{{</heading-pill>}}
 
 Page rules trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
 {{<Aside type="warning">}}
-We advise considering alternative [Rules](/rules/) options due to their enhanced configurability.<br>
-Page Rules are going to be deprecated in the foreseeable future. Refer to [our blog post](https://blog.cloudflare.com/future-of-page-rules/) for details.
+**Page Rules are deprecated.** You should consider alternative [Rules](/rules/) options due to their enhanced configurability. Refer to the [migration guide](/rules/reference/page-rules-migration/) for details.
 {{</Aside>}}
 
 ## Availability
