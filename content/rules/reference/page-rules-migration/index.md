@@ -913,7 +913,7 @@ You configured a Page Rule changing the `Host` HTTP header to `example.saas-prov
 
 **How to migrate**:
 
-1. [Create an origin rule](/rules/origin-rules/create-dashboard/) change the `Host` header to `example.saas-provider.com` for any hostname containing `example.com`:
+1. [Create an origin rule](/rules/origin-rules/create-dashboard/) changing the `Host` header to `example.saas-provider.com` for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
