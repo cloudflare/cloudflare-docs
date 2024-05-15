@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/anthropic`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/anthropic`
 
 
 ```bash
@@ -13,8 +13,8 @@ _build:
 header: Example fetch request
 ---
 
-curl -X POST https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/anthropic/v1/messages \
-    -H 'x-api-key: XXX' \
+curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/anthropic/v1/messages \
+    -H 'x-api-key: <ANTHROPIC_API_KEY>' \
     -H "anthropic-version: 2023-06-01" \
     -H 'Content-Type: application/json' \
     -d '{
@@ -36,8 +36,8 @@ filename: index.js
 import Anthropic from '@anthropic-ai/sdk';
 
 const anthropic = new Anthropic({
-  apiKey: env.ANTHROPIC_API_KEY, 
-  baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/anthropic",
+  apiKey: env.ANTHROPIC_API_KEY,
+  baseURL: "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/anthropic",
 });
 
 const message = await anthropic.messages.create({

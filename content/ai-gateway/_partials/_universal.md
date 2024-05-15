@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>`
 
 AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint. The Universal Endpoint requires some adjusting to your schema, but supports additional features. Some of these features are, for example, retrying a request if it fails the first time, or configuring a fallback model/provider when a request fails.
 
@@ -22,14 +22,14 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY_NAME -X POST \
+curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>_NAME -X POST \
   --header 'Content-Type: application/json' \
   --data '[
   {
     "provider": "workers-ai",
     "endpoint": "@cf/meta/llama-2-7b-chat-int8",
     "headers": {
-      "Authorization": "Bearer XXXX",
+      "Authorization": "Bearer <CLOUDFLARE_TOKEN>",
       "Content-Type": "application/json"
     },
     "query": {
@@ -49,7 +49,7 @@ curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY_NAME -X POST \
     "provider": "openai",
     "endpoint": "chat/completions",
     "headers": {
-      "Authorization": "Bearer XXXX",
+      "Authorization": "Bearer <OPENAI_TOKEN>",
       "Content-Type": "application/json"
     },
     "query": {

@@ -5,9 +5,9 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/huggingface`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/huggingface`
 
-When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/huggingface/bigcode/starcoder`.
+When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/huggingface/bigcode/starcoder`.
 
 
 ```bash
@@ -15,8 +15,8 @@ When making requests to HuggingFace Inference API, replace `https://api-inferenc
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/huggingface/bigcode/starcoder -X POST \
-  --header 'Authorization: Bearer $TOKEN' \
+curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/huggingface/bigcode/starcoder -X POST \
+  --header 'Authorization: Bearer <HF_API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
     "inputs": "console.log"
