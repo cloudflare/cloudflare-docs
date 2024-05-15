@@ -18,7 +18,7 @@ For example, the following expression will extract the user claim from a token p
 
 ```json
 
-lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "user")
+lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")
 
 ```
 

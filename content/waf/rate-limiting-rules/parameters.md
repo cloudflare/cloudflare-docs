@@ -145,6 +145,21 @@ Use one or more of the following characteristics:
       </td>
     </tr>
     <tr>
+      <td>
+        <strong>JWT Claim of</strong><br />
+        (enter configuration ID, claim_name)
+      </td>
+      <td>
+        <code>lookup_json_string(http.request.jwt.claims[&quot;&lt;TOKEN_CONFIGURATION_ID&gt;&quot;][0], &quot;&lt;claim_name&quot;&lt;)</code>
+      </td>
+      <td>
+        <ul>
+          <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
+          <li><a href="/api-shield/security/jwt-validation/transform-rules/">JWT Validation reference</a></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>N/A<br />(API only)</td>
       <td>
         <code>lookup_json_integer(http.request.body.raw, &quot;&lt;key&gt;&quot;)</code>
