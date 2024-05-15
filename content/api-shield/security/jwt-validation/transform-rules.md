@@ -35,23 +35,3 @@ As an example, to send the header `x-send-jwt-claim-user` request header to the 
 5. Choose **Set dynamic**.
 6. Set the header name.
 7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "user")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation.
-
-```json
----
-header: Example
----
-{
-  "action": "rewrite",
-  "expression": "true",
-  "description": "Add JWT Claim User header",
-  "enabled": true,
-  "action_parameters": {
-    "headers": {
-      "header-name": {
-        "operation": "set",
-        "expression": "lookup_json_string(http.request.jwt.claims[<TOKEN_CONFIGURATION_ID>][0], \"user\")"
-      }
-    }
-  }
-}
-```
