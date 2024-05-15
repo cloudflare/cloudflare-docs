@@ -150,7 +150,7 @@ Use one or more of the following characteristics:
         (enter configuration ID, claim_name)
       </td>
       <td>
-        <code>lookup_json_string(http.request.jwt.claims[&quot;&lt;TOKEN_CONFIGURATION_ID&gt;&quot;][0], &quot;&lt;claim_name&quot;&lt;)</code>
+        <code>lookup_json_string(http.request.jwt.claims[&quot;&lt;TOKEN_CONFIGURATION_ID&gt;&quot;][0], &quot;&lt;claim_name&gt;&quot;)</code>
       </td>
       <td>
         <ul>
