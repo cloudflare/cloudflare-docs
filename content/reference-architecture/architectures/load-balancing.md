@@ -681,7 +681,7 @@ Cloudflare layer 4 Spectrum load balancers are publicly accessible. Access to th
 In addition to being public, Spectrum load balancers are always proxied. The proxy setting shown earlier (Figures 24 and 25) will be ignored when Spectrum is configured as the ingress path for the load balancer. All traffic destined for Spectrum-based load balancers will always pass through the Cloudflare edge.
 
 **Important notes about Spectrum load balancers:**
-* Spectrum load balancers support both public and private LTM endpoints
+* Spectrum load balancers support both public and private endpoints
 * Spectrum load balancers are initially created as Layer 7 HTTP(S) load balancers. A Spectrum application is then created with a Load Balancer endpoint type, and the load balancer that has already been created is selected.
 * Spectrum load balancers are always proxied, regardless of the proxy setting on the load balancer configuration
 * There is no ability to change the ingress port from the Internet via Spectrum to the endpoint; i.e., if the traffic comes in on port 22 to Spectrum, it will be steered to port 22 on the endpoint
