@@ -82,8 +82,8 @@ The descriptions below detail the fields available for `http_requests`.
 | OriginTLSHandshakeDurationMs | Time taken to complete TLS handshake with origin. This will be 0 if an origin connection is reused. | int |
 | ParentRayID | Ray ID of the parent request if this request was made using a Worker script. | string |
 | RayID | ID of the request. | string |
-| RequestHeaders | String key-value pairs for RequestHeaders. | object |
-| ResponseHeaders | String key-value pairs for ResponseHeaders. | object |
+| RequestHeaders | String key-value pairs of request headers specified in [Custom fields](/logs/reference/custom-fields/). | object |
+| ResponseHeaders | String key-value pairs of response headers specified in [Custom fields](/logs/reference/custom-fields/. | object |
 | SecurityAction | Action of the security rule that triggered a terminating action, if any. | string |
 | SecurityActions | Array of actions the Cloudflare security products performed on this request. The individual security products associated with this action be found in SecuritySources and their respective rule Ids can be found in SecurityRuleIDs. The length of the array is the same as SecurityRuleIDs and SecuritySources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeFailed</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeFailed</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeSkipped</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> \| <em>rewrite</em> \| <em>forceConnectionClose</em> \| <em>skip</em> \| <em>managedChallengeFailed</em>. | array[string] |
 | SecurityRuleDescription | Description of the security rule that triggered a terminating action, if any. | string |
