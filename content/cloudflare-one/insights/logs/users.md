@@ -23,15 +23,3 @@ Selecting the View button for any user will show you details for that user, such
 - Their recent logins
 
 Select **View all activity** to see a full list of the user’s login events.
-
-## Workplace records
-
-Wokplace records show the amount of unique sessions the user has initiated from a given country in the current billing period. To view workplace records:
-
-1.  In the Users page, locate the user whose workplace records you want to see.
-
-1.  Select **View**.
-
-1.  In the **User details** section, under the **Most recent location** field, select the View all button.
-
-To change the granularity with which workplace records are shown, adjust your [global session duration](/cloudflare-one/identity/users/session-management/#set-global-session-duration). An informative threshold can be **24 hours**.
