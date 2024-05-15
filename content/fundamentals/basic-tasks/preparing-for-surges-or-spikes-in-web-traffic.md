@@ -21,13 +21,13 @@ By default, Cloudflare [caches static content](/cache/concepts/default-cache-be
 
 5. You can then monitor the effectiveness of your cache settings using [Cache Analytics](/cache/performance-review/cache-analytics/) and update your configuration according to our [Cache performance guide](/cache/performance-review/cache-performance/).
 
-Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information). For more information, refer to [Cache HTML selectively](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains).
+Customers with Business and Enterprise domains have additional Page Rules (deprecated) settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information). For more information, refer to [Cache HTML selectively](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains).
 
 ### Advanced cache optimizations
 
 - [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set the cacheability setting for any resource.
 
-- [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the `Cache-Control` headers tell Cloudflare how to handle content from the origin server. 
+- [Origin Cache Control](/cache/concepts/cache-control/) can be used to let the `Cache-Control` headers tell Cloudflare how to handle content from the origin server.
 
 ### Use Tiered Cache
 
@@ -37,11 +37,11 @@ It works by dividing Cloudflare's data centers into a hierarchy of lower-tiers a
 
 Refer to [Enable Tiered Cache](/cache/how-to/tiered-cache/#enable-tiered-cache) to get started.
 
-### Use Cache Reserve 
+### Use Cache Reserve
 
 [Cache Reserve](/cache/advanced-configuration/cache-reserve/) is a large, persistent data store implemented on top of [R2](/r2/).
 
-With a single click in the dashboard, your cacheable content will be written to Cache Reserve. In the same way that Tiered Cache builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want. 
+With a single click in the dashboard, your cacheable content will be written to Cache Reserve. In the same way that Tiered Cache builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want.
 
 This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
@@ -81,5 +81,5 @@ You can also use the [Security Events](/waf/analytics/security-events/) to revie
 
 ### Cache Analytics
 
-You can use [Cache Analytics](/cache/performance-review/cache-analytics/) to improve site performance or reduce origin web server traffic. 
+You can use [Cache Analytics](/cache/performance-review/cache-analytics/) to improve site performance or reduce origin web server traffic.
 Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching.

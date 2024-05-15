@@ -95,10 +95,10 @@ For example, you might have an image resizing endpoint or a search form, where t
 To minimize problems, consider:
 
 -   Disabling **Query String Sort** for the site if you’re sure that this feature does not add value to any part of your site. Cloudflare disables this option by default in the **Caching** app.
--   Use Cloudflare **Page Rules** to enable **Query String Sort** for URLs where preserving the query string parameter order is not important.
--   Alternatively, use Cloudflare **Page Rules** to disable **Query String Sort** for URLs where a specific parameter order is required. For example, disable Query String Sort for `example.com/wp-admin/load-scripts.php*` or any URLs with similar requirements (replace example.com with your domain name).
+-   Use Cache Rules to enable Query String Sort (in **Cache key** > **Sort query string**) for URLs where preserving the query string parameter order is not important.
+-   Alternatively, use Cache Rules to disable **Query String Sort** for URLs where a specific parameter order is required. For example, set **Cache key** > **Sort query string**: `Off` for URI paths starting with `/wp-admin/load-scripts.php`, or for any URLs with similar requirements.
 
-To learn more about Page Rules, visit [Page Rules](/rules/page-rules/).
+To learn more about Cache Rules, visit [Cache Rules](/cache/how-to/cache-rules/).
 
 ___
 

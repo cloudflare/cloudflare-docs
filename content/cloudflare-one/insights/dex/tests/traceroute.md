@@ -17,7 +17,7 @@ weight: 2
 | Windows  | ✅           | 2023.5.587           |
 | macOS    | ✅           | 2023.5.589           |
 | Linux    | ❌           |                      |
-| iOS      | ✅           | 1.0      |
+| iOS      | ❌           |       |
 | Android  | ✅           | 1.0      |
 | ChromeOS | ✅           | 1.0      |
 

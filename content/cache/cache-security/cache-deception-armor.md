@@ -29,11 +29,12 @@ In the newsfeed example above, if `http://www.example.com/newsfeed` is a script 
 
 ## Enable Cache Deception Armor
 
-To enable Cache Deception Armor, you need to start by creating a Page Rule. Follow the steps below for guidance:
+To enable Cache Deception Armor, you need to start by creating a [cache rule](/cache/how-to/cache-rules/). Follow the steps below for guidance:
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2.  Select **Rules** > **Page Rules**. 
-3. Select **Create Page Rule**.
-4.  Enter the URL information and choose *Cache Deception Armor* from the dropdown menu.
-5.  Enable **Cache Deception Armor** .
-6.  Select **Save and Deploy** when you are done.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Caching** > **Cache Rules**.
+3. Select **Create rule**.
+4. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
+5. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
+6. Add the **Cache Key** setting to the rule and turn on **Cache deception armor**.
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
