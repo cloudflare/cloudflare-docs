@@ -98,6 +98,7 @@
 /support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
 /support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
+/analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 
 # area1
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301

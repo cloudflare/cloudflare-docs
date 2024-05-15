@@ -1131,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules",
+      "title": "Page Rules (deprecated)",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {

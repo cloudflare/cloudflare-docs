@@ -198,6 +198,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 24          | Society & Lifestyle    | 158            | Tobacco                                    |
 | 24          | Society & Lifestyle    | 173            | Body Art                                   |
 | 24          | Society & Lifestyle    | 174            | Lingerie & Bikini                          |
+| 24          | Society & Lifestyle    | 181            | Alcohol                                    |
 | 25          | Sports                 | 152            | Sports                                     |
 | 26          | Technology             | 69             | APIs                                       |
 | 26          | Technology             | 81             | Content Servers                            |

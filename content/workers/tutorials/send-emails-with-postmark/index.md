@@ -114,7 +114,7 @@ export default {
 			}),
 		});
 
-		return Response.json(await response.json());
+		return response;
 	},
 };
 ```
@@ -175,7 +175,7 @@ export default {
 			}),
 		});
 
-		return Response.json(await response.json());
+		return response;
 	},
 };
 ```

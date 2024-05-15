@@ -59,7 +59,7 @@ Streaming responses use [server-sent events](https://developer.mozilla.org/en-US
 
 ```bash
 $ curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/@cf/meta/{{ .Params.model.name }}" \
+"https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/{{ .Params.model.name }}" \
 -H "Authorization: Bearer {API_TOKEN}" \
 -H "Content-Type:application/json" \
 -d '{ "prompt": "where is new york?", "stream": true }'

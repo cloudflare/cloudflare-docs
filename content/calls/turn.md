@@ -10,10 +10,6 @@ Separately from the SFU, Calls also offers a managed TURN service. TURN acts as 
 
 Using Cloudflare Calls TURN service is available free of charge when used together with the Calls SFU. Otherwise, it costs $0.05/real-time GB outbound from Cloudflare to the TURN client.
 
-{{<Aside type="warning">}}
-Calls TURN service is in open beta, rolling out between April 4 and 24, 2024 in batches. If you're an enterprise customer, please reach out to your account team requesting access.
-{{</Aside>}}
-
 ## Service address and ports
 
 | Protocol      | Primary address     | Primary port | Alternate port |

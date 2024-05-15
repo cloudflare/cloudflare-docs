@@ -5,6 +5,11 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-05-09'
+  title:
+  description: |-
+    * Added new endpoints to the [REST API](/api/operations/aig-config-create-gateway).
+
 - publish_date: '2024-03-26'
   title:
   description: |-
