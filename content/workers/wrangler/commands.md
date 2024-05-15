@@ -42,17 +42,17 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 {{<Aside type="note">}}
 
-The following global flags work on every command.
+The following global flags work on every command, with some exceptions for `pages` commands.
 
 {{<definitions>}}
 
-- `--config` {{<type>}}string{{</type>}}
-  - Path to `.toml` configuration file.
 - `--help` {{<type>}}boolean{{</type>}}
   - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
   - Show version number.
-- `--experimental-json-config` {{<type>}}boolean{{</type>}}
+- `--config` {{<type>}}string{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
+  - Path to `.toml` configuration file.
+- `--experimental-json-config` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
   - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
