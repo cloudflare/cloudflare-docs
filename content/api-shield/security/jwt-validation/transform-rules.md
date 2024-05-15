@@ -1,16 +1,16 @@
 ---
-title: Configure JWT claims
+title: Enhance Transform Rules
 pcx_content_type: how-to
 type: overview
 layout: wide
 weight: 3
 meta:
-  title: Configure JWT claims with Transform Rules
+  title: Enhance Transform Rules with JWT claims
 ---
 
-# Configure JWT claims with Transform Rules
+# Enhance Transform Rules with JWT claims
 
-You can forward information from [JSON Web Token (JWT)](/api-shield/security/jwt-validation/) to the origin in a header by creating [Transform Rules](/rules/transform/) using claims that Cloudflare has verified via the JSON Web Token.
+You can forward information from a [JSON Web Token (JWT)](/api-shield/security/jwt-validation/) to the origin in a header by creating [Transform Rules](/rules/transform/) using claims that Cloudflare has verified via the JSON Web Token.
 
 Claims are available through the `http.request.jwt.claims` firewall fields.
 
@@ -34,4 +34,4 @@ As an example, to send the header `x-send-jwt-claim-user` request header to the 
 4. Enter a rule name and a filter expression, if applicable.
 5. Choose **Set dynamic**.
 6. Set the header name.
-7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation.
+7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation and `claim_name` is the JWT claim you want to add to the header.
