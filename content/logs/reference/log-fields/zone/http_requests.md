@@ -48,7 +48,7 @@ The descriptions below detail the fields available for `http_requests`.
 | ClientXRequestedWith | X-Requested-With HTTP header. | string |
 | ContentScanObjResults | List of content scan results. | array[string] |
 | ContentScanObjTypes | List of content types. | array[string] |
-| Cookies | String key-value pairs for Cookies. | object |
+| Cookies | String key-value pairs of cookies specified in [Custom fields](/logs/reference/custom-fields/). | object |
 | EdgeCFConnectingO2O | True if the request looped through multiple zones on the Cloudflare edge. This is considered an orange to orange (o2o) request. | bool |
 | EdgeColoCode | IATA airport code of data center that received the request. | string |
 | EdgeColoID | Cloudflare edge colo id. | int |
