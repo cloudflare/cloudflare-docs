@@ -6,7 +6,7 @@ weight: 1
 
 # Cloudflare Fundamentals
 
-Cloudflare Fundamentals is your landing page containing information about features and outcomes that span Cloudflare products. 
+Cloudflare TEST is your landing page containing information about features and outcomes that span Cloudflare products. 
 
 As you get started with Cloudflare, explore the following resources:
 - [Concepts](/fundamentals/concepts/) explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.
