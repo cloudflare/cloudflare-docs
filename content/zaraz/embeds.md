@@ -1,6 +1,10 @@
-# Embeds
+---
+pcx_content_type: get-started
+title: Embeds
+weight: 2
+---
 
-## Cloudflare Zaraz's Server-Side Rendering for Embeds
+# Embeds
 
 Embeds are tools for incorporating external content, like social media posts, directly onto webpages, enhancing user engagement without compromising site performance and security.
 
