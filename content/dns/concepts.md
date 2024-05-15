@@ -8,7 +8,7 @@ meta:
 
 # Concepts
 
-This page defines and articulates key concepts that are relevant to the Cloudflare DNS service and are used in this documentation. For more concepts and broader descriptions, check out the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
+This page defines key concepts that are relevant to the Cloudflare DNS service and are used in this documentation. For more concepts and broader descriptions, check out the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
 
 ## Domain
 
