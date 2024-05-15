@@ -11,28 +11,28 @@ Cloudflare Zaraz introduces server-side rendering for embeds, avoiding third-par
 To embed content, add a placeholder in your HTML, specifying the necessary attributes. For a generic embed, the snippet looks like this:
 
 ```html
-<componentName-embedName attribute1="value"></componentName-embedName>
+<componentName-embedName attribute="value"></componentName-embedName>
 ```
 
-Replace `componentName`, `embedName`, and `attribute1="value"` with the specific Managed Component requirements.
+Replace `componentName`, `embedName`, and `attribute="value"` with the specific Managed Component requirements.
 
 ## Configuration and Setup
 
-Configurations for embeds are straightforward. Activate the desired tools on your Cloudflare Zaraz dashboard. Zaraz automatically detects placeholders, injecting iframes to render the content securely and efficiently.
+First, add and activate the desired tools on your Cloudflare Zaraz dashboard. Zaraz automatically detects placeholders and replaces them with the content in a secure and efficient way.
 
 ## Examples
 
-For Twitter embed:
+### X (Twitter) embed
 
 ```html
 <twitter-post tweet-id="12345"></twitter-post>
 ```
 Replace `tweet-id` with the actual tweet ID for the content you wish to embed.
 
-For Instagram embed:
+### Instagram embed
 
 ```html
 <instagram-post post-url="https://www.instagram.com/p/ABC/" captions="true"></instagram-post>
 ```
 
-Replace `post-url` with the actual URL for the content you wish to embed. To include posts captions set captions attribute to “true”.
+Replace `post-url` with the actual URL for the content you wish to embed. To include posts captions set captions attribute to `true`.
