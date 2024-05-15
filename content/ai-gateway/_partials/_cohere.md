@@ -31,7 +31,7 @@ If using the [`cohere-python-sdk`](https://github.com/cohere-ai/cohere-python), 
 
 ```python
 ---
-filename: index.js
+filename: main.py
 ---
 import cohere
 import os
