@@ -6,7 +6,7 @@ title: OpenAI compatible API endpoints
 
 # OpenAI compatible API endpoints
 
-Workers AI supports OpenAI compatible endpoints for [text generation](/workers-ai/models/#text-generation) (`/chat/completions`) and [text embedding models](/workers-ai/models/#text-embeddings) (`/embeddings`). This allows you to use the same code as you would for your OpenAI commands, but swap in Workers AI more easily.
+Workers AI supports OpenAI compatible endpoints for [text generation](/workers-ai/models/#text-generation) (`/v1/chat/completions`) and [text embedding models](/workers-ai/models/#text-embeddings) (`/v1/embeddings`). This allows you to use the same code as you would for your OpenAI commands, but swap in Workers AI more easily.
 
 ## Usage
 
@@ -19,8 +19,8 @@ With OpenAI compatible endpoints, Workers AI supports examples like the followin
 header: cURL example
 ---
 curl --request POST \
-  --url https://api.staging.cloudflare.com/client/v4/accounts/{{ACCOUNT_ID}}/ai/v1/chat/completions
-  --header 'Authorization: Bearer {{API_TOKEN}}' \
+  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1/chat/completions
+  --header 'Authorization: Bearer <API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '
     {
