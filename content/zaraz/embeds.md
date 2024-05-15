@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Embeds
-weight: 2
+weight: 7
 ---
 
 # Embeds
