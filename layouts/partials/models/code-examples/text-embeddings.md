@@ -72,3 +72,11 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 ```
 
 </details>
+
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+
+<div class="DocsMarkdown--aside-header">OpenAI compatible endpoints</div>
+
+Workers AI also supports OpenAI compatible API endpoints for `/chat/completions` and `/embeddings`. For more details, refer to [Configurations](/workers-ai/configuration/open-ai-compatibility/).
+
+</aside>
