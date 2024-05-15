@@ -26,3 +26,24 @@ curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/cohere/v1/chat 
   "connectors": [{"id": "web-search"}]
 }'
 ```
+
+If using the [`cohere-python-sdk`](https://github.com/cohere-ai/cohere-python), set your endpoint like this:
+
+```python
+---
+filename: index.js
+---
+import cohere
+import os
+
+co = cohere.Client(
+    api_key= os.getenv('API_KEY'),
+    base_url="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere/v1",
+)
+
+chat = co.chat(
+    message="hello world!",
+    model="command"
+)
+print(chat)
+```
