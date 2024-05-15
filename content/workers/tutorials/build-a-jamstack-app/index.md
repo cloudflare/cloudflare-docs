@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list Jamstack application
-layout: single
 ---
 
 # Build a todo list Jamstack application
@@ -51,9 +50,9 @@ All incoming HTTP requests to a Worker are passed to the [`fetch()` handler](/wo
 filename: index.js
 ---
 export default {
-	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
-	},
+  async fetch(request, env, ctx) {
+    return new Response('Hello World!');
+  },
 };
 ```
 
@@ -108,19 +107,19 @@ Start storing data by defining an initial set of data, which you will put inside
 filename: index.js
 ---
 export default {
-	async fetch(request, env, ctx) {
-		const defaultData = {
-			todos: [
-				{
-					id: 1,
-					name: 'Finish the Cloudflare Workers blog post',
-					completed: false,
-				},
-			],
-		};
-		await env.TODOS.put('data', JSON.stringify(defaultData));
-		return new Response('Hello World!');
-	},
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    await env.TODOS.put('data', JSON.stringify(defaultData));
+    return new Response('Hello World!');
+  },
 };
 ```
 
@@ -134,31 +133,31 @@ filename: index.js
 lines: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 ---
 export default {
-	async fetch(request, env, ctx) {
-		const defaultData = {
-			todos: [
-				{
-					id: 1,
-					name: 'Finish the Cloudflare Workers blog post',
-					completed: false,
-				},
-			],
-		};
-		const setCache = data => env.TODOS.put('data', data);
-		const getCache = () => env.TODOS.get('data');
-		
-		let data;
-		
-		const cache = await getCache();
-		if (!cache) {
-			await setCache(JSON.stringify(defaultData));
-			data = defaultData;
-		} else {
-			data = JSON.parse(cache);
-		}
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    const setCache = data => env.TODOS.put('data', data);
+    const getCache = () => env.TODOS.get('data');
+    
+    let data;
+    
+    const cache = await getCache();
+    if (!cache) {
+      await setCache(JSON.stringify(defaultData));
+      data = defaultData;
+    } else {
+      data = JSON.parse(cache);
+    }
 
-		return new Response(JSON.stringify(data));
-	},
+    return new Response(JSON.stringify(data));
+  },
 };
 ```
 
@@ -188,10 +187,10 @@ const html = `<!DOCTYPE html>
 async fetch (request, env, ctx) {
   // previous code
   return new Response(html, {
-			headers: {
-				'Content-Type': 'text/html'
-			}
-		});
+      headers: {
+        'Content-Type': 'text/html'
+      }
+    });
 }
 ```
 
@@ -299,21 +298,21 @@ filename: index.js
 highlight: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 ---
 export default {
-	async fetch(request, env, ctx) {
-		const setCache = data => env.TODOS.put('data', data);
+  async fetch(request, env, ctx) {
+    const setCache = data => env.TODOS.put('data', data);
 
-		if (request.method === 'PUT') {
-			const body = await request.text();
-			try {
-				JSON.parse(body);
-				await setCache(body);
-				return new Response(body, { status: 200 });
-			} catch (err) {
-				return new Response(err, { status: 500 });
-			}
-		}	
-		// previous code
-	},
+    if (request.method === 'PUT') {
+      const body = await request.text();
+      try {
+        JSON.parse(body);
+        await setCache(body);
+        return new Response(body, { status: 200 });
+      } catch (err) {
+        return new Response(err, { status: 500 });
+      }
+    }	
+    // previous code
+  },
 };
 ```
 
@@ -574,51 +573,51 @@ filename: index.js
 highlight: [15, 16, 22, 33]
 ---
 export default {
-	async fetch(request, env, ctx) {
-		const defaultData = {
-			todos: [
-				{
-					id: 1,
-					name: 'Finish the Cloudflare Workers blog post',
-					completed: false,
-				},
-			],
-		};
-		const setCache = (key, data) => env.TODOS.put(key, data);
-		const getCache = key => env.TODOS.get(key);
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    const setCache = (key, data) => env.TODOS.put(key, data);
+    const getCache = key => env.TODOS.get(key);
 
-		const ip = request.headers.get('CF-Connecting-IP');
-		const myKey = `data-${ip}`;
+    const ip = request.headers.get('CF-Connecting-IP');
+    const myKey = `data-${ip}`;
 
-		if (request.method === 'PUT') {
-			const body = await request.text();
-			try {
-				JSON.parse(body);
-				await setCache(myKey, body);
-				return new Response(body, { status: 200 });
-			} catch (err) {
-				return new Response(err, { status: 500 });
-			}
-		}
+    if (request.method === 'PUT') {
+      const body = await request.text();
+      try {
+        JSON.parse(body);
+        await setCache(myKey, body);
+        return new Response(body, { status: 200 });
+      } catch (err) {
+        return new Response(err, { status: 500 });
+      }
+    }
 
-		let data;
+    let data;
 
-		const cache = await getCache();
-		if (!cache) {
-			await setCache(myKey, JSON.stringify(defaultData));
-			data = defaultData;
-		} else {
-			data = JSON.parse(cache);
-		}
+    const cache = await getCache();
+    if (!cache) {
+      await setCache(myKey, JSON.stringify(defaultData));
+      data = defaultData;
+    } else {
+      data = JSON.parse(cache);
+    }
 
-		const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+    const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
 
-		return new Response(body, {
-			headers: {
-				'Content-Type': 'text/html',
-			},
-		});
-	},
+    return new Response(body, {
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
+  },
 };
 ```
 
@@ -713,51 +712,51 @@ const html = todos => `
 `;
 
 export default {
-	async fetch(request, env, ctx) {
-		const defaultData = {
-			todos: [
-				{
-					id: 1,
-					name: 'Finish the Cloudflare Workers blog post',
-					completed: false,
-				},
-			],
-		};
-		const setCache = (key, data) => env.TODOS.put(key, data);
-		const getCache = key => env.TODOS.get(key);
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    const setCache = (key, data) => env.TODOS.put(key, data);
+    const getCache = key => env.TODOS.get(key);
 
-		const ip = request.headers.get('CF-Connecting-IP');
-		const myKey = `data-${ip}`;
+    const ip = request.headers.get('CF-Connecting-IP');
+    const myKey = `data-${ip}`;
 
-		if (request.method === 'PUT') {
-			const body = await request.text();
-			try {
-				JSON.parse(body);
-				await setCache(myKey, body);
-				return new Response(body, { status: 200 });
-			} catch (err) {
-				return new Response(err, { status: 500 });
-			}
-		}
+    if (request.method === 'PUT') {
+      const body = await request.text();
+      try {
+        JSON.parse(body);
+        await setCache(myKey, body);
+        return new Response(body, { status: 200 });
+      } catch (err) {
+        return new Response(err, { status: 500 });
+      }
+    }
 
-		let data;
+    let data;
 
-		const cache = await getCache();
-		if (!cache) {
-			await setCache(myKey, JSON.stringify(defaultData));
-			data = defaultData;
-		} else {
-			data = JSON.parse(cache);
-		}
+    const cache = await getCache();
+    if (!cache) {
+      await setCache(myKey, JSON.stringify(defaultData));
+      data = defaultData;
+    } else {
+      data = JSON.parse(cache);
+    }
 
-		const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+    const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
 
-		return new Response(body, {
-			headers: {
-				'Content-Type': 'text/html',
-			},
-		});
-	},
+    return new Response(body, {
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
+  },
 };
 ```
 
