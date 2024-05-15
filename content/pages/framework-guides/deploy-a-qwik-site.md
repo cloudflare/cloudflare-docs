@@ -73,7 +73,7 @@ highlight: [4, 5]
 
 export const useGetServerTime = routeLoader$(({ platform }) => {
   // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (platform as { MY_KV: KVNamespace }));
+  const { MY_KV } = (platform.env as { MY_KV: KVNamespace }));
 
   return {
     // ....

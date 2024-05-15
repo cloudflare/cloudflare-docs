@@ -174,7 +174,7 @@ To unmount Turnstile, `turnstile.render()` will return an ID which you can pass 
 
 A few seconds before a token expires, the `expired-callback` is invoked.
 
-The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired.
+The `refresh-expired` or `data-refresh-expired` parameter defines the behavior when the token of a Turnstile widget has expired.
 
 By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token by rerunning the challenge. After the challenge is solved again, the `callback`, if specified, is invoked with the new token.
 
@@ -186,7 +186,7 @@ Additionally, specifying `never` will not result in a regeneration of a token, a
 
 When managed mode is chosen, Turnstile may present the visitor with an interactive challenge at times. If this interactive challenge is presented but was not solved within a given time period, it will time out and Turnstile's challenge process will need to be restarted.
 
-The `refresh-timeout` or `data-refresh-timeout` parameter defines the behaviour when the interactive challenge encounters a timeout. By default, the widget automatically refreshes (`auto`). However, the widget can also be configured such that the visitor needs to manually refresh a timed-out widget (`manual`), or the widget can only refreshed externally (`refresh-timeout="never"`) by the application (e.g. by calling Turnstile's `reset()` function).
+The `refresh-timeout` or `data-refresh-timeout` parameter defines the behavior when the interactive challenge encounters a timeout. By default, the widget automatically refreshes (`auto`). However, the widget can also be configured such that the visitor needs to manually refresh a timed-out widget (`manual`), or the widget can only refreshed externally (`refresh-timeout="never"`) by the application (e.g. by calling Turnstile's `reset()` function).
 
 When a widget is encountering the interactivity timeout the `timeout-callback` is invoked.
 
@@ -235,8 +235,8 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
 | `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
-| `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry upon failure. |
+| `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry on failure. |
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
-| `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
+| `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual`, or `never`, defaults to `auto`. |
 | `refresh-timeout` | `data-refresh-timeout` | Controls whether the widget should automatically refresh upon entering an interactive challenge and observing a timeout. Can take `auto` (automatically refreshes upon encountering an interactive timeout), `manual` (prompts the visitor to manually refresh) or `never` (will show a timeout), defaults to `auto`.  Only applies to widgets of mode managed.|
 | `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |

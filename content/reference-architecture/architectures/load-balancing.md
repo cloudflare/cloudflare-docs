@@ -30,13 +30,10 @@ This reference architecture is designed for IT, web hosting, and network profess
 
 To build a stronger baseline understanding of Cloudflare and its load balancing solution, we recommend the following resources:
 
-What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
-
-Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
-
-Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
-
-Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
+{{<render file="_what-is-cloudflare-link.md">}}
+- Solution Brief: [Cloudflare LTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/4mn2dtdw7TvSwCUJw8mMf5/f1fa6269f4468c432560b2c9f5ebd38a/Cloudflare_Local_Traffic_Manager_Solution_Brief.pdf) (5 minute read)
+- Solution Brief: [Cloudflare GTM Load Balancing](https://cf-assets.www.cloudflare.com/slt3lc6tev37/5OWUduF4YBKYADj3zREAX6/5241a81a3fc4ff1db7c9bade14991b23/Cloudflare_Global_Traffic_Manager__GTM__Solution_Brief.pdf) (5 minute read)
+- Blog: [Elevate load balancing with Private IPs and Cloudflare Tunnels: a secure path to efficient traffic distribution](https://blog.cloudflare.com/elevate-load-balancing-with-private-ips-and-cloudflare-tunnels-a-secure-path-to-efficient-traffic-distribution/) (13 minutes)
 
 Those who read this reference architecture will learn:
 * How Cloudflare Load Balancing can address both local traffic management and global traffic management use cases.

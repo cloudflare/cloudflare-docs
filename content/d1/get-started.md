@@ -195,7 +195,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if (pathname === "/api/beverages") {
@@ -212,7 +212,7 @@ export default {
       "Call /api/beverages to see everyone who works at Bs Beverages"
     );
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 In the code above, you:

@@ -13,7 +13,7 @@ meta:
   description: Cloudflare Waiting Room redirects visitors to virtual waiting rooms
     when they are trying to access web pages that have high volumes of traffic.
   author: '@cloudflare'
-  
+
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/waiting-rooms
 
@@ -23,5 +23,5 @@ externals:
 
 algolia:
   index: developers-cloudflare2
-  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: waiting-room

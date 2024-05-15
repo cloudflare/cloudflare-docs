@@ -21,10 +21,10 @@ interface Env {
   COUNTER_OBJECT: DurableObjectNamespace<Counter>
 }
 
-export default <ExportedHandler<Env>>{
-  async fetch(req, env, ctx) {
+export default {
+  async fetch(req, env, ctx): Promise<Response> {
     const result = await env.SUM_SERVICE.sum(1, 2);
     return new Response(result.toString());
   }
-}
+} satisfies ExportedHandler<Env>;
 ```

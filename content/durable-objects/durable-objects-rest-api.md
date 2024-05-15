@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-weight: 10
+weight: 11
 title: Durable Objects REST API
 external_link: /api/operations/durable-objects-namespace-list-namespaces
 _build:

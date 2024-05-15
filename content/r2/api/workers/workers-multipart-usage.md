@@ -31,9 +31,9 @@ interface Env {
 
 export default {
   async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext
+    request,
+    env,
+    ctx
   ): Promise<Response> {
     const bucket = env.MY_BUCKET;
 
@@ -177,7 +177,7 @@ export default {
         });
     }
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 After you have updated your Worker with the above code, run `npx wrangler deploy`.

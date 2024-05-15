@@ -9,7 +9,7 @@ meta:
   title: Cloudflare Vectorize
 ---
 
-# Cloudflare Vectorize
+{{<heading-pill style="beta" heading="h1">}}Cloudflare Vectorize{{</heading-pill>}}
 
 {{<description>}}
 

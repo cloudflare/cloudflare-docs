@@ -4,6 +4,10 @@ summary: Allow a client to request static assets while waiting for the HTML resp
 tags:
   - Middleware
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: 103 Early Hints
 weight: 1001
@@ -87,7 +91,7 @@ const HTML = `
 `;
 
 export default {
-  async fetch(req) {
+  async fetch(req): Promise<Response> {
     // If request is for test.css, serve the raw CSS
     if (/test\.css$/.test(req.url)) {
       return new Response(CSS, {

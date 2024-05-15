@@ -3,8 +3,10 @@ type: example
 summary: Set up an A/B test by controlling what response is served based on
   cookies. This version supports passing the request through to test and control
   on the origin, bypassing random assignment.
-tags:
-  - Originless
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: A/B testing with same-URL direct access
 weight: 1001
@@ -59,7 +61,7 @@ export default {
 const NAME = "myExampleWorkersABTest";
 
 export default {
-  async fetch(req) {
+  async fetch(req): Promise<Response> {
     const url = new URL(req.url);
     // Enable Passthrough to allow direct access to control and test routes.
     if (url.pathname.startsWith("/control") || url.pathname.startsWith("/test"))

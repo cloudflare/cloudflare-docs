@@ -87,8 +87,8 @@ If you have already created a DNS record covering your child domain in the paren
 3. If the parent zone is in Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 4. In the child domain zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 5. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
-6. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records).
-7. Within the **DNS** > **Records** of the parent zone, leave one address record and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
+6. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records) referencing the child domain or any of its deeper subdomains.
+7. Within the **DNS** > **Records** of the parent zone, leave one address record referencing the child domain and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
 8. Change the type of the last address record to `NS` and its content to one of the child domain's nameserver names. If the parent domain is in Cloudflare, use [a `PATCH` request](/api/operations/dns-records-for-a-zone-patch-dns-record) to achieve this.
 7. Within the **DNS** > **Records** of the parent zone, [create](/dns/manage-dns-records/how-to/create-dns-records/) the second `NS` record in the parent zone for the subdomain you want to delegate.
 

@@ -4,6 +4,9 @@ summary: Protect sensitive data to prevent data loss, and send alerts to a
   webhooks server in the event of a data breach.
 tags:
   - Security
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Data loss prevention
 weight: 1001
@@ -89,7 +92,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     const DEBUG = true;
     const SOME_HOOK_SERVER = "https://webhook.flow-wolf.io/hook";
 

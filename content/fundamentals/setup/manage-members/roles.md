@@ -33,7 +33,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
-| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/) and [R2](/r2/). Also provides read access to Zones, [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/) and [Page Rules](/rules/) |
+| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/) and [R2](/r2/). Also provides read access to Zones, [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/) and [Page Rules](/rules/) (deprecated). |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |
 | Cloudflare Zero Trust PII | Can access [Cloudflare for Zero Trust](/cloudflare-one/) PII. |
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
@@ -74,6 +74,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Role | Description |
 | --- | --- |
 | Bot Management | Can edit [Bot Management](/bots/plans/bm-subscription/) (including [Super Bot Fight Mode](/bots/get-started/pro/)) configurations. |
+| Cache Domain Purge | Grants access to [purge the edge cache](/cache/how-to/purge-cache/) for a specific domain. |
 | Domain Administrator | Grants full access to domains in an account, and read-only access to account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain Administrator Read Only | Grants read-only access to domains in an account, as well as account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain API Gateway | Grants full access to API Gateway (including [API Shield](/api-shield/)). |

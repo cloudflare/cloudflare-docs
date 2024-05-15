@@ -142,7 +142,7 @@ export default {
 filename: src/index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx): Promise<Response> {
 		return new Response("Hello World!");
 	},
 } satisfies ExportedHandler<Env>;
@@ -232,7 +232,7 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {

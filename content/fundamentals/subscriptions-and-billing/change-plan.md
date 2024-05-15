@@ -15,7 +15,7 @@ If you decide to downgrade or remove a domain, Cloudflare does not issue refunds
 
 Upgrades are processed immediately, but downgrades are not processed until the end of the billing period. When downgrading, you are allowed to continue using the higher plans' products until the new billing period begins.
 
-If you downgrade your plan, your plan may have access to [fewer Page Rules](/rules/page-rules/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions]/fundamentals/subscriptions-and-billing/cancel-subscription/ if you do not want to be charged.
+If you downgrade your plan, your plan may have access to [fewer Page Rules](/rules/page-rules/) (deprecated). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions]/fundamentals/subscriptions-and-billing/cancel-subscription/ if you do not want to be charged.
 
 The Enterprise App Sec Advanced and Enterprise App Sec Core plans cannot be downgraded without [contacting Cloudflare](/support/contacting-cloudflare-support/).
 
@@ -27,7 +27,7 @@ For additional help, refer to [this Community thread](https://community.cloudfla
 {{<tab label="dashboard" no-code="true">}}
 
 To change the Cloudflare plan for a domain in the dashboard:
- 
+
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Overview**.
 3. For Plan Extensions, select **Change**.
@@ -39,11 +39,11 @@ To change the Cloudflare plan for a domain in the dashboard:
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 To change the Cloudflare plan for a domain using the API, first send a [`GET`](/api/operations/zone-rate-plan-list-available-plans) request to review available subscriptions.
 
 Then, send a [`PUT`](/api/operations/zone-subscription-update-zone-subscription) request with your desired plan type in the `rate_plan` object.
- 
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -59,7 +59,7 @@ If you are an Enterprise customer and cannot change your plan type, contact your
 {{<tab label="dashboard" no-code="true">}}
 
 To change the duration of your Cloudflare plan in the dashboard:
- 
+
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Overview**.
 3. For Plan Extensions, select **Change**.
@@ -76,8 +76,8 @@ To change the duration of your Cloudflare plan in the dashboard:
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 To change the duration of a Cloudflare plan for a domain using the API, send a [`PUT`](/api/operations/zone-subscription-update-zone-subscription) request with an updated value for the `frequency` parameter.
- 
+
 {{</tab>}}
 {{</tabs>}}

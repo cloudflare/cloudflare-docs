@@ -37,7 +37,7 @@ Because Zaraz converts the `dataLayer.push()` call to `zaraz.track()`, creating 
 
 | Rule type    | Variable name               | Match operation | Match string |
 | ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_                | _Equals_        | `purchase`   |
+| _Match rule_ | _Event Name_                | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
 

@@ -4,13 +4,17 @@ summary: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
 tags:
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Cookie parsing
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -35,7 +39,7 @@ export default {
 ```ts
 import { parse } from "cookie";
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     // The name of the cookie
     const COOKIE_NAME = "__uid";
     const cookie = parse(request.headers.get("Cookie") || "");
@@ -46,6 +50,26 @@ export default {
     return new Response("No cookie with name: " + COOKIE_NAME);
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from http.cookies import SimpleCookie
+from js import Response
+
+async def on_fetch(request):
+    # Name of the cookie
+    cookie_name = "__uid"
+
+    cookies = SimpleCookie(request.headers["Cookie"] or "")
+
+    if cookie_name in cookies:
+        # Respond with cookie value
+        return Response.new(cookies[cookie_name].value)
+
+    return Response.new("No cookie with name: " + cookie_name)
 ```
 
 {{</tab>}}
