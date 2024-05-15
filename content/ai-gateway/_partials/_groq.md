@@ -11,10 +11,10 @@ When making requests to [Groq](https://groq.com/), replace `https://api.groq.com
 
 ```bash
 ---
-header: Request
+header: Example fetch request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/chat/completions -X POST \
+curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/groq/chat/completions -X POST \
   --header 'Authorization: Bearer <GROQ_API_KEY>' \
   --header 'Content-Type: application/json' \
   --data '{
