@@ -6,7 +6,7 @@ weight: 5
 
 # Deploy `cloudflared` in GCP
 
-This guide covers how to connect a Google Cloud Project (GCP) virtual machine to Cloudflare  using our lightweight connector, `cloudflared`.
+This guide covers how to connect a Google Cloud Project (GCP) virtual machine to Cloudflare using our lightweight connector, `cloudflared`.
 
 We will deploy:
 
@@ -26,7 +26,7 @@ To complete the following procedure, you will need to:
 2. Go to **Compute Engine** > **VM instances**.
 3. Select **Create instance**.
 4. Name your VM instance. In this example we will name it `http-test-server`.
-5. Configure the VM instance with your desired operating system and specifications. For this example, you can use the following settings:
+5. Choose your desired operating system and specifications. For this example, you can use the following settings:
 
     - **Machine family:** General Purpose
     - **Series:** E2
@@ -42,7 +42,7 @@ To complete the following procedure, you will need to:
     apt -y install apache2
     cat <<EOF > /var/www/html/index.html
     <html><body><h1>Hello Cloudflare!</h1>
-    <p>This page was created from a startup script for a Cloudflare demo.</p>
+    <p>This page was created for a Cloudflare demo.</p>
     </body></html>
     EOF
     ```
@@ -70,7 +70,7 @@ Next, we will create a Cloudflare Tunnel in Zero Trust and run the tunnel on the
 
 5. Select **Save tunnel**.
 
-6. Under **Choose your environment**, select **Debian**. Copy the command shown in the dashboard and paste it into your GCP VM terminal.
+6. Under **Choose your environment**, select **Debian**. Copy the command shown in the dashboard and run it on your GCP VM.
 
 7. Once the command has finished running, your connector will appear in Zero Trust.
 
@@ -98,14 +98,16 @@ To configure a private network route for your Cloudflare Tunnel:
 
 1. In the **Private Network** tab, enter the **Internal IP** of your GCP VM instance (for example, `10.0.0.2`).
 2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `10.0.0.0/8`.  We recommend re-adding the IPs that are not explicitly used by your GCP VM -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
-3. To test, [log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/). Open a terminal window and run the following command:
+3. To test on a user device:
+    1. [Log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
+    2. Open a terminal window and connect to the service using its private IP:
 
-    ```sh
-    $ curl 10.0.0.2
-    <html><body><h1>Hello Cloudflare!</h1>
-    <p>This page was created from a startup script for a Cloudflare demo.</p>
-    </body></html>
-    ```
+      ```sh
+      $ curl 10.0.0.2
+      <html><body><h1>Hello Cloudflare!</h1>
+      <p>This page was created for a Cloudflare demo.</p>
+      </body></html>
+      ```
 
 You can optionally [create Gateway network policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to control who can access the VM via its private IP.
 
@@ -113,15 +115,12 @@ You can optionally [create Gateway network policies](/cloudflare-one/connections
 
 - [Connect over SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
 
-## GCP firewall configuration
+## Firewall configuration
 
-By default, GCP denies all ingress traffic and allows all egress traffic (refer to [Implied rules](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules)). The default VPC network also comes with [pre-configured rules](https://cloud.google.com/firewall/docs/firewalls#more_rules_default_vpc) which allow certain types of ingress traffic.
+To secure your VM instance, you can [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation). Since GCP denies ingress traffic by [default](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules), you can delete all ingress rules and leave only the relevant egress rules.
 
-To secure your VM instance, you can [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic. The general steps are as follows:
+{{<Aside type="note">}}
+If you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM.
+{{</Aside>}}
 
-1. Create a firewall rule to deny all egress traffic.
-2. Create a higher priority firewall rule that allows egress traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
-3. If needed, create additional rules to allow specific egress traffic.
-4. Delete any unnecessary ingress rules. Note that if you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM.
-5. Verify that you can still access the service through Cloudflare Tunnel via its [public hostname](#3-connect-using-a-public-hostname) or [private IP](#4-connect-using-a-private-ip).
-6. Verify that the service is no longer accessible from outside the tunnel via its external IP. For example, if you go to `http://<EXTERNAL IP>` the test page should no longer load.
+After configuring your VPC firewall rules, verify that you can still access the service through Cloudflare Tunnel via its [public hostname](#3-connect-using-a-public-hostname) or [private IP](#4-connect-using-a-private-ip). The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://<EXTERNAL IP>` the test page should no longer load.
