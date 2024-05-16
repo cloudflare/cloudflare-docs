@@ -24,7 +24,7 @@ export default {
 
     // replace with your configuration
     const cfAccountId = "ACCOUNT_ID";
-    const gatewayName = "<GATEWAY_NAME>_NAME";
+    const gatewayName = "<GATEWAY_NAME>";
     const region = 'us-east-1';
 
     // added as secrets (https://developers.cloudflare.com/workers/configuration/secrets/)
