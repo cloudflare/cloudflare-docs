@@ -5,7 +5,7 @@ weight: 3
 layout: learning-unit
 ---
 
-Both Custom and Managed Lists are located in the account settings. Refer to [Features by plan type](/learning-paths/application-security-2/lists/features/) for more information on plan eligibility. 
+Both Custom and Managed Lists are located in the account settings. Refer to [Features by plan type](/learning-paths/application-security/lists/features/) for more information on plan eligibility. 
 
 ## Custom Lists
 
