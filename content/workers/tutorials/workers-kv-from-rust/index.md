@@ -199,5 +199,5 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 
 ## Related resources
 
-- [Rust support in Workers](https://www.notion.so/Workers-Examples-In-Python-Rust-e7e5a38f4f414540895ddf4e41409493?pvs=21).
+- [Rust support in Workers](/workers/languages/rust/).
 - [Using KV in Workers](https://www.notion.so/Use-Workers-KV-directly-from-Rust-95912dda004a4c8faf1d1281958b408a?pvs=21).
