@@ -42,8 +42,8 @@ header: Example script
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: c.env.CLOUDFLARE_API_KEY,
-  baseURL: `https://api.cloudflare.com/client/v4/accounts/${c.env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`
+  apiKey: env.CLOUDFLARE_API_KEY,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`
  });
 
 const chatCompletion = await openai.chat.completions.create({
