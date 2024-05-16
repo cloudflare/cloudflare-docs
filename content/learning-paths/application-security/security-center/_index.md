@@ -9,9 +9,11 @@ layout: learning-module
 
 {{<render file="_security-center-definition.md" productFolder="security-center">}}
 
+
+
 ## Objectives
 
 By the end of this module, you will be able to:
 
-- Understand the various Security Center features
-- Review and manage potential security risks associated with your infrastructure
+- Understand the primary Security Center features such as Security Insights and Brand Protection
+- Review and manage security risks at the account level, encompassing all of your domains in one unified view
