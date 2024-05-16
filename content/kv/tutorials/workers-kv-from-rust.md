@@ -28,7 +28,7 @@ $ cargo install cargo-generate
 
 ## 1. Create your Worker project in Rust
 
-Open up a terminal and run the following command to generate a Worker project template in Rust:
+Open a terminal window, and run the following command to generate a Worker project template in Rust:
 
 ```sh
 $ cargo generate cloudflare/workers-rs
