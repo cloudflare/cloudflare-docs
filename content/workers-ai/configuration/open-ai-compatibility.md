@@ -14,6 +14,27 @@ Normally, Workers AI requires you to specify the model name in the cURL endpoint
 
 With OpenAI compatible endpoints, Workers AI supports examples like the following:
 
+```bash
+---
+header: curl example
+---
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/{{ACCOUNT_ID}}/ai/v1/chat/completions
+  --header 'Authorization: Bearer {{API_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '
+    {
+      "model": "@hf/thebloke/zephyr-7b-beta-awq",
+      "messages": [
+        {
+          "role": "user",
+          "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
+        }
+      ]
+    }
+'
+```
+
 ```js
 ---
 header: Example script
