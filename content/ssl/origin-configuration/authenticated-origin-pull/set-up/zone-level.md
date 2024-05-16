@@ -50,7 +50,7 @@ If you had set up logging on your origin during [step 2](#2-configure-origin-to-
 
 ---
 
-## Alerts
+## 6. (Optional) Set up alerts for zone-level Authenticated Origin Pulls certificates
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 

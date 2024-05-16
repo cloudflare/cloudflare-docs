@@ -10,4 +10,6 @@ meta:
 
 {{<render file="_web-analytics-notifications.md">}}
 
+{{<render file="_get-started.md" productFolder="notifications" >}}
+
 {{<available-notifications product="Web Analytics">}}

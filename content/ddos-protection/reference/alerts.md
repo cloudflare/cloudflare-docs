@@ -42,8 +42,7 @@ Cloudflare can issue notifications for different types of DDoS attack alerts.
 
 ### Standard alerts
 
-{{<available-notifications product="DDoS Protection" notificationName="HTTP DDoS Attack Alert"
->}}
+{{<available-notifications product="DDoS Protection" notificationName="HTTP DDoS Attack Alert">}}
 
 {{<available-notifications product="DDoS Protection" notificationName="Layer 3/4 DDoS Attack Alert">}}
 

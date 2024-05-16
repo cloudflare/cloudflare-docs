@@ -36,7 +36,7 @@ If you had set up logging on your origin during step 2, test and confirm that Au
 
 ---
 
-## Alerts
+## 6. (Optional) Set up alerts for hostname-level Authenticated Origin Pulls certificates
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 

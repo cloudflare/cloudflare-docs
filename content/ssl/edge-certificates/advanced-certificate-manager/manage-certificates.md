@@ -99,7 +99,7 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 
 ---
 
-## Alerts
+## Set up alerts
 
 You can configure alerts to receive notifications for changes in your certificates.
 

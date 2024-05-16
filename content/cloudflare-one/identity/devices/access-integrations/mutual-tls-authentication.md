@@ -247,7 +247,7 @@ mTLS does not currently work for:
 - HTTP/3 traffic
 - Cloudflare Pages site served on a [custom domain](/pages/configuration/custom-domains/)
 
-## Alerts
+## Set up alerts for mutual TLS certificates
 
 You can configure alerts to receive notifications before your mutual TLS certificates expire.
 

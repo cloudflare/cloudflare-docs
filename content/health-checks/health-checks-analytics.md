@@ -19,7 +19,7 @@ You can evaluate origin uptime, latency, failure reason, and specific event logs
 - **Event Log**: Shows individual health check data. 
   - Select each record for additional details on **Round trip time**, the **Failure Reason**, the **Average Waterfall** (showing chronological data about request stages), **Response status code**, and more.
 
-## Alerts
+## Set up alerts
 
 You can configure alerts to notify you of any changes in your health check status.
 

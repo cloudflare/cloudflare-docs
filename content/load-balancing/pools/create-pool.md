@@ -86,7 +86,7 @@ To delete a pool using the API, send a [DELETE](/api/operations/account-load-bal
 
 ---
 
-## Alerts
+## Set up alerts
 
 You can configure alerts to receive notifications for changes in the status of your pools. 
 
