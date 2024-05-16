@@ -5,7 +5,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
-- publish_date: '2024-05-15'
+- publish_date: '2024-05-16'
   title:
   description: |-
     * **Providers**: Added [Cohere](/ai-gateway/providers/cohere/) and [Groq](/ai-gateway/providers/groq/) as new providers.
