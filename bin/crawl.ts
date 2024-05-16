@@ -3,9 +3,6 @@
  * - all anchor tags (<a>) do not point to broken links
  * - all images (<img>) do not have broken sources
  * NOTE: Requires `npm run build` first!
- * 2. Crawl the `assets/json` directory (JSON files) and assert:
- * - all `url_path` values do not point to broken links
- * - all anchor tags (<a>) do not point to broken links
  */
 import * as http from "http";
 import * as https from "https";
@@ -16,8 +13,6 @@ import { parse } from "node-html-parser";
 
 let WARNS = 0;
 let ERRORS = 0;
-let JSON_WARNS = 0;
-let JSON_ERRORS = 0;
 let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
@@ -25,7 +20,6 @@ const PUBDIR = join(ROOT, "public");
 const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
-const DEV_DOCS_HOSTNAME = "developers.cloudflare.com";
 
 async function walk(dir: string) {
   let files = await fs.readdir(dir);
