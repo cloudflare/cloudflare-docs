@@ -85,7 +85,7 @@ preview_database_id = "DB" # Required for Pages local development
 
 You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to wrangler:
 
-```sh
+```bash
 $ wrangler d1 execute YOUR_DATABASE_NAME \
   --local --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);"
 ```
@@ -134,9 +134,11 @@ You can then use the `getD1Database()` method to retrieve the simulated database
 
 ```js
 const db = await mf.getD1Database("DB");
-const { results } = await db.prepare("<Query>");
 
-console.log(await res.json(results));
+const stmt = db.prepare("SELECT name, age FROM users LIMIT 3");
+const { results } = await stmt.all();
+
+console.log(results);
 ```
 
 ### `unstable_dev`

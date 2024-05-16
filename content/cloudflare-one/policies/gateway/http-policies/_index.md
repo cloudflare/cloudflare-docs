@@ -163,6 +163,10 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 | -------------- | ----------------------------- |
 | Destination IP | `http.dst.ip == "10.0.0.0/8"` |
 
+### Device Posture
+
+{{<render file="gateway/selectors/_device-posture.md">}}
+
 ### Domain
 
 Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
@@ -231,9 +235,9 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 | ------- | ------------------------------------ |
 | URL     | `http.response.status_code == "200"` |
 
-### Device Posture
+### Proxy Endpoint
 
-{{<render file="gateway/selectors/_device-posture.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### Security Risks
 

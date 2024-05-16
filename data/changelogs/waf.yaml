@@ -1,12 +1,17 @@
 ---
 link: "/waf/change-log/"
 productName: WAF
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 - publish_date: '2024-04-22'
   scheduled_date: '2024-04-29'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
+- publish_date: '2024-05-14'
+  individual_page: true
+  link: '/waf/change-log/2024-05-14/'
 - publish_date: '2024-05-08'
   individual_page: true
   link: '/waf/change-log/2024-05-08/'

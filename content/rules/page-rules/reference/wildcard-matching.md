@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Wildcard matching
 meta:
-    title: Wildcard matching | Page Rules
+    title: Wildcard matching | Page Rules (deprecated)
 weight: 5
 ---
 
@@ -15,6 +15,8 @@ You can use the asterisk (`*`) in any URL segment to match certain patterns. For
 - `example.com/trust`
 
 `example.com/foo/* `does not match `example.com/foo`, but `example.com/foo*` does match.
+
+{{<render file="_page-rules-deprecation.md">}}
 
 ## Helpful tips
 

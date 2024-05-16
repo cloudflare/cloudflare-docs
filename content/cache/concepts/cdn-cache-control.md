@@ -43,7 +43,7 @@ In situations where Cloudflare does not receive `Cloudflare-CDN-Cache-Control`, 
 
 ### Manage cached assets TTLs
 
-Use `CDN-Cache-Control` when you want to manage cached asset’s TTLs separately for origin caches, CDN caches, and browser caches. Previously, this scenario required creating page rules, but `CDN-Cache-Control` accomplishes the desired behavior through origin-set response headers. The example below shows how you could manage your cached asset’s TTLs.
+Use `CDN-Cache-Control` when you want to manage cached asset’s TTLs separately for origin caches, CDN caches, and browser caches. Previously, this scenario required creating Page Rules (deprecated), but `CDN-Cache-Control` accomplishes the desired behavior through origin-set response headers. The example below shows how you could manage your cached asset’s TTLs.
 
 Headers:
 

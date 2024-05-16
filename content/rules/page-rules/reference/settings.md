@@ -4,13 +4,17 @@ source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-c
 title: Settings
 layout: wide
 meta:
-  title: Settings | Page Rules
+  title: Settings | Page Rules (deprecated)
 weight: 3
 ---
 
 # Page Rules settings
 
-Settings control the action Cloudflare takes once a request matches the URL pattern defined in a page rule. You can use settings to enable and disable multiple Cloudflare features across the dashboard. Note that:
+Settings control the action Cloudflare takes once a request matches the URL pattern defined in a page rule. You can use settings to enable and disable multiple Cloudflare features across the dashboard.
+
+{{<render file="_page-rules-deprecation.md">}}
+
+Note that:
 
 - Some settings require a Pro, Business, or Enterprise domain plan.
 - You can specify more than one setting to apply when the rule triggers.

@@ -5364,3 +5364,12 @@ code.ruleID:active {
     top: 45px;
   }
 }
+
+/* Developer Spotlight author credit components*/
+.author-container {
+  margin-bottom: 20px;
+}
+
+.author-details{
+  font-weight: bold;
+}

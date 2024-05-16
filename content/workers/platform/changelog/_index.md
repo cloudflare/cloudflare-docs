@@ -1,19 +1,19 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 4
+weight: 2
 meta:
-    description: Review recent changes to the Cloudflare Developer Platform.
+    title: Workers Changelog
+    description: Review recent changes to Cloudflare Workers.
 layout: changelog
-changelog_name: Developer Platform
-changelog_product_area_name: Developer platform
+changelog_file_name: [workers]
 outputs:
     - html
     - rss
 ---
 
-# Changelog
+# Workers Changelog
 
-<!-- All changelog entries live in associated /data/changelogs/{productName}.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+<!-- Actual content lives in /data/changelogs/workers.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
-{{<full-changelog>}}
+{{<product-changelog>}}

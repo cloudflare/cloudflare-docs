@@ -56,6 +56,6 @@ async function handleRequest(request) {
 }
 ```
 
-### Use Page Rules
+### Use Cache Rules
 
-Use Page Rules to exclude non-WordPress portions of the site from caching using **Cache Level: Bypass**. This option disables all caching, including static assets for those paths. As a result, we recommend disabling APO via the response header.
+Create a [cache rule](/cache/how-to/cache-rules/) to exclude non-WordPress portions of the site from caching using **Cache eligibility: Bypass cache**. This option disables all caching, including static assets for those paths. As a result, we recommend disabling APO via the response header.

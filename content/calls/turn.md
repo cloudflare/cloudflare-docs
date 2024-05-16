@@ -10,24 +10,20 @@ Separately from the SFU, Calls also offers a managed TURN service. TURN acts as 
 
 Using Cloudflare Calls TURN service is available free of charge when used together with the Calls SFU. Otherwise, it costs $0.05/real-time GB outbound from Cloudflare to the TURN client.
 
-{{<Aside type="warning">}}
-Calls TURN service is in open beta, rolling out between April 4 and 24, 2024 in batches. If you're an enterprise customer, please reach out to your account team requesting access.
-{{</Aside>}}
-
 ## Service address and ports
 
-|    Protocol   |           Primary address          | Primary port |  Alternate port |
-|---------------|------------------------------------|--------------|-----------------|
-| STUN over UDP | stun.cloudflare.com                | 3478/udp     | 53/udp          |
-| TURN over UDP | turn.cloudflare.com                | 3478/udp     | 53 udp          |
-| TURN over TCP | turn.cloudflare.com                | 3478/tcp     | 80/tcp          |
-| TURN over TLS | turn.cloudflare.com                | 5349/tcp     | 443/tcp         |
+| Protocol      | Primary address     | Primary port | Alternate port |
+| ------------- | ------------------- | ------------ | -------------- |
+| STUN over UDP | stun.cloudflare.com | 3478/udp     | 53/udp         |
+| TURN over UDP | turn.cloudflare.com | 3478/udp     | 53 udp         |
+| TURN over TCP | turn.cloudflare.com | 3478/tcp     | 80/tcp         |
+| TURN over TLS | turn.cloudflare.com | 5349/tcp     | 443/tcp        |
 
 ## Regions
 
-Calls TURN service is available in every Cloudflare datacenter. 
+Calls TURN service is available in every Cloudflare datacenter.
 
-When a client tries to connect to `turn.cloudflare.com`, it *automatically* connects to the Cloudflare location closest to them. We achieve this using Anycast routing. 
+When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using Anycast routing.
 
 To learn more about the architecture that makes this possible, read this [technical deep-dive about Calls](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
 
@@ -37,23 +33,21 @@ Communication between TURN clients and the TURN server (as defined in [RFC5766](
 
 TURN server relay allocations are done using a larger set of [IP address ranges](https://www.cloudflare.com/ips/). Calls relay allocations will be in the 9024-65535 port range.
 
-
 ## Protocols and Ciphers for TURN over TLS
 
 TLS versions supported include TLS 1.1, TLS 1.2, and TLS 1.3.
 
-
-| OpenSSL Name                        | TLS 1.1 | TLS 1.2 | TLS 1.3 |
-| ----------------------------------- | ------- | ------- | ------- |
-| AEAD-AES128-GCM-SHA256              | No      | No      | ✅      |
-| AEAD-AES256-GCM-SHA384              | No      | No      | ✅      |
-| AEAD-CHACHA20-POLY1305-SHA256       | No      | No      | ✅      |
-| ECDHE-ECDSA-AES128-GCM-SHA256       | No      | ✅      | No      |
-| ECDHE-RSA-AES128-GCM-SHA256         | No      | ✅      | No      |
-| ECDHE-RSA-AES128-SHA                | ✅      | ✅      | No      |
-| AES128-GCM-SHA256                   | No      | ✅      | No      |
-| AES128-SHA                          | ✅      | ✅      | No      |
-| AES256-SHA                          | ✅      | ✅      | No      |
+| OpenSSL Name                  | TLS 1.1 | TLS 1.2 | TLS 1.3 |
+| ----------------------------- | ------- | ------- | ------- |
+| AEAD-AES128-GCM-SHA256        | No      | No      | ✅      |
+| AEAD-AES256-GCM-SHA384        | No      | No      | ✅      |
+| AEAD-CHACHA20-POLY1305-SHA256 | No      | No      | ✅      |
+| ECDHE-ECDSA-AES128-GCM-SHA256 | No      | ✅      | No      |
+| ECDHE-RSA-AES128-GCM-SHA256   | No      | ✅      | No      |
+| ECDHE-RSA-AES128-SHA          | ✅      | ✅      | No      |
+| AES128-GCM-SHA256             | No      | ✅      | No      |
+| AES128-SHA                    | ✅      | ✅      | No      |
+| AES256-SHA                    | ✅      | ✅      | No      |
 
 ## MTU
 
@@ -69,10 +63,38 @@ Cloudflare Calls TURN service places limits on:
 
 These limits are set quite high and suitable for high-demand applications.
 
-## Example configuration
+## Creating credentials
 
+You need to generate short-lived credentials for each TURN user. In order to create credentials, you should have a back-end service that uses your TURN Token ID and API token to generate credentials. It will need to make an API call like this:
+
+```sh
+curl -X POST \
+	-H "Authorization: Bearer $TURN_SERVICE_API_TOKEN" \
+	-H "Content-Type: application/json" -d '{"ttl": 86400}' \
+	https://rtc.live.cloudflare.com/v1/turn/keys/$TURN_SERVICE_ID/credentials/generate
 ```
-var myPeerConnection = new RTCPeerConnection({
+
+The JSON response below can then be passed on to your front-end application:
+
+```JSON
+{
+  "iceServers": {
+    "urls": [
+      "stun:stun.cloudflare.com:3478",
+      "turn:turn.cloudflare.com:3478?transport=udp",
+      "turn:turn.cloudflare.com:3478?transport=tcp",
+      "turns:turn.cloudflare.com:5349?transport=tcp"
+    ],
+    "username": "XXXXX",
+    "credential": "YYYYY"
+  }
+}
+```
+
+Use `username` and `credential` as follows when instantiating the `RTCPeerConnection`:
+
+```js
+const myPeerConnection = new RTCPeerConnection({
   iceServers: [
     {
       urls: "stun:stun.cloudflare.com:3478",
