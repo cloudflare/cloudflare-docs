@@ -18,7 +18,7 @@ using [workers-rs](https://github.com/cloudflare/workers-rs).
 To complete this tutorial, you will need:
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-- [Wrangler](https://www.notion.so/Workers-e568dc13453f4c9d9133de54c18e32ea?pvs=21) CLI.
+- [Wrangler](/workers/wrangler/) CLI.
 - The [Rust](https://www.rust-lang.org/tools/install) toolchain.
 - And `cargo-generate` sub-command by running:
 
@@ -36,7 +36,7 @@ $ cargo generate cloudflare/workers-rs
 
 Then select `template/hello-world-http` template, give your project a descriptive name and select enter. A new project should be created in your directory. Open the project in your editor and run `npx wrangler dev` to compile and run your project.
 
-In this tutorial, you will use Workers KV from Rust to build an app to store and retrieve cities by a given country name. 
+In this tutorial, you will use Workers KV from Rust to build an app to store and retrieve cities by a given country name.
 
 ## 2. Create a KV namespace
 
@@ -150,10 +150,7 @@ $ curl http://localhost:8787/France
 
 ## 5. Deploy your project
 
-To deploy your Worker, run the following command:
-
-```sh
-$ npx wrangler deploy
+The source code for the completed app should include the following:
 
 ```rust
 ---
@@ -200,7 +197,13 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 }
 ```
 
+To deploy your Worker, run the following command:
+
+```sh
+$ npx wrangler deploy
+```
+
 ## Related resources
 
-- [Rust support in Workers](https://www.notion.so/Workers-Examples-In-Python-Rust-e7e5a38f4f414540895ddf4e41409493?pvs=21).
-- [Using KV in Workers](https://www.notion.so/Use-Workers-KV-directly-from-Rust-95912dda004a4c8faf1d1281958b408a?pvs=21).
+- [Rust support in Workers](/workers/languages/rust/).
+- [Using KV in Workers](/kv/get-started/).

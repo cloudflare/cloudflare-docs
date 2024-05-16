@@ -18,7 +18,7 @@ using [workers-rs](https://github.com/cloudflare/workers-rs).
 To complete this tutorial, you will need:
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-- [Wrangler](https://www.notion.so/Workers-e568dc13453f4c9d9133de54c18e32ea?pvs=21) CLI.
+- [Wrangler](/workers/wrangler/) CLI.
 - The [Rust](https://www.rust-lang.org/tools/install) toolchain.
 - And `cargo-generate` sub-command by running:
 
@@ -26,9 +26,9 @@ To complete this tutorial, you will need:
 $ cargo install cargo-generate
 ```
 
-## 1. Create a Worker project in Rust
+## 1. Create your Worker project in Rust
 
-Open a terminal and run the following command to generate a Worker project template in Rust:
+Open a terminal window, and run the following command to generate a Worker project template in Rust:
 
 ```sh
 $ cargo generate cloudflare/workers-rs
@@ -36,7 +36,7 @@ $ cargo generate cloudflare/workers-rs
 
 Then select `template/hello-world-http` template, give your project a descriptive name and select enter. A new project should be created in your directory. Open the project in your editor and run `npx wrangler dev` to compile and run your project.
 
-In this tutorial, you will use Workers KV from Rust to build and app to store and retrieve cities by a given country name. 
+In this tutorial, you will use Workers KV from Rust to build an app to store and retrieve cities by a given country name.
 
 ## 2. Create a KV namespace
 
@@ -63,7 +63,7 @@ With this configured, you can access the KV namespace with the binding `"cities"
 
 ## 3. Write data to KV
 
-For this app, you will create two routes: A `POST` route to receive and store the city in KV and a `GET` route to retrieve the city of a given country. For example, a `POST` request to `/France` with a body of `{"city": "Paris"}` should create an entry of Paris as a city in France. A `GET` request to `/France` should retrieve from KV and respond with Paris.
+For this app, you will create two routes: A `POST` route to receive and store the city in KV, and a `GET` route to retrieve the city of a given country. For example, a `POST` request to `/France` with a body of `{"city": "Paris"}` should create an entry of Paris as a city in France. A `GET` request to `/France` should retrieve from KV and respond with Paris.
 
 Install [Serde](https://serde.rs/) as a project dependency to handle JSON `cargo add serde`. Then create an app router and a struct for `Country` in `src/lib.rs`:
 
@@ -125,7 +125,7 @@ $ curl --json '{"city": "Paris"}' http://localhost:8787/France
 
 ## 4. Read data from KV
 
-To retrieve cities stored in KV, write a `GET` route that pulls the country name from the path and searches KV. You also need some error handling if the country name is not found:
+To retrieve cities stored in KV, write a `GET` route that pulls the country name from the path and searches KV. You also need some error handling if the country is not found:
 
 ```rust
 ---
@@ -148,12 +148,9 @@ Save and make a curl request to test the endpoint:
 $ curl http://localhost:8787/France
 ```
 
-## Conclusion
+## 5. Deploy your project
 
-To deploy your project, run:
-
- ```sh
-$ npx wrangler deploy
+The source code for the completed app should include the following:
 
 ```rust
 ---
@@ -198,6 +195,12 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         .run(req, env)
         .await
 }
+```
+
+To deploy your Worker, run the following command:
+
+```sh
+$ npx wrangler deploy
 ```
 
 ## Related resources
