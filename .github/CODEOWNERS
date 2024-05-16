@@ -102,7 +102,7 @@
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
 /content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/wrangler/ @pensaloa @peterbacondarwin @dario-piotrowicz @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
+/content/workers/wrangler/ @penalosa @petebacondarwin @dario-piotrowicz @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @kodster28 @cloudflare/pcx-technical-writing
 /content/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 
@@ -157,7 +157,7 @@
 /data/changelogs/waf.yaml @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
 
 # Support
-/content/support/ @jedecf @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
+/content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
 /content/turnstile/ @migueldemoura @punkeel @worenga @patriciasantaana @cloudflare/pcx-technical-writing
