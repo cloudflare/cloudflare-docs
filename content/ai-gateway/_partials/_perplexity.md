@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/perplexity-ai`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/perplexity-ai`
 
 
 ```bash
@@ -14,7 +14,7 @@ header: Example fetch request
 ---
 
 curl --request POST \
-     --url https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/perplexity-ai/chat/completions \
+     --url https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/perplexity-ai/chat/completions \
      --header 'accept: application/json' \
      --header 'content-type: application/json' \
      --header 'Authorization: Bearer <PERPLEXITY_API_KEY>' \
@@ -43,7 +43,7 @@ import OpenAI from "openai";
 
   const perplexity = new OpenAI({
     apiKey: env.PERPLEXITY_API_KEY,
-    baseURL: "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/perplexity-ai"
+    baseURL: "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/perplexity-ai"
   });
 
    const chatCompletion = await perplexity.chat.completions.create({

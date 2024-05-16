@@ -5,14 +5,14 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/anthropic`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/anthropic`
 
 
 ```bash
 ---
 header: Example fetch request
 ---
-curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/anthropic/v1/messages \
+curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/anthropic/v1/messages \
  --header 'x-api-key: <ANTHROPIC_API_KEY>' \
  --header 'anthropic-version: 2023-06-01' \
  --header 'Content-Type: application/json' \

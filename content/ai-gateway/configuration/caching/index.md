@@ -32,7 +32,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/openai/chat/completions -X POST \
+curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/openai/chat/completions -X POST \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --header 'cf-skip-cache: true' \
@@ -59,7 +59,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/openai/chat/completions -X POST \
+curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/openai/chat/completions -X POST \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --header 'cf-cache-ttl: 60' \
