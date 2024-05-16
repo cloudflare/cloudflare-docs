@@ -35,7 +35,7 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const anthropic = new Anthropic({
   apiKey: env.ANTHROPIC_API_KEY,
-  baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/anthropic",
+  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/anthropic",
 });
 
 const message = await anthropic.messages.create({

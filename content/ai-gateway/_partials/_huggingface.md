@@ -32,7 +32,7 @@ filename: index.js
 import { HfInferenceEndpoint } from '@huggingface/inference'
 
 const hf = new HfInferenceEndpoint(
-	"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/huggingface/gpt2",
+	"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/gpt2",
 	env.HF_API_TOKEN
 );
 ```
