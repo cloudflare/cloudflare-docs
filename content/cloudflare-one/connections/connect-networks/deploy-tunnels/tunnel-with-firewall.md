@@ -47,7 +47,7 @@ Opening port 443 enables some optional features. Failure to allow these connecti
 
 ### Cloud VM firewall
 
-If you host your services on a virtual machine (VM) instance in a cloud provider, you may set up instance-level firewall rules to block all ingress traffic and allow only egress traffic. For example, on Google Cloud Platform (GCP), you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall denies ingress traffic by default.
+If you host your services on a virtual machine (VM) instance in a cloud provider, you may set up instance-level firewall rules to block all ingress traffic and allow only egress traffic. For example, on Google Cloud Platform (GCP), you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall denies ingress traffic unless it matches an explicit rule.
 
 ### OS firewall
 
