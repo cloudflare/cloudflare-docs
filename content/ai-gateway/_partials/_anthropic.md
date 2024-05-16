@@ -5,26 +5,24 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/anthropic`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/anthropic`
 
 
 ```bash
 ---
 header: Example fetch request
 ---
-
-curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/anthropic/v1/messages \
-    -H 'x-api-key: <ANTHROPIC_API_KEY>' \
-    -H "anthropic-version: 2023-06-01" \
-    -H 'Content-Type: application/json' \
-    -d '{
-      "model": "claude-3-opus-20240229",
-      "max_tokens": 1024,
-      "messages": [
-          {"role": "user", "content": "Hello, world"}
-      ]
-    }'
-
+curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/anthropic/v1/messages \
+ --header 'x-api-key: <ANTHROPIC_API_KEY>' \
+ --header 'anthropic-version: 2023-06-01' \
+ --header 'Content-Type: application/json' \
+ --data  '{
+    "model": "claude-3-opus-20240229",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "What is Cloudflare?"}
+    ]
+  }'
 ```
 
 If you are using the `@anthropic-ai/sdk`, you can set your endpoint like this:
@@ -37,14 +35,12 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const anthropic = new Anthropic({
   apiKey: env.ANTHROPIC_API_KEY,
-  baseURL: "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/anthropic",
+  baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/anthropic",
 });
 
 const message = await anthropic.messages.create({
   model: 'claude-3-opus-20240229',
-  messages: [{role: "user", content: "When is halloween?"}],
-  max_tokens: 1024,
-
+  messages: [{role: "user", content: "What is Cloudflare?"}],
+  max_tokens: 1024
 });
-
 ```

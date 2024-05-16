@@ -5,16 +5,16 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/cohere`
+`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere`
 
-When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/cohere`.
+When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere`.
 
 ```bash
 ---
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY>/cohere/v1/chat -X POST \
+curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere/v1/chat -X POST \
   --header 'Authorization: Token <COHERE_API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
