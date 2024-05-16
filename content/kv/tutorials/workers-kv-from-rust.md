@@ -15,7 +15,7 @@ using [workers-rs](https://github.com/cloudflare/workers-rs).
 
 ## Prerequisites
 
-You'll need the following tools installed on your computer to complete this tutorial:
+To complete this tutorial, you will need:
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 - [Wrangler](https://www.notion.so/Workers-e568dc13453f4c9d9133de54c18e32ea?pvs=21) CLI.
