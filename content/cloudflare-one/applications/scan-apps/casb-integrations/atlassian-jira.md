@@ -35,17 +35,17 @@ These permissions follow the principle of least privilege to ensure that only th
 
 Flag user and third-party app access issues, including account misuse and users not following best practices.
 
-| Finding                                    | Severity |
-| ------------------------------------------ | -------- |
-| Active Jira user with unknown account type | Low      |
-| Active third-party app with access         | Low      |
-| Inactive third-party app with access       | Low      |
-| Inactive Jira user                         | Low      |
+| Finding Type                                | Finding Type ID                        | Severity |
+| ------------------------------------------- | -------------------------------------- | -------- |
+| Jira: Active user with unknown account type | `8dfd390d-911e-47bb-9ded-cb75fd91e793` | Low      |
+| Jira: Active third-party app with access    | `01118135-a4ab-4b8f-887d-c814358da217` | Low      |
+| Jira: Inactive third-party app with access  | `36f7de49-2938-4a54-b212-b4da74145a58` | Low      |
+| Jira: Inactive user                         | `1e1a085c-1ef3-4199-bea5-ff52ccbd6d2d` | Low      |
 
 ### File security
 
 Identify files that could be potentially problematic and worth deeper investigation.
 
-| Finding                           | Severity |
-| --------------------------------- | -------- |
-| Jira Issue attachment over 512 MB | Medium   |
+| Finding                                   | Finding Type ID                        | Severity |
+| ----------------------------------------- | -------------------------------------- | -------- |
+| Jira: Issue attachment larger than 512 MB | `1e5473b7-588e-4954-b97d-a5a20b4f8c5a` | Medium   |
