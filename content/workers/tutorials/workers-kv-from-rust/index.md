@@ -200,4 +200,4 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 ## Related resources
 
 - [Rust support in Workers](/workers/languages/rust/).
-- [Using KV in Workers](https://www.notion.so/Use-Workers-KV-directly-from-Rust-95912dda004a4c8faf1d1281958b408a?pvs=21).
+- [Using KV in Workers](/kv/get-started/).
