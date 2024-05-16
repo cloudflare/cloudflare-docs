@@ -31,20 +31,20 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ### User account settings
 
-| Finding                        | Severity | Description                                                                                            |
-| ------------------------------ | -------- | ------------------------------------------------------------------------------------------------------ |
-| Slack User 2FA Disabled        | Critical | A user in the Slack Workspace does not have two-factor authentication (2FA) enabled for their account. |
-| Slack User Email Not Confirmed | High     | A user in the Slack Workspace has not verified the email they use to sign in.                          |
+| Finding Type                                        | Finding Type ID                        | Severity | Description                                                                                            |
+| --------------------------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
+| Slack: User with two-factor authentication disabled | `d1cc8596-d22c-435c-9f94-3ba068f019cd` | Critical | A user in the Slack Workspace does not have two-factor authentication (2FA) enabled for their account. |
+| Slack: User with unverified email                   | `9fa4ae7c-07f0-453a-b232-e734b0f8877c` | High     | A user in the Slack Workspace has not verified the email they use to sign in.                          |
 
 ### Channel sharing
 
-| Finding                         | Severity | Description                                                                                       |
-| ------------------------------- | -------- | ------------------------------------------------------------------------------------------------- |
-| Slack Channel Shared Externally | High     | A channel in the Slack Workspace has been shared with users who are not members of the Workspace. |
+| Finding Type                     | Finding Type ID                        | Severity | Description                                                                                       |
+| -------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------------- |
+| Slack: Channel shared externally | `d298ba64-f013-4e28-b68a-63f758380355` | High     | A channel in the Slack Workspace has been shared with users who are not members of the Workspace. |
 
 ### File sharing
 
-| Finding                           | Severity | Description                                                                   |
-| --------------------------------- | -------- | ----------------------------------------------------------------------------- |
-| Slack File Publicly Accessible    | Medium   | An external link has been created for a file uploaded to the Slack Workspace. |
-| Large File (2GB+) Shared in Slack | Low      | A file ≥ 2 GB has been uploaded to the Slack Workspace.                       |
+| Finding Type                                     | Finding Type ID                        | Severity | Description                                                                    |
+| ------------------------------------------------ | -------------------------------------- | -------- | ------------------------------------------------------------------------------ |
+| Slack: File publicly accessible with view access | `9d96d3a2-696b-4802-98aa-c6c8572e806e` | Medium   | An external link has been created for a file uploaded to the Slack Workspace.  |
+| Slack: File larger than 2 GB                     | `c16d64a8-9f78-4f24-99ff-de7fcdc6871b` | Low      | A file greater than or equal to 2 GB has been uploaded to the Slack Workspace. |
