@@ -47,7 +47,12 @@ Cloudflare's time servers are included in [pool.ntp.org](https://www.ntppool.org
 * [2606:4700:f1::1](https://www.ntppool.org/scores/2606:4700:f1::1)
 * [2606:4700:f1::123](https://www.ntppool.org/scores/2606:4700:f1::123)
 
-To manually configure your NTP client to use our time service, please first refer to the documentation for your Linux distribution to determine which NTP client you are using and where the configuration files are stored (for example, [Ubuntu](https://ubuntu.com/server/docs/about-time-synchronisation), [Debian](https://wiki.debian.org/NTP), [RHEL](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite)).
+To manually configure your NTP client to use our time service, please first refer to the documentation for your Linux distribution to determine which NTP client you are using and where the configuration files are stored.
+
+For example:
+- [Ubuntu](https://ubuntu.com/server/docs/about-time-synchronisation)
+- [Debian](https://wiki.debian.org/NTP)
+- [RHEL](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite)
 
 Exact configuration will vary by Linux distribution, but below are some example configurations for popular clients:
 
