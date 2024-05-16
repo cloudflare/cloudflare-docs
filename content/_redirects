@@ -371,7 +371,7 @@
 /fundamentals/get-started/origin-health/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
 /fundamentals/get-started/reference/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
-/fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
+/fundamentals/get-started/task-guides/optimize-site-speed/ /speed/ 301
 /fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
 /fundamentals/internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
@@ -441,7 +441,6 @@
 /fundamentals/data-products/ /analytics/ 301
 /fundamentals/get-started/setup/add-site/ /fundamentals/setup/manage-domains/add-site/ 301
 /fundamentals/get-started/get-started-external-link/ /learning-paths/get-started/ 301
-/fundamentals/get-started/task-guides/optimize-speed-external-link/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/get-started/task-guides/prevent-ddos-attacks-external/ /learning-paths/prevent-ddos-attacks/ 301
 /fundamentals/get-started/task-guides/origin-health/free/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/business/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
@@ -582,6 +581,7 @@
 /learning-paths/modules/security/dns-filtering-concepts/what-is-dns/ /learning-paths/dns-filtering/concepts/what-is-dns/ 301
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
+/learning-paths/optimize-site-speed/ /speed/ 301
 /learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
 /learning-paths/workers/configure/ /learning-paths/workers/get-started/ 301
 /learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
