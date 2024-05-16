@@ -14,7 +14,7 @@ When making requests to [Cohere](https://cohere.com/), replace `https://api.cohe
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere/v1/chat -X POST \
+curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere/v1/chat \
   --header 'Authorization: Token <COHERE_API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -37,13 +37,14 @@ import cohere
 import os
 
 co = cohere.Client(
-    api_key= os.getenv('API_KEY'),
-    base_url="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere/v1",
+  api_key= os.getenv('API_KEY'),
+  base_url="https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/cohere/v1",
 )
 
 chat = co.chat(
-    message="hello world!",
-    model="command"
+  message="hello world!",
+  model="command"
 )
+
 print(chat)
 ```

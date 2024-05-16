@@ -14,15 +14,15 @@ When making requests to [Groq](https://groq.com/), replace `https://api.groq.com
 header: Example fetch request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/groq/chat/completions -X POST \
+curl -X POST https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_NAME>/groq/chat/completions \
   --header 'Authorization: Bearer <GROQ_API_KEY>' \
   --header 'Content-Type: application/json' \
   --data '{
     "messages": [
-        {
-            "role": "user",
-            "content": "Explain the importance of fast language models"
-        }
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
     ],
     "model": "mixtral-8x7b-32768"
 }'
@@ -42,7 +42,7 @@ const groq = new Groq({
 });
 
 const chatCompletion = await groq.chat.completions.create({
-	  messages: [{ role: 'user', content: 'Explain the importance of low latency LLMs' }],
-	  model: 'mixtral-8x7b-32768',
+	messages: [{ role: 'user', content: 'What is Cloudflare?' }],
+	model: 'mixtral-8x7b-32768',
 });
 ```
