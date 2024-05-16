@@ -53,7 +53,7 @@ You can configure the concurrency of your consumer Worker in two ways:
 1. Set concurrency settings in the Cloudflare dashboard
 2. Set concurrency settings via `wrangler.toml`
 
-### Set concurrency settings in the Cloudflare dashboard:
+### Set concurrency settings in the Cloudflare dashboard
 
 To configure the concurrency settings for your consumer Worker from the dashboard: 
 
