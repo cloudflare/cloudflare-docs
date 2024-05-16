@@ -34,11 +34,11 @@ Open a terminal window, and run the following command to generate a Worker proje
 $ cargo generate cloudflare/workers-rs
 ```
 
-Then select `template/hello-world-http` template, give your project a descriptive name and hit enter. A new project should be created in your shell directory. You can open up the project in your editor and run `npx wrangler dev` to get it compiled and running.
+Then select `template/hello-world-http` template, give your project a descriptive name and select enter. A new project should be created in your directory. Open the project in your editor and run `npx wrangler dev` to compile and run your project.
 
-To explore Workers KV from Rust, let's build an app to store and retrieve cities by a given country name. Let’s go!
+In this tutorial, you will use Workers KV from Rust to build an app to store and retrieve cities by a given country name. 
 
-## Create a KV namespace
+## 2. Create a KV namespace
 
 In the terminal, use Wrangler to create a KV namespace for `cities`. This generates a configuration to be added to the project:
 
@@ -46,7 +46,7 @@ In the terminal, use Wrangler to create a KV namespace for `cities`. This genera
 $ npx wrangler kv:namespace create cities
 ```
 
-To add this configuration to your project, open up the `wrangler.toml` file and create an entry for `kv_namespaces` just above the build command:
+To add this configuration to your project, open the `wrangler.toml` file and create an entry for `kv_namespaces` above the build command:
 
 ```toml
 ---
@@ -59,13 +59,13 @@ kv_namespaces = [
 # build command...
 ```
 
-With this configured, we can access the KV namespace with the binding `"cities"` from Rust.
+With this configured, you can access the KV namespace with the binding `"cities"` from Rust.
 
-## Write data to KV
+## 3. Write data to KV
 
-For this app we’ll create two routes. A `POST` route to receive and store the city in KV and a `GET` route to retrieve the city of a given country. For example, a `POST` request to `/France` with a body of `{"city": "Paris"}` should create an entry of Paris as a city in France. Conversely, a `GET` request to `/France` should retrieve from KV and respond with Paris.
+For this app, you will create two routes: A `POST` route to receive and store the city in KV, and a `GET` route to retrieve the city of a given country. For example, a `POST` request to `/France` with a body of `{"city": "Paris"}` should create an entry of Paris as a city in France. A `GET` request to `/France` should retrieve from KV and respond with Paris.
 
-Start by installing [Serde](https://serde.rs/) as a project dependency to handle JSON `cargo add serde`. Then create an app router and a struct for `Country` in `src/lib.rs`:
+Install [Serde](https://serde.rs/) as a project dependency to handle JSON `cargo add serde`. Then create an app router and a struct for `Country` in `src/lib.rs`:
 
 ```rust
 ---
@@ -95,7 +95,7 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 
 ```
 
-For the post handler, we’ll grab the country name from the path and the city name from the request body. Then we’ll save this in KV with the country as key and the city as value. Finally, we respond with the city name if all goes well:
+For the post handler, you will retrieve the country name from the path and the city name from the request body. Then, you will save this in KV with the country as key and the city as value. Finally, the app will respond with the city name:
 
 ```rust
 ---
@@ -123,9 +123,9 @@ Save the file and make a `POST` request to test this endpoint:
 $ curl --json '{"city": "Paris"}' http://localhost:8787/France
 ```
 
-## Read data from KV
+## 4. Read data from KV
 
-To retrieve cities stored in KV, let’s write a `GET` route that pulls the country name from the path and searches KV. We also need some error handling in case it’s not found:
+To retrieve cities stored in KV, write a `GET` route that pulls the country name from the path and searches KV. You also need some error handling if the country is not found:
 
 ```rust
 ---
@@ -148,9 +148,12 @@ Save and make a curl request to test the endpoint:
 $ curl http://localhost:8787/France
 ```
 
-## Conclusion
+## 5. Deploy your project
 
-The completed app should look like this and you can deploy your worker with `npx wrangler deploy` :
+To deploy your Worker, run the following command:
+
+```sh
+$ npx wrangler deploy
 
 ```rust
 ---
