@@ -19,8 +19,8 @@ With OpenAI compatible endpoints, Workers AI supports examples like the followin
 header: curl example
 ---
 curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{{ACCOUNT_ID}}/ai/v1/chat/completions
-  --header 'Authorization: Bearer {{API_TOKEN}}' \
+  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1/chat/completions
+  --header 'Authorization: Bearer <CF_API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '
     {
