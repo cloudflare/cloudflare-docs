@@ -28,6 +28,8 @@ The email notifications are for informational purposes only. Actual usage and bi
 
 {{<available-notifications product="Billing">}}
 
+{{<render file="_get-started.md" productFolder="notifications" >}}
+
 ---
 
 ## Billing for Cloudflare Apps

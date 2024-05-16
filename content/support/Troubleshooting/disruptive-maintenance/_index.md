@@ -27,6 +27,8 @@ Scheduled maintenances can also be sent out via [Cloudflare Notifications](/noti
 
 {{<available-notifications product="Cloudflare Status" notificationName="Maintenance Notification">}}
 
+{{<render file="_get-started.md" productFolder="notifications" >}}
+
 ## Unplanned Maintenance
 
 Cloudflare operates a redundant [Anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) that is capable of automatically removing locations from our network if they require unplanned maintenance or experience an emergency event. In such cases, traffic will be rerouted automatically to alternative locations.

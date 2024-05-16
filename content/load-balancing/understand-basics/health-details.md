@@ -76,3 +76,5 @@ If a load balancer reaches **Critical** health and the pool serving as your fall
 You can configure alerts to receive notifications for changes in the health status of your pools or origins. 
 
 {{<available-notifications product="Load Balancing" notificationName="Load Balancing Health Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

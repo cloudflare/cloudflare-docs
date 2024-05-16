@@ -252,3 +252,5 @@ mTLS does not currently work for:
 You can configure alerts to receive notifications before your mutual TLS certificates expire.
 
 {{<available-notifications product="SSL/TLS" notificationName="Access mTLS Certificate Expiration Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

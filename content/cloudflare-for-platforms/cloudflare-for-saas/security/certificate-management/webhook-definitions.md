@@ -516,3 +516,5 @@ This behavior is because each custom hostname can only have one certificate atta
 You can configure alerts to receive notifications for changes in your custom hostname certificates.
 
 {{<available-notifications product="SSL/TLS" notificationName="SSL for SaaS Custom Hostnames Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

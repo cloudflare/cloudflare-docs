@@ -9,3 +9,5 @@ weight: 11
 You can configure alerts to receive notifications for changes in your network. 
 
 {{<available-notifications product="Magic Transit">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

@@ -104,3 +104,5 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 You can configure alerts to receive notifications for changes in your certificates.
 
 {{<available-notifications product="SSL/TLS" notificationName="Advanced Certificate Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}
