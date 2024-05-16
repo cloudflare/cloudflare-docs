@@ -42,8 +42,10 @@ Cloudflare can issue notifications for different types of DDoS attack alerts.
 
 ### Standard alerts
 
-* **HTTP DDoS Attack Alert**: Alert for HTTP attacks that generate more than 100 requests per second.
-* **Layer 3/4 DDoS Attack Alert**: Alert for Layer 3/4 attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more.
+{{<available-notifications product="DDoS Protection" notificationName="HTTP DDoS Attack Alert"
+>}}
+
+{{<available-notifications product="DDoS Protection" notificationName="Layer 3/4 DDoS Attack Alert">}}
 
 ### Advanced alerts
 
@@ -53,19 +55,8 @@ The availability of advanced DDoS attack alerts depends on your Cloudflare plan 
 
 Advanced DDoS attack alerts support additional configuration, allowing you to filter the notifications you wish to receive.
 
-* **Advanced HTTP DDoS Attack Alert**: Customizable alert for HTTP attacks that generate more than the configured number of requests per second (100 rps by default). Supports the following configuration parameters:
-
-    * The zones in your account for which you wish to receive notifications.
-    * The specific hostnames for which you wish to receive notifications.
-    * The minimum requests-per-second rate that will trigger the alert (100 rps by default).
-
-* **Advanced Layer 3/4 DDoS Attack Alert**: Customizable alert for Layer 3/4 attacks that generate more than the configured number of packets per second (12,000 pps by default). Supports the following configuration parameters:
-
-    * The IP prefixes for which you wish to receive notifications.
-    * The specific IP addresses for which you wish to receive notifications.
-    * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
-    * The minimum megabits-per-second rate that will trigger the alert.
-    * The protocols for which you wish to receive notifications (all protocols by default).
+{{<available-notifications product="DDoS Protection" notificationName="Advanced HTTP DDoS Attack Alert">}}
+{{<available-notifications product="DDoS Protection" notificationName="Advanced Layer 3/4 DDoS Attack Alert">}}
 
 You will also receive alerts for rules with a _Log_ action, containing information on what triggered the alert.
 
