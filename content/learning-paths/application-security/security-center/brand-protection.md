@@ -9,9 +9,9 @@ layout: learning-unit
 
 ## Types of queries
 
-1. Domain search: allows you to search for domains that might be trying to impersonate your brand
+1. [Domain search](/security-center/brand-protection/#domain-search): allows you to search for domains that might be trying to impersonate your brand.
 
-2. Logo search: allows you to search for logos that might look and feel like your brand's logo. 
+2. [Logo search](/security-center/brand-protection/#logo-queries): allows you to search for logos that might look and feel like your brand's logo. 
 
 ## Alerts
 
