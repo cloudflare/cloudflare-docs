@@ -13,7 +13,7 @@ _build:
 header: Example fetch request
 ---
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/anthropic/v1/messages \
- --header 'x-api-key: <ANTHROPIC_API_KEY>' \
+ --header 'x-api-key: {anthropic_api_key}' \
  --header 'anthropic-version: 2023-06-01' \
  --header 'Content-Type: application/json' \
  --data  '{

@@ -28,7 +28,7 @@ header: Example fetch request
 ---
 
 curl -X POST "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/google-vertex-ai/v1/projects/PROJECT_NAME/locations/REGION/publishers/google/models/gemini-1.0-pro-001:streamGenerateContent" \
-    -H "Authorization: Bearer <VERTEX_API_KEY>" \
+    -H "Authorization: Bearer {vertex_api_key}" \
     -H 'Content-Type: application/json' \
     -d '{
       "contents": [

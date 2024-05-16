@@ -15,7 +15,7 @@ header: Example fetch request
 ---
 
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq/chat/completions \
-  --header 'Authorization: Bearer <GROQ_API_KEY>' \
+  --header 'Authorization: Bearer {groq_api_key}' \
   --header 'Content-Type: application/json' \
   --data '{
     "messages": [

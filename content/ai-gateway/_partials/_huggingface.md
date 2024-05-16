@@ -16,7 +16,7 @@ header: Request
 ---
 
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/bigcode/starcoder -X POST \
-  --header 'Authorization: Bearer <HF_API_TOKEN>' \
+  --header 'Authorization: Bearer {hf_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{
     "inputs": "console.log"

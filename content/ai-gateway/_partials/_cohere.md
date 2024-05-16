@@ -15,7 +15,7 @@ header: Request
 ---
 
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/cohere/v1/chat \
-  --header 'Authorization: Token <COHERE_API_TOKEN>' \
+  --header 'Authorization: Token {cohere_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{
   "chat_history": [

@@ -17,7 +17,7 @@ curl --request POST \
      --url https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/perplexity-ai/chat/completions \
      --header 'accept: application/json' \
      --header 'content-type: application/json' \
-     --header 'Authorization: Bearer <PERPLEXITY_API_KEY>' \
+     --header 'Authorization: Bearer {perplexity_api_key}' \
      --data '{
       "model": "mistral-7b-instruct",
       "messages": [

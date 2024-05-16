@@ -25,7 +25,7 @@ header: Example fetch request
 curl --request POST \
   --url 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/RESOURCE_NAME/DEPLOYMENT_NAME/chat/completions?api-version=2023-05-15' \
   --header 'Content-Type: application/json' \
-  --header 'api-key: <AZURE_API_KEY>' \
+  --header 'api-key: {azure_api_key}' \
   --data '{
   "messages": [
     {
