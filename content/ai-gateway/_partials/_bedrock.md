@@ -23,7 +23,7 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 
     // replace with your configuration
-    const cfAccountId = "ACCOUNT_ID";
+    const cfAccountId = "{account_id}";
     const gatewayName = "{gateway_slug}";
     const region = 'us-east-1';
 
