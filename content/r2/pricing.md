@@ -8,24 +8,23 @@ weight: 10
 
 R2 charges based on the total volume of data stored, along with two classes of operations on that data:
 
-1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state. 
+1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state.
 2. [Class B operations](#class-b-operations) which tend to read existing state.
- 
+
 There are no charges for egress bandwidth.
 
 All included usage is on a monthly basis.
 
 ## R2 pricing
 
-{{<table-wrap>}}
-
 |                    | Free                         | Paid - Rates                       |
 | ------------------ | ---------------------------- | ---------------------------------- |
 | Storage            | 10 GB / month                | $0.015 / GB-month                  |
 | Class A Operations | 1 million requests / month   | $4.50 / million requests           |
 | Class B Operations | 10 million requests / month  | $0.36 / million requests           |
+| Egress (data transfer to Internet) | Free [^1] |
 
-{{</table-wrap>}}
+[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other, metered services to an R2 bucket, you may be charged by those services.
 
 ### Storage usage
 
@@ -49,13 +48,27 @@ Class B Operations include `HeadBucket`, `HeadObject`, `GetObject`, `UsageSummar
 
 Free operations include `DeleteObject`, `DeleteBucket` and `AbortMultipartUpload`.
 
+## Data migration pricing
+
+### Super Slurper
+
+Super Slurper is free to use. You are only charged for the Class A operations that Super Slurper makes to your R2 bucket. Objects with sizes < 100MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Super Slurper copies objects over to R2.
+
+Once migration completes, you are charged for storage & Class A/B operations as described in previous sections.
+
+### Sippy
+
+Sippy is free to use. You are only charged for the operations Sippy makes to your R2 bucket. If a requested object is not present in R2, Sippy will copy it over from your source bucket. Objects with sizes < 200MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates, and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Sippy copies objects over to R2.
+
+As objects are migrated to R2, they are served from R2, and you are charged for storage & Class A/B operations as described in previous sections.
+
 ## Pricing calculator
 
 To learn about potential cost savings from using R2, refer to the [R2 pricing calculator](https://r2-calculator.cloudflare.com/).
 
 ## R2 billing examples
 
-#### Data Storage
+### Data storage
 
 If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB and requests each 1,000 times per month, the estimated cost for the month would be:
 
@@ -68,9 +81,9 @@ If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB an
 | **TOTAL**          |                                            |              |                   | **$14.85** |
 {{</table-wrap>}}
 
-#### Asset Hosting
+### Asset hosting
 
-If a user writes 100,000 files with an average size of 100 KB object and reads 10,000,000 objects per day, the estimated cost in a month would be: 
+If a user writes 100,000 files with an average size of 100 KB object and reads 10,000,000 objects per day, the estimated cost in a month would be:
 
 {{<table-wrap>}}
 |                    | Usage                                               | Free Tier    | Billable Quantity | Price       |
@@ -81,18 +94,12 @@ If a user writes 100,000 files with an average size of 100 KB object and reads 1
 | **TOTAL**          |                                                     |              |                   | **$104.40** |
 {{</table-wrap>}}
 
-## Super Slurper pricing
-
-Super Slurper is free to use. You are only charged for the Class A operations that Super Slurper makes to your R2 bucket. Objects with sizes < 100MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Super Slurper copies objects over to R2.
-
-Once migration completes, you are charged for storage & Class A/B operations as described in previous sections.
-
-## Sippy pricing
-
-Sippy is free to use. You are only charged for the operations Sippy makes to your R2 bucket. If a requested object is not present in R2, Sippy will copy it over from your source bucket. Objects with sizes < 200MiB are uploaded to R2 in a single Class A operation. Larger objects use multipart uploads to increase transfer success rates, and will perform multiple Class A operations. Note that your source bucket might incur additional charges as Sippy copies objects over to R2.
-
-As objects are migrated to R2, they are served from R2, and you are charged for storage & Class A/B operations as described in previous sections.
-
 ## Cloudflare billing policy
 
 To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/).
+
+## Frequently asked questions
+
+### Will I be charged for unauthorized requests to my R2 bucket?
+
+No. You are not charged for operations when the caller does not have permission to make the request (HTTP 401 `Unauthorized` response status code).

@@ -264,6 +264,10 @@ const platform = await getPlatformProxy(options);
 
     *   Optional options object containing preferences for the bindings:
 
+        * `environment` {{<type>}}string{{</type>}}
+
+          The environment to use.
+
         * `configPath` {{<type>}}string{{</type>}}
 
           The path to the configuration object to use (default `wrangler.toml`).

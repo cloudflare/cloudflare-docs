@@ -16,7 +16,7 @@ entries:
 
 - term: C3
   general_definition: |-
-    [C3](/learning-paths/workers/get-started/first-worker/#c3-and-wrangler) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+    [C3](/learning-paths/workers/get-started/c3-and-wrangler/) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
 - term: CPU time
   general_definition: |-
@@ -128,7 +128,7 @@ entries:
 
 - term: Wrangler
   general_definition: |-
-    [Wrangler](/learning-paths/workers/get-started/first-worker/#c3-and-wrangler) is the Cloudflare Developer Platform command-line interface (CLI) that allows you to manage projects, such as Workers, created from the Cloudflare Developer Platform product offering.
+    [Wrangler](/learning-paths/workers/get-started/c3-and-wrangler/) is the Cloudflare Developer Platform command-line interface (CLI) that allows you to manage projects, such as Workers, created from the Cloudflare Developer Platform product offering.
 
 - term: wrangler.toml
   general_definition: |-

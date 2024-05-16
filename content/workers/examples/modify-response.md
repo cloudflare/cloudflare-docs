@@ -5,6 +5,9 @@ summary: Fetch and modify response properties which are immutable by creating a
 tags:
   - Middleware
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Modify response
 weight: 1001

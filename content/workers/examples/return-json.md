@@ -5,7 +5,12 @@ summary: Return JSON directly from a Worker script, useful for building APIs and
 demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
-  - Originless
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Return JSON
 weight: 2

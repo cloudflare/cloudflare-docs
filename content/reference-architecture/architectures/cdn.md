@@ -19,7 +19,6 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 {{<render file="_what-is-cloudflare-link.md">}}
 - What is a CDN? | [Website](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) (5 minute read)
-- Whitepaper: [Cloudflare CDN](https://cfl.re/CDN-whitepaper) (3 minute read)
 - Analyst Report: [Cloudflare named Leader in 2024 GigaOm Radar for Content Delivery Networks](https://www.cloudflare.com/lp/gigaom-radar-cdn/) (20 minute read)
 
 Those who read this reference architecture will learn:
@@ -200,9 +199,7 @@ Figure 6 details the traffic flow when Tiered Cache and Argo Smart Routing are n
 
 ![Figure 6: Diagram with bidirectional arrows indicating a request between an end user and origin server without Argo Smart Routing enabled.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure6.svg "Figure 6: Cloudflare CDN without Tiered Cache or Argo Smart Routing")
 
-Figure 7 articulates the traffic flow with both Tiered Cache and Argo Smart Routing enabled.
-it 
-In Figure 7, when a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 4, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin.
+Figure 7 articulates the traffic flow with both Tiered Cache and Argo Smart Routing enabled. When a request is received by Data Center 1 and there is a cache miss, the cache of the upper tier data center, Data Center 4, is checked. If the cached content is not found at the upper tier data center, with Argo Smart Routing enabled, the request is sent on the fastest path from the upper tier data center to the origin.
 
 The fastest path is determined by the Argo network intelligence capabilities, which take into account real-time network data such as congestion, latency, and RTT.
 

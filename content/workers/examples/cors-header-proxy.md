@@ -4,6 +4,9 @@ summary: Add the necessary CORS headers to a third party API response.
 tags:
   - Security
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: CORS header proxy
 weight: 1001

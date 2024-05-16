@@ -56,10 +56,13 @@ To upload a custom SSL certificate in the dashboard:
 
 7. Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
 
-8. Select a value for **Legacy Client Support**, which toggles {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}Server Name Indication (SNI){{</glossary-tooltip>}} support:
+8. Select a value for **Legacy Client Support**, which specifies {{<glossary-tooltip term_id="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">}}Server Name Indication (SNI){{</glossary-tooltip>}} support:
 
     - **Modern (recommended)**: SNI only
     - **Legacy**: Supports non-SNI
+    {{<Aside type="warning">}}
+Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](/byoip/).
+{{</Aside>}}
 
 9. Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
@@ -119,6 +122,10 @@ EOF
 ```
 
 `sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.
+
+  {{<Aside type="warning">}}
+Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](/byoip/).
+{{</Aside>}}
 
 2. Upload your certificate and key
 

@@ -42,17 +42,17 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 {{<Aside type="note">}}
 
-The following global flags work on every command.
+The following global flags work on every command, with some exceptions for `pages` commands.
 
 {{<definitions>}}
 
-- `--config` {{<type>}}string{{</type>}}
-  - Path to `.toml` configuration file.
 - `--help` {{<type>}}boolean{{</type>}}
   - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
   - Show version number.
-- `--experimental-json-config` {{<type>}}boolean{{</type>}}
+- `--config` {{<type>}}string{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
+  - Path to `.toml` configuration file.
+- `--experimental-json-config` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
   - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
@@ -766,6 +766,10 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to listen to requests on.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
@@ -802,6 +806,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
 - `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify Wrangler's logging level.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the interactive dev session.
 
 {{</definitions>}}
 
@@ -826,7 +832,7 @@ None of the options for this command are required. Also, many can be set in your
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -908,7 +914,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1868,6 +1874,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} 
+  - Show the interactive dev session.
 
 {{</definitions>}}
 

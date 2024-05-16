@@ -62,6 +62,31 @@ In your project directory, C3 has generated the following:
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
 
+### Create a new Worker Project from an external source
+
+In addition to creating new projects from C3 templates, C3 also supports creating new projects from Git repositories. To create a new project from a Git repository, open your terminal and run:
+
+```sh
+$ npm create cloudflare@latest -- --template <SOURCE>
+```
+
+`<SOURCE>` may be any of the following:
+
+- user/repo (GitHub)
+- git@github.com:user/repo
+- https://github.com/user/repo
+- user/repo/some-template (subdirectories)
+- user/repo#canary (branches)
+- user/repo#1234abcd (commit hash)
+- bitbucket:user/repo (Bitbucket)
+- gitlab:user/repo (GitLab)
+
+At a minimum, template folders must contain the following:
+
+- `package.json`
+- `wrangler.toml`
+- `src/` containing a worker script referenced from `wrangler.toml`
+
 ## 2. Develop with Wrangler CLI
 
 The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. C3 will install Wrangler in projects by default.

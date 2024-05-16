@@ -50,7 +50,7 @@ header: Text in Expression Editor
 ---
 header: Text in Path > Rewrite to... > Dynamic
 ---
-concat("/cdn-cgi/images", substring(http.request.uri.path, 7))
+concat("/cdn-cgi/image", substring(http.request.uri.path, 7))
 ```
 
 ### Advanced version

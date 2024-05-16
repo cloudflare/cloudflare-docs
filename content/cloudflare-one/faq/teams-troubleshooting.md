@@ -159,6 +159,7 @@ To resolve the issue, you will need to edit two Windows registry keys:
     Value: EnableActiveProbing
     Data: 1
     ```
+If you continue to have issues with Microsoft 365 applications, consider enabling [**Directly route Microsoft 365 traffic**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).  
 
 ## I see Storage Partitioned Error.
 
@@ -176,7 +177,7 @@ To disable third-party storage partitioning:
 2. Set **Experimental third-party storage partitioning** to _Disabled_.
 3. Select **Relaunch** to apply the change.
 
-## I see `WebGL context creation error occurred`.
+## I see `WebGL Rendering Error`.
 
 Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology. This allows us to deliver a secure, performant remote computing experience without the bandwidth limitations of traditional solutions. While we expect most websites to work perfectly, some browser features and web technologies such as WebGL (Web Graphics Library) are unsupported.
 

@@ -4,6 +4,12 @@ summary: Example of how to add, change, or delete headers sent in a request or r
 tags:
   - Headers
   - Middleware
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Alter headers
 weight: 1001

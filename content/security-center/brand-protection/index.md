@@ -12,7 +12,7 @@ While the Brand Protection tool is in beta, you will need to request access by f
 
 {{</Aside>}}
 
-Common misspellings (`cloudfalre.com`) and concatenation of services (`cloudflare-okta.com`) are often registered by attackers to trick unsuspecting victims into submitting private information such as passwords. Brand Protection gives you the ability to search for new domains that may be attempting to impersonate your brand. Our system allows you to save search queries that run continuously and alert you if any new domains match those queries.
+{{<render file="_brand-protection-definition.md">}}
 
 ## Domain search
 
@@ -55,9 +55,7 @@ To investigate a query:
 
 ## Brand Protection Alerts
 
-Brand Protection works with Cloudflare’s ANS (Alerts Notification Service) to provide configurable alerts when new domains are detected. 
-
-Any matches that are found during the new domain search are then inserted into an internal alerts table which triggers an alert for the user. This allows you to receive real-time notifications and take immediate action to investigate and potentially block any suspicious domains that may be attempting to impersonate your brand.
+{{<render file="_brand-protection-alerts.md">}}
 
 To set a Brand Protection Alert:
 

@@ -66,7 +66,7 @@ export default {
 };
 ```
 
-You can also call `retry()` to explicitly force a message to be redelivered in a subsequent batch. This is referred to as "negative acknowledgement". This can be particularly useful when you want process the rest of the messages in that batch without throwing an error that would force the entire batch to be redelivered.
+You can also call `retry()` to explicitly force a message to be redelivered in a subsequent batch. This is referred to as "negative acknowledgement". This can be particularly useful when you want to process the rest of the messages in that batch without throwing an error that would force the entire batch to be redelivered.
 
 ```ts
 ---
@@ -113,7 +113,7 @@ Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause
 
 ## Delay messages
 
-When publishing messages to a queue, or when [marking a messsage or batch for retry](#explicit-acknowledgement-and-retries), you can choose to delay messages from being processed for a period of time.
+When publishing messages to a queue, or when [marking a message or batch for retry](#explicit-acknowledgement-and-retries), you can choose to delay messages from being processed for a period of time.
 
 Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue. For example, if an upstream API you are calling to returns a `HTTP 429: Too Many Requests`, you can delay messages to slow down how quickly you are consuming them before they are re-processed.
 

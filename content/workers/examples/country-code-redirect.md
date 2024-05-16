@@ -2,7 +2,13 @@
 type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
-  - Originless
+  - Redirects
+  - Geolocation
+languages:
+  - JavaScript
+  - TypeScript
+preview:
+  - true
 pcx_content_type: configuration
 title: Country code redirect
 weight: 1001

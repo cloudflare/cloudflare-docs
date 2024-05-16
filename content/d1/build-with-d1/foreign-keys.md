@@ -51,7 +51,7 @@ To illustrate this with an example based on an e-commerce website with two table
 This mapping is defined as `FOREIGN KEY`, which ensures that:
 
 * You cannot delete a row from the `users` table that would violate the foreign key constraint. This means that you cannot end up with orders that do not have a valid user to map back to.
-* `orders` are always defined against a valid `user_id`, mitigating the risk of creating orders that refer to invalid (or non-existant) users.
+* `orders` are always defined against a valid `user_id`, mitigating the risk of creating orders that refer to invalid (or non-existent) users.
 
 ```sql
 CREATE TABLE users (
@@ -81,8 +81,8 @@ There are five actions you can set when defining the `ON UPDATE` and/or `ON DELE
 
 * `CASCADE` - Updating or deleting a parent key deletes all child keys (rows) associated to it.
 * `RESTRICT` - A parent key cannot be updated or deleted when _any_ child key refers to it. Unlike the default foreign key enforcement, relationships with `RESTRICT` applied return errors immediately, and not at the end of the transaction.
-* `SET DEFAULT` - Set the child column(s) referred to by the foreign key defintion to the `DEFAULT` value defined in the schema. If no `DEFAULT` is set on the child columns, you cannot use this action.
-* `SET NULL` - Set the child column(s) referred to by the foreign key defintion to SQL `NULL`.
+* `SET DEFAULT` - Set the child column(s) referred to by the foreign key definition to the `DEFAULT` value defined in the schema. If no `DEFAULT` is set on the child columns, you cannot use this action.
+* `SET NULL` - Set the child column(s) referred to by the foreign key definition to SQL `NULL`.
 * `NO ACTION` - Take no action.
 
 {{<Aside type="warning" header="CASCADE usage">}}
