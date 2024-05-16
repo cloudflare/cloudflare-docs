@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}`
 
 AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint. The Universal Endpoint requires some adjusting to your schema, but supports additional features. Some of these features are, for example, retrying a request if it fails the first time, or configuring a fallback model/provider when a request fails.
 
@@ -22,7 +22,7 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG> -X POST \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug} -X POST \
   --header 'Content-Type: application/json' \
   --data '[
   {

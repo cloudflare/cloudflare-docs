@@ -5,16 +5,16 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/replicate`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate`
 
-When making requests to Replicate, replace `https://api.replicate.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/replicate`.
+When making requests to Replicate, replace `https://api.replicate.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate`.
 
 ```bash
 ---
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_SLUG>/replicate/predictions -X POST \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate/predictions -X POST \
   --header 'Authorization: Token <REPLICATE_API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
