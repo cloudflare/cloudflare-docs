@@ -242,7 +242,7 @@
           },
           {
             "url_path": "/magic-wan/",
-            "link_title": "Magic Wan",
+            "link_title": "Magic WAN",
             "additional_description": "Securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution."
           }
         ]
