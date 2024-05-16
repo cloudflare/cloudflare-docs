@@ -26,7 +26,7 @@ To complete this tutorial, you will need:
 $ cargo install cargo-generate
 ```
 
-## Basic project scaffolding
+## 1. Create your Worker project in Rust
 
 Open up a terminal and run the following command to generate a Worker project template in Rust:
 
