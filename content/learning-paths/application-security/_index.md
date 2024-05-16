@@ -1,12 +1,12 @@
 ---
-title: Secure your application
+title: Application Security
 type: developers-site
 layout: home
+new_learning_path: true
 pcx_content_type: learning-path
 meta:
+    title: Application Security
     description: Learn more about the tools Cloudflare offers to protect your website against malicious traffic and bad actors.
 ---
 
-{{<dynamic-learning-path-header file="application-security.json">}}
-
-<vue-component name="DynamicLearningPath"/>
+{{<learning-path file="application-security.json">}}
