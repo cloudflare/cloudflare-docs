@@ -196,5 +196,5 @@ A message is the object you are producing to and consuming from a queue.
 
 Any JSON serializable object can be published to a queue. For most developers, this means either simple strings or JSON objects. You can explicitly [set the content type](#content-types) when sending a message.
 
-Messages themselves can be [batched when delivered to a consumer](/queues/configuration/batching-retries/). By default, messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried. You can also choose to [explictly acknowledge](/queues/configuration/batching-retries/) messages as they are successfully processed, and/or mark individual messages to be retried.
+Messages themselves can be [batched when delivered to a consumer](/queues/configuration/batching-retries/). By default, messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried. You can also choose to [explicitly acknowledge](/queues/configuration/batching-retries/) messages as they are successfully processed, and/or mark individual messages to be retried.
 
