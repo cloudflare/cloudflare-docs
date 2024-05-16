@@ -7,7 +7,7 @@ meta:
   title: Magic Cloud Networking
 ---
 
-# Magic Cloud Networking
+{{<heading-pill style="beta" heading="h1">}}Magic Cloud Networking{{</heading-pill>}}
 
 {{<description>}}{{</description>}}
 
