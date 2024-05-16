@@ -1,11 +1,11 @@
 ---
-title: Default security
+title: Default traffic security
 pcx_content_type: overview
 weight: 3
 layout: learning-module
 ---
 
-# Default security
+# Default traffic security
 
 As soon as you onboard your domain to Cloudflare, you are automatically protected. This module reviews what those protections are and why they are critical. 
 
