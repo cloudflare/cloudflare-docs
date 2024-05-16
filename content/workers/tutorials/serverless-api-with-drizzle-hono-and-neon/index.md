@@ -12,6 +12,8 @@ spotlight:
 
 # Cloudflare Workers - Build a serverless API using Drizzle ORM, Hono and Neon
 
+{{<spotlight-author>}}
+
 ## Prerequisites
 
 To successfully complete this tutorial, you will need:
