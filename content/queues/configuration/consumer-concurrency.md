@@ -50,7 +50,7 @@ If you have a workflow that is limited by an upstream API and/or system, you may
 
 You can configure the concurrency of your consumer Worker 2 ways:
 
-* Set concurrency settings in the Cloudflare dashboard
+1. Set concurrency settings in the Cloudflare dashboard
 2. Set concurrency settings via `wrangler.toml`
 
 ### Set concurrency settings in the Cloudflare dashboard:
