@@ -40,11 +40,11 @@ These permissions follow the principle of least privilege to ensure that only th
 
 Flag user and third-party app access issues, including account misuse, sharing security, and users not following best practices.
 
-| Finding type                                                     | Finding type ID                        | Severity |
-| ---------------------------------------------------------------- | -------------------------------------- | -------- |
-| Confluence Unknown or anonymous user with edit access to content | `d5ad6f5e-3e7a-4409-a9dc-9707caca047e` | Critical |
-| Confluence Unknown or anonymous user with edit access to space   | `a531c40f-76f5-404e-9c9b-3b21a6da7b98` | High     |
-| Confluence Third-party app with edit access to space             | `aac0ac18-25ad-442a-9a24-01ecd85b0b2b` | Medium   |
-| Confluence Third-party app with edit access to content           | `8214431e-b708-49c9-b28b-3214f1b491d8` | Medium   |
-| Confluence Unknown or anonymous user with access                 | `a1d0d098-2602-4312-85a8-a62d3bc56aca` | Low      |
-| Confluence Third-party app with content access                   | `5ccf7326-386d-4afb-867a-fbf25978c33a` | Low      |
+| Finding type                                                      | Finding type ID                        | Severity |
+| ----------------------------------------------------------------- | -------------------------------------- | -------- |
+| Confluence: Unknown or anonymous user with edit access to content | `d5ad6f5e-3e7a-4409-a9dc-9707caca047e` | Critical |
+| Confluence: Unknown or anonymous user with edit access to space   | `a531c40f-76f5-404e-9c9b-3b21a6da7b98` | High     |
+| Confluence: Third-party app with edit access to space             | `aac0ac18-25ad-442a-9a24-01ecd85b0b2b` | Medium   |
+| Confluence: Third-party app with edit access to content           | `8214431e-b708-49c9-b28b-3214f1b491d8` | Medium   |
+| Confluence: Unknown or anonymous user with access                 | `a1d0d098-2602-4312-85a8-a62d3bc56aca` | Low      |
+| Confluence: Third-party app with content access                   | `5ccf7326-386d-4afb-867a-fbf25978c33a` | Low      |
