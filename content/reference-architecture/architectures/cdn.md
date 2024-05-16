@@ -110,7 +110,9 @@ The benefits of the Cloudflare CDN can be attributed to the below two points, di
 
 Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global Anycast network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin. 
 
-![Figure 2 is a diagram representing the traffic between a client and a server on Cloudflare's global Anycast network at different client locations.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure2.svg "Figure 2: HTTP request to Cloudflare CDN with Anycast")
+(fix typo on Figure 2 below - Closet to Closest)
+
+![Figure 2 is a diagram representing the traffic between a client and a server on Cloudflare's global Anycast network at different client locations.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure2.svg "Figure 2: HTTP request to Cloudflare CDN with Anycast") 
 
 ## Cloudflare CDN architecture and design
 
