@@ -9,6 +9,37 @@ title: Deploy a VitePress site
 
 In this guide, you will create a new VitePress project and deploy it using Cloudflare Pages.
 
+## Set up a new project
+
+VitePress ships with a command line setup wizard that will help you scaffold a basic project.
+
+{{<tabs labels="npm | pnpm | yarn | bun">}}
+{{<tab label="npm" default="true">}}
+
+```sh
+$ npx vitepress init
+```
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm vitepress init
+```
+{{</tab>}}
+{{<tab label="yarn">}}
+
+```sh
+$ yarn vitepress init
+```
+{{</tab>}}
+{{<tab label="bun">}}
+
+```sh
+$ bun vitepress init
+```
+{{</tab>}}
+{{</tabs>}}
+
 ## Install VitePress
 
 {{<tabs labels="npm | pnpm | yarn | bun">}}
@@ -43,37 +74,6 @@ $ bun add -D vitepress
 If you encounter errors, make sure your local machine meets the [Prerequisites for VitePress](https://vitepress.dev/guide/getting-started#prerequisites).
 
 {{</Aside>}}
-
-## Set up a new project
-
-VitePress ships with a command line setup wizard that will help you scaffold a basic project.
-
-{{<tabs labels="npm | pnpm | yarn | bun">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npx vitepress init
-```
-{{</tab>}}
-{{<tab label="pnpm">}}
-
-```sh
-$ pnpm vitepress init
-```
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn vitepress init
-```
-{{</tab>}}
-{{<tab label="bun">}}
-
-```sh
-$ bun vitepress init
-```
-{{</tab>}}
-{{</tabs>}}
 
 {{<render file="_tutorials-before-you-start.md">}}
 
