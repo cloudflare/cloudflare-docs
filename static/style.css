@@ -3480,23 +3480,14 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown--table-wrap table {
-  word-break: normal;
+  word-break: break-word;
 }
 
-/* @media (hover: hover) {
-  .DocsMarkdown--table-wrap:hover {
-    width: calc(100% + var(--docs-body-sidebar-width));
-  }
-  .DocsMarkdown--table-wrap:hover table {
-    background-color: var(--background-color);
-    z-index: 1;
-  }
-} */
 .DocsMarkdown--table-wrap tr > :first-child {
   position: -webkit-sticky;
   position: sticky;
   left: 0;
-  white-space: nowrap;
+  white-space: normal;
   padding-left: 1em;
   background: var(--background-color);
   box-shadow: 5px 0 5px -3px var(--background-color);
