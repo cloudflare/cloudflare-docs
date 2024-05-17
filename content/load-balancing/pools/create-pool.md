@@ -90,6 +90,6 @@ To delete a pool using the API, send a [DELETE](/api/operations/account-load-bal
 
 You can configure alerts to receive notifications for changes in the status of your pools. 
 
-{{<available-notifications product="Load Balancing" notificationName="Pool Enablement">}}
+{{<available-notifications product="Load Balancing">}}
 
 {{<render file="_get-started.md" productFolder="notifications" >}}
