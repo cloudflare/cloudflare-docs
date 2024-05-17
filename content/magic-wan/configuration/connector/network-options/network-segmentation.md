@@ -5,7 +5,7 @@ title: Network segmentation
 
 # Network segmentation
 
-You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN to LAN traffic. These policies can be created for specific subnets, and link two LANs.
+You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it to the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN to LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
 Creating these policies to segment your network means LAN to LAN traffic can be allowed either locally or via Cloudflare’s network. As a best practice for security, we recommend sending all traffic through Cloudflare’s network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN to LAN traffic flows.
 
