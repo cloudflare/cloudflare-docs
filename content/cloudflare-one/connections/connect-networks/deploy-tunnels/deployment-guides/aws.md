@@ -38,7 +38,7 @@ To complete the following procedure, you will need to:
 
 7. In **Network settings**, select **Create security group**.
 
-8. Turn on the following security group rules:
+8. Turn on the following Security Group rules:
     - **Allow SSH traffic from _My IP_** to prevent the instance from being publicly accessible.
     - **Allow HTTPS traffic from the internet**
     - **Allow HTTP traffic from the internet**
@@ -75,50 +75,22 @@ To complete the following procedure, you will need to:
   EOF
   ```
 
-14. To verify that the Apache server is running, open a browser and go to `http://ubuntu@ec2-44-202-59-16.compute-1.amazonaws.com` (make sure to connect over `http`, not `https`). You should see the **Hello Cloudflare!** test page.
+14. To verify that the Apache server is running, open a browser and go to `http://ec2-44-202-59-16.compute-1.amazonaws.com` (make sure to connect over `http`, not `https`). You should see the **Hello Cloudflare!** test page.
 
 ## 2. Create a Cloudflare Tunnel
 
-Next, we will create a Cloudflare Tunnel in Zero Trust and run the tunnel on the VM.
-
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com) and go to **Networks** > **Tunnels**.
-
-2. Select **Create a tunnel**.
-
-3. Choose **Cloudflared** for the connector type and select **Next**.
-
-4. Enter a name for your tunnel (for example, `aws-tunnel`).
-
-5. Select **Save tunnel**.
-
-6. Under **Choose your environment**, select **Debian**. Copy the command shown in the dashboard and run it on your AWS instance.
-
-7. Once the command has finished running, your connector will appear in Zero Trust.
-
-8. Select **Next**.
+{{<render file="tunnel/_cloud-create-tunnel.md" withParameters="AWS instance;;aws">}}
 
 ## 3. Connect using a public hostname
 
-To configure a public hostname route for your Cloudflare Tunnel:
-
-1. In the **Public Hostname** tab, enter a hostname for the application (for example, `hellocloudflare.<your-domain>.com`).
-2. Under **Service**, enter `http://localhost:80`.
-3. Select **Save hostname**.
-4. To test, open a browser and go to `http://hellocloudflare.<your-domain>.com`. You should see the **Hello Cloudflare!** test page.
-
-You can optionally [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to control who can access the service via its public hostname.
-
-### Related resources
-
-- [Public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/)
-- [Origin configuration](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/)
+{{<render file="tunnel/_cloud-public-hostname.md">}}
 
 ## 4. Connect using a private IP
 
-To configure a private network route for your Cloudflare Tunnel:
+[Private network routes](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) allow users to connect to your virtual private cloud (VPC) using the WARP client. To add a private network route for your Cloudflare Tunnel:
 
-1. In the **Private Network** tab, enter the **Private IPv4 address** of your AWS instance (for example, `172.31.19.0`).
-2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `172.16.0.0/12`.  We recommend re-adding the IPs that are not explicitly used by your AWS instance -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
+1. In the **Private Network** tab, enter the **Private IPv4 address** of your AWS instance (for example, `172.31.19.0`). You can expand the IP range later if necessary.
+2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `172.16.0.0/12`.  We recommend re-adding the IPs that are not explicitly used by your AWS instance -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
 3. To test on a user device:
     1. [Log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
     2. Open a terminal window and connect to the service using its private IP:
@@ -132,8 +104,12 @@ To configure a private network route for your Cloudflare Tunnel:
 
 You can optionally [create Gateway network policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to control who can access the instance via its private IP.
 
-### Related resources
-
-- [Connect over SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
-
 ## Firewall configuration
+
+To secure your AWS instance, you can configure your [Security Group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html) to deny all inbound traffic and allow only outbound traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation). All Security Group rules are Allow rules; traffic that does not match a rule is blocked. Therefore, you can delete all inbound rules and leave only the relevant outbound rules.
+
+{{<Aside type="note">}}
+If you delete the inbound rule for port `22`, you will be unable to SSH back into the instance.
+{{</Aside>}}
+
+After configuring your Security Group rules, verify that you can still access the service through Cloudflare Tunnel via its [public hostname](#3-connect-using-a-public-hostname) or [private IP](#4-connect-using-a-private-ip). The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://ec2-44-202-59-16.compute-1.amazonaws.com` the test page should no longer load.
