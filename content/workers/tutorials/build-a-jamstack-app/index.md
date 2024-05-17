@@ -36,10 +36,10 @@ $ npm create cloudflare@latest todos
 
 To configure your Worker:
 
-- Choose "Hello World" script for the type of application you would like to create.
-- Answer No to using TypeScript.
-- Answer Yes to using Git for version control.
-- Answer No to deploying your Worker.
+- Choose `"Hello World" Worker` for the type of application you would like to create.
+- Answer `No` to using TypeScript.
+- Answer `Yes` to using Git for version control.
+- Answer `No` to deploying your application.
 
 Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
