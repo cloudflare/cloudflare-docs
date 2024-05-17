@@ -284,7 +284,7 @@ async fetch (request, env, ctx) {
 }
 ```
 
-## 4. Adding todos from the UI
+## 4. Add todos from the user interface (UI)
 
 At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining task is creating todos from inside the application UI. You can add todos using the KV API — update the cache by running `env.TODOS.put(newData)`.
 
