@@ -147,3 +147,9 @@ entries:
 - term: Universal SSL certificate
   general_definition: |-
     by default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/manage-domains/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.
+
+- term: validation level
+  general_definition: |-
+    the level to which a certificate authotity validates domain ownership before issuing an SSL/TLS certificate.
+
+    The different certificate validation levels are DV (Domain Validated), OV (Organization Validated), or EV (Extended Validation).
