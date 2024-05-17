@@ -43,7 +43,7 @@ For details on configuring a managed ruleset in the dashboard, refer to [Configu
 
 To enable Cloudflare Sensitive Data Detection for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_response_firewall_managed` phase. For more information on deploying a managed ruleset, refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
 
-The ruleset ID is the following:  {{<rule-id>}}e22d83c647c64a3eae91b71b499d988e{{</rule-id>}}.
+The ruleset ID is the following: {{<rule-id>}}e22d83c647c64a3eae91b71b499d988e{{</rule-id>}}.
 
 To configure Cloudflare Sensitive Data Detection via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 - Turn on or off individual rules by creating rule overrides for those rules.
