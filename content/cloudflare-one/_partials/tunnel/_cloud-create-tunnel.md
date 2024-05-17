@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1, param2
+inputParameters: param1;;param2
 ---
 
 Next, we will create a Cloudflare Tunnel in Zero Trust and run the tunnel on the $1.
