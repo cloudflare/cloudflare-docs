@@ -7,7 +7,7 @@ title: Microsoft Azure
 
 This tutorial provides information on how to connect Cloudflare Magic WAN to your Azure Virtual Network, using the Azure Virtual Network Gateway.
 
-> Note: This configuration guide applies to Azure Virtual Network Gateway in an Active/Standby configuration. Active/Active is not currently supported.
+{{<Aside type="note">}}This configuration guide applies to Azure Virtual Network Gateway in an Active/Standby configuration. Active/Active configuration is not currently supported.{{</Aside>}}
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ You will need to have an existing Resource group, Virtual Network, and Virtual M
 
 ### 1. Create a Gateway subnet
 
-You should already have a Virtual Network (VNET) created with a Subnet assigned to it. The next step is to create a Gateway Subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway.
+You should already have a Virtual Network (VNET) created with a subnet assigned to it. The next step is to create a gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway.
 
 1. Go to your **Virtual Network** > **Subnets**.
 2. Select the option to add a **Gateway subnet**.
@@ -28,7 +28,7 @@ You should already have a Virtual Network (VNET) created with a Subnet assigned 
 
 The Virtual Network Gateway is used to form the tunnel to the devices on your premises.
 
-> Note: This configuration guide applies to Azure Virtual Network Gateway which includes the functionality found in the Azure VPN Gateway.
+{{<Aside type="note">}}This configuration guide applies to Azure Virtual Network Gateway which includes the functionality found in the Azure VPN Gateway.{{</Aside>}}
 
 1. Create a Virtual Network Gateway.
 2. Create a new public IP address or use an existing IP. Take note of the public IP address assigned to the Virtual Network Gateway as this will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
@@ -53,13 +53,13 @@ Repeat this process to create a Local Network Gateway to represent the redundant
 
 ### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
-Magic WAN uses [Tunnel Health Checks](https://developers.cloudflare.com/magic-wan/reference/tunnel-health-checks/) to ensure the tunnel is available.
+Magic WAN uses [Tunnel Health Checks](/magic-wan/reference/tunnel-health-checks/) to ensure the tunnel is available.
 
 Tunnel health checks make use of ICMP probes sent from the Cloudflare side of the Magic IPsec tunnel to the remote endpoint (Azure).
 
 There is an important distinction between how to configure Cloudflare and Azure to support the health checks:
 
-- Magic IPsec Tunnel configuration settings requires specifying a discrete IP address (/31 netmask recommended)
+- Magic IPsec Tunnel configuration settings requires specifying a discrete IP address (`/31` netmask recommended)
 - Azure Local Network Gateway settings require specifying a subnet (in CIDR notation)
 
 Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
@@ -122,14 +122,14 @@ Use the Address Space settings within the Local Network Gateway objects to defin
 
 Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare Anycast IP address.
 
-### 6. Route all Internet traffic through Magic WAN & Cloudflare Gateway
+### 6. Route all Internet traffic through Magic WAN and Cloudflare Gateway
 
 Cloudflare Zero Trust customers can route Internet-bound traffic through Magic WAN to the Internet through Cloudflare Gateway.
 
-Microsoft does not permit specifying a default route (0.0.0.0/0) under Address Space in the Local Network Gateway, however it is possible to work around this limitation through the use of route summarization.
+Microsoft does not permit specifying a default route (`0.0.0.0/0`) under Address Space in the Local Network Gateway. However, it is possible to work around this limitation through the use of route summarization.
 
-1. Navigate to **Local network gateways** and select the desired object.
-2. Navigate to **Configuration** then **Address Space(s)** and specify the following two subnets: `0.0.0.0/1` & `128.0.0.0/1`.
+1. Go to **Local network gateways** and select the desired object.
+2. Go to **Configuration** > **Address Space(s)** and specify the following two subnets: `0.0.0.0/1` & `128.0.0.0/1`.
 3. Do not remove the subnet configured to support the Tunnel Health Checks.
 4. Select **Save**
 
