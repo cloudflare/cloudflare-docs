@@ -60,7 +60,7 @@ The following managed rulesets run in a response phase:
   </thead>
   <tbody>
     <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Sensitive Data Detection</td>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href="/waf/managed-rules/reference/sensitive-data-detection/">Cloudflare Sensitive Data Detection</a></td>
       <td><p>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in <strong>Security</strong> > <strong>Sensitive Data</strong>.</p>
       <p>Ruleset ID: {{<rule-id>}}e22d83c647c64a3eae91b71b499d988e{{</rule-id>}}</td>
     </tr>
