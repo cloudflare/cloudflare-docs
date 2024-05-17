@@ -421,7 +421,7 @@ const html = todos => `
 
 With the client-side code in place, deploying the new version of the function should put all these pieces together. The result is an actual dynamic todo list.
 
-## 5. Updating todos from the application UI
+## 5. Update todos from the application UI
 
 For the final piece of your todo list, you need to be able to update todos — specifically, marking them as completed.
 
