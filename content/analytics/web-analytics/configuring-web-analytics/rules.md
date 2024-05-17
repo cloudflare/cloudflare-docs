@@ -5,7 +5,7 @@ title: Rules
 
 # Rules
 
-Use **Rules** to configure whether to track Web Analytics for specific websites or paths. If you do not configure any rules, Web Analytics injects the JavaScript (JS) snippet for all sites.
+Use **Rules** to configure whether to track Web Analytics for specific websites or paths. By default, Web Analytics automatically creates a single rule for the zone that injects the JavaScript (JS) snippet for all pages.
 
 Rules are only available for sites proxied through Cloudflare. For more information, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
 
