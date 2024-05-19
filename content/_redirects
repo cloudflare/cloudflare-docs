@@ -755,7 +755,6 @@
 /pages/platform/functions/plugins/graphql/ /pages/functions/plugins/graphql/ 301
 /pages/platform/functions/plugins/hcaptcha/ /pages/functions/plugins/hcaptcha/ 301
 /pages/platform/functions/plugins/honeycomb/ /pages/functions/plugins/honeycomb/ 301
-/pages/platform/functions/plugins/mailchannels/ /pages/functions/plugins/mailchannels/ 301
 /pages/platform/functions/plugins/sentry/ /pages/functions/plugins/sentry/ 301
 /pages/platform/functions/plugins/static-forms/ /pages/functions/plugins/static-forms/ 301
 /pages/platform/functions/plugins/stytch/ /pages/functions/plugins/stytch/ 301
