@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a VitePress site
+title: VitePress
 ---
 
-# Deploy a VitePress site
+# VitePress
 
 [VitePress](https://vitepress.dev/) is a [static site generator](https://en.wikipedia.org/wiki/Static_site_generator) (SSG) designed for building fast, content-centric websites. VitePress takes your source content written in [Markdown](https://en.wikipedia.org/wiki/Markdown), applies a theme to it, and generates static HTML pages that can be easily deployed anywhere.
 

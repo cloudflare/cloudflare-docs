@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Hono site
+title: Hono
 ---
 
-# Deploy a Hono site
+# Hono
 
 [Hono](https://honojs.dev/) is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Hono application and deploy it using Cloudflare Pages.
 
