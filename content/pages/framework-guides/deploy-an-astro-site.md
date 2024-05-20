@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Astro site
+title: Astro
 ---
 
-# Deploy an Astro site
+# Astro
 
 [Astro](https://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
 
