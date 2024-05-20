@@ -14,15 +14,7 @@ This guide will instruct you through:
 
 {{<render file="_prereqs.md" productFolder="workers">}}
 
-## 1. Enable Durable Objects in the dashboard
-
-To enable Durable Objects, you will need to purchase the Workers Paid plan:
-
- 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
- 2. Go to **Workers & Pages** > **Plans**.
- 3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
-
- ## 2. Create a Worker project
+ ## 1. Create a Worker project
 
 You will access your Durable Object from a [Worker](/workers/). Your Worker application is an interface to interact with your Durable Object.
 
@@ -56,7 +48,7 @@ In your terminal, you will be asked a series of questions related to your projec
 
 This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
-## 3. Write a class to define a Durable Object
+## 2. Write a class to define a Durable Object
 
 Before you create and access a Durable Object, its behavior must be defined by an ordinary exported JavaScript class.
 
@@ -140,7 +132,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 {{</Aside>}}
 
-## 4. Instantiate and communicate with a Durable Object
+## 3. Instantiate and communicate with a Durable Object
 
 The `fetch()` handler allows you to instantiate and communicate to a Durable Object from a Worker.
 
@@ -205,7 +197,7 @@ In the code above, you have:
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/) to learn more about communicating to a Durable Object.
 
-## 5. Configure Durable Object bindings
+## 4. Configure Durable Object bindings
 
 [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
 
@@ -231,7 +223,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 - `class_name` - Required. The class name you wish to bind to.
 - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
 
-## 6. Configure Durable Object classes with migrations
+## 5. Configure Durable Object classes with migrations
 
 A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, renaming, deleting and transferring an existing Durable Object class.
 
@@ -250,7 +242,7 @@ new_classes = ["MyDurableObject"] # Array of new classes
 
 Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
 
-## 7. Develop a Durable Object Worker locally
+## 6. Develop a Durable Object Worker locally
 
 To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/commands/#dev):
 
@@ -261,7 +253,7 @@ $ npx wrangler dev
 In your console, you should see a`Hello world` string returned by the Durable Object.
 
 
-## 8. Deploy your Durable Object Worker
+## 7. Deploy your Durable Object Worker
 
 To deploy your Durable Object Worker:
 
