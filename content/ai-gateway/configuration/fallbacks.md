@@ -18,7 +18,7 @@ For example, you could set up a gateway endpoint that:
 graph TD
     A[AI Gateway] --> B[Request to Workers AI Inference API]
     B -->|Success| C[Return Response]
-    B -->|Failure| D[Request to OpenAI]
+    B -->|Failure| D[Request to OpenAI API]
     D --> E[Return Response]
 ```
 <br/>

@@ -17,7 +17,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug} -X POST \
     "provider": "workers-ai",
     "endpoint": "@cf/meta/llama-2-7b-chat-int8",
     "headers": {
-      "Authorization": "Bearer <ClOUDFLARE_API_TOKEN>",
+      "Authorization": "Bearer {cloudflare_token}",
       "Content-Type": "application/json"
     },
     "query": {
@@ -28,7 +28,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug} -X POST \
         },
         {
           "role": "user",
-          "content": "Why is pizza so good"
+          "content": "What is Cloudflare?"
         }
       ]
     }
@@ -37,7 +37,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug} -X POST \
     "provider": "openai",
     "endpoint": "chat/completions",
     "headers": {
-      "Authorization": "Bearer <OPEN_AI_TOKEN>",
+      "Authorization": "Bearer {open_ai_token}",
       "Content-Type": "application/json"
     },
     "query": {
