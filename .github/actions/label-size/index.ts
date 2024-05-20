@@ -14,14 +14,14 @@ async function run(): Promise<void> {
     });
     const login = pr.user.login
 
-    const userContext = await octokit.rest.users.getByUsername({username: login, subject_type: "organization", subject_id: "cloudflare"})
-    const userContextRepo = await octokit.rest.users.getByUsername({username: login, subject_type: "repository", subject_id: "cloudflare/cloudflare-docs"})
-    const userContextOrg = await octokit.rest.users.getByUsername({username: login})
+    const userContext = await octokit.rest.users.getContextForUser({username: login})
+    const userContextRepo = await octokit.rest.users.getContextForUser({username: login, subject_type: "repository", subject_id: "cloudflare/cloudflare-docs"})
+    const userContextOrg = await octokit.rest.users.getContextForUser({username: login, subject_type: "organization", subject_id: "cloudflare"})
     const userData = await octokit.rest.users.getByUsername({username: login})
 
-    console.log(userContextRepo)
-    console.log(userContextOrg)
     console.log(userContext)
+    console.log(userContextOrg)
+    console.log(userContextRepo)
     console.log(userData)
 
     const changes = files.reduce((total, file) => total + file.changes, 0);
