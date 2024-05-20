@@ -96,7 +96,7 @@ Running [`wrangler pages download config`](/pages/functions/wrangler-configurati
 
 {{</Aside>}}
 
-You can continue to use your `wrangler.toml` file for local developerment without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
+You can continue to use your `wrangler.toml` file for local development without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
 
 ### Projects without existing `wrangler.toml` file
 

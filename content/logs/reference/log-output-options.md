@@ -267,6 +267,6 @@ For example, if logpull_options are `fields=ClientIP,EdgeStartTimestamp,RayID&sa
     "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
     "sample_rate": 0.1,
     "timestamp_format": "rfc3339",
-    "CVE-2021-4428": true
+    "CVE-2021-44228": true
 }
 ```

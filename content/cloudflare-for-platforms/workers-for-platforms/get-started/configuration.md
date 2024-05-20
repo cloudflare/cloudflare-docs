@@ -103,7 +103,7 @@ binding = "DISPATCHER"
 namespace = "testing"
 ```
 
-Add the followinng to the index.js file:
+Add the following to the index.js file:
 
 ```js
 ---

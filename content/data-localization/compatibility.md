@@ -2,7 +2,6 @@
 title: Product compatibility
 pcx_content_type: reference
 weight: 3
-layout: wide
 meta:
   title: Cloudflare product compatibility
 ---
@@ -16,8 +15,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 ✘ Product cannot be used <br>
 ⚫️ Not applicable
 
-{{<tabs labels="Application Performance | Application Security | Developer Platform | Network Services | Platform | Zero Trust">}}
-{{<tab label="application performance" no-code="true">}}
+## Application Performance
 
  Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -35,8 +33,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Waiting Room | ⚫️ | ✅ | ✅ |
 | Zaraz | ✅ | ✅ | ✅ |
 
-{{</tab>}}
-{{<tab label="application security" no-code="true">}}
+---
+
+## Application Security
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -53,8 +52,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 | WAF/L7 Firewall | ✅ | ✅ | ✅ |
 | DMARC Management | ⚫️ | ⚫️ | ✅ |
 
-{{</tab>}}
-{{<tab label="developer platform" no-code="true">}}
+---
+
+## Developer Platform
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -68,8 +68,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Workers KV | ⚫️ | ✘ | ✘ |
 | Workers.dev | ✘ | ✘ | ✘ |
 
-{{</tab>}}
-{{<tab label="network services" no-code="true">}}
+---
+
+## Network Services
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -80,16 +81,18 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 
-{{</tab>}}
-{{<tab label="platform" no-code="true">}}
+---
+
+## Platform
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Logpull | ⚫️ | ⚫️ | 🚧{{<fnref num="12">}} |
 | Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
 
-{{</tab>}}
-{{<tab label="zero trust" no-code="true">}}
+---
+
+## Zero Trust
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -100,9 +103,6 @@ The table below provides a summary of the Data Localization Suite product's beha
 | DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | 🚧{{<fnref num="31">}} |
 | Gateway | 🚧{{<fnref num="20">}} | 🚧{{<fnref num="21">}} | 🚧{{<fnref num="22">}} |
 | WARP | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-
-{{</tab>}}
-{{</tabs>}}
 
 {{<fnsection>}}
 {{<fnentry num="1">}}Logs / Analytics not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
