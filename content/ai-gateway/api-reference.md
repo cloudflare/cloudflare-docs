@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: API reference
+title: REST API reference
 external_link: /api/operations/aig-config-list-gateway
 weight: 8
 _build:

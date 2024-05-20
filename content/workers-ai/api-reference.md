@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: API reference
+title: REST API reference
 external_link: /api/operations/workers-ai-post-run-model
 weight: 9
 _build:
