@@ -1,12 +1,12 @@
 ---
 title: Alerts
-pcx_content_type: concept
+pcx_content_type: reference
 weight: 4
 meta:
-  title: Set up alerts for Universal SSL
+  title: Alerts for Universal SSL
 ---
 
-# Set up alerts for Universal SSL
+# Alerts for Universal SSL
 
 You can configure alerts to receive notifications for changes in your certificates.
 

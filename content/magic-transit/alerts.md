@@ -1,10 +1,10 @@
 ---
 title: Alerts
-pcx_content_type: concept
+pcx_content_type: reference
 weight: 11
 ---
 
-# Set up alerts for Magic Transit
+# Alerts for Magic Transit
 
 You can configure alerts to receive notifications for changes in your network. 
 

@@ -56,7 +56,7 @@ Refer to [SSL properties of a custom hostname](/api/operations/custom-hostname-f
 
 {{</details>}}
 
-## Set up alerts for mutual TLS certificates
+## Alerts for mutual TLS certificates
 
 You can configure alerts to receive notifications before your mutual TLS certificates expire.
 

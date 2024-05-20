@@ -38,17 +38,15 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 {{<render file="_aop-enable-feature.md">}}
 
-##  4. Enable Authenticated Origin Pulls for all hostnames in a zone
+## 4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
 Use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
 
 If you had set up logging on your origin during [step 2](#2-configure-origin-to-accept-client-certificates), test and confirm that Authenticated Origin Pulls is working.
 
-##  5. Enforce validation check on your origin
+## 5. Enforce validation check on your origin
 
 {{<render file="_aop-enforce-validation.md">}}
-
----
 
 ## 6. (Optional) Set up alerts for zone-level Authenticated Origin Pulls certificates
 

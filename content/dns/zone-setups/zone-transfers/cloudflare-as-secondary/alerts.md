@@ -1,12 +1,12 @@
 ---
-pcx_content_type: concept
+pcx_content_type: reference
 title: Alerts
 weight: 4
 meta:
-   title: Set up alerts for Secondary DNS
+   title: Alerts for Secondary DNS
 ---
 
-# Set up alerts for Secondary DNS
+# Alerts for Secondary DNS
 
 You can configure alerts to receive notifications for changes in your secondary DNS. 
 

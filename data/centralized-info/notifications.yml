@@ -247,7 +247,6 @@ entries:
   otherFilters: None.
   additional_information: Triggered hourly.
 
-
 - name: Page Shield New Malicious Domain Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
   availability: Enterprise plans with paid add-on.
@@ -521,7 +520,7 @@ entries:
   additional_information: |-
    The mean time to detection is five minutes.
 
-    This alert will look for spikes across all services that generate log entries in [security/firewall events](/logs/reference/log-fields/zone/firewall_events/).
+    This alert will look for spikes across all services that generate log entries in [security/firewall events](/waf/analytics/security-events/paid-plans/).
   limitations: |-
     Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
