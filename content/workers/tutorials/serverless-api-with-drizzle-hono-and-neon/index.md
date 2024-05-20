@@ -144,6 +144,7 @@ import type { Config } from 'drizzle-kit';
 export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
+  dialect: 'postgresql',
 } satisfies Config;
 ```
 
@@ -157,7 +158,7 @@ filename: package.json
 ---
 "scripts": {
   ...
-  "db:generate": "drizzle-kit generate:pg"
+  "db:generate": "drizzle-kit generate"
 },
 ...
 ```
