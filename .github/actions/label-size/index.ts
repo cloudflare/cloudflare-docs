@@ -13,7 +13,8 @@ async function run(): Promise<void> {
       per_page: 100
     });
     const login = pr.user.login
-    const userData = await octokit.paginate(octokit.rest.users.getByUsername({login}))
+    console.log(login)
+    const userData = await octokit.rest.users.getByUsername({login})
 
     console.log(userData)
 
