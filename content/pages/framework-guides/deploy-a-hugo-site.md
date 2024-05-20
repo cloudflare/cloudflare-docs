@@ -44,7 +44,7 @@ $ scoop install hugo
 {{</tab>}}
 {{<tab label="linux">}}
 
-Your Linux distro's package manager may include Hugo. If this is the case, install it directly using your distro's package manager -- for instance, in Ubuntu, run the following command:
+The package manager for your Linux distribution may include Hugo. If this is the case, install Hugo directly using the distribution's package manager — for instance, in Ubuntu, run the following command:
 
 ```sh
 $ sudo apt-get install hugo
@@ -68,7 +68,7 @@ With Hugo installed, refer to [Hugo's Quick Start](https://gohugo.io/getting-sta
 $ hugo new site my-hugo-site
 ```
 
-Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, use the [Ananake theme](https://themes.gohugo.io/themes/gohugo-theme-ananke/) by running the following commands in your terminal:
+Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) — for now, use the [Ananake theme](https://themes.gohugo.io/themes/gohugo-theme-ananke/) by running the following commands in your terminal:
 
 ```sh
 $ cd my-hugo-site
