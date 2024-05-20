@@ -728,6 +728,7 @@
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-vuepress-site/ /pages/framework-guides/deploy-a-vitepress-site/ 301
 /pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site/ 301
+/pages/functions/plugins/mailchannels/ /workers/tutorials/send-emails-with-resend/ 301
 /pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
@@ -755,6 +756,7 @@
 /pages/platform/functions/plugins/graphql/ /pages/functions/plugins/graphql/ 301
 /pages/platform/functions/plugins/hcaptcha/ /pages/functions/plugins/hcaptcha/ 301
 /pages/platform/functions/plugins/honeycomb/ /pages/functions/plugins/honeycomb/ 301
+/pages/platform/functions/plugins/mailchannels/ /pages/functions/plugins/mailchannels/ 301
 /pages/platform/functions/plugins/sentry/ /pages/functions/plugins/sentry/ 301
 /pages/platform/functions/plugins/static-forms/ /pages/functions/plugins/static-forms/ 301
 /pages/platform/functions/plugins/stytch/ /pages/functions/plugins/stytch/ 301
