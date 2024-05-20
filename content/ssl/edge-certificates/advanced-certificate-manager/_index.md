@@ -27,7 +27,7 @@ Advanced Certificate Manager allows you to:
 
 {{<Aside type="note">}}
 
-Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 edge certificates per zone.
+Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 {{<glossary-tooltip term_id="edge certificate">}}edge certificates{{</glossary-tooltip>}} per zone.
 
 {{</Aside>}}
 

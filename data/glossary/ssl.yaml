@@ -70,6 +70,12 @@ entries:
   related_terms: []
   cloudflare_specific: false
 
+- term: edge certificate
+  general_definition: |-
+    the SSL/TLS certificates that Cloudflare presents to clients visiting your website or application.
+
+    Because of [how Cloudflare works](/fundamentals/concepts/how-cloudflare-works/), there can actually be [two certificates involved in a single request](/ssl/concepts/): an edge certificate and an origin certificate.
+
 - term: Extended Validation (EV) certificate
   general_definition: |-
     EV certificates provide maximum trust to visitors, but require the most validation effort by the CA. EV certificates show the name of the company or organization in the address bar of the visitor’s browser. An EV certificate requires additional documentation by the company or organization in order for the CA to approve the certificate.
