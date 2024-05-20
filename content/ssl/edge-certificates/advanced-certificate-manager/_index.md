@@ -20,7 +20,7 @@ Advanced Certificate Manager allows you to:
   * Be issued by the certificate authority (CA) you choose.
   * Use your preferred validation method.
   * Have the validity period you choose.
-* Use [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to delegate the DCV process of your [partial zones](/dns/zone-setups/partial-setup/) to Cloudflare.
+* Use [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to delegate the {{<glossary-tooltip term_id="domain control validation (DCV)">}}DCV process{{</glossary-tooltip>}} of your {{<glossary-tooltip term_id="partial setup" link="/dns/zone-setups/partial-setup/">}}partial zones{{</glossary-tooltip>}} to Cloudflare.
 * Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically protect proxied hostnames.
 * Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
 * Control [cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).

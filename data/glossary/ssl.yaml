@@ -59,6 +59,10 @@ entries:
   related_terms: []
   cloudflare_specific: false
 
+- term: domain control validation (DCV)
+  general_definition: |-
+    process by which a certificate authority (CA) can verify domain ownership before issuing an SSL/TLS certificate.
+
 - term: encryption algorithm
   general_definition: |-
     an encryption algorithm is a set of mathematical operations performed on data to ensure the data is only understood by the intended recipient.
