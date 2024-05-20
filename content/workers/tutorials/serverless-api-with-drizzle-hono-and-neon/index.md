@@ -144,6 +144,7 @@ import type { Config } from 'drizzle-kit';
 export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
+  dialect: 'postgresql',
 } satisfies Config;
 ```
 
@@ -157,7 +158,7 @@ filename: package.json
 ---
 "scripts": {
   ...
-  "db:generate": "drizzle-kit generate:pg"
+  "db:generate": "drizzle-kit generate"
 },
 ...
 ```
@@ -170,7 +171,7 @@ In your project’s root directory, create a `migrate.ts` file and add the follo
 
 ```ts
 ---
-filename: package.json
+filename: migrate.ts
 ---
 import { config } from 'dotenv';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
