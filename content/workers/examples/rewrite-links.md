@@ -7,7 +7,6 @@ tags:
 languages:
   - JavaScript
   - TypeScript
-  - Python
 pcx_content_type: configuration
 title: Rewrite links
 weight: 1001
