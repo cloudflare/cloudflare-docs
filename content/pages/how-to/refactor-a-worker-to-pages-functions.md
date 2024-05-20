@@ -187,11 +187,11 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 };
 ```
 
-You can test your Function [locally using Wrangler](/pages/functions/local-development/). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
+You can test your Function [locally using Wrangler](/content/pages/functions/local-development/). By completing this guide, you have successfully refactored your form submission Worker to a form submission Pages Function.
 
 ## Related resources
 
-- [HTML forms](/pages/tutorials/forms/)
-- [Plugins documentation](/pages/functions/plugins/)
-- [Functions documentation](/pages/functions/)
+- [HTML forms](/content/pages/tutorials/forms/)
+- [Plugins documentation](/content/pages/functions/plugins/)
+- [Functions documentation](/content/pages/functions/)
 
