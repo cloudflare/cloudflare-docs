@@ -359,7 +359,7 @@ When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Erro
 
 ### Error 526 in the Workers context
 
-Workers subrequests to hostnames are not proxied by Cloudflare are always made using the **[Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/)** SSL mode, even when the Workers zone is configured otherwise.
+Workers subrequests to hostnames that are not proxied by Cloudflare are always made using the **[Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/)** SSL mode, even when the Workers zone is configured otherwise.
 
 As a result, a valid SSL certificate is required at the origin.
 
