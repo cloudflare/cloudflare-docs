@@ -7,13 +7,15 @@ async function run(): Promise<void> {
     const token = core.getInput('GITHUB_TOKEN', { required: true });
     const octokit = github.getOctokit(token);
     const pr = ctx.payload.pull_request;
-    console.log(pr.auth)
-    console.log(pr)
     const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
       ...ctx.repo,
       pull_number: pr.number,
       per_page: 100
     });
+    const login = pr.user.login
+    const userData = await octokit.paginate(octokit.rest.users.getByUsername({login}))
+
+    console.log(userData)
 
     const changes = files.reduce((total, file) => total + file.changes, 0);
 
