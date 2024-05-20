@@ -145,22 +145,9 @@ Use one or more of the following characteristics:
       </td>
     </tr>
     <tr>
-      <td>
-        <strong>JWT Claim of</strong><br />
-        (enter configuration ID, claim_name)
+      <td><strong>JSON integer value of</strong><br />
+        (enter key)
       </td>
-      <td>
-        <code>lookup_json_string(http.request.jwt.claims[&quot;&lt;TOKEN_CONFIGURATION_ID&gt;&quot;][0], &quot;&lt;claim_name&gt;&quot;)</code>
-      </td>
-      <td>
-        <ul>
-          <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
-          <li><a href="/api-shield/security/jwt-validation/transform-rules/">JWT Validation reference</a></li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>N/A<br />(API only)</td>
       <td>
         <code>lookup_json_integer(http.request.body.raw, &quot;&lt;key&gt;&quot;)</code>
       </td>
@@ -168,6 +155,28 @@ Use one or more of the following characteristics:
         <ul>
           <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
           <li><a href="/ruleset-engine/rules-language/functions/#function-lookup_json_integer"><code>lookup_json_integer()</code> function reference</a></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Form input value of</strong><br />(enter field name)</td>
+      <td>
+        <code>http.request.body.form[&quot;&lt;input_field_name&gt;&quot;]</code>
+      </td>
+      <td><ul><li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li></ul></td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JWT claim of</strong><br />
+        (enter token configuration ID, claim name)
+      </td>
+      <td>
+        <code>lookup_json_string(http.request.jwt.claims[&quot;&lt;token_configuration_id&gt;&quot;][0], &quot;&lt;claim_name&gt;&quot;)</code>
+      </td>
+      <td>
+        <ul>
+          <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
+          <li><a href="/api-shield/security/jwt-validation/transform-rules/">JWT Validation reference</a></li>
         </ul>
       </td>
     </tr>
@@ -182,16 +191,11 @@ Use one or more of the following characteristics:
       <td></td>
     </tr>
     <tr>
-      <td><strong>Form input value of</strong><br />(enter field name)</td>
-      <td>
-        <code>http.request.body.form[&quot;&lt;input_field_name&gt;&quot;]</code>
+      <td><strong>Custom</strong><br />
+        (enter expression)
       </td>
-      <td><ul><li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li></ul></td>
-    </tr>
-    <tr>
-      <td>N/A<br />(API only)</td>
       <td>
-        <code>substring(&lt;field&gt;, &lt;start&gt;[, &lt;end&gt;])</code>
+        For example, <code>substring(&lt;field&gt;, &lt;start&gt;[, &lt;end&gt;])</code>
       </td>
       <td>
         <ul>
