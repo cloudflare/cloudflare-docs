@@ -14,7 +14,7 @@ async function run(): Promise<void> {
     });
     const login = pr.user.login
     console.log(login)
-    const userData = await octokit.rest.users.getByUsername({login})
+    const userData = await octokit.rest.users.getByUsername({username: login})
 
     console.log(userData)
 
