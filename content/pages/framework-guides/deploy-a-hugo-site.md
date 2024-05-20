@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Hugo site
+title: Hugo
 ---
 
-# Deploy a Hugo site
+# Hugo
 
 [Hugo](https://gohugo.io/) is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
 
@@ -15,9 +15,34 @@ Go to [Deploy with Cloudflare Pages](#deploy-with-cloudflare-pages) if you alrea
 
 ## Install Hugo
 
-Install the Hugo CLI, using the specific instructions for your operating system below:
+Install the Hugo CLI, using the specific instructions for your operating system.
 
-### Linux
+{{<tabs labels="MacOS | Windows | Linux">}}
+{{<tab label="macos" default="true">}}
+
+If you use the package manager [Homebrew](https://brew.sh), run the `brew install` command in your terminal to install Hugo:
+
+```sh
+$ brew install hugo
+```
+
+{{</tab>}}
+{{<tab label="windows">}}
+
+If you use the package manager [Chocolatey](https://chocolatey.org/), run the `choco install` command in your terminal to install Hugo:
+
+```sh
+$ choco install hugo --confirm
+```
+
+If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Hugo:
+
+```sh
+$ scoop install hugo
+```
+
+{{</tab>}}
+{{<tab label="linux">}}
 
 Your Linux distro's package manager may include Hugo. If this is the case, install it directly using your distro's package manager -- for instance, in Ubuntu, run the following command:
 
@@ -26,30 +51,8 @@ $ sudo apt-get install hugo
 ```
 
 If your package manager does not include Hugo or you would like to download a release directly, refer to the [**Manual**](/pages/framework-guides/deploy-a-hugo-site/#manual-installation) section.
-
-### Homebrew (macOS)
-
-If you use the package manager [Homebrew](https://brew.sh), run the `brew install` command in your terminal to install Hugo:
-
-```sh
-$ brew install hugo
-```
-
-### Windows (Chocolatey)
-
-If you use the package manager [Chocolatey](https://chocolatey.org/), run the `choco install` command in your terminal to install Hugo:
-
-```sh
-$ choco install hugo --confirm
-```
-
-### Windows (Scoop)
-
-If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Hugo:
-
-```sh
-$ scoop install hugo
-```
+{{</tab>}}
+{{</tabs>}}
 
 ### Manual installation
 
@@ -65,9 +68,10 @@ With Hugo installed, refer to [Hugo's Quick Start](https://gohugo.io/getting-sta
 $ hugo new site my-hugo-site
 ```
 
-Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, use the [Terminal theme](https://themes.gohugo.io/hugo-theme-terminal/) by running the following commands in your terminal:
+Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, use the [Ananake theme](https://themes.gohugo.io/themes/gohugo-theme-ananke/) by running the following commands in your terminal:
 
 ```sh
+$ cd my-hugo-site
 $ git init
 $ git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
 $ echo "theme = 'ananke'" >> hugo.toml

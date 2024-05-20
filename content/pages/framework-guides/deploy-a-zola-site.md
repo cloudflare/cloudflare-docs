@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Zola site
+title: Zola
 ---
 
-# Deploy a Zola site
+# Zola
 
 [Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you will create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
 

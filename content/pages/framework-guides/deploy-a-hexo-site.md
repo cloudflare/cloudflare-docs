@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Hexo site
+title: Hexo
 ---
 
-# Deploy a Hexo site
+# Hexo
 
 [Hexo](https://hexo.io/) is a tool for generating static websites, powered by Node.js. Hexo's benefits include speed, simplicity, and flexibility, allowing it to render Markdown files into static web pages via Node.js.
 
