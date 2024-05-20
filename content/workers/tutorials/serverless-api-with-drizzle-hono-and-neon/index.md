@@ -170,7 +170,7 @@ In your project’s root directory, create a `migrate.ts` file and add the follo
 
 ```ts
 ---
-filename: package.json
+filename: migrate.ts
 ---
 import { config } from 'dotenv';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
