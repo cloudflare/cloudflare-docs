@@ -85,7 +85,7 @@ export class YourDurableObject implements DurableObject {
     // Error handling elided for brevity.
     // Publish to your queue
     await this.env.YOUR_QUEUE.send({
-      id: this.state.id // Write the ID of the Durable Object to your queue
+      id: this.state.id.toString() // Write the ID of the Durable Object to your queue
       // Write any other properties to your queue
     });
 
