@@ -58,7 +58,7 @@ The following domains are used as part of our captive portal check:
 
 As part of establishing the WARP connection, the client will check the following HTTPS URLs to validate a successful connection:
 
-- `engage.cloudflareclient.com` These requests are always sent directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+- `engage.cloudflareclient.com` verifies general Internet connectivity outside of the WARP tunnel.These requests are always sent directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
 
 - `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
 
