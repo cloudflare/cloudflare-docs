@@ -62,7 +62,9 @@ entries:
 
 - term: nameserver
   general_definition: |-
-    a nameserver is a dedicated server that translates human readable hostnames into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
+    a nameserver is a dedicated server that translates human readable hostnames (`www.example.com`) into IP addresses.
+
+    Nameservers like root servers, TLD servers, and [authoritative nameservers](/dns/nameservers/) are fundamental components of the Domain Name System (DNS).
   associated_products:
     - DDoS Protection
 
