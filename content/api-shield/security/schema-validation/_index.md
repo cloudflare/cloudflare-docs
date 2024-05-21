@@ -156,11 +156,20 @@ There is a limit of 1000 total operations for enabled schemas. We will raise thi
 
 ## Body inspection
 
-API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.
+API Shield has the ability to identify body specifications contained in uploaded schemas and validate that the data of incoming API requests adheres to them.
 
-The supported content-type format is `application/json`. The code must validate that no other content media ranges are uploaded. 
+Schema validation currently supports validating requests with content-type `application/json`.
 
-`*/*`, `application/*`, and `application/json` media-ranges are valid. We will also only accept the `charset` parameter with a static value of `utf-8`.
+Within the OpenAPI specification, request body schemas are associated to media-ranges (such as `application/*`, `application/xml` or `application/json`).
+
+When Cloudflare validates incoming requests, Cloudflare checks that the request's content-type matches to the OpenAPI-specified media-range, for example:
+When the OpenAPI file specifies `application/*` as part of the request body content map, Cloudflare will accept requests with the content-types `application/xml` and `application/json`, etc. However, only `application/json` bodies will be validated with the supplied schema.
+
+Note: We generally recommend keeping the media-ranges as tight as possible. If you need to support multiple content-types on an API endpoint, explicitly list those as individual media-ranges and refrain from using wildcard identifiers. Futhermore, care should be taken if the origin is configured to perform [MIME sniffing](https://mimesniff.spec.whatwg.org/). For example, when a request carrying a json body is deliberately carrying an `application/malicous` content-type and Cloudflare was configured to allow `application/*` media-ranges, the request would be passed along to the origin without validating the json body contents. However, an origin that ignores the content-type, and either trial deserializes or sniffs the MIME type may thus deserialize the json body with a wrong assumption about it having passed schema body validation.
+As such, if you need to support, for example `application/json` and `application/xml` on the same endpoint, don't use `application/*` but rather set one content for `application/json` (where Cloudflare will check the request body with the supplied schema) and one with `application/xml` that Cloudflare will just let through. It is still advised to disable content-type sniffing on your origin.
+
+Cloudflare allows specifying the following media-ranges in the OpenAPI request body content map:
+`*/*`, `application/*`, and `application/json` media-ranges are valid. Further, we also only accept the `charset` parameter with a static value of `utf-8` as part of the media-range specification and s
 
 ## Availability
 
