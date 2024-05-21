@@ -14,7 +14,7 @@ This is especially useful if you already have mTLS implemented and client certif
 
 ## Availability
 
-* Currently, you can only upload your CA via API.
+* Currently, you can only manage your uploaded CA via API, and the hostname associations are **not** reflected on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
 * This process is only available on Enterprise accounts.
 * Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
@@ -64,7 +64,9 @@ This is especially useful if you already have mTLS implemented and client certif
 
   {{</definitions>}}
 
-4. Create a custom rule to enforce client certificate validation.
+4. (Optional) Since this process is API-only, and hostnames that use your uploaded CA certificate **are not** listed on the dashboard, you can make a [GET request](/api/operations/client-certificate-for-a-zone-list-hostname-associations) with the `mtls_certificate_id` as a query parameter to confirm the hostname association.
+
+5. Create a custom rule to enforce client certificate validation.
 You can do this [via the dashboard](/api-shield/security/mtls/configure/) or [via API](/waf/custom-rules/create-api/).
 
 ```text

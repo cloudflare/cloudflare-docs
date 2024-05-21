@@ -88,6 +88,7 @@ function copyCode(e: MouseEvent) {
   width: 2rem;
   font-size: 0.9rem;
   padding: 0.5rem;
+  box-sizing: border-box;
   background: #d9d9d9;
   color: #1e1e1e;
   border: none;

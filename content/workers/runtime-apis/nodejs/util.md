@@ -45,7 +45,7 @@ callbackifiedFoo(args, (err, value) => {
 });
 ```
 
-`callbackify` and `promisify` make it easy to handle all of the the challenges that come with bridging between callbacks and promises.
+`callbackify` and `promisify` make it easy to handle all of the challenges that come with bridging between callbacks and promises.
 
 Refer to the [Node.js documentation for `callbackify`](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utilcallbackifyoriginal) and [Node.js documentation for `promisify`](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utilpromisifyoriginal) for more information.
 

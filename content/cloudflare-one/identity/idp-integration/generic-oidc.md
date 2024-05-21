@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Generic OIDC
-weight: 12
+weight: 1
 ---
 
 # Generic OIDC

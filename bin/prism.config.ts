@@ -21,6 +21,7 @@ import "prismjs/components/prism-jsx.min.js";
 import "prismjs/components/prism-markdown.min.js";
 import "prismjs/components/prism-perl.min.js";
 import "prismjs/components/prism-php.min.js";
+import "prismjs/components/prism-powershell.min.js";
 import "prismjs/components/prism-python.min.js";
 import "prismjs/components/prism-ruby.min.js";
 import "prismjs/components/prism-rust.min.js";
@@ -303,7 +304,9 @@ export async function highlight(
     '<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally';
 
   if (theme === "light") output += " CodeBlock-is-light-in-light-theme";
-  output += ` CodeBlock--language-${lang}" language="${lang}">`;
+  output += ` CodeBlock--language-${lang}" language="${lang}"`;
+  if (frontmatter.header) output += ` title="${frontmatter.header}">`;
+  else output += ">"
 
   if (frontmatter.header)
     output += `<span class="CodeBlock--header">${frontmatter.header}</span>`;

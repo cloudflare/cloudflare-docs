@@ -2,8 +2,8 @@
 pcx_content_type: concept
 title: Concepts
 weight: 3
-meta: 
-    title: DNS concepts 
+meta:
+    title: DNS concepts
 ---
 
 # Concepts
@@ -28,9 +28,9 @@ For the purpose of this documentation, keep in mind that each site added to a Cl
 
 ## Nameserver
 
-Although the resolution of a DNS query involves a number of different servers, in this documentation nameserver usually refers to the Cloudflare authoritative nameservers. As explained in the [article about DNS server types](https://www.cloudflare.com/learning/dns/dns-server-types/), the authoritative nameserver is the last stop in the query, the server that returns the IP address for the requested domain.  
+Although the resolution of a DNS query involves a number of different servers, in this documentation nameserver usually refers to the Cloudflare authoritative nameservers. As explained in the [article about DNS server types](https://www.cloudflare.com/learning/dns/dns-server-types/), the authoritative nameserver is the last stop in the query, the server that returns the IP address for the requested domain.
 
-When you have a domain using a [full setup](/dns/zone-setups/full-setup/), Cloudflare provides the authoritative nameservers for your domain.
+When you have a domain using a [full setup](/dns/zone-setups/full-setup/), Cloudflare provides the authoritative nameservers for your domain. Refer to [Nameservers](/dns/nameservers/) for details on the different nameserver offerings.
 
 ## DNS records
 

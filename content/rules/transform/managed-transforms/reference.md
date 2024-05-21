@@ -6,12 +6,18 @@ weight: 2
 
 # Available Managed Transforms
 
+This page lists the available Managed Transforms. They can modify HTTP request headers or response headers.
+
+{{<Aside type="warning" header="Warning">}}
+The names of HTTP headers are case-insensitive. Cloudflare may use a capitalization different from the one presented in this page. Make sure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
+{{</Aside>}}
+
 ## HTTP request headers
 
 ### Add bot protection headers
 
 {{<Aside type="note">}}
-Requires a Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+Requires an Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 {{</Aside>}}
 
 Adds HTTP headers with bot-related values to the request sent to the origin server:
@@ -19,7 +25,7 @@ Adds HTTP headers with bot-related values to the request sent to the origin serv
 - `cf-bot-score`: Contains the {{<glossary-tooltip term_id="bot score" link="/bots/concepts/bot-score/">}}bot score{{</glossary-tooltip>}} (for example, `30`).
 - `cf-verified-bot`: Contains `true` if the request comes from a {{<glossary-tooltip term_id="verified bot" link="/bots/concepts/bot/#verified-bots">}}verified bot{{</glossary-tooltip>}}, or `false` otherwise.
 - `cf-threat-score`: Contains the {{<glossary-tooltip term_id="threat score" link="/waf/tools/security-level/#threat-score">}}threat score{{</glossary-tooltip>}} (for example, `10`).
-- `cf-ja3-hash`: Contains the {{<glossary-tooltip term_id="JA3 fingerprint" link="/bots/concepts/ja3-fingerprint/">}}JA3 fingerprint{{</glossary-tooltip>}}.
+- `cf-ja3-hash`: Contains the {{<glossary-tooltip term_id="JA3 fingerprint" link="/bots/concepts/ja3-ja4-fingerprint/">}}JA3 fingerprint{{</glossary-tooltip>}}.
 
 ### Add TLS client auth headers
 
@@ -57,6 +63,10 @@ Adds HTTP headers with location information for the visitor's IP address to the 
 - `cf-metro-code`: The visitor's metro code (value from the [`ip.src.metro_code`](/ruleset-engine/rules-language/fields/#field-ip-src-metro_code) field).
 - `cf-postal-code`: The visitor's postal code (value from the [`ip.src.postal_code`](/ruleset-engine/rules-language/fields/#field-ip-src-postal_code) field).
 - `cf-timezone`: The name of the visitor's timezone (value from the [`ip.src.timezone.name`](/ruleset-engine/rules-language/fields/#field-ip-src-timezone-name) field).
+
+{{<Aside type="warning" header="Warning">}}
+Turning on [IP geolocation](/network/ip-geolocation/) will send a `cf-ipcountry` HTTP header to your origin server even when **Add visitor location headers** is turned off.
+{{</Aside>}}
 
 ### Add "True-Client-IP" header
 

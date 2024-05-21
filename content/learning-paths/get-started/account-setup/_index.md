@@ -7,7 +7,7 @@ layout: learning-module
 
 # Account setup
 
-Make sure your zone's basics are configured properly. 
+Make sure your zone's basics are configured properly.
 
 ## Objectives
 

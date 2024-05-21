@@ -3,7 +3,7 @@ type: overview
 pcx_content_type: configuration
 title: Access API examples
 weight: 1
-layout: list
+layout: wide
 ---
 
 # Access API examples
@@ -38,4 +38,4 @@ You can use the Cloudflare Access API to create policies, including individual r
 
 ## Example rule configurations
 
-{{<list-examples directory="/cloudflare-one/api-terraform/rule-api-examples/">}}
+{{<list-examples directory="/cloudflare-one/api-terraform/access-api-examples/">}}

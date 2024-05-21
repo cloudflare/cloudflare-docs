@@ -9,7 +9,7 @@ meta:
 
 # Enable Load Balancing
 
-Load balancing is an add-on for your account, meaning your account needs a [billing profile](/fundamentals/setup/account-setup/create-billing-profile/).
+Load balancing is an add-on for your account, meaning your account needs a [billing profile](/fundamentals/subscriptions-and-billing/create-billing-profile/).
 
 {{<Aside type="note">}}
 Load Balancing is not available with [China Network](/china-network/).{{</Aside>}}

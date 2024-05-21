@@ -4,7 +4,6 @@ pcx_content_type: concept
 weight: 4
 meta:
   title: Network-layer DDoS Attack Protection managed ruleset
-layout: single
 ---
 
 # Network-layer DDoS Attack Protection managed ruleset
@@ -24,10 +23,11 @@ Adjust the behavior of the rules in the managed ruleset by modifying the followi
 * The performed **action** when an attack is detected
 * The **sensitivity level** of attack detection mechanisms
 
-To adjust rule behavior, do one of the following:
+To adjust rule behavior, use one of the following methods:
 
-* [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
-* [Configure Network-layer DDoS Attack Protection managed ruleset overrides via API](/ddos-protection/managed-rulesets/network/configure-api/).
+* [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
+* [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/configure-api/).
+* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-network).
 
 You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 

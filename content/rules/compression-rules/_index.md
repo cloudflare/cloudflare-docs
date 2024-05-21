@@ -2,7 +2,6 @@
 title: Compression Rules
 pcx_content_type: concept
 weight: 8
-layout: single
 ---
 
 # Compression Rules
@@ -49,3 +48,5 @@ N/A | [`raw.http.request.uri.path.extension`](/ruleset-engine/rules-language/fie
 * If there is a match for a compression rule but the client does not support any of the compression algorithms configured in the rule (according to the provided `Accept-Encoding` request header), the response sent to the client will not be compressed.
 
 * If there is a match for a compression rule but the response sent from the origin server contains a `cache-control: no-transform` HTTP header, the compression rule will not perform any changes to the response.
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="compression rules">}}

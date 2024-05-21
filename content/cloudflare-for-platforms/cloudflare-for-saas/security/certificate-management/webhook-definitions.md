@@ -6,7 +6,7 @@ weight: 5
 
 # Webhook data definitions
 
-When you [create a webhook notification](/notifications/create-notifications/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
+When you [create a webhook notification](/notifications/get-started/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
 
 The following section details the data Cloudflare sends to a webhook destination.
 
@@ -510,3 +510,11 @@ Cloudflare sends this alert when certificates move from a status of `active` to 
 Occasionally, you may see webhook notifications that do not include a corresponding `<<CUSTOM_HOSTNAME_ID>>` and `hostname` values.
 
 This behavior is because each custom hostname can only have one certificate attached to it. Previously attached certificates can still emit webhook events but will not include the associated hostname and ID values.
+
+## Alerts
+
+You can configure alerts to receive notifications for changes in your custom hostname certificates.
+
+{{<available-notifications product="SSL/TLS" notificationName="SSL for SaaS Custom Hostnames Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

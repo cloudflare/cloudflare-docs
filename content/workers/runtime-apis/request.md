@@ -7,7 +7,7 @@ meta:
 
 # Request
 
-The `Request` interface represents an HTTP request and is part of the Fetch API.
+The [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface represents an HTTP request and is part of the [Fetch API](/workers/runtime-apis/fetch/).
 
 ## Background
 
@@ -18,17 +18,17 @@ The most common way you will encounter a `Request` object is as a property of an
 highlight: [2]
 ---
 export default {
-	async fetch(request, env, ctx) { 
+	async fetch(request, env, ctx) {
 		return new Response('Hello World!');
 	},
 };
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming request parameter is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming `request` parameter that you receive from the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) is immutable.
 
 ```js
 export default {
-	async fetch(request, env, ctx) { 
+	async fetch(request, env, ctx) {
         const url = "https://example.com";
         const modifiedRequest = new Request(url, request);
 		// ...
@@ -36,14 +36,14 @@ export default {
 };
 ```
 
-The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
+The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#options) and [`RequestInitCfProperties`](#the-cf-property-requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
 
 ---
 
 ## Constructor
 
 ```js
-let request = new Request(input [, init])
+let request = new Request(input, options)
 ```
 
 ### Parameters
@@ -54,23 +54,25 @@ let request = new Request(input [, init])
 
     *   Either a string that contains a URL, or an existing `Request` object.
 
-*   `init` {{<type-link href="#requestinit">}}RequestInit{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `options` {{<type-link href="#options">}}options{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object that contains settings to apply to the `Request`.
 
 {{</definitions>}}
 
-#### `RequestInit`
+#### `options`
+
+An object containing properties that you want to apply to the request.
 
 {{<definitions>}}
 
-*   `cf` {{<type-link href="#requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `cf` {{<type-link href="#the-cf-property-requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
 *   `method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The HTTP request method. The default is `GET`.
+    *   The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -79,6 +81,7 @@ let request = new Request(input [, init])
 *   `body` {{<type>}}string | ReadableStream | FormData | URLSearchParams{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   The request body, if any.
+    *   Note that a request using the GET or HEAD method cannot have a body.
 
 *   `redirect` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -86,7 +89,7 @@ let request = new Request(input [, init])
 
 {{</definitions>}}
 
-#### `RequestInitCfProperties`
+#### The `cf` property (`RequestInitCfProperties`)
 
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
@@ -118,7 +121,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules (deprecated): [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheTtlByStatus` {{<type>}}{ \[key: string]: number }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -126,7 +129,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `image` {{<type>}}Object | null{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables [Image Resizing](/images/) for this request. The possible values are described in [Image Resizing with Workers](/images/image-resizing/resize-with-workers) documentation.
+    *   Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
 
 *   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -158,7 +161,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 ## Properties
 
-All properties of an incoming `Request` object (that is, `event.request`) are read only. To modify a request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
+All properties of an incoming `Request` object (the request you receive from the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/)) are read-only. To modify the properties of an incoming request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
 
 {{<definitions>}}
 
@@ -173,14 +176,13 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 *   `cf` {{<type-link href="#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
     *   An object containing properties about the incoming request provided by Cloudflare’s global network.
+    *   This property is read-only (unless created from an existing `Request`). To modify its values, pass in the new values on the [`cf` key of the `init` options argument](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) when creating a new `Request` object.
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
     *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
 
-    {{<Aside type="note">}}
-Note that, compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header.
-    {{</Aside>}}
+    *  Compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header.
 
     {{<Aside type="warning">}}
 If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request.
@@ -251,6 +253,14 @@ All plans have access to:
 *   `tlsClientAuth` {{<type>}}Object | null{{</type>}}
 
     *   Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+
+*   `tlsClientHelloLength` {{<type>}}string{{</type>}}
+
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello.
+
+*   `tlsClientRandom` {{<type>}}string{{</type>}}
+
+    *   The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). Refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2) for more details.
 
 *   `tlsVersion` {{<type>}}string{{</type>}}
 

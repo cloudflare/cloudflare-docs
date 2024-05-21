@@ -20,7 +20,7 @@ These attributes are particularly useful when:
 
 {{<Aside type="note">}}
 
-The information in record attributes will not impact DNS record resolution or propagation timing and is only meant for your reference.
+The information in record attributes will not impact DNS record resolution or propagation timing and is only meant for your private reference. This information is only visible to [members](/fundamentals/setup/manage-members/manage/) of your Cloudflare account and is not visibile publicly.
 
 {{</Aside>}}
 

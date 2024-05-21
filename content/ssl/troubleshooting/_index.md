@@ -4,6 +4,7 @@ pcx_content_type: navigation
 weight: 202
 meta:
   title: Troubleshooting
+layout: wide
 ---
 
 # Troubleshooting

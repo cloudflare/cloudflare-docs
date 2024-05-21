@@ -26,7 +26,7 @@ Before proceeding, ensure that you have the Anycast IPs associated with your acc
 Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router — one to each of the two Anycast IP addresses.
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to  to **Magic WAN** > **Configuration**.
+2. Go to **Magic WAN** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
 4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn about settings not mentioned here):
     - **Customer Endpoint**: Enter your external/egress interface of the firewall.
@@ -35,7 +35,7 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
     - **Health check type**: _Reply_.
     - **Health check target**: _Custom_.
     - **Target address**: The target address for the first tunnel is always `172.64.240.253`.
-    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for more information.
+    - **Pre-shared key**: Enter your own key or allow Cloudflare to define the key. Refer to [Add IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) for more information.
 
     ![The first IPsec tunnel should have the values mentioned above.](/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01.png)
 
@@ -89,7 +89,7 @@ end
 
 ### Disable anti-replay protection
 
-For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet’s documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
+For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet's documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
 
 
 ```txt
@@ -124,6 +124,7 @@ fortigate # config vpn ipsec phase1-interface
         set net-device enable
         set proposal aes256gcm-prfsha512 aes256gcm-prfsha384 aes256gcm-prfsha256
         set localid "f1473dXXXXXXX72e33.49561179.ipsec.cloudflare.com"
+        set dhgrp 14
         set nattraversal disable
         set remote-gw 162.159.67.210
         set add-gw-route enable
@@ -158,6 +159,8 @@ fortigate # config vpn ipsec phase2-interface
         set dhgrp 14
         set replay disable
         set keylifeseconds 3600
+        set auto-negotiate enable
+        set keepalive enable
     next
     edit "MWAN_IPsec_Tun2"
         set phase1name "MWAN_IPsec_Tun2"
@@ -165,37 +168,13 @@ fortigate # config vpn ipsec phase2-interface
         set dhgrp 14
         set replay disable
         set keylifeseconds 3600
+        set auto-negotiate enable
+        set keepalive enable
     next
 end
 ```
 
 ### Network interfaces
-
-#### Loopback interfaces
-
-Create two loopback interfaces to bind the bidirectional health check Anycast IPs to the FortiGate firewall. This allows you to specify the respective IP addresses when adding the firewall policy and policy-based routing configuration settings.
-
-Add two loopback interfaces one corresponding to each of the two bidirectional health check Anycast IPs (`172.64.240.253` and `172.64.240.254` respectively):
-
-```txt
-fortigate # config system interface
-    edit "loopback1"
-        set vdom "root"
-        set ip 172.64.240.253 255.255.255.255
-        set allowaccess ping
-        set type loopback
-        set alias "MWAN_Tun_01"
-        set snmp-index 19
-    next
-    edit "loopback2"
-        set vdom "root"
-        set ip 172.64.240.254 255.255.255.255
-        set allowaccess ping
-        set type loopback
-        set alias "MWAN_Tun_02"
-        set snmp-index 20
-end
-```
 
 #### Virtual tunnel interfaces
 
@@ -400,7 +379,6 @@ config firewall policy
         set name "CF_Magic_Health_Checks"
         set uuid 80eb76ce-3033-51ee-c5e5-d5a670dff3b3
         set srcintf "Cloudflare_Zone"
-        set dstintf "loopback1" "loopback2"
         set action accept
         set srcaddr "Cloudflare_IPv4_Nets"
         set dstaddr "Bidirect_HC_Endpoint_01" "Bidirect_HC_Endpoint_02"
@@ -409,7 +387,6 @@ config firewall policy
         set logtraffic all
     next
 end
-
 ```
 
 ### Policy-based routing
@@ -441,7 +418,7 @@ end
 
 ## Monitor Cloudflare Magic IPsec tunnel health checks
 
-{{<render file="_tunnel-healthchecks-dash.md" withParameters="**Magic WAN** > **Tunnel health**" >}}
+{{<render file="_tunnel-healthchecks-dash.md" withParameters="The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.;;**Magic WAN** > **Tunnel health**" >}}
 
 ## Troubleshooting
 
@@ -489,7 +466,7 @@ filters=[host 172.64.240.254]
 
 Flow debugging can be helpful when it comes to determining whether or not traffic is ingressing/egressing the firewall via the expected path. It takes steps much further than the sniffer packet captures in the previous section, but it creates a tremendous amount of logging and should only be enabled when absolutely necessary.
 
-Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application’s requirements.
+Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application's requirements.
 
 ```txt
 fortigate # diagnose debug disable

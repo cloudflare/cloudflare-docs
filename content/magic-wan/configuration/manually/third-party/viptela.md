@@ -101,5 +101,3 @@ A matching blocked log line is visible from the Cloudflare logs.
 ## Add new tunnels using IPsec
 
 IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/configuration/manually/third-party/cisco-ios-xe/) for more information.
-
-**Coming soon: IPsec tunnel creation in SD-WAN mode.**

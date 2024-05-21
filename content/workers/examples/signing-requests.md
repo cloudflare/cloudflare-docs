@@ -5,6 +5,12 @@ summary: Verify a signed request using the HMAC and SHA-256 algorithms or
 tags:
   - Security
   - WebCrypto
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
 pcx_content_type: configuration
 title: Sign requests
 weight: 1001
@@ -147,8 +153,11 @@ const encoder = new TextEncoder();
 // How long an HMAC token should be valid for, in seconds
 const EXPIRY = 60;
 
-export default <ExportedHandler<{ SECRET_DATA: string }>>{
-  async fetch(request, env) {
+interface Env {
+  SECRET_DATA: string;
+}
+export default {
+  async fetch(request, env): Promise<Response> {
     // You will need some secret data to use as a symmetric key. This should be
     // attached to your Worker as an encrypted secret.
     // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
@@ -235,7 +244,7 @@ export default <ExportedHandler<{ SECRET_DATA: string }>>{
 
     return fetch(new URL(url.pathname, "https://example.com"), request);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

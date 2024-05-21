@@ -41,4 +41,4 @@ meta:
 
 ## Configuring a custom response for blocked requests
 
-{{<render file="_custom-response-blocked-requests.md">}}
+{{<render file="_custom-response-blocked-requests.md" withParameters="rate limiting;;429">}}

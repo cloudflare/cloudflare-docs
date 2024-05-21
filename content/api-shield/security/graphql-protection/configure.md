@@ -2,7 +2,7 @@
 title: Configure
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure GraphQL malicious query protection
 ---
@@ -33,7 +33,7 @@ header: GraphQL query
 
 ## Gather GraphQL statistics
 
-Using the new `apiGatewayGraphqlQueryAnalyticsGroups` node in the Cloudflare GraphQL API, you can retrieve `apiGatewayGraphqlQuerySize` and `apiGatewayGraphqlQueryDepth` dimensions. 
+Using the new `apiGatewayGraphqlQueryAnalyticsGroups` node in the Cloudflare GraphQL API, you can retrieve `apiGatewayGraphqlQuerySize` and `apiGatewayGraphqlQueryDepth` dimensions.
 
 ```graphql
 ---
@@ -93,7 +93,7 @@ In the response example, Cloudflare observed 10 requests with depth 1 and size 1
 
 ## Analyze GraphQL statistics
 
-You can use the response to compute percentiles across the attributes and set a threshold on what is allowed. For example, you can use a simple heuristic like `1.5 * p99` for query size or depth. 
+You can use the response to compute percentiles across the attributes and set a threshold on what is allowed. For example, you can use a simple heuristic like `1.5 * p99` for query size or depth.
 
 Here is a simple Python script that will report query size and depth p-levels given the GraphQL API response output above (as a JSON file):
 
@@ -103,11 +103,11 @@ header: Python script
 ---
 
 #!/usr/bin/env python3
- 
+
 import json
 import numpy as np
 import argparse
- 
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--response", help="Path to the API JSON response file with the apiGatewayGraphqlQueryAnalyticsGroups node", required=True)
 args = parser.parse_args()
@@ -118,7 +118,7 @@ with open(args.response) as f:
     for datapoint in data:
         query_sizes = np.append(query_sizes, [datapoint['dimensions']['apiGatewayGraphqlQuerySize']] * datapoint['count'])
         query_depths = np.append(query_depths, [datapoint['dimensions']['apiGatewayGraphqlQueryDepth']] * datapoint['count'])
-     
+
     quantiles = [0.99, 0.95, 0.75, 0.5]
     print('\n'.join([f"Query size {int(q * 100)}th percentile is {v}" for q, v in zip(quantiles, np.quantile(query_sizes, quantiles))]))
     print('\n'.join([f"Query depth {int(q * 100)}th percentile is {v}" for q, v in zip(quantiles, np.quantile(query_depths, quantiles))]))
@@ -147,7 +147,7 @@ API Shield customers now have three new fields available in custom rules:
 
 - `cf.api_gateway.graphql.query_size` describes the size of a GraphQL query.
 - `cf.api_gateway.graphql.query_depth` describes the depth of a GraphQL query.
-- `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules. 
+- `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules.
 <br />
 For example, you can deploy the following rule via the API or the dashboard to block queries that are deeply nested but ask for a few fields.
 

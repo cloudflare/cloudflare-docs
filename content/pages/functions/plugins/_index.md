@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Pages Plugins
-layout: single
 weight: 9
 ---
 
@@ -65,7 +64,20 @@ filename: package.json
 }
 ```
 
-`dist/index.js` will be the entrypoint to your Plugin. This is a generated file built by Wrangler with the `npm run build` command. Add the `dist/` directory to your `.gitignore`.
+{{<Aside type="note">}}
+
+The `npx wrangler pages functions build` command supports a number of arguments, including:
+
+- `--plugin` which tells the command to build a Pages Plugin, (rather than Pages Functions as part of a Pages project)
+- `--outdir` which allows you to specify where to output the built Plugin
+- `--external` which can be used to avoid bundling external modules in the Plugin
+- `--watch` argument tells the command to watch for changes to the source files and rebuild the Plugin automatically
+
+For more information about the available arguments, run `npx wrangler pages functions build --help`.
+
+{{</Aside>}}
+
+In our example, `dist/index.js` will be the entrypoint to your Plugin. This is a generated file built by Wrangler with the `npm run build` command. Add the `dist/` directory to your `.gitignore`.
 
 Next, create a `functions` directory and start coding your Plugin. The `functions` folder will be mounted at some route by the developer, so consider how you want to structure your files. Generally:
 
@@ -231,61 +243,6 @@ If you experience any problems with any one Plugin, file an issue on that Plugin
 If you experience any problems with Plugins in general, we would appreciate your feedback in the #pages-discussions channel in [Discord](https://discord.com/invite/cloudflaredev)! We are excited to see what you build with Plugins and welcome any feedback about the authoring or developer experience. Let us know in the Discord channel if there is anything you need to make Plugins even more powerful.
 
 ---
-
-## Include Static Assets with a Plugin (alpha)
-
-A Pages Plugin can also bring along static assets to be included in a user's Pages project. This is useful if you want to build a full experience for your Plugin (for example, an admin interface for users to interact with).
-
-A Plugin can import an `onRequest` handler from a folder of static assets by prefixing with the `assets:` protocol to the import statement. For example, with a folder of static assets (`public`), a Plugin can serve these static assets with a `functions/[[path]].ts` Function:
-
-```html
----
-filename: public/index.html
----
-
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Admin Dashboard</h1>
-  </body>
-</html>
-```
-
-```typescript
----
-filename: functions/[[path]].ts
----
-export { onRequest } from 'assets:../public';
-```
-
-Ensure you add the directory of static assets to your `package.json`'s `files` field so that they are included in your distribution:
-
-```json
----
-filename: package.json
----
-{
-  "name": "@cloudflare/a-fictional-admin-plugin",
-  "main": "dist/index.js",
-  "types": "index.d.ts",
-  "files": ["dist", "index.d.ts", "tsconfig.json", "public"],
-  "scripts": {
-    "build": "npx wrangler pages functions build --plugin --outdir=dist",
-    "prepare": "npm run build"
-  }
-}
-```
-
-Again, there should be no reference to where this Plugin will eventually be mounted. It is up to the developer to mount the Plugin wherever they choose. In this case, they may choose to include the plugin on a `/admin` route like so:
-
-```typescript
----
-filename: functions/admin/_middleware.ts
----
-import adminDashboardPlugin from '@cloudflare/an-admin-plugin';
-
-export const onRequest = adminDashboardPlugin();
-```
 
 ## Chain your Plugin
 

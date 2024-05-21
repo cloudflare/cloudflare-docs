@@ -473,7 +473,7 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:1200px) {
     .HeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         background-repeat: no-repeat;
@@ -484,14 +484,14 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:1200px) {
     [theme=dark] .HeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
 }
 
-@media (max-width:768px) {
+@media (max-width:1100px) {
     .HeroImage {
         background-image: none;
     }
@@ -911,6 +911,106 @@ a {
     }
 }
 
+@media (min-width: 978px) {
+    .TryOutSection {
+      margin-top: 5em;
+      width: 100%;
+    }
+    .documentation-content pre {
+      margin-bottom: 0em !important;
+    }
+
+    .documentation-container {
+      display: flex;
+      margin-top: 1.8em;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    .documentation-sidebar {
+      width: 14em;
+      background: #f2f2f2;
+      padding: 20px;
+      box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    [theme="dark"] .documentation-sidebar {
+      background: #222629;
+    }
+
+    .documentation-sidebar label {
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      word-wrap: normal;
+    }
+
+    .documentation-sidebar label:hover {
+      background: rgba(var(--orange-rgb), 0.2);
+    }
+
+    #section1Content, #section2Content, #section3Content, #section4Content, #section5Content {
+      display: none;
+    }
+
+    .documentation-content {
+      margin-left: 2em;
+      width: 90%;
+      margin-right: 2em;
+      background: #f2f2f2;
+      border-radius: 20px;
+    }
+
+    [theme="dark"] .documentation-content {
+      background: #222629;
+    }
+
+    #section1:checked ~ .documentation-content #section1Content,
+    #section2:checked ~ .documentation-content #section2Content,
+    #section3:checked ~ .documentation-content #section3Content,
+    #section4:checked ~ .documentation-content #section4Content,
+    #section5:checked ~ .documentation-content #section5Content
+     {
+      display: block;
+    }
+
+    #section1:checked ~ .documentation-sidebar #section1Label,
+    #section2:checked ~ .documentation-sidebar #section2Label,
+    #section3:checked ~ .documentation-sidebar #section3Label,
+    #section4:checked ~ .documentation-sidebar #section4Label,
+    #section5:checked ~ .documentation-sidebar #section5Label
+     {
+        background: rgba(var(--orange-rgb), 0.2);
+    }
+
+    .section-label {
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+  }
+
+  @media (max-width: 978px) {
+    .TryOutSection {
+      display: none;
+    }
+    .ViewProducts {
+      display: none
+    }
+  }
+
+.ViewProducts {
+    margin-top: 2em;
+    margin-left: .3em;
+}
+
 .FeaturedContentSection {
     margin-top: 2em;
 }
@@ -1023,6 +1123,24 @@ a {
 
 [theme=dark] .subTitle {
     color: #fff;
+}
+
+@media (min-width:570px) {
+    .subTitle {
+        width: 70%;
+    }
+}
+
+@media (min-width:870px) {
+    .subTitle {
+        width: 50%;
+    }
+}
+
+@media (min-width:1180px) {
+    .subTitle {
+        width: 30%;
+    }
 }
 
 .StartHere {
@@ -2403,7 +2521,7 @@ html[is-docs-page] body {
 }
 
 .DocsMarkdown .full-img {
-    max-width: 692px;
+    max-width: 100%;
     margin-bottom: 1em
 }
 
@@ -3791,4 +3909,112 @@ td>code,
 
 .changelogDate {
     width: 8em;
+}
+
+/* Changelog-specific overrides for main page */
+
+.sticky-date-header {
+  top: 45px;
+}
+
+@media (min-width: 972px) {
+  #changelogContent {
+    max-width: 80%;
+  }
+
+  .sticky-date-header {
+    top: 55px !important;
+  }
+}
+
+/* Alpha, Beta, and Deprecated pills */
+.DocsMarkdown-alpha,
+.DocsMarkdown-beta,
+.DocsMarkdown-deprecated,
+.DocsMarkdown-early-access {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.inline-pill {
+  display: inline !important;
+  margin-left: 4px;
+}
+
+.DocsMarkdown--pill {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+
+  position: relative;
+  margin-bottom: 0.75em;
+
+  height: 18px;
+  border-radius: 20px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+}
+
+/* Pills on levels lower than H1 */
+
+/* '-lower' unused? */
+.DocsMarkdown-pill-lower {
+  margin-bottom: initial;
+  margin-top: 2.25em;
+}
+
+.DocsMarkdown--pill-h2 {
+  margin-bottom: initial;
+  margin-top: 2.6em;
+}
+.DocsMarkdown--pill-h3 {
+  margin-bottom: initial;
+  margin-top: 2.75em;
+}
+.DocsMarkdown--pill-h4 {
+  margin-bottom: initial;
+  margin-top: 1.75em;
+}
+
+.DocsMarkdown--pill-tab {
+  top: 0;
+  margin-left: 0.8em;
+}
+
+.DocsMarkdown--pill-alpha {
+  width: 47px;
+  background: var(--orange-8);
+  color: var(--orange-1);
+}
+
+.DocsMarkdown--pill-beta {
+  background: var(--orange-8);
+  color: var(--orange-1);
+}
+
+.DocsMarkdown--pill-deprecated {
+  background: var(--red-8);
+  color: var(--red-0);
+}
+
+[theme="dark"] .DocsMarkdown--pill-deprecated {
+  background: var(--red-6);
+  color: var(--red-0);
+}
+
+.DocsMarkdown--pill-early-access {
+  background-color: var(--blue-8);
+  color: var(--blue-0);
 }

@@ -37,6 +37,7 @@ Opening port 443 enables some optional features. Failure to allow these connecti
 | ----------- | -------- | --------- | ------- |
 | `api.cloudflare.com`        | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
 | `update.argotunnel.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
+| `github.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to download the latest release and perform a software update. |
 | `<your-team-name>.cloudflareaccess.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to validate the Access JWT.  Only required if the [`access`](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access) setting is enabled. |
 | `pqtunnels.cloudflareresearch.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudflare.com/post-quantum-tunnel/) errors to Cloudflare. |
 
@@ -196,7 +197,7 @@ On Windows, you can use PowerShell commands if `dig` is not available.
 
 To test DNS:
 
-```bash
+```powershell
 PS C:\Windows\system32> Resolve-DnsName -Name _v2-origintunneld._tcp.argotunnel.com SRV
 
 Name                                     Type   TTL   Section    NameTarget                     Priority Weight Port
@@ -207,7 +208,7 @@ _v2-origintunneld._tcp.argotunnel.com       SRV    112   Answer     region1.v2.a
 
 To test ports:
 
-```bash
+```powershell
 PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 443
 
 ComputerName     : region1.v2.argotunnel.com
@@ -216,11 +217,9 @@ RemotePort       : 443
 InterfaceAlias   : Ethernet
 SourceAddress    : 10.0.2.15
 TcpTestSucceeded : True
-
 ```
 
-```bash
-
+```powershell
 PS C:\Cloudflared\bin> tnc region1.v2.argotunnel.com -port 7844
 
 ComputerName     : region1.v2.argotunnel.com

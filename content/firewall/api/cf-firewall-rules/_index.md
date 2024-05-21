@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Firewall Rules API
 weight: 1
-layout: single
 ---
 
 # Firewall Rules API

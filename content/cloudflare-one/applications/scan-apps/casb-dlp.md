@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Scan for sensitive data
 weight: 3
-layout: single
 ---
 
 # Scan SaaS applications with DLP
@@ -18,13 +17,25 @@ To perform DLP scans in a SaaS app, first configure a DLP profile with the data 
 
 ## Supported integrations
 
-- [Google Drive](/cloudflare-one/applications/scan-apps/casb-integrations/google-workspace/google-drive/)
-- [Microsoft OneDrive](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/onedrive/)
-- [Microsoft SharePoint](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/sharepoint/)
+{{<render file="casb/_casb-dlp-integrations.md">}}
 
 ## Configure a DLP profile
 
-Refer to the [DLP documentation](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
+You may either use DLP profiles predefined by Cloudflare, or create your own custom profiles based on regex, predefined detection entries, and DLP datasets.
+
+### Configure a predefined profile
+
+{{<render file="data-loss-prevention/_predefined-profile.md">}}
+
+Your DLP profile is now ready to use with CASB.
+
+### Build a custom profile
+
+{{<render file="data-loss-prevention/_custom-profile.md">}}
+
+Your DLP profile is now ready to use with CASB.
+
+For more information, refer to [Configure a DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
 
 ## Enable DLP scans in CASB
 

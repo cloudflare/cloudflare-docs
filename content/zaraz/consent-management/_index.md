@@ -4,7 +4,6 @@ title: Consent management
 weight: 6
 meta:
     title: Zaraz Consent Management platform
-layout: single
 ---
 
 # Zaraz Consent Management platform

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: DNSSEC states
-layout: list
+layout: wide
 weight: 4
 ---
 

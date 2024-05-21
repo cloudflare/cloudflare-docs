@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Deploy a Worker that connects to OpenAI via AI Gateway
-layout: single
 ---
 
 # Deploy a Worker that connects to OpenAI via AI Gateway
@@ -13,7 +12,7 @@ layout: single
 
 In this tutorial, you will learn how to deploy a Worker that makes calls to OpenAI through AI Gateway. AI Gateway helps you better observe and control your AI applications with more analytics, caching, rate limiting, and logging.
 
-This tutorial uses the most recent v4 OpenAI node library, an update released in August 2023. 
+This tutorial uses the most recent v4 OpenAI node library, an update released in August 2023.
 
 ## Before you start
 
@@ -105,7 +104,7 @@ export default {
 	async fetch(request, env, ctx) {
 		const openai = new OpenAI({
 		  apiKey: env.OPENAI_API_KEY,
-		  baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai" // paste your AI Gateway endpoint here
+		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai" // paste your AI Gateway endpoint here
 		});
 	},
 };
@@ -146,7 +145,7 @@ export default {
 	async fetch(request, env, ctx) {
 		const openai = new OpenAI({
 		  apiKey: env.OPENAI_API_KEY,
-		  baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai"
+		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai"
 		});
 
 		try {

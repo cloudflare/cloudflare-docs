@@ -18,6 +18,8 @@ Clientless Web Isolation allows users to securely browse high risk or sensitive 
 
 Gateway filters and resolves DNS queries for isolated sessions via [DNS policies](/cloudflare-one/policies/gateway/dns-policies/). Enterprise users can resolve domains available only through private resolvers by creating [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
 
+Gateway DNS and resolver policies will always apply to Clientless Web Isolation traffic, regardless of device configuration.
+
 ## Use the remote browser
 
 Clientless Web Isolation is implemented through a prefixed URL, where `<your-team-name>` is your organization's {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.

@@ -160,7 +160,4 @@ The function `regex_replace()` also allows you to extract parts of the URL using
 
 ## Serve images from custom paths
 
-When using Cloudflare Images or Cloudflare Image Resizing, you can use URL rewrites to serve images from a custom path. Refer to the following pages for examples:
-
-* [Serve images from custom domains and paths](/images/cloudflare-images/serve-images/serve-images-custom-domains/) (Cloudflare Images)
-* [Serve images from custom paths](/images/image-resizing/serve-images-custom-paths/) (Cloudflare Image Resizing)
+When using Cloudflare Image Optimization, you can use URL rewrites to serve images from a custom path. For more information, refer to [Serve images from custom domains and paths](/images/manage-images/serve-images/serve-from-custom-domains/).

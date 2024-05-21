@@ -34,12 +34,6 @@ To retrieve your database connection details:
 5. Select **General connection string** as the option.
 6. In the text box below, select **Copy** to copy the connection string.
 
-{{<Aside type="note">}}
-
-During the beta release of Hyperdrive, you will need to remove the `?sslmode=verify-full` from the connection string. Hyperdrive requires TLS/SSL to connect to an upstream database, but does not yet support client CAs.
-
-{{</Aside>}}
-
 By default, the CockroachDB cloud enables connections from the public Internet (`0.0.0.0/0`). If you have changed these settings on an existing cluster, you will need to allow connections from the public Internet for Hyperdrive to connect.
 
 ## 2. Create a database configuration

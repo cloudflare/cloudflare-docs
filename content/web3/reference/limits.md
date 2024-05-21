@@ -1,13 +1,15 @@
 ---
 pcx_content_type: reference
 title: Limits
-layout: list
+layout: wide
 weight: 4
 ---
 
 # Limits
 
 The following limits apply to users of the Cloudflare Web3 Gateways.
+
+{{<render file="_pricing-page-reference.md">}}
 
 ## IPFS Gateway
 

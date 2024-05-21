@@ -13,10 +13,7 @@ Cloudflare may remove HTTP request headers with names considered invalid [accord
 
 ## Accept-Encoding
 
-For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`[^1]. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
-
-[^1]: Brotli support between Cloudflare and the origin will be available across all plans by the end of Q4 2023.
-
+For incoming requests, the value of this header will always be set to `accept-encoding: br, gzip`. If the client set a different value, such as `accept-encoding: deflate`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
 
 ## CF-Connecting-IP
 
@@ -31,7 +28,7 @@ Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or an
 
 In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
 
-In cross-zone subrequests from one Cloudflare customer zone to another Cloudflare customer zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
+In cross-zone subrequests from one Cloudflare zone to another Cloudflare zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
 
 For Worker subrequests destined for a non-Cloudflare customer zone, the `CF-Connecting-IP` and `x-real-ip` headers will both reflect the client's IP address, with only the `x-real-ip` header able to be altered.
 
@@ -76,7 +73,7 @@ For example, if the original visitor IP address is `203.0.113.1` and the request
 
 If, on the other hand, an `X-Forwarded-For` header was already present in the request to Cloudflare, Cloudflare will append the IP address of the HTTP proxy connecting to Cloudflare to the header. For example, if the original visitor IP address is `203.0.113.1` and a request is proxied through two proxies: proxy A with an IP address of `198.51.100.101` and proxy B with an IP address of `198.51.100.102` before being proxied to Cloudflare, then Cloudflare will send `X-Forwarded-For: 203.0.113.1,198.51.100.101,198.51.100.102` to the origin. Proxy A will append the original visitor's IP address (`203.0.113.1`) to `X-Forwarded-For` before proxying the request to proxy B which, in turn, will append Proxy A's IP address (`198.51.100.101`) to `X-Forwarded-For` before proxying the request to Cloudflare. And finally, Cloudflare will append proxy B's IP address (`198.51.100.102`) to `X-Forwarded-For` before proxying the request to the origin.
 
-If you do not wish to receive the `X-Forwarded-For` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
+If you do not wish to receive the visitor's IP address in the `X-Forwarded-For` header, or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
 {{<Aside type="note">}}
 

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Endpoints
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Endpoints - Filters
 ---

@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Check for exposed credentials
 weight: 12
-layout: single
 ---
 
 # Check for exposed credentials

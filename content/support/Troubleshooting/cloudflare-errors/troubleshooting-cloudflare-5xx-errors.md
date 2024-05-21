@@ -28,7 +28,7 @@ Additional details to provide to your hosting provider or site administrator are
 
 ## Error analytics
 
-Error Analytics per domain are available within [Zone Analytics](https://developers.cloudflare.com/analytics/account-and-zone-analytics/zone-analytics/). Error Analytics allows insight into overall errors by HTTP error code and provides the URLs, source IP addresses, and Cloudflare data centers needed to diagnose and resolve the issue.  Error Analytics are based on a 1% traffic sample.
+Error Analytics per domain are available within [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/). Error Analytics allows insight into overall errors by HTTP error code and provides the URLs, source IP addresses, and Cloudflare data centers needed to diagnose and resolve the issue.  Error Analytics are based on a 1% traffic sample.
 
 To view Error Analytics:
 
@@ -51,12 +51,12 @@ However, if the 500 error contains “cloudflare” or “cloudflare-nginx” in
 
 1.  Your domain name
 2.  The time and timezone of the 500 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 500 error was observed (replace _www.example.com_ with your actual domain and hostname)
+3.  The output of `www.example.com/cdn-cgi/trace` from the browser where the 500 error was observed (replace `www.example.com` with your actual domain and hostname)
 
 {{<Aside type="note">}}
 If you observe blank or white pages when visiting your website, confirm
 whether the issue occurs when [temporarily pausing
-Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753)
+Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/)
 and contact your hosting provider for assistance.
 {{</Aside>}}
 
@@ -91,14 +91,23 @@ A 502 or 504 error originating from Cloudflare appears as follows:
 
 ![Example of an unbranded error 502.](/images/support/image5.png)
 
-If the error does not mention “cloudflare,” contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
+If the error does not mention `cloudflare`, contact your hosting provider for assistance on [502/504 errors from your origin](#502504-from-your-origin-web-server).
+
+This error can be returned in case of a compression issue at the origin, for example the origin server is serving gzip encoded compressed content but is not updating the `content-length` header, or the origin is serving broken gzip compressed content.
+You can try to disable compression at your origin to confirm if this is the root cause of the errors.
+
+Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic. 
+In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
+These traffic adjustments are mostly seamless and take only a few seconds. 
+Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors. 
+You can find more information about our automated traffic management tools [in this blogpost](https://blog.cloudflare.com/meet-traffic-manager).
 
 **Resolution**
 
-To avoid delays processing your inquiry, provide these required details to [Cloudflare Support](/support/contacting-cloudflare-support/):
+If you still need our Support team to help you investigate further, please provide these required details to [Cloudflare Support](/support/contacting-cloudflare-support/) to avoid delays processing your inquiry:
 
 1.  Time and timezone the issue occurred.
-2.  URL that resulted in the HTTP 502 or 504 response (for example: `https://www.example.com/images/icons/image1.png`)
+2.  URL that resulted in the HTTP 502 or 504 response (for example: `https://www.example.com/images/icons/image1.png`).
 3.  Output from browsing to `<YOUR_DOMAIN>/cdn-cgi/trace`.
 
 ___
@@ -107,17 +116,17 @@ ___
 
 HTTP error 503 occurs when your origin web server is overloaded. There are two possible causes discernible by error message:
 
--   Error doesn’t contain “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error doesn't contain `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: Contact your hosting provider to verify if they rate limit requests to your origin web server.
 
--   Error contains “cloudflare” or “cloudflare-nginx” in the HTML response body.
+-   Error contains `cloudflare` or `cloudflare-nginx` in the HTML response body.
 
 **Resolution**: A connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 
 1.  Your domain name
 2.  The time and timezone of the 503 error occurrence
-3.  The output of _www.example.com/cdn-cgi/trace_ from the browser where the 503 error was observed (replace _www.example.com_ with your actual domain and hostname)
+3.  The output of `www.example.com/cdn-cgi/trace` from the browser where the 503 error was observed (replace `www.example.com` with your actual domain and hostname)
 
 ___
 
@@ -197,7 +206,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
 
-If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/configuration/custom-domains/#add-a-custom-domain).
+If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
@@ -218,10 +227,6 @@ Error 523 occurs when Cloudflare cannot contact your origin web server. This typ
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator:
 
 -   An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP from the logs of the origin web server.
--   If you use [Railgun](/railgun/) (deprecated) via a Cloudflare Hosting Partner, [contact your hosting provider](#required-error-details-for-hosting-provider) to troubleshoot the 523 errors.
--   If you manage your [Railgun](/railgun/) (deprecated) installation, provide the following:
-    -   A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) to your origin web server from your Railgun server.
-    -   The most recent syslog file from your Railgun server.
 
 ___
 
@@ -254,13 +259,12 @@ or
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting) or using a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting in the Cloudflare Dashboard.
+-   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
--   If error 524 occurs for a domain using [Cloudflare Railgun](/railgun/) (deprecated), ensure the _lan.timeout_ is set higher than the default of 30 seconds and restart the railgun service.
 
 {{<Aside type="note">}}
 Please note that you may observe a 1 second difference between the timeout you've set and the actual time at which the Error 524 is returned.
-This is expect, it's due to the current work on implementing [Pingora, our new proxy](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
+This is expected, it's due to the current work on implementing [Pingora, our new proxy](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
 As a workaround you can simply set the timeout to 1 second more (121 seconds instead of 120 seconds for example).
 {{</Aside>}}
 
@@ -285,7 +289,7 @@ Contact your hosting provider to exclude the following common causes at your or
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](https://developers.cloudflare.com/fundamentals/reference/glossary/#server-name-indication-sni) support
+-   No [SNI](/fundamentals/reference/glossary/#server-name-indication-sni) support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="note">}}
@@ -307,6 +311,8 @@ ___
 
 ## Error 526: invalid SSL certificate
 
+### Error 526
+
 Error 526 occurs when these two conditions are true:
 
 1.  Cloudflare cannot validate the SSL certificate at your origin web server, and
@@ -324,7 +330,7 @@ Request your server administrator or hosting provider to review the origin web s
 
 -   Certificate is not expired
 -   Certificate is not revoked
--   Certificate is signed by a [Certificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
+-   Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed)
 -   The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**
 -   Your origin web server accepts connections over port SSL port 443
 -   [Temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
@@ -333,104 +339,29 @@ Request your server administrator or hosting provider to review the origin web s
 
 If the origin server uses a self-signed certificate, configure the domain to use _Full_ _SSL_ instead of _Full SSL (Strict)_. Refer to [recommended SSL settings for your origin](/ssl/origin-configuration/ssl-modes).
 
-___
+### Error 526 in the Zero Trust context
 
-## Error 527: Railgun Listener to origin error
+When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Error 526 might be returned in the [following cases](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website):
 
-{{<render file="_railgun-deprecation-notice.md" productFolder="railgun">}}
+- **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
 
-A 527 error indicates an interrupted connection between Cloudflare and your origin's [Railgun server (rg-listener)](https://support.cloudflare.com/hc/articles/200168406). Common causes include:
+  - The server certificate issuer is unknown or is not trusted by the service.
+  - The server certificate is revoked and fails a CRL check.
+  - There is at least one expired certificate in the certificate chain for the server certificate.
+  - The common name on the certificate does not match the URL you are trying to reach.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
--   Firewall interference
--   Network incidents or packet loss between the Railgun server and Cloudflare
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
 
-{{<Aside type="note">}}
-For additional details to aid troubleshooting, [increase Railgun
-logging](https://support.cloudflare.com/hc/articles/218444227).
-{{</Aside>}}
+  - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Redirect all HTTPS requests to HTTP.
 
-Common causes of 527 errors include:
+### Error 526 in the Workers context
 
--   [Connection timeouts](#connection-timeouts)
--   [LAN timeout exceeded](#lan-timeout-exceeded)
--   [Connection refusals](#connection-refusals)
--   [TLS/SSL related errors](#tlsssl-related-errors)
+Workers subrequests to hostnames that are not proxied by Cloudflare are always made using the **[Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/)** SSL mode, even when the Workers zone is configured otherwise.
 
-If contacting Cloudflare support, provide the following information from the Railgun Listener:
-
--   The full content of the _railgun.conf_ file
--   The full content of the _railgun-nat.conf_ file
--   Railgun log files that detail the observed errors
-
-### Connection timeouts
-
-The following Railgun log errors indicate a connection failure between the Railgun Listener and your origin web server:
-
-```
-connection failed 0.0.0.0:443/example.com: dial tcp 0.0.0.0:443: i/o timeout
-no response from origin (timeout) 0.0.0.0:80/example.com
-```
-**Resolution**
-
-Contact your hosting provider for assistance to test for connectivity issues between your origin web server and your Railgun Listener. For example, a netcat command tests connectivity when run from the Railgun Listener to the origin web server’s _SERVERIP_ and _PORT_ (80 for HTTP or 443 for HTTPS):
-
-```
-nc -vz SERVERIP PORT
-```
-
-### LAN timeout exceeded
-
-The following Railgun Listener log error is generated if the origin web server does not send an HTTP response to the Railgun Listener within the 30 second default timeout:
-
-```
-connection failed 0.0.0.0:443/example.com: dial tcp 0.0.0.0:443: i/o timeout
-```
-
-The time is adjusted by the lan.timeout parameter of the railgun.conf file.
-
-**Resolution**
-
-Either increase the _lan.timeout_ limit in _railgun.conf_, or review the web server configuration. Contact your hosting provider to confirm if the origin web server is overloaded.
-
-### Connection refusals
-
-The following errors appear in the Railgun logs when requests from the Railgun Listener are refused:
-
-```
-Error getting page: dial tcp 0.0.0.0:80:connection refused
-```
-
-**Resolution**
-
-Allow the IP of your Railgun Listener at your origin web server’s firewall.
-
-### TLS/SSL related errors
-
-The following errors appear in the Railgun logs if TLS connections fail:
-
-```
-connection failed 0.0.0.0:443/example.com: remote error: handshake failure
-connection failed 0.0.0.0:443/example.com: dial tcp 0.0.0.0:443:connection refused
-connection failed 127.0.0.1:443/www.example.com: x509: certificate is valid for
-example.com, not www.example.com
-```
-
-**Resolution**
-
-If TLS/SSL errors occur, check the following on the origin web server and ensure that:
-
--   Port 443 is open
--   An SSL certificate is presented by the origin web server
--   the SAN or Common Name of the origin web server’s SSL certificate contains the requested or target hostname
--   **SSL** is set to [Full or Full (Strict)](/ssl/origin-configuration/ssl-modes) in the **Overview** tab of the Cloudflare **SSL/TLS** app
-
-{{<Aside type="note">}}
-If your origin web server SSL certificate is self-signed, [set
-*validate.cert=0* in
-*railgun.conf*](/railgun/user-guide/railgun-ca-certificates).
-{{</Aside>}}
-
-___
+As a result, a valid SSL certificate is required at the origin.
 
 ## Error 530
 

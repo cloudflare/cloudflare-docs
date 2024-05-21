@@ -18,7 +18,7 @@ As the WARP client has replaced WinDivert with WinTun architecture, all Windows 
 
 As our [Network Map](https://www.cloudflare.com/en-gb/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the data center (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:
 
-- Sometimes your nearest colo may be undergoing maintenance or having problems. Check [here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
+- Sometimes your nearest colo may be undergoing maintenance or having problems. Check the [Cloudflare Status page](https://www.cloudflarestatus.com/) for system status.
 - Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
 
 ## Why is my public IP address sometimes visible?

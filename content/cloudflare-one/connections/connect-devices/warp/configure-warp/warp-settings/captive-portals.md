@@ -2,7 +2,6 @@
 pcx_content_type: concept
 title: Captive portal detection
 weight: 3
-layout: single
 ---
 
 # Captive portal detection

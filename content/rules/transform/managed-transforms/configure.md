@@ -2,7 +2,6 @@
 title: Configure Managed Transforms
 pcx_content_type: how-to
 weight: 1
-layout: single
 meta:
     description: Learn how to configure Managed Transforms.
 ---

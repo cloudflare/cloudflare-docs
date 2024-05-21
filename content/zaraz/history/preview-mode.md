@@ -10,8 +10,6 @@ meta:
 
 Zaraz allows you to test your configurations before publishing them. This is helpful to avoid unintended consequences when deploying a new tool or trigger.
 
-{{<Aside type="note">}}This feature is available to customers on a [Workers Paid plan](/workers/platform/pricing/).{{</Aside>}}
-
 After enabling Preview & Publish you will also have access to [Zaraz History](/zaraz/history/history/).
 
 ## Enable Preview & Publish mode

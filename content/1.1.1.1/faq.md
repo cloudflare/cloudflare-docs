@@ -18,7 +18,7 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 This specialized server is called a DNS recursive resolver. The resolver’s job is to find the address for a given name, like `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`, and return it to the computer that asked for it.
 
-Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you’re on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
+Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you are on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -74,11 +74,11 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="​Does 1.1.1.1 send EDNS client subnet header?" >}}
+{{<faq-question level=2 text="​Does 1.1.1.1 send EDNS Client Subnet header?" >}}
 
 {{<faq-answer>}}
 
-1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the EDNS Client Subnet Header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
+1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the {{<glossary-tooltip term_id="EDNS Client Subnet (ECS)" link="/glossary/?term=ecs">}}EDNS Client Subnet (ECS){{</glossary-tooltip>}} header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
 
 {{</faq-answer>}}
 {{</faq-item>}}

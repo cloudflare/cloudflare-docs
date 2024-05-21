@@ -2,7 +2,6 @@
 title: Advanced DNS Protection (beta)
 pcx_content_type: concept
 weight: 7
-layout: single
 ---
 
 {{<heading-pill style="beta">}} Cloudflare Advanced DNS Protection {{</heading-pill>}}

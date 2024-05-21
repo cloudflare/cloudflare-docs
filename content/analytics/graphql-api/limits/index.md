@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Limits
 weight: 31
-layout: single
 meta:
     title: GraphQL API - Limits
 ---
@@ -26,6 +25,8 @@ These limits are applied to every query for every plan:
 
 * A zone-scoped query can include up to **10 zones**
 * An account-scoped query can include only **1 account**
+
+Additionally, there is a limited number of queries you can make per request. The total number of queries in a request is equal to the number of zone/account scopes, multiplied by the number of nodes to which they are applied.
 
 ## User limits
 

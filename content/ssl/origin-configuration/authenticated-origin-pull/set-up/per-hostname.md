@@ -18,7 +18,7 @@ In the API response, save the certificate `id` since it will be required in step
 
 ## 2. Configure origin to accept client certificates
 
-{{<render file="_aop-configure-origin.md">}}
+{{<render file="_aop-configure-origin.md" withParameters=" ;; ">}}
 
 ## 3. Enable Authenticated Origin Pulls (globally)
 
@@ -33,3 +33,11 @@ If you had set up logging on your origin during step 2, test and confirm that Au
 ## 5. Enforce validation check on your origin
 
 {{<render file="_aop-enforce-validation.md">}}
+
+## 6. (Optional) Set up alerts for hostname-level Authenticated Origin Pulls certificates
+
+You can configure alerts to receive notifications before your AOP certificates expire.
+
+{{<available-notifications product="SSL/TLS" notificationName="Hostname-level Authenticated Origin Pulls Certificate Expiration Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

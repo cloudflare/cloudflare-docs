@@ -25,11 +25,8 @@ Workers functions are written in [JavaScript](https://www.cloudflare.com/learnin
 ---
 header: Setting custom headers with a Workers function
 ---
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
+export default {
+  async fetch(request) {
   // This proxies your Pages application under the condition that your Worker script is deployed on the same custom domain as your Pages project
   const response = await fetch(request);
 
@@ -47,7 +44,8 @@ async function handleRequest(request) {
   newResponse.headers.set('x-header-to-change', 'NewValue');
 
   return newResponse;
-}
+  }
+};
 ```
 
 ## Deploying a Workers function in the dashboard

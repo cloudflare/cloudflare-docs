@@ -2,7 +2,6 @@
 title: Cisco - Area 1 as MX Record
 pcx_content_type: integration-guide
 weight: 3
-layout: single
 meta:
    title: Deploy and configure Cisco IronPort with Area 1 as MX Record
 updated: 2022-09-30
@@ -14,7 +13,7 @@ updated: 2022-09-30
 
 In this tutorial, you will learn how to configure Cisco IronPort with Area 1 as MX record. This tutorial is broken down into several steps.
 
-{{<render file="_mx-deployment-prerequisites.md">}}
+{{<render file="deployment/_mx-deployment-prerequisites.md">}}
 
 ## 1. Add a Sender Group for Area 1 Email Protection IPs
 
@@ -59,8 +58,8 @@ Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/secu
 
 Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX. For example:
 
-{{<render file="_mx-deployment-values.md">}}
-{{<render file="_mx-geographic-locations.md">}}
+{{<render file="deployment/_mx-deployment-values.md">}}
+{{<render file="deployment/_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 

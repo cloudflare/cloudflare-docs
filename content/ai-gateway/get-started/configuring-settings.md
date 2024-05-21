@@ -6,7 +6,7 @@ weight: 3
 
 # Observe and control
 
-Now that your application is connected to the AI Gateway, you should be able to see see requests coming in through your [Cloudflare Dashboard - AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general). This guide shows you what data you can expect to see and what settings to configure for better control.
+Now that your application is connected to the AI Gateway, you should be able to see requests coming in through your [Cloudflare Dashboard - AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general). This guide shows you what data you can expect to see and what settings to configure for better control.
 
 ---
 
@@ -20,7 +20,7 @@ The cost metric is an estimation based on the number of tokens sent and received
 {{</Aside>}}
 
 ### Using GraphQL
-You can use GraphQL to query your usage data outside of the AI Gateway dashboard. See the example query below. You will need to use your Cloudflare token when making the request, and change ACCOUNT_TAG to match your account tag.
+You can use GraphQL to query your usage data outside of the AI Gateway dashboard. See the example query below. You will need to use your Cloudflare token when making the request, and change {account_id} to match your account tag.
 
 ```bash
 ---
@@ -31,7 +31,7 @@ curl --request POST \
   --header 'Authorization: Bearer TOKEN \
   --header 'Content-Type: application/json' \
   --data '{
-    "query": "query{\n  viewer {\n	accounts(filter: { accountTag: \"ACCOUNT_TAG\" }) {\n	requests: aiGatewayRequestsAdaptiveGroups(\n    	limit: $limit\n    	filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }\n    	orderBy: [datetimeMinute_ASC]\n  	) {\n    	count,\n    	dimensions {\n        	model,\n        	provider,\n        	gateway,\n        	ts: datetimeMinute\n    	}\n    	\n  	}\n    	\n	}\n  }\n}",
+    "query": "query{\n  viewer {\n	accounts(filter: { accountTag: \"{account_id}\" }) {\n	requests: aiGatewayRequestsAdaptiveGroups(\n    	limit: $limit\n    	filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }\n    	orderBy: [datetimeMinute_ASC]\n  	) {\n    	count,\n    	dimensions {\n        	model,\n        	provider,\n        	gateway,\n        	ts: datetimeMinute\n    	}\n    	\n  	}\n    	\n	}\n  }\n}",
     "variables": {
    	 "limit": 1000,
    	 "start": "2023-09-01T10:00:00.0Z",
@@ -70,7 +70,7 @@ Rate limiting is helpful when you want to control the traffic your application g
 
 You can define rate limits as the number of requests that get sent in a specific time frame. For example, I can limit my application to 100 requests per 60s.
 
-You can also select if you would like a **fixed** or **sliding** rate limiting technique. With rate limiting, we allow a certain number of requests within a window of time. If it's fixed, the window would be based on time, so there would be no more than x requests in a 10 minute window (for example). If it's sliding, there would be no more than x requests in the last 10 minutes. 
+You can also select if you would like a **fixed** or **sliding** rate limiting technique. With rate limiting, we allow a certain number of requests within a window of time. If it's fixed, the window would be based on time, so there would be no more than x requests in a 10 minute window (for example). If it's sliding, there would be no more than x requests in the last 10 minutes.
 
 To illustrate this, let's say you had a limit of 10 requests per 10 minutes, starting at 12:00 so the fixed window is 12:00-12:10, 12:10-12:20, etc. If you sent 10 requests at 12:09 and 10 requests at 12:11, all 20 requests would be successful in a fixed window strategy, but would fail in a sliding window strategy since there were >10 requests in the last 10 minutes.
 

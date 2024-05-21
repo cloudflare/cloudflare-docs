@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Community Plugins
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Community Pages Plugins

@@ -12,8 +12,6 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct Upload](/pages/get-started/direct-upload/) allows you to integrate your own build platform or upload from your local computer.
 
-- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Upload](/pages/get-started/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
-
 - Incremental builds are currently not supported in Cloudflare Pages.
 
 - Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#functions)).
@@ -86,7 +84,7 @@ If you do not configure an Access policy for your custom domain, an Access authe
 
 {{</Aside>}}
 
-If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
+If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.cloudflare.com](https://discord.cloudflare.com), and share your bug report in the #pages-general channel.
 
 ## Delete a project with a high number of deployments
 

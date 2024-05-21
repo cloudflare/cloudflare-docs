@@ -10,7 +10,7 @@ Use this tutorial to start using Cloudflare's Web3 Gateways to the IPFS and Ethe
 
 ## Before you begin
 
-Before you start, make sure the you have [set up an account](/fundamentals/setup/account-setup/) and [added your website](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
+Before you start, make sure the you have [set up an account](/fundamentals/setup/account/) and [added your website](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
 
 ## Step 1 - Subscribe to a gateway
 

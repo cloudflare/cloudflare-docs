@@ -6,7 +6,7 @@ weight: 4
 
 # Configure your mobile app or IoT device
 
-This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](/api-shield/).
+This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield](/api-shield/).
 
 ## Scenario details
 
@@ -196,7 +196,7 @@ EOF
 ))
 
 // save the response so we can view it and then extra the certificate
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d “$request_body” https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
+$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d "$request_body" https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
 
 $ cat response.json | jq .
 {
@@ -353,7 +353,7 @@ def readSensor():
     # Takes a reading from a temperature sensor and store it to temp_measurement
 
     dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime(‘%Y-%m-%dT%H:%M:%SZ’)
+    timestampStr = dateTimeObj.strftime('%Y-%m-%dT%H:%M:%SZ')
 
     measurement = {'temperature':str(temp_measurement),'time':timestampStr}
     return measurement

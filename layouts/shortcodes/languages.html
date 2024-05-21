@@ -49,7 +49,7 @@
             <td>{{ .default }}</td>
             <td>{{ .supported }}</td>
             <td>{{ if .environment_variable }}<code>{{ .environment_variable }}</code>{{ end }}</td>
-            <td>{{ if .file }}<code>{{ delimit .file "</code>, <code>" }}</code>{{ end }}</td>
+            <td>{{ if .file }}<code>{{ delimit .file "</code>, <code>" | safeHTML }}</code>{{ end }}</td>
           </tr>
           {{- end -}}
         </tbody>

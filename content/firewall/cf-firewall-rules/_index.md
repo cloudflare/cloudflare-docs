@@ -4,7 +4,6 @@ pcx_content_type: concept
 weight: 2
 meta:
   title: About Cloudflare Firewall Rules
-layout: single
 ---
 
 {{<heading-pill style="deprecated">}} About Cloudflare Firewall Rules {{</heading-pill>}}

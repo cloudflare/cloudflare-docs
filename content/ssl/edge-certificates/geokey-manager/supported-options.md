@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Supported options
 weight: 2
-layout: single
 meta:
     title: Supported options - Geo Key Manager
     description: Learn which options are supported for Geo Key Manager.

@@ -23,7 +23,7 @@ Zaraz matches the variable you input in **Variable name** with the text under **
 
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_  | _Equals_        | `purchase`   |
+| _Match rule_ | _Event Name_  | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
 
@@ -43,7 +43,7 @@ If you create a trigger with match rules using variables from Page Properties, C
 
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_  | _Equals_        | `Pageview`   |
+| _Match rule_ | _Event Name_  | _Equals_        | `Pageview`   |
 
 {{</table-wrap>}}
 
@@ -61,7 +61,7 @@ If you create a trigger with match rules using variables from Page Properties, C
 
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_  | _Equals_        | `Pageview`   |
+| _Match rule_ | _Event Name_  | _Equals_        | `Pageview`   |
 
 {{</table-wrap>}}
 

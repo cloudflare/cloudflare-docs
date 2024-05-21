@@ -15,8 +15,8 @@ The descriptions below detail the fields available for `dns_logs`.
 | Field | Value | Type |
 | -- | -- | -- |
 | ColoCode | IATA airport code of data center that received the request. | string |
-| EDNSSubnet | EDNS Client Subnet (IPv4 or IPv6). For more information refer to [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs). | string |
-| EDNSSubnetLength | EDNS Client Subnet length. For more information refer to [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs). | int |
+| EDNSSubnet | IPv4 or IPv6 address information corresponding to the [EDNS Client Subnet (ECS)](/glossary/?term=ecs) forwarded by recursive resolvers. Not all resolvers send this information. | string |
+| EDNSSubnetLength | Size of the [EDNS Client Subnet (ECS)](/glossary/?term=ecs) in bits. For example, if the last octet of an IPv4 address is omitted (`192.0.2.x.`), the subnet length will be 24. | int |
 | QueryName | Name of the query that was sent. | string |
 | QueryType | Integer value of query type. For more information refer to [Query type](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4). | int |
 | ResponseCached | Whether the response was cached or not. | bool |

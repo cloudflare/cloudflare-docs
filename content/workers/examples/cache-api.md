@@ -2,9 +2,11 @@
 type: example
 summary: Use the Cache API to store responses in Cloudflare's cache.
 tags:
-  - Cache API
   - Middleware
   - Caching
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Using the Cache API
 weight: 1001
@@ -56,8 +58,9 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request, env, ctx) {
+interface Env {}
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
     const cacheUrl = new URL(request.url);
 
     // Construct the cache key from the cache URL
@@ -90,9 +93,7 @@ const handler: ExportedHandler = {
     }
     return response;
   },
-};
-
-export default handler;
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

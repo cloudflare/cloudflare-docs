@@ -14,7 +14,7 @@ Some browsers might already have this setting enabled.
 1. Select the menu button > **Settings**.
 2. In the **Privacy & Security** menu, scroll down to the **Enable secure DNS using:** section.
 3. Select **Increased Protection** or **Max Protection**. By default, it will use the **Cloudflare** provider.
-4. If this is not the case for you, select **Cloudflare** in the **Choose Provider** dropdown.
+4. If this is not the case, select **Cloudflare** in the **Choose Provider** dropdown.
 
 ## Google Chrome
 
@@ -34,10 +34,10 @@ Some browsers might already have this setting enabled.
 ## Brave
 
 1. Select the menu button in your browser > **Settings**.
-2. Select **Security and Privacy** > **Security**.
-3. Enable **Use secure DNS**.
-4. Select **With Custom** and choose *Cloudflare (1.1.1.1)* as a service provider from the drop-down menu.
+2. Select **Privacy and security** > **Security**.
+3. Under **Advanced**, enable **Use secure DNS**.
+4. From the **Select DNS provider** drop-down menu, choose *Cloudflare (1.1.1.1)*.
 
-## Check if browser is configured correctly
+## Check if the browser is configured correctly
 
-Visit [1.1.1.1 help page](https://1.1.1.1/help) and check if `Using DNS over HTTPS (DoH)` show `Yes`.
+Visit [1.1.1.1 help page](https://1.1.1.1/help) and check if `Using DNS over HTTPS (DoH)` shows `Yes`.

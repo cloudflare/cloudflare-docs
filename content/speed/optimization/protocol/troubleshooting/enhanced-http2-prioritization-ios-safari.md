@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Enhanced HTTP/2 Prioritization negatively affects iOS/Safari devices
-layout: list
+layout: wide
 ---
 
 # Enhanced HTTP/2 Prioritization negatively affects iOS/Safari devices
