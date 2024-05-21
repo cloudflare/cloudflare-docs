@@ -28,7 +28,7 @@ Additional details to provide to your hosting provider or site administrator are
 
 ## Error analytics
 
-Error Analytics per domain are available within [Zone Analytics](https://developers.cloudflare.com/analytics/account-and-zone-analytics/zone-analytics/). Error Analytics allows insight into overall errors by HTTP error code and provides the URLs, source IP addresses, and Cloudflare data centers needed to diagnose and resolve the issue.  Error Analytics are based on a 1% traffic sample.
+Error Analytics per domain are available within [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/). Error Analytics allows insight into overall errors by HTTP error code and provides the URLs, source IP addresses, and Cloudflare data centers needed to diagnose and resolve the issue.  Error Analytics are based on a 1% traffic sample.
 
 To view Error Analytics:
 
@@ -289,7 +289,7 @@ Contact your hosting provider to exclude the following common causes at your or
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](https://developers.cloudflare.com/fundamentals/reference/glossary/#server-name-indication-sni) support
+-   No [SNI](/fundamentals/reference/glossary/#server-name-indication-sni) support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="note">}}
@@ -311,6 +311,8 @@ ___
 
 ## Error 526: invalid SSL certificate
 
+### Error 526
+
 Error 526 occurs when these two conditions are true:
 
 1.  Cloudflare cannot validate the SSL certificate at your origin web server, and
@@ -328,7 +330,7 @@ Request your server administrator or hosting provider to review the origin web s
 
 -   Certificate is not expired
 -   Certificate is not revoked
--   Certificate is signed by a [Certificate Authority](https://support.cloudflare.com/hc/articles/360026016272) (not self-signed)
+-   Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed)
 -   The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**
 -   Your origin web server accepts connections over port SSL port 443
 -   [Temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
@@ -336,6 +338,30 @@ Request your server administrator or hosting provider to review the origin web s
 ![Screen showing an SSL certificate with no errors.](/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
 If the origin server uses a self-signed certificate, configure the domain to use _Full_ _SSL_ instead of _Full SSL (Strict)_. Refer to [recommended SSL settings for your origin](/ssl/origin-configuration/ssl-modes).
+
+### Error 526 in the Zero Trust context
+
+When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Error 526 might be returned in the [following cases](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website):
+
+- **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
+
+  - The server certificate issuer is unknown or is not trusted by the service.
+  - The server certificate is revoked and fails a CRL check.
+  - There is at least one expired certificate in the certificate chain for the server certificate.
+  - The common name on the certificate does not match the URL you are trying to reach.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
+
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
+
+  - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Redirect all HTTPS requests to HTTP.
+
+### Error 526 in the Workers context
+
+Workers subrequests to hostnames that are not proxied by Cloudflare are always made using the **[Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/)** SSL mode, even when the Workers zone is configured otherwise.
+
+As a result, a valid SSL certificate is required at the origin.
 
 ## Error 530
 
