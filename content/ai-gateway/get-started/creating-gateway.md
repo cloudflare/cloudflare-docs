@@ -41,8 +41,6 @@ To set up an AI Gateway using the API:
 {{</tab>}}
 {{</tabs>}}
 
-
-
 ## Next Steps
 
 {{<resource-group>}}
