@@ -43,7 +43,7 @@ You can enable HTTP pull or change a queue from push-based to pull-based via `wr
 A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
 
 ```toml
-[[queues.consumer]]
+[[queues.consumers]]
 # Required
 queue = "QUEUE_NAME"
 type = "http_pull"
