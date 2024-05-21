@@ -22,7 +22,7 @@ The cost metric is an estimation based on the number of tokens sent and received
 
 ### Using GraphQL
 
-You can use GraphQL to query your usage data outside of the AI Gateway dashboard. See the example query below. You will need to use your Cloudflare token when making the request, and change {account_id} to match your account tag.
+You can use GraphQL to query your usage data outside of the AI Gateway dashboard. See the example query below. You will need to use your Cloudflare token when making the request, and change `{account_id}` to match your account tag.
 
 ```bash
 ---
@@ -69,6 +69,6 @@ For more details, refer to [Rate limiting](/ai-gateway/configuration/rate-limiti
 
 ### Editing your gateway
 
-You can also delete and rename your gateway or the endpoint. Please note that by editing your gateway endpoint (not the gateway name in the dashboard), you'll need to update the endpoints in your code to reflect the updated changes.
+You can also delete and rename your gateway or the endpoint. If you edit your gateway endpoint (not the gateway name in the dashboard), you will need to update the endpoints in your code to reflect the updated changes.
 
 Deleting your gateway is permanent and can not be undone.
