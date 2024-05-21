@@ -195,11 +195,11 @@ Use one or more of the following characteristics:
         (enter expression)
       </td>
       <td>
-        For example, <code>substring(&lt;field&gt;, &lt;start&gt;[, &lt;end&gt;])</code>
+        Custom expression — Used when you need to use a function such as <code>substring()</code> or <code>lower()</code>, or when you need to enter a more complex expression.
       </td>
       <td>
         <ul>
-          <li><a href="/ruleset-engine/rules-language/functions/#function-substring"><code>substring()</code> function reference</a></li>
+          <li><a href="/ruleset-engine/rules-language/functions/">Functions</a></li>
         </ul>
       </td>
     </tr>
