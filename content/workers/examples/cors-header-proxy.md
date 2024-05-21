@@ -418,7 +418,7 @@ async def on_fetch(request):
         return response
 
     async def handle_options(request):
-        if request.headers["Origin"] and request.headers["Access-Control-Request-Method"] and request.headers["Access-Control-Request-Headers"]:
+        if "Origin" in request.headers and "Access-Control-Request-Method" in request.headers and "Access-Control-Request-Headers" in request.headers:
             return Response.new(None, headers=to_js({
             **cors_headers,
             "Access-Control-Allow-Headers": request.headers["Access-Control-Request-Headers"]
