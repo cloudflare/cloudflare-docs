@@ -16,15 +16,15 @@ header: Request
 ---
 
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
-  --header 'Authorization: Bearer $TOKEN' \
+  --header 'Authorization: Bearer {openai_token}' \
   --header 'Content-Type: application/json' \
   --data ' {
    		 "model": "gpt-3.5-turbo",
    		 "messages": [
-   			 {
-   				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
-   			 }
+        {
+          "role": "user",
+          "content": "What is Cloudflare"
+        }
    		 ]
    	 }
 '
@@ -43,5 +43,19 @@ const openai = new OpenAI({
 	apiKey: 'my api key', // defaults to process.env["OPENAI_API_KEY"]
 	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai"
 });
+
+try {
+  const chatCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo-0613",
+    messages: [{ role: "user", content: "What is a neuron?" }],
+    max_tokens: 100,
+  });
+
+  const response = chatCompletion.choices[0].message;
+
+  return new Response(JSON.stringify(response));
+} catch (e) {
+  return new Response(e);
+}
 
 ```

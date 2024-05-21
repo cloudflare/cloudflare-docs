@@ -18,9 +18,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate/
   --header 'Authorization: Token {replicate_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{
-    "version": "2796ee9483c3fd7aa2e171d38f4ca12251a30609463dcfd4cd76703f22e96cdf",
-    "input": {
-   	 "prompt": "What is Cloudflare?"
-    }
-}'
+    "input":
+      {
+        "prompt": "What is Cloudflare?"
+      }
+    }'
 ```
