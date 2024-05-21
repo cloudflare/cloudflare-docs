@@ -195,7 +195,7 @@ Use one or more of the following characteristics:
         (enter expression)
       </td>
       <td>
-        Custom expression — Used when you need to use a function such as <code>substring()</code> or <code>lower()</code>, or when you need to enter a more complex expression.
+        Enter a custom expression. You can use a function such as <code>substring()</code> or <code>lower()</code>, or enter a more complex expression.
       </td>
       <td>
         <ul>
