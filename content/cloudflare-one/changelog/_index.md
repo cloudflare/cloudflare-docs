@@ -5,8 +5,8 @@ meta:
     description: Review recent changes to Cloudflare Access.
 weight: 15
 layout: changelog
-changelog_name: Cloudflare Zero Trust
-changelog_product_area_name: Zero Trust
+changelog_name: Cloudflare One
+changelog_product_area_name: Cloudflare One
 outputs:
     - html
     - rss
