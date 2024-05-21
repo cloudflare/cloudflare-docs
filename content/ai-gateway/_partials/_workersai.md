@@ -17,7 +17,7 @@ You'll need to generate an [API token](/fundamentals/api/get-started/create-toke
 header: Request to Workers AI llama model
 ---
 
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-2-7b-chat-int8 \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-2-7b-chat-int8 \
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{"prompt": "What is Cloudflare?"}'
@@ -28,7 +28,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/wo
 header: Request to Workers AI text classification model
 ---
 
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/huggingface/distilbert-sst-2-int8 \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/huggingface/distilbert-sst-2-int8 \
   --header 'Authorization: Bearer {cf_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{ "text": "This pizza is amazing!" }'

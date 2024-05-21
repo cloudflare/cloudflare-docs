@@ -15,7 +15,7 @@ When making requests to HuggingFace Inference API, replace `https://api-inferenc
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/bigcode/starcoder -X POST \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/bigcode/starcoder \
   --header 'Authorization: Bearer {hf_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{

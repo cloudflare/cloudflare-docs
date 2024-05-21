@@ -10,7 +10,7 @@ _build:
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug} -X POST \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug} \
   --header 'Content-Type: application/json' \
   --data '[
   {
