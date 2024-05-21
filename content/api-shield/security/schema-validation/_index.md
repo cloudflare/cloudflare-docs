@@ -158,16 +158,17 @@ There is a limit of 1000 total operations for enabled schemas. We will raise thi
 
 API Shield has the ability to identify body specifications contained in uploaded schemas and validate that the data of incoming API requests adheres to them.
 
-Schema validation currently supports validating requests with content-type `application/json`.
+Schema Validation currently supports validating requests with content-type `application/json`.
 
 Within the OpenAPI specification, request body schemas are associated to media-ranges (such as `application/*`, `application/xml` or `application/json`).
 
 When Cloudflare validates incoming requests, Cloudflare checks that the request's `content-type` matches the OpenAPI-specified media-range. 
-For example, when the OpenAPI file specifies `application/*` as part of the request body content map, Cloudflare will accept requests with the content-types `application/xml` and `application/json`, etc. However, only `application/json` bodies will be validated with the supplied schema.
 
-Cloudflare generally recommends keeping the media-ranges as tight as possible. We recommend, setting them to an individual media-type. If you need to support multiple content-types on an API endpoint, you can utilize wildcard media-ranges (see below).
+For example, when the OpenAPI file specifies `application/*` as part of the request body content map, Cloudflare will accept requests with the content-types `application/xml` and `application/json`. However, only `application/json` bodies will be validated with the supplied schema.
 
-Care should also be taken if the origin is configured to perform [MIME sniffing](https://mimesniff.spec.whatwg.org/). For example, when a request carrying a JSON body is deliberately carrying an `application/malicous` content-type and Cloudflare was configured to allow `application/*` media-ranges, the request would be passed along to the origin without validating the JSON body contents. However, an origin that ignores the content-type, and either trial deserializes or sniffs the MIME type may deserialize the JSON body with a wrong assumption of having passed schema body validation.
+Cloudflare generally recommends keeping the media-ranges as tight as possible. We suggest setting them to an individual media-type. If you need to support multiple content-types on an API endpoint, you can utilize wildcard media-ranges.
+
+Care should also be taken if the origin is configured to perform [MIME sniffing](https://mimesniff.spec.whatwg.org/). For example, when a request carrying a JSON body is deliberately carrying an `application/malicous` content-type and Cloudflare was configured to allow `application/*` media-ranges, the request would be passed along to the origin without validating the JSON body contents. However, an origin that ignores the content-type and either trial deserializes or sniffs the MIME type may deserialize the JSON body with a wrong assumption of having passed schema body validation.
 
 As such, if you need to support `application/json` and `application/xml` on the same endpoint, you can use `application/*`. Cloudflare will validate the provided schema for request bodies where the content-type is set to `application/json`. Requests with content-type `application/xml` (and others matching `application/*`) will be let through. It is still strongly advised to disable content-type sniffing on your origin.
 
