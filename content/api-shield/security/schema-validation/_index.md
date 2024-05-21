@@ -172,7 +172,7 @@ Care should also be taken if the origin is configured to perform [MIME sniffing]
 
 As such, if you need to support `application/json` and `application/xml` on the same endpoint, you can use `application/*`. Cloudflare will validate the provided schema for request bodies where the content-type is set to `application/json`. Requests with content-type `application/xml` (and others matching `application/*`) will be let through. It is still strongly advised to disable content-type sniffing on your origin.
 
-Cloudflare allows specifying the following media-ranges in the OpenAPI request body content map: 
+We allows specifying the following media-ranges in the OpenAPI request body content map: 
 - `*/*`
 - `application/*`
 - `application/json`. 
