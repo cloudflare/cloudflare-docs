@@ -169,7 +169,7 @@ Cloudflare generally recommends keeping the media-ranges as tight as possible. W
 
 Care should also be taken if the origin is configured to perform [MIME sniffing](https://mimesniff.spec.whatwg.org/). For example, when a request carrying a JSON body is deliberately carrying an `application/malicous` content-type and Cloudflare was configured to allow `application/*` media-ranges, the request would be passed along to the origin without validating the JSON body contents. However, an origin that ignores the content-type, and either trial deserializes or sniffs the MIME type may deserialize the JSON body with a wrong assumption of having passed schema body validation.
 
-As such, if you need to support `application/json` and `application/xml` on the same endpoint, do not use `application/*`. Instead, set one content for `application/json`, where Cloudflare will check the request body with the supplied schema, and another with `application/xml` that Cloudflare will let through. It is still advised to disable content-type sniffing on your origin.
+As such, if you need to support `application/json` and `application/xml` on the same endpoint, you can use `application/*`. Cloudflare will validate the provided schema for request bodies where the content-type is set to `application/json`. Requests with content-type `application/xml` (and others matching `application/*`) will be let through. It is still strongly advised to disable content-type sniffing on your origin.
 
 Cloudflare allows specifying the following media-ranges in the OpenAPI request body content map: 
 - `*/*`
