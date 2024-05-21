@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Changelog
 meta:
-    description: Review recent changes to Cloudflare Access.
+    description: Review recent changes to Cloudflare One.
 weight: 15
 layout: changelog
 changelog_name: Cloudflare One
