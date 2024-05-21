@@ -14,7 +14,7 @@ When making requests to Replicate, replace `https://api.replicate.com/v1` in the
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate/predictions -X POST \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate/predictions \
   --header 'Authorization: Token {replicate_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{

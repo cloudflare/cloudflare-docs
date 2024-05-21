@@ -14,7 +14,7 @@ When making requests to [Groq](https://groq.com/), replace `https://api.groq.com
 header: Example fetch request
 ---
 
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq/chat/completions \
   --header 'Authorization: Bearer {groq_api_key}' \
   --header 'Content-Type: application/json' \
   --data '{

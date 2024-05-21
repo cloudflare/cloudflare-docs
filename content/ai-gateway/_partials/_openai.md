@@ -15,7 +15,7 @@ When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL y
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions -X POST \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --data ' {
