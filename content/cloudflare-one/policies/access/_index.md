@@ -127,7 +127,7 @@ Identity-based attributes are only checked when a user authenticates to Access, 
 | Emails   | `you@company.com`  | ✅ | ❌ |
 | Emails ending in | `@company.com`| ✅ | ❌ |
 | External Evaluation | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API. | ✅ | ❌ |
-| IP ranges | `192.168.100.1/24` (supports IPv4 and IPv6, and range max limit is /32). | ✅ | ✅ |
+| IP ranges | `192.168.100.1/24` (supports IPv4 and IPv6 addresses and CiDR ranges). | ✅ | ✅ |
 | Country | Uses the IP address to determine country. | ✅ | ✅ |
 | Everyone | Allows, denies, or bypasses access to everyone. |  ✅ | ❌ |
 | Common Name | The request will need to present a valid certificate with an expected common name. | ✅ | ✅ |
