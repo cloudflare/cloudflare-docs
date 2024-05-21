@@ -162,7 +162,7 @@ Schema validation currently supports validating requests with content-type `appl
 
 Within the OpenAPI specification, request body schemas are associated to media-ranges (such as `application/*`, `application/xml` or `application/json`).
 
-When Cloudflare validates incoming requests, Cloudflare checks that the request's content-type matches to the OpenAPI-specified media-range, for example:
+When Cloudflare validates incoming requests, Cloudflare checks that the request's `content-type` matches the OpenAPI-specified media-range. 
 When the OpenAPI file specifies `application/*` as part of the request body content map, Cloudflare will accept requests with the content-types `application/xml` and `application/json`, etc. However, only `application/json` bodies will be validated with the supplied schema.
 
 Note: We generally recommend keeping the media-ranges as tight as possible. If you need to support multiple content-types on an API endpoint, explicitly list those as individual media-ranges and refrain from using wildcard identifiers. Futhermore, care should be taken if the origin is configured to perform [MIME sniffing](https://mimesniff.spec.whatwg.org/). For example, when a request carrying a json body is deliberately carrying an `application/malicous` content-type and Cloudflare was configured to allow `application/*` media-ranges, the request would be passed along to the origin without validating the json body contents. However, an origin that ignores the content-type, and either trial deserializes or sniffs the MIME type may thus deserialize the json body with a wrong assumption about it having passed schema body validation.
