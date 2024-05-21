@@ -44,6 +44,8 @@ To disable automatic HTTPS upgrades in Chrome, go to [Chrome flags](chrome://fla
 
 Websites that adhere to [ESNI or ECH standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indicator (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. This is because Gateway relies on the SNI to match an HTTP request to a policy.
 
+By default, if ECH initially fails, browsers will re-send the ClientHello message unencrypted. To avoid this behavior, disable ECH in your users' browsers.
+
 You can still apply all [network policy filters](/cloudflare-one/policies/gateway/network-policies/#selectors) except for SNI and SNI Domain. To restrict ESNI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
 
 ## FIPS compliance
