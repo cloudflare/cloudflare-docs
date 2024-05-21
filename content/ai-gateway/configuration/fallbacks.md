@@ -12,7 +12,7 @@ Specify model or provider fallback with your [Universal endpoint](/ai-gateway/pr
 
 For example, you could set up a gateway endpoint that:
 1. Sends a request to Workers AI Inference API.
-2. If that request fails, it will proceed to OpenAI.
+2. If that request fails, proceeds to OpenAI.
 
 ```mermaid
 graph TD
