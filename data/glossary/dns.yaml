@@ -25,7 +25,6 @@ entries:
     - 1.1.1.1
     - Cloudflare One
 
-
 - term: DNS record
   general_definition: |-
     DNS records are instructions that live in authoritative DNS servers and provide information about a domain including what IP address is associated with that domain and how to handle requests for that domain.
@@ -63,6 +62,20 @@ entries:
 
 - term: nameserver
   general_definition: |-
-    a nameserver is a dedicated server that translates human readable hostnames into IP addresses. Nameservers like root servers, TLD servers, and authoritative nameservers are fundamental components of the Domain Name System (DNS).
+    a nameserver is a dedicated server that translates human readable hostnames (`www.example.com`) into IP addresses.
+
+    Nameservers like root servers, TLD servers, and [authoritative nameservers](/dns/nameservers/) are fundamental components of the Domain Name System (DNS).
   associated_products:
     - DDoS Protection
+
+- term: partial setup
+  general_definition: |-
+    also known as CNAME setup, a partial setup allows you to use Cloudflare's reverse proxy without using Cloudflare for your authoritative nameservers.
+
+- term: proxy status
+  general_definition: |-
+    the proxy status of a DNS record defines whether requests for your domain will route through Cloudflare (`proxied`) or not (`DNS-only`).
+
+    When a [DNS record is proxied](/dns/manage-dns-records/reference/proxied-dns-records/), requests are processed according to your configurations, and Cloudflare can optimize, cache, and protect your domain. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
+  associated_products:
+    - Fundamentals
