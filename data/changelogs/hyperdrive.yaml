@@ -4,6 +4,14 @@ productName: Hyperdrive
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-05-22"
+    title: Driver performance improvements
+    description: |-
+      Compatibility improvements to how Hyperdrive interoperates with the popular [Postgres.js](https://github.com/porsager/postgres) driver have been released. These improvements allow queries made via Postgres.js to be correctly cached (when enabled) in Hyperdrive.
+
+      Developers who had previously set `prepare: false` can remove this configuration when establishing a new Postgres.js client instance.
+
+      Read the [documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about database driver interoperability with Hyperdrive.
   - publish_date: "2024-04-01"
     title: Hyperdrive is now Generally Available
     description: |-
