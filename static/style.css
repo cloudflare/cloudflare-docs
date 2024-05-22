@@ -4409,6 +4409,20 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 }
 
+p#totalExamples {
+  margin-top: 1em;
+  font-size: 1.1em;
+  padding-left: .5em;
+  width: 7em;
+  font-weight: 400;
+  border-radius: 5px;
+  background: #FCC373;
+}
+
+[theme="dark"] p#totalExamples {
+  background: #0051c3;
+}
+
 .DocsTutorials {
   margin: 2em 0;
   width: 53em;
