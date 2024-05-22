@@ -432,7 +432,7 @@
 /fundamentals/data-products/about-analytics/ /analytics/faq/about-analytics/ 301
 /fundamentals/data-products/analytics-integrations/graylog/index/ /analytics/analytics-integrations/graylog/ 301
 /fundamentals/data-products/analytics-integrations/looker/index/ /analytics/analytics-integrations/looker/ 301
-/fundamentals/data-products/analytics-integrations/elastic/index/ /analytics/analytics-integrations/elastic/ 301
+/analytics/analytics-integrations/elastic/ /analytics/analytics-integrations/ 301
 /fundamentals/data-products/analytics-integrations/splunk/index/ /analytics/analytics-integrations/splunk/ 301
 /fundamentals/data-products/analytics-integrations/datadog/index/ /analytics/analytics-integrations/datadog/ 301
 /fundamentals/data-products/analytics-integrations/google-cloud/index/ /analytics/analytics-integrations/google-cloud/ 301

@@ -23,16 +23,14 @@ To get these values:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **AI** > **Workers AI**.
-3. Select **Using the Workers AI API**.
+3. Select **Use REST API**.
 4. Get your API token:
-    1. Select **Get API Token**.
+    1. Select **Create a Workers AI API Token**.
     2. Review the prefilled information.
-    3. Select **Continue to summary**.
-    4. Select **Create Token**.
-    5. Copy the token value for future steps.
-5. Get your account ID:
-    1. Go back to the **Using the Workers AI API screen** (your original tab).
-    2. For **Get Account ID**, copy the value for **Account ID**.
+    3. Select **Create API Token**.
+    4. Select **Copy API Token**.
+    5. Save that value for future use.
+5. For **Get Account ID**, copy the value for **Account ID**. Save that value for future use.
 
 {{<Aside type="note">}}
 
