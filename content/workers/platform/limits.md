@@ -24,7 +24,7 @@ meta:
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
-<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). 
+<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 {{<render file="_limits_increase.md">}}
 
@@ -84,17 +84,12 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
 
+{{<render file="_isolate-cpu-flexibility">}}
+<br/>
+
 {{<Aside type="note">}}
 On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
 {{</Aside>}}
-
-#### Rollover banks
-
-Each isolate has a rollover bank of CPU time. If you use less than your limit on one request, the leftover time is added to the bank. If you use more than your limit on another request, time is taken out of the bank. Only when the bank reaches zero do you get an error.
-
-Additionally, the bank does not start out empty. When an isolate first starts up, its bank is initialized with some extra time. This is meant to make up for the fact that the first few requests are likely to run slower as the isolate warms up (meaning it starts JIT-compiling code).
-
-Because of the initial time, if your Worker commonly executes only a small number of requests per isolate, it is indeed possible to exceed the limit regularly. But if you get enough traffic that individual isolates are commonly handling many requests, you will start to see errors.
 
 ---
 
@@ -189,7 +184,7 @@ If you make a subrequest from your Worker to a target Worker that runs on a [Cus
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker. 
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker.
 
 ### How long can a subrequest take?
 
@@ -267,7 +262,7 @@ $ wrangler deploy --outdir bundled/ --dry-run
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
-Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code. 
+Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 
 {{<render file="_limits_increase.md">}}
 
