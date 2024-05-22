@@ -160,6 +160,6 @@ entries:
 
 - term: validation level
   general_definition: |-
-    the level to which a certificate authotity validates domain ownership before issuing an SSL/TLS certificate.
+    the level to which a certificate authority validates domain ownership before issuing an SSL/TLS certificate.
 
     The different certificate validation levels are DV (Domain Validated), OV (Organization Validated), or EV (Extended Validation).
