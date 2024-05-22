@@ -24,10 +24,10 @@ We plan on adding semantic search for caching in the future to improve cache hit
 
 To set the default caching configuration in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **AI** > **AI Gateway**.
-3. Go to **Settings**.
-4. For **Cache Responses**, switch the toggle to **On**.
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **AI** > **AI Gateway**.
+3. Select **Settings**.
+4. Enable **Cache Responses**.
 5. Change the default caching to whatever value you prefer.
 
 {{</tab>}}
@@ -84,7 +84,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/cha
 
 Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and requires refreshing from the original source. You can use **cf-cache-ttl** to set the desired caching duration in seconds.
 
-For example, if you set a TTL of 1 hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a "more recent" response and that response will repopulate the cache for the next hour.
+For example, if you set a TTL of one hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a more recent response, and that response will repopulate the cache for the next hour.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
