@@ -43,6 +43,25 @@ Refer to the table below for the complete list of available regions and their de
 | Germany | Cloudflare will only use data centers that are physically located within Germany to decrypt and service HTTPS traffic. |
 | Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
 | South Korea | Cloudflare will only use data centers that are physically located within South Korea to decrypt and service HTTPS traffic. |
+| Austria | Cloudflare will only use data centers that are physically located within Austria to decrypt and service HTTPS traffic. |
+| Brazil | Cloudflare will only use data centers that are physically located within Brazil to decrypt and service HTTPS traffic. |   
+| Cloudflare Green Energy | Cloudflare will only use data centers that are committed to powering their operations with renewable energy. |
+| Exclusive of Hong Kong and Macau | Cloudflare will only use data centers that are NOT physically located within Hong Kong and Macau to decrypt and service HTTPS traffic. |
+| Exclusive of Russia and Belarus | Cloudflare will only use data centers that are NOT physically located within Russia and Belarus to decrypt and service HTTPS traffic. |
+| France | Cloudflare will only use data centers that are physically located within European France to decrypt and service HTTPS traffic. |
+| Hong Kong | Cloudflare will only use data centers that are physically located within Hong Kong to decrypt and service HTTPS traffic. |
+| Italy | Cloudflare will only use data centers that are physically located within Italy to decrypt and service HTTPS traffic. |
+| NATO | Cloudflare will only use data centers that are physically located within North Atlantic Treaty Organization (NATO) countries. For more details, refer to the [list of NATO countries](https://www.nato.int/nato-welcome/).
+| Netherlands | Cloudflare will only use data centers that are physically located within the Netherlands to decrypt and service HTTPS traffic. |
+| Russia | Cloudflare will only use data centers that are physically located within Russia to decrypt and service HTTPS traffic. |
+| Saudi Arabia | Cloudflare will only use data centers that are physically located within Saudi Arabia to decrypt and service HTTPS traffic. |
+| South Africa | Cloudflare will only use data centers that are physically located within South Africa to decrypt and service HTTPS traffic. |
+| Spain | Cloudflare will only use data centers that are physically located within Spain to decrypt and service HTTPS traffic. |
+| Switzerland | Cloudflare will only use data centers that are physically located within Switzerland to decrypt and service HTTPS traffic. |
+| Taiwan | Cloudflare will only use data centers that are physically located within Taiwan to decrypt and service HTTPS traffic. |
+| US State of California | Cloudflare will only use data centers that are physically located within the US State of California to decrypt and service HTTPS traffic. |
+| US State of Florida | Cloudflare will only use data centers that are physically located within the US State of Florida to decrypt and service HTTPS traffic. |
+| US State of Texas | Cloudflare will only use data centers that are physically located within the US State of Texas to decrypt and service HTTPS traffic. |
 
 {{</table-wrap>}}
 
