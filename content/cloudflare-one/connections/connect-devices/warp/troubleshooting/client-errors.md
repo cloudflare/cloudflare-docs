@@ -88,15 +88,17 @@ A third-party process (usually a third-party DNS software) is bound to port 53, 
 ### Symptoms
 
 - Unable to connect WARP
+- Unable to browse the Internet
 
 ### Cause
 
-The system DNS configuration was invalid and so we could not read it. This could be an invalid nameserver, a mis-typed search domain, etc.
+WARP could not read the system DNS configuration, most likely because it contains an invalid nameserver or search domain.
 
 ### Resolution
 
-On macOS/Linux, check if `/etc/resolv.conf` contains an invalid character:
-https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#maclinux-the-devices-etcresolvconf-file-has-an-invalid-character
+On macOS and Linux, validate that `/etc/resolv.conf` is [formatted correctly](https://man7.org/linux/man-pages/man5/resolv.conf.5.html) and check for [invalid characters](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#maclinux-the-devices-etcresolvconf-file-has-an-invalid-character).
+
+On Windows, validate that the registry entry `HKLM\System\CurrentControlSet\Services\TCPIP\Parameters\SearchList` contains only valid search domains. Examples of invalid entries include IP addresses and domains that start with a period (such as `.local`).
 
 ## CF_FAILED_TO_SET_MTLS
 
@@ -113,7 +115,7 @@ The device failed to present a [valid mTLS certificate](/cloudflare-one/connecti
 1. Ensure that there are no admin restrictions on certificate installation.
 2. Re-install the client certificate on the device.
 
-## CF_HAPPY_EYEBALLS_MITM_FAILURE
+## CF_HAPPY_EYEBALLS_FAILURE
 
 ### Symptoms
 
