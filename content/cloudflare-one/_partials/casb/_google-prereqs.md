@@ -6,4 +6,4 @@ _build:
 ---
 
 - A Google Workspace account with a Business Starter, Business Standard, Business Plus or Enterprise plan
-- [Super Admin privileges](https://support.google.com/a/answer/2405986) in Google Workspace
+- A Google Workspace user with [Super Admin privileges](https://support.google.com/a/answer/2405986) and [Owner permissions](https://cloud.google.com/iam/docs/understanding-roles) in the Google Cloud Platform (GCP) project used

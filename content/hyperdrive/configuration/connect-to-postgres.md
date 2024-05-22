@@ -45,7 +45,7 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
 | -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
-| Postgres.js (**recommended**)        | https://github.com/porsager/postgres | `postgres@3.4.5` | `3.4.5` and later correctly support caching with Hyperdrive. Supported in both Workers & Pages. |
+| Postgres.js (**recommended**)        | https://github.com/porsager/postgres | `postgres@3.4.5` | Supported in both Workers & Pages. |
 | node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages.  |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
@@ -122,10 +122,10 @@ export default {
 			return Response.json({ result: result });
 		} catch (e) {
 			console.log(e);
-			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
+			return Response.json({ error: e.message }, { status: 500 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}
@@ -167,19 +167,12 @@ export interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		// Create a database client that connects to your database via Hyperdrive
-		// Hyperdrive generates a unique connection string you can pass to
-		// supported drivers, including node-postgres, Postgres.js, and the many
-		// ORMs and query builders that use these drivers.
-		const client = new Client({
-			host: env.HYPERDRIVE.host,
-			user: env.HYPERDRIVE.user,
-			password: env.HYPERDRIVE.password,
-			port: Number(env.HYPERDRIVE.port),
-			database: env.HYPERDRIVE.database
-		})
+	async fetch(request, env, ctx): Promise<Response> {
 
+    // Important: Set `prepare: false` as Postgres.js named prepared statements
+    // are not compatible with connection pooling systems like Hyperdrive
+    const sql = postgres(env.HYPERDRIVE.connectionString, { prepare: false })
+ 
 		try {
 			// Connect to your database
 			await client.connect();
@@ -191,10 +184,10 @@ export default {
 			return Response.json({ result: result });
 		} catch (e) {
 			console.log(e);
-			return Response.json({ error: JSON.stringify(e) }, { status: 500 });
+			return Response.json({ error: e.message }, { status: 500 });
 		}
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 {{</tab>}}

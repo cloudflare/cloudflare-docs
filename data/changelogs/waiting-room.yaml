@@ -1,6 +1,8 @@
 ---
 link: "/waiting-room/changelog/"
 productName: Waiting Room
+productArea: Application performance
+productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
 - publish_date: '2023-09-06'
   title: Waiting Room coverage for multiple hostnames and paths

@@ -4,6 +4,10 @@ summary: Rewrite URL links in HTML using the HTMLRewriter. This is useful for
   JAMstack websites.
 tags:
   - HTMLRewriter
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Rewrite links
 weight: 1001
@@ -57,7 +61,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const OLD_URL = "developer.mozilla.org";
     const NEW_URL = "mynewdomain.com";
 

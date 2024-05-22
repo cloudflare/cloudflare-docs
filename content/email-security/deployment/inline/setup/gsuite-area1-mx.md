@@ -51,7 +51,7 @@ When Area 1 is deployed as the MX record for Google Workspace, the Inbound gatew
 
     </div>
 
-{{<Aside type="note">}}Do not select **Reject all mail not from gateway IPs** until the MX records have fully propagated. [Refer to step 4](#4-secure-your-email-flow) for more details.{{</Aside>}}
+{{<Aside type="note">}}Do not select **Reject all mail not from gateway IPs** until the MX records have fully propagated. [Refer to step 5](#5-secure-your-email-flow) for more details.{{</Aside>}}
 
 5. Select the **Save** button at the bottom of the dialog box to save the configuration once the details have been entered. Once saved, the administrator console will show the Inbound Gateway as **enabled**.
 

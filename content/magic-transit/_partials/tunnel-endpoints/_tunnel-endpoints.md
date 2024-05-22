@@ -10,7 +10,7 @@ Cloudflare recommends two tunnels for each ISP and network location router combi
 
 To configure the tunnels between Cloudflare and your locations, you must provide the following data for each tunnel:
 
-- **Tunnel name**: A name with 15 or fewer characters that does not contain spaces or special characters. The name cannot be shared with other tunnels.
+- **Tunnel name**: For GRE tunnels, the name must have 15 or fewer characters. IPsec tunnels have no character limit. For both GRE and IPsec tunnels, the name cannot contain spaces or special characters, and cannot be shared with other tunnels.
 - **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel.
 - **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them. <br>
 This value is not required for {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, unless your router is using an {{<glossary-tooltip term_id="Internet key exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} ID of type `ID_IPV4_ADDR`.

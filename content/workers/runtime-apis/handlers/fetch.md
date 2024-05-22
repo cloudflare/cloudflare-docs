@@ -17,6 +17,12 @@ export default {
 };
 ```
 
+{{<Aside type="note">}}
+
+The Workers runtime does not support `XMLHttpRequest` (XHR). Learn the difference between `XMLHttpRequest` and `fetch()` in the [MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) documentation.
+
+{{</Aside>}}
+
 ### Parameters
 
 {{<definitions>}}
@@ -35,6 +41,6 @@ export default {
 
 - {{<code>}}ctx.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passThroughOnException).
+  - Refer to [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception).
 
 {{</definitions>}}

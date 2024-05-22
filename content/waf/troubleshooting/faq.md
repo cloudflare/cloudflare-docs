@@ -241,7 +241,7 @@ There is no functional difference between known and verified bots. However, the 
 
 Previously, unless you customize your front-end application, any AJAX request that is challenged will fail because AJAX calls are not rendered in the DOM.
 
-Now, you can [opt-in to Turnstile’s Pre-Clearance cookies](/turnstile/get-started/pre-clearance-support/). This allows you to issue a challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie’s validity is controlled by the zone-specific configurable [Challenge Passage](/waf/tools/challenge-passage/) security setting.
+Now, you can [opt-in to Turnstile’s Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/). This allows you to issue a challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie’s validity is controlled by the zone-specific configurable [Challenge Passage](/waf/tools/challenge-passage/) security setting.
 
 {{</faq-answer>}}
 {{</faq-item>}}

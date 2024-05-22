@@ -200,3 +200,15 @@ Peer: 172.64.###.### port 500 fvrf: (none) ivrf: (none)
         Inbound:  #pkts dec'ed 31639 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2569
         Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2569
 ```
+
+## Troubleshooting
+
+If you notice connectivity issues after rebooting your Cisco router, your IPsec Security Associations (SAs) might be out of sync. Cisco recommends that you enable the Invalid Security Parameter Index (SPI) recovery feature to solve this issue. To do so, add the following lines to your configuration file:
+
+```txt
+conf t
+crypto isakmp invalid-spi-recovery
+exit
+```
+
+Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/security-vpn/ipsec-negotiation-ike-protocols/115801-technote-iosvpn-00.html) for more information.

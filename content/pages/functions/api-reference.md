@@ -49,26 +49,26 @@ You can pass a [Request object](/workers/runtime-apis/request/), URL string, or 
 The following are the properties on the `context` object which are passed through on the `onRequest` methods:
 
   - `request` [{{<type>}}Request{{</type>}}](/workers/runtime-apis/request/)
- 
-      This is the incoming [Request](/workers/runtime-apis/request/).
-  
-  - `functionPath` {{<type>}}string{{</type>}}
-  
-      This is the path of the request. 
-    
-  - {{<code>}}waitUntil(promise{{<param-type>}}Promise&lt;any&gt;{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
-  
-      Refer to [`waitUntil` documentation](/workers/runtime-apis/handlers/fetch/#contextwaituntil) for more information.
 
-  
+      This is the incoming [Request](/workers/runtime-apis/request/).
+
+  - `functionPath` {{<type>}}string{{</type>}}
+
+      This is the path of the request.
+
+  - {{<code>}}waitUntil(promise{{<param-type>}}Promise&lt;any&gt;{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+
+      Refer to [`waitUntil` documentation](/workers/runtime-apis/context/#waituntil) for more information.
+
+
   - {{<code>}}passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
-  
-      Refer to [`passThroughOnException` documentation](/workers/runtime-apis/handlers/fetch/#contextpassthroughonexception) for more information. Note that this will not work on an [advanced mode project](/pages/functions/advanced-mode/).
-  
+
+      Refer to [`passThroughOnException` documentation](/workers/runtime-apis/context/#passthroughonexception) for more information. Note that this will not work on an [advanced mode project](/pages/functions/advanced-mode/).
+
   - {{<code>}}next(input?{{<param-type>}}Request | string{{</param-type>}}, init?{{<param-type>}}RequestInit{{</param-type>}}){{</code>}} {{<type>}}Promise&lt;Response&gt;{{</type>}}
-  
-      Passes the request through to the next Function or to the asset server if no other Function is available. 
-  
+
+      Passes the request through to the next Function or to the asset server if no other Function is available.
+
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
   - `params` {{<type>}}Params&lt;P&gt;{{</type>}}
 
@@ -93,7 +93,7 @@ The following are the properties on the `context` object which are passed throug
       Which would return `"Hello nevi"`.
 
   - `data` {{<type>}}Data{{</type>}}
-  
+
 {{</definitions>}}
 
 ### `EnvWithFetch`

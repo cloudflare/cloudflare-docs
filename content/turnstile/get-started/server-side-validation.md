@@ -1,7 +1,7 @@
 ---
 title: Server-side validation
 pcx_content_type: get-started
-weight: 3
+weight: 2
 ---
 
 # Server-side validation

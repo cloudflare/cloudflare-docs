@@ -9,7 +9,7 @@ weight: 2
 This guide covers the recommended steps to start securing your users and devices with Cloudflare Zero Trust.
 
 {{<Aside type="note">}}
-To get started with a specific use case, refer to our [learning paths](/cloudflare-one/learning-paths/).
+To get started with a specific use case, refer to our [implementation guides](/cloudflare-one/implementation-guides/).
 {{</Aside>}}
 
 ## Prerequisites

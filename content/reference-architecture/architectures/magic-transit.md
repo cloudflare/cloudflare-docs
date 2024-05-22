@@ -16,7 +16,7 @@ This reference architecture is designed for IT or network professionals with som
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
+{{<render file="_what-is-cloudflare-link.md">}}
 - Blog: [Magic Transit makes your network smarter, better, stronger, and cheaper to operate](https://blog.cloudflare.com/magic-transit) (14 minute read)
 
 Those who read this reference architecture will learn:

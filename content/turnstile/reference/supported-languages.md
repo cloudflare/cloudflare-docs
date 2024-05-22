@@ -1,12 +1,16 @@
 ---
 title: Supported languages
 pcx_content_type: reference
-weight: 9
+weight: 2
 ---
 
 # Supported languages
 
 Turnstile supports `auto` (default), which uses the visitor's browser language if it is supported. You can also explicitly set the widget's language to one listed on the table below:
+
+{{<Aside type="note">}}
+To request Turnstile support for a language not listed below or submit feedback on a translation error, you can fill out [this form](https://forms.gle/Cdz4YTRoagGpVwd7A).
+{{</Aside>}} 
 
 | Language code (4 letters) | Language code (2 letters) | Language |
 | --- | --- | --- |

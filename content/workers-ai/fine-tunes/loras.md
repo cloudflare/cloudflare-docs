@@ -118,7 +118,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finet
     -H 'Authorization: Bearer {API_TOKEN}' \
     -H 'Content-Type: multipart/form-data' \
     -F 'file_name=adapter_model.safetensors' \
-    -F 'file=@{PATH/TO/adapter_model.safetensors}' \
+    -F 'file=@{PATH/TO/adapter_model.safetensors}'
 ```
 
 #### List fine-tunes in your account
@@ -135,7 +135,7 @@ header: cURL
 ## Output: success true/false
 
 curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
-    -H 'Authorization: Bearer {API_TOKEN}' \
+    -H 'Authorization: Bearer {API_TOKEN}'
 ```
 {{</tab>}}
 {{<tab label="json output" no-code="true">}}
@@ -178,7 +178,7 @@ To make inference requests and apply the LoRA adapter, you will need your model 
 ---
 highlight: [5-6]
 ---
-const response = await ai.run(
+const response = await env.AI.run(
   "@cf/mistralai/mistral-7b-instruct-v0.2-lora", //the model supporting LoRAs
   {
       messages: [{"role": "user", "content": "Hello world"],

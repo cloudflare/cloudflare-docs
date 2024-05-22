@@ -3,6 +3,7 @@ title: Configure JWT Validation
 pcx_content_type: how-to
 type: overview
 layout: wide
+weight: 1
 meta:
   title: Configure JWT Validation
 ---
@@ -41,7 +42,7 @@ Refer to the [Ruleset Engine documentation](/ruleset-engine/rules-language/field
 
 ### Credentials
 
-API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them.
+API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, `ES256`, and `ES384`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them.
 
 We allow up to 4 different keys in order to aid in key rollover.
 

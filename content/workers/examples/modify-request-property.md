@@ -5,6 +5,9 @@ summary: Create a modified request with edited properties based off of an
 tags:
   - Middleware
   - Headers
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Modify request property
 weight: 1001
@@ -76,7 +79,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     /**
      * Example someHost is set up to return raw JSON
      * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied

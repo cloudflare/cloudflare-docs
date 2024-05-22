@@ -9,30 +9,7 @@ meta:
 
 # Configure Sequence Mitigation
 
-You can use Sequence Rules to establish a set of known behavior for API clients.
-
-For example, you may expect that API requests made during a bank funds transfer could conform to the following order in time:
-
-| Order | Method | Path | Description |
-| --- | --- | --- | --- |
-| 1 | `GET` | `/api/v1/users/{user_id}/accounts` | `user_id` is the active user. |
-| 2 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is one of the user’s accounts. |
-| 3 | `GET` | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user. |
-| 4 | `POST` | `/api/v1/transferFunds` | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
-
-You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/accounts` before `GET /api/v1/accounts/{account_id}/balance` and that you request `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds`.
-
-Using Sequence Mitigation, you can enforce that request pattern with two new Sequence Mitigation rules.
-
-{{<Aside type="note">}}
-You can create Sequence Mitigation rules for a sequence even if the sequence is not listed in [Sequence Analytics](/api-shield/security/sequence-analytics/).
-{{</Aside>}}
-
-You can also set up a negative security model with Sequence Mitigation. See [Configuration](/api-shield/security/sequence-mitigation/configure/#configure) to understand how to distinguish between rule types using the `kind` field.
-
-## Configure
-
-Configuring Sequence Mitigation is currently available only via API.
+Configuring Sequence Mitigation via the API consists of building a rule object by choosing the sequence and setting the type of rule and its action. 
 
 ``` json
 ---

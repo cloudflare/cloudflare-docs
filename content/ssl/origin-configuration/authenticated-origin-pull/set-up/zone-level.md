@@ -32,18 +32,26 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 ## 2. Configure origin to accept client certificates
 
-{{<render file="_aop-configure-origin.md">}}
+{{<render file="_aop-configure-origin.md" withParameters="To use the Cloudflare certificate, download it from [step 1 above](#1-upload-certificate-to-origin), rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.;; To use the Cloudflare certificate, donwload it from [step 1 above](#1-upload-certificate-to-origin), rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.">}}
 
 ## 3. Configure Cloudflare to use client certificate
 
 {{<render file="_aop-enable-feature.md">}}
 
-##  4. Enable Authenticated Origin Pulls for all hostnames in a zone
+## 4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
 Use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable zone-level authenticated origin pulls.
 
 If you had set up logging on your origin during [step 2](#2-configure-origin-to-accept-client-certificates), test and confirm that Authenticated Origin Pulls is working.
 
-##  5. Enforce validation check on your origin
+## 5. Enforce validation check on your origin
 
 {{<render file="_aop-enforce-validation.md">}}
+
+## 6. (Optional) Set up alerts for zone-level Authenticated Origin Pulls certificates
+
+You can configure alerts to receive notifications before your AOP certificates expire.
+
+{{<available-notifications product="SSL/TLS" notificationName="Zone-level Authenticated Origin Pulls Certificate Expiration Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

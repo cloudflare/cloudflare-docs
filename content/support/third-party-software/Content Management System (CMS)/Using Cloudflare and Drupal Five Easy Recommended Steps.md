@@ -24,7 +24,7 @@ Note: You don’t need to worry about this if you activated through a certified 
 
 **Step #2**
 
-Create a [Page Rule](https://support.cloudflare.com/hc/articles/200168306) to exclude the Drupal admin or Drupal login sections from Cloudflare’s caching and performance features. You can access Page Rules in the [Rules app](https://support.cloudflare.com/hc/en-us/articles/200172336-How-do-I-create-a-PageRule-).
+Create a [Page Rule](/rules/page-rules/) (deprecated) to exclude the Drupal admin or Drupal login sections from Cloudflare’s caching and performance features. You can access Page Rules in the [Rules app](/rules/page-rules/).
 
 Why do this?
 

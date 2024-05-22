@@ -8,7 +8,7 @@ title: IP geolocation
 
 IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-request-headers/#cf-ipcountry) to all requests to your origin server.
 
-Cloudflare automatically updates its IP geolocation database using [Maxmind source data](https://support.maxmind.com/hc/en-us/articles/4408216129947#h_01G3XX402XKD3J1CMWKNKMDYYZ), typically twice a week.
+Cloudflare automatically updates its IP geolocation database using MaxMind and other data sources, typically twice a week.
 
 ## Availability
 
@@ -45,10 +45,9 @@ In order to use this data, you will need to then retrieve it from the [`CF-IPCou
 
 ___
 
-
 ## Report an incorrect IP location
 
-If you find an incorrect IP location, use the [Maxmind tool](https://www.maxmind.com/en/geoip2-precision-demo) to make sure that Maxmind shows the correct **Country Code**. If the data is incorrect:
+If you find an incorrect IP location, consider the following:
 
--   Please submit correction requests [through Maxmind](https://support.maxmind.com/hc/en-us/articles/4408252036123-GeoIP-Corrections).
--   [Contact Cloudflare Support](/support/contacting-cloudflare-support/) if Maxmind is showing the correct country code, but **CF-IPCountry** request header is incorrect.
+- If the IP is part of the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), report to `geoip@cloudflare.com`.
+- If the IP is **not** listed within the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), [report to MaxMind](https://www.maxmind.com/en/geoip-data-correction-request).

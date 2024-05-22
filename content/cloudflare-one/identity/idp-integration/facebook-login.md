@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Facebook
-weight: 13
+weight: 10
 ---
 
 # Facebook
@@ -60,7 +60,7 @@ Use these steps to set up Facebook as your identity provider.
 
 22. Select **Save Changes**.
 
-To test that your connection is working, follow the steps on [SSO Integration](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust).
+To test that your connection is working, follow the steps on [SSO Integration](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust).
 
 ## Example API Configuration
 

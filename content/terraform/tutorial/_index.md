@@ -33,7 +33,7 @@ Before you begin, make sure you [install Terraform](/terraform/installing/). Eac
 
 ## [5 – Add exceptions with page rules](/terraform/tutorial/add-page-rules/)
 
-* Add page rule.
+* Add page rule (deprecated).
 * Resource covered: [`cloudflare_page_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/page_rule).
 * Increase security level for a specific URL: `/expensive-db-call`.
 * Add a redirect (URL forward) with a `301` status code from `/old-location.php` to `/expensive-db-call`.

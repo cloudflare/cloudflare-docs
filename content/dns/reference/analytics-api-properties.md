@@ -10,6 +10,10 @@ meta:
 
 This page describes API properties that you can use in [API requests for DNS analytics](/api/operations/dns-analytics-table).
 
+{{<Aside type="note">}}
+If you have [Foundation DNS](/dns/foundation-dns/) and advanced nameservers are enabled, analytics for your zone are accessible by [GraphQL](/analytics/graphql-api/). Refer to [GraphQL DNS analytics](/dns/foundation-dns/graphql-analytics/) for details.
+{{</Aside>}}
+
 ## Metrics
 
 A metric is a numerical value based on an attribute of the data, for example a query count.
@@ -74,11 +78,11 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
 - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
-  
+
 {{</details>}}
 
 {{<details header="Examples using AND">}}
-  
+
 - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
 - `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
 

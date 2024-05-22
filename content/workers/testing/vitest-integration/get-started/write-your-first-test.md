@@ -23,7 +23,7 @@ This guide will instruct you through installing and setting up the `@cloudflare/
 Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
 
 ```sh
-$ npm install vitest@1.3.0 --save-dev --save-exact
+$ npm install vitest@1.5.0 --save-dev --save-exact
 $ npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
@@ -31,14 +31,14 @@ The above commands will add the packages to your `package.json` file and install
 
 {{<Aside type="note">}}
 
-Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.3.0.
+Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.5.0.
 
 {{</Aside>}}
 
 ## Define Vitest configuration
 
 If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
-You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/configuration/bindings/).
+You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/runtime-apis/bindings/).
 
 ```js
 ---
@@ -142,7 +142,7 @@ export default {
 filename: src/index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx): Promise<Response> {
 		return new Response("Hello World!");
 	},
 } satisfies ExportedHandler<Env>;
@@ -232,7 +232,7 @@ export default {
 filename: index.ts
 ---
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env, ctx): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if(pathname === "/404") {

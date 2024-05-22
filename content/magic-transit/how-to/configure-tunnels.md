@@ -14,7 +14,7 @@ meta:
 
 ### GRE and IPsec tunnels
 
-{{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/">}}
+{{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/;;/magic-transit/reference/tunnels/#supported-configuration-parameters">}}
 
 #### Anti-replay protection
 

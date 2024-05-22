@@ -1,7 +1,17 @@
 ---
 link: "/cloudflare-one/changelog/access/"
 productName: Access
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
 entries:
+- publish_date: '2024-04-28'
+  title: Add option to bypass CORS to origin server
+  description: |-
+    Access admins can [defer all CORS enforcement to their origin server](/cloudflare-one/identity/authorization-cookie/cors/#bypass-options-requests-to-origin) for specific Access applications.
+- publish_date: '2024-04-15'
+  title: Zero Trust User identity audit logs
+  description: |-
+    All user identity changes via SCIM or Authentication events are logged against a user's registry identity.
 - publish_date: '2024-02-22'
   title: Access for SaaS OIDC Support
   description: |-

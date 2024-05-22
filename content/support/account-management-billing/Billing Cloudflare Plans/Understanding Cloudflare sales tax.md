@@ -32,16 +32,16 @@ In the US, sales tax requirements are computed based on the 9-digit postal code 
 
 Cloudflare is required by law to maintain documentation of tax-exempt sales. If you or your company are exempt from paying sales tax, email exemptioncertificates@cloudflare.com from an email address associated with your Cloudflare account and provide one of the following forms of tax-exempt documentation:
 
--   Resale certificate
--   Multi-state tax exemption certificate
--   State sales tax exemption certificate
--   Partial sales tax exemption certificate
+- Resale certificate
+- Multi-state tax exemption certificate
+- State sales tax exemption certificate
+- Partial sales tax exemption certificate
 
 After your exemption is validated, tax-exempt status is added to your Cloudflare account information. Cloudflare invoices do not contain sales tax for the duration your exemption is valid. 
 
 ___
 
-## Russian value-added tax (VAT)
+## Russia (VAT)
 
 Foreign e-services suppliers are required by law to collect taxes on the supply of e-services to Russian customers. Cloudflare customers with Russian billing addresses are charged a 20% flat tax rate based on their billing address on file.
 
@@ -53,23 +53,29 @@ There is no tax exemption for Russian customers.
 
 ___
 
-## Singapore taxes
+## Singapore (GST)
 
-Cloudflare adds 7% sales tax for individuals and non-GST registered business customers within Singapore. GST-registered customers are required to self access GST. Refunds are not issued for taxed customers that were missing the GST Registration Number within their Cloudflare account.
+Cloudflare adds 9% sales tax for individuals and non-GST registered business customers within Singapore. GST-registered customers are required to self access GST. Refunds are not issued for taxed customers that were missing the GST Registration Number within their Cloudflare account.
 
 Contact billing@cloudflare.com with any questions.
 
 ___
 
-## Taiwanese value-added tax (VAT)
+## Taiwan (VAT)
 
 Cloudflare collects VAT on all pay-as-you-go customers in Taiwan. The eGUI Invoice ID and eGUI Code are shown in the Cloudflare dashboard and are required to retrieve an invoice from the Taiwan government.
 
 ___
 
+## Japan (CT)
+
+Cloudflare Inc. is currently registered in Japan as of October 1st, 2023. Due to some constraints, Cloudflare will be only able to start collecting tax from PAYGO customers on April 1st, 2024.
+
+___
+
 ## Canada
 
-All **NON-GST Registered** Customers who are located in Canada are required by law to pay tax
+All **NON-GST Registered** Customers who are located in Canada are required by law to pay tax.
 
 {{<Aside type="note">}}
 Anyone who provides a GST ID is exempt, no other exceptions
@@ -95,7 +101,7 @@ ___
 
 ## India (GST)
 
-Cloudflare Inc. is registered for Goods and Services Tax (GST) purposes in India as of 2023-10-01.
+Cloudflare Inc. is registered for Goods and Services Tax (GST) purposes in India as of October 1st, 2023.
 
 An email communication, in both English and Hindi, was shared at the end of October and the beginning of November with all Indian customers to inform and request them to update addresses and GST IDs accordingly. 
 
@@ -107,4 +113,4 @@ Cloudflare will issue tax invoices and add VAT at the 16% standard rate on top o
 
 You may update your VAT registration number in your account profile.
 
-Please reach out to Cloudflare via email indirect_tax@cloudflare.com if you have any tax related concerns or questions.
+Reach out to Cloudflare via email indirect_tax@cloudflare.com if you have any tax related concerns or questions.

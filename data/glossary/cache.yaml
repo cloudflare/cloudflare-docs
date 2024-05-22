@@ -44,7 +44,7 @@ entries:
 - term: edge server
   general_definition: |-
     a server located at the edge of a network, typically within a CDN, that serves content to end-users.
-  associated_products:   
+  associated_products:
      - Logs
 
 - term: origin server
@@ -66,6 +66,8 @@ entries:
 - term: time-to-live (TTL)
   general_definition: |-
     the duration for which a cached copy of a resource is considered valid before it needs to be refreshed or revalidated.
+  associated_products:
+    - Magic WAN
 
 - term: cache lock
   general_definition: |-

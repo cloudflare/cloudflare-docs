@@ -18,17 +18,17 @@ The most common way you will encounter a `Request` object is as a property of an
 highlight: [2]
 ---
 export default {
-	async fetch(request, env, ctx) { 
+	async fetch(request, env, ctx) {
 		return new Response('Hello World!');
 	},
 };
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming request parameter is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming `request` parameter that you receive from the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) is immutable.
 
 ```js
 export default {
-	async fetch(request, env, ctx) { 
+	async fetch(request, env, ctx) {
         const url = "https://example.com";
         const modifiedRequest = new Request(url, request);
 		// ...
@@ -121,7 +121,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules (deprecated): [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheTtlByStatus` {{<type>}}{ \[key: string]: number }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -161,7 +161,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 ## Properties
 
-All properties of an incoming `Request` object (that is, `event.request`) are read only. To modify a request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
+All properties of an incoming `Request` object (the request you receive from the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/)) are read-only. To modify the properties of an incoming request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
 
 {{<definitions>}}
 
@@ -176,6 +176,7 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 *   `cf` {{<type-link href="#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
     *   An object containing properties about the incoming request provided by Cloudflare’s global network.
+    *   This property is read-only (unless created from an existing `Request`). To modify its values, pass in the new values on the [`cf` key of the `init` options argument](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) when creating a new `Request` object.
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 

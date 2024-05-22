@@ -45,7 +45,7 @@ The recommended way to write integration tests for your Workers is by using [the
 
 ### Testing via `SELF`
 
-If testing a single Worker, you can use the `SELF` fetcher provided by the [`@cloudflare/test` API](/workers/testing/vitest-integration/test-apis/).
+If testing a single Worker, you can use the `SELF` fetcher provided by the [`cloudflare:test` API](/workers/testing/vitest-integration/test-apis/).
 
 ```js
 ---
@@ -115,7 +115,7 @@ If you have been using `unstable_dev()` for integration testing and want to migr
 
 ## Miniflare's API
 
-If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/configuration/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
+If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](https://github.com/cloudflare/workers-sdk/blob/main/packages/miniflare/README.md) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
 
 ```js
 import assert from "node:assert";

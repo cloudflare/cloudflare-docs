@@ -42,6 +42,8 @@ Only one redirect can be defined per line and must follow this format, otherwise
 
 {{</definitions>}}
 
+Lines starting with a `#` will be treated as comments.
+
 ### Per file
 
 A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
@@ -89,7 +91,7 @@ Cloudflare currently offers limited support for advanced redirects. More support
 | ----------------------------------- | ------- | --------------------------------------------------------------- | --------------------------------------- |
 | Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code. |
 | Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                         |
-| Splats                              | Yes     | `/blog/* /blog/:splat`                                          | Refer to [Splats](#splats).             |
+| Splats                              | Yes     | `/blog/* /posts/:splat`                                         | Refer to [Splats](#splats).             |
 | Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
 | Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                         |
 | Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |

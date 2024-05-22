@@ -13,7 +13,7 @@ A great way to explore the models that are available to you on [Workers AI](/wor
 
 You can [download the Workers AI Text Generation Exploration notebook](/workers-ai/static/documentation/notebooks/text-generation-model-exploration.ipynb) or view the embedded notebook below.
 
-{{<youtube id="9Cqzt8M3l1s">}}
+{{<stream video_id="4b4f0b9d7783512b8787e39424cfccd5">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
 
