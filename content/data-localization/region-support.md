@@ -23,6 +23,25 @@ Support by product and region is summarized in the following table:
 | Germany | &#x2705;{{<fnref num="1">}} | &#x2705; | Can use EU metadata boundary. |
 | Singapore | &#x2705;{{<fnref num="1">}} | &#x2705; | ✘ |
 | South Korea | &#x2705;{{<fnref num="1">}} | &#x2705; | ✘ |
+| Austria | ✘ | &#x2705; | ✘ | 
+| Brazil | ✘ | &#x2705; | ✘ | 
+| Cloudflare Green Energy | ✘ | &#x2705; | ✘ | 
+| Exclusive of Hong Kong and Macau | ✘ | &#x2705; | ✘ | 
+| Exclusive of Russia and Belarus | ✘ | &#x2705; | ✘ | 
+| France | ✘ | &#x2705; | ✘ | 
+| Hong Kong | ✘ | &#x2705; | ✘ | 
+| Italy | ✘ | &#x2705; | ✘ | 
+| NATO | ✘ | &#x2705; | ✘ | 
+| Netherlands | ✘ | &#x2705; | ✘ | 
+| Russia | ✘ | &#x2705; | ✘ | 
+| Saudi Arabia | ✘ | &#x2705; | ✘ | 
+| South Africa | ✘ | &#x2705; | ✘ | 
+| Spain | ✘ | &#x2705; | ✘ | 
+| Switzerland | ✘ | &#x2705; | ✘ | 
+| Taiwan | ✘ | &#x2705; | ✘ | 
+| US State of California | ✘ | &#x2705; | ✘ | 
+| US State of Florida | ✘ | &#x2705; | ✘ | 
+| US State of Texas | ✘ | &#x2705; | ✘ | 
 
 {{<fnsection>}}
 {{<fnentry num="1">}}Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).{{</fnentry>}}
