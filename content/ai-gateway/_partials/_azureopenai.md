@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/RESOURCE_NAME/MODEL_NAME`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/{resource_name}/{deployment_name}`
 
 When making requests to Azure OpenAI, you will need:
 - AI Gateway account tag
@@ -14,7 +14,7 @@ When making requests to Azure OpenAI, you will need:
 - Azure OpenAI resource name
 - Azure OpenAI deployment name (aka model name)
 
-Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/RESOURCE_NAME/DEPLOYMENT_NAME`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
+Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/{resource_name}/{deployment_name}`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
 
 
 ```bash
@@ -22,16 +22,11 @@ Your new base URL will use the data above in this structure: `https://gateway.ai
 header: Example fetch request
 ---
 
-curl --request POST \
-  --url 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/RESOURCE_NAME/DEPLOYMENT_NAME/chat/completions?api-version=2023-05-15' \
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/{resource_name}/{deployment_name}/chat/completions?api-version=2023-05-15' \
   --header 'Content-Type: application/json' \
   --header 'api-key: {azure_api_key}' \
   --data '{
   "messages": [
-    {
-      "role": "system",
-      "content": "You are a helpful assistant."
-    },
     {
       "role": "user",
       "content": "What is Cloudflare?"
