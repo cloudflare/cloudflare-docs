@@ -81,11 +81,20 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 {{</Aside>}}
 
 ### CPU time
+
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
 
 {{<Aside type="note">}}
 On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
 {{</Aside>}}
+
+#### Rollover banks
+
+Each isolate has a rollover bank of CPU time. If you use less than your limit on one request, the leftover time is added to the bank. If you use more than your limit on another request, time is taken out of the bank. Only when the bank reaches zero do you get an error.
+
+Additionally, the bank does not start out empty. When an isolate first starts up, its bank is initialized with some extra time. This is meant to make up for the fact that the first few requests are likely to run slower as the isolate warms up (meaning it starts JIT-compiling code).
+
+Because of the initial time, if your Worker commonly executes only a small number of requests per isolate, it is indeed possible to exceed the limit regularly. But if you get enough traffic that individual isolates are commonly handling many requests, you will start to see errors.
 
 ---
 
