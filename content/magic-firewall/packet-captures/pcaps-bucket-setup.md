@@ -193,12 +193,12 @@ To learn how to collect packet captures, refer to [Collect packet captures](/mag
 
 To start collecting packet captures with R2, you first need to configure it properly. For all the required details, refer to the [Cloudflare R2](/r2/) documentation.
 
-### Configure R2
+### Create bucket and API token
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **R2** > **Create bucket**.
 3. Give your bucket a name > **Create bucket**.
-4. Go to the R2 Overview page, ans select **Manage R2 API Tokens**.
+4. Go to the R2 Overview page, and select **Manage R2 API Tokens**.
 5. Select **Create API Token**.
 6. In **Permissions**, choose **Object Read & Write**. Make sure you also select **Apply to specific buckets only**, and select the bucket you have created for PCAPs from the drop-down menu.
 7. Select **Create API Token**.
@@ -222,4 +222,4 @@ The [response](/api/operations/magic-pcap-collection-add-buckets-for-full-packet
 
 ### Validate bucket ownership
 
-Refer to the [Validate a bucket](#validate-a-bucket) API instructions, for more details on the entire process to [validate your R2 bucket](/api/operations/magic-pcap-collection-validate-buckets-for-full-packet-captures). When specifying the R2 destination for this validation, exclude the secret and access keys from the URL.
+Refer to the [Validate a bucket](#validate-a-bucket) API instructions for more details on the entire process to [validate your R2 bucket](/api/operations/magic-pcap-collection-validate-buckets-for-full-packet-captures). When specifying the R2 destination for this validation, exclude the secret and access keys from the URL.
