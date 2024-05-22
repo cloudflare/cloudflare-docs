@@ -218,7 +218,23 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership 
 }'
 ```
 
-The [response](/api/operations/magic-pcap-collection-add-buckets-for-full-packet-captures) has a `"filename"` parameter with the name of a file that Cloudflare wrote to your R2 bucket. You need to download it for the next step.
+The [response](/api/operations/magic-pcap-collection-add-buckets-for-full-packet-captures) has a `"filename"` parameter with the name of a file that Cloudflare wrote to your R2 bucket. You need to download it for the next step. Example:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "destination_conf": "<YOUR_R2_BUCKET>",
+    "filename": "ownership-challenge-9883874ecac311ec8475433579a6bf5f.txt",
+    "id": "9883874ecac311ec8475433579a6bf5f",
+    "status": "success",
+    "submitted": "2020-01-01T08:00:00Z",
+    "validated": "2020-01-01T08:00:00Z"
+  },
+  "success": true
+}
+```
 
 ### Validate bucket ownership
 
