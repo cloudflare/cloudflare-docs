@@ -5,6 +5,11 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-05-22'
+  title: AI Gateway is now GA
+  description: |-
+    AI Gateway is moving from beta to GA.
+
 - publish_date: '2024-05-16'
   title:
   description: |-

@@ -7,7 +7,7 @@ meta:
   title: AI Gateway
 ---
 
-{{<heading-pill style="beta" heading="h1">}}AI Gateway{{</heading-pill>}}
+# AI Gateway
 
 {{<description>}}
 Observe and control your AI applications.
@@ -21,7 +21,7 @@ Check out the [Get started guide](/ai-gateway/get-started/) to learn how to conf
 
 ## Features
 
-{{<feature header="Analytics" href="/ai-gateway/get-started/configuring-settings/#analytics" cta="View analytics">}}
+{{<feature header="Analytics" href="/ai-gateway/get-started/configuring-settings/#analytics" cta="View Analytics">}}
 
 View metrics such as the number of requests, tokens, and the cost it takes to run your application.
 
