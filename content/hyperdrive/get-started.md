@@ -235,7 +235,7 @@ export default {
 In the code above, you have:
 
 1. Created a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
-3. Initiated a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
+2. Initiated a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
 4. Returned the response as JSON to the client.
 
 ## 6. Deploy your database
