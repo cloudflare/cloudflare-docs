@@ -48,7 +48,7 @@ Refer to the table below for the complete list of available regions and their de
 | Cloudflare Green Energy | Cloudflare will only use data centers that are committed to powering their operations with renewable energy. |
 | Exclusive of Hong Kong and Macau | Cloudflare will only use data centers that are NOT physically located within Hong Kong and Macau to decrypt and service HTTPS traffic. |
 | Exclusive of Russia and Belarus | Cloudflare will only use data centers that are NOT physically located within Russia and Belarus to decrypt and service HTTPS traffic. |
-| France | Cloudflare will only use data centers that are physically located within European France to decrypt and service HTTPS traffic. |
+| France | Cloudflare will only use data centers that are physically located within Metropolitan France (the European territory of France) to decrypt and service HTTPS traffic. |
 | Hong Kong | Cloudflare will only use data centers that are physically located within Hong Kong to decrypt and service HTTPS traffic. |
 | Italy | Cloudflare will only use data centers that are physically located within Italy to decrypt and service HTTPS traffic. |
 | NATO | Cloudflare will only use data centers that are physically located within North Atlantic Treaty Organization (NATO) countries. For more details, refer to the [list of NATO countries](https://www.nato.int/nato-welcome/).
