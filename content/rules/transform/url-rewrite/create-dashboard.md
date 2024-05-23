@@ -16,8 +16,6 @@ To create a rule:
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![The Transform Rules page in the Cloudflare dashboard with a tab for each type of Transform Rule you can create.](/images/rules/transform/transform-rules-tab.png)
-
 3. In the **Rewrite URL** tab, select **Create rule**.
 
     ![The rewrite URL rule creation page in the Cloudflare dashboard.](/images/rules/transform/create-url-rewrite-rule.png)
