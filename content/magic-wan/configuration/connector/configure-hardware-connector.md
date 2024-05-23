@@ -24,7 +24,7 @@ If you need a high availability configuration for your premises, refer to [About
 
 If you do not need a high availability configuration for you premises, proceed to [Configure Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
 
-{{<Aside type="warning">}}You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan according to your needs to create a high availability configuration from the start if needed.{{</Aside>}}
+{{<Aside type="warning">}}You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan accordingly to create a high availability configuration from the start if needed.{{</Aside>}}
 
 ---
 
