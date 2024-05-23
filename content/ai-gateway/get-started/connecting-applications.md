@@ -63,5 +63,5 @@ Once you have configured a Gateway in the AI Gateway dashboard, click on “API 
 
 {{<resource-group>}}
 
-{{<resource header="Observe and control" href="/ai-gateway/get-started/configuring-settings" icon="learning-center-book">}} Observe and control your AI applications {{</resource>}}
+{{<resource header="Observe and control" href="/ai-gateway/get-started/configuring-settings/" icon="learning-center-book">}} Observe and control your AI applications {{</resource>}}
 {{</resource-group>}}
