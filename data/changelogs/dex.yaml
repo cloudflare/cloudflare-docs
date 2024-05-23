@@ -4,6 +4,10 @@ productName: Digital Experience Monitoring
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+- publish_date: '2024-05-20'
+  title: Last seen ISP
+  description: |-
+    Admins can view the last ISP seen for a device by going to **My Team** > **Devices**. Requires setting up a [traceroute test](/cloudflare-one/insights/dex/tests/traceroute/).
 - publish_date: '2024-05-13'
   title: DEX alerts
   description: |-
