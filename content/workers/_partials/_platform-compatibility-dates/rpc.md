@@ -8,7 +8,7 @@ name: "Durable Object stubs and Service Bindings support RPC"
 sort_date: "2024-04-03"
 enable_date: "2024-04-03"
 enable_flag: "rpc"
-disable_flag: "rpc"
+disable_flag: "no_rpc"
 ---
 
 With this flag on, [Durable Object](/durable-objects/) stubs and [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) support [RPC](/workers/runtime-apis/rpc/). This means that these objects now appear as if they define every possible method name. Calling any method name sends an RPC to the remote Durable Object or Worker service.
