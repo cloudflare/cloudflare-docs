@@ -6,7 +6,22 @@ title: Managing Cloudflare Apps
 
 # Managing Cloudflare Apps
 
+{{<Aside type="warning">}}
 
+**Cloudflare Apps are deprecated and will be discontinued August 31, 2024.** 
+
+After August 31, 2024, we will be automatically uninstalling installed apps from your Cloudflare zone(s). This will not impact Cloudflare's first-party services running on your zones.
+
+**The [Datadome app](https://datadome.co/) is the only exception to this.** 
+
+We understand that uninstalling apps might be disruptive. To address any potential issues, please review and [remove](/support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/) apps installed on your zones through the Cloudflare dashboard.
+
+
+We will be creating a new Apps experience. If you’re interested, leave us feedback and sign up [here](https://forms.gle/sHxVMoQzZpTtuJak9).
+
+For any questions about the deprecation or support, reach out to apps-marketplace-support[at]cloudflare.com. 
+
+{{</Aside>}}
 
 ## Overview
 
