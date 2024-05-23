@@ -20,7 +20,7 @@ You can perform the following operations in the **Transform Rules** page:
 
 ## Create rules
 
-In **Transform Rules** you can create the following rules:
+In **Rules** > **Transform Rules** you can create the following rules:
 
 - [Rewrite URL rules](/rules/transform/url-rewrite/create-dashboard/)
 - [HTTP request header modification rules](/rules/transform/request-header-modification/create-dashboard/)
@@ -28,24 +28,20 @@ In **Transform Rules** you can create the following rules:
 
 Refer to each linked section for details on creating each rule type.
 
-## Manage rules
+## Turn on or off a rule
 
-Manage your existing Transform Rules using the toggle and the links located on the right of the rule you want to change, or by using the handle located on the left of the rule.
+Select the **Enabled** toggle next to the rule to turn it on or off.
 
-![For each rule in the rules list, you can change its order, enable/disable the rule, edit the rule, or delete the rule.](/images/rules/transform/rule-operations.png)
+## Edit a rule
 
-### Enable or disable a rule
+To edit a rule, select the rule name. Alternatively, select the three dots menu > **Edit**.
 
-Select the on/off toggle associated with a Transform Rule to enable or disable it.
+## Delete a rule
 
-### Edit a rule
+To delete a rule, select the three dots menu > **Delete** next to the rule you want to remove. In the confirmation dialog that appears, select **Delete** to confirm and complete the operation.
 
-Select **Edit** to open the **Edit Rule** panel and make the changes you want.
+## Order rules
 
-### Delete a rule
+Cloudflare evaluates each type of Transform Rules in list order, where rules are evaluated in the order they appear in the Rules List. You can drag and drop Transform Rules into position to reorder them using the handle next to each rule.
 
-Select **Delete** next to the existing rule you want to remove. In the confirmation dialog that appears, select **Delete** to confirm and complete the operation.
-
-### Order rules
-
-Cloudflare evaluates each type of Transform Rules in list order, where rules are evaluated in the order they appear in the Rules List. You can drag and drop Transform Rules into position to reorder them using the handle on the left of the rule.
+To specify an exact rule position, select the three dots menu > **Move to** and enter the new rule position (an integer number).
