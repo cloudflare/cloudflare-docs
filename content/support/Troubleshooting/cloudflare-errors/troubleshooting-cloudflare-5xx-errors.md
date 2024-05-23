@@ -176,6 +176,8 @@ The two most common causes of 521 errors are:
 -   Offlined origin web server application
 -   Blocked Cloudflare requests
 
+If multiple Origin servers are available [Zero Downtime Failover](https://developers.cloudflare.com/fundamentals/basic-tasks/protect-your-origin-server/#zero-downtime-failover) will occur before returning this error.
+
 **Resolution**
 
 [Contact your site administrator or hosting provider](#required-error-details-for-hosting-provider) to eliminate these common causes:
@@ -195,6 +197,8 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 
 1.  Before a connection is established, the origin web server does not return a SYN+ACK to Cloudflare within 15 seconds of Cloudflare sending a SYN.
 2.  After a connection is established, the origin web server doesn’t acknowledge (ACK) Cloudflare’s resource request within 90 seconds.
+
+If multiple Origin servers are available [Zero Downtime Failover](https://developers.cloudflare.com/fundamentals/basic-tasks/protect-your-origin-server/#zero-downtime-failover) will occur before returning this error.
 
 **Resolution**
 
@@ -218,6 +222,8 @@ ___
 ## Error 523: origin is unreachable
 
 Error 523 occurs when Cloudflare cannot contact your origin web server. This typically occurs when a network device between Cloudflare and the origin web server doesn’t have a route to the origin’s IP address.
+
+If multiple Origin servers are available [Zero Downtime Failover](https://developers.cloudflare.com/fundamentals/basic-tasks/protect-your-origin-server/#zero-downtime-failover) will occur before returning this error.
 
 **Resolution** [Contact your hosting provider](#required-error-details-for-hosting-provider) to exclude the following common causes at your origin web server:
 
@@ -277,6 +283,8 @@ ___
 1.  The [SSL handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) fails between Cloudflare and the origin web server, and
 2.  [_Full_ or _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
 
+If multiple Origin servers are available [Zero Downtime Failover](https://developers.cloudflare.com/fundamentals/basic-tasks/protect-your-origin-server/#zero-downtime-failover) will occur before returning this error.
+
 {{<Aside type="note">}}
 If your hosting provider frequently changes your origin web server's IP
 address, refer to Cloudflare's documentation on [dynamic DNS
@@ -317,6 +325,8 @@ Error 526 occurs when these two conditions are true:
 
 1.  Cloudflare cannot validate the SSL certificate at your origin web server, and
 2.  [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes/full-strict/) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
+
+If multiple Origin servers are available [Zero Downtime Failover](https://developers.cloudflare.com/fundamentals/basic-tasks/protect-your-origin-server/#zero-downtime-failover) will occur before returning this error.
 
 **Resolution**
 
