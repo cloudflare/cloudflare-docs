@@ -57,6 +57,30 @@ Prism.languages.sh = {
   },
 };
 
+// Custom `powershell` grammar
+Prism.languages.powershell = {
+  comment: {
+    pattern: /(^|[^'{\\$])#.*/,
+    alias: "unselectable",
+    lookbehind: true,
+  },
+
+  directory: {
+    pattern: /^PS (?=\w:[\w\\]+> )/m,
+    alias: "unselectable",
+  },
+
+  command: {
+    pattern: /\w:[\w\\]+> [^\r\n]+/,
+    inside: {
+      prompt: {
+        pattern: /^\w:[\w\\]+> /,
+        alias: "unselectable",
+      },
+    },
+  },
+};
+
 // Prism language aliases
 export const langs: Record<string, string> = {
   tf: "hcl", // terraform -> hashicorp config lang
