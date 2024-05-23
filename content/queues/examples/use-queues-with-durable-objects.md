@@ -32,6 +32,10 @@ name = "my-worker"
 bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["YourDurableObject"]
 ```
 
 The following Worker script:
