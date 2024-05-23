@@ -13,7 +13,7 @@ meta:
 
 {{<description>}}
 
-A globally distributed coordination API with strongly consistent storage.
+Create collaborative applications, real-time chat, multiplayer games and more without needing to coordinate state or manage infrastructure.
 
 {{</description>}}
 
