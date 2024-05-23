@@ -8,7 +8,7 @@ meta:
 
 # Enable Brotli
 
-{{<Aside type="warning" header="Deprecation notice">}}
+{{<Aside type="warning" header="Warning">}}
 
 The Brotli setting will be removed on 2024-06-14. After this date, Brotli compression will be enabled by default for all zones.
 
