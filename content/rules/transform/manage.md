@@ -44,4 +44,4 @@ To delete a rule, select the three dots menu > **Delete** next to the rule you w
 
 Cloudflare evaluates each type of Transform Rules in list order, where rules are evaluated in the order they appear in the Rules List. You can drag and drop Transform Rules into position to reorder them using the handle next to each rule.
 
-To specify an exact rule position, select the three dots menu > **Move to** and enter the new rule position (an integer number).
+To specify an exact rule position, select the three dots menu > **Move to** and enter the new rule position.
