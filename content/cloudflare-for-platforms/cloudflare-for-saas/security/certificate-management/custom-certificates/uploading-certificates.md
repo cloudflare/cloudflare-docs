@@ -12,6 +12,11 @@ For use cases and limitations, refer to [custom certificates](/cloudflare-for-pl
 
 ## Upload certificates
 
+{{<Aside type="warning">}}
+When uploading a custom certificate, you can only use one of the different supported types (SHA256WithRSA, SHA1WithRSA or ECDSAWithSHA256).
+For example you can't upload an SHA256WithRSA + ECDSAWithSHA256 certificate.
+{{</Aside>}}
+
 ### With the dashboard
 
 To upload a custom certificate in the dashboard, follow the steps for [issuing new certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/), but change the **Certificate type** to **Custom certificate**.
