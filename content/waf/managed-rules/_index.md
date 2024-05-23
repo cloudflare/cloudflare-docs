@@ -9,7 +9,7 @@ layout: wide
 
 # WAF Managed Rules
 
-{{<render file="_waf-intro.md" productFolder="waf">}}
+{{<render file="_waf-managed-rules-intro.md" productFolder="waf">}}
 
 ## Managed rulesets
 
