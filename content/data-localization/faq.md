@@ -60,7 +60,7 @@ Yes, you have these options available:
 - [Magic Transit](/magic-transit/)
 - [Privacy Gateway](/privacy-gateway/)
 
-These options only offer L3/L4 DDoS protection and using them imply that no Application / L7 Security or Performance services can be applied.
+These options only offer L3/L4 DDoS protection and using them imply that no application / L7 security or performance services can be applied.
 
 {{</faq-answer>}}
 {{</faq-item>}}
