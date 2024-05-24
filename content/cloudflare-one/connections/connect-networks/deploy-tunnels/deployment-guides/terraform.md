@@ -68,42 +68,42 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 
 1. In your configuration directory, create a `.tf` file:
 
-    ```sh
-    $ touch providers.tf
-    ```
+   ```sh
+   $ touch providers.tf
+   ```
 
 2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
 
-    ```txt
-    ---
-    filename: providers.tf
-    ---
-    terraform {
-      required_providers {
-        cloudflare = {
-          source = "cloudflare/cloudflare"
-          version = ">= 4.9.0"
-        }
-        google = {
-          source = "hashicorp/google"
-        }
-        random = {
-          source = "hashicorp/random"
-        }
-      }
-      required_version = ">= 0.13"
-    }
+   ```txt
+   ---
+   filename: providers.tf
+   ---
+   terraform {
+     required_providers {
+       cloudflare = {
+         source = "cloudflare/cloudflare"
+         version = ">= 4.9.0"
+       }
+       google = {
+         source = "hashicorp/google"
+       }
+       random = {
+         source = "hashicorp/random"
+       }
+     }
+     required_version = ">= 0.13"
+   }
 
-    # Providers
-    provider "cloudflare" {
-      api_token    = var.cloudflare_token
-    }
-    provider "google" {
-      project    = var.gcp_project_id
-    }
-    provider "random" {
-    }
-    ```
+   # Providers
+   provider "cloudflare" {
+     api_token    = var.cloudflare_token
+   }
+   provider "google" {
+     project    = var.gcp_project_id
+   }
+   provider "random" {
+   }
+   ```
 
 ### Configure Cloudflare resources
 
@@ -152,6 +152,14 @@ The following configuration will modify settings in your Cloudflare account.
       ingress_rule {
         hostname = "${cloudflare_record.http_app.hostname}"
         service  = "http://httpbin:8080"
+        origin_request {
+          connect_timeout = "2m0s"
+          access {
+            required  = true
+            team_name = "myteam"
+            aud_tag   = [cloudflare_access_application.http_app.aud]
+          }
+        }
       }
       ingress_rule {
         service  = "http_status:404"
@@ -247,39 +255,39 @@ The following script will install `cloudflared`, create a permissions and config
 
 2. Open the file in a text editor and copy and paste the following bash script:
 
-    ```bash
-    ---
-    filename: install-tunnel.tftpl
-    ---
-    # Script to install Cloudflare Tunnel and Docker resources
+   ```bash
+   ---
+   filename: install-tunnel.tftpl
+   ---
+   # Script to install Cloudflare Tunnel and Docker resources
 
-    # Docker configuration
-    cd /tmp
-    sudo apt-get install software-properties-common
-    # Retrieving the docker repository for this OS
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-    # The OS is updated and docker is installed
-    sudo apt update -y && sudo apt upgrade -y
-    sudo apt install docker docker-compose -y
-    # Add the HTTPBin application and run it on localhost:8080.
-    cat > /tmp/docker-compose.yml << "EOF"
-    version: '3'
-    services:
-      httpbin:
-        image: kennethreitz/httpbin
-        restart: always
-        container_name: httpbin
+   # Docker configuration
+   cd /tmp
+   sudo apt-get install software-properties-common
+   # Retrieving the docker repository for this OS
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+   # The OS is updated and docker is installed
+   sudo apt update -y && sudo apt upgrade -y
+   sudo apt install docker docker-compose -y
+   # Add the HTTPBin application and run it on localhost:8080.
+   cat > /tmp/docker-compose.yml << "EOF"
+   version: '3'
+   services:
+     httpbin:
+       image: kennethreitz/httpbin
+       restart: always
+       container_name: httpbin
 
-      cloudflared:
-        image: cloudflare/cloudflared:latest
-        restart: always
-        container_name: cloudflared
-        command: tunnel run --token ${tunnel_token}
-    EOF
-    cd /tmp
-    sudo docker-compose up -d
-    ```
+     cloudflared:
+       image: cloudflare/cloudflared:latest
+       restart: always
+       container_name: cloudflared
+       command: tunnel run --token ${tunnel_token}
+   EOF
+   cd /tmp
+   sudo docker-compose up -d
+   ```
 
 ## 6. Deploy Terraform
 
