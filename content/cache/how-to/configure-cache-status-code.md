@@ -27,39 +27,11 @@ All other status codes are not cached by default.
 
 ## Set cache TTL by response status via the Cloudflare dashboard
 
-To set cache TTL by response status, [create a Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#create-a-page-rule) for **Cache TTL by status code**.
+
 
 ## Set cache TTL by response status via the Cloudflare API
 
-```json
-curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/pagerules" \     
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: ${CF_AUTH_KEY}" \
--H "Content-Type: application/json" \
---data '{
-  "targets": [
-    {
-      "target": "url",
-      "constraint": {
-        "operator": "matches",
-        "value": "www.example.com/*"
-      }
-    }
-  ],
-  "actions": [
-    {
-      "id": "cache_ttl_by_status",
-      "value": {
-        "200": "no-cache",
-        "100": 5,
-        "300-302": 20
-      }
-    }
-  ],
-  "priority": 1,
-  "status": "active"
-}'
-```
+
 
 ### Syntax
 
@@ -69,6 +41,4 @@ Provide a JSON object containing status codes and their corresponding TTLs. Each
 *   `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
 *   `TTL`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store`, `no-cache`. Only positive integers, including 0, are accepted.
 
-## Set cache TTL by response status via a Cloudflare Worker
 
-The **cacheTtlByStatus** option is a version of the **cacheTtl** feature that designates a cache TTL for a request’s response status code (for example, `{ "200-299": 86400, 404: 1, "500-599": 0 }`).
