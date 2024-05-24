@@ -377,7 +377,7 @@ D1 supports the following [SQLite PRAGMA](https://www.sqlite.org/pragma.html) st
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `table_list`         | Returns information about the tables and views in the schema, one table per row of output.                                                                                                                 |
 | `table_info`         | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column. |
-| `defer_foreign_keys` | Query, set, or clear the enforcement of foreign key constraints. Learn more about foreign key constraints [here](/d1/build-with-d1/foreign-keys/)                                                          |
+| `defer_foreign_keys` | Query, set, or clear the enforcement of foreign key constraints. For more information, refer to [Define foreign key](/d1/build-with-d1/foreign-keys/)                                                      |
 
 
 
