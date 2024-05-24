@@ -25,9 +25,9 @@ Make sure you have:
 
 First, install `cloudflared` on a server in your private network:
 
-{{<render file="tunnel/_create-tunnel.md">}}
+{{<render productFolder="cloudflare-one" file="tunnel/_create-tunnel.md">}}
 
-{{<render file="access/_secure-tunnel-with-access.md">}}
+{{<render productFolder="access" file="_secure-tunnel-with-access.md">}}
 
 {{</tutorial-step>}}
 
