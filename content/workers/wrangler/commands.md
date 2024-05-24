@@ -42,17 +42,17 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 {{<Aside type="note">}}
 
-The following global flags work on every command.
+The following global flags work on every command, with some exceptions for `pages` commands.
 
 {{<definitions>}}
 
-- `--config` {{<type>}}string{{</type>}}
-  - Path to `.toml` configuration file.
 - `--help` {{<type>}}boolean{{</type>}}
   - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
   - Show version number.
-- `--experimental-json-config` {{<type>}}boolean{{</type>}}
+- `--config` {{<type>}}string{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
+  - Path to `.toml` configuration file.
+- `--experimental-json-config` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
   - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
@@ -219,7 +219,7 @@ wrangler d1 create <DATABASE_NAME> [OPTIONS]
   - The name of the new D1 database.
 - `--location` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
-  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `wnam` (Western North America), and `enam` (Eastern North America).
+  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
     {{</definitions>}}
 
 ### `info`
@@ -766,6 +766,10 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to listen to requests on.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
@@ -802,6 +806,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
 - `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify Wrangler's logging level.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the interactive dev session.
 
 {{</definitions>}}
 
@@ -826,7 +832,7 @@ None of the options for this command are required. Also, many can be set in your
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -875,7 +881,7 @@ None of the options for this command are required. Also, many can be set in your
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 - `--dispatch-namespace` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-dispatch-namespace) to upload this Worker to.
+  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 
 {{</definitions>}}
 
@@ -908,7 +914,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1427,6 +1433,64 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+### `notification create`
+
+{{<Aside type="note">}}
+Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
+{{</Aside>}}
+
+Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
+
+```txt
+wrangler r2 bucket notification create <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to create an event notification rule for.
+- `--event-type` {{<type>}}"object-create"|"object-delete"{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue that will receive event notification messages.
+- `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the key name prefix that an object must match to trigger event notifications.
+- `--suffix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the key name suffix that an object must match to trigger event notifications.
+{{</definitions>}}
+
+### `notification delete`
+
+Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+
+```txt
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to delete an event notification rule for.
+- `--queue` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue that corresponds to the event notification rule.
+
+{{</definitions>}}
+
+### `notification get`
+
+Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+
+```txt
+wrangler r2 bucket notification get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the R2 bucket to get event notification configuration for.
+
+{{</definitions>}}
+
 ### `sippy enable`
 
 {{<Aside type="note">}}
@@ -1783,23 +1847,17 @@ Configure Cloudflare Pages.
 Develop your full-stack Pages application locally.
 
 ```txt
-wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
+wrangler pages dev [<DIRECTORY>] [OPTIONS]
 ```
 
 {{<definitions>}}
 
 - `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The directory of static assets to serve.
-- `COMMAND...` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The proxy command(s) to run.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Run on your local machine.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
-- `--proxy` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The port to proxy (where the static assets are served).
-- `--script-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: "\_worker.js"){{</prop-meta>}}
-  - The location of the single Worker file if not using functions.
 - `--binding` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
 - `--kv` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1816,6 +1874,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND...>]
   - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} 
+  - Show the interactive dev session.
 
 {{</definitions>}}
 
@@ -1925,8 +1985,8 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 
 {{<definitions>}}
 
-- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload.
+- `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2133,7 +2193,6 @@ Retrieve your user information and test your authentication configuration.
 ```txt
 wrangler whoami
 ```
-
 ---
 ## `versions`
 
@@ -2141,7 +2200,7 @@ wrangler whoami
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2231,7 +2290,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 {{<Aside type="warning">}}
 
-The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
 The minimum required wrangler version to use these commands is 3.40.0.
 
@@ -2239,7 +2298,7 @@ The minimum required wrangler version to use these commands is 3.40.0.
 
 ### `deploy`
 
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload). 
+Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
 
 
 ```txt
@@ -2308,14 +2367,14 @@ wrangler deployments list [OPTIONS]
 
 {{<Aside type="note">}}
 
-The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned.
+The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0. 
+The minimum required wrangler version to use these commands is 3.40.0.
 {{</Aside>}}
 
 ### `list --experimental-versions`
- 
-Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment. 
+
+Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
 wrangler deployments list [OPTIONS] --experimental-versions
@@ -2333,7 +2392,7 @@ wrangler deployments list [OPTIONS] --experimental-versions
 
 ### `status`
 
-Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment. 
+Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
 
 ```txt
 wrangler deployments status --experimental-versions
@@ -2393,7 +2452,7 @@ wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for version commands. Can be replaced with `--x-versions`.
 - `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version. 
+  - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2523,7 +2582,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a [binding](/workers/configuration/bindings/) in your `wrangler.toml`:
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
 
 ```toml
 mtls_certificates = [

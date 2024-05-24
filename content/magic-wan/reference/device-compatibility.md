@@ -33,7 +33,7 @@ VPN                                                                             
 ---                                                                                                     |---                            |---
 [Alibaba Cloud VPN Gateway](/magic-wan/configuration/manually/third-party/alibaba-cloud/)               | —                             | ✅
 [Amazon AWS Transit Gateway](/magic-wan/configuration/manually/third-party/aws/)                        | —                             | ✅
-Azure VPN Gateway                                                                                       | Compatibility on roadmap      | ✅
+[Azure VPN Gateway](/magic-wan/configuration/manually/third-party/azure/)                               | —                             | ✅
 [GCP Cloud VPN](/magic-wan/configuration/manually/third-party/google/)                                  | —                             | ✅
 
 [^1]: Specifications compatible per vendor documentation; detailed integration guide coming soon.

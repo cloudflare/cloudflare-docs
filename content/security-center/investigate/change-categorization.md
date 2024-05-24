@@ -6,38 +6,75 @@ weight: 4
 
 # Change categorization
 
-Domains are sorted into categories by their content and security type. Refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/) for more information. You can request categorization changes in three ways:
+Cloudflare sorts domains into categories based on their content and security type. You can request categorization changes via the [dashboard](#via-the-cloudflare-dashboard), [Cloudflare Radar](#via-cloudflare-radar), or the [API](#via-the-api).
 
-## API
+For a detailed list of categories, refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
-You can request categorization changes by creating a [miscategorization API Token](/api/operations/miscategorization-create-miscategorization).
+## Via the Cloudflare dashboard
 
-## Radar feedback
-
-You can use [Cloudflare Radar](https://radar.cloudflare.com/domains/feedback) to submit feedback to request recategorization.
-
-## Change categorization via the Cloudflare dashboard
-
-When you search for a domain, you can request to change its categorization under the **Domain Overview**.
+To request a categorization change via the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Security Center** > **Investigate**.
-3. Select **Request to change categorization**.
-4. Choose whether to change a security or a content category.
-5. Select **Submit** to submit your request for review after you have selected the categories.
+3. Search for the domain you want to change.
+4. In **Domain overview**, select **Request to change categorization**.
+5. Choose whether to change a [security category](/cloudflare-one/policies/gateway/domain-categories/#security-categories) or a [content category](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
+6. Choose which categories you want to add or remove from the domain.
 
-{{<Aside type="note">}}
-The interface will not allow a domain to have more than two content categories associated with it. To change the proposed categories, remove some of the selected categories.
+   {{<Aside type="note" header="Content category limit">}}
+   A domain cannot have more than two associated content categories. To propose changes to categories of a domain with more than two existing categories, remove one or more of the existing categories.
+   {{</Aside>}}
+
+7. Select **Submit** to submit your request for review.
+
+Requesting a security category change will trigger a deeper investigation by Cloudflare to confirm that the submission is valid. Requesting a content category change also requires Cloudflare validation, but the turnaround time for these submissions is usually shorter as it requires less investigation.
+
+Your category change requests will be revised by the Cloudflare team depending on the type of change. If your requests have been reviewed and applied by the Cloudflare team, the new categories will be visible in the Cloudflare dashboard in **Security Center** > **Investigate**, as well as in [Cloudflare Radar](https://radar.cloudflare.com/).
+
+{{<Aside type="warning">}}
+Cloudflare does not guarantee the category change will be approved.
 {{</Aside>}}
 
-Once the reports have been reviewed and actioned by the Cloudflare team, the new categories will be visible in Investigate and in Cloudflare Radar.
+## Via Cloudflare Radar
 
-Requesting a change to **Security** Categories will trigger a deeper investigation on the Cloudflare side to confirm that the submission is valid.
+To request recategorization via Cloudflare Radar, submit feedback in [Radar Domain Categorization](https://radar.cloudflare.com/domains/feedback).
 
-Requesting a **Content** Category change also requires Cloudflare validation but the turnaround time for these submissions is usually lower as it requires less investigation.
+## Via the API
 
-The category change requests will be revised by the Cloudflare team, depending on the type of change. Check back to see if the change was implemented
+To request a categorization change via the API:
 
-{{<Aside type="note">}}
-There is no guarantee the category change will be approved.
-{{</Aside>}}
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with permission to edit your Intel account.
+
+    | **Permissions** |       |      |
+    | --------------- | ----- | ---- |
+    | Account         | Intel | Edit |
+
+    | **Account Resources** |              |
+    | --------------------- | ------------ |
+    | Include               | All accounts |
+
+2. Make a call to the [miscategorization endpoint](/api/operations/miscategorization-create-miscategorization) including the domain name and any categories you would like to add or remove. For example:
+
+    ```bash
+    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "content_adds": [
+        82
+      ],
+      "content_removes": [
+        155
+      ],
+      "indicator_type": "domain",
+      "ip": null,
+      "security_adds": [
+        117,
+        131
+      ],
+      "security_removes": [
+        83
+      ],
+      "url": "example.com"
+    }'
+    ```

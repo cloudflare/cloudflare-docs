@@ -10,17 +10,6 @@ D1 exposes database analytics that allow you to inspect query volume, query late
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
 
-## View metrics in the dashboard
-
-Per-database analytics for D1 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
-3. Select an existing database.
-4. Select the **Metrics** tab.
-
-You can optionally select a time window to query. This defaults to the last 24 hours.
-
 ## Metrics
 
 D1 currently exports the below metrics:
@@ -45,6 +34,17 @@ Row counts are a precise count of how many rows were read (scanned) or written b
 Inspect row counts to understand the performance and cost of a given query, including whether you can reduce the rows read [using indexes](/d1/build-with-d1/use-indexes/). Use query counts to understand the total volume of traffic against your databases and to discern which databases are actively in-use.   
 
 Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on how rows are counted.
+
+## View metrics in the dashboard
+
+Per-database analytics for D1 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
+3. Select an existing database.
+4. Select the **Metrics** tab.
+
+You can optionally select a time window to query. This defaults to the last 24 hours.
 
 ## Query via the GraphQL API
 

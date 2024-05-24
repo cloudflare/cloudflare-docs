@@ -9,7 +9,7 @@ weight: 3
 layout: example
 ---
 
-This example shows how to build a WebSocket server using Durable Objects and Workers. The example exposes two endpoints, one to create new WebSockets, and another to check how many WebSockets are currently connected. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/reference/websockets/).
+This example shows how to build a WebSocket server using Durable Objects and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/reference/websockets/).
 
 {{<Aside type="warning">}}
 
@@ -24,33 +24,11 @@ WebSocket connections pin your Durable Object to memory, and so duration charges
 ---
 filename: index.js
 ---
+import { DurableObject } from "cloudflare:workers";
+
 // Worker
 export default {
-  async fetch(request, env) {
-    // This example will always refer to the same Durable Object instance,
-    // since it hardcodes the name "foo".
-    let id = env.WEBSOCKET_SERVER.idFromName("foo");
-    let stub = env.WEBSOCKET_SERVER.get(id);
-
-    // Forward the request to the Durable Object.
-    return await stub.fetch(request);
-  }
-};
-
-// Durable Object
-export class WebSocketServer {
-  constructor(state, env) {
-    this.state = state;
-
-    // This is reset whenever the constructor runs because
-    // regular WebSockets do not survive Durable Object resets.
-    // WebSockets accepted via the Hibernation API can survive
-    // a certain type of eviction, but this example will not cover that here.
-    this.currentlyConnectedWebSockets = 0;
-  }
-
-  // Handle HTTP requests from clients.
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     if (request.url.endsWith("/websocket")) {
       // Expect to receive a WebSocket Upgrade request.
       // If there is one, accept the request and return a WebSocket Response.
@@ -59,47 +37,65 @@ export class WebSocketServer {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // Creates two ends of a WebSocket connection.
-      const webSocketPair = new WebSocketPair();
-      const [client, server] = Object.values(webSocketPair);
+      // This example will refer to the same Durable Object instance,
+      // since the name "foo" is hardcoded.
+      let id = env.WEBSOCKET_SERVER.idFromName("foo");
+      let stub = env.WEBSOCKET_SERVER.get(id);
 
-      // Calling `accept()` informs the runtime that this WebSocket is to begin terminating
-      // request within the Durable Object. It has the effect of "accepting" the connection,
-      // and allowing the WebSocket to send and receive messages.
-      server.accept();
-      this.currentlyConnectedWebSockets += 1;
-
-      // Upon receiving a message from the client, the server replies with the same message,
-      // but will prefix the message with "[Durable Object]: ".
-      server.addEventListener('message', event => {
-        server.send(`[Durable Object]: ${event.data}`);
-      });
-
-      // If the client closes the connection, the runtime will also close the connection.
-      server.addEventListener('close', cls => {
-        this.currentlyConnectedWebSockets -= 1;
-        server.close(cls.code, "Durable Object is closing WebSocket");
-      });
-
-      return new Response(null, {
-        status: 101,
-        webSocket: client,
-      });
-    } else if (request.url.endsWith("/getCurrentConnections")) {
-      if (this.currentlyConnectedWebSockets == 1) {
-        return new Response(`There is ${this.currentlyConnectedWebSockets} WebSocket client connected to this Durable Object instance.`);
-      }
-      return new Response(`There are ${this.currentlyConnectedWebSockets} WebSocket clients connected to this Durable Object instance.`);
+      return stub.fetch(request);
     }
 
-    // Unknown path, reply with usage info.
-    return new Response(`
-This Durable Object supports the following endpoints:
-  /websocket
-    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
-  /getCurrentConnections
-    - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
-`)
+    return new Response(null, {
+      status: 400,
+      statusText: 'Bad Request',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+  }
+};
+
+// Durable Object
+export class WebSocketServer extends DurableObject {
+  currentlyConnectedWebSockets;
+
+  constructor(ctx, env) {
+    // This is reset whenever the constructor runs because
+    // regular WebSockets do not survive Durable Object resets.
+    //
+    // WebSockets accepted via the Hibernation API can survive
+    // a certain type of eviction, but we will not cover that here.
+    super(ctx, env);
+    this.currentlyConnectedWebSockets = 0;
+  }
+
+  async fetch(request) {
+    // Creates two ends of a WebSocket connection.
+    const webSocketPair = new WebSocketPair();
+    const [client, server] = Object.values(webSocketPair);
+  
+    // Calling `accept()` tells the runtime that this WebSocket is to begin terminating
+    // request within the Durable Object. It has the effect of "accepting" the connection,
+    // and allowing the WebSocket to send and receive messages.
+    server.accept();
+    this.currentlyConnectedWebSockets += 1;
+
+    // Upon receiving a message from the client, the server replies with the same message,
+    // and the total number of connections with the "[Durable Object]: " prefix
+    server.addEventListener('message', (event) => {
+      server.send(`[Durable Object] currentlyConnectedWebSockets: ${this.currentlyConnectedWebSockets}`);
+    });
+
+    // If the client closes the connection, the runtime will close the connection too.
+    server.addEventListener('close', (cls) => {
+      this.currentlyConnectedWebSockets -= 1;
+      server.close(cls.code, "Durable Object is closing WebSocket");
+    });
+
+    return new Response(null, {
+      status: 101,
+      webSocket: client,
+    });
   }
 }
 ```
@@ -111,40 +107,15 @@ This Durable Object supports the following endpoints:
 ---
 filename: index.ts
 ---
+import { DurableObject } from "cloudflare:workers";
+
 export interface Env {
-  WEBSOCKET_SERVER: DurableObjectNamespace;
+  WEBSOCKET_SERVER: DurableObjectNamespace<WebSocketServer>;
 }
 
 // Worker
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // This example will refer to the same Durable Object instance,
-    // since the name "foo" is hardcoded.
-    let id: DurableObjectId = env.WEBSOCKET_SERVER.idFromName("foo");
-    let stub: DurableObjectStub = env.WEBSOCKET_SERVER.get(id);
-
-    // Forward the request to the Durable Object and wait for the Response.
-    return await stub.fetch(request);
-  },
-};
-
-// Durable Object
-export class WebSocketServer {
-  state: DurableObjectState;
-  currentlyConnectedWebSockets: number;
-
-  constructor(state: DurableObjectState, env: Env) {
-    this.state = state;
-    // This is reset whenever the constructor runs because
-    // regular WebSockets do not survive Durable Object resets.
-    //
-    // WebSockets accepted via the Hibernation API can survive
-    // a certain type of eviction, but we will not cover that here.
-    this.currentlyConnectedWebSockets = 0;
-  }
-
-  // Handle HTTP requests from clients.
-  async fetch(request: Request): Promise<Response> {
     if (request.url.endsWith("/websocket")) {
       // Expect to receive a WebSocket Upgrade request.
       // If there is one, accept the request and return a WebSocket Response.
@@ -153,47 +124,65 @@ export class WebSocketServer {
         return new Response('Durable Object expected Upgrade: websocket', { status: 426 });
       }
 
-      // Creates two ends of a WebSocket connection.
-      const webSocketPair = new WebSocketPair();
-      const [client, server] = Object.values(webSocketPair);
+      // This example will refer to the same Durable Object instance,
+      // since the name "foo" is hardcoded.
+      let id = env.WEBSOCKET_SERVER.idFromName("foo");
+      let stub = env.WEBSOCKET_SERVER.get(id);
 
-      // Calling `accept()` tells the runtime that this WebSocket is to begin terminating
-      // request within the Durable Object. It has the effect of "accepting" the connection,
-      // and allowing the WebSocket to send and receive messages.
-      server.accept();
-      this.currentlyConnectedWebSockets += 1;
-
-      // Upon receiving a message from the client, the server replies with the same message,
-      // but will prefix the message with "[Durable Object]: ".
-      server.addEventListener('message', (event: MessageEvent) => {
-        server.send(`[Durable Object]: ${event.data}`);
-      });
-
-      // If the client closes the connection, the runtime will close the connection too.
-      server.addEventListener('close', (cls: CloseEvent) => {
-        this.currentlyConnectedWebSockets -= 1;
-        server.close(cls.code, "Durable Object is closing WebSocket");
-      });
-
-      return new Response(null, {
-        status: 101,
-        webSocket: client,
-      });
-    } else if (request.url.endsWith("/getCurrentConnections")) {
-      if (this.currentlyConnectedWebSockets == 1) {
-        return new Response(`There is ${this.currentlyConnectedWebSockets} WebSocket client connected to this Durable Object instance.`);
-      }
-      return new Response(`There are ${this.currentlyConnectedWebSockets} WebSocket clients connected to this Durable Object instance.`);
+      return stub.fetch(request);
     }
 
-    // Unknown path, reply with usage info.
-    return new Response(`
-This Durable Object supports the following endpoints:
-  /websocket
-    - Creates a WebSocket connection. Any messages sent to it are echoed with a prefix.
-  /getCurrentConnections
-    - A regular HTTP GET endpoint that returns the number of currently connected WebSocket clients.
-`)
+    return new Response(null, {
+      status: 400,
+      statusText: 'Bad Request',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+  }
+};
+
+// Durable Object
+export class WebSocketServer extends DurableObject {
+  currentlyConnectedWebSockets: number;
+
+  constructor(ctx: DurableObjectState, env: Env) {
+    // This is reset whenever the constructor runs because
+    // regular WebSockets do not survive Durable Object resets.
+    //
+    // WebSockets accepted via the Hibernation API can survive
+    // a certain type of eviction, but we will not cover that here.
+    super(ctx, env);
+    this.currentlyConnectedWebSockets = 0;
+  }
+
+  async fetch(request: Request): Promise<Response> {
+    // Creates two ends of a WebSocket connection.
+    const webSocketPair = new WebSocketPair();
+    const [client, server] = Object.values(webSocketPair);
+  
+    // Calling `accept()` tells the runtime that this WebSocket is to begin terminating
+    // request within the Durable Object. It has the effect of "accepting" the connection,
+    // and allowing the WebSocket to send and receive messages.
+    server.accept();
+    this.currentlyConnectedWebSockets += 1;
+
+    // Upon receiving a message from the client, the server replies with the same message,
+    // and the total number of connections with the "[Durable Object]: " prefix
+    server.addEventListener('message', (event: MessageEvent) => {
+      server.send(`[Durable Object] currentlyConnectedWebSockets: ${this.currentlyConnectedWebSockets}`);
+    });
+
+    // If the client closes the connection, the runtime will close the connection too.
+    server.addEventListener('close', (cls: CloseEvent) => {
+      this.currentlyConnectedWebSockets -= 1;
+      server.close(cls.code, "Durable Object is closing WebSocket");
+    });
+
+    return new Response(null, {
+      status: 101,
+      webSocket: client,
+    });
   }
 }
 ```

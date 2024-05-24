@@ -18,8 +18,7 @@ You just need the server's address and public key to run the protocol:
 To get started, download and run Cloudflare's [Go client](https://github.com/cloudflare/roughtime):
 
 ```go
-go get -u github.com/cloudflare/roughtime
-go install github.com/cloudflare/roughtime...
+go install github.com/cloudflare/roughtime/cmd/getroughtime@latest
 getroughtime -ping roughtime.cloudflare.com:2003 -pubkey 0GD7c3yP8xEc4Zl2zeuN2SlLvDVVocjsPSL8/Rl/7zg=
 ```
 

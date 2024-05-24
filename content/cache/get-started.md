@@ -17,7 +17,7 @@ Cloudflare caches static content based on the following factors:
 * Presence of [query strings](/cache/advanced-configuration/query-string-sort/)
 * [Origin cache-control headers](/cache/concepts/cache-control/)
 * Origin headers that indicate {{<glossary-tooltip term_id="dynamic content">}}dynamic content{{</glossary-tooltip>}}
-* Page rules that [bypass cache on cookie](/support/third-party-software/content-management-system-cms/caching-html-with-drupal/#set-bypass-cache-on-cookie)
+* Page rules (deprecated) that [bypass cache on cookie](/support/third-party-software/content-management-system-cms/caching-html-with-drupal/#set-bypass-cache-on-cookie)
 
 Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/) DNS records.
 
@@ -63,7 +63,7 @@ These code alterations only occur on the cacheable objects found at Cloudflare's
 
 Review the list of Cloudflare features that function in this manner:
 
-- [Auto Minify](/speed/optimization/content/auto-minify/)
+- [Auto Minify](/speed/optimization/content/auto-minify/) (deprecated)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
 - [Polish](/images/polish/)
 - [Mirage](/speed/optimization/images/mirage/)

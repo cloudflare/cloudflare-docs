@@ -15,24 +15,21 @@
   <summary>Worker</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: any;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
-    const response = await ai.run("{{ .Params.model.name }}", {
+    const response = await env.AI.run("{{ .Params.model.name }}", {
       prompt: "tell me a story",
       raw: true, //skip applying the default chat template
       lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
     });
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -59,15 +56,12 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
   <summary>Worker - Streaming</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -77,7 +71,7 @@ export default {
       },
     ];
 
-    const stream = await ai.run("{{ .Params.model.name }}", {
+    const stream = await env.AI.run("{{ .Params.model.name }}", {
       messages,
       stream: true,
     });
@@ -86,7 +80,7 @@ export default {
       headers: { "content-type": "text/event-stream" },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -95,15 +89,12 @@ export default {
   <summary>Worker</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: any;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
     const messages = [
       { role: "system", content: "You are a friendly assistant" },
@@ -112,11 +103,11 @@ export default {
         content: "What is the origin of the phrase Hello, World",
       },
     ];
-    const response = await ai.run("{{ .Params.model.name }}", { messages });
+    const response = await env.AI.run("{{ .Params.model.name }}", { messages });
 
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>
@@ -133,7 +124,7 @@ AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
 
 prompt = "Tell me all about PEP-8"
 response = requests.post(
-  f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{{ .Params.model.name}}",
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Params.model.name}}",
     headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
     json={
       "messages": [
@@ -159,4 +150,13 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 ```
 
 </details>
+
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+
+<div class="DocsMarkdown--aside-header">OpenAI compatible endpoints</div>
+
+Workers AI also supports OpenAI compatible API endpoints for `/v1/chat/completions` and `/v1/embeddings`. For more details, refer to [Configurations](/workers-ai/configuration/open-ai-compatibility/).
+
+</aside>
+
 {{ end }}

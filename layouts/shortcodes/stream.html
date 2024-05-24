@@ -1,0 +1,13 @@
+{{- $cust_id := "1mwganm1ma0xgnmj" -}}
+{{- $video_id := .Get "video_id" -}}
+
+<figure data-type="stream">
+  <div style="position: relative; padding-top: 56.25%;">
+    <iframe
+        src="https://customer-{{ $cust_id  }}.cloudflarestream.com/{{ $video_id }}/iframe?preload=true&letterboxColor=transparent{{ if .Get "poster"}}&poster={{.Get "poster" | urlquery}}{{ end }}"
+        style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen="true">
+    </iframe>
+  </div>
+</figure>

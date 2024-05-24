@@ -9,3 +9,7 @@ meta:
 # Notifications for Web Analytics
 
 {{<render file="_web-analytics-notifications.md">}}
+<br>
+{{<render file="_get-started.md" productFolder="notifications" >}}
+
+{{<available-notifications product="Web Analytics">}}

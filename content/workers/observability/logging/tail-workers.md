@@ -98,3 +98,6 @@ The Worker that you add a `tail_consumers` binding to must have a `tail()` handl
 ## Related resources
 
 - [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
+* [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
+* [Local development and testing](/workers/testing/local-development/) - Develop and test you Workers locally.
+* [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.  

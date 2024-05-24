@@ -134,7 +134,7 @@ You can filter real-time logs in the dashboard or using [`wrangler tail`](/worke
 
 ## Persist logs
 
-Logs can be persited in two ways:
+Logs can be persisted in two ways:
 
 1. [Workers Logpush](/workers/observability/logging/logpush/).
 2. [Tail Workers](/workers/observability/logging/tail-workers/).
@@ -154,3 +154,4 @@ Refer to the [Tail Workers documentation](/workers/observability/logging/tail-wo
 * [Local development and testing](/workers/testing/local-development/) - Develop and test you Workers locally.
 * [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
 * [Tail Workers](/workers/observability/logging/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
+* [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.  

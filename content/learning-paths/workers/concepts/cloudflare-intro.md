@@ -19,7 +19,7 @@ For more information about what Cloudflare is and a step-by-step guide on how to
 
 ## Cloudflare Developer Platform
 
-The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) includes [Cloudflare Workers](/workers/), which allows you to deploy serverless code instantly across the globe. You will learn more about [the Developer Platform in this module](http://localhost:5173/learning-paths/workers/concepts/developer-platform/).
+The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) includes [Cloudflare Workers](/workers/), which allows you to deploy serverless code instantly across the globe. You will learn more about [the Developer Platform in this module](/learning-paths/workers/devplat/).
 
 ## Built on Cloudflare
 

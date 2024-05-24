@@ -8,7 +8,7 @@ weight: 10
 
 <div class="full-img">
 
-![Example Architecture](/images/calls/calls-architecture.png)
+![Example Architecture](/images/calls/video-calling-application.png)
 
 </div>
 

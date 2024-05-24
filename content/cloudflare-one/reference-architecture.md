@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Reference architecture
 external_link: /reference-architecture/architectures/sase/
-weight: 2
+weight: 10
 _build:
   publishResources: false
   render: never

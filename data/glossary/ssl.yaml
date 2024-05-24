@@ -59,12 +59,22 @@ entries:
   related_terms: []
   cloudflare_specific: false
 
+- term: domain control validation (DCV)
+  general_definition: |-
+    process by which a certificate authority (CA) can verify domain ownership before issuing an SSL/TLS certificate.
+
 - term: encryption algorithm
   general_definition: |-
     an encryption algorithm is a set of mathematical operations performed on data to ensure the data is only understood by the intended recipient.
   associated_products: []
   related_terms: []
   cloudflare_specific: false
+
+- term: edge certificate
+  general_definition: |-
+    the SSL/TLS certificates that Cloudflare presents to clients visiting your website or application.
+
+    Because of [how Cloudflare works](/fundamentals/concepts/how-cloudflare-works/), there can actually be [two certificates involved in a single request](/ssl/concepts/): an edge certificate and an origin certificate.
 
 - term: Extended Validation (EV) certificate
   general_definition: |-
@@ -147,3 +157,9 @@ entries:
 - term: Universal SSL certificate
   general_definition: |-
     by default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains [added to](/fundamentals/setup/manage-domains/add-site/) and [activated on](/dns/zone-setups/reference/domain-status/) Cloudflare.
+
+- term: validation level
+  general_definition: |-
+    the level to which a certificate authority validates domain ownership before issuing an SSL/TLS certificate.
+
+    The different certificate validation levels are DV (Domain Validated), OV (Organization Validated), or EV (Extended Validation).

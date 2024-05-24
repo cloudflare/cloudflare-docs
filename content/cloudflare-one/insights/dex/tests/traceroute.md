@@ -17,7 +17,7 @@ weight: 2
 | Windows  | ✅           | 2023.5.587           |
 | macOS    | ✅           | 2023.5.589           |
 | Linux    | ❌           |                      |
-| iOS      | ✅           | 1.0      |
+| iOS      | ❌           |       |
 | Android  | ✅           | 1.0      |
 | ChromeOS | ✅           | 1.0      |
 
@@ -34,10 +34,10 @@ To set up a traceroute test for an application:
 3. Fill in the following fields:
     - **Name**: Enter any name for the test.
     - **Target**: Enter the IP address of the server you want to test (for example, `192.0.2.0`). You can test either a public-facing endpoint or a private endpoint you have connected to Cloudflare.
+    - **Source device profiles**: (Optional) Select the [WARP device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) that you want to run the test on. If no profiles are selected, the test will run on all supported devices connected to your Zero Trust organization.
     - **Test type**: Select _Traceroute_.
     - **Test frequency**: Specify how often the test will run. Input a minute value between 5 and 60.
-
-The test will now run on all devices connected to your Zero Trust organization via the WARP client.
+4. Select **Add test**.
 
 Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of your test.
 
@@ -45,9 +45,11 @@ Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of yo
 
 A traceroute test measures the following data:
 
-| Data | Description |
+| Data  <div style="width: 100px;">| Description |
 | ----------- | ----------- |
+| Network path | IP address, average response time, and packet loss for each hop between the device and the target. |
 | Round trip time | Time between sending out a packet and receiving a response from the target. |
 | Number of hops | Number of routers encountered between the device and the target. |
 | Packet loss | Percentage of IP packets that failed to receive a response. |
 | Availability | Percentage of tests where at least one packet reached the destination. |
+| Last seen ISP | The Internet Service Provider that is managing the connection from the device to Cloudflare. (Only available on macOS and Windows.) <br> <br> DEX looks up the IP address of the ISP in the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases) and returns the corresponding [ASO and ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/). If the ASO and ASN are `Unknown`, it means this information is unavailable in MaxMind. |

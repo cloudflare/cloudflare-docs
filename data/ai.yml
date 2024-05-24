@@ -11,13 +11,13 @@ meta:
   title: Cloudflare AI
   description: Utilize Cloudflare's global network to build better assistive and generative AI apps.
   author: "@cloudflare"
-  
+
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
-    
+
 algolia:
   index: developers-cloudflare2
-  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: ai

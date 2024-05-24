@@ -1,6 +1,8 @@
 ---
 link: "/tenant/changelog/"
 productName: Tenant
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
 - publish_date: '2023-10-10'
   title: "New Tenant Admin UI"

@@ -86,10 +86,6 @@ This behavior commonly occurs because an extension modifies your browser's defau
 
 Challenges are not supported when device emulation is enabled on a browser, for example, using the browser's developer tools.
 
-### Native mobile applications
-
-Challenges are not supported within native mobile applications, including those utilizing web views or embedded browsers. This applies to all mobile development frameworks and platforms, such as React Native, Swift for iOS, and Kotlin for Android, among others.
-
 ---
 
 ## Resolve a challenge

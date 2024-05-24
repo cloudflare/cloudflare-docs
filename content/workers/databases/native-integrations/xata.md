@@ -28,22 +28,22 @@ To set up an integration with Xata:
 4. Install the [Xata CLI](https://xata.io/docs/getting-started/installation) and authenticate the CLI by running the following commands:
 
    ```sh
-   npm install -g @xata.io/cli
+   $ npm install -g @xata.io/cli
 
-   xata auth login
+   $ xata auth login
    ```
 
 5. Once you have the CLI set up, In your Worker, run the following code in the root directory of your project:
 
    ```sh
-   xata init
+   $ xata init
    ```
 
    Accept the default settings during the configuration process. After completion, a `.env` and `.xatarc` file will be generated in your project folder.
 
 6. To enable Cloudflare access the secret values generated when running in development mode, create a `.dev.vars` file in your project's root directory and add the following content, replacing placeholders with the specific values:
 
-   ```sh
+   ```txt
    XATA_API_KEY=<YOUR_API_KEY_HERE>
    XATA_BRANCH=<YOUR_BRANCH_HERE>
    XATA_DATABASE_URL=<YOUR_DATABASE_URL_HERE>
@@ -56,25 +56,24 @@ To set up an integration with Xata:
    filename: Worker code
    ---
    export default {
-     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+     async fetch(request, env, ctx): Promise<Response> {
        const xata = new XataClient({
          apiKey: env.XATA_API_KEY,
          branch: env.XATA_BRANCH,
          databaseURL: env.XATA_DATABASE_URL,
        });
-       const records = await xata.db.Posts.select([
-         'id',
-         'title',
-         'author.name',
-         'author.email',
-         'author.bio',
-       ]).getAll();
 
-       return new Response(JSON.stringify(records), {
-         status: 200
-       });
+       const records = await xata.db.Posts.select([
+         "id",
+         "title",
+         "author.name",
+         "author.email",
+         "author.bio",
+       ]).getAll();
+  
+       return Response.json(records);
      },
-   };
+   } satisfies ExportedHandler<Env>;
    ```
 
 To learn more about Xata, refer to [Xata's official documentation](https://xata.io/docs).

@@ -27,14 +27,4 @@ WAF alerts use a static threshold together with a [z-score](https://en.wikipedia
 
 ## Alert types
 
-### Security Events Alert
-
-Available for zones on Business and Enterprise plans. The mean time to detection is two hours.
-
-This alert will look for spikes across all services that generate log entries in [security/firewall events](/logs/reference/log-fields/zone/firewall_events/).
-
-### Advanced Security Events Alert
-
-Only available for zones on Enterprise plans. The mean time to detection is five minutes.
-
-When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.
+{{<available-notifications product="Web Application Firewall (WAF)">}}

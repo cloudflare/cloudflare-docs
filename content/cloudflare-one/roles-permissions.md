@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Roles and permissions
-weight: 12
+weight: 13
 ---
 
 # Roles and permissions
@@ -11,7 +11,6 @@ When creating a Cloudflare Zero Trust account, you will be given the Super Admin
 To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/setup/manage-members/) documentation.
 
 ## Zero Trust roles
-
 
 Only Super Administrators will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 

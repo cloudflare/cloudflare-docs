@@ -13,7 +13,7 @@ Cloudflare Workers significantly differs from other serverless computing provide
 
 A single Worker project can have logic as complex or as simple as the developer desires. A project of smaller scale might look like a Worker that [returns a small HTML page](/workers/examples/return-html/) on a single route. A more complex Worker project would span multiple domains, multiple routes for each domain, and different logic for each route. The developer decides the architectural complexity of their Worker project.
 
-Your application can be made up of multiple Workers that work together and deliver a single experience to end users. Workers can also add integrate with other Cloudflare Developer Platform functionality such as storage, media and AI. You will learn more about this in the [Developer Platform module](/learning-paths/workers/devplat/).
+Your application can be made up of multiple Workers that work together and deliver a single experience to end users. Workers can also integrate with other Cloudflare Developer Platform functionality such as storage, media and AI. You will learn more about this in the [Developer Platform module](/learning-paths/workers/devplat/).
 
 ## Runtime
 
@@ -49,7 +49,7 @@ In the next module, you build and deploy your first Worker to the Cloudflare glo
 
 ## Related resources
 
-- [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - Blog post detailing the containers versus isolates difference in the context of Cloudflare.
+- [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - A blog post detailing the containers versus isolates difference in the context of Cloudflare.
 - [How Workers works](/workers/reference/how-workers-works/) - Learn the difference between the Workers runtime versus traditional browsers and Node.js.
 - [How the cache works](/workers/reference/how-the-cache-works/) - Learn how Workers interacts with the Cloudflare cache.
 

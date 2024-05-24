@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Customer Metadata Boundary
-weight: 3
+weight: 5
 ---
 
 # Customer Metadata Boundary
@@ -36,10 +36,6 @@ sequenceDiagram
 
 Additionally, customers have the option to configure [Logpush](/logs/about/) to push their Customer Logs to various storage services, SIEMs, and log management providers.
 
-## Data unavailability
-
-{{<render file="_customer_metadata_boundary_error.md" productFolder="analytics">}}
-
 ## Product specific-behavior
 
-For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Overview section](/data-localization/).
+For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page.

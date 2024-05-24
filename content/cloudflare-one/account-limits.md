@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Account limits
-weight: 11
+weight: 12
 ---
 
 # Account limits

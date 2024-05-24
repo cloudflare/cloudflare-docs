@@ -5,17 +5,14 @@
   <summary>Worker - TypeScript</summary>
 
 ```ts
-import { Ai } from "@cloudflare/ai";
-
 export interface Env {
   AI: Ai;
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
-    const ai = new Ai(env.AI);
+  async fetch(request, env): Promise<Response> {
 
-    const response = await ai.run(
+    const response = await env.AI.run(
       "{{ .Page.Params.model.name }}",
       {
         text: "This pizza is great!",
@@ -24,7 +21,7 @@ export default {
 
     return Response.json(response);
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>

@@ -19,7 +19,7 @@ ___
 
 ## Page Rules limitations
 
-By default, Cloudflare Page Rules does not allow creating a rule that combines the two options mentioned in the use case above.
+By default, Cloudflare Page Rules (deprecated) does not allow creating a rule that combines the two options mentioned in the use case above.
 
 Currently, you can pick just one **Cache Level** setting per page rule. As such, for the options discussed in this use case, you could only pick either _Cache Everything_ or _Ignore Query String_.
 
@@ -53,7 +53,7 @@ addEventListener('fetch', event => {
      event.respondWith(fetchAndApply(event.request))
 })
 
-asyncfunction fetchAndApply(request) {
+async function fetchAndApply(request) {
      let url = new URL(request.url)
 
      // Only use the path for the cache key, removing query strings

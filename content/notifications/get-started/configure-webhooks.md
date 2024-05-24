@@ -133,6 +133,12 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
       <td>The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user.</td>
       <td>URL is provided by Teams when the Incoming Webhook connector is created.</td>
    </tr>
+   <!-- ServiceNow  -->
+   <tr>
+      <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://docs.servicenow.com/bundle/tokyo-application-development/page/administer/integrationhub-store-spokes/task/govnotify-wbhk.html">ServiceNow</a></td>
+      <td>User decides. Ensure that the secret entered in Cloudflare Notifications matches with ServiceNow. Refer to <a target="_blank" rel="noopener noreferrer" href="https://docs.servicenow.com/bundle/washingtondc-integrate-applications/page/administer/integrationhub/concept/rest-trigger.html">ServiceNow's documentation</a> for details.</td>
+      <td><code>https://{servicenow_instance}.com/{base_api_path}</code></td>
+   </tr>
    <!-- generic webhook    -->
    <tr>
       <td valign="top">Generic webhook</td>

@@ -24,7 +24,7 @@ If you are an Enterprise customer, contact your account team for information abo
 
 ### Data points written
 
-Every time you call [`writeDataPoint()`](/analytics/analytics-engine/get-started/#3-write-data-from-your-worker) in a Worker, this counts as one data point written.
+Every time you call [`writeDataPoint()`](/analytics/analytics-engine/get-started/#2-write-data-points-from-your-worker) in a Worker, this counts as one data point written.
 
 Each data point written costs the same amount. There is no extra cost to add dimensions or cardinality, and no additional cost for writing more data in a single data point.
 

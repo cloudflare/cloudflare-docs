@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Key Management
-weight: 1
+weight: 4
 ---
 
 # Key Management

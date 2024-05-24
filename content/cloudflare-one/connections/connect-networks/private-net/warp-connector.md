@@ -25,7 +25,7 @@ meta:
 
 {{</details>}}
 
-Cloudflare WARP connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
+Cloudflare WARP Connector is a piece of software{{<fnref num="1">}} that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
 
 - Connect two or more private networks to each other.
 - Connect IoT devices that cannot run external software, such as printers and IP phones.
