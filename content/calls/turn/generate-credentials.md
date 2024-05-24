@@ -81,7 +81,8 @@ When using short-lived TURN credentials with WebRTC, credentials can be refreshe
 ## Revoke credentials
 
 Short lived credentials can also be revoked before their TTL expires with a API call like this:
-```
+
+```sh
 curl -X POST \
 	-H "Authorization: Bearer $TURN_KEY_API_TOKEN" \
 	https://rtc.live.cloudflare.com/v1/turn/keys/$TURN_KEY_ID/credentials/username/$USERNAME/revoke
