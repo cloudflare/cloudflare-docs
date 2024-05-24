@@ -4,6 +4,12 @@ productName: Hyperdrive
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-05-24"
+    title: Increased configuration limits
+    description: |-
+      You can now create up to 25 Hyperdrive configurations per account, up from the previous maximum of 10.
+
+      Refer to [Limits](/hyperdrive/platform/limits/) to review the limits that apply to Hyperdrive.
   - publish_date: "2024-05-22"
     title: Driver performance improvements
     description: |-
