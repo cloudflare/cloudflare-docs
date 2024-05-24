@@ -156,6 +156,11 @@ in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/se
 origin web server.
 {{</Aside>}}
 
+If HTTP/2 is enabled at your origin web server, please check and make sure HTTP/2 is correctly configured.
+Cloudflare connects to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2).
+If the origin web server accepts the HTTP/2 connection but then doesn’t respect or support the protocol, an HTTP Error 520 will be returned.
+You can try to disable the [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/#disable-http2-to-origin) setting on the Cloudflare Dashboard under Speed -> Optimization -> Protocol Optimization and check your origin web server configuration further.
+
 If 520 errors continue after contacting your hosting provider or site administrator, provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/):
 
 -   Full URL(s) of the resource requested when the error occurred
