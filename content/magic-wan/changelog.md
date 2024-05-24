@@ -1,12 +1,11 @@
 ---
 pcx_content_type: navigation
 title: Changelog
+weight: 11
 meta:
     description: Review recent changes to Magic WAN.
-weight: 11
 layout: changelog
-changelog_name: Magic WAN
-changelog_product_area_name: Cloudflare One
+changelog_file_name: [magic-wan]
 outputs:
     - html
     - rss
@@ -16,4 +15,4 @@ outputs:
 
 <!-- All changelog entries live in associated /data/changelogs/{productName}.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
 
-{{<full-changelog>}}
+{{<product-changelog>}}
