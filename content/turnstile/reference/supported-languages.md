@@ -12,43 +12,44 @@ Turnstile supports `auto` (default), which uses the visitor's browser language i
 To request Turnstile support for a language not listed below or submit feedback on a translation error, you can fill out [this form](https://forms.gle/Cdz4YTRoagGpVwd7A).
 {{</Aside>}} 
 
-| Language code (4 letters) | Language code (2 letters) | Language |
+|  Language | Language code<br>(4 letters) | Language code<br>(2 letters) |
 | --- | --- | --- |
-| `ar-eg` | `ar` | Arabic (Egypt) |
-| `bg-bg` | `bg` | Bulgarian (Bulgaria) |
-| `cs-cz` | `cs` | Czech (Czech Republic) |
-| `da-dk` | `da` | Danish (Denmark) |
-| `de-de` | `de` | German (Germany) |
-| `el-gr` | `el` | Greek (Greece) |
-| `en-us` | `en` | English (United States) |
-| `es-es` | `es` | Spanish (Spain) |
-| `fa-ir` | `fa` | Farsi (Iran) |
-| `fi-fi` | `fi` | Finnish (Finland) |
-| `fr-fr` | `fr` | French (France) |
-| `he-il` | `he` | Hebrew (Israel) |
-| `hi-in` | `hi` | Hindi (India) |
-| `hr-hr` | `hr` | Croatian (Croatia) |
-| `hu-hu` | `hu` | Hungarian (Hungary) |
-| `id-id` | `id` | Indonesian (Indonesia) |
-| `it-it` | `it` | Italian (Italy) |
-| `ja-jp` | `ja` | Japanese (Japan) |
-| `ko-kr` | `ko` | Korean (Korea) |
-| `lt-lt` | `lt` | Lithuanian (Lithuania) |
-| `ms-my` | `ms` | Malay (Malaysia) |
-| `nb-no` | `nb` | Norwegian Bokmål (Norway) |
-| `nl-nl` | `nl` | Dutch (Netherlands) |
-| `pl-pl` | `pl` | Polish (Poland) |
-| `pt-br` | `pt` | Portuguese (Brazil) |
-| `ro-ro` | `ro` | Romanian (Romania) |
-| `ru-ru` | `ru` | Russian (Russia) |
-| `sk-sk` | `sk` | Slovak (Slovakia) |
-| `sl-si` | `sl` | Slovenian (Slovenia) |
-| `sr-ba` | `sr` | Serbian (Bosnia and Herzegovina) |
-| `sv-se` | `sv` | Swedish (Sweden) |
-| `th-th` | `th` | Thai (Thailand) |
-| `tlh` | -- | Klingon (Qo'noS) |
-| `tr-tr` | `tr` | Turkish (Turkey) |
-| `uk-ua` | `uk` | Ukrainian (Ukraine) |
-| `vi-vn` | `vi` | Vietnamese (Vietnam) |
-| `zh-cn` | `zh` | Chinese (Simplified, China) |
-| `zh-tw` | -- | Chinese (Traditional, Taiwan) |
+| Arabic (Egypt) | `ar-eg` | `ar` |
+| Bulgarian (Bulgaria) | `bg-bg` | `bg` |
+| Chinese (Simplified, China) | `zh-cn` | `zh` | 
+| Chinese (Traditional, Taiwan) | `zh-tw` | -- |
+| Croatian (Croatia) | `hr-hr` | `hr` |
+| Czech (Czech Republic) | `cs-cz` | `cs` |
+| Danish (Denmark) | `da-dk` | `da` |
+| Dutch (Netherlands) | `nl-nl` | `nl` |
+| English (United States) | `en-us` | `en` |
+| Farsi (Iran) | `fa-ir` | `fa` | 
+| Finnish (Finland) | `fi-fi` | `fi` |
+| French (France) | `fr-fr` | `fr` |
+| German (Germany) | `de-de` | `de` | 
+| Greek (Greece) | `el-gr` | `el` |
+| Hebrew (Israel) | `he-il` | `he` |
+| Hindi (India) | `hi-in` | `hi` |
+| Hungarian (Hungary) | `hu-hu` | `hu` |
+| Indonesian (Indonesia) | `id-id` | `id` |
+| Italian (Italy) | `it-it` | `it` |
+| Japanese (Japan) | `ja-jp` | `ja` |
+| Klingon (Qo'noS) | `tlh` | -- |
+| Korean (Korea) | `ko-kr` | `ko` |
+| Lithuanian (Lithuania) | `lt-lt` | `lt` |
+| Malay (Malaysia) | `ms-my` | `ms` |
+| Norwegian Bokmål (Norway) | `nb-no` | `nb` |
+| Polish (Poland) | `pl-pl` | `pl` |
+| Portuguese (Brazil) | `pt-br` | `pt` |
+| Romanian (Romania) | `ro-ro` | `ro` |
+| Russian (Russia) | `ru-ru` | `ru` |
+| Serbian (Bosnia and Herzegovina) | `sr-ba` | `sr` |
+| Slovak (Slovakia) | `sk-sk` | `sk` |
+| Slovenian (Slovenia) | `sl-si` | `sl` |
+| Spanish (Spain) | `es-es` | `es` |
+| Swedish (Sweden) | `sv-se` | `sv` |
+| Tagalog (Philippines) | `tl-ph` | `tl` |
+| Thai (Thailand) | `th-th` | `th` |
+| Turkish (Turkey) | `tr-tr` | `tr` |
+| Ukrainian (Ukraine) | `uk-ua` | `uk` |
+| Vietnamese (Vietnam) | `vi-vn` | `vi` |
