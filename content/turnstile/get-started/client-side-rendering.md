@@ -16,7 +16,6 @@ Refer to the [demo](https://demo.turnstile.workers.dev/) and its [source code](h
 
 The HTML is scanned for elements that have a `cf-turnstile` class name:
 
-
 <div>
 
 ```html
