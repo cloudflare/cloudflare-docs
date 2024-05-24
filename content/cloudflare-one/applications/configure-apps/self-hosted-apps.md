@@ -33,7 +33,7 @@ Next, set up a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/
 
 ## 5. Validate the Access token
 
-{{<render productFolder="access" file="_secure-tunnel-with-access.md">}}
+{{<render file="access/_secure-tunnel-with-access.md">}}
 
 Users can now connect to your self-hosted application after authenticating with Cloudflare Access.
 
