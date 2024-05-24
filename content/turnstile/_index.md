@@ -24,7 +24,7 @@ Turnstile also includes machine learning models that detect common features of e
 Turnstile [widget types](/turnstile/concepts/widget-types/) include:
 
 * A non-interactive challenge.
-* A non-intrusive interactive challenge (such as clicking a button), if the visitor is a suspected bot.
+* A non-intrusive interactive challenge (such as checking a box), if the visitor is a suspected bot.
 * An invisible challenge to the browser.
 
 <div class="medium-img">
