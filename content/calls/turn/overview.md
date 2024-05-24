@@ -1,12 +1,12 @@
 ---
 pcx_content_type: get-started
-title: TURN Service
-weight: 10
+title: Overview
+weight: 5
 ---
 
 # TURN Service
 
-Separately from the SFU, Calls also offers a managed TURN service. TURN acts as relay points for traffic between WebRTC clients like the browser and SFUs, particularly in scenarios where direct communication is obstructed by NATs or firewalls. TURN maintains an allocation of public IP addresses and ports for each session, ensuring connectivity even in restrictive network environments.
+Separately from the SFU, Calls offers a managed TURN service. TURN acts as a relay point for traffic between WebRTC clients like the browser and SFUs, particularly in scenarios where direct communication is obstructed by NATs or firewalls. TURN maintains an allocation of public IP addresses and ports for each session, ensuring connectivity even in restrictive network environments.
 
 Using Cloudflare Calls TURN service is available free of charge when used together with the Calls SFU. Otherwise, it costs $0.05/real-time GB outbound from Cloudflare to the TURN client.
 
@@ -61,59 +61,4 @@ Cloudflare Calls TURN service places limits on:
 - Packet rate outbound and inbound to the relay allocation
 - Data rate outbound and inbound to the relay allocation
 
-These limits are set quite high and suitable for high-demand applications.
-
-## Creating credentials
-
-You need to generate short-lived credentials for each TURN user. In order to create credentials, you should have a back-end service that uses your TURN Token ID and API token to generate credentials. It will need to make an API call like this:
-
-```sh
-curl -X POST \
-	-H "Authorization: Bearer $TURN_SERVICE_API_TOKEN" \
-	-H "Content-Type: application/json" -d '{"ttl": 86400}' \
-	https://rtc.live.cloudflare.com/v1/turn/keys/$TURN_SERVICE_ID/credentials/generate
-```
-
-The JSON response below can then be passed on to your front-end application:
-
-```JSON
-{
-  "iceServers": {
-    "urls": [
-      "stun:stun.cloudflare.com:3478",
-      "turn:turn.cloudflare.com:3478?transport=udp",
-      "turn:turn.cloudflare.com:3478?transport=tcp",
-      "turns:turn.cloudflare.com:5349?transport=tcp"
-    ],
-    "username": "XXXXX",
-    "credential": "YYYYY"
-  }
-}
-```
-
-Use `username` and `credential` as follows when instantiating the `RTCPeerConnection`:
-
-```js
-const myPeerConnection = new RTCPeerConnection({
-  iceServers: [
-    {
-      urls: "stun:stun.cloudflare.com:3478",
-    },
-    {
-      urls: "turn:turn.cloudflare.com:3478",
-      username: "REPLACE_WITH_USERNAME",
-      credential: "REPLACE_WITH_CREDENTIAL",
-    },
-    {
-      urls: "turns:turn.cloudflare.com:443?transport=tcp",
-      username: "REPLACE_WITH_USERNAME",
-      credential: "REPLACE_WITH_CREDENTIAL",
-    },
-    {
-      urls: "turn:turn.cloudflare.com:3478?transport=tcp",
-      username: "REPLACE_WITH_USERNAME",
-      credential: "REPLACE_WITH_CREDENTIAL",
-    },
-  ],
-});
-```
+These limits are set quite high and suitable for high-demand applications and includes burst rates. Hitting these limits will result in packet drops.
