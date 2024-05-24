@@ -42,7 +42,7 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 | CLASS | EXE  | JS   | PICT | SWF  | XLS   |
 | CSS   | FLAC | MID  | PLS  | TAR  | XLSX  |
 
-To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) to create a rule to cache everything.
+To cache additional content, refer to [Customize Caching with Cloudflare Rules](/cache/troubleshooting/customize-caching/) and [Cache Rules](/cache/how-to/cache-rules/) to create a rule to cache everything.
 
 ## Customization options and limits
 
