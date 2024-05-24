@@ -36,6 +36,10 @@ Once your SSO domain is approved, a new **SSO App** application will appear unde
 
 ## 3. Enable dashboard SSO
 
+{{<Aside type="note">}}
+We recommend noting down your [Global API key](/fundamentals/api/get-started/keys/) in case you need to [disable SSO](#option-2-disable-dashboard-sso) later.
+{{</Aside>}}
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 2. In the **Cloudflare dashboard SSO** card, set your email domain to **Enabled**. This action can only be performed by Super Administrators.
 3. Do not log out or close your browser window. Instead, open a different browser or an incognito window.
@@ -62,55 +66,127 @@ This section describes how to restore access to the Cloudflare dashboard in case
 
 If there is an issue with your SSO IdP provider, you can add an alternate IdP using the API. The following example shows how to add [Cloudflare One-time PIN](/cloudflare-one/identity/one-time-pin/) as a login method:
 
-1. Enable one-time PIN :
+1. [Add](/api/operations/access-identity-providers-add-an-access-identity-provider) one-time PIN login:
 
-```sh
+```bash
+---
+header: cURL command
+---
+curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "type":"onetimepin",
+  "config":{}
+}'
 ```
 
-2. Get the `id` of the **SSO App** Access application:
+2. [Get](/api/operations/access-applications-list-access-applications) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
 
-```sh
-
+```bash
+---
+header: cURL command
+---
+curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+| jq '.result[] | select(.type == "dash_sso")'
 ```
 
-3. Configure **SSO App** to accept all identity providers:
+```json
+---
+header: Response
+---
+{
+  "id": "0b49c957-1054-41b6-95b1-3ebae66c5b02",
+  "uid": "0b49c957-1054-41b6-95b1-3ebae66c5b02",
+  "type": "dash_sso",
+  "name": "SSO App"
+  ...
+}
+```
 
-```sh
+3. Using the `id` obtained above, [update](/api/operations/access-applications-update-an-access-application) **SSO App** to accept all identity providers:
 
+```bash
+---
+header: cURL command
+---
+curl --request PUT 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/0b49c957-1054-41b6-95b1-3ebae66c5b02' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "id": "0b49c957-1054-41b6-95b1-3ebae66c5b02",
+  ...
+  "allowed_idps": [],
+  ...
+}'
 ```
 
 Users will now have the option to log in using a one-time PIN.
 
 ### Option 2: Disable dashboard SSO
 
-The following API calls will disable SSO enforcement for an account. You must be a Super Administrator to make this change.
+The following API calls will disable SSO enforcement for an account. This action can only be performed by Super Administrators.
 
 1. Get your SSO `connector_id`:
 
 ```bash
+---
+header: cURL command
+---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors \
 --header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "X-Auth-Key: <API_KEY>" \
+```
 
-"result": [
+```json
+---
+header: Response
+---
+{
+  "result": [
     {
       "connector_id": "2828",
       "connector_tag": "d616ac82cc7f87153112d75a711c5c3c",
-      "email_domain": "domain.com",
+      "email_domain": "yourdomain.com",
       "connector_status": "V",
-     } ]
+      ...
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 
 2. Disable the SSO connector:
 
 ```bash
-curl -X 'PATCH' 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/sso/v2/connectors/2828' \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
-     -H "Content-Type: application/json" \
-     --data-raw '{"sso_connector_status":"DIS"}'
-
-"result":{"id":"2828"},"success":true,"errors":[],"messages":[]}
+---
+header: cURL command
+---
+curl --request 'PATCH' 'https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors/2828' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "sso_connector_status" : "DIS"
+}'
 ```
 
-Users can now log in using their Cloudflare account email and password.
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "2828"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Users can now log in using their Cloudflare account email and password. To re-enable SSO, send a `PATCH` request with `"sso_connector_status" : "V"`.
