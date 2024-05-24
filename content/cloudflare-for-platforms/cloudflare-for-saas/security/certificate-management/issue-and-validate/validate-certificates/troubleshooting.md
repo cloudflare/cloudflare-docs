@@ -28,6 +28,9 @@ example.com. IN CAA 0 issue "pki.goog"
 
 While it is possible for `CAA` records to be set on the subdomain they wish to use with your service, it is unlikely. You would also have to remove this `CAA` record.
 
+In some case the validation may be prevented because your hostname points to a CNAME target where CAA records are defined.
+In this case you would need to either select a Certificate Authority which CAA records are present at the target, or review the configuration with the service provider that owns the target.
+
 ---
 
 ## Time outs
