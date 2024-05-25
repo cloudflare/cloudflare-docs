@@ -52,9 +52,9 @@ Jurisdictional buckets can only be accessed via the corresponding jurisdictional
 | Object Read & Write | Allows the ability to read, write, and list objects in specific buckets. |
 | Object Read only | Allows the ability to read and list objects in specific buckets. |
 
-# Temporary Access Credentials
+## Temporary access credentials
 
-If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](https://developers.cloudflare.com/api/operations/r2-create-temp-access-credentials) in the api. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the api result for an S3-compatible request by setting the credential variables like so:
+If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/operations/r2-create-temp-access-credentials) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:
 
 ```
 AWS_ACCESS_KEY_ID = <accessKeyId>
