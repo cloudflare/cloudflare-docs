@@ -51,12 +51,12 @@ Caching the build output from frameworks can speed up subsequent build times. Th
 
 | Framework  | Directories cached                            |
 | ---------- | --------------------------------------------- |
+| Astro      | `node_modules/.astro`                         |
+| Docusaurus | `node_modules/.cache`, `.docusaurus`, `build` |
+| Eleventy   | `.cache`                                      |
 | Gatsby     | `.cache`, `public`                            |
 | Next.js    | `.next/cache`                                 |
-| Astro      | `node_modules/.astro`                         |
 | Nuxt       | `node_modules/.cache/nuxt`                    |
-| Eleventy   | `.cache`                                      |
-| Docusaurus | `node_modules/.cache`, `.docusaurus`, `build` |
 
 ## Limits
 
