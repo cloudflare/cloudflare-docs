@@ -8,7 +8,7 @@ weight: 3
 
 {{<Aside type="warning">}}
 
-**Cloudflare Apps are deprecated and will be discontinued August 31, 2024.** 
+**Cloudflare Apps is deprecated and will be discontinued August 31, 2024.** 
 
 After August 31, 2024, we will be automatically uninstalling installed apps from your Cloudflare zone(s). This will not impact Cloudflare's first-party services running on your zones.
 
