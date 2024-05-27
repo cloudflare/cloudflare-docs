@@ -19,25 +19,25 @@ Run the following command in your terminal to create a new VitePress project:
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npx vitepress init
+$ npx vitepress@latest init
 ```
 {{</tab>}}
 {{<tab label="pnpm">}}
 
 ```sh
-$ pnpm vitepress init
+$ pnpm dlx vitepress@latest init
 ```
 {{</tab>}}
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn vitepress init
+$ yarn dlx vitepress@latest init
 ```
 {{</tab>}}
 {{<tab label="bun">}}
 
 ```sh
-$ bun vitepress init
+$ bunx vitepress@latest init
 ```
 {{</tab>}}
 {{</tabs>}}
