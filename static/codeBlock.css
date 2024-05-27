@@ -514,7 +514,8 @@
 }
 
 [language="sh"] .CodeBlock--token-plain,
-[language="sh"] .CodeBlock--token-unselectable, 
+[language="sh"] .CodeBlock--token-unselectable,
+[language="powershell"] .CodeBlock--token-plain,
 [language="powershell"] .CodeBlock--token-unselectable {
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -526,9 +527,12 @@
 
 [language="sh"]:hover .CodeBlock--token-plain,
 [language="sh"]:hover .CodeBlock--token-unselectable,
-[language="powershell"]:hover .CodeBlock--token-unselectable,
 [language="sh"][has-selection-contained-within] .CodeBlock--token-plain,
-[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable {
+[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable,
+[language="powershell"]:hover .CodeBlock--token-plain,
+[language="powershell"]:hover .CodeBlock--token-unselectable,
+[language="powershell"][has-selection-contained-within] .CodeBlock--token-plain,
+[language="powershell"][has-selection-contained-within] .CodeBlock--token-unselectable {
   opacity: 0.25;
 }
 

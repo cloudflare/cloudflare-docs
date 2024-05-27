@@ -57,6 +57,8 @@ Prism.languages.sh = {
   },
 };
 
+const originalGrammar = Prism.languages.powershell;
+
 // Custom `powershell` grammar
 Prism.languages.powershell = {
   comment: {
@@ -66,17 +68,30 @@ Prism.languages.powershell = {
   },
 
   directory: {
-    pattern: /^PS (?=\w:[\w\\]+> )/m,
+    pattern: /^PS (?=\w:[\w\\-]+> )/m,
     alias: "unselectable",
   },
 
   command: {
-    pattern: /\w:[\w\\]+> [^\r\n]+/,
+    pattern: /\w:[\w\\-]+> [^\r\n]+/,
     inside: {
-      prompt: {
-        pattern: /^\w:[\w\\]+> /,
+      'prompt': {
+        pattern: /^\w:[\w\\-]+> /,
         alias: "unselectable",
       },
+      'comment': originalGrammar.comment,
+      'string': originalGrammar.string,
+      'boolean': originalGrammar.boolean,
+      'variable': /\$\w+\b/,
+      'function': originalGrammar.function,
+      'keyword': originalGrammar.keyword,
+      'operator': [
+        {
+          pattern: /(^|\W)(?:!|-(?:b?(?:and|x?or)|as|(?:Not)?(?:Contains|In|Like|Match)|eq|ge|gt|is(?:Not)?|Join|le|lt|ne|not|Replace|sh[lr])\b|[*%]=?)/i,
+          lookbehind: true
+        }
+      ],
+      'punctuation': originalGrammar.punctuation,
     },
   },
 };
