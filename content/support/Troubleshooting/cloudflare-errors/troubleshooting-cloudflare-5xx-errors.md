@@ -237,7 +237,9 @@ ___
 
 ## Error 524: a timeout occurred
 
-Error 524 indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second connection timed out. This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
+Error 524 usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second connection timed out. This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
+
+Error 524 can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 second [Proxy Write Timeout](/fundamentals/reference/connection-limits/).
 
 {{<Aside type="note">}}
 A 524 occurs if the origin web server
@@ -265,6 +267,11 @@ or
 {{</Aside>}}
 
 -   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
+
+{{<Aside type="note">}}
+If the timeouts are on write requests, the [Proxy Write Timeout](/fundamentals/reference/connection-limits/) of 30 seconds cannot be adjusted.
+{{</Aside>}}
+
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
 
 {{<Aside type="note">}}
