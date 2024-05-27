@@ -29,7 +29,7 @@ Pages will attach this `Link: </styles.css>; rel=preload; as=stylesheet` header.
 
 ### 2. Automatic `Link` header generation
 
-In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with any of the following attributes:
+In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with all of the following attributes:
 
 - `href`
 - `as`
