@@ -13,6 +13,8 @@ In this guide, you will create a new VitePress project and deploy it using Cloud
 
 VitePress ships with a command line setup wizard that will help you scaffold a basic project.
 
+Run the following command in your terminal to create a new VitePress project:
+
 {{<tabs labels="npm | pnpm | yarn | bun">}}
 {{<tab label="npm" default="true">}}
 
@@ -40,7 +42,8 @@ $ bun vitepress init
 {{</tab>}}
 {{</tabs>}}
 
-## Install VitePress
+Amongst other questions, the setup wizard will ask you in which directory to save your new project, make sure
+to be in the project's directory and then install the `vitepress` dependency with the following command:
 
 {{<tabs labels="npm | pnpm | yarn | bun">}}
 {{<tab label="npm" default="true">}}
@@ -74,6 +77,17 @@ $ bun add -D vitepress
 If you encounter errors, make sure your local machine meets the [Prerequisites for VitePress](https://vitepress.dev/guide/getting-started#prerequisites).
 
 {{</Aside>}}
+
+Finally create a `.gitignore` file with the following content:
+```
+---
+filename: .gitignore
+---
+node_modules
+.vitepress
+```
+
+this makes sure that unnecessary files are not going to be included in the project's git repository (which we will set up next).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
