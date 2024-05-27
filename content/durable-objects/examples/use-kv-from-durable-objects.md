@@ -73,11 +73,10 @@ export default {
 
 export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
-      this.state = state;
-      // Ensure you pass your bindings and environmental variables into
-      // each Durable Object when it is initialized
-      this.env = env;
-    }
+    this.state = state;
+    // Ensure you pass your bindings and environmental variables into
+    // each Durable Object when it is initialized
+    this.env = env;
   }
 
   async fetch(request: Request) {
@@ -90,6 +89,6 @@ export class YourDurableObject implements DurableObject {
 
     return Response.json(val)
   }
+}
 ```
-
 
