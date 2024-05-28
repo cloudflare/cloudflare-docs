@@ -135,7 +135,7 @@ async function handlePost(request) {
 
 | POST Parameter | Required/Optional | Description |
 | --- | --- | --- |
-| `secret` | Required | The widget’s secret key. The secret key can be found under widget settings in Cloudflare dashboard under Turnstile. |
+| `secret` | Required | The widget's secret key. The secret key can be found under widget settings in the Cloudflare dashboard under Turnstile. |
 | `response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The visitor's IP address. |
 | `idempotency_key` | Optional | The UUID to be associated with the response. |
