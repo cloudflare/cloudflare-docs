@@ -73,7 +73,7 @@ Next, test with a browser that you can connect to a service on the WAN by openin
 
 ## Double encapsulation
 
-When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each onramp method provides full Zero Trust protection.
+When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
 
 Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
 
