@@ -44,7 +44,7 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
-| -------------------- | -------------------------- | ------------------------ |  ----------------------- | 
+| -------------------- | -------------------------- | ------------------------ |  ----------------------- |
 | Postgres.js (**recommended**)        | https://github.com/porsager/postgres | `postgres@3.4.4` | Supported in both Workers & Pages. |
 | node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages.  |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
@@ -110,9 +110,9 @@ export interface Env {
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 
-    // Important: Set `prepare: false` as Postgres.js named prepared statements
-    // are not compatible with connection pooling systems like Hyperdrive
-    const sql = postgres(env.HYPERDRIVE.connectionString, { prepare: false })
+    // NOTE: if `prepare: false` is passed when connecting, performance will
+    // be slower but still correctly supported.
+    const sql = postgres(env.HYPERDRIVE.connectionString)
 
 		try {
 			// A very simple test query
@@ -169,10 +169,10 @@ export interface Env {
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 
-    // Important: Set `prepare: false` as Postgres.js named prepared statements
-    // are not compatible with connection pooling systems like Hyperdrive
-    const sql = postgres(env.HYPERDRIVE.connectionString, { prepare: false })
- 
+    // NOTE: if `prepare: false` is passed when connecting, performance will
+    // be slower but still correctly supported.
+    const sql = postgres(env.HYPERDRIVE.connectionString)
+
 		try {
 			// Connect to your database
 			await client.connect();
@@ -199,7 +199,6 @@ Hyperdrive's connection pooling mode is equivalent to the `transaction` mode of 
 
 Hyperdrive does not support the following PostgreSQL features:
 
-- Named prepared statements ([PostgreSQL docs](https://www.postgresql.org/docs/current/sql-prepare.html)). These are distinct from the typical and common _unnamed_ prepared statements used to safely provide values to a query.
 - `SET` statements.
 - Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
 - `LISTEN` and `NOTIFY`.
