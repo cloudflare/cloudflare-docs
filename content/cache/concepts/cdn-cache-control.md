@@ -25,7 +25,7 @@ Additionally, surrogates will not honor `Cache-Control` headers in the response 
 
 ### Edge Cache TTL cache rule
 
-The [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the amount of time an asset is cached on the edge (Cloudflare data centers). This cache rule overrides directives in `Cloudflare-CDN-Cache-Control/CDN-Cache-Control` which manage how long an asset is cached on the edge. You can set this rule in the dashboard in **Cache** > **Cache Rules**.
+The [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the amount of time an asset is cached on the edge (Cloudflare data centers). This cache rule overrides directives in `Cloudflare-CDN-Cache-Control/CDN-Cache-Control` which manage how long an asset is cached on the edge. You can create this rule in the dashboard in **Cache** > **Cache Rules**.
 
 ### Browser Cache TTL cache rule
 

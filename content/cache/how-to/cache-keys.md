@@ -41,8 +41,8 @@ A [Cache Key](/cache/how-to/cache-keys/) is an identifier that Cloudflare uses f
 3. Select **Create rule**.
 4. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
 5. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
-6. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting
-7. You can also select settings for **Headers**, **Cookie**, **Host** and **User**.
+6. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting.
+7. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Cache Key Template
