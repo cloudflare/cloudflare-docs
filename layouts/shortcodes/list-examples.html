@@ -1,6 +1,8 @@
 {{- $filters := split (.Get "filters") "," -}}
 {{- $examplePages := slice -}}
 
+{{- $showCount := default false (.Get "showCount") -}}
+
 {{- $target := printf "%sexamples/" .Page.FirstSection.RelPermalink -}}
 {{- $pages := (where .Site.Pages "Section" .Page.Section) -}}
 
@@ -47,8 +49,10 @@
 </div>
 {{ end }}
 
-<p id="totalExamples">{{$examplesLength}} examples</p>
-
+{{- if $showCount -}}
+  <p id="totalExamples">{{$examplesLength}} examples</p>
+{{- else -}}
+{{ end }}
 <!-- Add list of examples, with optional filterable properties -->
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
   {{- range $index, $page := $examplePages -}}
