@@ -2,7 +2,7 @@
 pcx_content_type: use_case
 layout: home
 meta:
-  title: Build AI Applications | Use cases
+  title: Build AI Applications · Use cases
 ---
 
 # Build AI Applications
