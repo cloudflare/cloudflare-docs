@@ -34,4 +34,4 @@ To prevent attackers from successfully using a permutation of `/wp-admin/` such 
 
 ## Other resources
 
-* [Use case: Allow traffic from IP addresses in allowlist only](/waf/custom-rules/use-cases/allow-traffic-from-specific-ips/)
+* [Use case: Allow traffic from IP addresses in allowlist only](/waf/custom-rules/use-cases/allow-traffic-from-ips-in-allowlist/)
