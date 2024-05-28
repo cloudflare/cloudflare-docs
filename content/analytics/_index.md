@@ -16,7 +16,7 @@ Cloudflare visualizes the metadata collected by our products in the Cloudflare d
 ## Features
 
 {{<feature header="Workers Analytics Engine" href="/analytics/analytics-engine/">}}
-Provides analytics about anything using Cloudflare Workers.
+Provides a queryable analytics engine for custom events emitted from Cloudflare Workers.
 {{</feature>}}
 
 {{<feature header="Cloudflare Web Analytics" href="/analytics/web-analytics/">}}
