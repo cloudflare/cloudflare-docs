@@ -27,7 +27,7 @@ To configure DHCP relay:
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a [`PUT` request](/api/operations/magic-wan-connectors-lans-update-lan) to update the LAN where you want to enable DHCP relay:
+Create a [`PUT` request](/api/operations/magic-site-lans-update-lan) to update the LAN where you want to enable DHCP relay:
 
 Example:
 
