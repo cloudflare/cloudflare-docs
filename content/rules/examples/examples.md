@@ -1,139 +1,32 @@
 ---
 pcx_content_type: example
-title: Rewrite path of welcome page for visitors in specific countries
-
+product: Rules
+title: URL normalization
 ---
 
-## Rewrite path of welcome page for visitors in specific countries
+# URL normalization
 
-To have a welcome page in two languages, create two rewrite URL rules with a static rewrite of the path component:
+The following table shows how different [URL normalization settings](/rules/normalization/settings/) affect request URLs before they pass to other Cloudflare features and to the origin server:
 
-**Rewrite URL rule #1**
+{{<table-wrap style="font-size:89%">}}
 
-{{<example>}}
+| Incoming URL | Normalization type | Normalize incoming URLs | Normalize URLs to origin | URL at Cloudflare's network | URL passed to origin server |
+| ---|---|---|---|---|--- |
+| `www.example.com/hello`      | (any)        | _Off_ | _Off_ | `www.example.com/hello`        | `www.example.com/hello` |
+| `www.example.com/hello`      | (any)        | _On_  | _Off_ | `www.example.com/hello`        | `www.example.com/hello` |
+| `www.example.com/hello`      | (any)        | _On_  | _On_  | `www.example.com/hello`        | `www.example.com/hello` |
+| `example.com/%68ello`        | (any)        | _Off_ | _Off_ | `example.com/%68ello`          | `example.com/%68ello` |
+| `example.com/%68ello`        | (any)        | _On_  | _Off_ | `example.com/hello`            | `example.com/%68ello` |
+| `example.com/%68ello`        | (any)        | _On_  | _On_  | `example.com/hello`            | `example.com/hello` |
+| `example.com/%68ello//pa\th` | _RFC-3986_   | _Off_ | _Off_ | `example.com/%68ello//pa\th`   | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _RFC-3986_   | _On_  | _Off_ | `example.com/hello//pa%5Cth`   | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _RFC-3986_   | _On_  | _On_  | `example.com/hello//pa%5Cth`   | `example.com/hello//pa%5Cth` |
+| `example.com/%68ello//pa\th` | _Cloudflare_ | _Off_ | _Off_ | `example.com/%68ello//pa\th`   | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_ | _On_  | _Off_ | `example.com/hello/pa/th`      | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_ | _On_  | _On_  | `example.com/hello/pa/th`      | `example.com/hello/pa/th` |
+| `example.com/hello//../path` | _RFC-3986_   | _On_  | _On_  | `example.com/hello/path`       | `example.com/hello/path` |
+| `example.com/hello//../path` | _Cloudflare_ | _On_  | _On_  | `example.com/path`             | `example.com/path` |
+| `example.com/hello/\../path` | _RFC-3986_   | _On_  | _On_  | `example.com/hello/%5C../path` | `example.com/hello/%5C../path` |
+| `example.com/hello/\../path` | _Cloudflare_ | _On_  | _On_  | `example.com/path`             | `example.com/path` |
 
-Text in **Expression Editor**:
-
-```txt
-http.request.uri.path == "/welcome.html" && ip.geoip.country == "GB"
-```
-
-Text after **Path** > **Rewrite to...** > _Static_:
-
-```txt
-/welcome-gb.html
-```
-
-{{</example>}}
-
-**Rewrite URL rule #2**
-
-{{<example>}}
-
-Text in **Expression Editor**:
-
-```txt
-http.request.uri.path == "/welcome.html" && ip.geoip.country == "PT"
-```
-
-Text after **Path** > **Rewrite to...** > _Static_:
-
-```txt
-/welcome-pt.html
-```
-
-{{</example>}}
-
-
-
-## Rewrite path of archived blog posts
-
-To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new rewrite URL rule and define a dynamic URL path rewrite using an expression:
-
-{{<example>}}
-
-Text in **Expression Editor**:
-
-```txt
-starts_with(http.request.uri.path, "/news/2012/")
-```
-
-Text after **Path** > **Rewrite to...** > _Dynamic_:
-
-```txt
-concat("/archive", http.request.uri.path)
-```
-
-{{</example>}}
-
-The filter uses the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with) function all paths starting with `/news/2012/`. The dynamic path rewrite uses the [`concat()`](/ruleset-engine/rules-language/functions/#function-concat) function to concatenate a prefix to the original URL path of the HTTP request.
-
-## Rewrite path of moved section of a website
-
-To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>` you must modify the first component of the path (`/blog/`). Create a rewrite URL rule and use the [`regex_replace()`](/ruleset-engine/rules-language/functions/#function-regex_replace) function for this purpose:
-
-{{<example>}}
-
-Text in **Expression Editor**:
-
-```txt
-starts_with(http.request.uri.path, "/blog/")
-```
-
-Text after **Path** > **Rewrite to...** > _Dynamic_:
-
-```txt
-regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
-```
-
-{{</example>}}
-
-The `regex_replace()` function matches the path component on a regular expression (`^/blog/`) and then provides a replacement for that match (`/marketing/`).
-
-## Rewrite path with several URL segments to a different URL segment
-
-To rewrite paths like `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` — where `<FOLDER1>`, `<FOLDER2>`, and `<FILENAME>` can vary — to `/img/<FILENAME>`, create a rewrite URL rule with a dynamic rewrite of the path component:
-
-{{<example>}}
-
-Text in **Expression Editor**:
-
-```txt
-http.request.uri.path ~ "^/images/[^/]+/[^/]+/[^/]+$"
-```
-
-Text after **Path** > **Rewrite to...** > _Dynamic_:
-
-```txt
-regex_replace(http.request.uri.path, "^/images/[^/]+/[^/]+/(.+)$", "/img/${1}")
-```
-
-{{</example>}}
-
-For example, this rule would rewrite the `/images/nature/animals/tiger.png` path to `/img/tiger.png`.
-
-## Rewrite blog archive URLs to support a new URL format
-
-To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`, create the following rewrite URL rule:
-
-{{<example>}}
-
-Text in **Expression Editor**:
-
-```txt
-http.request.uri.path ~ "^/posts/[0-9]+-[0-9]+-[0-9]+-.*"
-```
-
-Text after **Path** > **Rewrite to...** > _Dynamic_:
-
-```txt
-regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")
-```
-
-{{</example>}}
-
-The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<NUMBER>}` in the replacement string, where `<NUMBER>` is the number of the capture group.
-
-## Serve images from custom paths
-
-When using Cloudflare Image Optimization, you can use URL rewrites to serve images from a custom path. For more information, refer to [Serve images from custom domains and paths](/images/manage-images/serve-images/serve-from-custom-domains/).
+{{</table-wrap>}}
