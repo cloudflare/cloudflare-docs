@@ -5,6 +5,8 @@ pcx_content_type: tutorial
 title: Create a fine-tuned OpenAI model with R2
 updated: 2023-09-18
 weight: 1
+tags:
+  - AI
 ---
 
 # Create a fine-tuned OpenAI model with R2

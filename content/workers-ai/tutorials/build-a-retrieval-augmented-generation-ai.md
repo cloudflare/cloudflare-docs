@@ -366,6 +366,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
+- Explore the reference diagram for a [Retrieval Augmented Generation (RAG) Architecture](/reference-architecture/diagrams/ai/ai-rag/).
 - Review Cloudflare's [AI documentation](/workers-ai).
 - Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 - Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.

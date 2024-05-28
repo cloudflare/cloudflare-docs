@@ -4,6 +4,8 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Composable AI architecture"
+tags:
+  - AI
 ---
 
 # Composable AI architecture

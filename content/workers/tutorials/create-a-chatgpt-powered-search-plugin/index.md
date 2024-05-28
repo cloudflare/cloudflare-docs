@@ -5,6 +5,8 @@ pcx_content_type: tutorial
 title: Build a ChatGPT search plugin with Notion and Pinecone
 updated: 2023-08-14
 weight: 1
+tags:
+  - AI
 ---
 
 # Build a ChatGPT search plugin with Notion and Pinecone

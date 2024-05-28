@@ -4,6 +4,8 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Retrieval Augmented Generation (RAG)"
+tags:
+  - AI
 ---
 
 # Retrieval Augmented Generation (RAG) Architecture
