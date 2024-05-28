@@ -119,7 +119,7 @@ Delaying messages allows you to defer tasks until later, and/or respond to backp
 
 {{<Aside type="note">}}
 
-Configuring delivery and retry delays via the `wrangler` CLI or when [/queues/configuration/local-development/](developing locally) requires `wrangler` version `3.38.0` or greater. Use `npx wrangler@latest` to always use the latest version of `wrangler`.
+Configuring delivery and retry delays via the `wrangler` CLI or when [developing locally](/queues/configuration/local-development/) requires `wrangler` version `3.38.0` or greater. Use `npx wrangler@latest` to always use the latest version of `wrangler`.
 
 {{</Aside>}}
 
