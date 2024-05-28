@@ -4018,3 +4018,14 @@ td>code,
   background-color: var(--blue-8);
   color: var(--blue-0);
 }
+
+@media (min-width:1200px) {
+  .HeroImage {
+      background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
+      background-repeat: no-repeat;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 0 0px .5px white inset;
+      margin-top: 3em;
+  }
+}

@@ -9,6 +9,8 @@ meta:
 
 Build and deploy ambitious AI applications to Cloudflare's global network.
 
+![test](/images/use-cases/ai-header.png)
+
 ## Reference architectures
 
 Diagrams, design patterns, and detailed best practices to help you generate solutions with Cloudflare products.
