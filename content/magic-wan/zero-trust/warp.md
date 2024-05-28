@@ -15,7 +15,7 @@ Before you can begin using WARP as an on-ramp to Magic WAN, you must set up your
 
 ## IP ranges
 
-When connecting a WARP device to Magic WAN, you will have IP addresses from WARP virtual IP address, in the `100.96.0.0/12` range.
+When connecting a WARP device to Magic WAN, you will have virtual IP addresses from WARP, in the `100.96.0.0/12` range.
 
 ---
 
@@ -75,6 +75,6 @@ Next, test with a browser that you can connect to a service on the WAN by openin
 
 When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each onramp method provides full Zero Trust protection.
 
-Since WARP traffic is already protected on its own, Cloudflare recommends that your Magic WAN set up should exclude WARP traffic, and send it to the Internet through regular connections.
+Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
 
 To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) and [WARP UDP ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-udp-ports).
