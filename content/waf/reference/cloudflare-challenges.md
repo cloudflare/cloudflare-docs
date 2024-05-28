@@ -76,8 +76,6 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 If you have browser extensions, they might lead to unpassable challenge loops. To fix, disable your extensions and reload the page.
 
-This behavior commonly occurs because an extension modifies your browser's default `User-Agent` value.
-
 ### Mobile device emulation
 
 Challenges are not supported when device emulation is enabled on a browser, for example, using the browser's developer tools.
@@ -190,6 +188,6 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 Cloudflare challenges cannot support the following:
 
 * Random canvas fingerprinting.
-* [Browser extensions](#browser-extensions) that modify your browser’s default `User-Agent` value.
+* [Browser extensions](#browser-extensions) that modify the browser's `User-Agent` value or Web APIs like `Canvas` and `WebGL`.
 * Implementations where a domain serves a challenge page originally requested for another domain.
 * Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to. For example, if you receive the challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a challenge loop.
