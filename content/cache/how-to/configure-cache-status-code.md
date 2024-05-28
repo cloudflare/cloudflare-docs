@@ -42,7 +42,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 --data '{
   "rules": [
     {
-      "expression": "(http.host eq "www.example.com")",
+      "expression": "(http.host eq \"www.example.com\")",
       "description": "set cache TTL by response status",
       "action": "set_cache_settings",
       "action_parameters": {
@@ -71,7 +71,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
         ],
         "mode": "respect_origin"
     }
-}
+}'
 ```
 
 ### Syntax

@@ -9,21 +9,21 @@ Some possible combinations of origin web server settings and Cloudflare [Cache R
 
 ## Create a directory for static content at your origin web server
 
-For example, create a `/static/` subdirectory at your origin web server and a Cache Everything Cache Rule matching:
+For example, create a `/static/` subdirectory at your origin web server and a Cache Everything Cache Rule matching the following expression:
 
 - Using the Expression Builder: `Hostname contains "example.com" AND URI Path starts with "/static"`
 - Using the Expression Editor: `(http.host contains "example.com" and starts_with(http.request.uri.path, "/static"))`
 
 ## Append a unique file extension to static pages 
 
-For example, create a `.shtml` file extension for resources at your origin web server and a Cache Everything Cache Rule matching:
+For example, create a `.shtml` file extension for resources at your origin web server and a Cache Everything Cache Rule matching the following expression:
 
 - Using the Expression Builder: `Hostname contains "example.com" AND URI Path ends with ".shtml"`
 - Using the Expression Editor: `(http.host contains "example.com" and ends_with(http.request.uri.path, ".shtml"))`
 
 ## Add a query string to a resource’s URL to mark the content as static
 
-For example, add a `static=true` query string for resources at your origin web server and a Cache Everything Cache Rule matching:
+For example, add a `static=true` query string for resources at your origin web server and a Cache Everything Cache Rule matching the following expression:
 
 - Using the Expression Builder: `Hostname contains "example.com" AND URI Query String contains "static=true"`
 - Using the Expression Editor: `(http.host contains "example.com" and http.request.uri.query contains "static=true")`
