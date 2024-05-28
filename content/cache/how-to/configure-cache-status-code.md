@@ -31,11 +31,21 @@ To set cache TTL by response status, [create a Cache Rule](/cache/how-to/cache-r
 
 ## Set cache TTL by response status via the Cloudflare API
 
-```json
+```bash
 ---
-header: API configuration example
+header: Request
 ---
-"action_parameters": {
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "expression": "(http.host eq "www.example.com")",
+      "description": "set cache TTL by response status",
+      "action": "set_cache_settings",
+      "action_parameters": {
     "cache": true,
     "edge_ttl": {
         "status_code_ttl": [
@@ -68,9 +78,9 @@ header: API configuration example
 
 Provide a JSON object containing status codes and their corresponding TTLs. Each key-value pair in the cache TTL by status cache rule has the following syntax:
 
-*   `status_code`: A string such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-999.
-*   `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
-*   `value`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store` (equivalent to `-1`), `no-cache` (equivalent to `0`).
+*   `status_code`: An integer value such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-999.
+*   `status_code_range`: Integer values for `from` and `to`. `status_code_range` matches any status code from the origin web server within the specified range.
+*   `value`: An integer value that defines the duration an asset is valid in seconds or one of the following strings: `no-store` (equivalent to `-1`), `no-cache` (equivalent to `0`).
 
 ## Set cache TTL by response status via a Cloudflare Worker
 
