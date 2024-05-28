@@ -36,7 +36,7 @@ To set cache TTL by response status, [create a Cache Rule](/cache/how-to/cache-r
 header: Request
 ---
 curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
@@ -46,31 +46,34 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
       "description": "set cache TTL by response status",
       "action": "set_cache_settings",
       "action_parameters": {
-    "cache": true,
-    "edge_ttl": {
-        "status_code_ttl": [
+        "cache": true,
+        "edge_ttl": {
+          "status_code_ttl": [
             {
-                "status_code_range": {
-                    "to": 299
-                },
-                "value": 86400
+              "status_code_range": {
+                "to": 299
+              },
+              "value": 86400
             },
             {
-                "status_code_range": {
-                    "from": 300,
-                    "to": 499
-                },
-                "value": 0  // no-cache
+              "status_code_range": {
+                "from": 300,
+                "to": 499
+              },
+              "value": 0  // no-cache
             },
             {
-                "status_code_range": {
-                    "from": 500
-                },
-                "value": -1  // no-store
+              "status_code_range": {
+                "from": 500
+              },
+              "value": -1  // no-store
             }
-        ],
-        "mode": "respect_origin"
+          ],
+          "mode": "respect_origin"
+        }
+      }
     }
+  ]
 }'
 ```
 
