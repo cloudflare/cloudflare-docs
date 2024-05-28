@@ -3462,19 +3462,13 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown--table-wrap table {
-  min-width: calc(
-    var(--docs-body-width) - var(--docs-content-gap) * 2 -
-      var(--table-border-width) * 2
-  );
+  min-width: 100%;
   margin: 0;
 }
 
 @media (max-width: 768px) {
   .DocsMarkdown--table-wrap table {
-    min-width: calc(
-      100vw - var(--docs-content-horizontal-padding) * 2 -
-        var(--table-border-width) * 2
-    );
+    min-width: 100%;
   }
 }
 
