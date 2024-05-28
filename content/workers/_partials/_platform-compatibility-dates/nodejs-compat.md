@@ -10,4 +10,4 @@ enable_flag: "nodejs_compat"
 disable_flag: "no_nodejs_compat"
 ---
 
-Enables the full set of available Node.js APIs in the Workers Runtime.
+Enables the full set of [available Node.js APIs](/workers/runtime-apis/nodejs/) in the Workers Runtime.
