@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+product: Rules
 title: Rewrite URL query string of blog visitors
 ---
 
