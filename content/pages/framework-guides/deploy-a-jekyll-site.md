@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Jekyll site
+title: Jekyll
 ---
 
-# Deploy a Jekyll site
+# Jekyll
 
 [Jekyll](https://jekyllrb.com/) is an open-source framework for creating websites, based around Markdown with Liquid templates. In this guide, you will create a new Jekyll application and deploy it using Cloudflare Pages. You use the `jekyll` CLI to create a new Jekyll site.
 

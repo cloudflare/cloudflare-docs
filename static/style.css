@@ -3446,8 +3446,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown--table-wrap {
-  --table-border-width: 1px;
-  border: var(--table-border-width) solid rgba(var(--color-rgb), 0.15);
+  border: 1px solid rgba(var(--color-rgb), 0.15);
   padding: 0.25em 0;
   border-radius: 0.3125em;
   overflow-x: auto;
@@ -3463,40 +3462,25 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown--table-wrap table {
-  min-width: calc(
-    var(--docs-body-width) - var(--docs-content-gap) * 2 -
-      var(--table-border-width) * 2
-  );
+  min-width: 100%;
   margin: 0;
 }
 
 @media (max-width: 768px) {
   .DocsMarkdown--table-wrap table {
-    min-width: calc(
-      100vw - var(--docs-content-horizontal-padding) * 2 -
-        var(--table-border-width) * 2
-    );
+    min-width: 100%;
   }
 }
 
 .DocsMarkdown--table-wrap table {
-  word-break: normal;
+  word-break: break-word;
 }
 
-/* @media (hover: hover) {
-  .DocsMarkdown--table-wrap:hover {
-    width: calc(100% + var(--docs-body-sidebar-width));
-  }
-  .DocsMarkdown--table-wrap:hover table {
-    background-color: var(--background-color);
-    z-index: 1;
-  }
-} */
 .DocsMarkdown--table-wrap tr > :first-child {
   position: -webkit-sticky;
   position: sticky;
   left: 0;
-  white-space: nowrap;
+  white-space: normal;
   padding-left: 1em;
   background: var(--background-color);
   box-shadow: 5px 0 5px -3px var(--background-color);
@@ -4417,6 +4401,20 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     height: 12.2em;
     --border-radius: 0em;
   }
+}
+
+p#totalExamples {
+  margin-top: 1em;
+  font-size: 1.1em;
+  padding-left: .5em;
+  width: 7em;
+  font-weight: 400;
+  border-radius: 5px;
+  background: #FCC373;
+}
+
+[theme="dark"] p#totalExamples {
+  background: #0051c3;
 }
 
 .DocsTutorials {

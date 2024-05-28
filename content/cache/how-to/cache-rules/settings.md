@@ -10,7 +10,7 @@ meta:
 
 These are the settings that you can configure when creating a cache rule.
 
-## Fields 
+## Fields
 
 The fields available for Cache Rule matching expressions in the Expression Builder are:
 
@@ -37,11 +37,11 @@ Not all fields are available as a trigger for Cache Rules due to incompatibility
 
 The operators available for Cache Rule expressions are:
 
-* equals 
-* does not equal 
-* contains 
-* does not contain 
-* matches regex 
+* equals
+* does not equal
+* contains
+* does not contain
+* matches regex
 * does not match regex
 * is in
 * is not in
@@ -67,10 +67,10 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with image transformations . Cache Rules will not be applied to image transformation requests. Page Rules are supported.
+Currently, Cache Rules are not compatible with image transformations. Cache Rules will not be applied to image transformation requests. Page Rules are supported, but they are now deprecated.
 {{</Aside>}}
 
-#### Edge TTL 
+#### Edge TTL
 
 Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests. This setting has three primary options:
 
@@ -282,7 +282,7 @@ API configuration property name: `"additional_cacheable_ports"` (array of intege
 header: API configuration example
 ---
 "action_parameters": {
-    "cache": true 
+    "cache": true
     "additional_cacheable_ports": [8443, 8080]
   }
 }

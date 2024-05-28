@@ -1,11 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Analog site
+title: Analog
 meta:
   description: The fullstack Angular meta-framework
 ---
 
-# Deploy an Analog site
+# Analog
 
 [Analog](https://analogjs.org/) is a fullstack meta-framework for Angular, powered by [Vite](https://vitejs.dev/) and [Nitro](https://nitro.unjs.io/).
 

@@ -8,6 +8,8 @@ weight: 6
 
 Stream Live supports webhooks that notify your service when an Input connects or disconnects to Stream Live.
 
+{{<available-notifications product="Stream">}}
+
 ## Subscribe to Stream Live Webhooks
 
 1.  Log in to your Cloudflare account and click **Notifications**.

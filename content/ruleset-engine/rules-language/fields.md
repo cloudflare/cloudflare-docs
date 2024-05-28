@@ -1710,7 +1710,7 @@ You can only use HTTP response fields in:
 * [Compression Rules](/rules/compression-rules/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
-* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
+* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/reference/sensitive-data-detection/) ruleset
 
 Specific fields may have additional limitations.
 

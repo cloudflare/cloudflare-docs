@@ -41,7 +41,7 @@ If you use these third-party tools, you should do the following to test website 
 
 ### Improve speed
 
-Based on the results of these speed tests, you may want to explore other ways to [optimize your site speed](/learning-paths/optimize-site-speed/) using Cloudflare.
+Based on the results of these speed tests, you may want to explore other ways to [optimize your site speed](/speed/) using Cloudflare.
 
 {{<Aside type="note">}}
 

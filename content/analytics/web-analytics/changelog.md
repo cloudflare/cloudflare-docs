@@ -4,7 +4,7 @@ pcx_content_type: changelog
 weight: 7
     - rss
 layout: changelog
-changelog_file_name: [web-analytics]
+changelog_file_name: [beacon-min-js]
 outputs:
     - html
     - rss

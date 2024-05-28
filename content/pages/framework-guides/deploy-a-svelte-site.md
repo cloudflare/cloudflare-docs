@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Svelte site
+title: Svelte
 ---
 
-# Deploy a Svelte site
+# Svelte
 
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
 
@@ -13,9 +13,9 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 ## Setting up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
-To use `create-cloudflare` to create a new Svelte project, run the following command:
 
-To use create-cloudflare to create a new Svelte project, run the following command:
+
+To use `create-cloudflare` to create a new Svelte project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-svelte-app -- --framework=svelte

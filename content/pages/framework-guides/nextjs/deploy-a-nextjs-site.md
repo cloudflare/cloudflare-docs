@@ -5,7 +5,7 @@ meta:
   description: Deploy a full-stack Next.js site (recommended).
 ---
 
-# Deploy a Next.js site
+# Next.js
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 

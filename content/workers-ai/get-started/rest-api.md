@@ -15,15 +15,28 @@ This guide will instruct you through setting up and deploying your first Workers
 
 Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 
-## 1. Get an API token
+## 1. Get API token and Account ID
 
-To create an API token:
+You need your API token and Account ID to use the REST API.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select the user icon on the top right of your dashboard > **My Profile**.
-3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**.
-4. Go to the **Workers AI** template > select **Use template**. You can also go to **Create Custom Token** > **Get started** to customize a token.
-5. Select **Continue to summary** > in the Workers AI API token summary, select **Create Token**.
+To get these values:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **AI** > **Workers AI**.
+3. Select **Use REST API**.
+4. Get your API token:
+    1. Select **Create a Workers AI API Token**.
+    2. Review the prefilled information.
+    3. Select **Create API Token**.
+    4. Select **Copy API Token**.
+    5. Save that value for future use.
+5. For **Get Account ID**, copy the value for **Account ID**. Save that value for future use.
+
+{{<Aside type="note">}}
+
+If you choose to [create an API token](/fundamentals/api/get-started/create-token/) instead of using the template, that token will need permissions for both `Workers AI - Read` and `Workers AI - Edit`.
+
+{{</Aside>}}
 
 ## 2. Run a model via API
 
@@ -37,7 +50,7 @@ $ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/met
   -d '{ "prompt": "Where did the phrase Hello World come from" }'
 ```
 
-Replace `{ACCOUNT_ID}` with your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and `{API_token}` with the API token you generated in [step 1](/workers-ai/get-started/rest-api/#1-get-an-api-token).
+Replace the values for `{ACCOUNT_ID}` and `{API_token}`.
 
 The API response will look like the following:
 

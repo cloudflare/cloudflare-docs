@@ -22,15 +22,7 @@ To continue:
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.13.0` or later.
 
-## 1. Enable Workers KV in the dashboard
-
-Enable Workers KV for your account by purchasing the Workers Paid plan:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages** > **Plans**.
-3. Select **Purchase Workers Paid** and complete the payment process to enable Workers KV.
-
-## 2. Create a Worker project
+## 1. Create a Worker project
 
 {{<Aside type="note" header="New to Workers?">}}
 
@@ -67,7 +59,7 @@ For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --g
 
 {{</Aside>}}
 
-## 3. Create a KV namespace
+## 2. Create a KV namespace
 
 A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
 
@@ -138,7 +130,7 @@ Refer to [Environment](/kv/reference/environments/) for more information.
 KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/).
 {{</Aside>}}
 
-## 4. Interact with your KV namespace
+## 3. Interact with your KV namespace
 
 You can interact with your KV namespace via [Wrangler](/workers/wrangler/install-and-update/) or directly from your [Workers](/workers/) application.
 
@@ -254,7 +246,7 @@ The code above:
 2. Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
 3. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
-## 5. Develop locally with Wrangler
+## 4. Develop locally with Wrangler
 
 {{<Aside type="note">}}
 
@@ -272,7 +264,7 @@ $ npx wrangler dev
 
 When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see your value printed on the browser.
 
-## 6. Deploy your KV
+## 5. Deploy your KV
 
 Run the following command to deploy KV to Cloudflare's global network:
 

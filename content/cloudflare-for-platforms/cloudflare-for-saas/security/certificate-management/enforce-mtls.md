@@ -55,3 +55,11 @@ Refer to [SSL properties of a custom hostname](/api/operations/custom-hostname-f
 {{<render file="_edit-custom-hostname-api.md" withParameters="When making the request," >}}
 
 {{</details>}}
+
+## Alerts for mutual TLS certificates
+
+You can configure alerts to receive notifications before your mutual TLS certificates expire.
+
+{{<available-notifications product="SSL/TLS" notificationName="Access mTLS Certificate Expiration Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

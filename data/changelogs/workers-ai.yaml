@@ -4,6 +4,12 @@ productName: Workers AI
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+
+- publish_date: '2024-05-17'
+  title: Add OpenAI compatible API endpoints
+  description: |-
+    Added OpenAI compatible API endpoints for `/v1/chat/completions` and `/v1/embeddings`. For more details, refer to [Configurations](/workers-ai/configuration/open-ai-compatibility/).
+
 - publish_date: '2024-04-11'
   title: Add AI native binding
   description: |-
