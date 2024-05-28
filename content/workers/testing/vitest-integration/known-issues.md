@@ -18,14 +18,6 @@ Native code coverage via [V8](https://v8.dev/blog/javascript-code-coverage) is n
 
 Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not apply to KV, R2 and cache simulators. For example, you cannot expire a KV key by advancing fake time.
 
-### Automatically re-running tests with `SELF`
-
-If you are writing integration tests with `SELF`, you must import your Worker's `main` entry point in your test file for tests to re-run when files change. For example, if `main` was set to `./src/index.ts`, include `import "./src/index"` at the top of each test file. Vite's module analysis that powers hot-module-reloading is performed statically and currently does not detect the dynamic import of `main` in our test runner.
-
-### `console.log()`s with `SELF`
-
-`console.log()`s inside `export default { ... }` handlers are not shown when writing integration tests with `SELF` if the handler does no asynchronous work. You can work around this by including `ctx.waitUntil(scheduler.wait(100))` in your tests during debugging to keep the request context alive for long enough.
-
 ### Dynamic `import()` statements with `SELF` and Durable Objects
 
 Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `SELF`, or inside Durable Object event handlers. You must import and call your handlers directly, or use static `import` statements in the global scope.
@@ -33,3 +25,11 @@ Dynamic `import()` statements do not work inside `export default { ... }` handle
 ### Durable Object alarms
 
 Durable Object alarms are not reset between test runs and do not respect isolated storage. Ensure you delete or run all alarms with [`runDurableObjectAlarm()`](/workers/testing/vitest-integration/test-apis/#durable-objects) scheduled in each test before finishing the test.
+
+### Durable Objects and `isolatedStorage`
+
+Using WebSockets with Durable Objects with the [(/workers/testing/vitest-integration/isolation-and-concurrency) flag turned on is not supported. You must set `isolatedStorage: false` in your `vitest.config.ts` file.
+
+### Returning non-primitive values from RPC methods
+
+In order to return non-primitive values (objects or classes extending `RpcTarget`, for instance) from RPC methods, you must use the `using` keyword. Refer to https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management for more details. An [example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) is included in the `workers-sdk` repository.
