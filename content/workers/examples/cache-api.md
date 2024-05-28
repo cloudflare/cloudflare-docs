@@ -7,7 +7,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
-pcx_content_type: configuration
+pcx_content_type: example
 title: Using the Cache API
 weight: 1001
 layout: example

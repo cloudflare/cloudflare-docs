@@ -7,7 +7,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
-pcx_content_type: configuration
+pcx_content_type: example
 title: Read POST
 weight: 1001
 layout: example

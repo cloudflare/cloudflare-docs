@@ -1,6 +1,6 @@
 ---
 title: Automatic captioning for video uploads
-pcx_content_type: reference-architecture-diagram
+pcx_content_type: reference-architecture
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Automatic captioning for video uploads"

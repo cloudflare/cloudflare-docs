@@ -1,6 +1,6 @@
 ---
 title: Content-based asset creation
-pcx_content_type: reference-architecture-diagram
+pcx_content_type: reference-architecture
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Content-based asset creation"

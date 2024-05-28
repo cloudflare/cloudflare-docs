@@ -1,23 +1,5 @@
-{{- $dataArray := slice }}
+{{- $dataArray := partial "folder-data.html" }}
 {{- $availableOptions := slice -}}
-
-{{- range readDir "./data/" -}}
-{{- if in .Name ".yml" -}}
-{{- $productName :=  replace .Name ".yml" "" -}}
-{{- $productData := index $.Site.Data $productName -}}
-{{- with index $productData "product" -}}
-{{- $additional_groups := slice -}}
-{{- range .additional_groups -}}
-  {{- $additional_groups = $additional_groups | append . -}}
-{{- end -}}
-
-{{- $dataArray = $dataArray | append
-(dict "group" .group "title" .title  "show" (default true .show) "url"
-.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout)
-"additional_groups" (default (slice) ($additional_groups))) -}}
-{{- end -}}
-{{- end -}}
-{{- end -}}
 
 {{- range $dataArray -}}
   {{- with .group -}}

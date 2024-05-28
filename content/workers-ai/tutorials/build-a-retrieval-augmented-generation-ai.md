@@ -5,6 +5,8 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
 weight: 2
+tags:
+  - AI
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI

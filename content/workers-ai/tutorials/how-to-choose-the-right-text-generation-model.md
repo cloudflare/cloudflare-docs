@@ -5,6 +5,8 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Choose the Right Text Generation Model
 weight: 1
+tags:
+  - AI
 ---
 
 # Choose the Right Text Generation Model

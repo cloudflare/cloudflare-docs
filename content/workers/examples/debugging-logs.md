@@ -6,7 +6,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
-pcx_content_type: configuration
+pcx_content_type: example
 title: Debugging logs
 weight: 1001
 layout: example

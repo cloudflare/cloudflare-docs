@@ -6,6 +6,7 @@ product:
   url: /ai-gateway/
   group: Developer platform
   additional_groups: [AI]
+  tags: [AI]
 
 meta:
   title: Cloudflare AI Gateway docs
@@ -26,6 +27,3 @@ algolia:
   index: developers-cloudflare2
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: ai-gateway
-
-tags:
-  - AI

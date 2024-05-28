@@ -1,0 +1,15 @@
+{{- $tags := split (lower (.Get "tags")) "," -}}
+{{- $resource_type := split (.Get "resource_type") "," -}}
+
+<ul>
+  {{ range $index, $siteTag := .Site.Taxonomies.tags }}
+  {{ if in $tags $index -}}
+  {{ range $siteTag }}
+  {{ if in $resource_type .Params.pcx_content_type}}
+  {{ $string := printf "[%s](%s)" .Title .RelPermalink | $.Page.RenderString}}
+  <li>{{$string}}</li>
+  {{ end }}
+  {{ end }}
+  {{ end }}
+  {{ end }}
+</ul>

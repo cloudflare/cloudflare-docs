@@ -8,7 +8,7 @@ languages:
   - TypeScript
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: "Geolocation: Hello World"
 weight: 1001
 layout: example

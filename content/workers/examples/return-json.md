@@ -11,7 +11,7 @@ languages:
   - Python
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Return JSON
 weight: 2
 layout: example

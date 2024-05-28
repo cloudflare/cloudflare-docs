@@ -4,6 +4,8 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Explore Workers AI Models Using a Jupyter Notebook
+tags:
+  - AI
 ---
 
 # Explore Workers AI Models Using a Jupyter Notebook
