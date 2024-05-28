@@ -87,7 +87,7 @@ node_modules
 .vitepress
 ```
 
-this makes sure that unnecessary files are not going to be included in the project's git repository (which we will set up next).
+This step makes sure that unnecessary files are not going to be included in the project's git repository (which we will set up next).
 
 {{<render file="_tutorials-before-you-start.md">}}
 
