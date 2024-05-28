@@ -99,7 +99,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
+Create a `POST` request [using the API](/api/operations/magic-site-wans-create-wan) to create a WAN.
 
 The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode.
 
@@ -151,7 +151,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
+Create a `POST` request [using the API](/api/operations/magic-site-lans-create-lan) to create a LAN.
 
 Example:
 

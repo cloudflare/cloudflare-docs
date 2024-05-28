@@ -90,18 +90,18 @@
 /data/changelogs/r2.yaml @dcpena @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /data/changelogs/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
-/content/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
+/content/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing @irvinebroque
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
-/content/workers/runtime-apis/ @irvinebroque @jasnell @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/runtime-apis/bindings/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/ @irvinebroque @jasnell @mikenomitch @kodster28 @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @kodster28 @cloudflare/pcx-technical-writing
 /content/workers/platform/ @irvinebroque @tanushree-sharma @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/configuration/compatibility-dates/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
+/content/workers/configuration/compatibility-dates/ @irvinebroque @kodster28 @mikenomitch @cloudflare/pcx-technical-writing
 /content/workers/reference/migrate-to-module-workers/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @kodster28 @cloudflare/pcx-technical-writing
+/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @kodster28 @mikenomitch @cloudflare/pcx-technical-writing
 /content/workers/wrangler/ @penalosa @petebacondarwin @dario-piotrowicz @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @kodster28 @cloudflare/pcx-technical-writing
 /content/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing

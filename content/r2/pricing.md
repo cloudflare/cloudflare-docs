@@ -15,6 +15,12 @@ There are no charges for egress bandwidth.
 
 All included usage is on a monthly basis.
 
+{{<Aside type="note">}}
+
+To learn about potential cost savings from using R2, refer to the [R2 pricing calculator](https://r2-calculator.cloudflare.com/).
+
+{{</Aside>}}
+
 ## R2 pricing
 
 |                    | Free                         | Paid - Rates                       |
