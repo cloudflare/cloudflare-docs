@@ -2,18 +2,18 @@
 * @cloudflare/pcx-technical-writing
 
 # More dev-specific files
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
-/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
-/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
-*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
-*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
+/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 /assets/json-collector.ts @GregBrimble @cloudflare/pcx-technical-writing
-/data/calculations/ @kristianfreeman @kodster28 @pedrosousa
-/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa
+/data/calculations/ @kristianfreeman @kodster28 @pedrosousa @KianNH
+/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa @KianNH
 /layouts/partials/models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
