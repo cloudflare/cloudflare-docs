@@ -47,7 +47,12 @@
 </div>
 {{ end }}
 
+<!-- Only show # of examples if the filters are set -->
+{{ if ne (index $filters 0) "" }}
+
 <p id="totalExamples">{{$examplesLength}} examples</p>
+
+{{ end }}
 
 <!-- Add list of examples, with optional filterable properties -->
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
