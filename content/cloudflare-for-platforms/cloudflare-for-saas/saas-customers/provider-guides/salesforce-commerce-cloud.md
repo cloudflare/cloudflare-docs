@@ -20,7 +20,7 @@ For additional detail about how traffic routes when O2O is enabled, refer to [Ho
 
 ## Enable
 
-You can only enable O2O on the Cloudflare Enterprise plan.
+You can enable O2O on any Cloudflare zone plan.
 
 To enable O2O for a specific hostname within a Cloudflare Zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with a target of the `CNAME` provided by SFCC Business Manager, which is the dashboard used by SFCC customers to configure their storefront environment.
 
