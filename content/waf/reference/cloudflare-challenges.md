@@ -187,7 +187,6 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 
 Cloudflare challenges cannot support the following:
 
-* Random canvas fingerprinting.
 * [Browser extensions](#browser-extensions) that modify the browser's `User-Agent` value or Web APIs such as `Canvas` and `WebGL`.
 * Implementations where a domain serves a challenge page originally requested for another domain.
 * Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to. For example, if you receive the challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a challenge loop.
