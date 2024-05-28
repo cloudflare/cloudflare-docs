@@ -113,3 +113,13 @@ $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_N
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
 
 To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).
+
+## Use Pages as Origin in Cloudflare Load Balancer
+
+[Cloudflare Load Balancing](/load-balancing/) will not work without the host header set.
+To create a new [Origin pool](/load-balancing/pools/) with a Pages project as target do the following:
+
+1. Follow the instructions [Create a Pool](/load-balancing/pools/create-pool/#create-a-pool) and set the origin server address to your pages.dev domain.
+2. In step 4, follow the optional step **Add host header**.
+3. Set the host header value to your pages.dev domain, same as the origin server address.
+4. Select **Save**.
