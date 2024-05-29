@@ -251,6 +251,7 @@
 /d1/reference/query-json/ /d1/build-with-d1/query-json/ 301
 /d1/configuration/local-development/ /d1/build-with-d1/local-development/ 301
 /d1/configuration/remote-development/ /d1/build-with-d1/remote-development/ 301
+/d1/build-with-d1/import-data/  /d1/build-with-d1/import-export-data/ 301
 
 # data loss prevention (dlp)
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301

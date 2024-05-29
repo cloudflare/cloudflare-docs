@@ -4,9 +4,11 @@ weight: 1
 pcx_content_type: concept
 ---
 
-# Import data
+# Import and Export data
 
 D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
+
+D1 also allows you to export a database. This can be useful for local development or testing.
 
 ## Import an existing database
 
@@ -43,7 +45,7 @@ With your `users_export.sql` file in the current working directory, you can pass
 $ wrangler d1 execute example-db --remote --file=users_export.sql
 ```
 
-To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
+To confirm your table was imported correctly and is queryable, execute a `SELECT` statement to fetch all the tables from your D1 database:
 
 ```sh
 $ wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name;"
