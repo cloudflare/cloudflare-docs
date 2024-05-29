@@ -15,6 +15,36 @@ JA3 and JA4 fingerprints are only available to Enterprise customers who have pur
 
 {{<render file="_signals-intelligence-and-ja4.md">}}
 
+```json
+---
+header: Script example
+---
+ "botManagement": {
+    "jsDetection": {
+      "passed": false
+    },
+    "ja4Signals": {
+      "h2h3_ratio_1h": 0.98670762777328,
+      "heuristic_ratio_1h": 0,
+      "reqs_quantile_1h": 0.99785631895065,
+      "uas_rank_1h": 1030,
+      "browser_ratio_1h": 0.95027899742126,
+      "paths_rank_1h": 699,
+      "reqs_rank_1h": 1156,
+      "cache_ratio_1h": 0.38930341601372,
+      "ips_rank_1h": 730,
+      "ips_quantile_1h": 0.99864625930786
+    },
+    "staticResource": false,
+    "corporateProxy": false,
+    "ja4": "t13d1512h2_8daaf6152771_ef7df7f74e48",
+    "verifiedBot": false,
+    "ja3Hash": "25b4882c2bcb50cd6b469ff28c596742",
+    "score": 99,
+    "detectionIds": {}
+  },
+```
+
 ## Analytics
 
 To get more information about potential bot requests, use these JA3 and JA4 fingerprints in:
