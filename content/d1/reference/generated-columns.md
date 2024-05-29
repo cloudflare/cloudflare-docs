@@ -92,8 +92,8 @@ Alternatively, you could define an `expires_at` column that calculates a future 
 -- Filter out "expired" results based on your generated column:
 -- SELECT * FROM your_table WHERE current_date() > expires_at
 ALTER TABLE your_table
--- calculates a date (YYYY-MM-dd) 30 days from the current date.
-ADD COLUMN expires_at AS (date('now', '+30 days');
+-- calculates a date (YYYY-MM-dd) 30 days from the timestamp.
+ADD COLUMN expires_at AS (date(timestamp, '+30 days'));
 ```
 
 ## Additional considerations
