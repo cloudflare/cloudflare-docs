@@ -362,7 +362,7 @@ In this section, we provide details regarding how other Cloudflare features inte
 
 ### Browser Cache TTL
 
-[Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl) Page Rules (deprecated) override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
+[Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl) Cache Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
 
 ### Polish
 

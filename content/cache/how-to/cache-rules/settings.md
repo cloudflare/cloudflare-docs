@@ -67,7 +67,7 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with image transformations. Cache Rules will not be applied to image transformation requests. Page Rules are supported, but they are now deprecated.
+If you use cache rules, image transformations, and zone versioning simultaneously, some settings may not be applied correctly.
 {{</Aside>}}
 
 #### Edge TTL
