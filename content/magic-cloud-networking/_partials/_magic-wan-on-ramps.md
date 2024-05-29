@@ -11,7 +11,7 @@ Magic Cloud Networking allows you to create on-ramps from your cloud networks to
 
 To connect your cloud networks to Magic WAN you need to have a Magic WAN account. Contact your account team to learn more.
 
-{{<Aside type="note">}} Make sure you have configured a Magic Cloud Networking Cloud Integration before adding a Magic WAN Cloud on-ramp.{{</Aside>}}
+{{<Aside type="note">}} Make sure you have configured a [Magic Cloud Networking Cloud Integration](/magic-cloud-networking/get-started/) before adding a Magic WAN Cloud on-ramp.{{</Aside>}}
 
 ## Create a Magic WAN cloud on-ramp
 
