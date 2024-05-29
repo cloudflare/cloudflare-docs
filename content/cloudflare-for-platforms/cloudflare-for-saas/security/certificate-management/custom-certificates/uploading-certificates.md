@@ -10,12 +10,11 @@ meta:
 
 For use cases and limitations, refer to [custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/).
 
-## Upload certificates
-
 {{<Aside type="warning">}}
-When uploading a custom certificate, you can only use one of the different supported types (SHA256WithRSA, SHA1WithRSA or ECDSAWithSHA256).
-For example you can't upload an SHA256WithRSA + ECDSAWithSHA256 certificate.
+You can only use one of the different [supported types](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/#limitations). For example, you cannot upload an `SHA256WithRSA` + `ECDSAWithSHA256` certificate.
 {{</Aside>}}
+
+## Upload certificates
 
 ### With the dashboard
 
