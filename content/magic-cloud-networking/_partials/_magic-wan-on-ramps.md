@@ -3,7 +3,6 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;productPath
 ---
 
 # Cloud on-ramps
