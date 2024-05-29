@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Transform
 title: Add an HTTP response header with a static value
 ---
 # Add an HTTP response header with a static value

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Redirects
 title: Redirect all requests from one country to another domain
 ---
 # Redirect all requests from one country to another domain

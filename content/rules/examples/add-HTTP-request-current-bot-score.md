@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Transform
 title: Add an HTTP request header with the current bot score
 ---
 # Add an HTTP request header with the current bot score

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Redirects
 title: Redirect UK and France visitors to their specific subdomains
 ---
 # Redirect UK and France visitors to their specific subdomains

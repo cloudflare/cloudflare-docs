@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Transform
 title: Rewrite path of moved section of a website
 ---
 # Rewrite path of moved section of a website

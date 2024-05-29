@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Configuration
 title: Define a single configuration rule using Terraform
 ---
 # Define a single configuration rule using Terraform

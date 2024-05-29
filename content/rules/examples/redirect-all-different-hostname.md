@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-product: Rules
+rule type: Redirects
 title: Redirect all requests to a different hostname
 ---
 # Redirect all requests to a different hostname
