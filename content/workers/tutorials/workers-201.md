@@ -5,6 +5,7 @@ content_type: 🎥 Video
 pcx_content_type: tutorial
 title: Stateful Apps with Cloudflare Workers
 redirect: https://www.youtube.com/watch?v=QTsaAhFvX9o
+products: [KV, D1]
 ---
 
 # Stateful Apps with Cloudflare Workers
