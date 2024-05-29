@@ -117,7 +117,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers
 
-The recommended way of testing Cron Triggers is using Wrangler. 
+The recommended way of testing Cron Triggers is using Wrangler.
 
 {{<Aside type="note" header="Cron Trigger changes take time to propagate.">}}
 
@@ -168,6 +168,11 @@ Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron
 With Green Compute enabled, your Cron Triggers will only run on Cloudflare points of presence that are located in data centers that are powered purely by renewable energy. Organizations may claim that they are powered by 100 percent renewable energy if they have procured sufficient renewable energy to account for their overall energy use.
 
 Renewable energy can be purchased in a number of ways, including through on-site generation (wind turbines, solar panels), directly from renewable energy producers through contractual agreements called Power Purchase Agreements (PPA), or in the form of Renewable Energy Credits (REC, IRECs, GoOs) from an energy credit market.
+
+Green Compute can be configured at the account level:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Find **Compute Setting** on the right-side menu > **Change**.
 
 ## Related resources
 
