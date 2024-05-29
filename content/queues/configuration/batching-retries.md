@@ -27,7 +27,7 @@ For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that i
 
 {{<Aside type="info" header="Empty queues">}}
 
-When a queue is empty, a push based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
+When a queue is empty, a push-based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
 
 [Pull-based consumers](/queues/configuration/pull-consumers/) that attempt to pull from a queue, even when empty, will incur a read operation.
 
@@ -115,7 +115,7 @@ When a single message within a batch fails to be delivered, the entire batch is 
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
+Retrying messages with `retry()` or calling `retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
 
 {{</Aside>}}
 
