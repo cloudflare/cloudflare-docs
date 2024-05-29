@@ -167,7 +167,7 @@ wrangler init [<NAME>] [OPTIONS]
   - Answer yes to any prompts for new projects.
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
-  - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
+  - {{<render file="_wrangler-from-dash-rec.md">}}
     {{</definitions>}}
 
 ---
@@ -1874,7 +1874,7 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} 
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}}
   - Show the interactive dev session.
 
 {{</definitions>}}
