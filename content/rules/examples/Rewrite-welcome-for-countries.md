@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Transform
+tags:
+  - Transform
 title: Rewrite path of welcome page for visitors in specific countries
 ---
 

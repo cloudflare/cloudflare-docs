@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Redirect visitors to the new URL of a specific page
 ---
 # Redirect visitors to the new URL of a specific page

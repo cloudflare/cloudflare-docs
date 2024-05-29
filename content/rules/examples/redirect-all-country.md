@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Redirect all requests from one country to another domain
 ---
 # Redirect all requests from one country to another domain

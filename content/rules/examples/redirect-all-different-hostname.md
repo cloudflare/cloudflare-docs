@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Redirect all requests to a different hostname
 ---
 # Redirect all requests to a different hostname

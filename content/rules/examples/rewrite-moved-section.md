@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Transform
+tags:
+  - Transform
 title: Rewrite path of moved section of a website
 ---
 # Rewrite path of moved section of a website

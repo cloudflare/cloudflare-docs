@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Compression
+tags:
+  - Compression
 title: Use only Brotli compression for a specific URI path
 ---
 # Use only Brotli compression for a specific URI path

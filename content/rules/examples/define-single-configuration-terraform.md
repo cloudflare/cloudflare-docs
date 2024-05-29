@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Configuration
+tags:
+  - Configuration
 title: Define a single configuration rule using Terraform
 ---
 # Define a single configuration rule using Terraform

@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Redirect admin area requests to HTTPS
 ---
 # Redirect admin area requests to HTTPS

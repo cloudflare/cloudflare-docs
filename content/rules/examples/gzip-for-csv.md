@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Compression
+tags:
+  - Compression
 title: Use Gzip compression for CSV files or other algorithm if not available
 ---
 # Use Gzip compression for CSV files or other algorithm if not available

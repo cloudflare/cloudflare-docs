@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Transform
+tags:
+  - Transform
 title: Rewrite path with several URL segments to a different URL segment
 ---
 

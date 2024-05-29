@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Redirect all requests for a domain to the root page of different domain
 ---
 # Redirect all requests for a domain to the root page of different domain

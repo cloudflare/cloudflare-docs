@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Perform mobile redirects
 ---
 # Perform mobile redirects

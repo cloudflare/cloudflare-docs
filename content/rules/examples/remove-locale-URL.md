@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Redirects
+tags:
+  - Redirects
 title: Remove locale information from URL path
 ---
 # Remove locale information from URL path

@@ -1,6 +1,7 @@
 ---
 pcx_content_type: example
-tag: Compression
+tags:
+  - Compression
 title: Disable compression to AVIF images
 ---
 # Disable compression to AVIF images
