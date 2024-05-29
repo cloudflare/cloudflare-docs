@@ -6,15 +6,9 @@ meta:
   description: Upload and use LoRA adapters to get fine-tuned inference on Workers AI.
 ---
 
-# Running fine-tuned inference with LoRA adapters
+{{<heading-pill style="beta">}}Fine-tuned inference with LoRA adapters{{</heading-pill>}}
 
-Workers AI now supports fine-tuned inference with adapters trained with [Low-Rank Adaptation](https://blog.cloudflare.com/fine-tuned-inference-with-loras). This feature is in open beta and free during this period. {{<inline-pill style="beta">}}
-
-{{<Aside type="note" heading="LoRA routing">}}
-
-We recently added support so that you can make LoRA requests to the normal base models. This means that you don't have to explicitly call the `-lora` version of the model when running inference.
-
-{{</Aside>}}
+Workers AI supports fine-tuned inference with adapters trained with [Low-Rank Adaptation](https://blog.cloudflare.com/fine-tuned-inference-with-loras). This feature is in open beta and free during this period.
 
 ## Limitations
 - We only support LoRAs for the following models (must not be quantized):

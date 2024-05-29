@@ -8,7 +8,7 @@ entries:
 - publish_date: '2024-05-29'
   title: Add new public LoRAs and note on LoRA routing
   description: |-
-    * Added documentation on new public loras
+    * Added documentation on [new public LoRAs](/workers-ai/fine-tunes/public-loras/).
     * Noted that you can now run LoRA inference with the base model rather than explicitly calling the `-lora` version
 
 
