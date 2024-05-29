@@ -1,12 +1,9 @@
 ---
-title: Terraform example
-pcx_content_type: configuration
-weight: 5
-meta:
-  title: Configuration Rules — Terraform example
+pcx_content_type: example
+product: Rules
+title: Define a single configuration rule using Terraform
 ---
-
-# Terraform example
+# Define a single configuration rule using Terraform
 
 The following example defines a single configuration rule for a zone using Terraform. The rule disables Email Obfuscation and Browser Integrity Check for API requests.
 
