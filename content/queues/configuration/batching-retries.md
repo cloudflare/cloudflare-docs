@@ -25,6 +25,14 @@ Both `max_batch_size` and `max_batch_timeout` work together. Whichever limit is 
 
 For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that if 30 messages are written to the queue, the consumer will deliver a batch of 30 messages. However, if it takes longer than 10 seconds for those 30 messages to be written to the queue, then the consumer will get a batch of messages that contains however many messages were on the queue at the time (somewhere between 1 and 29, in this case).
 
+{{<Aside type="info" header="Empty queues">}}
+
+When a queue is empty, a push based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
+
+[Pull-based consumers](/queues/configuration/pull-consumers/) that attempt to pull from a queue, even when empty, will incur a read operation.
+
+{{</Aside>}}
+
 When determining what size and timeout settings to configure, you will want to consider latency (how long can you wait to receive messages?), overall batch size (when writing to external systems), and cost (fewer-but-larger batches).
 
 ### Batch settings
@@ -107,7 +115,7 @@ When a single message within a batch fails to be delivered, the entire batch is 
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
+Retrying messages with `.retry()` or calling `.retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
 
 {{</Aside>}}
 
