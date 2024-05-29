@@ -27,7 +27,7 @@ Magic Cloud Networking is in a closed beta. If you are interested in trying out 
 Discover your cloud resources automatically, and easily set up your integrations.
 {{</feature>}}
 
-{{<feature header="Cloud resource catalog" href="/magic-cloud-networking/">}}
+{{<feature header="Cloud resource catalog" href="/magic-cloud-networking/manage-resources/#cloud-resource-catalog">}}
 Review all of your cloud resources, like Virtual Private Clouds (VPCs), subnets, Virtual Machines (VMs), route tables, and routes.
 {{</feature>}}
 

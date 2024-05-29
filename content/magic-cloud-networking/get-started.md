@@ -78,6 +78,6 @@ You have successfully connected your cloud provider to Magic Cloud Network. Clou
 
 ## Next steps
 
-- [Set up Magic WAN](/magic-cloud-networking/cloud-onramps/) as an on-ramp to your cloud.
-- [Edit](/magic-cloud-networking/manage-resources/) cloud integrations.
+- [Set up Magic WAN](/magic-cloud-networking/cloud-on-ramps/) as an on-ramp to your cloud.
+- [Edit](/magic-cloud-networking/manage-resources/#edit-cloud-integrations) cloud integrations.
 - [Check Cloud resources](/magic-cloud-networking/manage-resources/) found by Magic Cloud Networking.
