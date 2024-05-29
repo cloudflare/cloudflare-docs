@@ -67,7 +67,7 @@ By default, Cloudflare installs the following summarized routes in your cloud ro
 To override the defaults with custom prefixes:
 
 1. Log in to the Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Magic WAN** > **Cloud on-ramps**.
+2. Select **Magic WAN** > **Configuration**.
 3. Select **Magic WAN Address Space**.
 4. Delete the prefixes, and enter your custom ones.
 5. When you are finished, select **Save changes**.
