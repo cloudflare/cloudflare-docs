@@ -16,21 +16,21 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 ## 1. Configure AWS
 
-1.  In the AWS admin panel, search for `SSO`.
+1.  In the AWS admin panel, search for `IAM Identity Center`.
 
-1.  Add **AWS Single Sign** on to your AWS account.
+1.  Add **IAM Identity Center** on to your AWS account.
 
-1.  Select **Choose an identity source**.
+1.  Under **IAM Identity Center setup**, select **Confirm identity source**.
+
+1.  Select **Change identity source** under the identity source **Actions** dropdown.
 
 1.  Change the identity source to **External Identity provider**.
 
-1.  Select **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
+1. We will be using the values shown in **Service Provider metadata** to the Cloudflare Access for SaaS app.
 
-1.  Copy the **AWS SSO ACS URL**.
+1.  In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications** to continue with configuration.
 
-## 2. Configure Cloudflare
-
-1.  In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications**.
+## 2. Configure Cloudflare App
 
 1.  Select **SaaS** as the application type to begin creating a SaaS application.
 
@@ -38,8 +38,8 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
     | AWS value              | Cloudflare value                   |
     | ---------------------- | ---------------------------------- |
-    | **AWS SSO ACS URL**    | **Assertion Consumer Service URL** |
     | **AWS SSO Issuer URL** | **Entity ID**                      |
+    |  **AWS SSO ACS URL**   | **Assertion Consumer Service URL** |
 
     The **Name ID Format** must be set to: Email.
 
@@ -51,7 +51,7 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 1.  Now create an [Access policy](/cloudflare-one/policies/access/) to determine who has access to your application.
 
-1.  Save your policy and return to the AWS SSO dashboard.
+1.  Save your policy and return to the AWS External Identity provider tab.
 
 ## 3. Complete the AWS configuration
 
@@ -68,15 +68,15 @@ This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Acce
     The Public key must be transformed into a fingerprint. To do that:
 
 1.  Copy the Public Key Value.
-1.  Paste the Public Key into VIM or another code editor.
+1.  Paste the Public Key into a code/text editor.
 1.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 1.  Set the file extension to `.crt` and save.
 
     {{</Aside>}}
 
-1.  Select **Next: Review**.
+1.  Select **Next** to review settings, type **ACCEPT** and click **Change Identity Source** to confirm changes.
 
-1.  Set Provisioning to _Manual_.
+1.  Confirm that Provisioning to _Manual_ and if not change it.
 
     {{<Aside type="warning" header="Important">}}Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Make sure that:
 
