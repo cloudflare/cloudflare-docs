@@ -17,3 +17,4 @@ Refer to [Runtime APIs](/workers/runtime-apis/) for more information on specific
 - [TypeScript type definitions](https://github.com/cloudflare/workers-types)
 - [JavaScript and web standard APIs](/workers/runtime-apis/web-standards/)
 - [Tutorials](/workers/tutorials/)
+- [Examples](/workers/examples/?languages=JavaScript)

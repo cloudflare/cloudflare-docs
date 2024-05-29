@@ -36,3 +36,4 @@ For more information, refer to [this GitHub issue](https://github.com/cloudflare
 - [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript)
 - [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
 - [Runtime APIs](/workers/runtime-apis/)
+- [TypeScript Examples](/workers/examples/?languages=TypeScript)
