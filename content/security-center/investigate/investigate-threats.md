@@ -6,7 +6,7 @@ weight: 3
 
 # Investigate threats
 
-Users can investigate the details of an IP address, domain name, URL or Autonomous System Number (ASN). You can find the Investigate feature in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan).
+Users can investigate the details of an IP address, domain name, URL, or Autonomous System Number (ASN). You can find the Investigate feature in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan).
 
 You can search with Investigate by [IP address](/security-center/investigate/investigate-threats/#ip-address), [domain](/security-center/investigate/investigate-threats/#domain), [URL](/security-center/investigate/investigate-threats/#url) and [AS number](/security-center/investigate/investigate-threats/#as-number).
 
