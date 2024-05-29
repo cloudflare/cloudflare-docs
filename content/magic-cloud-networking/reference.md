@@ -10,18 +10,18 @@ Refer to this page for details about how Cloudflare orchestrates VPN connectivit
 
 ## AWS
 
-![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/aws.png)
+![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/reference/aws.png)
 
 When using Magic Cloud Networking to automatically create on-ramps to your AWS account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 - Cloudflare will create a new Network Security Group (NSG) named **Cloudflare Magic WAN** with rules allowing outbound/inbound traffic to/from Magic WAN. You must attach this NSG to subnets or VMs you wish to have connectivity to Magic WAN.
 - Cloudflare will create a Virtual Private Gateway and attach it to your VPC. If an existing Virtual Private Gateway is already attached to the VPC, on-ramp creation will fail.
-- Cloudflare will enable route propagation from the Virtual Private Gateway into all route tables in your VPC. This will result in a route for each prefix in your [Magic WAN Address Space](#link) targeting the gateway.
+- Cloudflare will enable route propagation from the Virtual Private Gateway into all route tables in your VPC. This will result in a route for each prefix in your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) targeting the gateway.
 - Cloudflare will add a route in Magic WAN for each IPv4 CIDR block in your VPC.
 
 
 ## Azure
 
-![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/azure.png)
+![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/reference/azure.png)
 
 When using Magic Cloud Networking to automatically create on-ramps to your Azure account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 
