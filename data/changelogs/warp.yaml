@@ -4,21 +4,7 @@ productName: Zero Trust WARP Client
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-- publish_date: '2024-05-21'
-  title: WARP client for macOS (version 2024.5.287.1)
-  description: |-
-    A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)
-
-    Notable updates:
-      - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
-      - Fixed an issue so that the reauth notification is cleared from the UI when the user switches configurations.
-      - Fixed an issue by correcting the WARP client setting of macOS firewall rules. This relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
-      - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
-
-    Known issues:
-      - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
-
-- publish_date: '2024-05-21'
+- publish_date: '2024-05-22'
   title: WARP client for Windows (version 2024.5.310.1)
   description: |-
     A new beta release for the Windows WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta).
@@ -30,6 +16,20 @@ entries:
       - Fixed a known issue where the certificate was not always properly left behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
       - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being incorrectly sent on the WARP tunnel.
 
+
+    Known issues:
+      - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
+
+- publish_date: '2024-05-21'
+  title: WARP client for macOS (version 2024.5.287.1)
+  description: |-
+    A new beta release for the macOS WARP client is now available in the [App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)
+
+    Notable updates:
+      - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
+      - Fixed an issue so that the reauth notification is cleared from the UI when the user switches configurations.
+      - Fixed an issue by correcting the WARP client setting of macOS firewall rules. This relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
+      - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
 
     Known issues:
       - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the `warp-cli registration delete` command to clear the registration, and then re-register the client.
