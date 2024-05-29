@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Transform
+tag: Transform
 title: Rewrite URL query string of blog visitors
 ---
 

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Redirects
+tag: Redirects
 title: Redirect visitors to the new URL of a specific page
 ---
 # Redirect visitors to the new URL of a specific page

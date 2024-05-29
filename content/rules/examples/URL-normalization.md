@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: URL normalization
+tag: URL normalization
 title: URL normalization
 ---
 

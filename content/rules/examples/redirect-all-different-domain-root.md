@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Redirects
+tag: Redirects
 title: Redirect all requests for a domain to the root page of different domain
 ---
 # Redirect all requests for a domain to the root page of different domain

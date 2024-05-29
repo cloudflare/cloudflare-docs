@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Transform
+tag: Transform
 title: Set an HTTP response header to a static value
 ---
 

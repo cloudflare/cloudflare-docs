@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Compression
+tag: Compression
 title: Disable compression to AVIF images
 ---
 # Disable compression to AVIF images

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Origin
+tag: Origin
 title: Define a single origin rule using Terraform
 ---
 # Define a single origin rule using Terraform

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Transform
+tag: Transform
 title: Serve images from custom paths
 ---
 

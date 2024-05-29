@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Transform
+tag: Transform
 title: Remove an HTTP response header
 ---
 # Remove an HTTP response header

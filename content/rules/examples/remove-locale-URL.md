@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Redirects
+tag: Redirects
 title: Remove locale information from URL path
 ---
 # Remove locale information from URL path

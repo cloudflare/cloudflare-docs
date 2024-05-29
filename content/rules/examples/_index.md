@@ -9,4 +9,4 @@ layout: wide
 
 # Examples
 
-{{<list-examples filters="rule type">}}
+{{<list-examples filters="tag">}}

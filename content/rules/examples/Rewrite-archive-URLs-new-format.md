@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Transform
+tag: Transform
 title: Rewrite blog archive URLs to support a new URL format
 ---
 # Rewrite blog archive URLs to support a new URL format

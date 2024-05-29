@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Compression
+tag: Compression
 title: Disable Brotli compression for all requests of a zone
 ---
 # Disable Brotli compression for all requests of a zone

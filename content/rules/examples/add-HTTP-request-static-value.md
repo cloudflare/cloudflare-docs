@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Transform
+tag: Transform
 title: Add an HTTP request header with a static value
 ---
 # Add an HTTP request header with a static value

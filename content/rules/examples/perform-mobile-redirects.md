@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Redirects
+tag: Redirects
 title: Perform mobile redirects
 ---
 # Perform mobile redirects

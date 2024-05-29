@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-rule type: Redirects
+tag: Redirects
 title: Redirect admin area requests to HTTPS
 ---
 # Redirect admin area requests to HTTPS
