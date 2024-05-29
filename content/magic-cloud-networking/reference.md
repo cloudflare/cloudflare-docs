@@ -29,3 +29,40 @@ When using Magic Cloud Networking to automatically create on-ramps to your Azure
 - Cloudflare will enable gateway route propagation on all route tables in your VNet. This will result in a route for each prefix in your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) pointing to the gateway. If your VNet has other Virtual Network Gateways, their routes will also propagate to your route tables. If you delete the on-ramp, route propagation will not be disabled.
 - By default, Network Security Groups in Azure contain Allow rules for outbound/inbound traffic to/from the `VirtualNetwork` service tag, which includes Virtual Network Gateway address space (and therefore your Magic WAN Address Space). If you do not want all resources in your VNet to be accessible from Magic WAN, add the appropriate Deny rules to your Network Security Groups (NSGs).
 - Cloudflare will add a route in Magic WAN for each IPv4 address range in your VNet.
+
+## Supported resources
+Magic Cloud Networking discovers the following resource types.
+
+### AWS
+- AWS Customer Gateway
+- AWS Egress Only Internet Gateway
+- AWS Internet Gateway
+- AWS Route Table
+- AWS Subnet
+- AWS VPC
+- AWS VPC IPv4 CIDR Block Association
+- AWS VPN Connection
+- AWS VPN Connection Route
+- AWS VPN Gateway
+
+### Azure
+- Azure Virtual Network
+- Azure Subnet
+- Azure Route Table
+- Azure Virtual Network Gateway
+- Azure Local Network Gateway
+- Azure Public IP
+- Azure Virtual Network Gateway Connection
+- Azure Route
+- Azure Subnet Route Table Association
+
+### GCP
+- Google Compute Network
+- Google Compute Subnetwork
+- Google Compute VPN Gateway
+- Google Compute VPN Tunnel
+- Google Compute Route
+- Google Compute Address
+- Google Compute Router
+- Google Compute Interconnect Attachment
+- Google Compute HA VPN Gateway
