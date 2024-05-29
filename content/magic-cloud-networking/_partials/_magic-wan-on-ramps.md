@@ -34,23 +34,22 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
 ## Edit a Magic WAN cloud on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2 .Select **Magic WAN** > **Cloud on-ramps**.
+2. Select **Magic WAN** > **Cloud on-ramps**.
 3. Select the on-ramp you want to edit.
 4. Select **Edit** in the side panel.
-5. In **Basic information**, you can change the name and description of your on-ramp.
-    1. Select **Save** when you are finished.
+5. In **Basic information**, you can change the name and description of your on-ramp. Select **Save** when you are finished.
 6. In **Configurations**, you can modify where the required routes are installed. Select **Continue**.
-    {{<Aside type="warning">}}If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.{{</Aside>}}
     1. Select **Save and review** after making changes.
     2. Review your settings, and select **Approve changes**.
+    {{<Aside type="warning">}}If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.{{</Aside>}}
 
 ## Delete a Magic WAN cloud on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2 .Select **Magic WAN** > **Cloud on-ramps**.
+2. Select **Magic WAN** > **Cloud on-ramps**.
 3. Select the on-ramp you want to edit.
 4. Select **Edit** in the side panel.
-5. Choose **Detach** or **Destroy** to proceed.
+5. Choose **Detach** or **Destroy** to proceed:
     - **Detach**: Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
     - **Destroy**: Cloudflare will delete the resources that were created to build this on-ramp in the cloud provider, if possible. Resources cannot be deleted if they are depended upon by other resources. For example, if an AWS Customer Gateway was created for this on-ramp, but was subsequently used in a second on-ramp, destroying this on-ramp will not destroy the AWS Customer Gateway.
 
