@@ -3,7 +3,6 @@ pcx_content_type: example
 product: Rules
 title: Add an HTTP response header with a static value
 ---
-
 # Add an HTTP response header with a static value
 
 The following HTTP response header modification rule adds a header named `set-cookie` with a static value (`cookiename=value`) to the response:

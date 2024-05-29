@@ -3,7 +3,6 @@ pcx_content_type: example
 product: Rules
 title: Redirect admin area requests to HTTPS
 ---
-
 # Redirect admin area requests to HTTPS
 
 This example dynamic redirect for zone `example.com` will redirect requests for the administration area of a specific subdomain (`store.example.com`) to HTTPS, keeping the original path and query string.

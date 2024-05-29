@@ -3,7 +3,6 @@ pcx_content_type: example
 product: Rules
 title: Perform mobile redirects
 ---
-
 # Perform mobile redirects
 
 The following examples will redirect visitors using mobile devices — based on the request user agent string — to a different hostname.

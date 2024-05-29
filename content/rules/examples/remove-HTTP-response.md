@@ -2,9 +2,7 @@
 pcx_content_type: example
 product: Rules
 title: Remove an HTTP response header
-
 ---
-
 # Remove an HTTP response header
 
 The following HTTP response header modification rule removes the `cf-connecting-ip` header from the response:

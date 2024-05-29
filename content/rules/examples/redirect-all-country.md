@@ -3,7 +3,6 @@ pcx_content_type: example
 product: Rules
 title: Redirect all requests from one country to another domain
 ---
-
 # Redirect all requests from one country to another domain
 
 In this example, all website visitors from the United Kingdom will be redirected to a different domain, but maintaining current functionality in the same paths.

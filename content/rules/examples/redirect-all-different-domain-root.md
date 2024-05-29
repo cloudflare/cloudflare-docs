@@ -3,7 +3,6 @@ pcx_content_type: example
 product: Rules
 title: Redirect all requests for a domain to the root page of different domain
 ---
-
 # Redirect all requests for a domain to the root page of different domain
 
 In this example, an old website was discontinued and replaced by a new one in a different domain. The functionality is different, and all URLs should now point to the root of the new domain. The same applies to any subdomains of the old domain.
