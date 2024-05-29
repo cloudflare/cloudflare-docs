@@ -8,7 +8,7 @@ weight: 2
 
 To get started with Magic Cloud Networking you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage Virtual Private Clouds (VPCs) belonging to two different AWS accounts.
 
-Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources - like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/).
+Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources — like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
 ## 1. Set up cloud credentials
 
@@ -50,7 +50,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 
 ### Microsoft Azure
 
-1. [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application) and skip the optional Redirect URL step.
+1. [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application) and skip the optional **Redirect URL** step.
 2. [Add a client secret](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#add-a-client-secret) to the app registration. Take note of the secret value as you cannot retrieve this information later. Cloudflare will ask for this value when you make an Azure Cloud Integration.
 3. [Add a role assignment](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal). The purpose of this step is to give the app that you registered in step 1 permission to access your Azure Subscription.
     1. In step 3 of the linked doc, select the **Contributor** role from the **Privileged administrator roles** tab.
@@ -72,12 +72,12 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 5. Enter a descriptive name, and optionally a description, for your cloud integration.
 6. Select **Continue**.
 7. Enter the credentials that you have created in [Set up cloud credentials](#1-set-up-cloud-credentials). These allow Magic Cloud Networking to access the resources in your cloud provider.
-8. Select Authorize.
+8. Select **Authorize**.
 
-You have successfully connected your cloud provider to Magic Cloud Network. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/).
+You have successfully connected your cloud provider to Magic Cloud Network. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
 ## Next steps
 
 - [Set up Magic WAN](/magic-cloud-networking/cloud-on-ramps/) as an on-ramp to your cloud.
+- [Manage resources](/magic-cloud-networking/manage-resources/) found by Magic Cloud Networking.
 - [Edit](/magic-cloud-networking/manage-resources/#edit-cloud-integrations) cloud integrations.
-- [Check Cloud resources](/magic-cloud-networking/manage-resources/) found by Magic Cloud Networking.
