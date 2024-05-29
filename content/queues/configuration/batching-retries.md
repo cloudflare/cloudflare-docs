@@ -225,7 +225,15 @@ If you use both the `wrangler` CLI and `wrangler.toml` to change the settings as
 
 Refer to the [Queues REST API documentation](/api/operations/queue-v2-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
 
-## Apply a backoff algorithm
+### Message delay precedence
+
+Messages can be delayed by default at the queue level, or per-message (or batch).
+
+* Per-message/batch delay settings take precedence over queue-level settings.
+* Setting `delaySeconds: 0` on a message when sending or retrying will ignore any queue-level delays and cause the message to be delivered in the next batch.
+* A message sent or retried with `delaySeconds: <any positive integer>` to a queue with a shorter default delay will still respect the message-level setting.
+
+### Apply a backoff algorithm
 
 You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message.
 
