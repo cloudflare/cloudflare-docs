@@ -18,7 +18,7 @@ The R2 support in Wrangler allows you to manage buckets and perform basic operat
 
 ## Bucket-Level Operations
 
-Create a bucket:
+Create a bucket with the [`r2 bucket create` command](/workers/wrangler/commands/#create-4):
 
 ```sh
 $ wrangler r2 bucket create your-bucket-name
@@ -31,12 +31,12 @@ The placeholder text is only for the example.
 
 {{</Aside>}}
 
-List buckets in the current account:
+List buckets in the current account with the [`r2 bucket list` command](/workers/wrangler/commands/#list-5):
 
 ```sh
 $ wrangler r2 bucket list
 ```
-Delete a bucket. Note that the bucket must be empty (all objects must be deleted).
+Delete a bucket with the [`r2 bucket delete` command](/workers/wrangler/commands/#delete-7). Note that the bucket must be empty (all objects must be deleted).
 
 ```sh
 $ wrangler r2 bucket delete BUCKET_TO_DELETE

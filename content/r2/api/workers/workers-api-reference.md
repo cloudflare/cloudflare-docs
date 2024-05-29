@@ -153,6 +153,11 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
 
+- {{<code>}}storageClass{{</code>}}{{<param-type>}}string{{</param-type>}}
+
+  - The storage class associated with the object. Refer to [Storage Classes](#storage-class).
+
+
 {{</definitions>}}
 
 ## `R2ObjectBody` definition
@@ -312,6 +317,10 @@ Only a single hashing algorithm can be specified at once.
 
   - A SHA-512 hash to use to check the received object's integrity.
 
+- {{<code>}}storageClass{{</code>}}{{<param-type>}}string{{</param-type>}}
+
+  - Sets the storage class of the object if provided. Otherwise, the object will be stored in the default storage class associated with the bucket. Refer to [Storage Classes](#storage-class).
+
 {{</definitions>}}
 
 ### R2MultipartOptions
@@ -325,6 +334,10 @@ Only a single hashing algorithm can be specified at once.
 - {{<code>}}customMetadata{{</code>}}{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - A map of custom, user-defined metadata that will be stored with the object.
+
+- {{<code>}}storageClass{{</code>}}{{<param-type>}}string{{</param-type>}}
+
+  - Sets the storage class of the object if provided. Otherwise, the object will be stored in the default storage class associated with the bucket. Refer to [Storage Classes](#storage-class).
 
 {{</definitions>}}
 
@@ -508,3 +521,8 @@ An `R2UploadedPart` object represents a part that has been uploaded. `R2Uploaded
   - The `etag` of the part.
 
 {{</definitions>}}
+
+### Storage Class
+
+The storage class where an `R2Object` is stored in. The available storage classes are `Standard` and `InfrequentAccess`. Refer to [Storage classes](/r2/buckets/storage-classes/)
+for more information.

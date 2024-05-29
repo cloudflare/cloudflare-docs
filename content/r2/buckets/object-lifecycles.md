@@ -5,27 +5,19 @@ pcx_content_type: how-to
 
 # Object lifecycles
 
-Object lifecycles affect how long objects uploaded to your bucket are kept.
+Object lifecycles determine the retention period of objects uploaded to your bucket and allow you to specify when objects should transition from Standard storage to Infrequent Access storage.
 
-For example, you can create an object lifecycle rule to delete objects after 30 days, or you can set a rule to abort multipart uploads after 30 days.
+For example, you can create an object lifecycle rule to delete objects after 90 days, or you can set a rule to transition objects to Infrequent Access storage after 30 days.
 
 ## Behavior
 
 - Objects will typically be removed from a bucket within 24 hours of the `x-amz-expiration` value.
-- When a new lifecycle policy is applied, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous policy.
+- When a lifecycle policy is applied that deletes objects, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous policy.
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle policy to expire multipart uploads seven days after initiation.
+- When an object is transitioned from Standard storage to Infrequent Access storage a [Class A operation](/r2/pricing/#class-a-operations) is incurred.
 
-## Add an object lifecycle rule from the Cloudflare dashboard
-
-1. From the Cloudflare dashboard, select **R2**.
-2. Locate and select your bucket from the list.
-3. From the bucket page, select **Settings**.
-4. Under **Object lifecycle rules**, select **Add rule**.
-5. Fill out the fields for the new rule.
-6. When you are done, select **Add rule**.
-
-## Configure a bucket’s lifecycle policy
+## Configure your bucket's object lifecycle policy
 
 When you create an object lifecycle rule, you can specify which prefix you would like it to apply to.
 
@@ -34,6 +26,17 @@ When you create an object lifecycle rule, you can specify which prefix you would
 Object lifecycles has a 1000 rule maximum.
 
 {{</Aside>}}
+
+### Dashboard
+
+1. From the Cloudflare dashboard, select **R2**.
+2. Locate and select your bucket from the list.
+3. From the bucket page, select **Settings**.
+4. Under **Object lifecycle rules**, select **Add rule**.
+5. Fill out the fields for the new rule.
+6. When you are done, select **Add rule**.
+
+### S3 API
 
 Below is an example of configuring a lifecycle policy with different sets of rules for different potential use cases. 
 
@@ -136,6 +139,16 @@ console.log(
 ```
 
 ## Delete a bucket's lifecycle policy
+
+### Dashboard
+
+1. From the Cloudflare dashboard, select **R2**.
+2. Locate and select your bucket from the list.
+3. From the bucket page, select **Settings**.
+4. Under **Object lifecycle rules**, select the rules you'd like to delete.
+5. When you are done, select **Delete rule(s)**.
+
+### S3 API
 
 ```js
 import S3 from "aws-sdk/clients/s3.js";
