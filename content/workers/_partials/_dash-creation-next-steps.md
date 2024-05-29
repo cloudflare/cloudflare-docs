@@ -21,7 +21,7 @@ Once you have created your Worker script, you can edit and deploy your Worker us
 To develop more advanced applications or [implement tests](/workers/testing/), start working in the Wrangler CLI:
 
 1. [Install Wrangler](/workers/wrangler/install-and-update/).
-2. Run `wrangler initi --from-dash {worker_name}`.
+2. Run `wrangler init --from-dash {worker_name}`.
 
 {{<render file="_wrangler-from-dash-rec.md">}}
 <br/>
