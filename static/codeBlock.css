@@ -509,11 +509,11 @@
   color: var(--code-green);
 }
 
-[language="sh"] .CodeBlock--token-plain {
+[language="sh"] .CodeBlock--token-output {
   color: var(--code-gray);
 }
 
-[language="sh"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-output,
 [language="sh"] .CodeBlock--token-unselectable,
 [language="powershell"] .CodeBlock--token-plain,
 [language="powershell"] .CodeBlock--token-unselectable {
