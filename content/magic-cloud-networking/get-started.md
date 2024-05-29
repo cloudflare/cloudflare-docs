@@ -8,7 +8,7 @@ weight: 2
 
 To get started with Magic Cloud Networking you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage Virtual Private Clouds (VPCs) belonging to two different AWS accounts.
 
-Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources - like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](//magic-cloud-networking/manage-resources/).
+Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources - like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/).
 
 ## 1. Set up cloud credentials
 
@@ -65,7 +65,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 
 ## 2. Set up Cloud Integrations
 
-1. Log in to the Cloudflare dashboard, and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Manage Account** > **Cloud integrations**.
 3. Go to **Integrations** > **Connect integration**.
 4. Select your cloud provider to start the cloud integration wizard.
@@ -79,5 +79,5 @@ You have successfully connected your cloud provider to Magic Cloud Network. Clou
 ## Next steps
 
 - [Set up Magic WAN](/magic-cloud-networking/cloud-onramps/) as an on-ramp to your cloud.
-- [Edit](/magic-cloud-networking/manage-resources/#edit-cloud-integrations) cloud integrations.
+- [Edit](/magic-cloud-networking/manage-resources/) cloud integrations.
 - [Check Cloud resources](/magic-cloud-networking/manage-resources/) found by Magic Cloud Networking.
