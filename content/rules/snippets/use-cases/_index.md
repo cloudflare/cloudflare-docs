@@ -2,7 +2,7 @@
 type: overview
 hideChildren: true
 pcx_content_type: navigation
-title: Use cases
+title: Use cases (headings)
 weight: 3
 layout: wide
 ---
