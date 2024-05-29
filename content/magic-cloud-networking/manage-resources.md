@@ -25,6 +25,6 @@ To browse the resources in your catalog:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Manage Account** > **Cloud integrations**.
 3. Select the integration you want to edit > **Edit**.
-4. Make the required changes to your credentials.
+4. In **Credentials**, select **I would like to update my credentials**, and make the required changes to your credentials.
 5. Select **Save** when you are finished.
 6. (Optional) You can also select **Delete** to delete your cloud integration.
