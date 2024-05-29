@@ -5,6 +5,13 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-05-29'
+  title: Add new public LoRAs and note on LoRA routing
+  description: |-
+    * Added documentation on new public loras
+    * Noted that you can now run LoRA inference with the base model rather than explicitly calling the `-lora` version
+
+
 - publish_date: '2024-05-17'
   title: Add OpenAI compatible API endpoints
   description: |-

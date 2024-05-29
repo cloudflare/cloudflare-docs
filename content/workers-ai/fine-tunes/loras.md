@@ -1,6 +1,7 @@
 ---
 title: Using LoRA adapters
 pcx_content_type: get-started
+weight: 1
 meta:
   description: Upload and use LoRA adapters to get fine-tuned inference on Workers AI.
 ---
@@ -8,6 +9,12 @@ meta:
 # Running fine-tuned inference with LoRA adapters
 
 Workers AI now supports fine-tuned inference with adapters trained with [Low-Rank Adaptation](https://blog.cloudflare.com/fine-tuned-inference-with-loras). This feature is in open beta and free during this period. {{<inline-pill style="beta">}}
+
+{{<Aside type="note" heading="LoRA routing">}}
+
+We recently added support so that you can make LoRA requests to the normal base models. This means that you don't have to explicitly call the `-lora` version of the model when running inference.
+
+{{</Aside>}}
 
 ## Limitations
 - We only support LoRAs for the following models (must not be quantized):
@@ -38,11 +45,11 @@ In order to run inference with LoRAs on Workers AI, you'll need to create a new 
 
 Right now, you can't edit a fine tune's asset files after you upload it. We will support this soon, but for now you will need to create a new fine tune and upload  files again if you would like to use a new LoRA.
 
-Before you upload your LoRA adapter, you'll need to edit your `adapter_model.config` file to include `model_type` as one of `mistral`, `gemma` or `llama` like below.
+Before you upload your LoRA adapter, you'll need to edit your `adapter_config.json` file to include `model_type` as one of `mistral`, `gemma` or `llama` like below.
 
 ```json
 ---
-filename: adapter_model.config
+filename: adapter_config.json
 highlight: [10]
 ---
 {
