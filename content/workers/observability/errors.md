@@ -19,7 +19,7 @@ When a Worker running in production has an error that prevents it from returning
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
 | `1101`     | Worker threw a JavaScript exception.                                                                              |
 | `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                             |
-| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/#service-level-agreements-and-objectives)                   |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                   |
 | `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
 | `1019`     | Worker hit [loop limit](#loop-limit).                                                                             |
 | `1021`     | Worker has requested a host it cannot access.                                                                     |
