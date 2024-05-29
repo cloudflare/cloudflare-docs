@@ -24,7 +24,7 @@ To connect your cloud networks to Magic WAN you need to have a Magic WAN account
 6. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, to ensure successful communication between them:
     - **Add routes for your Magic WAN address space to your cloud network**: This installs routes for reaching Magic WAN in your cloud network’s route tables  (see [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
 
-    {{<Aside type="warning">}}Cloudflare recommends that you leave this option selected. If you unselect this option, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, like routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.
+    {{<Aside type="warning">}}Cloudflare recommends that you leave this option selected. If you unselect this option, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, like routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.{{</Aside>}}
 
     - **Add routes for your cloud network to Magic WAN**: This option creates routes for reaching your cloud network in Magic WAN.
 7. Select **Continue**. Applying your settings might take a few seconds to complete.
@@ -41,7 +41,7 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
 5. In **Basic information**, you can change the name and description of your on-ramp.
     1. Select **Save** when you are finished.
 6. In **Configurations**, you can modify where the required routes are installed. Select **Continue**.
-    {{<Aside type="warning">}}If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.
+    {{<Aside type="warning">}}If you uncheck any of the Propagation settings, you will have to manually configure Magic WAN or your cloud provider to ensure successful communication between them. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.{{</Aside>}}
     1. Select **Save and review** after making changes.
     2. Review your settings, and select **Approve changes**.
 
