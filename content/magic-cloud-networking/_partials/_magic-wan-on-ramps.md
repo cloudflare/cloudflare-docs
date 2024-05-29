@@ -22,7 +22,7 @@ To connect your cloud networks to Magic WAN you need to have a Magic WAN account
 4. Give your new on-ramp a descriptive name.
 5. Select the network you want to connect to, and select **Continue**.
 6. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, to ensure successful communication between them:
-    - **Add routes for your Magic WAN address space to your cloud network**: This installs routes for reaching Magic WAN in your cloud network’s route tables  (see [Magic WAN Address Space](#link) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
+    - **Add routes for your Magic WAN address space to your cloud network**: This installs routes for reaching Magic WAN in your cloud network’s route tables  (see [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
 
     {{<Aside type="warning">}}Cloudflare recommends that you leave this option selected. If you unselect this option, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, like routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider.
 
