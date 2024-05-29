@@ -17,7 +17,7 @@ JA3 and JA4 fingerprints are only available to Enterprise customers who have pur
 
 ```json
 ---
-header: Script example
+header: Sample output
 ---
  "botManagement": {
     "jsDetection": {
@@ -44,6 +44,10 @@ header: Script example
     "detectionIds": {}
   },
 ```
+
+{{<Aside type="note">}}
+This sample was generated using [Workers' Cloudflare Object script](/workers/examples/accessing-the-cloudflare-object/).
+{{</Aside>}}
 
 ## Analytics
 
