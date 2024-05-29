@@ -11,7 +11,7 @@ entries:
 
     Notable updates:
       - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
-      - Fixed an issue so that that the reauth notification is cleared from the UI when the user switches configurations.
+      - Fixed an issue so that the reauth notification is cleared from the UI when the user switches configurations.
       - Fixed an issue by correcting the WARP client setting of macOS firewall rules. This relates to TunnelVision ([CVE-2024-3661](https://nvd.nist.gov/vuln/detail/CVE-2024-3661)).
       - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
 
