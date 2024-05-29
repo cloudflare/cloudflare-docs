@@ -98,8 +98,8 @@ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps' \
 header: Response
 ---
 {
-  "id": "0b49c957-1054-41b6-95b1-3ebae66c5b02",
-  "uid": "0b49c957-1054-41b6-95b1-3ebae66c5b02",
+  "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
+  "uid": "3537a672-e4d8-4d89-aab9-26cb622918a1",
   "type": "dash_sso",
   "name": "SSO App"
   ...
@@ -112,11 +112,11 @@ header: Response
 ---
 header: cURL command
 ---
-curl --request PUT 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/0b49c957-1054-41b6-95b1-3ebae66c5b02' \
+curl --request PUT 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --data '{
-  "id": "0b49c957-1054-41b6-95b1-3ebae66c5b02",
+  "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
   ...
   "allowed_idps": [],
   ...
