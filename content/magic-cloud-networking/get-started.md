@@ -67,7 +67,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Manage Account** > **Cloud integrations**.
-3. Go to **Integrations** > **Connect integration**.
+3. Go to **Cloud integrations** and select **Add**.
 4. Select your cloud provider to start the cloud integration wizard.
 5. Enter a descriptive name, and optionally a description, for your cloud integration.
 6. Select **Continue**.

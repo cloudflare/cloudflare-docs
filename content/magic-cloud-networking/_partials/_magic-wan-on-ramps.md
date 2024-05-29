@@ -21,11 +21,11 @@ $1
 3. Select **Add new on-ramp**.
 4. Give your new on-ramp a descriptive name.
 5. Select the network you want to connect to, and select **Continue**.
-6. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
-    - **Add routes for your Magic WAN address space to your cloud network**: This installs routes for reaching Magic WAN in your cloud network’s route tables  (see [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
+6. **Configure on-ramp** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
+    - **Add routes for your Magic WAN address space to your cloud network**: Select this to install routes for reaching Magic WAN in your cloud network’s route tables  (see [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
     {{<Aside type="warning">}}Cloudflare recommends that you leave this option selected. If you unselect **Add routes for your Magic WAN address space to your cloud network**, you will need to manually create all the required configurations to allow Magic WAN to connect to your cloud, like routing tables, transit gateways, and VPNs. Refer to the [Magic WAN How to](/magic-wan/configuration/manually/how-to/) section, or consult the documentation for your cloud provider for more information.{{</Aside>}}
 
-    - **Add routes for your cloud network to Magic WAN**: This option creates routes for reaching your cloud network in Magic WAN.
+    - **Add routes for your cloud network to Magic WAN**: Select this option to create routes for reaching your cloud network in Magic WAN.
 7. Select **Continue**. Applying your settings might take a few seconds to complete.
 8. Review the changes in your cloud environment, and select **Approve changes**.
 
