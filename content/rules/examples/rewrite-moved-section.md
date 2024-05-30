@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Transform rule where everything under `/blog/<PATH>` is rewritten to `/marketing/<PATH>`.
+summary: A Transform Rule where everything under `/blog/<PATH>` is rewritten to `/marketing/<PATH>`.
 tags:
   - Transform
 title: Rewrite path of moved section of a website

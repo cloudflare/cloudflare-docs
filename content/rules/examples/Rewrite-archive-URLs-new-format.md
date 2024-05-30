@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Transform rule where a URL format is rewritten to the new format.
+summary: A Transform Rule where the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` is rewritten to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`.
 tags:
   - Transform
 title: Rewrite blog archive URLs to support a new URL format

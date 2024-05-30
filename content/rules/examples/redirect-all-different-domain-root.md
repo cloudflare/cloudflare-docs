@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Redirects rule where all URLs are configured to point to the root of a new domain instead of an old domain, including any subdomains of the old domain.
+summary: A Redirects Rule where all URLs are configured to point to the root of a new domain instead of an old domain, including any subdomains of the old domain.
 tags:
   - Redirects
 title: Redirect all requests for a domain to the root page of different domain

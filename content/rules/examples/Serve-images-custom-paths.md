@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Transform rule where images from a custom path are served using URL rewrites.
+summary: A Transform Rule where images from a custom path are served using URL rewrites.
 tags:
   - Transform
 title: Serve images from custom paths

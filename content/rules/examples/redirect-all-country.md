@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Redirects rule where all website visitors from the United Kingdom are redirected to a different domain, but current functionality is maintained in the same paths.
+summary: A Redirects Rule where all website visitors from the United Kingdom are redirected to a different domain, but current functionality is maintained in the same paths.
 tags:
   - Redirects
 title: Redirect all requests from one country to another domain

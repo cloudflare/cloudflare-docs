@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Transform rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewritten to `/img/<FILENAME>`.
+summary: A Transform Rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewritten to `/img/<FILENAME>`.
 tags:
   - Transform
 title: Rewrite path with several URL segments to a different URL segment

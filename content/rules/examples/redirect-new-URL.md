@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Redirects rule where visitors requesting the `/contact-us/` page are redirected to the new page URL `/contacts/`.
+summary: A Redirects Rule where visitors requesting the `/contact-us/` page are redirected to the new page URL `/contacts/`.
 tags:
   - Redirects
 title: Redirect visitors to the new URL of a specific page

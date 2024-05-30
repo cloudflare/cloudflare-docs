@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Transform rule where all requests to `/news/2012/...` are rewritten to `/archive/news/2012/...`.
+summary: A Transform Rule where all requests to `/news/2012/...` are rewritten to `/archive/news/2012/...`.
 tags:
   - Transform
 title: Rewrite path of archived blog posts

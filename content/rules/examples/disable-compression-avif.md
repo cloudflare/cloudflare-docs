@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: You can use the example below for a demo Compression rule where compression for AVIF images is disabled, based on either the content type or the file extension specified in the request.
+summary: A Compression Rule where compression for AVIF images is disabled, based on either the content type or the file extension specified in the request.
 tags:
   - Compression
 title: Disable compression to AVIF images
