@@ -31,9 +31,12 @@ Refer to the guides below on how to clear your browser cache and cookies based o
 
 #### Try in incognito or private mode
 
+
 #### Test with another browser or device
 
+
 #### Ensure that you are not behind a VPN or proxy
+
 
 #### Try again from a different network
 
