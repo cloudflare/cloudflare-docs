@@ -45,7 +45,3 @@ When setting up your models, specify the `cloudflare` endpoint.
 ## Supported models
 
 This template works with any [text generation models](/workers-ai/models/#text-generation) that begin with the `@hf` parameter.
-
-## Limitations
-
-Workers AI currently do not support custom sampling parameters like `temperature` or `top_p`.
