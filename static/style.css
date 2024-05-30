@@ -5371,3 +5371,8 @@ code.ruleID:active {
 .author-details{
   font-weight: bold;
 }
+
+.youtube_link {
+  margin-top: .75em;
+  font-size: .9em;
+}

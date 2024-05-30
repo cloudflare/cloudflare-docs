@@ -1,6 +1,6 @@
 ---
 updated: 2023-12-14
-difficulty: Beginnger
+difficulty: Beginner
 content_type: 🎥 Video
 pcx_content_type: tutorial
 title: Learn AI Development (models, embeddings, vectors)
