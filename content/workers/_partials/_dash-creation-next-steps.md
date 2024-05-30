@@ -20,10 +20,33 @@ Once you have created your Worker script, you can edit and deploy your Worker us
 
 ### Wrangler CLI
 
-To develop more advanced applications or [implement tests](/workers/testing/), start working in the Wrangler CLI:
+To develop more advanced applications or [implement tests](/workers/testing/), start working in the Wrangler CLI.
+
+{{<tabs labels="npm | yarn | pnpm | bun">}}
+{{<tab label="npm" default="true">}}
+```sh
+$ npm create cloudflare [--] [<DIRECTORY>] --type=pre-existing
+```
+{{</tab>}}
+{{<tab label="yarn">}}
+```sh
+$ yarn create cloudflare [--] [<DIRECTORY>] --type=pre-existing
+```
+{{</tab>}}
+{{<tab label="pnpm">}}
+```sh
+$ pnpm create cloudflare [--] [<DIRECTORY>] --type=pre-existing
+```
+{{</tab>}}
+{{<tab label="bun">}}
+```sh
+$ bun create cloudflare [--] [<DIRECTORY>] --type=pre-existing
+```
+{{</tab>}}
+{{</tabs>}}
 
 1. [Install Wrangler](/workers/wrangler/install-and-update/).
-2. Run `wrangler init --from-dash {worker_name}`.
+2. Run the following command.
 
 {{<render file="_wrangler-from-dash-rec.md">}}
 <br/>
