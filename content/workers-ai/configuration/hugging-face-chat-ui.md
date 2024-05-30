@@ -11,9 +11,9 @@ Use Workers AI with [Chat UI](https://github.com/huggingface/chat-ui?tab=readme-
 ## Prerequisites
 
 You will need the following:
-- A [Cloudflare account](https://dash.cloudflare.com).
-- Your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
-- An [API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) for Workers AI.
+- A [Cloudflare account](https://dash.cloudflare.com)
+- Your [Account ID](/fundamentals/setup/find-account-and-zone-ids/)
+- An [API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) for Workers AI
 
 ## Setup
 
