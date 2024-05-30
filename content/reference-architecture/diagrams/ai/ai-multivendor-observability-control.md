@@ -1,6 +1,6 @@
 ---
 title: Multi-vendor AI observability and control
-pcx_content_type: reference-architecture
+pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Multi-vendor AI observability and control"

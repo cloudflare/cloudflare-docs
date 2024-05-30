@@ -1,6 +1,7 @@
 ---
 pcx_content_type: use_case
-layout: home
+layout: single
+title: Build AI Applications
 meta:
   title: Build AI Applications · Use cases
 ---
@@ -9,13 +10,17 @@ meta:
 
 Build and deploy ambitious AI applications to Cloudflare's global network.
 
-![test](/images/use-cases/ai-header.png)
+{{<stream video_id="3c46281a9b2b84ee6776a53f87580c45">}}
 
 ## Reference architectures
 
 Diagrams, design patterns, and detailed best practices to help you generate solutions with Cloudflare products.
 
-{{<resource-by-tag tags="AI" resource_type="reference-architecture">}}
+{{<resource-by-tag tags="AI" resource_type="reference-architecture,design-guide,reference-architecture-diagram">}}
+
+## Demo apps
+
+{{<external-resources-by-tag resource_type="apps" tags="AI">}}
 
 ## Tutorials
 
@@ -32,6 +37,12 @@ Explore case studies on [AI companies building on Cloudflare](https://workers.cl
 Examples ready to copy and paste.
 
 {{<resource-by-tag tags="AI" resource_type="example">}}
+
+{{<Aside type="note">}}
+
+Cloudflare also offers detailed code examples for various [AI models](/workers-ai/models/) and [Model providers](/ai-gateway/providers/).
+
+{{</Aside>}}
 
 ## Related products
 

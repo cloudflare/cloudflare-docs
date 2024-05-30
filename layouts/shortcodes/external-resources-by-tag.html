@@ -1,0 +1,18 @@
+{{- $data := index $.Site.Data "external-resources" -}}
+{{- $resource_type := .Get "resource_type" -}}
+{{- $entries := index (index $data $resource_type) "entries" -}}
+{{- $tags := default slice (split (.Get "tags") ",") }}
+{{- $cloudflare_only := default true (.Get "cloudflare_one") -}}
+
+<ul>
+
+{{ range $entry := $entries }}
+{{ $intersect := $tags | intersect $entry.tags }}
+
+{{ if gt (len $intersect) 0}}
+{{ $string := printf "[%s](%s): %s" $entry.name $entry.link $entry.description | $.Page.RenderString }}
+<li>{{$string}}</li>
+{{ end }}
+{{ end }}
+
+</ul>
