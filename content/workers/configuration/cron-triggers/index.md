@@ -172,7 +172,10 @@ Renewable energy can be purchased in a number of ways, including through on-site
 Green Compute can be configured at the account level:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. Find **Compute Setting** on the right-side menu > **Change**.
+3. In the **Account details** section, find **Compute Setting**.
+4. Select **Change**.
+5. Select **Green Compute**.
+6. Select **Confirm**.
 
 ## Related resources
 
