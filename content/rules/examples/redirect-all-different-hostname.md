@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Redirects rule where all requests for `smallshop.example.com` are redirected to a different hostname using HTTPS, keeping the original path and query string.
 tags:
   - Redirects
 title: Redirect all requests to a different hostname

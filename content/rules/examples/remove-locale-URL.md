@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Redirects rule where visitors from an old URL format that included the locale are redirected to the new format.
 tags:
   - Redirects
 title: Remove locale information from URL path

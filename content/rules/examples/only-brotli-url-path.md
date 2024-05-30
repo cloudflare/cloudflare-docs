@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Compression rule where only Brotli compression is configured for a specific URI path.
 tags:
   - Compression
 title: Use only Brotli compression for a specific URI path

@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Redirects rule where visitors using mobile devices are redirected to a different hostname.
 tags:
   - Redirects
 title: Perform mobile redirects

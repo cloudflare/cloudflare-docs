@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Configuration rule using Terraform where mail Obfuscation and Browser Integrity Check for API requests are disabled for a zone.
 tags:
   - Configuration
 title: Define a single configuration rule using Terraform

@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Transform rule where a URL format is rewritten to the new format.
 tags:
   - Transform
 title: Rewrite blog archive URLs to support a new URL format

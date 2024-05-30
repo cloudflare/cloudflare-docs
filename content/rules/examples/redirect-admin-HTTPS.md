@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Redirects rule where requests for the administration area of a specific subdomain (`store.example.com`) is redirected to HTTPS, keeping the original path and query string.
 tags:
   - Redirects
 title: Redirect admin area requests to HTTPS

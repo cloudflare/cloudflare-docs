@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Compression rule where Gzip compression is configured as the preferred compression method for CSV files.
 tags:
   - Compression
 title: Use Gzip compression for CSV files or other algorithm if not available

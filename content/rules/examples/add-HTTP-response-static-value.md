@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Transform rule where a header named `set-cookie` with a static value (`cookiename=value`) is added to the response.
 tags:
   - Transform
 title: Add an HTTP response header with a static value

@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Transform rule where a header named `X-Bot-Score` with the current bot score is added to the request.
 tags:
   - Transform
 title: Add an HTTP request header with the current bot score

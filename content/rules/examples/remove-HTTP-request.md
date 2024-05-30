@@ -1,5 +1,6 @@
 ---
 pcx_content_type: example
+summary: You can use the example below for a demo Transform rule where the `cf-connecting-ip` header is removed from the request.
 tags:
   - Transform
 title: Remove an HTTP request header
