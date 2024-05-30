@@ -24,4 +24,4 @@ When creating a compression rule via API, make sure you:
 
 ## Example requests
 
-Refer to the [Examples](/rules/compression-rules/examples/) page for example API requests.
+Refer to the [Rules examples gallery](/rules/examples/) for example API requests.

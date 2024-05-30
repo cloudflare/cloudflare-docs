@@ -38,4 +38,4 @@ The Cloudflare dashboard provides the following settings to manage URL normaliza
 
 {{</definitions>}}
 
-For examples of how these settings affect URL normalization, refer to [URL normalization examples](/rules/normalization/examples/).
+For examples of how these settings affect URL normalization, refer to the [Rules examples gallery](/rules/examples/).

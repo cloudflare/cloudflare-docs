@@ -8,7 +8,7 @@ meta:
 
 # Create a rewrite URL rule in the dashboard
 
-Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for examples of rule definitions.
+Refer to the [Rules examples gallery](/rules/examples/) for examples of rule definitions.
 
 To create a rule:
 

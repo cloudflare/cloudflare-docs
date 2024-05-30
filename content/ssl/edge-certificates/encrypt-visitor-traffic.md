@@ -34,4 +34,4 @@ To avoid these issues, enable [Automatic HTTPS Rewrites](/ssl/edge-certificates/
 
 If your entire application can support HTTPS traffic, enable [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/#encrypt-all-visitor-traffic).
 
-If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** and use a [dynamic redirect](/rules/url-forwarding/single-redirects/) to selectively perform the redirect to HTTPS. Refer to [Redirect admin area requests to HTTPS](/rules/url-forwarding/single-redirects/examples/#redirect-admin-area-requests-to-https) for an example.
+If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** and use a [dynamic redirect](/rules/url-forwarding/single-redirects/) to selectively perform the redirect to HTTPS. Refer to [Redirect admin area requests to HTTPS](/rules/examples/redirect-admin-HTTPS/) for an example.

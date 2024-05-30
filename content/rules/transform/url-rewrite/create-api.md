@@ -8,7 +8,7 @@ meta:
 
 # Create a rewrite URL rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create rewrite URL rules via API. Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for common use cases.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create rewrite URL rules via API. Refer to the [Rules examples gallery](/rules/examples/) for common use cases.
 
 ## Basic rule settings
 
