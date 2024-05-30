@@ -70,7 +70,7 @@ Data retrieval fees apply when you access or retrieve data from the Infrequent A
 
 ### Minimum storage duration
 
-For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted or moved before the duration specified.
+For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the duration specified.
 
 | Storage class                                           | Minimum storage duration            |
 | ------------------------------------------------------- | ----------------------------------- |

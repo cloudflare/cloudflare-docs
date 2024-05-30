@@ -153,7 +153,7 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
 
-- {{<code>}}storageClass{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}storageClass{{</code>}}{{<param-type>}}"Standard"|"InfrequentAccess"{{</param-type>}}
 
   - The storage class associated with the object. Refer to [Storage Classes](#storage-class).
 
@@ -317,7 +317,7 @@ Only a single hashing algorithm can be specified at once.
 
   - A SHA-512 hash to use to check the received object's integrity.
 
-- {{<code>}}storageClass{{</code>}}{{<param-type>}}string{{</param-type>}}
+- {{<code>}}storageClass{{</code>}}{{<param-type>}}"Standard"|"InfrequentAccess"{{</param-type>}}
 
   - Sets the storage class of the object if provided. Otherwise, the object will be stored in the default storage class associated with the bucket. Refer to [Storage Classes](#storage-class).
 

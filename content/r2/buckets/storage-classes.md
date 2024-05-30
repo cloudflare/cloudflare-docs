@@ -73,7 +73,7 @@ Standard storage is designed for data that is accessed frequently. This is the d
 - AI training data
 - Other workloads involving frequently accessed data
 
-### Infrequent Access storage
+{{<heading-pill style="beta" heading="h3">}}Infrequent Access storage{{</heading-pill>}}
 
 {{<Aside type="note" header="Open Beta">}}
 
@@ -85,7 +85,7 @@ Infrequent Access storage is ideal for data that is accessed less frequently. Th
 
 {{<Aside type="note">}}
 
-For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted or moved before the duration specified.
+For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the duration specified.
 
 {{</Aside>}}
 

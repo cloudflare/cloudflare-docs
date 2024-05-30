@@ -75,15 +75,26 @@ await client
             Date: new Date("2024-01-01"),
           },
         },
+        // Example: transitioning objects to Infrequent Access storage by age
+        // Transition objects older than 30 days to Infrequent Access storage
+        {
+          ID: 'Transition Objects To Infrequent Access',
+          Transitions: [
+            {
+              Days: 30,
+              StorageClass: 'STANDARD_IA',
+            },
+          ],
+        },
         // Example: deleting objects by age
-        // Delete logs older than 30 days
+        // Delete logs older than 90 days
         {
           ID: "Delete Old Logs",
           Filter: {
             Prefix: "logs/",
           },
           Expiration: {
-            Days: 30,
+            Days: 90,
           },
         },
         // Example: abort all incomplete multipart uploads after a week
