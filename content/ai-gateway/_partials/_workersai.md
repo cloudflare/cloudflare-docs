@@ -17,7 +17,7 @@ You'll need to generate an [API token](/fundamentals/api/get-started/create-toke
 header: Request to Workers AI llama model
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-2-7b-chat-int8 \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-3-8b-instruct \
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{"prompt": "What is Cloudflare?"}'
