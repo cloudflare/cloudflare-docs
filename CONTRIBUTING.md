@@ -18,6 +18,9 @@
 
 Before proposing significant changes, open an issue so that we can discuss your approach first. Only members of the Cloudflare organization can open a pull request on the repository, and they should follow the same guidance on opening an issue for significant changes. If you’re not part of the Cloudflare organization but want to contribute, fork the repository and then create a pull request.
 
+A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
+If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.
+
 ### Pull Request Guidelines
 
 - Commits and commit messages
@@ -34,9 +37,6 @@ Before proposing significant changes, open an issue so that we can discuss your 
 
 - [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager#introduction-to-npm) is the recommended package manager that must be used in installing dependencies.
 - The generated `package-lock.json` file must be committed to git.
-
-A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
-If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.
 
 
 ## Workers Playground
