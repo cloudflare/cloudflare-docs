@@ -163,15 +163,13 @@ If your logpush destination hostname is proxied through Cloudflare, and you have
 | Hostname         | `equals`   | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com` |
 | URI Path         | `equals`   | `/services/collector/raw`                                             |
 | URI Query String | `contains` | `channel`                                                             |
-| AS Num           | `equals`   | `132892`                                                              |
-| User Agent       | `equals`   | `Go-http-client/2.0`                                                  |
 
 {{</table-wrap>}}
 
 4. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
 
 ```txt
-(http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.geoip.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
+(http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel")
 ```
 
 5.  Under the **Then** > **Choose an action** dropdown, select _Skip_.
