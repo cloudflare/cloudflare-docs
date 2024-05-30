@@ -2,16 +2,25 @@
 {{- $resource_type := .Get "resource_type" -}}
 {{- $entries := index (index $data $resource_type) "entries" -}}
 {{- $tags := default slice (split (.Get "tags") ",") }}
-{{- $cloudflare_only := default true (.Get "cloudflare_one") -}}
+{{- $cloudflare_only := default true (.Get "cloudflare_only") -}}
 
 <ul>
 
 {{ range $entry := $entries }}
+
+<!-- Look for commonalities between both tags arrays -->
 {{ $intersect := $tags | intersect $entry.tags }}
 
-{{ if gt (len $intersect) 0}}
+{{ if gt (len $intersect) 0 }}
+{{ if $cloudflare_only }}
+{{ if $entry.cloudflare }}
 {{ $string := printf "[%s](%s): %s" $entry.name $entry.link $entry.description | $.Page.RenderString }}
 <li>{{$string}}</li>
+{{ end }}
+{{ else }}
+{{ $string := printf "[%s](%s): %s" $entry.name $entry.link $entry.description | $.Page.RenderString }}
+<li>{{$string}}</li>
+{{ end }}
 {{ end }}
 {{ end }}
 
