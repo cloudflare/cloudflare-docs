@@ -82,7 +82,7 @@ export interface Env {
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
         prompt: "What is the origin of the phrase Hello, World"
       }
     );

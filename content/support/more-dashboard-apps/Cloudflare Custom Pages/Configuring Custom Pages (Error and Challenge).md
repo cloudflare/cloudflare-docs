@@ -151,9 +151,9 @@ ___
 
 If you block countries or IP addresses with an [IP Access rule](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rules/) and you do not configure a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests in the rule, affected visitors will get your **WAF Block** page.
+If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rules/) and you do not configure a [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests in the rule, affected visitors will get your **WAF Block** page.
 
-If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom response for blocked requests](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) in the rule, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
+If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom response for blocked requests](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) in the rule, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
 
 If you block countries or IP addresses with a firewall rule (now deprecated), affected visitors will get your **1000 Class Errors page**.
 

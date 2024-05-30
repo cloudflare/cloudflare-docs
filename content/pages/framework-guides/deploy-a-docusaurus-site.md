@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Docusaurus site
+title: Docusaurus
 ---
 
-# Deploy a Docusaurus site
+# Docusaurus
 
 [Docusaurus](https://docusaurus.io) is a static site generator. It builds a single-page application with fast client-side navigation, leveraging the full power of React to make your site interactive. It provides out-of-the-box documentation features but can be used to create any kind of site such as a personal website, a product site, a blog, or marketing landing pages.
 

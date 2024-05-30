@@ -25,17 +25,13 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 2. For your **Plan**, choose **Business** or **Enterprise**.
 
-3. Add your domain to Cloudflare. You should land on the **Overview** page.
+3. Continue through the onboarding steps, ignoring the instructions to change your nameservers.
 
-4. Ignore the instructions to change your nameservers.
+4. On the **Overview** page, select **Convert to CNAME DNS Setup**.
 
-5. For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
+5. Select **Convert** to confirm.
 
-    ![On your domain's overview page, click Convert to CNAME DNS Setup](/images/dns/dns_cname_setup.png)
-
-6. Click **Convert**.
-
-7. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
+6. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
 
 {{</tutorial-step>}}
 

@@ -139,6 +139,12 @@ https://:project.pages.dev/*
 
 ### Harden security for an application
 
+{{<Aside type="note">}}
+
+If you are using Pages Functions and wish to attach security headers in order to control access to or browser behavior of server-side logic, the headers should be sent from in Pages Functions' `Response` instead of the `_headers` file. For example, if you have an API endpoint and want to allow cross-origin requests, you should ensure that your Pages Functions attaches CORS headers to its responses, including to `OPTIONS` requests. This is to ensure that, in the unlikely event of an incident involving serving static assets, your API security headers will continue to be configured.
+
+{{</Aside>}}
+
 You can prevent click-jacking by informing browsers not to embed your application inside another (for example, with an `<iframe>`) with a [`X-Frame-Options`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header.
 
 [`X-Content-Type-Options: nosniff`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options) prevents browsers from interpreting a response as any other content-type than what is defined with the `Content-Type` header.

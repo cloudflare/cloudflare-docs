@@ -21,4 +21,4 @@ Beyond [creating a simple load balancer](/load-balancing/load-balancers/create-l
 
 ## Integrate with 3rd parties
 
-*   Increase visibility by [sending health monitor notifications to Pagerduty](/load-balancing/additional-options/pagerduty-integration/)
+*   Increase visibility by [sending health monitor notifications to PagerDuty](/load-balancing/additional-options/pagerduty-integration/)

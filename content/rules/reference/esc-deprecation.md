@@ -10,7 +10,7 @@ meta:
 
 Edge Side Code (ESC) is a customization option used by several Enterprise customers that allows for more configurability of Cloudflare's global network features. This code can alter the behavior of Cloudflare's CDN, enabling logic for specific customer use cases. Currently, a few customers have ESC in place to perform special operations such as advanced header manipulation, host header switching.
 
-**Edge Side Code is now deprecated.** All configurations currently done via ESC will be removed on 2024-01-01. If you are using ESC, you will need to configure other Cloudflare products to replace your current ESC configuration before this date.
+**Edge Side Code is now deprecated.** All configurations currently done via ESC will be removed on 2025-01-01. If you are using ESC, you will need to configure other Cloudflare products to replace your current ESC configuration before this date.
 
 ## Will this deprecation affect my account?
 

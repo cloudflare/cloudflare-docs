@@ -51,3 +51,19 @@ Jurisdictional buckets can only be accessed via the corresponding jurisdictional
 | Admin Read only | Allows the ability to list buckets and view bucket configuration in addition to list and read object access. |
 | Object Read & Write | Allows the ability to read, write, and list objects in specific buckets. |
 | Object Read only | Allows the ability to read and list objects in specific buckets. |
+
+## Temporary access credentials
+
+If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/operations/r2-create-temp-access-credentials) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:
+
+```
+AWS_ACCESS_KEY_ID = <accessKeyId>
+AWS_SECRET_ACCESS_KEY = <secretAccessKey>
+AWS_SESSION_TOKEN = <sessionToken>
+```
+
+{{<Aside type="note">}}
+
+The temporary access key cannot have a permission that is higher than the parent access key. e.g. if the parent key is set to `Object Read Write`, the temporary access key could only have `Object Read Write` or `Object Read Only` permissions.
+
+{{</Aside>}}

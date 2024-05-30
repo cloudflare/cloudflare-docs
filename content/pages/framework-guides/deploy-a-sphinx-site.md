@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Sphinx site
+title: Sphinx
 ---
 
-# Deploy a Sphinx site
+# Sphinx
 
 [Sphinx](https://www.sphinx-doc.org/) is a tool that makes it easy to create documentation and was originally made for the publication of Python documentation. It is well known for its simplicity and ease of use.
 

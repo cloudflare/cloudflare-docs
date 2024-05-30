@@ -8,14 +8,14 @@ weight: 2
 
 ## Get Started
 
-Before you begin, you should understand two basic page rule behaviors:
+Before you begin, you should understand two basic behaviors of Page Rules (deprecated):
 
 - Only the highest priority matching page rule takes effect on a request.
 - Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
 Cloudflare recommends ordering your rules from most specific to least specific.
 
-## Page Rules Explained
+## Page Rules explained
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
 

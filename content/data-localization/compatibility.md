@@ -2,7 +2,6 @@
 title: Product compatibility
 pcx_content_type: reference
 weight: 3
-layout: wide
 meta:
   title: Cloudflare product compatibility
 ---
@@ -16,8 +15,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 ✘ Product cannot be used <br>
 ⚫️ Not applicable
 
-{{<tabs labels="Application Performance | Application Security | Developer Platform | Network Services | Platform | Zero Trust">}}
-{{<tab label="application performance" no-code="true">}}
+## Application Performance
 
  Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -35,8 +33,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Waiting Room | ⚫️ | ✅ | ✅ |
 | Zaraz | ✅ | ✅ | ✅ |
 
-{{</tab>}}
-{{<tab label="application security" no-code="true">}}
+---
+
+## Application Security
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -53,8 +52,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 | WAF/L7 Firewall | ✅ | ✅ | ✅ |
 | DMARC Management | ⚫️ | ⚫️ | ✅ |
 
-{{</tab>}}
-{{<tab label="developer platform" no-code="true">}}
+---
+
+## Developer Platform
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -68,28 +68,31 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Workers KV | ⚫️ | ✘ | ✘ |
 | Workers.dev | ✘ | ✘ | ✘ |
 
-{{</tab>}}
-{{<tab label="network services" no-code="true">}}
+---
+
+## Network Services
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
-| BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
+| Static IP/BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
 | Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
 
-{{</tab>}}
-{{<tab label="platform" no-code="true">}}
+---
+
+## Platform
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Logpull | ⚫️ | ⚫️ | 🚧{{<fnref num="12">}} |
 | Logpush | ⚫️ | ✅ | 🚧{{<fnref num="13">}} |
 
-{{</tab>}}
-{{<tab label="zero trust" no-code="true">}}
+---
+
+## Zero Trust
 
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
@@ -100,9 +103,6 @@ The table below provides a summary of the Data Localization Suite product's beha
 | DLP | ⚫️{{<fnref num="19">}} | ⚫️{{<fnref num="19">}} | 🚧{{<fnref num="31">}} |
 | Gateway | 🚧{{<fnref num="20">}} | 🚧{{<fnref num="21">}} | 🚧{{<fnref num="22">}} |
 | WARP | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-
-{{</tab>}}
-{{</tabs>}}
 
 {{<fnsection>}}
 {{<fnentry num="1">}}Logs / Analytics not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
@@ -126,7 +126,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnentry num="20">}}You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.{{</fnentry>}}
 {{<fnentry num="21">}}Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.{{</fnentry>}}
 {{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
-{{<fnentry num="26">}}BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
+{{<fnentry num="26">}}Static IP/BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
 {{<fnentry num="27">}}Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).{{</fnentry>}}
 {{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/reference/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
 {{<fnentry num="29">}}You cannot yet specify region location for object storage itself.{{</fnentry>}}

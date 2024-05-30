@@ -10,7 +10,7 @@ meta:
 
 This page explains how you can manage mTLS using client certificates that have not been issued by Cloudflare CA.
 
-This is especially useful if you already have mTLS implemented and client certificates issued by your chosen CA are already installed on devices.
+This is especially useful if you already have mTLS implemented and client certificates are already installed on devices.
 
 ## Availability
 

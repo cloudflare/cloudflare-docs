@@ -7,20 +7,9 @@ meta:
 
 # Examples
 
-## Return a custom status code and/or response headers
+Cloudflare has a wide range of Python examples in the [Workers Example gallery](/workers/examples/?languages=Python).
 
-```python
----
-filename: src/entry.py
----
-from js import Response, Headers
-
-async def on_fetch(request, env):
-  # Create a Headers object
-  headers = Headers.new({"x-hello-from": "python-workers"}.items())
-  # Return a response object with a status code and headers
-  return Response.new("Hello world!", status=404, headers=headers)
-```
+In addition to those examples, consider the following ones that illustrate Python-specific behavior.
 
 ## Parse an incoming request URL
 
@@ -90,23 +79,6 @@ async def on_fetch(request):
     print("print() from Python!")
 
     return Response.new("We're testing logging!")
-```
-
-## Respond with JSON
-
-```python
----
-filename: src/entry.py
----
-from js import Response, Headers
-import json
-
-async def on_fetch(request):
-    # Use json.loads to serialize Python objects to JSON strings
-    payload = json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True)
-
-    headers = Headers.new({"content-type": "application/json"}.items())
-    return Response.new(payload, headers=headers)
 ```
 
 ## Publish to a Queue

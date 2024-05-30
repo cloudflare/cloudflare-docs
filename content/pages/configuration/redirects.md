@@ -42,6 +42,8 @@ Only one redirect can be defined per line and must follow this format, otherwise
 
 {{</definitions>}}
 
+Lines starting with a `#` will be treated as comments.
+
 ### Per file
 
 A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.

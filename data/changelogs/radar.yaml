@@ -1,6 +1,8 @@
 ---
 link: "/radar/changelog/"
 productName: Radar
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2023-11-27'
   title: Add more meta information's

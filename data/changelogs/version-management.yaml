@@ -1,6 +1,8 @@
 ---
 link: "/version-management/changelog/"
 productName: Version Management
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
 - publish_date: '2024-02-26'
   title: "Support for API Shield"
