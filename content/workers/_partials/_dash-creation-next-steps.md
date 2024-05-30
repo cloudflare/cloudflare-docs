@@ -16,6 +16,8 @@ Once you have created your Worker script, you can edit and deploy your Worker us
 3. Select your application.
 4. Select **Edit Code**.
 
+  ![Edit code directly within the Cloudflare dashboard](/images/workers/workers-edit-code.png)
+
 ### Wrangler CLI
 
 To develop more advanced applications or [implement tests](/workers/testing/), start working in the Wrangler CLI:
