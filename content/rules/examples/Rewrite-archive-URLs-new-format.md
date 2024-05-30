@@ -5,6 +5,7 @@ tags:
   - Transform
 title: Rewrite blog archive URLs to support a new URL format
 ---
+
 # Rewrite blog archive URLs to support a new URL format
 
 To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`, create the following rewrite URL rule:

@@ -5,6 +5,7 @@ tags:
   - Redirects
 title: Redirect all requests to a different hostname
 ---
+
 # Redirect all requests to a different hostname
 
 This example dynamic redirect will redirect all requests for `smallshop.example.com` to a different hostname using HTTPS, keeping the original path and query string.

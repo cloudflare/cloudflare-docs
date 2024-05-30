@@ -5,6 +5,7 @@ tags:
   - Redirects
 title: Redirect all requests from one domain to another domain
 ---
+
 # Redirect all requests from one domain to another domain
 
 In this example the original domain was replaced with a different domain. All functionality was maintained, except for the HTTP service (port 80) which was discontinued.

@@ -5,6 +5,7 @@ tags:
   - Redirects
 title: Redirect visitors to the new URL of a specific page
 ---
+
 # Redirect visitors to the new URL of a specific page
 
 This example static redirect for zone `example.com` will redirect visitors requesting the `/contact-us/` page to the new page URL `/contacts/`.

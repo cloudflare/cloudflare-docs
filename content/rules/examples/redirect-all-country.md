@@ -5,18 +5,19 @@ tags:
   - Redirects
 title: Redirect all requests from one country to another domain
 ---
+
 # Redirect all requests from one country to another domain
 
 In this example, all website visitors from the United Kingdom will be redirected to a different domain, but maintaining current functionality in the same paths.
 
-1.  Create a Bulk Redirect List named `uk_redirect_list` with the following URL redirect:
+1. Create a Bulk Redirect List named `uk_redirect_list` with the following URL redirect:
 
     - **Source URL**: `https://example.com/`
     - **Target URL**: `https://example.co.uk/`
     - **Subpath matching**: Enabled
     - **Preserve query string**: Enabled
 
-2.  Create a Bulk Redirect Rule that enables the previous Bulk Redirect List and set the rule expression to the following:
+2. Create a Bulk Redirect Rule that enables the previous Bulk Redirect List and set the rule expression to the following:
 
     ```txt
     ip.src.country == "GB" and http.request.full_uri in $uk_redirect_list

@@ -5,11 +5,12 @@ tags:
   - Redirects
 title: Perform mobile redirects
 ---
+
 # Perform mobile redirects
 
 The following examples will redirect visitors using mobile devices — based on the request user agent string — to a different hostname.
 
-### Redirect mobile users dropping the original URI path
+## Redirect mobile users dropping the original URI path
 
 This example static redirect will redirect requests for the current zone (`example.com`) from mobile users to `m.example.com` without preserving the URI path in the original HTTP request.
 
@@ -34,7 +35,7 @@ Notes about this example:
 * The **Then** > **URL** value should be the same as the one you entered in the `http.host` condition of the rule's filter expression.
 * You can redirect users to other zones on Cloudflare or to other hostnames not on Cloudflare.
 
-### Redirect mobile users keeping the original path
+## Redirect mobile users keeping the original path
 
 This example dynamic redirect will redirect requests for the current zone (`example.com`) from mobile users to `m.example.com`, keeping the URI path of the original HTTP request.
 

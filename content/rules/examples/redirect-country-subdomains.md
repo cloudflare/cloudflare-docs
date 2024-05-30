@@ -5,6 +5,7 @@ tags:
   - Redirects
 title: Redirect UK and France visitors to their specific subdomains
 ---
+
 # Redirect UK and France visitors to their specific subdomains
 
 This example dynamic redirect for zone `example.com` will redirect United Kingdom and France visitors requesting the website's root path (`/`) to their localized subdomains `https://gb.example.com` and `https://fr.example.com`, respectively.

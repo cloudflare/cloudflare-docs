@@ -5,6 +5,7 @@ tags:
   - Transform
 title: Remove an HTTP request header
 ---
+
 # Remove an HTTP request header
 
 The following HTTP request header modification rule removes the `cf-connecting-ip` header from the request:

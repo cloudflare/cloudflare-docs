@@ -5,6 +5,7 @@ tags:
   - Redirects
 title: Remove locale information from URL path
 ---
+
 # Remove locale information from URL path
 
 This example dynamic redirect for zone `example.com` will redirect visitors from an old URL format that included the locale (for example, `/en-us/<page_name>`) to the new format `/<page_name>`.

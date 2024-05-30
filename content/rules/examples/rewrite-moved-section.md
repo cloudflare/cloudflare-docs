@@ -5,6 +5,7 @@ tags:
   - Transform
 title: Rewrite path of moved section of a website
 ---
+
 # Rewrite path of moved section of a website
 
 To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>` you must modify the first component of the path (`/blog/`). Create a rewrite URL rule and use the [`regex_replace()`](/ruleset-engine/rules-language/functions/#function-regex_replace) function for this purpose:

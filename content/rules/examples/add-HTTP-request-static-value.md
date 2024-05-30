@@ -5,6 +5,7 @@ tags:
   - Transform
 title: Add an HTTP request header with a static value
 ---
+
 # Add an HTTP request header with a static value
 
 The following HTTP request header modification rule adds a header named `X-Source` with a static value (`Cloudflare`) to the request:

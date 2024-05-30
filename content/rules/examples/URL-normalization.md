@@ -4,6 +4,7 @@ summary: You can use the table below to understand how different URL normalizati
 tags:
   - URL normalization
 title: URL normalization
+layout: wide
 ---
 
 # URL normalization

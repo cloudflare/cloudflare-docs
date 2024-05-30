@@ -5,6 +5,7 @@ tags:
   - Origin
 title: Define a single origin rule using Terraform
 ---
+
 # Define a single origin rule using Terraform
 
 The following example defines a single origin rule for a zone using Terraform. The rule overrides the `Host` header, the resolved hostname, and the destination port of API requests.

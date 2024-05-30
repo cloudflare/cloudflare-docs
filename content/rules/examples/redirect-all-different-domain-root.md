@@ -5,11 +5,12 @@ tags:
   - Redirects
 title: Redirect all requests for a domain to the root page of different domain
 ---
+
 # Redirect all requests for a domain to the root page of different domain
 
 In this example, an old website was discontinued and replaced by a new one in a different domain. The functionality is different, and all URLs should now point to the root of the new domain. The same applies to any subdomains of the old domain.
 
-1.  Create a Bulk Redirect List with the following URL redirect:
+1. Create a Bulk Redirect List with the following URL redirect:
 
     - **Source URL**: `example.com/`
     - **Target URL**: `https://example.net/`
@@ -17,7 +18,7 @@ In this example, an old website was discontinued and replaced by a new one in a 
     - **Include subdomains**: Enabled
     - **Preserve path suffix**: Disabled
 
-2.  Create a Bulk Redirect Rule that enables this list.
+2. Create a Bulk Redirect Rule that enables this list.
 
 This configuration will perform the following redirects:
 

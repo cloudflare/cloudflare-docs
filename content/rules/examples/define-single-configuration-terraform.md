@@ -5,6 +5,7 @@ tags:
   - Configuration
 title: Define a single configuration rule using Terraform
 ---
+
 # Define a single configuration rule using Terraform
 
 The following example defines a single configuration rule for a zone using Terraform. The rule disables Email Obfuscation and Browser Integrity Check for API requests.
