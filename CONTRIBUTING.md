@@ -32,8 +32,8 @@ Before proposing significant changes, open an issue so that we can discuss your 
 
 ## Package manager
 
-- [Yarn](https://classic.yarnpkg.com/en/docs/install) is the recommended package manager that must be used in installing dependencies.
-- Generated yarn.lock files must be committed to git.
+- [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager#introduction-to-npm) is the recommended package manager that must be used in installing dependencies.
+- The generated `package-lock.json` file must be committed to git.
 
 A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
 If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.
