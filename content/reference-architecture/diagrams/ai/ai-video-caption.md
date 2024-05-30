@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Automatic captioning for video uploads"
+  description: By integrating automatic speech recognition technology into video platforms, content creators, publishers, and distributors can reach a broader audience, including individuals with hearing impairments or those who prefer to consume content in different languages.
 tags:
   - AI
 ---

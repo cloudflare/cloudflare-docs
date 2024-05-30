@@ -88,11 +88,11 @@ Create a global, low-latency, key-value data storage.
 
 {{<resource header="Get started" href="/workers-ai/get-started/workers-wrangler/" icon="learning-center-book">}}Build and deploy your first Workers AI application.{{</resource>}}
 
-{{<resource header="Learning Path" href="/learning-paths/workers/" icon="reference-architecture">}}New to Workers? Get started with the Workers Learning Path.{{</resource>}}
-
 {{<resource header="Plans" href="/workers-ai/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
 
 {{<resource header="Limits" href="/workers-ai/platform/limits/" icon="documentation-clipboard">}}Learn about Workers AI limits.{{</resource>}}
+
+{{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 

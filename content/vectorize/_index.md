@@ -39,7 +39,7 @@ Learn how to create your first Vectorize database, upload vector embeddings, and
 
 {{<feature header="Vector embeddings using Workers AI" href="/vectorize/get-started/embeddings/" cta="Create vector embeddings using Workers AI">}}
 
-Learn how to use Vectorize to generate vector embeddings using Workers AI. 
+Learn how to use Vectorize to generate vector embeddings using Workers AI.
 
 {{</feature>}}
 
@@ -66,6 +66,8 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 {{<resource-group>}}
 
 {{<resource header="Limits" href="/vectorize/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the open beta and how to work within them.{{</resource>}}
+
+{{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 

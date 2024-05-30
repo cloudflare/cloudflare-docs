@@ -1,6 +1,8 @@
 ---
 type: example
 summary: Use the OpenAI v4 SDK to stream responses from OpenAI.
+meta:
+  description: Use the OpenAI v4 SDK to stream responses from OpenAI.
 tags:
   - AI
 languages:

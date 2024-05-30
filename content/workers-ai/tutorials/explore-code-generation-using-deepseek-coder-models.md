@@ -4,6 +4,8 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Explore Code Generation Using DeepSeek Coder Models
+meta:
+  description: Explore how you can use AI models to generate code and work more efficiently.
 weight: 4
 tags:
   - AI

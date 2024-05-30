@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Composable AI architecture"
+  description: The architecture diagram illustrates how AI applications can be built end-to-end on Cloudflare, or single services can be integrated with external infrastructure and services.
 tags:
   - AI
 ---

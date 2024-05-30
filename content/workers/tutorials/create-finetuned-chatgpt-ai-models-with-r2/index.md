@@ -11,7 +11,9 @@ tags:
 
 # Create a fine-tuned OpenAI model with R2
 
-In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning). This feature in OpenAI's API allows you to derive a custom model from OpenAI's various large language models based on a set of custom instructions and example answers. These instructions and example answers are written in a document, known as a fine-tune document. This document will be stored in R2 and dynamically provided to OpenAI's APIs when creating a new fine-tune model.
+In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning).
+
+This feature in OpenAI's API allows you to derive a custom model from OpenAI's various large language models based on a set of custom instructions and example answers. These instructions and example answers are written in a document, known as a fine-tune document. This document will be stored in R2 and dynamically provided to OpenAI's APIs when creating a new fine-tune model.
 
 In order to use this feature, you will do the following tasks:
 
