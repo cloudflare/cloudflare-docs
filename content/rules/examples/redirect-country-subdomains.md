@@ -4,6 +4,7 @@ summary: A Redirects Rule where United Kingdom and France visitors requesting th
 tags:
   - Redirects
 title: Redirect UK and France visitors to their specific subdomains
+layout: wide
 ---
 
 # Redirect UK and France visitors to their specific subdomains

@@ -4,6 +4,7 @@ summary: A Transform Rule where a header named `X-Bot-Score` is set to the curre
 tags:
   - Transform
 title: Set an HTTP response header to the current bot score
+layout: wide
 ---
 
 # Set an HTTP response header to the current bot score

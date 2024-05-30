@@ -4,6 +4,7 @@ summary: A Transform Rule where everything under `/blog/<PATH>` is rewritten to 
 tags:
   - Transform
 title: Rewrite path of moved section of a website
+layout: wide
 ---
 
 # Rewrite path of moved section of a website

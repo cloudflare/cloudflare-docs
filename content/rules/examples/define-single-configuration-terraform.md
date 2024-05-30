@@ -4,6 +4,7 @@ summary: A Configuration Rule using Terraform where mail Obfuscation and Browser
 tags:
   - Configuration
 title: Define a single configuration rule using Terraform
+layout: wide
 ---
 
 # Define a single configuration rule using Terraform

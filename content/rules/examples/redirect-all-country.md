@@ -4,6 +4,7 @@ summary: A Redirects Rule where all website visitors from the United Kingdom are
 tags:
   - Redirects
 title: Redirect all requests from one country to another domain
+layout: wide
 ---
 
 # Redirect all requests from one country to another domain

@@ -4,6 +4,7 @@ summary: A Redirects Rule where visitors using mobile devices are redirected to 
 tags:
   - Redirects
 title: Perform mobile redirects
+layout: wide
 ---
 
 # Perform mobile redirects

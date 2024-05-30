@@ -4,6 +4,7 @@ summary: An Origin Rule using Terraform where the `Host` header, the resolved ho
 tags:
   - Origin
 title: Define a single origin rule using Terraform
+layout: wide
 ---
 
 # Define a single origin rule using Terraform

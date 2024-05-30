@@ -4,6 +4,7 @@ summary: A Redirects Rule where visitors requesting the `/contact-us/` page are 
 tags:
   - Redirects
 title: Redirect visitors to the new URL of a specific page
+layout: wide
 ---
 
 # Redirect visitors to the new URL of a specific page

@@ -4,6 +4,7 @@ summary: A Transform Rule where the `cf-connecting-ip` header is removed from th
 tags:
   - Transform
 title: Remove an HTTP request header
+layout: wide
 ---
 
 # Remove an HTTP request header

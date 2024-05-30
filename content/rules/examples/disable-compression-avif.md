@@ -4,6 +4,7 @@ summary: A Compression Rule where compression for AVIF images is disabled, based
 tags:
   - Compression
 title: Disable compression to AVIF images
+layout: wide
 ---
 
 # Disable compression to AVIF images

@@ -4,6 +4,7 @@ summary: A Redirects Rule where visitors from an old URL format that included th
 tags:
   - Redirects
 title: Remove locale information from URL path
+layout: wide
 ---
 
 # Remove locale information from URL path

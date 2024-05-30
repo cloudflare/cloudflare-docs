@@ -4,6 +4,7 @@ summary: A Redirects Rule where requests for the administration area of `store.e
 tags:
   - Redirects
 title: Redirect admin area requests to HTTPS
+layout: wide
 ---
 
 # Redirect admin area requests to HTTPS

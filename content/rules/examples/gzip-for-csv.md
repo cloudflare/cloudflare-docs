@@ -4,6 +4,7 @@ summary: A Compression Rule where Gzip compression is configured as the preferre
 tags:
   - Compression
 title: Use Gzip compression for CSV files or other algorithm if not available
+layout: wide
 ---
 
 # Use Gzip compression for CSV files or other algorithm if not available

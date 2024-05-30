@@ -4,6 +4,7 @@ summary: A Transform Rule where the header `X-Source` with a static value (`Clou
 tags:
   - Transform
 title: Add an HTTP request header with a static value
+layout: wide
 ---
 
 # Add an HTTP request header with a static value

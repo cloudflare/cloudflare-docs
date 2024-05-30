@@ -4,6 +4,7 @@ summary: A Redirects Rule where all URLs are configured to point to the root of 
 tags:
   - Redirects
 title: Redirect all requests for a domain to the root page of different domain
+layout: wide
 ---
 
 # Redirect all requests for a domain to the root page of different domain

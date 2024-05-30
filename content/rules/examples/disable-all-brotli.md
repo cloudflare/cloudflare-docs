@@ -4,6 +4,7 @@ summary: A Compression Rule where Brotli compression for all incoming requests o
 tags:
   - Compression
 title: Disable Brotli compression for all requests of a zone
+layout: wide
 ---
 
 # Disable Brotli compression for all requests of a zone

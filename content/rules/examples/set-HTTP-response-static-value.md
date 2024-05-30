@@ -4,6 +4,7 @@ summary: A Transform Rule where a header named `X-Bot-Score` is set to a static 
 tags:
   - Transform
 title: Set an HTTP response header to a static value
+layout: wide
 ---
 
 # Set an HTTP response header to a static value

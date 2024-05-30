@@ -4,6 +4,7 @@ summary: A Transform Rule where the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>`
 tags:
   - Transform
 title: Rewrite blog archive URLs to support a new URL format
+layout: wide
 ---
 
 # Rewrite blog archive URLs to support a new URL format

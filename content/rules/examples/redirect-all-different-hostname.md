@@ -4,6 +4,7 @@ summary: A Redirects Rule where all requests for `smallshop.example.com` are red
 tags:
   - Redirects
 title: Redirect all requests to a different hostname
+layout: wide
 ---
 
 # Redirect all requests to a different hostname

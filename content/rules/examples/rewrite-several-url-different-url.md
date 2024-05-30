@@ -4,6 +4,7 @@ summary: A Transform Rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewr
 tags:
   - Transform
 title: Rewrite path with several URL segments to a different URL segment
+layout: wide
 ---
 
 # Rewrite path with several URL segments to a different URL segment

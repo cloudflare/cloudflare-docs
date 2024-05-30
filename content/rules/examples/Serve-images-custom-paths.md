@@ -4,6 +4,7 @@ summary: A Transform Rule where images from a custom path are served using URL r
 tags:
   - Transform
 title: Serve images from custom paths
+layout: wide
 ---
 
 # Serve images from custom paths

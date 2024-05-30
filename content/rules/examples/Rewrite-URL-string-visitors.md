@@ -4,6 +4,7 @@ summary: A Transform Rule where a request to the `/blog` path is rewritten to `/
 tags:
   - Transform
 title: Rewrite URL query string of blog visitors
+layout: wide
 ---
 
 # Rewrite URL query string of blog visitors

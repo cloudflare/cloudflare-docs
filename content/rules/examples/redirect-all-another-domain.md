@@ -4,6 +4,7 @@ summary: A Redirects Rule where the original domain was replaced with a differen
 tags:
   - Redirects
 title: Redirect all requests from one domain to another domain
+layout: wide
 ---
 
 # Redirect all requests from one domain to another domain

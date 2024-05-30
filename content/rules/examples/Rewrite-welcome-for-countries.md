@@ -4,6 +4,7 @@ summary: A Transform Rule where the path of the welcome page for visitors in spe
 tags:
   - Transform
 title: Rewrite path of welcome page for visitors in specific countries
+layout: wide
 ---
 
 # Rewrite path of welcome page for visitors in specific countries

@@ -4,6 +4,7 @@ summary: A Compression Rule where only Brotli compression is configured for a sp
 tags:
   - Compression
 title: Use only Brotli compression for a specific URI path
+layout: wide
 ---
 
 # Use only Brotli compression for a specific URI path

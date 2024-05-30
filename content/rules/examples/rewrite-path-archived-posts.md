@@ -4,6 +4,7 @@ summary: A Transform Rule where all requests to `/news/2012/...` are rewritten t
 tags:
   - Transform
 title: Rewrite path of archived blog posts
+layout: wide
 ---
 
 # Rewrite path of archived blog posts

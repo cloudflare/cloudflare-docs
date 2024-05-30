@@ -4,6 +4,7 @@ summary: A Transform Rule where the header `set-cookie` with a static value (`co
 tags:
   - Transform
 title: Add an HTTP response header with a static value
+layout: wide
 ---
 
 # Add an HTTP response header with a static value
