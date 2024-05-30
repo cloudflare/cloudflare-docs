@@ -24,7 +24,7 @@ An error callback will retrieve an error code as its first parameter.
 
 By default, Turnstile will automatically retry upon encountering a problem. When subsequent failures due to retries are observed, the error callback can be invoked multiple times.
 
-You can adjust the retry behavior by setting the `retry` value to `never` instead of the default `auto`. This will result in Turnstile not automatically retrying.
+You can adjust the retry behavior by setting the `retry` value to `never` instead of the default `auto`. This will result in Turnstile not automatically retrying. If there is any issue or error verifying the visitor, the widget will not retry and will remain in the respective failure state.
 
 An implementation may call `turnstile.reset()` in the corresponding `error-callback` to manually trigger a retry.
 
