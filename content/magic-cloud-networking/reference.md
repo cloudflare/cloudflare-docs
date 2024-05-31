@@ -8,7 +8,9 @@ weight: 5
 
 Refer to this page for details about how Cloudflare orchestrates VPN connectivity to your cloud networks.
 
-## AWS
+## Cloud on-ramps
+
+### AWS
 
 ![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/reference/aws.png)
 
@@ -19,7 +21,7 @@ When using Magic Cloud Networking to automatically create on-ramps to your AWS a
 - Cloudflare will add a route in Magic WAN for each IPv4 CIDR block in your VPC.
 
 
-## Azure
+### Azure
 
 ![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/reference/azure.png)
 
