@@ -36,7 +36,7 @@ Written following Cloudflare’s documentation style guide. For more information
 
 You may submit as many tutorial topics ideas as you like in your application
 
-- When will I be compensated for my tutorial?
+### When will I be compensated for my tutorial?
 
 We will add the account credits to your Cloudflare account after your tutorial has been approved and published under the Developer Spotlight program.
 
