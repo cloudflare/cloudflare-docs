@@ -1,7 +1,7 @@
 ---
-title: Cloud on-ramps
+title: Configure cloud on-ramps
 pcx_content_type: how-to
-weight: 5
+weight: 3
 meta:
     description: Use Magic Cloud Networking to quickly and easily discover resources on your cloud provider, and configure them automatically.
 ---
