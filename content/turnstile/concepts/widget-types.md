@@ -16,7 +16,6 @@ This mode is fully managed by Cloudflare. It automatically chooses the appropria
 
 Refer to [appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) to configure whether to have the widget be always visible or visible only when interaction is required. 
 
-
 ### Light mode
 
 ![Managed challenge](/images/turnstile/light-verify.png)
