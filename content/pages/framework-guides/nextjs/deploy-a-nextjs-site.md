@@ -310,6 +310,10 @@ If you are using the Pages router, for page routes, you need to use `'experiment
 
 {{</Aside>}}
 
+### Caching and Data Revalidation
+
+`@cloudflare/next-on-pages` provides an out-of-the-box solution for caching as close as possible to the default one that Next.js provides. In case you run into troubles with caching and data revalidation or want to see the possible caching storage options please refer to the [`next-on-pages caching documentation`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/docs/caching.md).
+
 ### App router
 
 #### Not found
