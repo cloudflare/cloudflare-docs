@@ -8,7 +8,7 @@ weight: 300
 
 ## Summary
 
-Starting on July 10, 2024, Cloudflare Logpush will begin updating the [User-Agent request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) used to make HTTP requests to your destination. We will be replacing the existing User-Agent header values of `Go-http-client/1.1` and `Go-http-client/2.0` with the value of `Cloudflare-Logpush/1.0`. While this change is being rolled out, you may see any Logpush traffic from any of the three User-Agents mentioned.
+Starting on July 10, 2024, Cloudflare Logpush will begin updating the [User-Agent request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) used to make HTTP requests to your destination. We will be replacing the existing User-Agent header values of `Go-http-client/1.1` and `Go-http-client/2.0` with the value of `Cloudflare-Logpush/1.0`. While this change is being rolled out, you may see Logpush traffic from any of the three User-Agents mentioned.
 
 ## What destination types does this affect?
 
