@@ -1,11 +1,16 @@
 ---
-title: Change notices
-pcx_content_type: navigation
-weight: 131
-meta:
-  description: Get additional information about relevant changes to Cloudflare Logs.
+pcx_content_type: changelog
+title: Changelog
+weight: 11
+layout: changelog
+changelog_file_name: [logs]
+outputs:
+    - html
+    - rss
 ---
 
-# Change notices
+# Changelog
 
-{{<directory-listing>}}
+<!-- Actual content lives in /data/changelogs/logs.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+
+{{<product-changelog>}}

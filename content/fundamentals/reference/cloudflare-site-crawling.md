@@ -15,6 +15,8 @@ Cloudflare will crawl your site when you have specific products enabled:
 
 * [**Always Online**](/cache/how-to/always-online/)
     * *User-Agent*: `Mozilla/5.0 (compatible; CloudFlare-AlwaysOnline/1.0; +http://www.cloudflare.com/always-online)`
+* [**Logpush**](/logs/about/):
+    * *User-Agent*: `Cloudflare-Logpush/1.0`
 * [**Health checks**](/health-checks/)
     * *User-Agent*: `Mozilla/5.0 (compatible; Cloudflare-Healthchecks/1.0; +https://www.cloudflare.com/; healthcheck-id: <HEALTHCHECK_ID>)`
     * `HEALTHCHECK_ID` is a 16-character string associated with the health check ID.
@@ -36,9 +38,9 @@ Cloudflare will also crawl your site in other, specific situations:
 * **Speed tests**
     * *User-Agent*: `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 PTST/190628.140653`
     * *Triggered when*: You launch a speed test from within [the Cloudflare dashboard](/speed/speed-test/run-speed-test/).
-* **Support diagnostics**: 
+* **Support diagnostics**:
     * *User-Agent*: `Cloudflare-diagnostics`
     * *Triggered when*: Cloudflare Support Engineers perform error checks and by continuous monitoring used to raise intelligent alerts in the Cloudflare dashboard.
-* **Custom Hostname validation**: 
+* **Custom Hostname validation**:
     * *User-Agent*: `Cloudflare Custom Hostname Verification`
     * *Triggered when*: You choose to validate a custom hostname with an [HTTP ownership token](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/pre-validation/#http-tokens).

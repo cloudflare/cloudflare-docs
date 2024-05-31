@@ -1,0 +1,22 @@
+---
+link: "/logs/change-notices/"
+productName: Logs
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
+entries:
+- publish_date: '2024-05-30'
+  title: Updates to Logpush's User-Agent
+  description: |-
+    Starting on July 10, 2024, Cloudflare Logpush will begin updating the [User-Agent request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) used to make HTTP requests to your destination. We will be replacing the existing User-Agent header values of `Go-http-client/1.1` and `Go-http-client/2.0` with the value of `Cloudflare-Logpush/1.0`. While this change is being rolled out, you may see any Logpush traffic from any of the three User-Agents mentioned.
+
+    For more details, refer to the [dedicated change page](/logs/reference/change-notices/2024-05-30-logpush-user-agent/).
+
+- publish_date: '2023-02-01'
+  title: Updates to security fields in Cloudflare Logs
+  description: |-
+    Cloudflare will deploy some updates to security-related fields in Cloudflare Logs. These updates will affect the following datasets:
+
+    - HTTP Requests
+    - Firewall Events
+
+    For more details, refer to the [dedicated change page](/logs/reference/change-notices/2023-02-01-security-fields-updates/).
