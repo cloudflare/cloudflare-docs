@@ -53,7 +53,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 1. [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application) and skip the optional **Redirect URL** step.
 2. [Add a client secret](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#add-a-client-secret) to the app registration. Take note of the secret value as you cannot retrieve this information later. Cloudflare will ask for this value when you make an Azure Cloud Integration.
 3. [Add a role assignment](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal). The purpose of this step is to give the app that you registered in step 1 permission to access your Azure Subscription.
-    1. In step 3 of the linked doc, select the **Contributor** role from the **Privileged administrator roles** tab.
+    1. In step 3 of the linked document, select the **Contributor** role from the **Privileged administrator roles** tab.
     2. In step 4 of the linked document, search for the app registration from step 1 when selecting members.
 
 ### Google Cloud Platform
