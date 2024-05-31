@@ -46,7 +46,7 @@ We ask that you do not republish any tutorials that have been published under th
 
 ### Will I be credited for my work?
 
-You will be credited as the author of any tutorial you submit that is successfully published to the Cloudflare Developer Spotlight program. We will add your details to your work after it has been approved.
+You will be credited as the author of any tutorial you submit that is successfully published through the Cloudflare Developer Spotlight program. We will add your details to your work after it has been approved.
 
 ### What happens If my topic of choice gets accepted but the tutorial submission gets rejected?
 
