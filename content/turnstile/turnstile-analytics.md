@@ -48,7 +48,7 @@ API Solve Rate is the share of tokens that were siteverified compared to issued.
 
 ## Widget traffic
 
-Widget traffic metrics provide you with data on the number of instances where the widget was displayed, number of instances where interactive widget was solved, and the number of instances where non-interactive widget was solved on your website over time.
+Widget traffic metrics provide you with data on the number of instances where the widget was displayed, the number of instances where interactive widget was solved, and the number of instances where non-interactive widget was solved on your website over time.
 
 ## Top Actions
 
