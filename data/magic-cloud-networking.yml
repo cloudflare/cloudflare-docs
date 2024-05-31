@@ -13,8 +13,6 @@ meta:
   author: '@cloudflare'
 
 externals:
-  - title: Magic Cloud Networking home
-    url:
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
