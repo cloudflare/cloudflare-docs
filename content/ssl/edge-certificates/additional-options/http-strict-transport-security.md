@@ -71,6 +71,12 @@ To enable HSTS with the API, send a [`PATCH`](/api/operations/zone-settings-chan
 {{</tab>}}
 {{</tabs>}}
 
+{{<Aside type="note">}}
+
+Should you want to enable HSTS on a specific subdomain only, you should configure a [subdomain setup](/dns/zone-setups/subdomain-setup/). Alternatively, you could add the appropriate HSTS header at the origin or use an [HTTP response header modification rule](/rules/transform/response-header-modification/).
+
+{{</Aside>}}
+
 ## Disable HSTS
 
 To disable HSTS on your website:
