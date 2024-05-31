@@ -62,9 +62,13 @@ As part of establishing the WARP connection, the client will check the following
 
 - `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
 
-## NEL reporting
+## NEL reporting (optional)
 
-While not required for the WARP client to function, we will report connectivity issues to our NEL endpoint via `a.nel.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+The WARP client reports connectivity issues to our NEL endpoint via `a.nel.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+
+## Latency statistics (optional)
+
+The WARP client generates ICMP traffic to the [WARP ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) when running tunnel latency tests. This is not technically required to operate but will result in errors in our logs if not excluded properly.
 
 ## Scope of firewall rules
 
