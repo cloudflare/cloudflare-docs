@@ -7,7 +7,7 @@ title: Developer Spotlight Program
 
 If you use Cloudflare's developer products and would like to share your expertise then Cloudflare's Developer Spotlight program is for you! Whether you use Cloudflare in your profession, as a student or as a hobby, let us spotlight your creativity. Write a tutorial for our documentation and earn credits for your Cloudflare account along with having your name credited on your work.
 
-The Developer Spotlight Program is not currently open for applicants. Please keep an eye on our official Discord channel for future anouncements.
+The Developer Spotlight program is not currently open for applicants. Please keep an eye on our official Discord channel for future anouncements.
 
 ## Who can apply?
 
