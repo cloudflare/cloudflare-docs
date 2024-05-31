@@ -1,6 +1,6 @@
 ---
 title: Client-side error codes
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 weight: 3
 layout: wide
 ---
