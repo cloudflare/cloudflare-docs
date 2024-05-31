@@ -12,7 +12,7 @@ The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible*
 
 ## Managed (recommended)
 
-This mode is fully managed by Cloudflare. It automatically chooses the appropriate action based on various signals and risk levels. Cloudflare will use the information from the visitor to decide if an interactive challenge should be used.  Turnstile will only require interaction if a further check is necessary to verify that the visitor is human. When Turnstile shows an interaction, the user will be prompted to check a box (no images or text to decipher). This managed mode is ideal for users who want a simple configuration without needing to fine-tune the behavior. 
+This mode is fully managed by Cloudflare. It automatically chooses the appropriate action based on various signals and risk levels. Cloudflare will use the information from the visitor to decide if an interactive challenge should be used. Turnstile will only require interaction if a further check is necessary to verify that the visitor is human. When Turnstile shows an interaction, the user will be prompted to check a box (no images or text to decipher). This managed mode is ideal for users who want a simple configuration without needing to fine-tune the behavior. 
 
 Refer to [appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) to configure whether to have the widget be always visible or visible only when interaction is required. 
 
