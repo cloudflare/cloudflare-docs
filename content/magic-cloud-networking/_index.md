@@ -23,12 +23,12 @@ Magic Cloud Networking is in a closed beta. If you are interested in trying out 
 
 ## Features
 
-{{<feature header="Automatic discovery of cloud resources" href="/magic-cloud-networking/get-started/">}}
-Discover your cloud resources automatically, and easily set up your integrations.
+{{<feature header="Discover your cloud resources automatically" href="/magic-cloud-networking/get-started/">}}
+Discover your cloud resources like Virtual Private Clouds (VPCs), subnets, Virtual Machines (VMs), route tables, and routes automatically, and easily set up your integrations.
 {{</feature>}}
 
-{{<feature header="Cloud resource catalog" href="/magic-cloud-networking/manage-resources/#cloud-resource-catalog">}}
-Review all of your cloud resources, like Virtual Private Clouds (VPCs), subnets, Virtual Machines (VMs), route tables, and routes.
+{{<feature header="Automatically connect a cloud network" href="/magic-cloud-network/get-started/">}}
+Automatically build VPN tunnels between cloud networks and Magic WAN.
 {{</feature>}}
 
 ---
