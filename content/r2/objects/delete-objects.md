@@ -20,7 +20,7 @@ You can delete objects from your bucket from the Cloudflare dashboard or using t
 
 {{<Aside type="warning">}}
 
-Deleting objects from a bucket is irreversible.
+Deleting objects from a bucket is irreversible. We recommend consider using a third party tool to backup any important content about your R2 before deleting objects.
 
 {{</Aside>}}
 
