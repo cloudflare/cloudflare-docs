@@ -34,22 +34,19 @@ Written following Cloudflare’s documentation style guide. For more information
 
 ### How many tutorial topic ideas can I submit?
 
-You may submit as many tutorial topics ideas as you like in your application
+You may submit as many tutorial topics ideas as you like in your application.
 
 ### When will I be compensated for my tutorial?
 
 We will add the account credits to your Cloudflare account after your tutorial has been approved and published under the Developer Spotlight program.
 
+### If my tutorial is accepted and published on Cloudflare's Developer Spotlight program, can I republish it elsewhere?
 
-### If my tutorial is accepted and published on Cloudflare's Developer Voices page, can I republish it elsewhere?
-
-We ask that you do not republish any tutorials that have been published under the Cloudflare Developer Voices page.
-
+We ask that you do not republish any tutorials that have been published under the Cloudflare Developer Spotlight program.
 
 ### Will I be credited for my work?
 
-You will be credited as the author of any tutorial you submit that is successfully published to the Cloudflare Developer Voices program. We will add your details to your work after it has been approved.
-
+You will be credited as the author of any tutorial you submit that is successfully published through the Cloudflare Developer Spotlight program. We will add your details to your work after it has been approved.
 
 ### What happens If my topic of choice gets accepted but the tutorial submission gets rejected?
 
