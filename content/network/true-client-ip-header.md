@@ -21,3 +21,5 @@ The recommended procedure to access client IP information is to [enable the **Ad
 In order to use this data, you will need to then retrieve it from the [`True-Client-IP` header](/fundamentals/reference/http-request-headers/#cf-ipcountry).
 
 {{</Aside>}}
+
+{{<render file="_true-client-ip-additional-resources.md">}}
