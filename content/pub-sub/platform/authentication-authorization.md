@@ -37,7 +37,7 @@ To generate a single token for a broker named `example-broker` in `your-namespac
 For example, to generate five valid tokens with an automatically generated Client ID for each token:
 
 ```sh
-$ wrangler pubsub broker issue example-broker --number=5 --expiration=48h
+$ wrangler pubsub broker issue example-broker --namespace=my-namespace --number=5 --expiration=48h
 ```
 
 You should receive a scucess response that resembles the example below, which is a map of Client IDs and their associated tokens.
