@@ -50,8 +50,8 @@ Then simply follow the prompts in order to create your new Worker application:
 1. Give your new Worker a concise and descriptive name.
 2. Select `"Hello World" Worker` for the type of application, as it creates a simple example Worker which is triggered by an HTTP request.
 3. Select `Yes` to use TypeScript.
-4. Choose if you want to init a git repository for this new Worker project. For this tutorial, we will select `Not`, but feel free to choose Yes.
-5. Then select `No` when you get asked if you want to deploy your application.
+4. Decide if you want to initialize a git repository for this new Worker project. We will select `No`, for this tutorial, but feel free to choose `Yes`.
+5. Choose `No` when asked if you want to deploy your application.
 
 If you do choose to deploy here, you will be asked to authenticate (if not logged in already) and select an account, then your project will be deployed. You can always (re)deploy your application later on by running `npx wrangler deploy`.
 
