@@ -8,7 +8,7 @@ meta:
 
 # Manage account members
 
-Learn how to add new account members, edit or revoke their permissions and access, and resend verifications emails.
+Learn how to add new account members, edit or revoke their access, and resend verification emails.
 
 {{<Aside type="note">}}
 {{<render file="_account-member-manage-limitation.md" productFolder="fundamentals">}}
