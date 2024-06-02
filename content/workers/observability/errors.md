@@ -39,22 +39,23 @@ A Worker cannot call itself or another Worker more than 16 times. In  order to p
 ## Errors on Worker upload
 These errors occur when a Worker is uploaded or modified. 
 {{<table-wrap>}}
-| Error code | Meaning                                                                                                           |
-| ---------------- | -------------------------------------------------------------------------------------------------------------- |
-| `10006`     | Could not parse script body.                                                                              |
-| `10007`     | Script or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                                      |
-| `10015`     | Account is not entitled to use Workers.                                          |
-| `10016`     | Invalid script name.                                                    |
-| `10026`     | Could not parse request body.                                                                     |
-| `10035`     | Multiple attempts to modify a resource at the same time                                                                                        
-| `10037`     | An account has exceeded the number of [Workers scripts allowed](/workers/platform/limits/#number-of-workers).                         |
-| `10026`     | Could not parse request body.                         |                        |
-| `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                         |
-| `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                         |
-| `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).                         |
-| `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                         |
-| `10068`     | The uploaded script has no registered [event handlers](/workers/runtime-apis/handlers/).                         |
-| `10069`     | The uploaded script contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.                     |
+| Error code | Meaning                                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `10006`     | Could not parse your Worker's code.                                                                                          |
+| `10007`     | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                    |
+| `10015`     | Account is not entitled to use Workers.                                                                                      |
+| `10016`     | Invalid Worker name.                                                                                                         |
+| `10021`     | Validation Error. See error message for further detail. Your Worker likely exceeded the [CPU startup time limit](/workers/platform/limits/#worker-startup-time). |
+| `10026`     | Could not parse request body.                                                                                                |
+| `10035`     | Multiple attempts to modify a resource at the same time                                                                      |     
+| `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
+| `10026`     | Could not parse request body.                                                                                                |
+| `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                     |
+| `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                  |
+| `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).  |
+| `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                                                                       |
+| `10068`     | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                     |
+| `10069`     | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.           |
 
 {{</table-wrap>}}
 
