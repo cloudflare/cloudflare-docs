@@ -12,9 +12,6 @@ This tutorial gives you an overview on how to create a TypeScript-based Cloudfla
 
 The following sections will guide you through the process of creating a Worker using the Cloudflare CLI, creating and setting up a D1 database and R2 bucket, and then implementing the functionality to securely upload and fetch files from the created R2 bucket.
 
-{{<tutorial>}}
-
-{{<tutorial-prereqs>}}
 
 ## Prerequisites
 
@@ -23,9 +20,6 @@ Before you can start with this tutorial, you will need to have the following pre
 2. [`npm`](https://docs.npmjs.com/getting-started)
 3. [`Node.js`](https://nodejs.org/en/) with version `16.17.0` or later
 
-{{</tutorial-prereqs>}}
-
-{{<tutorial-step title="1. Create a new Worker application">}}
 
 ## 1. Create a new Worker application
 
@@ -34,13 +28,13 @@ To get started developing your Worker you will use the [`create-cloudflare` CLI]
 {{<tabs labels="NPM | Yarn">}}
 {{<tab label="npm" no-code="true">}}
 ```sh
-npm create cloudflare@latest -y
+$ npm create cloudflare@latest -y
 ```
 {{</tab>}}
 
 {{<tab label="yarn" no-code="true">}}
 ```sh
-yarn create cloudflare
+$ yarn create cloudflare
 ```
 {{</tab>}}
 {{</tabs>}}
@@ -55,9 +49,6 @@ Then simply follow the prompts in order to create your new Worker application:
 
 If you do choose to deploy here, you will be asked to authenticate (if not logged in already) and select an account, then your project will be deployed. You can always (re)deploy your application later on by running `npx wrangler deploy`.
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="2. Create a new D1 database and binding" >}}
 
 ## 2. Create a new D1 database and binding
 
@@ -69,7 +60,7 @@ To create a D1 database, just run the following command.
 If you get asked to install wrangler, just confirm by pressing `y` and then press `Enter`.
 
 ```sh
-npx wrangler d1 create <YOUR_DATABASE_NAME>
+$ npx wrangler d1 create <YOUR_DATABASE_NAME>
 ```
 
 But be sure to replace `<YOUR_DATABASE_NAME>` with the name you want to you for your database. Keep in mind that this name can't be changed later on.
@@ -79,10 +70,6 @@ The binding declaration will start with `[[d1_databases]]` and contain the bindi
 To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file.
 
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="3. Create R2 bucket and binding">}}
-
 ## 3. Create R2 bucket and binding
 
 Now that the D1 database is created, you also need to create an R2 bucket which will be used to store the uploaded files.
@@ -90,7 +77,7 @@ This step can also be done through the Cloudflare Portal, but as before, we will
 To create an R2 bucket, run the following command:
 
 ```sh
-npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
+$ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
@@ -107,12 +94,9 @@ Now that you prepared the wrangler configuration, you should update the `worker-
 You could either update it manually or run the following command in the directory of your project to update it automatically based on the wrangler configuration file (recommended).
 
 ```sh
-npm run cf-typegen    
+$ npm run cf-typegen    
 ```
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="4. Database preparation">}}
 
 ## 4. Database preparation
 
@@ -127,14 +111,11 @@ As this operation only needs to be done once, this will be done through the Wran
 Just run the following commands in order to prepare the database, but be sure to replace `<YOUR_DATABASE_NAME>` with the name you used for your database:
 
 ```sh
-npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE TABLE user (id INTEGER PRIMARY KEY NOT NULL, username STRING NOT NULL, password STRING NOT NULL)" --remote
-npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE UNIQUE INDEX user_username ON user (username)"  --remote
-npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (username, password) VALUES ('admin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8')"  --remote
+$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE TABLE user (id INTEGER PRIMARY KEY NOT NULL, username STRING NOT NULL, password STRING NOT NULL)" --remote
+$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE UNIQUE INDEX user_username ON user (username)"  --remote
+$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (username, password) VALUES ('admin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8')"  --remote
 ```
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="5. Implement authentication in the Worker">}}
 
 ## 5. Implement authentication in the Worker
 
@@ -205,9 +186,6 @@ if (!user) {
 
 This code will now ensure that every request is authenticated before it can be processed further.
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="6. Upload a file through the Worker">}}
 
 ## 6. Upload a file through the Worker
 
@@ -231,11 +209,8 @@ if (request.method === 'POST') {
 
 This code will now allow you to upload a file through the Worker, which will be stored in your R2 bucket.
 
-{{</tutorial-step>}}
 
-{{<tutorial-step title="7. Fetch a file through the Worker">}}
-
-## 7. Fetch from an R2 bucket
+## 7. Fetch from the R2 bucket
 
 To round up the Worker application, you will need to implement the functionality to fetch files from the R2 bucket.
 This can be done by adding a new code path that handles `GET` requests.
@@ -256,9 +231,6 @@ return new Response('Method Not Allowed!', { status: 405 });
 
 This code now allows you to fetch and return data from the R2 bucket when a `GET` request is made to the Worker application.
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="8. Deploy your Worker">}}
 
 ## 8. Deploy your Worker
 
@@ -272,11 +244,6 @@ You might get asked to authenticate (if not logged in already) and select an acc
 When the deployment finished successfully, you will see a success message with the URL where your Worker is now accessible.
 
 
-{{</tutorial-step>}}
-
-
-{{<tutorial-step title="9. Test your Worker" optional=true >}}
-
 ## 9. Test your Worker (optional)
 
 To finish this tutorial, you should test your Worker application by sending a `POST` request to upload a file and after that a `GET` request to fetch the file.
@@ -285,7 +252,7 @@ This can be done by using a tool like `curl` or `Postman`, but for simplicity, t
 First run the following command to upload a simple JSON file with the content `{"Hello": "Worker!"}`:
 
 ```sh
-curl --location '<YOUR_WORKER_URL>/myFile.json' \
+$ curl --location '<YOUR_WORKER_URL>/myFile.json' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Basic YWRtaW46cGFzc3dvcmQ=' \
 --data '{
@@ -296,12 +263,9 @@ curl --location '<YOUR_WORKER_URL>/myFile.json' \
 Then run the next command, or simply open the URL in your browser, to fetch the file you just uploaded:
 
 ```sh
-curl --location '<YOUR_WORKER_URL>/myFile.json?Authorization=Basic%20YWRtaW46cGFzc3dvcmQ%3D'
+$ curl --location '<YOUR_WORKER_URL>/myFile.json?Authorization=Basic%20YWRtaW46cGFzc3dvcmQ%3D'
 ```
 
-{{</tutorial-step>}}
-
-{{<tutorial-step title="Next steps" >}}
 
 ## Next steps
 
@@ -309,7 +273,3 @@ If you want to learn more about Cloudflare Workers, R2, or D1 you can check out 
 - [Cloudflare Workers](/workers/)
 - [Cloudflare R2](/r2/)
 - [Cloudflare D1](/d1/)
-
-{{</tutorial-step>}}
-
-{{</tutorial>}}
