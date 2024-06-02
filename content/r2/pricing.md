@@ -25,7 +25,7 @@ All included usage is on a monthly basis.
 | Data Retrieval (processing) | None                         | $0.01 / GB                         |
 | Egress (data transfer to Internet) | Free [^1] | Free [^1] |
 
-[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other, metered services to an R2 bucket, you may be charged by those services.
+[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
 
 ### Free tier
 
@@ -70,7 +70,7 @@ Data retrieval fees apply when you access or retrieve data from the Infrequent A
 
 ### Minimum storage duration
 
-For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the duration specified.
+For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the specified duration.
 
 | Storage class                                           | Minimum storage duration            |
 | ------------------------------------------------------- | ----------------------------------- |

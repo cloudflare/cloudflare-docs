@@ -15,7 +15,7 @@ For example, you can create an object lifecycle rule to delete objects after 90 
 - When a lifecycle policy is applied that deletes objects, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous policy.
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle policy to expire multipart uploads seven days after initiation.
-- When an object is transitioned from Standard storage to Infrequent Access storage a [Class A operation](/r2/pricing/#class-a-operations) is incurred.
+- When an object is transitioned from Standard storage to Infrequent Access storage, a [Class A operation](/r2/pricing/#class-a-operations) is incurred.
 
 ## Configure your bucket's object lifecycle policy
 
@@ -156,7 +156,7 @@ console.log(
 1. From the Cloudflare dashboard, select **R2**.
 2. Locate and select your bucket from the list.
 3. From the bucket page, select **Settings**.
-4. Under **Object lifecycle rules**, select the rules you'd like to delete.
+4. Under **Object lifecycle rules**, select the rules you would like to delete.
 5. When you are done, select **Delete rule(s)**.
 
 ### S3 API

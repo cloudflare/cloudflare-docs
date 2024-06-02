@@ -524,5 +524,5 @@ An `R2UploadedPart` object represents a part that has been uploaded. `R2Uploaded
 
 ### Storage Class
 
-The storage class where an `R2Object` is stored in. The available storage classes are `Standard` and `InfrequentAccess`. Refer to [Storage classes](/r2/buckets/storage-classes/)
+The storage class where an `R2Object` is stored. The available storage classes are `Standard` and `InfrequentAccess`. Refer to [Storage classes](/r2/buckets/storage-classes/)
 for more information.

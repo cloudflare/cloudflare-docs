@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Storage classes
 
-Storage classes allow you to trade-off between the cost of storage and the cost of accessing data. Every object stored in R2 has an associated storage class.
+Storage classes allow you to trade off between the cost of storage and the cost of accessing data. Every object stored in R2 has an associated storage class.
 
 All storage classes share the following characteristics:
 - Compatible with Workers API, S3 API, and public buckets.
@@ -59,7 +59,7 @@ All storage classes share the following characteristics:
   </tbody>
 </table>
 
-For more information on how storage classes impact pricing, please refer to [Pricing](/r2/pricing/).
+For more information on how storage classes impact pricing, refer to [Pricing](/r2/pricing/).
 
 ### Standard storage
 
@@ -85,13 +85,13 @@ Infrequent Access storage is ideal for data that is accessed less frequently. Th
 
 {{<Aside type="note">}}
 
-For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the duration specified.
+For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the specified duration.
 
 {{</Aside>}}
 
 #### Example use cases
 
-- Long-term data archiving (e.g., logs, historical records needed for compliance)
+- Long-term data archiving (for example, logs and historical records needed for compliance)
 - Data backup and disaster recovery
 - Long tail user-generated content
 
@@ -107,9 +107,9 @@ To learn more about creating R2 buckets, refer to [Create new buckets](/r2/bucke
 
 #### Specify storage class during object upload
 
-To learn more about how to specify the storage class for new objects refer to documentation for the [Workers API](/r2/api/workers/) and [S3 API](/r2/api/s3/).
+To learn more about how to specify the storage class for new objects, refer to the [Workers API](/r2/api/workers/) and [S3 API](/r2/api/s3/) documentation.
 
 #### Use object lifecycle rules to transition objects to Infrequent Access storage
 
-To learn more about how to transition objects from Standard storage to Infrequent Access storage refer to [Object lifecycles](/r2/buckets/object-lifecycles/).
+To learn more about how to transition objects from Standard storage to Infrequent Access storage, refer to [Object lifecycles](/r2/buckets/object-lifecycles/).
 
