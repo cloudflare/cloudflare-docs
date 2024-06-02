@@ -8,11 +8,11 @@ meta:
 
 # Roles
 
-Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign specific roles to these users.
+Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign policies to those users, making use of the available roles. Roles can only ever be assigned to their given scope, and multiple roles can be assigned to a given policy.
 
 ## Account-scoped Roles
 
-If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
+Account Scoped Roles apply across a whole Cloudflare account, and through all domains in that account.
 
 | Role | Description |
 | --- | --- |
@@ -69,7 +69,7 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 
 ## Domain-scoped Roles
 
-If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
+Domain Scoped Roles apply for a given domain within an account.
 
 | Role | Description |
 | --- | --- |
