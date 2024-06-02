@@ -95,21 +95,19 @@ For objects stored in Infrequent Access storage, you will be charged for the obj
 - Data backup and disaster recovery
 - Long tail user-generated content
 
-## Get started with storage classes
-
-### Set default storage class for buckets
+## Set default storage class for buckets
 
 By setting the default storage class for a bucket, all objects uploaded into the bucket will automatically be assigned the selected storage class unless otherwise specified. Default storage class can be changed after bucket creation in the Dashboard.
 
 To learn more about creating R2 buckets, refer to [Create new buckets](/r2/buckets/create-buckets/).
 
-### Set storage class for objects
+## Set storage class for objects
 
-#### Specify storage class during object upload
+### Specify storage class during object upload
 
 To learn more about how to specify the storage class for new objects, refer to the [Workers API](/r2/api/workers/) and [S3 API](/r2/api/s3/) documentation.
 
-#### Use object lifecycle rules to transition objects to Infrequent Access storage
+### Use object lifecycle rules to transition objects to Infrequent Access storage
 
 To learn more about how to transition objects from Standard storage to Infrequent Access storage, refer to [Object lifecycles](/r2/buckets/object-lifecycles/).
 

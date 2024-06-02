@@ -38,7 +38,7 @@ You can use the following amount of storage and operations each month for free. 
 | Class B Operations | 10 million requests / month  |
 | Egress (data transfer to Internet) | Free [^1]    |
 
-[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other, metered services to an R2 bucket, you may be charged by those services.
+[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
 
 ### Storage usage
 
