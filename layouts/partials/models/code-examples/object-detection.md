@@ -34,7 +34,7 @@ export default {
   <summary>curl</summary>
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/detr-resnet-50 \
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/{{ .Page.Params.model.name }} \
     -X POST \
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
     --data-binary "@pedestrian-boulevard-manhattan-crossing.jpg"
