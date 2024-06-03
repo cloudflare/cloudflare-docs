@@ -45,7 +45,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10007`     | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                    |
 | `10015`     | Account is not entitled to use Workers.                                                                                      |
 | `10016`     | Invalid Worker name.                                                                                                         |
-| `10021`     | Validation Error. See error message for further details |
+| `10021`     | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors) for details. |
 | `10026`     | Could not parse request body.                                                                                                |
 | `10035`     | Multiple attempts to modify a resource at the same time                                                                      |     
 | `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
@@ -58,6 +58,22 @@ These errors occur when a Worker is uploaded or modified.
 | `10069`     | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.           |
 
 {{</table-wrap>}}
+
+### Validation Errors (10021)
+
+The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked). For example, if you attempt to deploy a broken Worker with invalid JavaScript that would throw a `SyntaxError` — Cloudflare will not deploy your Worker.
+
+Specific error cases include but are not limited to:
+
+#### Script startup exceeded CPU time limit
+
+This means that you are doing work in the top-level scope of your Worker that takes [more than the startup time limit (400ms)](/workers/platform/limits/#worker-startup-time) of CPU time.
+
+This is usually a sign of a bug and/or large performance problem with your code or a dependency you rely on — It's not typical to use more than 400ms of CPU time when your app starts. The more time your Worker's code spends parsing and executing top-level scope, the slower your Worker will be when you deploy a code change or a new [isolate](/workers/reference/how-workers-works/) is created.
+
+This error is most commontly caused by attempting to perform expernsive initialization work directly in top level (global) scope, rather than either at build time or when your Worker's handler is invoked. For example, attempting to initialize an app by generating or consuming a large schema.
+
+To analyze what is consuming so much CPU time, you should open Chrome DevTools for your Worker, and look at the Profiling and/or Performance panels, to understand where time is being spent. Is there something glaring that consumes tons of CPU time, the first time you make a request to your Worker?
 
 ## Runtime errors
 
