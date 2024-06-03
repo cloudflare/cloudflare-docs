@@ -41,12 +41,10 @@ To set up an AI Gateway using the API:
 {{</tab>}}
 {{</tabs>}}
 
-
-
 ## Next Steps
 
 {{<resource-group>}}
 
-{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
+{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications/" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
 
 {{</resource-group>}}

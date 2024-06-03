@@ -40,7 +40,9 @@ ___
 
 ## Does Cloudflare limit number of DNS records a domain can have?
 
-Yes. Currently Free, Pro, and Business customers have a limit on the number of DNS records they can create.
+Yes. All customers have a limit on the number of DNS records they can create.
+
+Pro, Business, and Enterprise have limit of 3,500 DNS records.
 
 If you are an Enterprise customer you can contact your Account team if you require more DNS records.
 

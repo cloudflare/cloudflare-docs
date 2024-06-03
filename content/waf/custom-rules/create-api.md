@@ -1,13 +1,15 @@
 ---
 pcx_content_type: how-to
 type: overview
-title: Create custom rules via API
+title: Create via API
 weight: 3
+meta:
+  title: Create a custom rule via API
 ---
 
-# Create custom rules via API
+# Create a custom rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule via API.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a custom rule via API.
 
 You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
@@ -38,7 +40,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
 
-The new rule, which will be the last rule in the ruleset, includes the definition of a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
+The new rule, which will be the last rule in the ruleset, includes the definition of a [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests:
 
 ```bash
 ---

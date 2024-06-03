@@ -140,11 +140,11 @@ build_configs:
     build_command: npx umi build
     build_output_directory: dist
     icon: /icons/framework-icons/logo-umi-js.svg
-  vuepress:
-    display_name: VuePress
-    build_command: npx vuepress build
-    build_output_directory: .vuepress/dist
-    icon: /icons/framework-icons/logo-vuepress.svg
+  vitepress:
+    display_name: VitePress
+    build_command: npx vitepress build
+    build_output_directory: .vitepress/dist
+    icon: /icons/framework-icons/logo-vitepress.svg
   zola:
     display_name: Zola
     build_command: zola build

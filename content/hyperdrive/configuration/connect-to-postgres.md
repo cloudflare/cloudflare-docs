@@ -45,8 +45,8 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
 | -------------------- | -------------------------- | ------------------------ |  ----------------------- |
-| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this.   |
-| Postgres.js          | https://github.com/porsager/postgres | `postgres@3.43.1` | Must pass `prepare: false` when creating the client. |
+| Postgres.js (**recommended**)        | https://github.com/porsager/postgres | `postgres@3.4.4` | Supported in both Workers & Pages. |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages.  |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
 
@@ -79,6 +79,57 @@ The following examples show you how to:
 1. Create a database client with a database driver.
 2. Pass the Hyperdrive connection string and connect to the database.
 3. Query your database via Hyperdrive.
+
+### Postgres.js
+
+The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
+
+Install the Postgres.js driver:
+
+```sh
+$ npm install postgres
+```
+
+Create a new `sql` instance and pass the Hyperdrive parameters:
+
+{{<tabs labels="postgres-js">}}
+{{<tab label="postgres-js" default="true">}}
+
+```ts
+---
+filename: src/index.ts
+---
+import postgres from "postgres";
+
+export interface Env {
+	// If you set another name in wrangler.toml as the value for 'binding',
+	// replace "HYPERDRIVE" with the variable name you defined.
+	HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+
+    // NOTE: if `prepare: false` is passed when connecting, performance will
+    // be slower but still correctly supported.
+    const sql = postgres(env.HYPERDRIVE.connectionString)
+
+		try {
+			// A very simple test query
+			const result = await sql`select * from pg_tables`
+
+			// Return result rows as JSON
+			return Response.json({ result: result });
+		} catch (e) {
+			console.log(e);
+			return Response.json({ error: e.message }, { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ### node-postgres / pg
 
@@ -117,17 +168,10 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a database client that connects to your database via Hyperdrive
-		// Hyperdrive generates a unique connection string you can pass to
-		// supported drivers, including node-postgres, Postgres.js, and the many
-		// ORMs and query builders that use these drivers.
-		const client = new Client({
-			host: env.HYPERDRIVE.host,
-			user: env.HYPERDRIVE.user,
-			password: env.HYPERDRIVE.password,
-			port: env.HYPERDRIVE.port,
-			database: env.HYPERDRIVE.database
-		})
+
+    // NOTE: if `prepare: false` is passed when connecting, performance will
+    // be slower but still correctly supported.
+    const sql = postgres(env.HYPERDRIVE.connectionString)
 
 		try {
 			// Connect to your database
@@ -149,64 +193,12 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-### Postgres.js
-
-The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
-
-Install the Postgres.js driver:
-
-```sh
-$ npm install postgres
-```
-
-Create a new `sql` instance and pass the Hyperdrive parameters:
-
-{{<tabs labels="postgres-js">}}
-{{<tab label="postgres-js" default="true">}}
-
-```ts
----
-filename: src/index.ts
----
-import postgres from "postgres";
-
-export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
-	// replace "HYPERDRIVE" with the variable name you defined.
-	HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-
-    // Important: Set `prepare: false` as Postgres.js named prepared statements
-    // are not compatible with connection pooling systems like Hyperdrive
-    const sql = postgres(env.HYPERDRIVE.connectionString, { prepare: false })
-
-		try {
-			// A very simple test query
-			const result = await sql`select * from pg_tables`
-
-			// Return result rows as JSON
-			return Response.json({ result: result });
-		} catch (e) {
-			console.log(e);
-			return Response.json({ error: e.message }, { status: 500 });
-		}
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-{{</tab>}}
-{{</tabs>}}
-
 ## Transaction and statement support
 
 Hyperdrive's connection pooling mode is equivalent to the `transaction` mode of connection poolers like [PgBouncer](https://www.pgbouncer.org/) and [PgCat](https://github.com/postgresml/pgcat).
 
 Hyperdrive does not support the following PostgreSQL features:
 
-- Named prepared statements ([PostgreSQL docs](https://www.postgresql.org/docs/current/sql-prepare.html)). These are distinct from the typical and common _unnamed_ prepared statements used to safely provide values to a query.
 - `SET` statements.
 - Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
 - `LISTEN` and `NOTIFY`.

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Preact site
+title: Preact
 ---
 
-# Deploy a Preact site
+# Preact
 
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
 

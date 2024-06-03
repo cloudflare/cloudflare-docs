@@ -16,30 +16,32 @@ The parameters below can be configured for egress traffic inside of a firewall.
 
 `cloudflared` connects to Cloudflare's global network on port `7844`. To use Cloudflare Tunnel, your firewall must allow outbound connections to the following destinations on port `7844` (via UDP if using the `quic` protocol or TCP if using the `http2` protocol).
 
-{{<table-wrap>}}
-| Destination | Port | Protocols |  Notes |
-| ----------- | -------- | --------- | ------- |
-| `region1.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) | |
-| `region2.v2.argotunnel.com` | 7844 | TCP/UDP (`http2`/`quic`) | |
-| `cftunnel.com`              | 7844 | TCP/UDP (`http2`/`quic`) | Only required for firewalls that enforce SNI.|
-| `h2.cftunnel.com`           | 7844 | TCP (`http2`) | Only required for firewalls that enforce SNI. |
-| `quic.cftunnel.com`         | 7844 | UDP (`quic`) | Only required for firewalls that enforce SNI.|
+{{<table-wrap style="font-size: 85%">}}
+| Domain | IPv4 | IPv6 | Port    | Protocols |
+| ----------- | -----| -----|-------- | --------- |
+| `region1.v2.argotunnel.com` | `198.41.192.167`<br> `198.41.192.67`<br> `198.41.192.57`<br> `198.41.192.107`<br> `198.41.192.27`<br> `198.41.192.7`<br> `198.41.192.227`<br> `198.41.192.47`<br> `198.41.192.37`<br> `198.41.192.77` |`2606:4700:a0::1`<br> `2606:4700:a0::2`<br> `2606:4700:a0::3`<br> `2606:4700:a0::4`<br> `2606:4700:a0::5`<br> `2606:4700:a0::6`<br> `2606:4700:a0::7`<br> `2606:4700:a0::8`<br> `2606:4700:a0::9`<br> `2606:4700:a0::10` | 7844 | TCP/UDP (`http2`/`quic`) |
+| `region2.v2.argotunnel.com` | `198.41.200.13`<br> `198.41.200.193`<br> `198.41.200.3`<br> `198.41.200.233`<br> `198.41.200.53`<br> `198.41.200.63`<br> `198.41.200.113`<br> `198.41.200.73`<br> `198.41.200.43`<br> `198.41.200.23`|`2606:4700:a8::1`<br> `2606:4700:a8::2`<br> `2606:4700:a8::3`<br> `2606:4700:a8::4`<br> `2606:4700:a8::5`<br> `2606:4700:a8::6`<br> `2606:4700:a8::7`<br> `2606:4700:a8::8`<br> `2606:4700:a8::9`<br> `2606:4700:a8::10`| 7844 | TCP/UDP (`http2`/`quic`) |
+| `cftunnel.com`<sup>1</sup> | Not applicable | Not applicable  | 7844 | TCP/UDP (`http2`/`quic`) |
+| `h2.cftunnel.com`<sup>1</sup> | Not applicable  | Not applicable | 7844 | TCP (`http2`) |
+| `quic.cftunnel.com`<sup>1</sup> | Not applicable |Not applicable |7844 | UDP (`quic`) |
 
 {{</table-wrap>}}
+
+<sup>1</sup> This rule is only required for firewalls that enforce SNI.
 
 ### Optional
 
 Opening port 443 enables some optional features. Failure to allow these connections may prompt a log error, but `cloudflared` will still run correctly.
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 85%">}}
 
-| Destination | Port | Protocol |  Description |
-| ----------- | -------- | --------- | ------- |
-| `api.cloudflare.com`        | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
-| `update.argotunnel.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
-| `github.com`     | 443  | TCP (HTTPS) | Allows `cloudflared` to download the latest release and perform a software update. |
-| `<your-team-name>.cloudflareaccess.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to validate the Access JWT.  Only required if the [`access`](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access) setting is enabled. |
-| `pqtunnels.cloudflareresearch.com` | 443 | TCP (HTTPS) | Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudflare.com/post-quantum-tunnel/) errors to Cloudflare. |
+| Domain | IPv4 | IPv6 | Port    | Protocols |  Description |
+| ----------- | -----| -----|-------- | --------- | ------- |
+| `api.cloudflare.com` | `104.19.192.29` <br> `104.19.192.177` <br>`104.19.192.175` <br> `104.19.193.29` <br> `104.19.192.174` <br> `104.19.192.176`| `2606:4700:300a::6813:c0af` <br> `2606:4700:300a::6813:c01d` <br> `2606:4700:300a::6813:c0ae` <br> `2606:4700:300a::6813:c11d` <br> `2606:4700:300a::6813:c0b0` <br> `2606:4700:300a::6813:c0b1`| 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
+| `update.argotunnel.com`  |`104.18.25.129` <br> `104.18.24.129` | `2606:4700::6812:1881` <br> `2606:4700::6812:1981` | 443  | TCP (HTTPS) | Allows `cloudflared` to query if software updates are available. |
+| `github.com`     | [GitHub's IP addresses](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses) | [GitHub's IP addresses](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses)  | 443  | TCP (HTTPS) | Allows `cloudflared` to download the latest release and perform a software update. |
+| `<your-team-name>.`<br>`cloudflareaccess.com` | `104.19.194.29` <br>  `104.19.195.29`| `2606:4700:300a::6813:c31d` <br> `2606:4700:300a::6813:c21d` | 443 | TCP (HTTPS) | Allows `cloudflared` to validate the Access JWT.  Only required if the [`access`](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access) setting is enabled. |
+| `pqtunnels.`<br>`cloudflareresearch.com` |`104.18.4.64` <br> `104.18.5.64`| `2606:4700::6812:540` <br> `2606:4700::6812:440` | 443 | TCP (HTTPS) | Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudflare.com/post-quantum-tunnel/) errors to Cloudflare. |
 
 {{</table-wrap>}}
 
@@ -170,24 +172,6 @@ region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::7
 region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::8
 region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::9
 region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::10
-...
-```
-
-```sh
-$ dig api.cloudflare.com
-...
-;; ANSWER SECTION:
-api.cloudflare.com.     41      IN      A       104.19.193.29
-api.cloudflare.com.     41      IN      A       104.19.192.29
-...
-```
-
-```sh
-$ dig update.argotunnel.com
-...
-;; ANSWER SECTION:
-update.argotunnel.com.	190	IN	A	104.18.32.167
-update.argotunnel.com.	190	IN	A	172.64.155.89
 ...
 ```
 

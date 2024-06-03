@@ -156,3 +156,9 @@ To exclude static resources, include `not (cf.bot_management.static_resource)` i
 From there, you could customize your custom rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
 Make sure you review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/analytics/security-events/) to check if your rules need more tuning.
+
+---
+
+## Other resources
+
+* [Use case: Allow traffic from verified bots](/waf/custom-rules/use-cases/allow-traffic-from-verified-bots/)

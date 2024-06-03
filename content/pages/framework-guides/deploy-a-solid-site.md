@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Solid site
+title: Solid
 ---
 
-# Deploy a Solid Site
+# Solid
 
 [Solid](https://www.solidjs.com/) is an open-source web application framework focused on generating performant applications with a modern developer experience based on JSX.
 

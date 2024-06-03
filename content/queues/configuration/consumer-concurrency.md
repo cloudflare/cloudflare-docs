@@ -48,7 +48,14 @@ Cloudflare recommends leaving the maximum concurrency unset, which will allow yo
 
 If you have a workflow that is limited by an upstream API and/or system, you may prefer for your backlog to grow, trading off increased overall latency in order to avoid overwhelming an upstream system.
 
-Concurrency settings can be configured in each projects' `wrangler.toml` file and/or the Cloudflare dashboard. To set concurrency settings in the Cloudflare dashboard:
+You can configure the concurrency of your consumer Worker in two ways:
+
+1. Set concurrency settings in the Cloudflare dashboard
+2. Set concurrency settings via `wrangler.toml`
+
+### Set concurrency settings in the Cloudflare dashboard
+
+To configure the concurrency settings for your consumer Worker from the dashboard: 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > **Queues**.

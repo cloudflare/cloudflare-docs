@@ -9,6 +9,15 @@ entries:
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
+- publish_date: '2024-05-30'
+  individual_page: true
+  link: '/waf/change-log/2024-05-30---emergency-release/'
+- publish_date: '2024-05-29'
+  individual_page: true
+  link: '/waf/change-log/2024-05-29---emergency-release/'
+- publish_date: '2024-05-21'
+  individual_page: true
+  link: '/waf/change-log/2024-05-21/'
 - publish_date: '2024-05-14'
   individual_page: true
   link: '/waf/change-log/2024-05-14/'

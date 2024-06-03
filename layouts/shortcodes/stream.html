@@ -1,5 +1,7 @@
 {{- $cust_id := "1mwganm1ma0xgnmj" -}}
 {{- $video_id := .Get "video_id" -}}
+{{- $youtube_link := default "https://www.youtube.com/@CloudflareWorkers/videos" (.Get "youtube_link") -}}
+{{- $show_youtube := default true (.Get "show_youtube")}}
 
 <figure data-type="stream">
   <div style="position: relative; padding-top: 56.25%;">
@@ -10,4 +12,9 @@
         allowfullscreen="true">
     </iframe>
   </div>
+{{- if $show_youtube -}}
+{{- $string := printf "For more Cloudflare video content, check out our [YouTube channel](%s)." $youtube_link | $.Page.RenderString -}}
+<p class="youtube_link">{{$string}}</p>
+{{- end -}}
 </figure>
+

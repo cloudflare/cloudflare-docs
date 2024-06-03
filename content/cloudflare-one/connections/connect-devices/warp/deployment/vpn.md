@@ -9,6 +9,7 @@ weight: 10
 The Cloudflare WARP client can run alongside most legacy third-party VPNs. Because the WARP client and third-party VPN client both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over IP and DNS traffic. To ensure compatibility make sure that:
 
 - IP traffic is split tunneled between WARP and the VPN. All VPN traffic must bypass WARP and vice versa.
+- The VPN bypasses/allows/excludes all domains, IPs, and ports listed in [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 - DNS resolution is handled by either WARP or the VPN. You must disable DNS filtering in one of the two products.
 
 For the most stable and consistent connection, we recommend connecting your [private network or individual applications](/cloudflare-one/connections/connect-networks/private-net/) to Cloudflare instead of using a legacy VPN. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.

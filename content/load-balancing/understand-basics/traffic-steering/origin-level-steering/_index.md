@@ -13,7 +13,7 @@ weight: 2
 {{<render file="_origin-steering-policies.md">}}
 <br/>
 
-{{<directory-listing showDescriptions="true" >}}
+{{<directory-listing showDescriptions="true" char_limit="500">}}
 
 ## Weights
 

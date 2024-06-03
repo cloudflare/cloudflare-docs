@@ -24,7 +24,7 @@ As we can see from the example, the default cache key includes:
     - URI with query string - in this example is `/logo.jpg`
 2.  Origin header sent by client (for CORS support).
 3.  `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
-4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme`, `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
+4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -36,21 +36,14 @@ Using Custom Cache Keys may result in cache sharding and reduction of your cache
 
 A [Cache Key](/cache/how-to/cache-keys/) is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
 
-1.  Log in to your Cloudflare account.
-2.  Select the domain that requires changes to the Cache Key Template.
-3.  Select **Rules** > **Page Rules**.
-4.  Select **Create Page Rule**.
-5.  Under **If the URL matches**, enter the URL to match.
-6.  Under **Then the settings are**, choose **Custom Cache Key** from the dropdown.
-7.  Select the appropriate _Query String_ setting.
-8.  (Optional) Select **Advanced** and enter appropriate settings for:
-    - `Headers`
-    - `Cookie`
-    - `Host`
-    - `User Features`
-9.  Choose a save option:
-    - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
-    - **Save and Deploy** to save the rule and enable it immediately.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Caching** > **Cache Rules**.
+3. Select **Create rule**.
+4. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
+5. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
+6. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting.
+7. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
+8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ## Cache Key Template
 
@@ -148,4 +141,4 @@ User feature fields add features about the end-user (client) into the Cache Key.
 
 ## Limitations
 
-The Prefetch feature is not compatible with the custom cache keys. With custom cache key Page Rules (deprecated) or Cache Rules, the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.
+The Prefetch feature is not compatible with the custom cache keys. With Cache Rules, the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.

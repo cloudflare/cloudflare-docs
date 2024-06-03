@@ -51,13 +51,6 @@
 {{- $products = sort ($products | uniq) . "asc" -}}
 {{- $productAreas = (sort ($productAreas | uniq) . "desc") | collections.Reverse -}}
 
-<script>
-  console.log({{$productAreas}})
-</script>
-<script>
-  console.log({{$products}})
-</script>
-
 <div class="selectorDropdowns">
   <div>
     <label for="product">Product</label>
