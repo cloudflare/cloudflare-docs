@@ -29,7 +29,6 @@
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240208.0",
     "@types/glob": "^8.0.1",
-    "@types/mermaid": "^9.2.0",
     "@types/node": "^18.11.12",
     "@types/prettier": "2.4.3",
     "@types/prismjs": "^1.26.0",
