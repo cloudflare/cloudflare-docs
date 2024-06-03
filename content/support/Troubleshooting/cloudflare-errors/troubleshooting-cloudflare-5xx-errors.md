@@ -96,10 +96,10 @@ If the error does not mention `cloudflare`, contact your hosting provider for as
 This error can be returned in case of a compression issue at the origin, for example the origin server is serving gzip encoded compressed content but is not updating the `content-length` header, or the origin is serving broken gzip compressed content.
 You can try to disable compression at your origin to confirm if this is the root cause of the errors.
 
-Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic. 
+Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic.
 In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
-These traffic adjustments are mostly seamless and take only a few seconds. 
-Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors. 
+These traffic adjustments are mostly seamless and take only a few seconds.
+Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors.
 You can find more information about our automated traffic management tools [in this blogpost](https://blog.cloudflare.com/meet-traffic-manager).
 
 **Resolution**
@@ -301,7 +301,7 @@ Contact your hosting provider to exclude the following common causes at your or
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](/fundamentals/reference/glossary/#server-name-indication-sni) support
+-   No {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}SNI{{</glossary-tooltip>}} support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="note">}}
