@@ -43,7 +43,7 @@ co = cohere.Client(
 
 chat = co.chat(
   message="hello world!",
-  model="command"
+  model="command-r-plus"
 )
 
 print(chat)
