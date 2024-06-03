@@ -6,17 +6,19 @@ weight: 4
 
 # Role scopes
 
-Scopes are one of the 3 constituent parts of a policy that allows granting of access to users.
-In order to allow for flexible combinations of access to users, we currently have two types of scopes (Account and Domain), with different sets of roles for each. We are interested in expanding this list of scopes.
+Scopes are one of three constituent parts of a policy that allows granting of access to users.
+
+To allow for flexible combinations of access to users, Cloudflare currently has two types of scopes (Account and Domain), with different sets of roles for each.
 
 ---
 
-## Choosing the scope of roles
+## Choose the scope of roles
 
-Each Policy has a limitation of a single scope, but you can assign multiple policies to a given user.
-You choose the scope of a policy when you [add a member](/fundamentals/setup/manage-members/manage/).
+Each policy has a limitation of a single scope, but you can assign multiple policies to a given user.
 
-### Account Scope
+You can choose the scope of a policy when you [add a member](/fundamentals/setup/manage-members/manage/).
+
+### Account scope
 
 If you want the member to have a policy that applies across your account, use the following combination of fields.
 
@@ -39,11 +41,11 @@ If you want the member to have a policy that applies to a specific domain, use t
 | --- | --- |
 | Operator | *Include* |
 | Type | *A specific domain* |
-| Name | the specific domain |
+| Name | The specific domain. |
 
 ### Domain groups
 
-If you have a set of domains that are all categorized similarly (e.g. all of your sensitive/production domains, all domains around a given project or geography), you can pre-assign them into a domain group, and then create policies that provide access to all domains within this group.
+If you have a set of domains that are all categorized similarly (e.g. all of your sensitive/production domains, all domains around a given project or geography), you can pre-assign them into a domain group and then create policies that provide access to all domains within this group.
 
 #### Create group
 

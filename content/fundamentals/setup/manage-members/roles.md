@@ -8,7 +8,7 @@ meta:
 
 # Roles
 
-Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign policies to those users, making use of the available roles. Roles can only ever be assigned to their given scope, and multiple roles can be assigned to a given policy.
+Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign policies to those users and make use of the available roles. Roles can only ever be assigned to their given scope and multiple roles can be assigned to a given policy.
 
 ## Account-scoped Roles
 

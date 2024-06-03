@@ -8,9 +8,11 @@ meta:
 
 # Account members
 
-On any Cloudflare account, you can collaborate by adding members to your account and assigning them access via (one or many) policies.
+On any Cloudflare account, you can collaborate by adding members to your account and assigning them access via one or several policies.
 
-Every policy has 3 parts: The actor, the role, and the scope. The pages below will go into depth on how to configure policies to ensure you can assign only the access needed to your account members.
+Every policy has 3 parts: the actor, the role, and the scope. 
+
+Refer to the resources below to configure policies to ensure that you can assign only the necessary access permissions to your account members.
 
 ## Resources
 
