@@ -1,6 +1,7 @@
 ---
 link: "/waf/change-log/"
 productName: WAF
+productLink: "/waf/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
