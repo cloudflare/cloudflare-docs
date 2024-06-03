@@ -12,7 +12,7 @@ Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to y
 
 ## Account-scoped Roles
 
-Account Scoped Roles apply across a whole Cloudflare account, and through all domains in that account.
+Account-scoped Roles apply across a whole Cloudflare account, and through all domains in that account.
 
 | Role | Description |
 | --- | --- |
@@ -69,7 +69,7 @@ Account Scoped Roles apply across a whole Cloudflare account, and through all do
 
 ## Domain-scoped Roles
 
-Domain Scoped Roles apply for a given domain within an account.
+Domain-scoped Roles apply for a given domain within an account.
 
 | Role | Description |
 | --- | --- |

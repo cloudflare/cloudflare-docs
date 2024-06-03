@@ -41,7 +41,7 @@ If you want the member to have a policy that applies to a specific domain, use t
 | --- | --- |
 | Operator | *Include* |
 | Type | *A specific domain* |
-| Name | The specific domain. |
+| Name | *A specific domain* |
 
 ### Domain groups
 
