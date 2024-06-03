@@ -45,7 +45,7 @@ For more information, refer to our [blog post](https://blog.cloudflare.com/cloud
 
 ## Availability
 
-All customers on Enterprise customers have access to Cloudflare Snippets. Other paid plans will [gradually get access](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans#we-are-rolling-out-access-to-cloudflare-snippets) throughout 2024. Once you have access, the Cloudflare dashboard will show a new **Snippets** tab under **Rules** at the zone level.
+All customers on Enterprise plans have access to Cloudflare Snippets. Other paid plans will [gradually get access](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans#we-are-rolling-out-access-to-cloudflare-snippets) throughout 2024. Once you have access, the Cloudflare dashboard will show a new **Snippets** tab under **Rules** at the zone level.
 
 {{<feature-table id="rules.snippets">}}
 
