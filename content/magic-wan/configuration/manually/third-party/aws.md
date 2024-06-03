@@ -47,6 +47,7 @@ Additionally, you also need to configure the necessary route table entries for t
     - **Phase 2 DH group numbers**: `14`
     - **IKE Version**: `ikev2`
     - **Startup action**: **Start**
+    - **DPD timeout action**: `Restart`
 9. Select **Save changes**.
 10. Repeat the steps above to configure the second VPN connection. Use the second outside IP address, and make the appropriate changes to IP addresses as well when configuring Cloudflare's side of the tunnel.
 
