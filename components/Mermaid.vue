@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import Mermaid from "mermaid";
+import mermaid from "mermaid";
 
 const props = defineProps({
   mermaid: String,
 });
 
-const svg = ref("");
+const element = ref("");
 const render = () => {
   const theme = document.documentElement.getAttribute("theme");
   const mermaidTheme = theme === "dark" ? "dark" : "neutral";
-  Mermaid.mermaidAPI.initialize({ theme: mermaidTheme, startOnLoad: false });
+  mermaid.initialize({ theme: mermaidTheme, startOnLoad: false });
 
-  Mermaid.mermaidAPI.render(
-    `mermaid-${crypto.randomUUID()}`,
-    decodeURIComponent(props.mermaid?.replaceAll("+", "%20") ?? ""),
-    (g: string) => (svg.value = g)
-  );
+  mermaid
+    .render(
+      `mermaid-${crypto.randomUUID()}`,
+      decodeURIComponent(props.mermaid?.replaceAll("+", "%20") ?? "")
+    )
+    .then(({ svg }) => {
+      element.value = svg;
+    });
 };
 
 onMounted(() => {
@@ -30,5 +33,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mermaid" v-html="svg"></div>
+  <div class="mermaid" v-html="element"></div>
 </template>
