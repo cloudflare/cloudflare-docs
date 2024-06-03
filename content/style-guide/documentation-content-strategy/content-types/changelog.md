@@ -179,6 +179,9 @@ header: /data/changelogs/waf.yaml
 ---
 link: "/waf/change-log/"
 productName: WAF
+productLink: "/waf/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 - publish_date: '2023-09-18'
   scheduled_date: '2023-09-25'
