@@ -4,7 +4,7 @@ weight: 1
 pcx_content_type: concept
 ---
 
-# Import and Export data
+# Import and export data
 
 D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
 
