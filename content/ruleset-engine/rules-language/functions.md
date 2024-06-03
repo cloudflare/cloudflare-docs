@@ -178,7 +178,7 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
   - Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
-  - The `end` index must be greater than the `start` index. The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
+  - The `end` index must be to the right of the `start` index on the string. The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
 
   - *Examples:*
 
@@ -188,6 +188,7 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
     substring(http.request.body.raw, 2, 5)   will return "dfg"
     substring(http.request.body.raw, 2)      will return "dfghjk"
     substring(http.request.body.raw, -2)     will return "jk"
+    substring(http.request.body.raw, 0, -2)  will return "asdfgh"
     ```
 
 - <code id="function-to_string">{{<name>}}to_string{{</name>}}({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
