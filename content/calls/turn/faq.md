@@ -32,7 +32,7 @@ Cloudflare Calls TURN server runs on [Cloudflare's global network](https://www.c
 
 ### What is the difference between Cloudflare Calls TURN with a enterprise plan vs self-serve (pay with your credit card) plans?
 
-There is no performance or feature level difference for Cloudflare Calls TURN service in enterprise or self-serve plans, however those on [enterprise plans](https://www.cloudflare.com/enterprise/) will get the benefit of priority support, predicable flat-rate pricing and SLA guarantees.
+There is no performance or feature level difference for Cloudflare Calls TURN service in enterprise or self-serve plans, however those on [enterprise plans](https://www.cloudflare.com/enterprise/) will get the benefit of priority support, predictable flat-rate pricing and SLA guarantees.
 
 ## Technical
 

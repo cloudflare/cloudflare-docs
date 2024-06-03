@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="note">}}
 
-If a binding is specified in `wrangler.toml` and via a command-line argument, the commmand-line argument takes precedence.
+If a binding is specified in `wrangler.toml` and via a command-line argument, the command-line argument takes precedence.
 
 {{</Aside>}}
