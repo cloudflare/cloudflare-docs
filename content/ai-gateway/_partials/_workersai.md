@@ -41,7 +41,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai
 
 ```bash
 ---
-header: Request to OpenAI compotible endpoint
+header: Request to OpenAI compatible endpoint
 ---
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/v1/chat/completions \
  --header 'Authorization: Bearer {cf_api_token}' \
