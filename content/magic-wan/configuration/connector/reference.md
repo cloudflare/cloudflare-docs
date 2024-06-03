@@ -11,10 +11,9 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 ## Security and other information
 
 - Cloudflare ensures the Magic WAN Connector device is secure and is not altered via TPM/Secure boot (does not apply to Virtual Connector).
-- Connectivity to the Cloudflare global network is secure and all traffic is encrypted through {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunneling.
+- Connectivity to the Cloudflare global network is secure and all traffic is encrypted through {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunneling. The Magic WAN Connector uses ESP-in-UDP with GCM-AES-256 encryption. Cloudflare uses a non-IKE keying protocol built into our control plane, secured with TLS.
 - The Magic WAN Connector does not support fail open.
 - Customers have the ability to layer on additional security features/policies that are enforced at the Cloudflare network.
-- The Magic WAN Connector uses IPsec tunnels to connect, specifically ESP-in-UDP with GCM-AES-256 encryption. Cloudflare uses a non-IKE keying protocol built into our control plane, secured with TLS.
 
 ---
 
