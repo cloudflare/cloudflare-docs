@@ -117,6 +117,10 @@
   {{- end -}}
   {{- end -}}
 
+  {{- with .Context.Params.tags -}}
+  <meta name="pcx_tags" content="{{- delimit . "," -}}">
+  {{- end -}}
+
   <meta name="algolia_page_title" content="{{- $pt -}}">
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
   {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
