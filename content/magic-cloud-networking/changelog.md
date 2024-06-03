@@ -5,7 +5,7 @@ weight: 6
 meta:
     description: Review recent changes to Magic Cloud Networking.
 layout: changelog
-changelog_file_name: [magic-wan]
+changelog_file_name: [magic-cloud-networking]
 outputs:
     - html
     - rss
