@@ -12,7 +12,7 @@
 {{- $productAreaLink = . -}}
 {{- end -}}
 {{- range $index2, $item := $product.entries -}}
-{{- $productEntries = $productEntries | append (merge $item (dict "product" $product.productName "url" $product.link "productArea" $productArea "productAreaLink" $productAreaLink)) -}}
+{{- $productEntries = $productEntries | append (merge $item (dict "product" $product.productName "url" $product.link "productLink" $product.productLink "productArea" $productArea "productAreaLink" $productAreaLink)) -}}
 {{- end -}}
 {{- $productData := merge $product (dict "entries" $productEntries) -}}
 {{- $changelogData = merge $changelogData (dict $key $productData)}}
