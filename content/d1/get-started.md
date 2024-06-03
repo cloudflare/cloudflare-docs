@@ -20,17 +20,7 @@ To continue:
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
 3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
 
-## 1. Log in
-
-Before creating your D1 database, log in with your Cloudflare account by running:
-
-```sh
-$ npx wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
-
-## 2. Create a Worker
+## 1. Create a Worker
 
 {{<Aside type="note" header="New to Workers?">}}
 
@@ -67,7 +57,7 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 
 {{</Aside>}}
 
-## 3. Create a database
+## 2. Create a database
 
 A D1 database is conceptually similar to many other databases: a database may contain one or more tables, the ability to query those tables, and optional indexes. D1 uses the familiar [SQL query language](https://www.sqlite.org/lang.html) (as used by SQLite).
 
@@ -77,15 +67,13 @@ To create your first D1 database, change into the directory you just created for
 $ cd d1-tutorial
 ```
 
-Run the following `wrangler d1` command and give your database a name. In this tutorial, the database will be named `prod-d1-tutorial`
+Run the following `wrangler d1` command and give your database a name. In this tutorial, the database will be named `prod-d1-tutorial`:
 
-{{<Aside type="note" heading="Naming databases">}}
-For reference, a good database name is:
+{{<Aside type="note">}}
 
-- Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
-- Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
-- Only used for describing the database, and is not directly referenced in code.
-  {{</Aside>}}
+The `wrangler` command-line interface is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare@latest` to initialize your new project.
+
+{{</Aside>}}
 
 ```sh
 $ npx wrangler d1 create prod-d1-tutorial
@@ -98,9 +86,19 @@ database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
+{{<Aside type="note" heading="Naming databases">}}
+
+For reference, a good database name is:
+
+- Typically a combination of ASCII characters, shorter than 32 characters, and uses dashes (-) instead of spaces.
+- Descriptive of the use-case and environment. For example, "staging-db-web" or "production-db-backend".
+- Only used for describing the database, and is not directly referenced in code.
+
+{{</Aside>}}
+
 This will create a new D1 database, and output the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
-## 4. Bind your Worker to your D1 database
+## 3. Bind your Worker to your D1 database
 
 You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
@@ -131,7 +129,7 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#d1-databases).
 
-## 5. Run a query against your D1 database
+## 4. Run a query against your D1 database
 
 ### Configure your D1 database
 
@@ -225,17 +223,25 @@ In the code above, you:
 
 After configuring your Worker, you can test your project locally before you deploy globally.
 
-## 6. Develop locally with Wrangler
+## 5. Develop locally with Wrangler
 
 While in your project directory, test your database locally by running:
-
-```sh
-$ npx wrangler dev
-```
 
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
 
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
+
+## 6. Log in
+
+To deploy your D1 database globally, log in with your Cloudflare account by running the following:
+
+{{
+
+```sh
+$ npx wrangler login
+```
+
+You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
 ## 7. Deploy your database
 
