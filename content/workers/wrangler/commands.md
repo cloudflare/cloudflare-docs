@@ -1876,7 +1876,7 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} 
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}}
   - Show the interactive dev session.
 
 {{</definitions>}}
