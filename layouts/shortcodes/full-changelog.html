@@ -82,7 +82,7 @@
 {{- range $entry := $changelogRendered -}}
 
 <div class="data-row" data-product="{{$entry.product | lower}}" data-product-area="{{$entry.productArea | lower}}" data-product-area-link="{{- print $entry.productAreaLink "index.xml" -}}" data-changelog="{{- print $entry.url "index.xml" -}}" data-date="{{ $entry.publish_date | time.Format "January 2, 2006" }}">
-  <h3>{{- $entry.product -}}</h3>
+  <h3>{{- printf "[%s](%s)" $entry.product $entry.productLink | $.Page.RenderString -}}</h3>
   {{- with $entry.title -}}
   <p><strong>{{ . | $.Page.RenderString }}</strong></td>
   {{- end -}}
