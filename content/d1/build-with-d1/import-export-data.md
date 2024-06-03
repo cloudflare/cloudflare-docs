@@ -63,7 +63,6 @@ $ wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_sch
 ```
 
 {{<Aside type="note">}}
-
 The `_cf_KV` table is a reserved table used by D1's underlying storage system. It cannot be queried and does not incur read/write operations charges against your account.
 
 {{</Aside>}}
