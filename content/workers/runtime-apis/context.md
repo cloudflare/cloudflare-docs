@@ -58,7 +58,7 @@ export default {
 {{<Aside type="warning" header="Reuse of body">}}
 The Workers Runtime uses streaming for request and response bodies. It does not buffer the body. Hence, if an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
 
-If this causes issues, we recommend cloning the request body and handling exceptions in code. This will protect against uncaught code exceptions. However some exception times such as exceed CPU or memeory limits will not be mitigated.
+If this causes issues, we recommend cloning the request body and handling exceptions in code. This will protect against uncaught code exceptions. However some exception times such as exceed CPU or memory limits will not be mitigated.
 {{</Aside>}}
 
 The `passThroughOnException` method allows a Worker to [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), and pass a request through to an origin server when a Worker throws an unhandled exception. This can be useful when using Workers as a layer in front of an existing service, allowing the service behind the Worker to handle any unexpected error cases that arise in your Worker.

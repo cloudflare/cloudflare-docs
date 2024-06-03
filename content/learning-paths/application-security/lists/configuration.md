@@ -9,7 +9,7 @@ Both Custom and Managed Lists are located in the account settings. Refer to [Fea
 
 ## Custom Lists
 
-Using a Custom List is an alternative to creating individual Firewall rules with long lists of IP addresses or other types of identifiers. They are easier to read and update, especially when they are used across many security rules. Lists are often used in conjuction with in-house or third party security feeds.
+Using a Custom List is an alternative to creating individual Firewall rules with long lists of IP addresses or other types of identifiers. They are easier to read and update, especially when they are used across many security rules. Lists are often used in conjunction with in-house or third party security feeds.
 
 ## Managed Lists
 
