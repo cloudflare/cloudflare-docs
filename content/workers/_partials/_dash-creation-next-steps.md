@@ -34,7 +34,7 @@ To develop more advanced applications or [implement tests](/workers/testing/), s
   {{<tabs labels="npm | yarn | pnpm | bun">}}
   {{<tab label="npm" default="true">}}
   ```sh
-  $ npm create cloudflare [<DIRECTORY>] --type=pre-existing
+  $ npm create cloudflare [<DIRECTORY>] -- --type=pre-existing
   ```
   {{</tab>}}
   {{<tab label="yarn">}}
