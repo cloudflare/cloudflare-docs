@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Set up JSON Web Token authentication.
-solution:
+goal:
  - Authentication
 operation:
  - Request header manipulation

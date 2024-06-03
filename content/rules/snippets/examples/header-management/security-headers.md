@@ -3,7 +3,7 @@ type: example
 summary: Set common security headers (X-XSS-Protection, X-Frame-Options,
   X-Content-Type-Options, Permissions-Policy, Referrer-Policy,
   Strict-Transport-Security, Content-Security-Policy).
-solution:
+goal:
  - Manage headers
 operation:
  - Response header manipulation

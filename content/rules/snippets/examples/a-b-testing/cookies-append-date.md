@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Append dates to cookies to use for A/B testing.
-solution:
+goal:
  - A/B testing
 operation:
  - Cookies manipulation

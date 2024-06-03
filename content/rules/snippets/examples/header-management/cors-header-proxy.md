@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Add the necessary CORS headers to a third party API response.
-solution:
+goal:
  - Manage headers
 operation:
  - Request header manipulation

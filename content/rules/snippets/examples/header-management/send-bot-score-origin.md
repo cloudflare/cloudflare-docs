@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Get the Cloudflare bot score field and send it in a header to the origin.
-solution:
+goal:
  - Manage headers
 operation:
  - Request header manipulation

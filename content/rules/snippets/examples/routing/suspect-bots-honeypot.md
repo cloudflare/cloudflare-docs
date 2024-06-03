@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Get the Cloudflare bot score field and dynamically change the URL that is send back as response.
-solution:
+goal:
  - Routing
 operation:
  - Redirect

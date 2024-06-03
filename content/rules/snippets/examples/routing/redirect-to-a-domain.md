@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Redirect requests from one set of URLs to another set.
-solution:
+goal:
  - Routing
 operation:
  - Redirect

@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Rewrite path of welcome page based on country code map.
-solution:
+goal:
  - Routing
 operation:
  - Rewrite

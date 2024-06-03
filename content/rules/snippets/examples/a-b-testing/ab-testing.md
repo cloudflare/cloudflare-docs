@@ -3,7 +3,7 @@ type: example
 summary: Set up an A/B test by controlling what response is served based on
   cookies. This version supports passing the request through to test and control
   on the origin, bypassing random assignment.
-solution:
+goal:
  - A/B testing
 operation:
  - Cookies manipulation
