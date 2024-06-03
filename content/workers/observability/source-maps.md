@@ -14,9 +14,7 @@ Source maps translate compiled and minified code back to the original code that 
 
 {{<Aside type="warning">}}
 
-Support for uploading source maps is available now in open beta. Minimum required Wrangler version: 3.46.0. 
-
-Stack traces support is going to be in open beta on April 15. 
+Support for uploading source maps is available now in open beta. Minimum required Wrangler version: 3.46.0.
 
 {{</Aside>}}
 
@@ -48,6 +46,8 @@ You can then view the stack trace in when streaming [real-time logs](/workers/ob
 The source map is retrieved after your Worker invocation completes — it's an asynchronous process that does not impact your Worker's CPU utilization or performance. Source maps are not accessible inside the Worker at runtime, if you `console.log()` the [stack property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) within a Worker, you will not get a deobfuscated stack trace. 
 
 {{</Aside>}}
+
+When trying to remap a stacktrace we'll try to remap as much as possible, but if we get an invalid mapping we'll ignore it. So if half your mappings are correct and half are wrong you'll get a mixed stacktrace with references to generated and original names/lines/columns.
 
 ## Related resources
 
