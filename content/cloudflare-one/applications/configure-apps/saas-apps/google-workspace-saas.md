@@ -10,7 +10,7 @@ This guide covers how to configure Cloudflare Access as a single sign-on provide
 
 {{<Aside type="note">}}
 
- The integration of Access as a single sign-on provider for your Google Workspace account does not work for Google super admins. It will work for other users.
+The integration of Access as a single sign-on provider for your Google Workspace account does not work for Google super admins. It will work for other users.
 
 {{</Aside>}}
 
