@@ -13,7 +13,7 @@ Breakout traffic will not work for applications that use DNS-over-HTTPs.
 
 {{<Aside type="note">}}
 
-Cloudflare’s best practice recommendation is to route all traffic through our global network for comprehensive security filtering and access controls, but there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
+We recommend routing all traffic through our global network for comprehensive security filtering and access controls, but there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
 Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn how Cloudflare routes traffic.
 {{</Aside>}}
