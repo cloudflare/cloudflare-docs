@@ -62,5 +62,5 @@ Access for SaaS does not currently support [SCIM provisioning](/cloudflare-one/i
 
 ## 4. Test the integration
 
-Open an incognito browser window and go to your **AWS access portal URL**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
+To test the connection, go to your **AWS access portal URL**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
 
