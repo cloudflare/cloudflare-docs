@@ -23,10 +23,6 @@ The Cloudflare WAF includes:
 
 Detections do not take any action on incoming traffic – they only add relevant information about each request that you can use in the rules you create. For more information on the detection and mitigation roles of the WAF, refer to [Detection versus mitigation](/waf/about/#detection-versus-mitigation).
 
-When defining the filter expression of a custom rule or a rate limiting rule you can use all the HTTP request properties. These properties are called [fields](/ruleset-engine/rules-language/fields/).
-
-Once you proxy your traffic through Cloudflare, after some time you will have traffic information available in the [Security Analytics](/waf/analytics/security-analytics/) and [Security Events](/waf/analytics/security-events/paid-plans/) dashboards.
-
 ---
 
 ## Before you begin
@@ -39,17 +35,15 @@ Once you proxy your traffic through Cloudflare, after some time you will have tr
 
 The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) protects against CVEs and known attack vectors. This ruleset is designed to identify common attacks using signatures, while generating low false positives. Rule changes are published on a weekly basis in the [WAF changelog](/waf/change-log/). Cloudflare may also add rules at any time during emergency releases for high profile zero-day protection.
 
-To deploy the Cloudflare Managed Ruleset:
-
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **WAF** and select the **Managed rules** tab.
 3. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare Managed Ruleset.
 
-In particular situations, enabling the managed ruleset can cause some false positives. False positives are legitimate requests inadvertently mitigated by the WAF. For information on addressing false positives, refer to [Handle false positives](/waf/managed-rules/handle-false-positives/).
-
 {{<details header="Default settings and ruleset customization">}}
 
 By default, the Cloudflare Managed Ruleset enables only a subset of rules and it is designed to strike a balance between protection and false positives. You can review and enable additional rules based on your application technology stack.
+
+In particular situations, enabling the managed ruleset can cause some false positives. False positives are legitimate requests inadvertently mitigated by the WAF. For information on addressing false positives, refer to [Handle false positives](/waf/managed-rules/handle-false-positives/).
 
 If you are testing the WAF against pentesting tools, it is recommended that you enable all rules by using the following ruleset configuration:
 
@@ -68,12 +62,10 @@ This feature is only available to Business customers (limited access to a single
 
 [WAF attack score](/waf/about/waf-attack-score/) is a machine-learning layer that complements Cloudflare's managed rulesets, providing additional protection against SQL injection (SQLi), Cross-site scripting (XSS), and many remote code execution (RCE) attacks. It helps identify rule bypasses and potentially new, undiscovered attacks.
 
-The [WAF Attack Score field](/waf/about/waf-attack-score/#available-scores), available to Enterprise customers, represents the likelihood that a request is an attack. An attack score of 1 indicates that the request is almost certainly malicious, while a score of 99 indicates that the request is likely clean.
-
 If you are an Enterprise customer, do the following:
 
 1. Reach out to your account team to get access to WAF attack score.
-2. Create a custom rule using WAF attack score:
+2. Create a custom rule using the {{<glossary-tooltip term_id="attack score">}}Attack Score{{</glossary-tooltip>}} field:
 
     1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
     2. Create a rule with the following configuration:
@@ -89,12 +81,10 @@ If you are on a Business plan, create a custom rule as mentioned above but use t
 Bot score is only available to Enterprise customers with Bot Management. Customers on Pro and Business plans may enable [Super Bot Fight mode](/bots/get-started/pro/) instead.
 {{</Aside>}}
 
-Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from bots scraping online content) using a custom rule with bot score, preventing this traffic from hitting your application. Bot score varies from 1 to 99 and indicates how likely a request came from a bot. Scores below 30 are commonly associated with bot traffic.
-
-To create a custom rule using bot score:
+Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from bots scraping online content) using a custom rule with bot score, preventing this traffic from hitting your application.
 
 1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
-2. Create a rule with the following configuration:
+2. Create a rule using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
 
     - **Expression**: `Bot Score less than 20 AND Verified Bot equals Off`
     - **Action**: _Block_
@@ -111,21 +101,22 @@ After configuring the Cloudflare Managed Ruleset and attack score, you can also 
 The Cloudflare OWASP Core Ruleset is prone to false positives and offers only marginal benefits when added on top of Cloudflare Managed Ruleset and WAF attack score. If you decide to deploy this managed ruleset, you will need to monitor and adjust its settings based on your traffic to prevent false positives.
 {{</Aside>}}
 
+1. Go to your domain > **Security** > **WAF** and select the **Managed rules** tab.
+2. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare OWASP Core Ruleset.<br>
+This will deploy the ruleset with the default configuration: paranoia level = _PL1_ and score threshold = _Medium - 40 and higher_.
+
+{{<details header="Ruleset configuration">}}
+
 Unlike the signature-based Cloudflare Managed Ruleset, the Cloudflare OWASP Core Ruleset is score-based. You select a certain paranoia level (levels vary from _PL1_ to _PL4_), which enables an increasing larger group of rules. You also select a score threshold, which decides when to perform the configured action. Low paranoia with a high score threshold usually leads to fewer false positives. For an example of how the OWASP Core Ruleset is evaluated, refer to [OWASP evaluation example](/waf/managed-rules/reference/owasp-core-ruleset/example/).
 
-To deploy the OWASP Core Ruleset:
+Follow one of these strategies to configure the ruleset according to your needs:
 
-1. Go to your domain > **Security** > **WAF** and select the **Managed rules** tab.
-
-2. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare OWASP Core Ruleset.<br>
-This will deploy the ruleset with the default configuration: paranoia level = _PL1_ and score threshold = _Medium - 40 and higher_. Cloudflare recommends that you deploy the OWASP Core Ruleset after the Cloudflare Managed Ruleset.
-
-3. (Optional) Follow one of these strategies to configure the ruleset according to your needs:
-
-    - Start from a strict configuration (paranoia level = _PL4_, score threshold = _Low - 60 and higher_). Reduce the score threshold and paranoia level until you achieve a good false positives/true positives rate for your incoming traffic.
-    - Alternatively, start from a more permissive configuration (paranoia level = _PL1_, score threshold = _High - 25 and higher_) and increase both parameters to adjust your protection, trying to keep a low number of false positives.
+- Start from a strict configuration (paranoia level = _PL4_, score threshold = _Low - 60 and higher_). Reduce the score threshold and paranoia level until you achieve a good false positives/true positives rate for your incoming traffic.
+- Alternatively, start from a more permissive configuration (paranoia level = _PL1_, score threshold = _High - 25 and higher_) and increase both parameters to adjust your protection, trying to keep a low number of false positives.
 
 For more information on configuring the Cloudflare OWASP Core Ruleset in the dashboard, refer to [Configure field values for all the rules](/waf/managed-rules/deploy-zone-dashboard/#configure-field-values-for-all-the-rules).
+
+{{</details>}}
 
 ## 5. Review traffic in security dashboards
 
@@ -133,14 +124,10 @@ For more information on configuring the Cloudflare OWASP Core Ruleset in the das
 Users on the Free plan only have access to Security Events.
 {{</Aside>}}
 
-After setting up your WAF configuration, review how incoming traffic is being affected by your current settings using the Security Analytics and Security Events dashboards.
+After setting up your WAF configuration, review how incoming traffic is being affected by your current settings using the following dashboards:
 
-Use [Security Analytics](/waf/analytics/security-analytics/) to explore all traffic, including traffic not affected by WAF mitigation measures. Since all data provided by WAF detections is available in this dashboard, you can use it to:
-- Adjust your current configuration — for example, update thresholds in expressions that use WAF attack score and bot score.
-- Review traffic that you would like to mitigate and create a new custom rule from applied fields.
-- Review the request rate for traffic matching the selected filters and time period to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/), creating a rate limiting rule based on your findings.
-
-Use [Security Events](/waf/analytics/security-events/) to get more information about requests that are being mitigated by Cloudflare security products. This dashboard shows top events by source and the activity log, with requests handled by the WAF during the selected time period. You can also create custom rules based on selected filters.
+- Use [Security Analytics](/waf/analytics/security-analytics/) to explore all traffic, including traffic not affected by WAF mitigation measures. All data provided by [traffic detections](/waf/about/#available-traffic-detections) is available in this dashboard.
+- Use [Security Events](/waf/analytics/security-events/) to get more information about requests that are being mitigated by Cloudflare security products.
 
 Enterprise customers can also obtain data about HTTP requests and security events using [Cloudflare Logs](/logs/).
 
@@ -168,35 +155,13 @@ Create a rate limiting rule to [apply rate limiting on a login endpoint](/waf/ra
 
 Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent {{<glossary-tooltip term_id="credential stuffing">}}credential stuffing{{</glossary-tooltip>}} attacks on your applications.
 
-The Cloudflare Exposed Credentials Check Ruleset contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for {{<glossary-tooltip term_id="exposed credentials">}}exposed credentials{{</glossary-tooltip>}} for these well-known applications.
-
-The default action of rules in this managed ruleset is to add a new HTTP header to any HTTP requests with exposed credentials, which you will receive at your origin server. You can change this action to a more severe one such as _Managed Challenge_ or _Block_.
-
-Follow these recommended steps to start checking for leaked credentials:
-
-1. Go to your domain > **Security** > **WAF** and select the **Managed rules** tab.
-2. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare Exposed Credentials Check Ruleset.
-3. Test your configuration by entering special [test credentials](/waf/managed-rules/check-for-exposed-credentials/test-configuration/) in your application:
-
-    {{<render file="_exposed-creds-test-credentials.md">}}
-
-4. After a few minutes, check the activity log in the [Security Events](/waf/analytics/security-events/) dashboard, searching for entries corresponding to requests with exposed credentials.
-5. (Optional, API only) If you have access to account-level WAF, you can [create a custom rule checking for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials) in custom locations of incoming requests, specific to your application.
-
 ### Prevent users from uploading malware into your applications
 
 {{<Aside type="note">}}
 Available to Enterprise customers with a paid add-on.
 {{</Aside>}}
 
-[WAF content scanning](/waf/about/content-scanning/) is a WAF [traffic detection](/waf/about/#detection-versus-mitigation) that scans content being uploaded to your application searching for malicious content.
-
-Follow these recommended steps to start using WAF content scanning:
-
-1. Go to your domain > **Security** > **Settings**.
-2. Under **Incoming traffic detections**, turn on **Malicious uploads**.
-3. Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to validate that malicious content objects are being detected correctly. At this point no mitigation action is being taken on requests with content objects considered malicious.
-4. Create a custom rule using [content scanning fields](/waf/about/content-scanning/#content-scanning-fields) to handle requests with malicious content objects. Refer to [Example rules](/waf/about/content-scanning/example-rules/) for a few examples.
+[Use WAF content scanning](/waf/about/content-scanning/get-started/) to scan content being uploaded to your application, searching for malicious content.
 
 ### Get additional security for your APIs
 
