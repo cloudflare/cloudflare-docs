@@ -91,7 +91,7 @@ To delete a load balancer using the API, send a [DELETE](/api/operations/load-ba
 
 ## Set up alerts
 
-You can configure alerts to receive notifications for changes in the health status of your pools or origins. 
+You can configure alerts to receive notifications for changes in the health status of your pools or endpoints.
 
 {{<available-notifications product="Load Balancing" notificationName="Load Balancing Health Alert">}}
 
