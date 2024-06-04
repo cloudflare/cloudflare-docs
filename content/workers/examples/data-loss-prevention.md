@@ -185,17 +185,15 @@ async def on_fetch(request):
         })
         return await fetch(some_hook_server, method="POST", headers=headers, body=body)
 
-    """
-    Define personal data with regular expressions.
-    Respond with block if credit card data, and strip
-    emails and phone numbers from the response.
-    Execution will be limited to MIME type "text/*".
-    """
+    # Define personal data with regular expressions.
+    # Respond with block if credit card data, and strip
+    # emails and phone numbers from the response.
+    # Execution will be limited to MIME type "text/*".
     response = await fetch(request)
 
     # Return origin response, if response wasn’t text
     content_type = response.headers["content-type"] or ""
-    if not "text" in content_type:
+    if "text" not in content_type:
         return response
 
     text = await response.text()
