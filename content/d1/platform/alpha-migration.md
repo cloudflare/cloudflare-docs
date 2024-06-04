@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="warning">}}
 
-D1 alpha databases will stop accepting live SQL queries on July 1, 2024.
+D1 alpha databases will [stop accepting live SQL queries on August 1, 2024](/d1/platform/changelog/#d1-alpha-databases-will-stop-accepting-live-sql-queries-on-august-1-2024).
 
 {{</Aside>}}
 
