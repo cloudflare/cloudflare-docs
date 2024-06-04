@@ -47,7 +47,7 @@ The source map is retrieved after your Worker invocation completes — it's an a
 
 {{</Aside>}}
 
-When trying to remap a stacktrace we'll try to remap as much as possible, but if we get an invalid mapping we'll ignore it. So if half your mappings are correct and half are wrong you'll get a mixed stacktrace with references to generated and original names/lines/columns.
+When Cloudflare attempts to remap a stack trace to the Worker's source map, it does so line-by-line, remapping as much as possible. If a line of the stack trace cannot be remapped for any reason, Cloudflare will leave that line of the stack trace unchanged, and continue to the next line of the stack trace.
 
 ## Related resources
 
