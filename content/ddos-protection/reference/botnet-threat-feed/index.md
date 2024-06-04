@@ -44,6 +44,7 @@ Make sure that:
 ### 1. Obtain Cloudflare API token
 
 You must [obtain a Cloudflare API token](/fundamentals/api/get-started/create-token/) with at least the following account-level permission:
+
 - _DDoS Botnet Feed_ > _Read_
 
 ### 2. Call Botnet Threat Feed API
