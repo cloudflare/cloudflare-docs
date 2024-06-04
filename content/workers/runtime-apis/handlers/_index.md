@@ -23,4 +23,4 @@ The following handlers are available within Workers:
 
 ## Handlers in Python Workers
 
-When you [write Workers in Python](https://developers.cloudflare.com/workers/languages/python/), handlers are prefixed with `on_`. For example, `on_fetch` or `on_scheduled`.
+When you [write Workers in Python](/workers/languages/python/), handlers are prefixed with `on_`. For example, `on_fetch` or `on_scheduled`.
