@@ -46,6 +46,8 @@ Many common tools have been preinstalled in the Cloudflare Pages build environme
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
 
+Please note that the presence of `package.json` or `package-lock.json` would cause `npm install` to be ran. If you don't want `npm install` run automatically, you should consider removing  `package.json` and `package-lock.json`. 
+
 ## Build environment
 
 Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container.
