@@ -24,7 +24,7 @@ For the time being, Express CNI does not support BGP. You need to create policy-
 
 With Classic CNI you need to [set up an onboarding process](/network-interconnect/classic-cni/) with Cloudflare. There is no self-serving option through the dashboard.
 
-Magic WAN only supports GRE tunnels over CNI. You will need to set your MSS clamp size to 1476 bytes to accommodate overhead from additional headers. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
+Magic WAN only supports GRE tunnels over CNI. You will need to set your {{<glossary-tooltip term_id="maximum segment size (MSS)">}}MSS clamp{{</glossary-tooltip>}} size to 1476 bytes to accommodate overhead from additional headers. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
 
 Magic WAN with Classic CNI does not support BGP for the private encapsulated traffic. You need to create policy-based routes to ensure traffic is routed correctly. Classic CNI does support BGP for the outer GRE packet, and this can be used for re-routing the tunnel over a backup CNI in the event of an issue with the primary.
 
