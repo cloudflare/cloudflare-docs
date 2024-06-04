@@ -14,11 +14,11 @@ When working with Magic WAN and Cloudflare Network Interconnect (CNI), there are
 
 ## Express CNI
 
-With Express CNI you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1500 bytes, both for ingress and egress traffic.
+With [Express CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1500 bytes, both for ingress and egress traffic.
 
 For the time being, Express CNI does not support BGP. You need to create policy-based routes to ensure traffic is routed correctly. You also need to implement tracking of network traffic to ensure that the CNI and Cloudflare data center is functioning properly.
 
-{{Aside type="note"}}Do not use Magic WAN Connector with Express CNI. You can use the Connector with a [Public Peering](/network-interconnect/pni-and-peering/) or a [Private Network Interconnection (PNI)](/network-interconnect/pni-and-peering/) if needed.
+{{<Aside type="note">}}Do not use Magic WAN Connector with Express CNI. You can use the Connector with a [Public Peering or a Private Network Interconnection (PNI)](/network-interconnect/pni-and-peering/) if needed.{{</Aside>}}
 
 ## Classic CNI
 
