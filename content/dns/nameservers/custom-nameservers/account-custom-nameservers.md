@@ -65,7 +65,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these n
 
     * If you are using Cloudflare Registrar for the domain that provides the ACNS names, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the account custom nameservers and IP addresses as glue records to the domain.
 
-    * If you are not using Cloudflare Registrar for the domain that provides the ACNS names, add the account custom nameservers and IP addresses to your domain's registrar as [glue records](https://www.rfc-editor.org/rfc/rfc1912.html#section-2.3). If you do not add these records, DNS lookups for your domain will fail.
+    * If you are not using Cloudflare Registrar for the domain that provides the ACNS names, add the account custom nameservers and IP addresses to your domain's registrar as glue records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
 
 ### 2. Use ACNS on existing zones
 
