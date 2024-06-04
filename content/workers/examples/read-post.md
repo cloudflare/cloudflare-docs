@@ -7,13 +7,14 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Read POST
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -133,6 +134,41 @@ export default {
     }
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+
+from js import Object, Response, Headers, JSON
+
+async def read_request_body(request):
+    headers = request.headers
+    content_type = headers["content-type"] or ""
+
+    if "application/json" in content_type:
+        return JSON.stringify(await request.json())
+    if "form" in content_type:
+        form = await request.formData()
+        data = Object.fromEntries(form.entries())
+        return JSON.stringify(data)
+    return await request.text()
+
+async def on_fetch(request):
+    def raw_html_response(html):
+        headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
+        return Response.new(html, headers=Headers)
+
+    if "form" in request.url:
+        return raw_html_response("")
+
+    if "POST" in request.method:
+        req_body = await read_request_body(request)
+        ret_body = f"The request body sent in was {req_body}"
+        return Response.new(ret_body)
+
+    return Response.new("The request was not POST")
 ```
 
 {{</tab>}}
