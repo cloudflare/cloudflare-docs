@@ -8,6 +8,12 @@ weight: 6
 
 This guide covers how to configure Cloudflare Access as a single sign-on provider for your Google Workspace account.
 
+{{<Aside type="note">}}
+
+The integration of Access as a single sign-on provider for your Google Workspace account does not work for Google super admins. It will work for other users.
+
+{{</Aside>}}
+
 ## 1. Create an application in Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
