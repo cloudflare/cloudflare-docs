@@ -9,7 +9,7 @@ A tutorial connects products to real-world scenarios to meet a user's goal.
 
 ## Template
 
-We have a [pre-built template](https://github.com/cloudflare/cloudflare-docs/tree/production/archetypes/tutorial.md) that helps you follow our general structure and content guidelines.
+We have a [pre-built template](https://github.com/cloudflare/cloudflare-docs/blob/production/archetypes/tutorial.md) that helps you follow our general structure and content guidelines.
 
 You can copy the file directly or - if you have [Hugo](https://github.com/cloudflare/cloudflare-docs?tab=readme-ov-file#setup) installed on your local machine - you can run the following command:
 
