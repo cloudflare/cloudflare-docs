@@ -1,6 +1,6 @@
 ---
 title: Network Interconnect (CNI)
-pcx_content_type: tutorial
+pcx_content_type: concept
 weight: 10
 meta:
   title: Network Interconnect and Magic Transit
