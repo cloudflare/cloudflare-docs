@@ -149,7 +149,7 @@ Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare. Howev
 - The IKE authentication method must be Pre-Shared Key (PSK).
 - If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
-- If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check its documentation for its dead peer detection behavior.
+- If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
 
 #### Optional configuration parameters
 
