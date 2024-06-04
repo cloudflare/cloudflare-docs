@@ -18,8 +18,8 @@ You need to configure Breakout Traffic for each of your existing sites, as it is
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Sites**.
 3. Select the site you want to configure > **Edit**.
-4. Go to **Breakout Traffic**.
-5. Select **Add**.
+4. Select **Traffic Steering**.
+5. In **Breakout traffic**, select **Add**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
 7. Select **Add applications**.
 
@@ -30,7 +30,7 @@ The traffic for that application will now go directly to the Internet and bypass
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Sites**.
 3. Select the site you want to configure > **Edit**.
-4. Go to **Breakout Traffic**.
-5. Find the application you want to delete, and select the **three dots** next to it.
-Select **Remove**.
-6. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
+4. Select **Traffic Steering**.
+5. In **Breakout Traffic**, find the application you want to delete, and select the **three dots** next to it.
+6. Select **Remove**.
+7. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
