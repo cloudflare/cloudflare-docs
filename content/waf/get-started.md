@@ -87,7 +87,7 @@ Customers with access to [Bot Management](/bots/get-started/bm-subscription/) ca
 2. Create a rule using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
 
     - **Expression**: `Bot Score less than 20 AND Verified Bot equals Off`
-    - **Action**: _Block_
+    - **Action**: _Managed Challenge_
 
 For more information about the bot-related fields you can use in expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
