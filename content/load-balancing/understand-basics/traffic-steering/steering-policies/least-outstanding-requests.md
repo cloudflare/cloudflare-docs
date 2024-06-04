@@ -33,6 +33,6 @@ Least Outstanding Requests steering can also be configured on a pool as a [local
 
 ## Limitations
 
-Least Outstanding Requests steering can be configured for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), but is only supported in a no-operation, dummy form. For DNS-only load balancers, all pool outstanding request counts are considered to be zero, meaning traffic is served solely based on `random_steering` weights.
+Least Outstanding Requests steering can be configured for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), but is only supported in a no-operation form. For DNS-only load balancers, all pool outstanding request counts are considered to be zero, meaning traffic is served solely based on `random_steering` weights.
 
 Although it is configurable, it is not recommended to use Least Outstanding Requests steering for DNS-only load balancers due to its partial support.
