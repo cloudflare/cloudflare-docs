@@ -12,13 +12,13 @@ The Cloudflare DDoS Botnet Threat Feed is a threat intelligence feed for service
 
 Each service provider can only get information about IP addresses associated with their autonomous system numbers (ASNs).
 
-To improve the feed’s accuracy, Cloudflare will only include in the feed IP addresses that have participated in multiple HTTP DDoS attacks and have triggered high-confidence rules. Cloudflare will try to ensure that the feed includes only actual attackers and not legitimate clients.
+To ensure the feed’s accuracy, Cloudflare will only include in the feed IP addresses that have participated in multiple HTTP DDoS attacks and have triggered high-confidence rules.
 
 ## Context
 
 A single DDoS attack consisting of thousands of bots can involve as little as one single IP per service provider. Service providers usually only see a small fraction of the attack traffic leaving their network, and it can be hard to correlate it to malicious activity, while trying to identify abusers.
 
-In the case of HTTPS DDoS attacks, service providers only see encrypted payloads leaving their network without any possibility to decrypt or understand if it is malicious or legitimate traffic. However, Cloudflare can see an entire attack and all of its sources. This global view can help service providers stop the abusers.
+In the case of HTTPS DDoS attacks, service providers only see encrypted payloads leaving their network without any possibility to decrypt or understand if it is malicious or legitimate traffic. However, Cloudflare can see an entire attack and all of its sources if it targets an Internet property that uses its services. This global view can help service providers stop the abusers.
 
 ## Availability
 
