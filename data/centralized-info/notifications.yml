@@ -34,6 +34,13 @@ entries:
   nextSteps: Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
   otherFilters: You can set up Brand Protection Digest on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
 
+- name: Logo Match Alerts
+  audience: Customers who want to receive a notification when the [Brand Protection](/security-center/brand-protection/) system detects a new domain which is using the uploaded logo and might be infringing copyright.
+  availability: Enterprise plans.
+  associatedProducts: Security Center
+  nextSteps: Review the domains and URLs that are potentially impersonating your brand.
+  otherFilters: You can select the query that you want to be alerted on.
+
 - name: Maintenance Notification
   audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
   availability: All Cloudflare plans.
