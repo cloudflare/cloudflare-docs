@@ -11,14 +11,7 @@ Cloudflare’s implementation of application awareness leverages the intelligenc
 
 For more information, refer to [Applications and app types](/cloudflare-one/policies/gateway/application-app-types/).
 
-Magic WAN Connector's ability to classify traffic allows you to define which applications should bypass Cloudflare’s security filtering, and go directly to the Internet. You can also prioritize applications, which is useful when your Internet connection is at capacity.
-
-{{<Aside type="note">}}
-
-Cloudflare’s best practice recommendation is to route all traffic through our global network for comprehensive security filtering and access controls, but there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
-
-For more information, refer to [Traffic steering](/magic-wan/reference/traffic-steering/).
-{{</Aside>}}
+Magic WAN Connector's ability to classify traffic allows you to define which applications should bypass Cloudflare’s security filtering, and go directly to the Internet. You can also give some applications a higher priority, and Connector will process them first. This is useful when your network is at capacity, for example.
 
 Refer to the following pages for more information.
 
