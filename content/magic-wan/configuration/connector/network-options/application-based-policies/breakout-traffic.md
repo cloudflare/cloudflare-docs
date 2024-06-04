@@ -31,4 +31,4 @@ The traffic for that application will now go directly to the Internet and bypass
 
 ## Delete an application
 
-{{<render file="connector/app-aware-policies/_delete-app.md" >}}
+{{<render file="connector/app-aware-policies/_delete-app.md" withParameters="Breakout traffic" >}}

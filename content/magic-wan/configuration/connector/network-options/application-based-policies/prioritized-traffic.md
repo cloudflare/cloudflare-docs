@@ -22,4 +22,4 @@ The traffic for the applications you chose are now processed first by Connector.
 
 ## Delete an application
 
-{{<render file="connector/app-aware-policies/_delete-app.md" >}}
+{{<render file="connector/app-aware-policies/_delete-app.md" withParameters="Prioritized traffic">}}
