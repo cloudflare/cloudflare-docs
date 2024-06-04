@@ -168,13 +168,18 @@ Create a rate limiting rule to [apply rate limiting on a login endpoint](/waf/ra
 
 Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent credential stuffing attacks on your applications.
 
-The default action of rules belonging to the Cloudflare Exposed Credentials Check Ruleset  is to add a new HTTP header to any HTTP requests with exposed credentials, which you will receive at your origin server. You can change this action to a more severe one such as _Managed Challenge_ or _Block_.
+The Cloudflare Exposed Credentials Check Ruleset contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
+
+The default action of rules in this managed ruleset is to add a new HTTP header to any HTTP requests with exposed credentials, which you will receive at your origin server. You can change this action to a more severe one such as _Managed Challenge_ or _Block_.
 
 Follow these recommended steps to start checking for leaked credentials:
 
 1. Go to your domain > **Security** > **WAF** and select the **Managed rules** tab.
 2. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare Exposed Credentials Check Ruleset.
-3. Test your configuration by entering special [test credentials](/waf/managed-rules/check-for-exposed-credentials/test-configuration/) in your application.
+3. Test your configuration by entering special [test credentials](/waf/managed-rules/check-for-exposed-credentials/test-configuration/) in your application:
+
+    {{<render file="_exposed-creds-test-credentials.md">}}
+
 4. After a few minutes, check the activity log in the [Security Events](/waf/analytics/security-events/) dashboard, searching for entries corresponding to requests with exposed credentials.
 5. (Optional, API only) If you have access to account-level WAF, you can [create a custom rule checking for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials) in custom locations of incoming requests, specific to your application.
 
