@@ -58,16 +58,16 @@ export default {
 (Aside example)
 
 {{<Aside type="note">}}
-An aside is a colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the text or warns users of specific behavior that can break functionality or impact security. For more details read our [style guide documentation on Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/#recommendations)
+An aside is a colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the text or warns users of specific behavior that can break functionality or impact security. For more details read our [style guide documentation on Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/#recommendations).
 {{</Aside>}}
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Next steps" optional=true >}}
+{{<tutorial-step title="Next steps" optional="true">}}
 
 (Cloudflare docs link example)
 
-To build more with Workers, refer to [Tutorials](/workers/tutorials).
+To build more with Workers, refer to [Tutorials](/workers/tutorials/).
 
 (External link example)
 
