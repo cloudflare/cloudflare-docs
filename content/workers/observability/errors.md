@@ -69,11 +69,11 @@ Specific error cases include but are not limited to:
 
 This means that you are doing work in the top-level scope of your Worker that takes [more than the startup time limit (400ms)](/workers/platform/limits/#worker-startup-time) of CPU time.
 
-This is usually a sign of a bug and/or large performance problem with your code or a dependency you rely on — It's not typical to use more than 400ms of CPU time when your app starts. The more time your Worker's code spends parsing and executing top-level scope, the slower your Worker will be when you deploy a code change or a new [isolate](/workers/reference/how-workers-works/) is created.
+This is usually a sign of a bug and/or large performance problem with your code or a dependency you rely on. It's not typical to use more than 400ms of CPU time when your app starts. The more time your Worker's code spends parsing and executing top-level scope, the slower your Worker will be when you deploy a code change or a new [isolate](/workers/reference/how-workers-works/) is created.
 
-This error is most commontly caused by attempting to perform expernsive initialization work directly in top level (global) scope, rather than either at build time or when your Worker's handler is invoked. For example, attempting to initialize an app by generating or consuming a large schema.
+This error is most commonly caused by attempting to perform expernsive initialization work directly in top level (global) scope, rather than either at build time or when your Worker's handler is invoked. For example, attempting to initialize an app by generating or consuming a large schema.
 
-To analyze what is consuming so much CPU time, you should open Chrome DevTools for your Worker, and look at the Profiling and/or Performance panels, to understand where time is being spent. Is there something glaring that consumes tons of CPU time, the first time you make a request to your Worker?
+To analyze what is consuming so much CPU time, you should open Chrome DevTools for your Worker and look at the Profiling and/or Performance panels to understand where time is being spent. Is there something glaring that consumes tons of CPU time, especially the first time you make a request to your Worker?
 
 ## Runtime errors
 
