@@ -61,7 +61,7 @@ Guiding, straightforward, educational, authoritative
 
 **Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
 
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): Numbered steps that complete a task. Refer to [Steps/tasks/procedures](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/) for more information.
+[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
 
 #### Optional components
 
