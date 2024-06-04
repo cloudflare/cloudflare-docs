@@ -71,6 +71,6 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, join the `#vectorize-open-beta` channel to show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
 
 {{</resource-group>}}
