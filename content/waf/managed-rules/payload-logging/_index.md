@@ -27,7 +27,7 @@ To view the content of the payload in clear text, do one of the following:
 
 * Decrypt the payload in the command line using the `matched-data-cli` tool. Refer to [Decrypt the payload content in the command line](/waf/managed-rules/payload-logging/command-line/decrypt-payload/) for details.
 
-* Decrypt the matched payload in your [Logpush](/logs/about/) job using a worker before storing the logs in your {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}}. Refer to [Decrypt the payload before storing the logs](/waf/managed-rules/payload-logging/decrypt-in-logs/).
+* Decrypt the matched payload in your [Logpush](/logs/about/) job using a Worker before storing the logs in your {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}}. Refer to [Store decrypted matched payloads in logs](/waf/managed-rules/payload-logging/decrypt-in-logs/).
 
 {{<Aside type="warning" header="Important">}}
 
