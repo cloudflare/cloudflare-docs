@@ -1,6 +1,7 @@
 ---
 link: "/logs/change-notices/"
 productName: Logs
+productLink: "/logs/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
