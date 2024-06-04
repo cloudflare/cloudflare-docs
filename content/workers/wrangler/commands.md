@@ -1407,6 +1407,10 @@ wrangler r2 bucket create <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new R2 bucket.
+- `--storage-class` {{<type>}}"Standard"|"InfrequentAccess"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The default storage class for objects uploaded to the bucket.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 {{</definitions>}}
 
@@ -1516,7 +1520,7 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
 - `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Your R2 Secret Access Key. Requires read and write access.
 - `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 - **AWS S3 provider-specific options:**
 - `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
