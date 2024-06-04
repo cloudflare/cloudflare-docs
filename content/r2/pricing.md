@@ -112,8 +112,9 @@ No. You are not charged for operations when the caller does not have permission 
 
 ### Will I lose my buckets/data immediately if the R2 subscription is removed?
 
-If the R2 subscription is removed, we don’t delete buckets/data immediately. However, you are not allowed access your buckets on dashboard if the R2 subscription is removed, but we retain the data for (at least) 30 days.
+If the R2 subscription is removed, we don’t delete buckets/data immediately. 
+However you are not allowed access your buckets on dashboard if the R2 subscription is removed, but we retain the data for (at least) 30 days.
 
-If you add the R2 subscription back. it will restore access.
+If you add the R2 subscription back it will restore access.
 
 
