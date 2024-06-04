@@ -92,7 +92,7 @@ $ npm create cloudflare@latest airtable-form-handler
 
 When configuring your Worker:
 
-* Choose `"Hello World" script` for the type of application you would like to create.
+* Choose `"Hello World" Worker` for the type of application you would like to create.
 * Select `No` to using TypeScript.
 * Select `No` to deploying your Worker.
 

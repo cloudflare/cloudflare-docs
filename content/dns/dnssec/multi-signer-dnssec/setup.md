@@ -92,15 +92,14 @@ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_re
 }'
 ```
 
-4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
+4. Enable the usage of the nameservers you added in the previous step by using the API request below.
 
 {{<Aside type="warning">}}
 This step is required. Without enabling this setting, Cloudflare will ignore any `NS` records created on the zone apex. This means that responses to DNS queries made to the zone apex and requesting `NS` records will only contain Cloudflare nameservers.
 {{</Aside>}}
 
 ```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings \
+$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -151,7 +150,6 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 
 3. Add your external provider(s) nameservers as NS records on your zone apex at your primary DNS provider. These records should be transferred successfully to Cloudflare.
 
-```
 {{</tab>}}
 {{</tabs>}}
 

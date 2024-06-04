@@ -38,6 +38,12 @@ To use transformations, you’ll need to enable this feature on each zone:
 
 {{<Aside type="note">}}
 
+With **Resize images from any origin** unchecked, only the initial URL passed will be checked. Any redirect returned will be followed, including if it leaves the zone, and the resulting image will be transformed.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
 If you are using transformations in a Worker, you need to include the appropriate logic in your Worker code to prevent resizing images from any origin. Unchecking this option in the dash does not apply to transformation requests coming from Cloudflare Workers.
 
 {{</Aside>}}

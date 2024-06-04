@@ -30,14 +30,14 @@ To increase the number of ports available to `cloudflared` on Linux:
 If your machine has a `/etc/sysctl.d/` directory:
 
 ```sh
-$ echo 'net.ipv4.ip_local_port_range = 12000 60999' | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
+$ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
 $ sudo sysctl -p /etc/sysctl.d/99-cloudflared.conf
 ```
 
 Otherwise:
 
 ```sh
-$ echo 'net.ipv4.ip_local_port_range = 12000 60999' | sudo tee -a /etc/sysctl.conf
+$ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p /etc/sysctl.conf
 ```
 

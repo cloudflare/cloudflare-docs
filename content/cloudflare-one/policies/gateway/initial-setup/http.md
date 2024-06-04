@@ -10,6 +10,10 @@ meta:
 
 Secure Web Gateway allows you to inspect HTTP traffic and control which websites users can visit.
 
+{{<Aside type="note">}}
+For a more detailed guide to filtering HTTP requests and other traffic for your organization, refer to the [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/) implementation guide.
+{{</Aside>}}
+
 ## 1. Connect to Gateway
 
 To filter HTTP requests from a device:
@@ -23,7 +27,7 @@ To filter HTTP requests from a device:
 
 ## 2. Verify device connectivity
 
-{{<render file="gateway/_verify-connectivity.md" withParameters="HTTP">}}
+{{<render file="gateway/_verify-connectivity.md" withParameters="HTTP;;requests">}}
 
 ## 3. Add recommended policies
 
@@ -32,12 +36,9 @@ We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
 
-Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
-This will help avoid any certificate pinning errors that may arise from an initial rollout.
+Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations). This will help avoid any incompatibilities that may arise from an initial rollout. By the _Do Not Inspect_ app type, Gateway will filter any new applications when they are added to the group.
 
-| Selector    | Operator | Value          | Action         |
-| ----------- | -------- | -------------- | -------------- |
-| Application | in       | Do Not Inspect | Do Not Inspect |
+{{<render file="gateway/policies/_do-not-inspect-applications.md">}}
 
 ### Block all security categories
 

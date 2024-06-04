@@ -13,7 +13,7 @@ meta:
 
 {{<description>}}
 
-A globally distributed coordination API with strongly consistent storage.
+Create collaborative applications, real-time chat, multiplayer games and more without needing to coordinate state or manage infrastructure.
 
 {{</description>}}
 
@@ -39,9 +39,9 @@ Learn how Durable Objects provide strongly consistent, serializable key-value st
 
 {{</feature>}}
 
-{{<feature header="Hibernatable WebSockets API" href="/durable-objects/api/websockets/">}}
+{{<feature header="WebSocket Hibernation" href="/durable-objects/reference/websockets/#websocket-hibernation">}}
 
-Learn how the Hibernatable WebSockets API allows you to manage the connections of multiple clients at scale.
+Learn how WebSocket Hibernation allows you to manage the connections of multiple clients at scale.
 
 {{</feature>}}
 

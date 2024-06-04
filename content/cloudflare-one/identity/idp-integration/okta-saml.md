@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Okta (SAML)
-weight: 13
+weight: 18
 ---
 
 # Okta (SAML)
@@ -89,20 +89,20 @@ SAML attributes are only refreshed during authentications with the Okta identity
 
 ```json
 {
-    "config": {
-        "issuer_url": "http://www.okta.com/exkbhqj29iGxT7GwT0h7",
-        "sso_target_url": "https://dev-abc123.oktapreview.com/app/myapp/exkbhqj29iGxT7GwT0h7/sso/saml",
-        "attributes": [
-            "email",
-            "group",
-        ],
-        "email_attribute_name": "",
-        "sign_request": false,
-        "idp_public_certs": [
-            "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-        ]
-    },
-    "type": "saml",
-    "name": "okta saml example"
+  "config": {
+      "issuer_url": "http://www.okta.com/exkbhqj29iGxT7GwT0h7",
+      "sso_target_url": "https://dev-abc123.oktapreview.com/app/myapp/exkbhqj29iGxT7GwT0h7/sso/saml",
+      "attributes": [
+          "email",
+          "group",
+      ],
+      "email_attribute_name": "",
+      "sign_request": false,
+      "idp_public_certs": [
+          "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+      ]
+  },
+  "type": "saml",
+  "name": "okta saml example"
 }
 ```

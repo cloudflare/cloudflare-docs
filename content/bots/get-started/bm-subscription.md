@@ -16,11 +16,17 @@ This Enterprise product provides the most flexibility to customers by:
 
 ## Enable Bot Management for Enterprise
 
-To enable [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) for Enterprise:
+Bot Management is automatically enabled for Enterprise zones entitled with the add-on. 
+
+To enable a [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) trial on Enterprise zones without the Bot Management add-on entitled:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Bots**.
-3. Select **Enable**.
+3. Select **Add Bot Management**.
+
+{{<Aside type="note">}}
+If you are not seeing Bot Management enabled on your zone or if you still see **Add Bot Management** on the Cloudflare dashboard, contact your account team for the proper entitlements.
+{{</Aside>}}
 
 ## Setup
 

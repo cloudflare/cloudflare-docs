@@ -55,13 +55,11 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 
 10. Read the permissions, and select **Accept** to continue. You will be directed back to the Area 1 dashboard.
 
-11. Now that both types of authorizations have been complete, select **Publish Domain**.
+11. In **Protection Scope**, choose if Area 1 should scan only the inbox or all folders. Scanning all folders is useful for situations where the email is automatically routed to other folders that users still have access to:
+    1. **Protect Inbox only**: Area 1 will only scan the user's inbox.
+    2. **Protect all folders**: Area 1 will scan all non-hidden email folders.
 
-    <div class="medium-img">
-
-    ![Now that both authorizations are complete, select Publish domain](/images/email-security/deployment/api-setup/ms-graph/step11.png)
-
-    </div>
+12. Now that both types of authorizations have been complete, select **Publish Domain**.
 
 Your authorized domain will show up in **Email Configuration** > **Domains & Routing** > **Domains**, with messages about the progress of directory syncing between Office 365 and Area 1.
 

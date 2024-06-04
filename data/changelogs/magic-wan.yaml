@@ -1,0 +1,11 @@
+---
+link: "/magic-wan/changelog/"
+productName: Magic WAN
+productLink: "/magic-wan/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-01-23'
+  title: Network segmentation
+  description: |-
+    You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features.

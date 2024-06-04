@@ -16,9 +16,9 @@ With Cloudflare's [Logpush](/logs/about/) service, you can configure the automat
 
 ## Export Zero Trust logs with Logpush
 
-{{<Aside header="Logpush limitation" type="warning">}}
+{{<Aside header="Dashboard limitation" type="warning">}}
 
-Zero Trust does not support [Cloudflare R2](/logs/get-started/enable-destinations/r2/) as a Logpush destination.
+Zero Trust does not support configuring [Cloudflare R2](/logs/get-started/enable-destinations/r2/) as a Logpush destination via the dashboard. To use R2 as a destination for Zero Trust logs, configure your Logpush jobs [via the API](/logs/get-started/enable-destinations/r2/#manage-via-api).
 
 {{</Aside>}}
 

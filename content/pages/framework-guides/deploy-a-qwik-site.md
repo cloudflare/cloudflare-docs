@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Qwik site
+title: Qwik
 ---
 
-# Deploy a Qwik site
+# Qwik
 
 [Qwik](https://github.com/builderio/qwik) is an open-source, DOM-centric, resumable web application framework designed for best possible time to interactive by focusing on [resumability](https://qwik.builder.io/docs/concepts/resumable/), server-side rendering of HTML and [fine-grained lazy-loading](https://qwik.builder.io/docs/concepts/progressive/#lazy-loading) of code.
 
@@ -73,7 +73,7 @@ highlight: [4, 5]
 
 export const useGetServerTime = routeLoader$(({ platform }) => {
   // the type `KVNamespace` comes from the @cloudflare/workers-types package
-  const { MY_KV } = (platform as { MY_KV: KVNamespace }));
+  const { MY_KV } = (platform.env as { MY_KV: KVNamespace }));
 
   return {
     // ....

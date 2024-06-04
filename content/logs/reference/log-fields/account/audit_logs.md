@@ -10,24 +10,92 @@ weight: 21
 
 The descriptions below detail the fields available for `audit_logs`.
 
-{{<table-wrap>}}
+## ActionResult
 
-| Field | Value | Type |
-| -- | -- | -- |
-| ActionResult | Whether the action was successful. | bool |
-| ActionType | Type of action taken. | string |
-| ActorEmail | Email of the actor. | string |
-| ActorID | Unique identifier of the actor in Cloudflare's system. | string |
-| ActorIP | Physical network address of the actor. | string |
-| ActorType | Type of user that started the audit trail. | string |
-| ID | Unique identifier of an audit log. | string |
-| Interface | Entry point or interface of the audit log. | string |
-| Metadata | Additional audit log-specific information. Metadata is organized in key:value pairs. Key and Value formats can vary by ResourceType. | object |
-| NewValue | Contains the new value for the audited item. | object |
-| OldValue | Contains the old value for the audited item. | object |
-| OwnerID | The identifier of the user that was acting or was acted on behalf of. If a user did the action themselves, this value will be the same as the ActorID. | string |
-| ResourceID | Unique identifier of the resource within Cloudflare's system. | string |
-| ResourceType | The type of resource that was changed. | string |
-| When | When the change happened. | int or string |
+Type: bool
 
-{{</table-wrap>}}
+Whether the action was successful.
+
+## ActionType
+
+Type: string
+
+Type of action taken.
+
+## ActorEmail
+
+Type: string
+
+Email of the actor.
+
+## ActorID
+
+Type: string
+
+Unique identifier of the actor in Cloudflare's system.
+
+## ActorIP
+
+Type: string
+
+Physical network address of the actor.
+
+## ActorType
+
+Type: string
+
+Type of user that started the audit trail.
+
+## ID
+
+Type: string
+
+Unique identifier of an audit log.
+
+## Interface
+
+Type: string
+
+Entry point or interface of the audit log.
+
+## Metadata
+
+Type: object
+
+Additional audit log-specific information. Metadata is organized in key:value pairs. Key and Value formats can vary by ResourceType.
+
+## NewValue
+
+Type: object
+
+Contains the new value for the audited item.
+
+## OldValue
+
+Type: object
+
+Contains the old value for the audited item.
+
+## OwnerID
+
+Type: string
+
+The identifier of the user that was acting or was acted on behalf of. If a user did the action themselves, this value will be the same as the ActorID.
+
+## ResourceID
+
+Type: string
+
+Unique identifier of the resource within Cloudflare's system.
+
+## ResourceType
+
+Type: string
+
+The type of resource that was changed.
+
+## When
+
+Type: int or string
+
+When the change happened.

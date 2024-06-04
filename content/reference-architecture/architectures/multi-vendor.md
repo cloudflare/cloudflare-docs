@@ -21,7 +21,7 @@ This reference architecture is designed for IT, security or network professional
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
+{{<render file="_what-is-cloudflare-link.md">}}
 
 Those who read this reference architecture will learn:
 

@@ -4,16 +4,18 @@ pcx_content_type: how-to
 weight: 2
 ---
 
-{{<heading-pill style="early-access">}}Protocol detection{{</heading-pill>}}
+# Protocol detection
 
-{{<Aside header="Availability">}}Protocol detection is available in early access for Enterprise users. For more information, contact your account team.{{</Aside>}}
+{{<Aside>}}Only available on Enterprise plans.{{</Aside>}}
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
-## Enable protocol detection
+Protocol detection only applies to devices connected to Zero Trust via the WARP client in [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode.
+
+## Turn on protocol detection
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Firewall**.
-2. Enable **Protocol Detection**.
+2. Turn on **Protocol Detection**.
 
 You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudflare-one/policies/gateway/network-policies/#detected-protocol).
 
@@ -37,4 +39,4 @@ You can create network policies that filter traffic based on protocol detections
 
 | Selector          | Operator | Value | Action |
 | ----------------- | -------- | ----- | ------ |
-| Detected Protocol | in       | SSH   | Block  |
+| Detected Protocol | in       | _SSH_ | Block  |

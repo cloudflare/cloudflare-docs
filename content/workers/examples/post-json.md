@@ -2,7 +2,10 @@
 type: example
 summary: Send a POST request with JSON data. Use to share data with external servers.
 tags:
-  - Originless
+  - JSON
+languages:
+  - JavaScript
+  - TypeScript
 pcx_content_type: configuration
 title: Post JSON
 weight: 1001
@@ -67,7 +70,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     /**
      * Example someHost is set up to take in a JSON request
      * Replace url with the host you wish to send requests to

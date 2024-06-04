@@ -3,10 +3,10 @@ updated: 2022-07-28
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Create an HTML form
+title: Create a HTML form
 ---
 
-# Create an HTML form
+# Create a HTML form
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 

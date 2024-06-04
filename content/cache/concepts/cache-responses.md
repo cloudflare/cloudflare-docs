@@ -29,7 +29,7 @@ Cloudflare generated a response that denotes the asset is not eligible for cachi
 
 - A WAF custom rule was triggered to block a request. The response will come from the Cloudflare global network before it hits cache. Since there is no cache status, Cloudflare will log as `none/unknown`.
 
-- A redirect cache rule caused the global network to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is `none/unknown`.
+- A [redirect rule](/rules/url-forwarding/) or [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) caused the global network to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is `none/unknown`.
 
 ## `EXPIRED`
 

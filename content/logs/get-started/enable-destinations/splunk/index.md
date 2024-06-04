@@ -149,7 +149,7 @@ Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.
 
 ### 3. Create WAF custom rule for Splunk HEC endpoint (optional)
 
-If you have the Cloudflare Web Application Firewall (WAF) turned on, you may get a challenge when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF custom rule that allows Cloudflare to bypass the HEC endpoint.
+If your logpush destination hostname is proxied through Cloudflare, and you have the Cloudflare Web Application Firewall (WAF) turned on, you may be challenged or blocked when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF custom rule that allows Cloudflare to bypass the HEC endpoint.
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Custom rules**.
 2.  Select **Create rule** and enter a descriptive name for it (for example, `Splunk`).

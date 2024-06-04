@@ -11,7 +11,7 @@ When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a se
 
 This process - known as [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) - moves authentication to the protocol of TLS, rather than managing it in application code. Connections from unauthorized clients are rejected during the TLS handshake instead.
 
-To present a client certificate when communicating with a service, create a [mTLS certificate binding](/workers/configuration/bindings/#mtls-certificate-bindings) in your Worker project's `wrangler.toml` file. This will allow your Worker to present a client certificate to a service on your behalf.
+To present a client certificate when communicating with a service, create a mTLS certificate [binding](/workers/runtime-apis/bindings/) in your Worker project's `wrangler.toml` file. This will allow your Worker to present a client certificate to a service on your behalf.
 
 {{<Aside type="warning">}}
 
@@ -71,10 +71,10 @@ interface Env {
 }
 
 export default {
-    async fetch(request: Request, environment: Env) {
+    async fetch(request, environment): Promise<Response> {
         return await environment.MY_CERT.fetch("https://a-secured-origin.com")
     }
-}
+} satisfies ExportedHandler<Env>;
 ```
 {{</tab>}}
 {{</tabs>}}

@@ -16,8 +16,6 @@ Create full-stack applications that are instantly deployed to the Cloudflare glo
 
 {{<plan type="all">}}
 
-{{<render file="_pages_survey.md">}}
-
 Deploy your Pages project by connecting to [your Git provider](/pages/get-started/git-integration/), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [C3](/pages/get-started/c3/) from the command line.
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}

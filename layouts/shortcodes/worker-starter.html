@@ -4,7 +4,7 @@
 
 {{- $remote := printf "https://github.com/%s" $repo -}}
 {{- $template := cond (hasPrefix $repo "cloudflare/workers-sdk/templates/") (path.Base $repo) $repo -}}
-{{- $command := printf "npx wrangler generate my-app %s" $template -}}
+{{- $command := printf "npm create cloudflare@latest my-app -- --template %s" $repo -}}
 {{- $link := cond (hasPrefix $repo "cloudflare/workers-sdk/templates/") (printf
 "https://github.com/cloudflare/workers-sdk/tree/main/templates/%s" $template) $remote}}
 

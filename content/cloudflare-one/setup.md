@@ -9,12 +9,14 @@ weight: 2
 This guide covers the recommended steps to start securing your users and devices with Cloudflare Zero Trust.
 
 {{<Aside type="note">}}
-To get started with a specific use case, refer to our [learning paths](/cloudflare-one/learning-paths/).
+To get started with a specific use case, refer to our [implementation guides](/cloudflare-one/implementation-guides/).
 {{</Aside>}}
 
-## Create a Zero Trust organization
+## Prerequisites
 
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
+Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
+
+## Create a Zero Trust organization
 
 {{<render file=_choose-team-name.md productFolder="cloudflare-one">}}
 

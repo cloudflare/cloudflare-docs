@@ -29,11 +29,7 @@ Before you begin, [find your zone and account IDs](/fundamentals/setup/find-acco
 10. Select **Create Token** to generate the token's secret.
 11. Copy the secret to a secure place.
 
-  {{<Aside type="warning" header="Warning">}}
- 
-  The token secret is **only shown once**. Do not store the secret in plaintext where others can access it. Anyone with this token can perform the authorized actions against the resources that the token has access to.
-
-  {{</Aside>}}
+{{<render file="_new-token-warning.md">}}
 
 ![Token creation completion screen displaying your API token and the `curl` command to test your token](/images/fundamentals/api/token-complete.png)
 

@@ -159,4 +159,4 @@ Properties are:
 
 {{</definitions>}}
 
-Because of space limitations, the tooltip will always default to the short definition of a term, meaning the the definition text before the first line break.
+Because of space limitations, the tooltip will always default to the short definition of a term, meaning the definition text before the first line break.

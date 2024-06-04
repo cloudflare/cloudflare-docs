@@ -21,6 +21,14 @@ Cloudflare allows you to select your cache topology so that you have control ove
 
 Smart Tiered Cache dynamically selects the single closest upper tier for each of your website’s origins with no configuration required, using our in-house performance and routing data. Cloudflare collects latency data for each request to an origin, and uses the latency data to determine how well any upper-tier data center is connected with an origin. As a result, Cloudflare can select the data center with the lowest latency to be the upper-tier for an origin.
 
+#### Smart Tiered Cache and Anycast network
+
+Smart Tiered Cache does not work when an origin is behind an [Anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) because that will prevent us from knowing where the origin is located. As a result, we are unable to select the optimal upper tier and latency may be negatively impacted.
+
+You need to be careful when updating your origin IPs/DNS records while Smart Tiered Cache is enabled. Depending on the changes made, it may cause the existing assigned upper tiers to change, resulting in an increased `MISS` rate as cache is refilled in the new upper tiers. If the origin is switched to a network behind Anycast, it will significantly reduce the effectiveness of Smart Tiered Cache.
+
+If you need to use Anycast and want to use Smart Tiered cache, contact your account team.
+
 ### Generic Global Tiered Cache
 
 Generic Global topology allows for all of Cloudflare’s global data centers to serve as a network of upper-tiers. This topology may help reduce the long tail latencies for far-away visitors.

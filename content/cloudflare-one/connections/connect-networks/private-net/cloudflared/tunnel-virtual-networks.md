@@ -6,6 +6,23 @@ weight: 5
 
 # Virtual networks
 
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans |
+
+| System   | Availability |
+| ---------| -------------|
+| Windows  | ✅           |
+| macOS    | ✅           |
+| Linux    | ✅           |
+| iOS      | ✅           |
+| Android  | ✅           |
+| ChromeOS | ✅           |
+
+{{</details>}}
+
 {{<render file="tunnel/_virtual-networks-intro.md" productFolder="cloudflare-one">}}
 
 ## Use cases
@@ -191,10 +208,18 @@ You can verify that the virtual network was successfully deleted by typing `clou
 
 ## Connect to a virtual network
 
-1. Open the WARP client on your device.
+### Windows, macOS, and Linux
 
+1. Open the WARP client.
 2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
+3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
+When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+
+### iOS, Android, and ChromeOS
+
+1. Launch the Cloudflare One Agent app.
+2. Go to **Advanced** > **Connection options** > **Virtual networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
 When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.

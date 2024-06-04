@@ -79,6 +79,12 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 The subdomain for the PTR record would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
 
+{{<example>}}
+| Type | Name | Domain name | TTL |
+| --- | --- | --- | --- |
+| `PTR` | `123` | `example.com` | `Auto` |
+{{</example>}}
+
     {{</details>}}
 
     {{<details header="IPv6 example">}}
@@ -89,6 +95,12 @@ The subdomain for the PTR record would be `123`, making the full domain for forw
 - **IP address**: `2001:DB8::5`
 
 The subdomain for the PTR record would be `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0`, making the full domain for forward lookup `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`.
+
+{{<example>}}
+| Type | Name | Domain name | TTL |
+| --- | --- | --- | --- |
+| `PTR` | `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0` | `example.com` | `Auto` |
+{{</example>}}
 
     {{</details>}}
 

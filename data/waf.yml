@@ -11,7 +11,7 @@ meta:
   description: Protect against web application vulnerabilities with Cloudflare’s
     Web Application Firewall (WAF).
   author: '@cloudflare'
-  
+
 resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf
@@ -25,5 +25,5 @@ externals:
 
 algolia:
   index: developers-cloudflare2
-  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: waf

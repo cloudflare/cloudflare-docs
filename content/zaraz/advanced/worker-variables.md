@@ -6,7 +6,7 @@ weight: 10
 
 # Worker Variables
 
-Zaraz Worker Variables are a powerful type of variable that you can configure and then use in your actions and triggers. Unlike string and secret variables, Worker Variables are dynamic. This means you can use a Cloudflare Worker to determine the value of the variable, allowing you to use them for countless purposes. For example:
+Zaraz Worker Variables are a powerful type of variable that you can configure and then use in your actions and triggers. Unlike string and masked variables, Worker Variables are dynamic. This means you can use a Cloudflare Worker to determine the value of the variable, allowing you to use them for countless purposes. For example:
 
 1. A Worker Variable that calculates the sum of all products in the cart
 2. A Worker Variable that takes a cookie, makes a request to your backend, and returns the User ID

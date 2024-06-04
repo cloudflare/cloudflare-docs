@@ -28,7 +28,7 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 
 - A non-interactive challenge page (similar to the current [JS Challenge](#js-challenge)).
 - A custom interactive challenge (such as click a button).
-- Private Access Tokens (using recent Apple operating systems).
+- [Private Access Tokens](#private-access-tokens) (using recent Apple operating systems).
 
 {{<render file="_challenge-issues.md" productFolder="rules" withParameters="Rules features">}}
 
@@ -75,12 +75,6 @@ If your visitors encounter issues using a major browser besides Internet Explore
 ### Browser extensions
 
 If you have browser extensions, they might lead to unpassable challenge loops. To fix, disable your extensions and reload the page.
-
-{{<Aside type="note">}}
-
-This behavior commonly occurs because an extension modifies your browser's default `User-Agent` value.
-
-{{</Aside>}}
 
 ### Mobile device emulation
 
@@ -134,6 +128,16 @@ For additional help, refer to [our FAQ for Challenges](/waf/troubleshooting/faq/
 
 ---
 
+## Private Access Tokens
+
+When a user is presented with a challenge page, Cloudflare decides what challenges need to be solved to prove they are human. While some challenges are computationally complex or require interactivity, most of the challenges served are invisible to the user.
+ 
+Cloudflare uses results from the Private Access Token (PAT) to decide what challenges users will see next. If a user presents a token, they will have an easier time solving the challenge. 
+ 
+The challenge page is an interstitial page and users will see it regardless of having a valid PAT or not. A PAT does not automatically solve a challenge. It prevents certain challenges from being issued.
+
+---
+
 ## Proxied hostnames
 
 {{<render file="_proxied-hostnames.md" productFolder="turnstile" >}}
@@ -183,5 +187,6 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 
 Cloudflare challenges cannot support the following:
 
+* [Browser extensions](#browser-extensions) that modify the browser's `User-Agent` value or Web APIs such as `Canvas` and `WebGL`.
 * Implementations where a domain serves a challenge page originally requested for another domain.
 * Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to. For example, if you receive the challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a challenge loop.

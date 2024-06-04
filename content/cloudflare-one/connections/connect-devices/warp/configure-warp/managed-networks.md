@@ -32,41 +32,6 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 
 2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
 
-{{<details header="Python">}}
-
-To serve the TLS certificate using Python:
-
-1. Create a Python 3 script called `myserver.py`:
-
-   ```txt
-   ---
-   filename: myserver.py
-   ---
-   import ssl, http.server
-
-   class BasicHandler(http.server.BaseHTTPRequestHandler):
-         def do_GET(self):
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b'OK')
-            return
-
-   server = http.server.ThreadingHTTPServer(('0.0.0.0', 3333), BasicHandler)
-   sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-   sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
-   server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
-   server.serve_forever()
-   ```
-
-2. Run the script:
-
-   ```sh
-   $ python3 myserver.py
-   ```
-
-{{</details>}}
-
 {{<details header="nginx in Docker">}}
 
 To serve the TLS certificate from an nginx container in Docker:
@@ -118,6 +83,46 @@ If needed, replace `/certs/example.pem` and `/certs/example.key` with the locati
 
    ```sh
    $ docker-compose up -d
+   ```
+
+{{</details>}}
+
+
+{{<details header="Python">}}
+
+{{<Aside type="warning">}}
+This Python script is intended for a quick proof of concept (PoC) and should not be used in production environments.
+{{</Aside>}}
+
+To serve the TLS certificate using Python:
+
+1. Create a Python 3 script called `myserver.py`:
+
+   ```txt
+   ---
+   filename: myserver.py
+   ---
+   import ssl, http.server
+
+   class BasicHandler(http.server.BaseHTTPRequestHandler):
+         def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b'OK')
+            return
+
+   server = http.server.ThreadingHTTPServer(('0.0.0.0', 3333), BasicHandler)
+   sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+   sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
+   server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
+   server.serve_forever()
+   ```
+
+2. Run the script:
+
+   ```sh
+   $ python3 myserver.py
    ```
 
 {{</details>}}

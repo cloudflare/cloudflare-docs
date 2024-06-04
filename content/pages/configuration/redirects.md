@@ -7,6 +7,12 @@ title: Redirects
 
 To use redirects on Cloudflare Pages, declare your redirects in a plain text file called `_redirects` without a file extension, in the output folder of your project. The [build output folder](/pages/configuration/build-configuration/) is project-specific, so the `_redirects` file should not always be in the root directory of the repository. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
 
+{{<Aside type="warning">}}
+
+Redirects defined in the `_redirects` file are not applied to requests served by [Functions](/pages/functions/), even if the Function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_redirects` file to the code in the appropriate `/functions` route, or [exclude the route from Functions](/pages/functions/routing/#create-a-_routesjson-file).
+
+{{</Aside>}}
+
 ## Structure
 
 ### Per line
@@ -35,6 +41,8 @@ Only one redirect can be defined per line and must follow this format, otherwise
   - Optional parameter
 
 {{</definitions>}}
+
+Lines starting with a `#` will be treated as comments.
 
 ### Per file
 
@@ -83,7 +91,7 @@ Cloudflare currently offers limited support for advanced redirects. More support
 | ----------------------------------- | ------- | --------------------------------------------------------------- | --------------------------------------- |
 | Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code. |
 | Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                         |
-| Splats                              | Yes     | `/blog/* /blog/:splat`                                          | Refer to [Splats](#splats).             |
+| Splats                              | Yes     | `/blog/* /posts/:splat`                                         | Refer to [Splats](#splats).             |
 | Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
 | Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                         |
 | Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |

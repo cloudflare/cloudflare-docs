@@ -42,6 +42,13 @@ If you have a [Transform Rule](/rules/transform/) in place that is modifying par
 
 {{</Aside>}}
 
+## Resulting cache status
+
+Purging by prefix deletes the resource, causing `CF-Cache-Status` header to show [`MISS`](/cache/concepts/cache-responses/#miss) for the subsequent request.
+
+If [tiered cache](/cache/how-to/tiered-cache/) is used, purging by prefix may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
+Depending on whether the upper tier has the resource or not, and whether the end user is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.
+
 ## Limitations
 
 There are several limitations regarding purge by prefix:

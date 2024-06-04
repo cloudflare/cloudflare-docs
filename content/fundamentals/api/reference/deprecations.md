@@ -8,6 +8,61 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Page Rules
+**End of life date: Jan 6th, 2025**
+
+The Page Rules API endpoints are deprecated, since Page Rules were deprecated.
+
+Deprecated APIs:
+- GET /zones/:zone_id/pagerules
+- POST /zones/:zone_id/pagerules
+- DELETE /zones/:zone_id/pagerules/:pagerule_id
+- GET /zones/:zone_id/pagerules/:pagerule_id
+- PATCH /zones/:zone_id/pagerules/:pagerule_id
+- PUT /zones/:zone_id/pagerules/:pagerule_id
+
+Refer to the [migration guide](/rules/reference/page-rules-migration/) for more information on the Rules features that are replacing Page Rules.
+
+## Auto Minify
+**End of life date: August 5th, 2024**
+
+The Auto Minify API endpoints are deprecated, since the Auto Minify feature was deprecated.
+
+Deprecated APIs:
+- GET /zones/:zone_id/settings/minify
+- PATCH /zones/:zone_id/settings/minify
+
+## Mobile Redirect
+**End of life date: June 30th, 2024**
+
+This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+
+Deprecated API:
+ - GET /zones/:zone_identifier/settings/mobile_redirect
+ - PATCH /zones/:zone_identifier/settings/mobile_redirect
+
+Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
+
+## Brotli
+**End of life date: June 14th, 2024**
+
+The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
+
+Deprecated APIs:
+- GET /zones/:zone_id/settings/brotli
+- PATCH /zones/:zone_id/settings/brotli
+
+Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
+
+## Server-side Excludes
+**End of life date: June 14th, 2024**
+
+The Server-side Excludes feature and its API endpoints are deprecated.
+
+Deprecated APIs:
+- GET /zones/:zone_id/settings/server_side_exclude
+- PATCH /zones/:zone_id/settings/server_side_exclude
+
 ## Name-Related Data Fields on SRV (DNS) Records
 **End of life date: May 31st, 2024**
 
@@ -16,7 +71,7 @@ The complete name would then be, e.g., `_xmpp._tcp.example.com`.
 
 When interacting with DNS records through the [API](/api/operations/dns-records-for-a-zone-create-dns-record), SRV records contain both a full `name` as well as a `data` map containing the individual components of the name:
 
-```
+```txt
 {
   "name": "_xmpp._tcp.example.com",
   "data": {
@@ -47,23 +102,76 @@ Modified API:
  - PATCH /zones/:zone_id/dns_records/:dns_record_id
  - PUT /zones/:zone_id/dns_records/:dns_record_id
 
-## Mobile Redirect 
-**End of life date: June 30th, 2024**
+---
 
-This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+## Firewall Rules API and Filters API
+**End of life date: May 1st, 2024**
+
+The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
+
+Deprecated APIs:
+- GET /zones/:zone_id/firewall/rules
+- POST /zones/:zone_id/firewall/rules
+- PATCH /zones/:zone_id/firewall/rules
+- PUT /zones/:zone_id/firewall/rules
+- DELETE /zones/:zone_id/firewall/rules
+- GET /zones/:zone_id/firewall/rules/:rule_id
+- PATCH /zones/:zone_id/firewall/rules/:rule_id
+- PUT /zones/:zone_id/firewall/rules/:rule_id
+- DELETE /zones/:zone_id/firewall/rules/:rule_id
+- GET /zones/:zone_id/filters
+- POST /zones/:zone_id/filters
+- PUT /zones/:zone_id/filters
+- DELETE /zones/:zone_id/filters
+- GET /zones/:zone_id/filters/:filter_id
+- PUT /zones/:zone_id/filters/:filter_id
+- DELETE /zones/:zone_id/filters/:filter_id
+
+Replacement: [WAF custom rules](/waf/custom-rules/)
+
+## WAF managed rules APIs (previous version)
+**End of life date: May 1st, 2024**
+
+The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
+
+Deprecated APIs:
+- GET /zones/:zone_id/firewall/waf/packages
+- GET /zones/:zone_id/firewall/waf/packages/:package_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
+- GET /zones/:zone_id/firewall/waf/overrides
+- POST /zones/:zone_id/firewall/waf/overrides
+- GET /zones/:zone_id/firewall/waf/overrides/:override_id
+- PUT /zones/:zone_id/firewall/waf/overrides/:override_id
+- DELETE /zones/:zone_id/firewall/waf/overrides/:override_id
+
+Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
+
+## Rate Limiting API (previous version)
+**End of life date: May 1st, 2024**
+
+The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
 
 Deprecated API:
- - GET /zones/:zone_identifier/settings/mobile_redirect
- - PATCH /zones/:zone_identifier/settings/mobile_redirect
+- GET /zones/:zone_id/rate_limits
+- POST /zones/:zone_id/rate_limits
+- GET /zones/:zone_id/rate_limits/:rate_limit_id
+- PUT /zones/:zone_id/rate_limits/:rate_limit_id
+- DELETE /zones/:zone_id/rate_limits/:rate_limit_id
 
-Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
+Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
 ## Privacy Pass API Removal
 **End of life date: March 31st, 2024**
 
 In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to
 provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time
-since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no 
+since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no
 longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting
 is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
 In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
@@ -72,6 +180,19 @@ Deprecated API:
  - GET zones/:zone_identifier/settings/privacy_pass
  - POST zones/:zone_identifier/settings/privacy_pass
 
+## Argo Tunnel
+**End of life Date: February 4th, 2024**
+
+This endpoint and its related APIs are deprecated in favor of the Cloudflare Tunnels equivalent APIs.
+
+Deprecated API:
+- GET accounts/:account_identifier/tunnels
+- POST accounts/:account_identifier/tunnels
+- GET accounts/:account_identifier/tunnels/:tunnel_id
+- DELETE accounts/:account_identifier/tunnels/:tunnel_id
+
+Replacement:
+Cloudflare Tunnel API
 
 ## ChaCha20 TLS Cipher Removal
 **End of life Date: July 1st, 2023**
@@ -92,30 +213,22 @@ In addition, unlike the standard variants, these legacy cipher suites are not ex
 
 As of July 1st, 2023, the ChaCha20-Poly1305 ciphers have been deprecated and are deemed End of Life by Cloudflare. If you have clients that currently rely on these ciphers, it is strongly recommended to upgrade them to newer, more secure ciphers. Be aware that these deprecated ciphers will be completely removed in the first quarter of 2024, and requests using them will start to fail. Take proactive measures to ensure a smooth transition and maintain the security of your systems.
 
-## Argo Tunnel
-**End of life Date: February 4, 2024**
+## Transfer-Encoding and Content-Length headers
+**End of life date: July 1st, 2023**
 
-This endpoint and its related APIs are deprecated in favor of the Cloudflare Tunnels equivalent APIs.
+Previously, RFC 2616 allowed the use of `Transfer-Encoding` and `Content-Length` HTTP headers in the same request. RFC 7230 supersedes RFC 2616 and prohibits the use of `Transfer-Encoding` and `Content-Length` headers in the same request because they can cause HTTP request smuggling vulnerabilities.
 
-Deprecated API:
-- GET accounts/:account_identifier/tunnels
-- POST accounts/:account_identifier/tunnels
-- GET accounts/:account_identifier/tunnels/:tunnel_id
-- DELETE accounts/:account_identifier/tunnels/:tunnel_id
-
-Replacement:
-Cloudflare Tunnel API
+Starting on July 1st, 2023, Cloudflare will decline requests with both `Transfer-Encoding` and `Content-Length` HTTP headers.
 
 ## Account Billing Profile, User Billing Profile, and User Billing History
-
-**End of life date: June 6, 2023**
+**End of life date: June 6th, 2023**
 
 There is no API replacement for these endpoints. As an alternative, please log in to your Cloudflare account to view your:
 
 - [Invoices & Billing Email](https://dash.cloudflare.com/?to=/:account/billing)
-- [Billing subscriptions](https://dash.cloudflare.com/?to=/:account/billing/subscriptions) 
+- [Billing subscriptions](https://dash.cloudflare.com/?to=/:account/billing/subscriptions)
 - [Billing profile payment info](https://dash.cloudflare.com/?to=/:account/billing/payment-info)
- 
+
 Deprecated API:
 
 - GET `accounts/{account_identifier}/billing/profile`
@@ -123,21 +236,14 @@ Deprecated API:
 - GET `user/billing/history`
 
 ## Load Balancing - notification_email
-**End of life date: April 3, 2023**
+**End of life date: April 3rd, 2023**
 
-This field is deprecated and has been moved to [Cloudflare centralized notification service](/notifications/). 
+This field is deprecated and has been moved to [Cloudflare centralized notification service](/notifications/).
 
 `notification_email` is the email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
 
-## Transfer-Encoding and Content-Length headers 
-**End of life date: July 1st, 2023**
-
-Previously, RFC 2616 allowed the use of `Transfer-Encoding` and `Content-Length` HTTP headers in the same request. RFC 7230 supersedes RFC 2616 and prohibits the use of `Transfer-Encoding` and `Content-Length` headers in the same request because they can cause HTTP request smuggling vulnerabilities.
-
-Starting on July 1st, 2023, Cloudflare will decline requests with both `Transfer-Encoding` and `Content-Length` HTTP headers.
-
 ## Access Bookmark applications
-**End of life date: March 19, 2023**
+**End of life date: March 19th, 2023**
 
 This endpoint is deprecated in favor of using a specialized Access Application App Type API.
 
@@ -153,13 +259,13 @@ Access applications app type API
 
 
 ## Page Shield
-**End of life date: October 11, 2022**
+**End of life date: October 11th, 2022**
 
 Replace `script_monitor` in Page Shield API routes with `page_shield`.
 
 
 ## Cloudflare Images - Create authenticated direct upload URL v1
-**End of life date: July 1, 2022**
+**End of life date: July 1st, 2022**
 
 This endpoint is deprecated in favor of using v2, which allows you to control metadata, define an access policy, and get the image ID.
 
@@ -170,7 +276,7 @@ Replacement:
 POST accounts/:account_identifier/images/v2/direct_upload
 
 ## Zone Analytics API
-**End of life date: March 1, 2021**
+**End of life date: March 1st, 2021**
 
 This API is deprecated in favor of the [GraphQL Analytics API](/analytics/graphql-api/), which provides equivalent data and more features, including the ability to select only the metrics that you need. For more information, refer to the [Zone analytics to GraphQL analytics migration guide](/analytics/graphql-api/migration-guides/zone-analytics/).
 
@@ -182,7 +288,7 @@ Replacement:
 GraphQL Analytics API
 
 ## Organizations
-**End of life date: February 4, 2020**
+**End of life date: February 4th, 2020**
 
 This endpoint and its related APIs are deprecated in favor of the `/accounts` equivalent API, which has a broader range of features and is backwards compatible with the `/organizations` API.
 

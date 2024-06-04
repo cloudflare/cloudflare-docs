@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy your site
+title: Static HTML
 ---
 
-# Deploy your site
+# Static HTML
 
 Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in [Framework guides](/pages/framework-guides/), you can still deploy it using this guide.
 

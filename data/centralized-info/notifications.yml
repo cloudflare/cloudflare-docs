@@ -13,7 +13,7 @@ entries:
   associatedProducts: Billing
   nextSteps: Review your product usage and adjust the configuration and/or increase the alerting threshold.
   otherFilters: |-
-    Customers can choose the product that they want to be notified about and the threshold that fires the notification. Thresholds depend on the product chosen.
+    You can choose the product that you want to be notified about and the threshold that fires the notification. Thresholds depend on the product chosen.
 
     For example:
 
@@ -25,21 +25,21 @@ entries:
   availability: Professional plans or higher.
   associatedProducts: Security Center
   nextSteps: Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
-  otherFilters: Customers can set up Brand Protection Alerts on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
+  otherFilters: You can set up Brand Protection Alerts on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
 
 - name: Brand Protection Digest
   audience: Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
   availability: Professional plans or higher.
   associatedProducts: Security Center
   nextSteps: Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.
-  otherFilters: Customers can set up Brand Protection Digest on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
+  otherFilters: You can set up Brand Protection Digest on individual monitored queries. For more details, refer to [Brand Protection Alerts](/security-center/brand-protection/#brand-protection-alerts).
 
 - name: Maintenance Notification
   audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
   availability: All Cloudflare plans.
   associatedProducts: Cloudflare Status
   nextSteps: If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar. During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
-  otherFilters: Customers can filter maintenance notifications for specific points of presence and updates (scheduled, changed, canceled).
+  otherFilters: You can filter maintenance notifications for specific points of presence and updates (scheduled, changed, canceled).
 
 - name: Incident Alerts
   audience: Customers interested in knowing about Cloudflare incidents. The notification lets you know when Cloudflare incidents are created, updated, and resolved.
@@ -47,7 +47,7 @@ entries:
   associatedProducts: Cloudflare Status
   nextSteps: Review your [analytics](/analytics/) page to see if your domain is impacted.
   otherFilters: |-
-    Customers can filter incident alerts to specific impact levels (minor, major, critical).
+    You can filter incident alerts to specific impact levels (minor, major, critical).
 
     Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.
 
@@ -98,41 +98,48 @@ entries:
   otherFilters: None.
 
 - name: HTTP DDoS Attack Alert
-  audience: "[WAF](/waf/) or [CDN](/cache/) customers who want to receive a notification when Cloudflare has mitigated an attack."
+  audience: "[WAF](/waf/) or [CDN](/cache/) customers who want to receive a notification when Cloudflare has mitigated HTTP attacks that generate more than 100 requests per second."
   availability: All Cloudflare plans.
   associatedProducts: DDoS Protection
   nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
   otherFilters: None.
 
+- name: Layer 3/4 DDoS Attack Alert
+  audience: "[BYOIP](/byoip/) and [Spectrum](/spectrum/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more."
+  availability: Purchase of Magic Transit and/or BYOIP.
+  associatedProducts: DDoS Protection
+  nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
+  otherFilters: None.
+
 - name: Advanced HTTP DDoS Attack Alert
-  audience: "[WAF](/waf/) or [CDN](/cache/) customers with the [Advanced DDoS Protection](/ddos-protection/) subscription who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics."
+  audience: "[WAF](/waf/) or [CDN](/cache/) customers with the [Advanced DDoS Protection](/ddos-protection/) subscription who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of requests per second (100 rps by default)."
   availability: Enterprise plans.
   associatedProducts: DDoS Protection
   nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
   otherFilters: |-
-    Customers can choose when to trigger a notification.
+    You can choose when to trigger a notification.
 
     Available filters include:
 
-    * The zones in the account for which they wish to receive notifications.
-    * The specific hostnames for which they wish to receive notifications.
-    * The minimum requests-per-second rate that will trigger the alert.
+    * The zones in the account for which you wish to receive notifications.
+    * The specific hostnames for which you wish to receive notifications.
+    * The minimum requests-per-second rate that will trigger the alert (100 rps by default).
 
 - name: Advanced Layer 3/4 DDoS Attack Alert
-  audience: "[BYOIP](/byoip/) and [Magic Transit](/magic-transit/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics."
+  audience: "[BYOIP](/byoip/) and [Magic Transit](/magic-transit/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of packets per second (12,000 pps by default)."
   availability: Purchase of Magic Transit and/or BYOIP (Enterprise plans).
   associatedProducts: DDoS Protection
   nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
   otherFilters: |-
-    Customers can choose when to trigger a notification.
+    You can choose when to trigger a notification.
 
     Available filters include:
 
-    * The IP prefixes for which they wish to receive notifications.
-    * The specific IP addresses for which they wish to receive notifications.
-    * The minimum packets-per-second rate that will trigger the alert.
+    * The IP prefixes for which you wish to receive notifications.
+    * The specific IP addresses for which you wish to receive notifications.
+    * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
     * The minimum megabits-per-second rate that will trigger the alert.
-    * The protocols for which they wish to receive notifications.
+    * The protocols for which you wish to receive notifications (all protocols by default).
 
 - name: Health Checks status notification
   audience: Customers who want to be warned about changes to server health as determined by [health checks](/health-checks/).
@@ -142,8 +149,8 @@ entries:
   otherFilters: |-
     Available filters include:
 
-    * Customers can search for and add health checks from their list of health checks.
-    * Customers can choose a trigger to fire the notification when their server becomes **unhealthy**, **healthy**, or **either healthy or unhealthy**.
+    * You can search for and add health checks from your list of health checks.
+    * You can choose a trigger to fire the notification when your server becomes **unhealthy**, **healthy**, or **either healthy or unhealthy**.
 
 - name: Pool Enablement
   audience: Customers who want to be warned about status changes (enabled/disabled) in their pools.
@@ -153,8 +160,8 @@ entries:
   otherFilters: |-
     Available filters include:
 
-    * Customers can search for and add pools from their list of pools.
-    * Customers can also choose the trigger that fires the notification when the Load Balancing pool is **enabled**, **disabled**, and **either enabled or disabled**.
+    * You can search for and add pools from your list of pools.
+    * You can also choose the trigger that fires the notification when the Load Balancing pool is **enabled**, **disabled**, and **either enabled or disabled**.
 
 - name: Load Balancing Health Alert
   audience: Customers who want to be warned about [changes in health status](/load-balancing/understand-basics/health-details/) in their pools or origins.
@@ -164,9 +171,9 @@ entries:
   otherFilters: |-
     Available filters include:
 
-    * Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
-    * Customers can choose the trigger that fires the notification when the health status becomes **unhealthy**, **healthy**, or **either unhealthy or healthy**
-    * Customers can choose the trigger that fires the notification when the event source health status changes in **pool**, **origin**, or **either pool or origin**.
+    * You can search for and add pools from your list of pools, as well as **Include future pools** (if all pools are selected).
+    * You can choose the trigger that fires the notification when the health status becomes **unhealthy**, **healthy**, or **either unhealthy or healthy**
+    * You can choose the trigger that fires the notification when the event source health status changes in **pool**, **origin**, or **either pool or origin**.
 
 - name: Failing Logpush Job Disabled
   audience: Enterprise customers who use [Logpush](/logs/) and want to monitor their job health.
@@ -186,7 +193,7 @@ entries:
   otherFilters: None.
 
 - name: Magic Network Monitoring - DDoS Attack
-  audience: "[BYOIP](/byoip/) customers and [Spectrum](/spectrum/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated an attack."
+  audience: "[BYOIP](/byoip/) and [Spectrum](/spectrum/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more."
   availability: Purchase of Magic Transit and/or BYOIP.
   associatedProducts: Magic Transit
   nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
@@ -230,6 +237,7 @@ entries:
   associatedProducts: Page Shield
   nextSteps: Investigate to confirm that it is an expected change.
   otherFilters: None.
+  additional_information: Triggered daily.
 
 - name: Page Shield New Domain Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from new host domains appear in their domain."
@@ -237,6 +245,7 @@ entries:
   associatedProducts: Page Shield
   nextSteps: Investigate to confirm that it is an expected change.
   otherFilters: None.
+  additional_information: Triggered hourly.
 
 - name: Page Shield New Malicious Domain Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/)."
@@ -274,6 +283,7 @@ entries:
   associatedProducts: Page Shield
   nextSteps: Investigate to confirm that it is an expected change.
   otherFilters: None.
+  additional_information: Triggered daily.
 
 - name: Page Shield New Resource Exceeds Max URL Length Alert
   audience: "[Page Shield](/page-shield/) customers who want to receive a notification when a resource's URL exceeds the maximum allowed length."
@@ -341,9 +351,9 @@ entries:
   associatedProducts: Stream
   nextSteps: Stream notifications are entirely customizable by the customer. Action will depend on the customizations enabled.
   otherFilters: |-
-    Customers can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs.
+    You can input Stream Live IDs to receive notifications only about those inputs. If left blank, you will receive a list for all inputs.
 
-    The following input states will fire notifications. Customers can toggle them on or off:
+    The following input states will fire notifications. You can toggle them on or off:
 
     * `live_input.connected`
     * `live_input.disconnected`
@@ -358,9 +368,11 @@ entries:
   otherFilters: |-
     Available filters include:
 
-    * Customers can search and add domains from their list of domains.
-    * Customers can filter alerts by **edge status code**, **origin status code**, and the **IP Address**.
-    * Customers can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
+    * You can search and add domains from your list of domains.
+    * You can filter alerts by **edge status code**, **origin status code**, and the **IP Address**.
+    * You can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
+
+    You can also toggle Alert Grouping to receive separate alerts for your domain, edge status code, and/or origin status code.
   limitations: |-
     Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -376,8 +388,8 @@ entries:
   otherFilters: |-
     Multiple filters available:
 
-    * Customers can search and add domains from their list of domains.
-    * Customers can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
+    * You can search and add domains from your list of domains.
+    * You can also choose the trigger that fires the notification. Available triggers are **low sensitivity**, **medium sensitivity**, **high sensitivity**, or **very high sensitivity**.
   limitations: |-
     Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -402,9 +414,9 @@ entries:
   otherFilters: |-
     Multiple filters available:
 
-    * Customers can search and add domains from their list of domains.
-    * Customers can include or exclude traffic mitigated by the [Web Application Firewall (WAF)](/waf/).
-    * Customers can choose whether to be notified of either spikes or drops in traffic.
+    * You can search and add domains from your list of domains.
+    * You can include or exclude traffic mitigated by the [Web Application Firewall (WAF)](/waf/).
+    * You can choose whether to be notified of either spikes or drops in traffic.
   limitations: |-
     Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -439,11 +451,60 @@ entries:
   otherFilters: None.
 
 - name: Tunnel Health Alert
-  audience: Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/) for their Cloudflare Tunnels.
+  audience: Customers who want to be warned about changes in health status for their Cloudflare Tunnels.
   availability: All Cloudflare Zero Trust plans.
   associatedProducts: Tunnel
   nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/).
   otherFilters: None.
+  additional_information: |-
+    | <div style="width:75px">Health status</div> | Description  |
+    | ------------- | ------------ |
+    | Healthy       | The tunnel is active and serving traffic through four connections to the Cloudflare global network. |
+    | Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) could risk the tunnel going down and failing to serve traffic.|
+    | Down          | The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.|
+    | Inactive      | This value is reserved for tunnels which have been created, but have never been run.|
+
+- name: Device connectivity anomaly
+  audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.
+  availability: All Cloudflare Zero Trust plans.
+  associatedProducts: DEX
+  nextSteps: Review your [fleet status](/cloudflare-one/insights/dex/fleet-status/) to investigate why the spike or drop occurred and which devices are impacted.
+  additional_information: To learn more about the alert logic, refer to [Z-score](/cloudflare-one/insights/dex/notifications/#z-score).
+  otherFilters: |-
+    - **Alert configuration**: Choose when to trigger a notification. Available options are _Connectivity spike_, _Connectivity drop_, and _Connectivity spike or drop_.
+    - Filters:
+      - **Colo**: Cloudflare data center that the device is connected to.
+      - **Platform**: Operating system of the device.
+      - **Version**: WARP client version (for example, `2024.3.409.0`).
+      - **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
+
+- name: DEX test latency
+  audience: Zero Trust customers who wish to receive alerts when there is a spike or drop in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).
+  availability: All Cloudflare Zero Trust plans.
+  associatedProducts: DEX
+  nextSteps: View your [test results](/cloudflare-one/insights/dex/tests/view-results/) to investigate why the spike occurred.
+  additional_information: To learn more about the alert logic, refer to [Z-score](/cloudflare-one/insights/dex/notifications/#z-score).
+  otherFilters: |-
+    - **Alert configuration**: Choose when to trigger a notification. Available options are _Latency spike_, _Latency drop_, and _Latency spike or drop_.
+    - Filters:
+      - **Colo**: Cloudflare data center that the device is connected to.
+      - **Platform**: Operating system of the device.
+      - **Version**: WARP client version (for example, `2024.3.409.0`).
+      - **Test name**: Choose which DEX test the alert should monitor. You will receive individual notifications for each test.
+
+- name: DEX test low availability
+  audience: Zero Trust customers who wish to receive alerts when the percentage of successful HTTP or traceroute requests to an application drops below the selected service-level objective (SLO). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).
+  availability: All Cloudflare Zero Trust plans.
+  associatedProducts: DEX
+  nextSteps: View your [test results](/cloudflare-one/insights/dex/tests/view-results/) to investigate why the degradation occurred.
+  additional_information: To learn more about the alert logic, refer to [SLO](/cloudflare-one/insights/dex/notifications/#slo).
+  otherFilters: |-
+    - **Service Level Objective (SLO)**: Specify the availability threshold that will trigger an alert. Enter a percentage in `xx.x` format (for example, `98.0`).
+    - Filters:
+      - **Colo**: Cloudflare data center that the device is connected to.
+      - **Platform**: Operating system of the device.
+      - **Version**: WARP client version (for example, `2024.3.409.0`).
+      - **Test name**: Choose which DEX test the alert should monitor. You will receive individual notifications for each test.
 
 - name: Advanced Security Events Alert
   audience: Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
@@ -453,9 +514,13 @@ entries:
   otherFilters: |-
     A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
 
-    * Customers can search for and add domains from their list of Enterprise zones.
-    * Customers can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
-    * Customers can filter events by a targeted action.
+    * You can search for and add domains from your list of Enterprise zones.
+    * You can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).
+    * You can filter events by a targeted action.
+  additional_information: |-
+   The mean time to detection is five minutes.
+
+    This alert will look for spikes across all services that generate log entries in [security/firewall events](/waf/analytics/security-events/paid-plans/).
   limitations: |-
     Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 
@@ -469,8 +534,12 @@ entries:
   otherFilters: |-
     A mandatory [`filters`](/api/operations/notification-policies-create-a-notification-policy) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
 
-    * Customers can also search for and add domains from their list of business or enterprise zones. The notification will be sent for the domains chosen.
-    * Customers can filter events by a targeted action.
+    * You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.
+    * You can filter events by a targeted action.
+  additional_information: |-
+    The mean time to detection is two hours.
+
+    When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.
   limitations: |-
     Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
 

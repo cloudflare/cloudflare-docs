@@ -4,6 +4,9 @@ title: .UK domains
 weight: 3
 meta:
     title: Learn how to manage a .UK domain with Cloudflare.
+learning_center:
+  title: What is a top-level domain?
+  link: https://www.cloudflare.com/learning/dns/top-level-domain/
 ---
 
 # .UK domains
