@@ -14,7 +14,7 @@ With Bedrock, you will need to sign the URL before you make requests to AI Gatew
 ```typescript
 import { AwsClient } from 'aws4fetch'
 
-inferface Env {
+interface Env {
   accessKey: string;
   secretAccessKey: string;
 }

@@ -1,7 +1,7 @@
 ---
 title: Common settings
 pcx_content_type: navigation
-weight: 3
+weight: 4
 ---
 
 # Common settings

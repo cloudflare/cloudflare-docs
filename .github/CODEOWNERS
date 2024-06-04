@@ -2,18 +2,18 @@
 * @cloudflare/pcx-technical-writing
 
 # More dev-specific files
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble
+/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
 /.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
-/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
-/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
-*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
-*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble
+/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+/functions/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
+*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 /assets/json-collector.ts @GregBrimble @cloudflare/pcx-technical-writing
-/data/calculations/ @kristianfreeman @kodster28 @pedrosousa
-/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa
+/data/calculations/ @kristianfreeman @kodster28 @pedrosousa @KianNH
+/layouts/shortcodes/calculation.html @kristianfreeman @kodster28 @pedrosousa @KianNH
 /layouts/partials/models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
@@ -95,13 +95,13 @@
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing @irvinebroque
 /content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
 /data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
-/content/workers/runtime-apis/ @irvinebroque @jasnell @mikenomitch @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/platform/ @irvinebroque @tanushree-sharma @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/configuration/compatibility-dates/ @irvinebroque @kodster28 @mikenomitch @cloudflare/pcx-technical-writing
-/content/workers/reference/migrate-to-module-workers/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/ @irvinebroque @jasnell @mikenomitch @kodster28 @GregBrimble @cloudflare/pcx-technical-writing
+/content/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @kodster28 @GregBrimble @cloudflare/pcx-technical-writing
+/content/workers/platform/ @irvinebroque @tanushree-sharma @kodster28 @GregBrimble @cloudflare/pcx-technical-writing
+/content/workers/configuration/compatibility-dates/ @irvinebroque @kodster28 @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
+/content/workers/reference/migrate-to-module-workers/ @irvinebroque @kodster28 @GregBrimble @cloudflare/pcx-technical-writing
 /content/workers/reference/security-model/ @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
-/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @kodster28 @mikenomitch @cloudflare/pcx-technical-writing
+/content/workers/_partials/_platform-compatibility-dates/ @irvinebroque @kflansburg @kodster28 @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
 /content/workers/wrangler/ @penalosa @petebacondarwin @dario-piotrowicz @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @kodster28 @cloudflare/pcx-technical-writing
 /content/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
@@ -121,6 +121,7 @@
 /content/magic-firewall/ @arges @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
 
 # Migration guides
 /content/migration-guides/ @kimj15 @crwaters16 @cloudflare/pcx-technical-writing

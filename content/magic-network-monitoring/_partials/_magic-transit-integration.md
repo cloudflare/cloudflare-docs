@@ -28,7 +28,7 @@ The diagrams below illustrate this process:
 
 <div class="large-img centered">
 
-![You can create rules to activate Magic Transit automatically, to protect your IP addresses from a DDoS atack.](/images/magic-network-monitoring/3-flowdata.png)
+![You can create rules to activate Magic Transit automatically, to protect your IP addresses from a DDoS attack.](/images/magic-network-monitoring/3-flowdata.png)
 
 </div>
 

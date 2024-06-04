@@ -8,7 +8,7 @@ title: Reference architecture diagram
 
 ## Purpose
 
-To provide a visual reference and explaination of using Cloudflare for a specific solution.
+To provide a visual reference and explanation of using Cloudflare for a specific solution.
 
 ## Tone
 

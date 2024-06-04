@@ -16,6 +16,8 @@ model:
       value: "false"
     - property_id: "info"
       value: "https://mistral.ai/news/announcing-mistral-7b/"
+    - property_id: "lora"
+      value: "true"
 task_type: "text-generation"
 model_display_name: "mistral-7b-instruct-v0.1"
 layout: "model"

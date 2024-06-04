@@ -7,7 +7,7 @@ layout: learning-unit
 
 This guide covers how to use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to quickly publish and secure a private application. In the following example, we will add a new public hostname route to an existing Cloudflare Tunnel, configure how `cloudflared` proxies traffic to the application, and secure the application with Cloudflare Access.
 
-## Prerequisities
+## Prerequisites
 
 - [Add your domain to Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
 - [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
@@ -125,7 +125,7 @@ resource "cloudflare_access_application" "example_app" {
 
 ### Create an Access policy
 
-Using the [`cloudflare_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_application) resource, create a policy to secure the application. The folloiwng policy will only allow access to users who authenticate through your identity provider.
+Using the [`cloudflare_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_application) resource, create a policy to secure the application. The following policy will only allow access to users who authenticate through your identity provider.
 
 ```txt
 resource "cloudflare_access_policy" "example_policy" {

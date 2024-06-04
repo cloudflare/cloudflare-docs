@@ -20,21 +20,21 @@ Magic Firewall uses Wireshark syntax, a domain-specific language (DSL) common in
 Magic Firewall is available with the purchase of [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/).
 
 ---
- 
+
 ## Features
- 
+
 {{<feature header="Intrusion Detection System (IDS)" href="/magic-firewall/how-to/enable-ids/">}}
 Actively monitor for a wide range of known threat signatures in your traffic.
 {{</feature>}}
- 
+
 ---
 
 ## Related products
- 
+
 {{<related header="Cloudflare Magic Transit" href="/magic-transit/" product="cloudflare-one">}}
 Secure your network from incoming Internet traffic, and improve performance at Cloudflare scale.
 {{</related>}}
 
-{{<related header="Cloudflare Magic WAN" href="/magic-wan/" product="cloudflare-one">}}
+{{<related header="Cloudflare Magic WAN" href="/magic-wan/" product="magic-wan">}}
 Improve security and performance for your entire corporate networking, reducing cost and operation complexity.
 {{</related>}}

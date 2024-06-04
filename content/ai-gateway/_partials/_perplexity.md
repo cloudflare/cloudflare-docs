@@ -28,7 +28,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/perplexity
     }'
 ```
 
-Perplexity doesn't have their own SDK, but they have compatability with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
+Perplexity doesn't have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
 
 ```javascript
 ---

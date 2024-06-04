@@ -6,9 +6,12 @@ title: OpenAI compatible API endpoints
 
 # OpenAI compatible API endpoints
 
-Workers AI supports OpenAI compatible endpoints for [text generation](/workers-ai/models/#text-generation) (`/v1/chat/completions`) and [text embedding models](/workers-ai/models/#text-embeddings) (`/v1/embeddings`). This allows you to use the same code as you would for your OpenAI commands, but swap in Workers AI easily.
+{{<render file="_openai-compatibility.md">}}
+<br/>
 
 ## Usage
+
+### Workers AI
 
 Normally, Workers AI requires you to specify the model name in the cURL endpoint or within the `env.AI.run` function.
 
@@ -57,3 +60,7 @@ curl --request POST \
     }
 '
 ```
+
+### AI Gateway
+
+These endpoints are also compatible with [AI Gateway](/ai-gateway/providers/workersai/#openai-compatible-endpoints).

@@ -94,7 +94,7 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
-This example features the [`@cf/meta/llama-2-7b-chat-int8` model](/workers-ai/models/llama-2-7b-chat-int8/), which generates text.
+This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
 ```toml
 ---
@@ -114,7 +114,7 @@ filename: src/index.js
 export default {
 	async fetch(request, env, ctx) {
     const answer = await env.AI.run(
-      '@cf/meta/llama-2-7b-chat-int8',
+      '@cf/meta/llama-3-8b-instruct',
       {
         messages: [
           { role: 'user', content: `What is the square root of 9?` }
@@ -214,7 +214,7 @@ const app = new Hono()
 
 app.get('/', async (c) => {
   const answer = await c.env.AI.run(
-    '@cf/meta/llama-2-7b-chat-int8',
+    '@cf/meta/llama-3-8b-instruct',
     {
       messages: [
         { role: 'user', content: `What is the square root of 9?` }
@@ -329,7 +329,7 @@ app.get('/', async (c) => {
   const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
   const { response: answer } = await c.env.AI.run(
-    '@cf/meta/llama-2-7b-chat-int8',
+    '@cf/meta/llama-3-8b-instruct',
     {
       messages: [
         ...(notes.length ? [{ role: 'system', content: contextMessage }] : []),

@@ -10,54 +10,7 @@ In this guide, you will learn how to connect your application to your AI Gateway
 
 Once you have configured a Gateway in the AI Gateway dashboard, click on “API Endpoints” to find your AI Gateway endpoint. AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint.
 
----
-## Universal
-{{<render file="_universal.md">}}
-
----
-
-## Workers AI
-{{<render file="_workersai.md">}}
-
----
-
-## Anthropic
-{{<render file="_anthropic.md">}}
-
----
-## Amazon Bedrock
-{{<render file="_bedrock.md">}}
-
----
-
-## Azure OpenAI
-{{<render file="_azureopenai.md">}}
-
----
-
-## Google Vertex AI
-{{<render file="_vertex.md">}}
-
----
-
-## HuggingFace
-{{<render file="_huggingface.md">}}
-
----
-## OpenAI
-{{<render file="_openai.md">}}
-
----
-
-## Perplexity
-{{<render file="_perplexity.md">}}
-
----
-
-## Replicate
-{{<render file="_replicate.md">}}
-
----
+{{<directory-listing folderDirectory="/ai-gateway/providers/">}}
 
 ## Next Steps
 
