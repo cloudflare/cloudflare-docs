@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Transform Rule where the header `X-Source` with a static value (`Cloudflare`) is added to the request.
-tags:
-  - Transform
+summary: A transform rule where the header `X-Source` with a static value (`Cloudflare`) is added to the request.
+product:
+  - Transform Rules
 title: Add an HTTP request header with a static value
-layout: wide
 ---
 
 # Add an HTTP request header with a static value

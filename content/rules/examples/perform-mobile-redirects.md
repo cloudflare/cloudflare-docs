@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Redirects Rule where visitors using mobile devices are redirected to a different hostname.
-tags:
-  - Redirects
+summary: A redirects rule where visitors using mobile devices are redirected to a different hostname.
+product:
+  - Redirects Rules
 title: Perform mobile redirects
-layout: wide
 ---
 
 # Perform mobile redirects

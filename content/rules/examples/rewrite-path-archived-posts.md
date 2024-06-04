@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Transform Rule where all requests to `/news/2012/...` are rewritten to `/archive/news/2012/...`.
-tags:
-  - Transform
+summary: A transform rule where all requests to `/news/2012/...` are rewritten to `/archive/news/2012/...`.
+product:
+  - Transform Rules
 title: Rewrite path of archived blog posts
-layout: wide
 ---
 
 # Rewrite path of archived blog posts

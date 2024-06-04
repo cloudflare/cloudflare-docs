@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Compression Rule where Gzip compression is configured as the preferred compression method for CSV files.
-tags:
-  - Compression
+summary: A compression rule where Gzip compression is configured as the preferred compression method for CSV files.
+product:
+  - Compression Rules
 title: Use Gzip compression for CSV files or other algorithm if not available
-layout: wide
 ---
 
 # Use Gzip compression for CSV files or other algorithm if not available

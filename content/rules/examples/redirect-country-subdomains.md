@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Redirects Rule where United Kingdom and France visitors requesting the `example.com` website's  root path (`/`) are redirected to their localized subdomains `https://gb.example.com` and `https://fr.example.com`, respectively.
-tags:
-  - Redirects
+summary: A redirects rule where United Kingdom and France visitors requesting the `example.com` website's  root path (`/`) are redirected to their localized subdomains `https://gb.example.com` and `https://fr.example.com`, respectively.
+product:
+  - Redirects Rules
 title: Redirect UK and France visitors to their specific subdomains
-layout: wide
 ---
 
 # Redirect UK and France visitors to their specific subdomains

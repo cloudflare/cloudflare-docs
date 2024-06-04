@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Transform Rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewritten to `/img/<FILENAME>`.
-tags:
-  - Transform
+summary: A transform rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewritten to `/img/<FILENAME>`.
+product:
+  - Transform Rules
 title: Rewrite path with several URL segments to a different URL segment
-layout: wide
 ---
 
 # Rewrite path with several URL segments to a different URL segment

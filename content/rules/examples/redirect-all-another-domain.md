@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Redirects Rule where the original domain was replaced with a different domain, maintaining all functionality, except for HTTP service (port 80).
-tags:
-  - Redirects
+summary: A redirects rule where the original domain was replaced with a different domain, maintaining all functionality, except for HTTP service (port 80).
+product:
+  - Redirects Rules
 title: Redirect all requests from one domain to another domain
-layout: wide
 ---
 
 # Redirect all requests from one domain to another domain

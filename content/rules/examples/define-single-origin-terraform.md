@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: An Origin Rule using Terraform where the `Host` header, the resolved hostname, and the destination port of API requests is overridden.
-tags:
-  - Origin
+summary: An origin rule using Terraform where the `Host` header, the resolved hostname, and the destination port of API requests is overridden.
+product:
+  - Origin Rules
 title: Define a single origin rule using Terraform
-layout: wide
 ---
 
 # Define a single origin rule using Terraform

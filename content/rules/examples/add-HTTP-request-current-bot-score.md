@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Transform Rule where the header `X-Bot-Score` with the current bot score is added to the request.
-tags:
-  - Transform
+summary: A transform rule where the header `X-Bot-Score` with the current bot score is added to the request.
+product:
+  - Transform Rules
 title: Add an HTTP request header with the current bot score
-layout: wide
 ---
 
 # Add an HTTP request header with the current bot score

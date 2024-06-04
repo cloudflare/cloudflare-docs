@@ -29,4 +29,8 @@ Rewrite URL rules can perform static or dynamic rewrites:
 
 Create rewrite URL rules [in the dashboard](/rules/transform/url-rewrite/create-dashboard/) or [via API](/rules/transform/url-rewrite/create-api/).
 
+## Serve images from custom paths
+
+When using Cloudflare Image Optimization, you can use URL rewrites to serve images from a custom path. For more information, refer to [Serve images from custom domains and paths](/images/manage-images/serve-images/serve-from-custom-domains/).
+
 {{<render file="_troubleshoot-rules-with-trace.md" withParameters="URL rewrites">}}

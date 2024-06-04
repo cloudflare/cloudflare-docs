@@ -1,13 +1,14 @@
 ---
-pcx_content_type: example
-summary: A table showing how different URL normalization settings affect request URLs before they pass to other Cloudflare features and to the origin server.
-tags:
-  - URL normalization
-title: URL normalization
+title: Reference Table
+pcx_content_type: configuration
+weight: 6
 layout: wide
+meta:
+  title: URL normalization reference table
+  description: Reference table displaying the impact of different URL normalization settings in the URLs of incoming requests.
 ---
 
-# URL normalization
+# URL normalization examples
 
 The following table shows how different [URL normalization settings](/rules/normalization/settings/) affect request URLs before they pass to other Cloudflare features and to the origin server:
 

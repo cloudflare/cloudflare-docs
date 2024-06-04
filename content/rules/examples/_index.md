@@ -9,4 +9,4 @@ layout: wide
 
 # Rules & Snippets examples gallery
 
-{{<list-examples filters="tags">}}
+{{<list-examples filters="product">}}

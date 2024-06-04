@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Redirects Rule where visitors from an old URL format that included the locale are redirected to the new format.
-tags:
-  - Redirects
+summary: A redirects rule where visitors from an old URL format that included the locale are redirected to the new format.
+product:
+  - Redirects Rules
 title: Remove locale information from URL path
-layout: wide
 ---
 
 # Remove locale information from URL path

@@ -1,10 +1,9 @@
 ---
 pcx_content_type: example
-summary: A Transform Rule where the path of the welcome page for visitors in specific countries is written with two URL rules.
-tags:
-  - Transform
+summary: A transform rule where the path of the welcome page for visitors in specific countries is written with two URL rules.
+product:
+  - Transform Rules
 title: Rewrite path of welcome page for visitors in specific countries
-layout: wide
 ---
 
 # Rewrite path of welcome page for visitors in specific countries
