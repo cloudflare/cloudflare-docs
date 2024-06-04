@@ -10,7 +10,7 @@ The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web and
 
 This page will guide you through some basic concepts and the recommended initial steps for configuring the WAF to get immediate protection against the most common attacks.
 
-This guide focuses on configuring WAF for individual domains, known as zones. The WAF configuration is also available at the account level for Enterprise customers with a paid add-on.
+This guide focuses on configuring WAF for individual domains, known as {{<glossary-tooltip term_id="zone">}}zones{{</glossary-tooltip>}}. The WAF configuration is also available at the account level for Enterprise customers with a paid add-on.
 
 ## Basic WAF concepts
 
@@ -19,7 +19,7 @@ A [rule](/ruleset-engine/about/rules/) includes a filter (which defines the scop
 The Cloudflare WAF includes:
 - Signature-based rules (for example, the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)) created by Cloudflare that provide immediate protection against known attacks.
 - [Traffic detections](/waf/about/#available-traffic-detections) (for example, bot score and attack score) that enrich requests with metadata.
-- User-defined rules for your specific needs, including [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
+- User-defined rules for your specific needs, including [custom rules](/waf/custom-rules/) and {{<glossary-tooltip term_id="rate limiting" link="/waf/rate-limiting-rules/">}}rate limiting rules{{</glossary-tooltip>}}.
 
 Detections do not take any action on incoming traffic – they only add relevant information about each request that you can use in the rules you create. For more information on the detection and mitigation roles of the WAF, refer to [Detection versus mitigation](/waf/about/#detection-versus-mitigation).
 
@@ -166,9 +166,9 @@ Create a rate limiting rule to [apply rate limiting on a login endpoint](/waf/ra
 
 ### Prevent credential stuffing attacks
 
-Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent credential stuffing attacks on your applications.
+Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent {{<glossary-tooltip term_id="credential stuffing">}}credential stuffing{{</glossary-tooltip>}} attacks on your applications.
 
-The Cloudflare Exposed Credentials Check Ruleset contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
+The Cloudflare Exposed Credentials Check Ruleset contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for {{<glossary-tooltip term_id="exposed credentials">}}exposed credentials{{</glossary-tooltip>}} for these well-known applications.
 
 The default action of rules in this managed ruleset is to add a new HTTP header to any HTTP requests with exposed credentials, which you will receive at your origin server. You can change this action to a more severe one such as _Managed Challenge_ or _Block_.
 
