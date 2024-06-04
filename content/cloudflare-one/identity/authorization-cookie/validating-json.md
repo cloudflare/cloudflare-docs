@@ -79,17 +79,7 @@ To verify the token manually:
 
 4. Paste the JWT into the **Encoded** box.
 
-5. Get the `kid` value located in the **Header** box.
-
-6. Get your public key:
-
-   1. Go to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
-   2. Under `public_certs`, locate the entry with the `kid` value you found in Step 5.
-   3. Copy the `cert` value.
-
-7. In the **Verify Signature** box, paste the `cert` value into the **Public Key** field.
-
-8. Ensure that the signature says **verified**.
+5. Ensure that the signature says **verified**.
 
 You can now trust that this request was sent by Access.
 
