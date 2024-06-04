@@ -64,3 +64,7 @@ Cloudflare cacheable file limits:
 
 - Free, Pro and Business customers have a limit of 512 MB.
 - For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team to request a limit increase.
+
+## When would Cloudflare cache successfully?
+
+While the connection status between visitors and Cloudflare can change in many ways, Cloudflare may or may not start to cache the content. In case that Cloudflare has already established the connection to the origin and started fetching the content, Cloudflare will continue to finish fetching the entire content and cache it even if the visitors disconnect on the way. In other case that Cloudflare has sent a request to the origin and the visitors disconnect before the origin even responds, any content has not been fetched yet, so Cloudflare will not start to cache the content.
