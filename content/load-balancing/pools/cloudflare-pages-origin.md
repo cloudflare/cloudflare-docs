@@ -21,7 +21,7 @@ This setup can be useful if you are migrating your production website or applica
 Make sure you:
 * Are familiar with the Cloudflare [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
 * Own a domain and use Cloudflare as a [primary DNS provider](/dns/zone-setups/full-setup/).
-* Have [deployed a website or application](/pages/get-started/guide/) with Cloudflare Pages.
+* Have [deployed a website or application](/pages/get-started/git-integration/) with Cloudflare Pages.
 * Have [enabled Load Balancing](/load-balancing/get-started/enable-load-balancing/) in your account.
 
 {{</tutorial-prereqs>}}
