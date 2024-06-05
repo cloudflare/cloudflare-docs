@@ -10,7 +10,7 @@ meta:
 # AI Gateway
 
 {{<description>}}
-Observe and control your AI applications.
+Observe and control your AI applications. Hi Kody.
 {{</description>}}
 
 {{<plan type="all">}}
