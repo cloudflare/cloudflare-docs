@@ -4,7 +4,7 @@ title: Changelog
 meta:
     description: Review recent changes to Cloudflare One.
 weight: 15
-layout: overview
+layout: changelog
 changelog_name: Cloudflare One
 changelog_product_area_name: Cloudflare One
 outputs:
