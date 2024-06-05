@@ -8,9 +8,9 @@ weight: 5
 
 You can include the encrypted matched payload in your [Logpush](/logs/about/) jobs by adding the **General** > [**Metadata**](/logs/reference/log-fields/zone/firewall_events/#metadata) field from the Firewall Events dataset to your job.
 
-The payload — in its encrypted form — is available in the `encrypted_matched_data` property of the `Metadata` field.
+The payload, in its encrypted form, is available in the `encrypted_matched_data` property of the `Metadata` field.
 
-However, you may want to decrypt the matched payload before storing the logs in your {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}} of choice. Cloudflare provides a [sample Worker project](https://github.com/cloudflare/matched-data-worker) in GitHub that does the following:
+However, you may want to decrypt the matched payload before storing the logs in your {{<glossary-tooltip term_id="SIEM">}}SIEM system{{</glossary-tooltip>}} of choice. Cloudflare provides a [sample Worker project](https://github.com/cloudflare/matched-data-worker) on GitHub that does the following:
 
 1. Behaves as an S3-compatible storage to receive logs from Logpush. These logs will contain encrypted matched payload data.
 2. Decrypts matched payload data using your private key.
