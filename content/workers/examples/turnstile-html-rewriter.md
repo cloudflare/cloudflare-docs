@@ -6,13 +6,14 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Turnstile with Workers
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -80,6 +81,35 @@ export default {
 		return newRes
 	}
 } satisfies ExportedHandler<Env>;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from pyodide.ffi import create_proxy
+from js import HTMLRewriter, fetch
+
+async def on_fetch(request, env):
+    site_key = env.SITE_KEY
+    res = await fetch(request)
+
+    class Append:
+        def element(self, element):
+            element.append('<scriptsrc="https://challenges.cloudflare.com/turnstile/v0/api.js"async defer></script>', {"html": True})
+
+    class AppendOnID:
+        def __init__(self, name):
+            self.name = name
+        def element(self, element):
+            # You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
+            if element.getAttribute("id") == self.name:
+                element.append(f'<div class="cf-turnstile" data-sitekey="{site_key}" data-theme="light"></div>', { "html": True })
+
+    # Instantiate the API to run on specific elements, for example, `head`, `div`
+    new_res = HTMLRewriter.new().on("head", create_proxy(Append())).on("div", create_proxy(AppendOnID("NAME_OF_ATTRIBUTE"))).transform(res)
+
+    return new_res
 ```
 
 {{</tab>}}
