@@ -67,7 +67,7 @@ Next, upload a file using the [`wrangler r2 object put`](/workers/wrangler/comma
 $ npx wrangler r2 object put <PATH> -f <FILE_NAME>
 ```
 
-`<PATH>` is the combined bucket and file path of the file you want to upload -- for example, `fine-tune-ai/finetune.jsonl`, where `fine-tune-ai` is the the bucket name. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
+`<PATH>` is the combined bucket and file path of the file you want to upload -- for example, `fine-tune-ai/finetune.jsonl`, where `fine-tune-ai` is the bucket name. Replace `<FILE_NAME>` with the local filename of your fine-tune document.
 
 ## 3. Bind your bucket to the Worker
 
