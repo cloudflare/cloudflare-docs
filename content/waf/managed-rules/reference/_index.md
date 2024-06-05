@@ -2,9 +2,8 @@
 title: Rulesets reference
 pcx_content_type: navigation
 weight: 14
-layout: single
 ---
 
 # Managed rulesets reference
 
-{{<directory-listing>}}
+{{<render file="_waf-rulesets.md" productFolder="waf">}}

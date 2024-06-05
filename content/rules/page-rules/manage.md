@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Manage
 meta:
-    title: Manage | Page Rules
+    title: Manage | Page Rules (deprecated)
 weight: 1
 ---
 
@@ -10,7 +10,7 @@ weight: 1
 
 You can manage Page Rules in the Cloudflare dashboard or via API.
 
-{{<render file="_page-rule-proxied-dns-warning.md">}}
+{{<render file="_page-rules-deprecation.md">}}
 
 ## Create a page rule
 
@@ -30,20 +30,22 @@ To create a page rule in the dashboard:
     -   **Save as Draft** to save the rule and leave it disabled.
     -   **Save and Deploy Page Rule** to save the rule and enable it immediately.
 
-For ideas about what rules you can create, refer to [example rules](/rules/page-rules/reference/recommended-rules/).
+For ideas about what rules you can create, refer to [recommended rules](/rules/page-rules/reference/recommended-rules/).
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 To create a page rule using the API, send a [`POST` request](/api/operations/page-rules-create-a-page-rule).
 
-You may also want to review the documentation on [wildcard matching](/rules/page-rules/reference/wildcard-matching/), [available settings](/rules/page-rules/reference/settings/), and [example rules](/rules/page-rules/reference/recommended-rules/).
+You may also want to review the documentation on [wildcard matching](/rules/page-rules/reference/wildcard-matching/), [available settings](/rules/page-rules/reference/settings/), and [recommended rules](/rules/page-rules/reference/recommended-rules/).
 
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
-Cloudflare does not support non-ASCII characters — such as punycode/unicode domain — in Page Rules. Instead, you could URL-encode the string using [Punycode converter](https://www.punycoder.com/).
+{{<Aside type="note" header="Notes">}}
+- Page Rules require a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
+
+- Cloudflare does not support non-ASCII characters — such as punycode/unicode domain — in Page Rules. Instead, you could URL-encode the string using [Punycode converter](https://www.punycoder.com/).
 {{</Aside>}}
 
 ## Edit a page rule

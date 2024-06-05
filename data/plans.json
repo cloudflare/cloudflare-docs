@@ -31,7 +31,7 @@
     },
     "zone_holds": {
       "title": "Zone holds",
-      "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
+      "link": "/fundamentals/setup/account/account-security/zone-holds/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -465,7 +465,7 @@
     "link": "/fundamentals/global-configurations/",
     "custom_pages": {
       "title": "Custom error/challenge pages",
-      "link": "https://support.cloudflare.com/hc/articles/200172706",
+      "link": "/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -538,8 +538,30 @@
   "dns": {
     "title": "DNS",
     "link": "/dns/",
+    "advanced_nameservers": {
+      "title": "Advanced nameservers",
+      "link": "/dns/foundation-dns/advanced-nameservers/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Included with [Foundation DNS](/dns/foundation-dns/)"
+        },
+        "graphql_analytics": {
+          "title": "GraphQL DNS analytics",
+          "summary": "Advanced nameservers analytics are accessible by GraphQL",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
     "cname_flattening": {
-      "title": "CNAME Flattening",
+      "title": "CNAME flattening",
       "link": "/dns/cname-flattening/",
       "properties": {
         "availability": {
@@ -562,7 +584,7 @@
     },
     "custom_nameservers": {
       "title": "Custom nameservers",
-      "link": "/dns/additional-options/custom-nameservers/",
+      "link": "/dns/nameservers/custom-nameservers/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -575,7 +597,7 @@
       }
     },
     "dns_analytics": {
-      "title": "DNS Analytics",
+      "title": "DNS analytics",
       "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
@@ -723,18 +745,18 @@
       }
     },
     "zone_transfers": {
-      "title": "DNS Zone Transfers",
+      "title": "DNS zone transfers",
       "link": "/dns/zone-setups/zone-transfers/",
       "paid_add_on": true,
       "paid_add_on_plans": ["ent"],
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Paid add-on for Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Paid add-on"
+          "ent": "Yes"
         }
       }
     },
@@ -1109,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules",
+      "title": "Page Rules (deprecated)",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {
@@ -1136,15 +1158,15 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
+          "summary": "Available on paid plans",
+          "free": "No",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
         "rules": {
           "title": "Number of snippets",
-          "free": 5,
+          "free": 0,
           "pro": 10,
           "biz": 25,
           "ent": 50
@@ -1257,6 +1279,7 @@
     "ddos": {
       "title": "DDoS protection",
       "link": "/ddos-protection/",
+      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1264,7 +1287,16 @@
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
-          "ent": "Yes"
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "b_unmetered_protection": {
+          "title": "Standard, unmetered DDoS<br/>protection (layers 3-7)",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
         },
         "http_ddos": {
           "title": "HTTP DDoS attack protection",
@@ -1272,15 +1304,51 @@
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
-          "ent": "Yes"
+          "ent": "Yes",
+          "ent_plus": "Yes"
         },
         "network_ddos": {
-          "title": "Network-layer (L3/4) DDoS attack protection",
+          "title": "Network-layer (L3/4)<br />DDoS attack protection",
           "link": "/ddos-protection/managed-rulesets/network/",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
-          "ent": "Yes"
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "o_managed_customization": {
+          "title": "Managed rules customization",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes, with Log action",
+          "ent_plus": "Expression fields & multi-rule support"
+        },
+        "p_proactive_false_positive_detection": {
+          "title": "Proactive false positive<br />detection for new rules",
+          "link": "/ddos-protection/managed-rulesets/#proactive-false-positive-detection-for-new-rules",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "q_adaptive_protection": {
+          "title": "Adaptive DDoS protection",
+          "link": "/ddos-protection/managed-rulesets/adaptive-protection/",
+          "free": "Only error adaptive rules",
+          "pro": "Only error adaptive rules",
+          "biz": "Only error adaptive rules",
+          "ent": "Only error adaptive rules",
+          "ent_plus": "All adaptive rules"
+        },
+        "r_adaptive_protection_details": {
+          "title": "Traffic profiling signals for<br/>adaptive DDoS protection",
+          "free": "Error rates only",
+          "pro": "Error rates only",
+          "biz": "Error rates & historical trends",
+          "ent": "Error rates & historical trends",
+          "ent_plus": "Error rates & historical trends, client country, user agent, query string, ML-scores"
         },
         "tcp_protection": {
           "title": "Advanced TCP Protection",
@@ -1288,7 +1356,26 @@
           "free": "Available to [Magic Transit](/magic-transit/) customers",
           "pro": "Available to [Magic Transit](/magic-transit/) customers",
           "biz": "Available to [Magic Transit](/magic-transit/) customers",
-          "ent": "Available to [Magic Transit](/magic-transit/) customers"
+          "ent": "Available to [Magic Transit](/magic-transit/) customers",
+          "ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
+        },
+        "u_dns_protection": {
+          "title": "Advanced DNS Protection",
+          "link": "/ddos-protection/dns-protection/",
+          "free": "Available to [Magic Transit](/magic-transit/) customers",
+          "pro": "Available to [Magic Transit](/magic-transit/) customers",
+          "biz": "Available to [Magic Transit](/magic-transit/) customers",
+          "ent": "Available to [Magic Transit](/magic-transit/) customers",
+          "ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
+        },
+        "v_alerts": {
+          "title": "Alerts",
+          "link": "/ddos-protection/reference/alerts/",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Advanced alerts with filtering"
         }
       }
     },
@@ -1444,7 +1531,7 @@
         "managed_ruleset_1": {
           "title": "Cloudflare Managed Ruleset",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/cloudflare-managed-ruleset/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1453,7 +1540,7 @@
         "managed_ruleset_2": {
           "title": "Cloudflare OWASP Core Ruleset",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/owasp-core-ruleset/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1462,7 +1549,7 @@
         "managed_ruleset_3": {
           "title": "Cloudflare Exposed Credentials Check",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/exposed-credentials-check/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1471,7 +1558,7 @@
         "managed_rulesets_response": {
           "title": "Cloudflare Sensitive Data Detection",
           "summary": "Enterprise-only",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/sensitive-data-detection/",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1610,7 +1697,16 @@
           "pro": 0,
           "biz": 0,
           "ent": 0,
-          "ent_plus": 3
+          "ent_plus": 5
+        },
+        "l_logpush_jobs": {
+          "title": "Number of Logpush jobs",
+          "summary": "Enterprise with add-on",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 0,
+          "ent_plus": 4
         }
       }
     },
@@ -1750,7 +1846,7 @@
       }
     },
     "server_side_excludes": {
-      "title": "Server-side Excludes",
+      "title": "Server-side Excludes (deprecated)",
       "link": "/waf/tools/scrape-shield/server-side-excludes/",
       "properties": {
         "availability": {
@@ -1779,14 +1875,14 @@
           "lite": "No",
           "pro": "Paid add-on",
           "biz": "Paid add-on",
-          "ent": "Paid add-on"
+          "ent": "Yes"
         },
         "tcp": {
           "title": "TCP",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Paid add-on"
         },
         "udp": {
           "title": "UDP",
@@ -1794,7 +1890,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Paid add-on"
         },
         "v_minecraft": {
           "title": "Minecraft (one app allowed)",
@@ -1866,7 +1962,7 @@
       }
     },
     "auto_minify": {
-      "title": "Auto Minify",
+      "title": "Auto Minify (deprecated)",
       "link": "/speed/optimization/content/auto-minify/",
       "properties": {
         "availability": {
@@ -1972,8 +2068,8 @@
       }
     },
     "image_resizing": {
-      "title": "Image Resizing",
-      "link": "/images/image-resizing/",
+      "title": "Image Optimization",
+      "link": "/images/",
       "paid_add_on": true,
       "paid_add_on_plans": ["pro", "biz", "ent"],
       "properties": {
@@ -2040,20 +2136,6 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
-        }
-      }
-    },
-    "railgun": {
-      "title": "Railgun (deprecated)",
-      "link": "/railgun/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Business and above",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -2869,22 +2951,6 @@
           "pro": "500,000 HTTP requests",
           "biz": "500,000 HTTP requests",
           "ent": "1,000,000 HTTP requests"
-        }
-      }
-    },
-    "polygon": {
-      "title": "Polygon Gateways",
-      "link": "/web3/polygon-gateway/",
-      "paid_add_on": true,
-      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Paid add-on for Enterprise",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Yes"
         }
       }
     }

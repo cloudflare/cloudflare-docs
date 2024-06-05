@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Sphinx site
+title: Sphinx
 ---
 
-# Deploy a Sphinx site
+# Sphinx
 
 [Sphinx](https://www.sphinx-doc.org/) is a tool that makes it easy to create documentation and was originally made for the publication of Python documentation. It is well known for its simplicity and ease of use.
 
@@ -252,6 +252,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Sphinx site, Cloudflare Pages will automatically rebuild your project and deploy it.
 
-You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Sphinx">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Sphinx">}}

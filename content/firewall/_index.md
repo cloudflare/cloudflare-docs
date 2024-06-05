@@ -2,7 +2,6 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-layout: single
 meta:
   title: Cloudflare Firewall Rules
 ---

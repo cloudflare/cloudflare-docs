@@ -18,16 +18,10 @@
     <div class="DocsContent" id="main" page-type="{{ $type }}">
       <article class="DocsMarkdown">
         <h1>{{ .Title }}</h1>
-        {{ if .Params.Playground }}
+
+        <workers-playground-link></workers-playground-link>
         <div class="DocsMarkdown--content-column">
-          <a href="{{- .Params.Playground -}}" class="DocsMarkdown--link" target="_blank" rel="noopener">
-            <span class="DocsMarkdown--link-content">Try in Workers Playground</span>
-            {{- partialCached "external.icon" . -}}
-          </a>
-        </div>
-        {{ end }}
-        <div class="DocsMarkdown--content-column">
-          {{- .Params.Summary -}}
+          {{- .Params.Summary | .Page.RenderString -}}
         </div>
 
         {{- .Content -}}

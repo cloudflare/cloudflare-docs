@@ -1,11 +1,12 @@
 ---
 type: example
 summary: Connect Hyperdrive to an AWS RDS or Aurora database instance.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to AWS RDS and Aurora
 weight: 11
-layout: example
 ---
+
+# Connect to AWS RDS and Aurora
 
 This example shows you how to connect Hyperdrive to an Amazon Relational Database Service (Amazon RDS) Postgres or Amazon Aurora database instance.
 

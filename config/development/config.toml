@@ -1,0 +1,6 @@
+[caches]
+  [caches.getjson]
+    maxAge = "120h"
+
+[sitemap]
+  changefreq = "daily"

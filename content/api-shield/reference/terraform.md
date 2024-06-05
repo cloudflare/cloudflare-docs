@@ -10,10 +10,10 @@ Get started with API Shield using Terraform from the examples below. For more in
 The following resources are available to configure through Terraform:
 
 **Session identifiers** 
-- [`api_shield`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield) for configuring session identifiers in API Shield.
+- [`api_shield`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield) for configuring {{<glossary-tooltip term_id="session identifier">}}session identifiers{{</glossary-tooltip>}} in API Shield.
 
 **Endpoint Management**
-- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring endpoints in Endpoint Management.
+- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} in Endpoint Management.
 
 **Schema Validation 2.0**
 - [`api_shield_schema`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema) for configuring a schema in [Schema Validation 2.0](/api-shield/security/schema-validation/).

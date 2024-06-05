@@ -24,6 +24,8 @@ inputParameters: editWord
 | Cache Rules $1                 | Grants write access to [Cache Rules](/cache/how-to/cache-rules/).                                                                          |
 | Config Rules Read                | Grants read access to [Configuration Rules](/rules/configuration-rules/).                                                                  |
 | Config Rules $1                | Grants write access to [Configuration Rules](/rules/configuration-rules/).                                                                 |
+| Custom Errors Read          | Grants read access to [Custom Errors Phase](/rules/custom-error-responses/create-api/).                                                               |
+| Custom Errors $1          | Grants write access to [Custom Errors Phase](/rules/custom-error-responses/create-api/).                                                               |
 | Custom Error Rules Read          | Grants read access to [Custom Error Rules](/rules/custom-error-responses/).                                                                |
 | Custom Error Rules $1          | Grants write access to [Custom Error Rules](/rules/custom-error-responses/).                                                               |
 | Custom Pages Read                | Grants read access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).  |
@@ -32,8 +34,8 @@ inputParameters: editWord
 | DMARC Management $1            | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
 | DNS Read                         | Grants read access to [DNS](/dns/).                                                                                                        |
 | DNS Write                        | Grants write access to [DNS](/dns/).                                                                                                       |
-| Dynamic Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
-| Dynamic Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
+| Dynamic URL Redirect Read            | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
+| Dynamic URL Redirect $1            | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
 | Email Routing Rules Read         | Grants read access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                                |
 | Email Routing Rules $1         | Grants write access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                               |
 | Firewall Services Read           | Grants read access to Firewall resources.                                                                                                  |

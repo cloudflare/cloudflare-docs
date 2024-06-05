@@ -64,13 +64,13 @@ Location Hints are only honored the first time a bucket with a given name is cre
 
 {{<Aside type="note">}}
 
-This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
+This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
 
 {{</Aside>}}
 
 Jurisdictional Restrictions guarantee objects in a bucket are stored within a specific jurisdiction.
 
-Use Jurisdictional Restrictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/).
+Use Jurisdictional Restrictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
 ### Set jurisdiction via the Cloudflare dashboard
 
@@ -129,6 +129,11 @@ The following jurisdictions are supported:
 | Jurisdiction | Jurisdiction description      |
 | ---- | --------------------- |
 | eu | European Union |
+| fedramp | FedRAMP |
+
+{{<Aside type="note">}}
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to get access to the FedRAMP jurisdiction.
+{{</Aside>}}
 
 ### Limitations
 

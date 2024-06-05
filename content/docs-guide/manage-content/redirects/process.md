@@ -18,11 +18,11 @@ We use various Cloudflare products for our redirects, due to ease of use and spe
 
 ### Cloudflare Pages (primary)
 
-Our primary method takes advantage of the [Pages platform](/pages/platform/redirects/), defining redirects in a [plain text file](https://github.com/cloudflare/cloudflare-docs/blob/production/content/_redirects) in our GitHub repo.
+Our primary method takes advantage of the [Pages platform](/pages/configuration/redirects/), defining redirects in a [plain text file](https://github.com/cloudflare/cloudflare-docs/blob/production/content/_redirects) in our GitHub repo.
 
 This setup allows us to use the same workflow for redirects as for any other documentation change. We implement a redirect in the same pull request as the content change and can test these changes in our preview branches.
 
-We also love the flexibility provided by the [Pages syntax](/pages/platform/redirects/#advanced-redirects).
+We also love the flexibility provided by the [Pages syntax](/pages/configuration/redirects/#advanced-redirects).
 
 ### Bulk redirects (secondary)
 
@@ -30,7 +30,7 @@ In certain situations, we also use [Bulk redirects](/rules/url-forwarding/bulk-r
 
 Normally, bulk redirects only come up when another team is adding a large number of individual redirects to our site, such as when all of our previous `support.cloudflare.com` content was migrated and needed individualized redirects per locale.
 
-We use this method when the contributors are outside of our team and when the total number of redirects is so large that it would clutter our `_redirects` file and count against our [limit for Pages redirects](/pages/platform/redirects/#surpass-_redirects-limits).
+We use this method when the contributors are outside of our team and when the total number of redirects is so large that it would clutter our `_redirects` file and count against our [limit for Pages redirects](/pages/configuration/redirects/#surpass-_redirects-limits).
 
 ---
 

@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 1
 meta:
   title: Changelog for the Network-layer DDoS managed ruleset
+sidebar_toc: true
 layout: changelog
 changelog_file_name: [ddos-network]
 outputs:

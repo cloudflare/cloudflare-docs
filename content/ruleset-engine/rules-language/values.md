@@ -30,7 +30,7 @@ Regular expression matching is performed using the Rust regular expression engin
 
 ### Quoted string syntax
 
-When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively. Additionally, if you use a string literal as a function argument you must use double escaping for the `\` (backslash) character.
+When using the quoted string syntax, a string literal is delimited by `"` (double quote) characters. This format requires that you escape special characters `"` and `\` using `\"` and `\\`, respectively.
 
 The quoted string syntax has the following additional escaping requirements:
 
@@ -47,10 +47,23 @@ http.request.uri.path matches "a\"b"
 # Test if URI path contains 'a"#b'
 http.request.uri.path matches "a\"#b"
 
-# Replace '\' (backslash) with 'a'
-# String literals in function arguments require double escaping in quoted strings
+# Replace 'a' with '\' (backslash)
+regex_replace(http.host, "a", "\\")
+```
+
+{{<Aside type="warning" header="Warning">}}
+In some situations you will need to double-escape a string — for example, when using the [`regex_replace()`](/ruleset-engine/rules-language/functions/#function-regex_replace) function with a regular expression matching a backslash (`\`).
+
+In this case, you must do the basic escaping required by strings as function parameters (using `\\` for each `\` character) and also the regex escaping (using `\\` for each `\` character), since the backslash has a special meaning in regular expressions.
+
+Therefore, to replace a backslash (`\`) with the `a` character using `regex_replace()` you would use the following expression:
+
+```txt
 regex_replace(http.host, "\\\\", "a")
 ```
+
+To avoid this situation, Cloudflare recommends that you use the [raw string syntax](#raw-string-syntax) for specifying regular expressions.
+{{</Aside>}}
 
 ### Raw string syntax
 
@@ -111,7 +124,7 @@ You can access individual array elements using an index (a non-negative value) b
 
 Use the special notation `[*]` when specifying an expression that will be evaluated for each array element (like the [`map` high-order function](<https://wikipedia.org/wiki/Map_(higher-order_function)>)). This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
 
-### Examples
+### Examples { #array-examples }
 
 Consider the `http.request.headers.names` field with type `Array<String>` in the following examples:
 
@@ -129,14 +142,11 @@ Consider the `http.request.headers.names` field with type `Array<String>` in the
 
 In the last example, the `lower()` function includes the `[*]` notation so that the function is evaluated for each array element. This function, used along `[*]`, returns a new array where each element of the input array is converted to lowercase. Then, the string comparison uses `[*]` to transform the array resulting from applying `lower()` to each header name into an array of boolean values. Finally, `any()` evaluates to true if at least one of these array elements is true.
 
-### Final notes
+### Notes { #array-notes }
 
 It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
 
-Accessing an out-of-bounds array index produces a "missing value". A missing value has the following behavior:
-
-- Any comparison `<expr> <op> <literal>` where `<expr>` evaluates to a missing value will evaluate to false.
-- Function calls like `function(<expr>)`, where `<expr>` evaluates to a missing value, will return a missing value in most cases, but the exact behavior can vary per function.
+{{<render file="_rules-language-missing-value-behavior.md" withParameters="an out-of-bounds array index">}}
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
@@ -145,10 +155,70 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 - `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
 - `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
+## Maps
+
+A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the key must be a `String` and the value can be of any type (for example, a `String` or an array of values). All values in a map must have the same type.
+
+The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<Array<String>>`, indicates the data type of the values associated with keys (an `Array` of `String` elements). This means that when you access the value of key `"foo"` you will get either an array of `String` elements or a [missing value](#map-notes).
+
+To access a value in a map, enter the key between square brackets (`[]`):
+
+```txt
+<MAP_FIELD>[<KEY>]
+```
+
+For maps where the values have an `Array` type, you cannot directly use [operators](/ruleset-engine/rules-language/operators/) with the obtained (array) value, since these operators do not support arrays directly. To use an operator on an item of the array, use the special notation `[*]` when specifying an expression. This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
+
+### Examples { #map-examples }
+
+The following example is based on the [`http.request.headers`](/ruleset-engine/rules-language/fields/#field-http-request-headers) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
+
+If an incoming HTTP request included a single `Accept: application/json` HTTP header, the following expressions would evaluate to the indicated values:
+
+```txt
+http.request.headers["accept"]     # ==> ["application/json"]
+http.request.headers["accept"][0]  # ==> "application/json"
+
+any(http.request.headers["accept"][*] == "application/json") # ==> true
+any(http.request.headers["accept"][*] == "text/plain")       # ==> false
+```
+
+The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/#field-http-request-uri-args) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
+
+If an HTTP request included three `filter` URI arguments `waf`, `botm`, and `cdn`, the following expressions would evaluate to the indicated values:
+
+```txt
+# Example request URL:
+# https://example.com/?filter=waf&filter=botm&filter=cdn
+
+http.request.uri.args["filter"]          # ==> ["waf", "botm", "cdn"]
+
+len(http.request.uri.args["filter"][1])  # ==> 4
+
+# Check if the length of all 'filter' values is always 3 or 4
+all(len(http.request.uri.args["filter"][*])[*] in {3 4})      # ==> true
+
+# Check if the length of 'filter' values (if any) is never 3 or 4
+all(not len(http.request.uri.args["filter"][*])[*] in {3 4})  # ==> false
+
+# Check if the http.request.uri.args map contains a "filter" key
+len(http.request.uri.args["filter"]) >= 0     # ==> true
+
+# Check if the http.request.uri.args map does not contain an "order" key
+not len(http.request.uri.args["order"]) >= 0  # ==> true
+```
+
+For more information on `any()`, `all()`, `len()`, and other available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
+
+### Notes { #map-notes }
+
+It is not possible to define your own maps. You can only use maps returned by fields.
+
+{{<render file="_rules-language-missing-value-behavior.md" withParameters="a non-existing key in a map">}}
+
 ## Lists
 
-Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support items with different data types. Each list can only have items of the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
-
+Lists allow you to create a group of items and refer to them collectively, by name, in your expressions. Each list type supports items of a specific data type. All items in a list must have the same data type. For details on the available list types, refer to [Lists](/waf/tools/lists/#supported-lists).
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 

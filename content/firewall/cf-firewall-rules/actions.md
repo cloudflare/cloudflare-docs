@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 1
 meta:
   title: Firewall rules actions
-layout: list
+layout: wide
 ---
 
 # Firewall rules actions
@@ -81,8 +81,8 @@ For reference information on rule actions available for Cloudflare products powe
               </ul>
               <p><strong>Notes:</strong></p>
               <ul>
-                <li>Currently, you cannot bypass Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
-                <li>You cannot bypass the new <a href="/waf/managed-rules/">WAF managed rules</a> using this action, only the previous version of WAF managed rules. To skip one or more managed rules in the new WAF for specific requests, <a href="/waf/managed-rules/waf-exceptions/">create a WAF exception</a>.</li>
+                <li>Currently, you cannot bypass Bot Fight Mode. For more information on this product, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
+                <li>You cannot bypass the new <a href="/waf/managed-rules/">WAF managed rules</a> using this action, only the previous version of WAF managed rules. To skip one or more managed rules in the new WAF for specific requests, <a href="/waf/managed-rules/waf-exceptions/">create an exception</a>.</li>
               </ul>
               <p></p>
             </li>

@@ -7,4 +7,4 @@ layout: learning-unit
 
 To verify that your DNS traffic is sent to Gateway:
 
-{{<render file="gateway/_verify-connectivity.md" withParameters="DNS" productFolder="cloudflare-one">}}
+{{<render file="gateway/_verify-connectivity.md" withParameters="DNS;;queries" productFolder="cloudflare-one">}}

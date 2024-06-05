@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Managing multiple Workers projects with Lerna
-layout: single
 ---
 
 # Managing multiple Workers projects with Lerna
@@ -33,7 +32,7 @@ Inside of `packages`, where `lerna` will look for your projects, you can create 
 header: Create projects using Wrangler
 ---
 $ cd packages
-$ wrangler init my-api
+$ npx wrangler init my-api
 
 # If you have existing projects, you can clone them into the directory:
 $ git clone https://github.com/cloudflare/worker-template.git
@@ -46,8 +45,8 @@ This approach to managing your Workers projects can become incredibly powerful w
 header: Create projects using Wrangler
 ---
 $ cd packages
-$ wrangler init public-api
-$ wrangler init private-api
+$ npx wrangler init public-api
+$ npx wrangler init private-api
 ```
 
 Next to your API projects, create a new package `handlers`, which can be imported into each project:

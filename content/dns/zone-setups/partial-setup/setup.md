@@ -21,21 +21,17 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 {{<tutorial>}}
 {{<tutorial-step title="Add your domain to Cloudflare">}}
 
-1. Create a Cloudflare account and [add your domain](/fundamentals/setup/account-setup/add-site/).
+1. Create a Cloudflare account and [add your domain](/fundamentals/setup/manage-domains/add-site/).
 
 2. For your **Plan**, choose **Business** or **Enterprise**.
 
-3. Add your domain to Cloudflare. You should land on the **Overview** page.
+3. Continue through the onboarding steps, ignoring the instructions to change your nameservers.
 
-4. Ignore the instructions to change your nameservers.
+4. On the **Overview** page, select **Convert to CNAME DNS Setup**.
 
-5. For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
+5. Select **Convert** to confirm.
 
-    ![On your domain's overview page, click Convert to CNAME DNS Setup](/images/dns/dns_cname_setup.png)
-
-6. Click **Convert**.
-
-7. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
+6. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
 
 {{</tutorial-step>}}
 
@@ -69,7 +65,7 @@ That record must remain in place for as long as your domain is active on the par
 
 To provision a Universal SSL certificate through Cloudflare, follow [these instructions](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup).
 
-If your domain is already live with a partial DNS setup — with Cloudflare or another DNS provider — you cannot use a TXT record for [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/). That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
+If your domain is already live with a partial (CNAME) setup — with Cloudflare or another DNS provider — you cannot use a TXT record for [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/). That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
 
 {{</tutorial-step>}}
 

@@ -14,4 +14,3 @@ All SWG products contain these technologies:
 - Application control
 
 SWGs may also include [data loss prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/), content filtering, and other Internet traffic filters.
-

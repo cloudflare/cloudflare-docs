@@ -51,7 +51,7 @@ header: Response
 
 ## Cookies in the request header
 
-Waiting Room is driven by a waiting room cookie, that determines the position of the user in the queue. Because of this, the cookie must be included in each of the subsequent requests to the Waiting Room API for the user. This is mandatory regardless of a user having been queued or not. If a request does not include a cookie, the waiting room will assume a new user and will return a new cookie in the response header. Consequently, this will place the user at the end of the queue. Thus, when consuming the waiting room in a non-browser environment it is important to include the waiting room cookie in the request header.
+Waiting Room is driven by a waiting room cookie that determines the position of the user in the queue. Because of this, the cookie is updated in the response headers for each request. For each request to an endpoint protected by Waiting Room, the application must include the up-to-date cookie retrieved during the previous request. This is mandatory regardless of a user having been queued or not. If a request does not include a cookie, the waiting room will assume this is a new user and will return a new cookie in the response header. Consequently, this will place the user at the end of the queue. Thus, when consuming the waiting room in a non-browser environment it is important to include the waiting room cookie in the request header and keep it updated after each request.
 
 Refer to the [Waiting Room cookies](/waiting-room/reference/waiting-room-cookie/), for more information.
 

@@ -27,3 +27,5 @@ To review preview logs:
 2. Go to **Settings** (the gear icon).
 3. Go to **Users and Actions** > **Audit Log**.
 4. From the dropdown, select one of the **Preview** logs. This will show you what would have been retracted with Post Delivery Response or Phish Submission Response enabled.
+
+{{<Aside type="note">}} {{<render file="_timestamp.md">}} {{</Aside>}}

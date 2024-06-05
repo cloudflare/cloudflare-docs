@@ -48,8 +48,8 @@ Enable Session Affinity when you [create or edit a load balancer](/load-balancin
 
 If you enable Session Affinity, choose one of the following options:
 
-- **By Cloudflare cookie only**: Sets a `cflib` cookie to track the associated origin web server.
-- **By Cloudflare cookie and Client IP fallback**: Sets a `cflib` cookie, but also uses the client IP address when no session affinity cookie is provided.
+- **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated origin web server.
+- **By Cloudflare cookie and Client IP fallback**: Sets a `__cflb` cookie, but also uses the client IP address when no session affinity cookie is provided.
 - **By HTTP header**.
 
 {{<Aside type="warning" header="Important">}}
@@ -88,7 +88,7 @@ Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)]
 
 ## Zero-Downtime Failover
 
-Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
+Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors.
 
 You can enable one of three options:
 

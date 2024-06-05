@@ -3,11 +3,10 @@ updated: 2022-07-28
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Create an HTML form
-layout: single
+title: Create a HTML form
 ---
 
-# Create an HTML form
+# Create a HTML form
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
@@ -17,7 +16,7 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 {{</Aside>}}
 
-This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
+This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 
 ## Overview
 
@@ -199,9 +198,9 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.
 
-Cloudflare Pages offers a [Functions](/pages/platform/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
+Cloudflare Pages offers a [Functions](/pages/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
 
-Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/routing/) documentation for more information.
+Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/functions/routing/) documentation for more information.
 
 To define a handler for `/api/submit`, you must create a `functions/api/submit.js` file. This means that your `functions` and `public` directories should be siblings, with a total project structure similar to the following:
 

@@ -10,7 +10,9 @@ meta:
 
 Below you will find answers to the most commonly asked questions regarding Bulk Redirects.
 
-To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshooting Cloudflare 10XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/).
+To troubleshoot errors related to Bulk Redirects:
+* Refer to [Troubleshooting Cloudflare 10XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/) for more information on runtime errors.
+* Use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) {{<inline-pill style="beta">}} to determine if a rule is triggering for a specific URL.
 
 ## What happens if the same source URL appears in two different Bulk Redirect Lists?
 
@@ -34,4 +36,4 @@ Use the `raw.http.request.full_uri` field both in the rule expression and in the
 
 ## Do Bulk Redirects take precedence over Page Rules?
 
-Yes. Bulk Redirects take precedence over Page Rules redirects. For more information on the execution order of Rules products, refer to [Execution order](/rules/url-forwarding/#execution-order).
+Yes. Bulk Redirects take precedence over Page Rules redirects (deprecated). For more information on the execution order of Rules products, refer to [Execution order](/rules/url-forwarding/#execution-order).

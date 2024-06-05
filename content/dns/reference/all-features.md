@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Features and plans
 weight: 4
-layout: list
+layout: wide
 meta:
     description: Review information on all Cloudflare DNS features and their availability.
 ---

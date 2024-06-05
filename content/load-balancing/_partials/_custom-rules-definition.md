@@ -7,4 +7,4 @@ _build:
 
 Custom load balancing rules let you customize the behavior of your load balancer based on the characteristics of a request.
 
-For example, you could create a rule that selects an origin pool based on the URI path of an HTTP request.
+For example, you can use URL-based routing, or create a rule that selects an origin pool based on the URI path of an HTTP request.

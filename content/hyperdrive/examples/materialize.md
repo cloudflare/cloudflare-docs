@@ -1,11 +1,12 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Materialize streaming database.
-pcx_content_type: configuration
+pcx_content_type: tutorial
 title: Connect to Materialize
 weight: 8
-layout: example
 ---
+
+# Connect to Materialize
 
 This example shows you how to connect Hyperdrive to a [Materialize](https://materialize.com/) database. Materialize is a Postgres-compatible streaming database that can automatically compute real-time results against your streaming data sources.
 

@@ -195,6 +195,16 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 {{</faq-answer>}}
 {{</faq-item>}}
 
+{{<faq-item>}}
+{{<faq-question level=3 text="Why are some rules bypassed when I did not create an exception?" >}}
+
+{{<faq-answer>}}
+
+If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [WAF Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
 ## Bots
 
 {{<faq-item>}}
@@ -229,15 +239,9 @@ There is no functional difference between known and verified bots. However, the 
 
 {{<faq-answer>}}
 
-No. The Managed Challenge, Interactive Challenge, and JS Challenge actions only support requests that trigger a page refresh.
+Previously, unless you customize your front-end application, any AJAX request that is challenged will fail because AJAX calls are not rendered in the DOM.
 
-Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), since visitors do not trigger a new page load.
-
-When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a `403` status code.
-
-Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
-
-For an additional layer of security against Credential Stuffing, you could use [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site (such as login or checkout forms).
+Now, you can [opt-in to Turnstile’s Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/). This allows you to issue a challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie’s validity is controlled by the zone-specific configurable [Challenge Passage](/waf/tools/challenge-passage/) security setting.
 
 {{</faq-answer>}}
 {{</faq-item>}}

@@ -20,7 +20,7 @@ To set up those notifications:
     - **Notification limit** (exact metric will vary based on product)
     - **Notification email**
 
-    {{<Aside type="note">}}Some plans also have access to alerts through [PagerDuty](/notifications/create-notifications/create-pagerduty/) and [Webhooks](/notifications/create-notifications/configure-webhooks/).
+    {{<Aside type="note">}}Some plans also have access to alerts through [PagerDuty](/notifications/get-started/configure-pagerduty/) and [Webhooks](/notifications/get-started/configure-webhooks/).
     {{</Aside>}}
 
 6. Select **Save**.

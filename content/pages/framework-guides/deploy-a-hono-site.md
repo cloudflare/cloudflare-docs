@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Hono site
+title: Hono
 ---
 
-# Deploy a Hono site
+# Hono
 
 [Hono](https://honojs.dev/) is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Hono application and deploy it using Cloudflare Pages.
 
@@ -83,7 +83,13 @@ filename: package.json
 {{</tab>}}
 {{</tabs>}}
 
-In the above example, `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
+Then, run the following command.
+
+```sh
+$ npm install npm-run-all --save-dev
+```
+
+Installing `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
 
 ## Run in local dev
 
@@ -97,7 +103,7 @@ You should be able to review your generated web application at `http://localhost
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -128,6 +134,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Hono">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Hono">}}

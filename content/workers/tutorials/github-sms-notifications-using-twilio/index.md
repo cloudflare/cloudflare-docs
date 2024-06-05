@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
-layout: single
 ---
 
 # GitHub SMS notifications using Twilio
@@ -75,7 +74,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
+![Following instructions to set up your webhook in the GitHub webhooks settings dashboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
 
 ---
 

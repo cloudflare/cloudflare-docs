@@ -12,7 +12,7 @@
         </span>
         <span>{{- .Page.RenderString .Inner -}}</span>
         {{- printf "</%s>" $heading | safeHTML -}}
-        <div class="DocsMarkdown--pill DocsMarkdown--pill-{{$style}} DocsMarkdown-pill-lower">{{(replace $style "-" " ") | title}}</div>
+        <div class="DocsMarkdown--pill DocsMarkdown--pill-{{$style}} DocsMarkdown--pill-{{printf "%s" $heading}}">{{(replace $style "-" " ") | title}}</div>
     <!-- Otherwise render as <h1> -->
     {{- else -}}
         <h1 id="{{- $ID -}}">{{- .Page.RenderString .Inner -}}</h1>

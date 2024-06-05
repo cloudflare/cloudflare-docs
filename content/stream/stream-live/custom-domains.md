@@ -2,6 +2,9 @@
 pcx_content_type: how-to
 title: Add custom ingest domains
 weight: 3
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Add custom ingest domains

@@ -1,16 +1,16 @@
 ---
-title: Use Zero Trust with DLS
+title: Zero Trust
 pcx_content_type: how-to
 weight: 1
 ---
 
-# Use Zero Trust with Data Localization Suite
+# Zero Trust
 
 In the following sections, we will give you some details about how different Zero Trust products can be used with the Data Localization Suite.
 
 ## Gateway
 
-Regional Services can be used with Gateway in all [supported regions](/data-localization/). Be aware that Regional Services only apply when using the WARP client in Gateway with WARP mode.
+Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the WARP client in Gateway with WARP mode.
 
 ### Egress policies
 
@@ -35,7 +35,7 @@ You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/
 
 ### DNS policies
 
-Regional Services controls where Cloudlare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
+Regional Services controls where Cloudflare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
 
 Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings) section below for more information.
 

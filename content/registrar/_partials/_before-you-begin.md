@@ -7,8 +7,8 @@ _build:
 
 ## Before transferring a domain to Cloudflare
 
-* Create [a Cloudflare account](/fundamentals/setup/account-setup/create-account/).
-* [Add the domain](/fundamentals/setup/account-setup/add-site/) you are transferring to your Cloudflare account.
+* Create [a Cloudflare account](/fundamentals/setup/account/create-account/).
+* [Add the domain](/fundamentals/setup/manage-domains/add-site/) you are transferring to your Cloudflare account.
 * [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) in the Cloudflare dashboard.
 * [Change your DNS nameservers](/dns/zone-setups/full-setup/) to Cloudflare.
 * If initiating multiple transfers, notify your financial institution to prevent them from flagging these charges as fraudulent.

@@ -13,4 +13,4 @@ Do not use plaintext environment variables to store sensitive information. Use [
 
 {{</Aside>}}
 
-[Secrets](/workers/configuration/secrets/) are [environment variables](/workers/configuration/environment-variables/). The difference is secret values are not visible within Wrangler or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.
+[Secrets](/workers/configuration/secrets/) are [environment variables](/workers/configuration/environment-variables/). The difference is secret values are not visible within Wrangler or Cloudflare dashboard after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.

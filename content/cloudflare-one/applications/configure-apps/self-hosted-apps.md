@@ -6,33 +6,26 @@ weight: 2
 
 # Add a self-hosted application
 
-{{<render file="access/_self-hosted-app-intro.md" productFolder="cloudflare-one">}}
+{{<render file="access/_self-hosted-intro.md">}}
+
+![Cloudflare Access authenticates users to your internal applications.](/images/cloudflare-one/applications/network-diagram.png)
 
 ## Prerequisites
 
-- [Add your domain](/fundamentals/setup/account-setup/add-site/) to Cloudflare.
-- [Change your domain nameservers](/dns/zone-setups/full-setup/) to Cloudflare, or configure a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
+- An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
 
 ## 1. Add your application to Access
 
-{{<render file="access/_add-app-to-access.md" productFolder="cloudflare-one">}}
-
+{{<render file="access/_self-hosted-app.md">}}
 
 ## 2. Add an Access policy
 
-{{<render file="access/_add-access-policy.md" productFolder="cloudflare-one">}}
-
+{{<render file="access/_self-hosted-policy.md">}}
 
 ## 3. (Optional) Configure advanced settings
 
-You can configure the following advanced settings for your application:
-
-- [Cross-Origin Resource Sharing (CORS)](/cloudflare-one/identity/authorization-cookie/cors/)
-- [Cookie settings](/cloudflare-one/identity/authorization-cookie/#cookie-settings)
-- [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/#automatic-cloudflared-authentication)
-- [Browser rendering](/cloudflare-one/applications/non-http/#rendering-in-the-browser)
-
-To finish configuring the application, select **Add application**.
+{{<render file="access/_self-hosted-settings.md">}}
 
 ## 4. Connect your origin to Cloudflare
 

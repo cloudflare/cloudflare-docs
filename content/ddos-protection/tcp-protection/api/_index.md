@@ -3,7 +3,7 @@ type: overview
 pcx_content_type: reference
 title: API configuration
 weight: 5
-layout: list
+layout: wide
 meta:
   title: Configuring Advanced TCP Protection via API
 ---

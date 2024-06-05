@@ -28,13 +28,21 @@ ___
 
 ## Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOis search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
+
+{{<Aside type="warning">}}
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool.
+{{</Aside>}}
+
+Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
 
 ___
 
 ## Does Cloudflare limit number of DNS records a domain can have?
 
-Yes. Currently Free, Pro, and Business customers have a limit on the number of DNS records they can create.
+Yes. All customers have a limit on the number of DNS records they can create.
+
+Pro, Business, and Enterprise have limit of 3,500 DNS records.
 
 If you are an Enterprise customer you can contact your Account team if you require more DNS records.
 
@@ -180,13 +188,15 @@ This can happen when you had a wildcard \* record configured at your previous au
 You can also:
 1. [Remove your domain](/fundamentals/setup/manage-domains/remove-domain/) from Cloudflare.
 2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/setup/account-setup/add-site/) the domain.
+3. [Re-add](/fundamentals/setup/manage-domains/add-site/) the domain.
 
 ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/) (deprecated), or [Cloudflare Workers](/workers/).
+
+___
 
 ## Why are DNS queries returning incorrect results?
 
@@ -226,3 +236,14 @@ ___
 The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk` TLDs. Use the Cloudflare Dashboard for managing such TLDs.
 
 Enterprise customer can [contact Cloudflare Support](/support/contacting-cloudflare-support/) to remove this limitation.
+
+___
+
+## How to configure records on local DNS servers?
+
+You can create CNAME records pointing to `cdn.cloudflare.net` in your local DNS to locally resolve hostnames through Cloudflare.
+For example, if you need to resolve `example.com` through Cloudflare in your local DNS server, you need to create a CNAME record such as:
+
+```txt
+example.com CNAME example.com.cdn.cloudflare.net
+```

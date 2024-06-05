@@ -9,23 +9,13 @@ meta:
 
 ## Background
 
-Secrets are [environment variables](/workers/configuration/environment-variables/) that are encrypted and not visible after they are set. Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
+Secrets are a type of binding that allow you to attach encrypted text values to your Worker. You cannot see secrets after you set them and can only access secrets via [Wrangler](/workers/wrangler/commands/#secret) or programmatically via the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters). Secrets are used for storing sensitive information like API keys and auth tokens. Secrets are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 ## Add secrets to your project
 
 ### Secrets in development
 
-When developing your Worker locally, create a `.dev.vars` file in the root of your project to define secrets that will be available to your Worker when running `wrangler dev`.
-
-The `.dev.vars` file should be formatted like a `dotenv` file.
-
-```bash
----
-header: .dev.vars
----
-SECRET_KEY=value
-API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-```
+{{<render file="_secrets-in-dev.md">}}
 
 ### Secrets on deployed Workers
 
@@ -37,7 +27,7 @@ To add a secret to a Worker, run the [`wrangler secret put` command](/workers/wr
 ---
 filename: wrangler secret put
 ---
-$ wrangler secret put <KEY>
+$ npx wrangler secret put <KEY>
 ```
 
 #### Via the dashboard
@@ -63,7 +53,7 @@ To delete a secret from your Worker project, run the [`wrangler secret delete` c
 ---
 filename: wrangler secret delete
 ---
-$ wrangler secret delete <KEY>
+$ npx wrangler secret delete <KEY>
 ```
 
 ### Via the dashboard

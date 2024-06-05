@@ -12,7 +12,7 @@ While the Brand Protection tool is in beta, you will need to request access by f
 
 {{</Aside>}}
 
-Common misspellings (`cloudfalre.com`) and concatenation of services (`cloudflare-okta.com`) are often registered by attackers to trick unsuspecting victims into submitting private information such as passwords. Brand Protection gives you the ability to search for new domains that may be attempting to impersonate your brand. Our system allows you to save search queries that run continuously and alert you if any new domains match those queries.
+{{<render file="_brand-protection-definition.md">}}
 
 ## Domain search
 
@@ -55,9 +55,9 @@ To investigate a query:
 
 ## Brand Protection Alerts
 
-Brand Protection works with Cloudflare’s ANS (Alerts Notification Service) to provide configurable alerts when new domains are detected. 
+{{<render file="_brand-protection-alerts.md">}}
 
-Any matches that are found during the new domain search are then inserted into an internal alerts table which triggers an alert for the user. This allows you to receive real-time notifications and take immediate action to investigate and potentially block any suspicious domains that may be attempting to impersonate your brand.
+{{<available-notifications product="Security Center">}}
 
 To set a Brand Protection Alert:
 
@@ -76,4 +76,5 @@ Manage your notifications in the **All notifications** tab. You can disable, edi
 
 ## Limitations
 
-While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise customers are entitled to one saved query per Enterprise zone on their account.
+- While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise customers are entitled to one saved query per Enterprise zone on their account.
+- You may only use the Brand Protection search tools to search for domains that may be attempting to impersonate your brand or a brand that has authorized you to conduct such search on its behalf.

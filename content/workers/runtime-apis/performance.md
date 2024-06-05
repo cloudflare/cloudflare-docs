@@ -15,7 +15,7 @@ The Workers runtime supports a subset of the [`Performance` API](https://develop
 
 The [`performance.now()` method](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) returns timestamp in milliseconds, representing the time elapsed since `performance.timeOrigin`.
 
-When Workers are deployed to Cloudflare, as a security measure to [mitigate against Spectre attacks](/workers/learning/security-model/#step-1-disallow-timers-and-multi-threading), APIs that return timers, including [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now), only advance or increment after I/O occurs. Consider the following examples:
+When Workers are deployed to Cloudflare, as a security measure to [mitigate against Spectre attacks](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading), APIs that return timers, including [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) and [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now), only advance or increment after I/O occurs. Consider the following examples:
 
 ```typescript
 ---

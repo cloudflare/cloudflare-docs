@@ -9,7 +9,7 @@ meta:
   title: Cloudflare Vectorize
 ---
 
-# Cloudflare Vectorize
+{{<heading-pill style="beta" heading="h1">}}Cloudflare Vectorize{{</heading-pill>}}
 
 {{<description>}}
 
@@ -17,7 +17,7 @@ Build full-stack AI applications with Vectorize, Cloudflare's powerful vector da
 
 {{</description>}}
 
-{{<plan type="workers_paid">}}
+{{<plan type="workers-paid">}}
 
 Vectorize is a globally distributed vector database that enables you to build full-stack, AI-powered applications with [Cloudflare Workers](/workers/). Vectorize makes querying embeddings — representations of values or objects like text, images, audio that are designed to be consumed by machine learning models and semantic search algorithms — faster, easier and more affordable.
 
@@ -71,6 +71,6 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, join the `#vectorize-open-beta` channel to show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
 
 {{</resource-group>}}

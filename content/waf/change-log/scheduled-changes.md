@@ -3,7 +3,7 @@ type: table
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Scheduled changes
@@ -23,13 +23,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-12-11</td>
-      <td>2023-12-18</td>
-      <td>Block</td>
       <td>N/A</td>
-      <td>...76abfd64</td>
-      <td>DotNetNuke - File Inclusion - CVE:CVE-2018-9126, CVE:CVE-2011-1892, CVE:CVE-2022-31474, BETA</td>
-      <td>This rule will replace ...1bc977d1</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
     </tr>
   </tbody>
 </table>

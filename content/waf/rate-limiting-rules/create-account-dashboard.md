@@ -48,7 +48,7 @@ To create a new custom rate limiting ruleset:
 
 12. Under **Then take action**, select the rule action from the **Choose an action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
 
-13. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests) for requests exceeding the configured rate limit.
+13. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests) for requests exceeding the configured rate limit.
 
 14. Select the mitigation timeout in the **Duration** dropdown. This is the time period during which Cloudflare applies the select action once the rate is reached.
 
@@ -80,6 +80,6 @@ Deployed custom rate limiting rulesets will only apply to incoming traffic of zo
 
 The **Deployed custom rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
 
-## Configuring a custom response for blocked requests
+## Configure a custom response for blocked requests
 
-{{<render file="_custom-response-blocked-requests.md">}}
+{{<render file="_custom-response-blocked-requests.md" withParameters="rate limiting;;429">}}

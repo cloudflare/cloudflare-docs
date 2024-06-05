@@ -32,11 +32,11 @@ Block a section of a site without blocking the entire site. For example, you can
 | -------- | ------------- | ----------- | ------ |
 | URL      | matches regex | `/r/gaming` | Block  |
 
-{{<render file="gateway/_content-categories.md">}}
+{{<render file="gateway/policies/_content-categories.md">}}
 
-{{<render file="gateway/_block-applications.md">}}
+{{<render file="gateway/policies/_block-applications.md">}}
 
-{{<render file="gateway/_policies-optional.md">}}
+{{<render file="gateway/policies/_policies-optional.md">}}
 
 ## Skip inspection for groups of applications
 
@@ -91,7 +91,7 @@ When accessing origin servers with certificates not signed by a public certifica
 | -------- | -------- | ------------------- | -------------- |
 | Domain   | in       | `internal.site.com` | Do Not Inspect |
 
-{{<render file="gateway/_block-file-types.md">}}
+{{<render file="gateway/policies/_block-file-types.md">}}
 
 ## Block Google services
 
@@ -123,3 +123,9 @@ Block file downloads from Gmail.
 | ---------------- | -------- | --------------------------------------- | ----- | ------ |
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
+
+## Isolate ChatGPT
+
+[Browser Isolation](/cloudflare-one/policies/browser-isolation/) users can isolate interactions with ChatGPT.
+
+{{<render file="gateway/policies/_isolate-chatgpt.md">}}

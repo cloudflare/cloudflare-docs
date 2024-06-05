@@ -4,7 +4,6 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a QR code generator
-layout: single
 ---
 
 # Build a QR code generator
@@ -30,7 +29,7 @@ $ npm create cloudflare@latest qr-code-generator
 
 To configure your Worker:
 
-* Choose `"Hello World" script` for the type of application you would like to create.
+* Choose `"Hello World" Worker` for the type of application you would like to create.
 * Answer `No` to using TypeScript.
 * Answer `No` to deploying your Worker.
 

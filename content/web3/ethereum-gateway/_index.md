@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Ethereum Gateway
 weight: 4
+layout: wide
 ---
 
 # Ethereum Gateway
@@ -15,3 +16,5 @@ These interactions take place through the official [Ethereum JSON-RPC API](https
 ## Availability
 
 {{<feature-table id="web3.ethereum">}}
+
+{{<render file="_pricing-page-reference.md">}}

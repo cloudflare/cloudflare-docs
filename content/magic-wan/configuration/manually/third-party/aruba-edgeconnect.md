@@ -5,13 +5,13 @@ pcx_content_type: integration-guide
 
 # Aruba EdgeConnect Enterprise
 
-Cloudflare partners with Aruba’s EdgeConnect SD-WAN solution to provide users with an integrated solution. The EdgeConnect appliances manage subnets associated with branch offices or retail locations. Anycast tunnels are set up between the EdgeConnect appliances and Cloudflare to securely route traffic.
+Cloudflare partners with Aruba's EdgeConnect SD-WAN solution to provide users with an integrated solution. The EdgeConnect appliances manage subnets associated with branch offices or retail locations. Anycast tunnels are set up between the EdgeConnect appliances and Cloudflare to securely route traffic.
 
 This tutorial describes how to configure the EdgeConnect device for both east-west (branch to branch) and north-south (Internet-bound) use cases.
 
 {{<Aside type="warning">}}
 
-Note that north-south traffic routed through Cloudflare’s Secure Web Gateway is an optional add-on feature set and requires a Cloudflare Zero Trust account.
+Note that north-south traffic routed through Cloudflare's Secure Web Gateway is an optional add-on feature set and requires a Cloudflare Zero Trust account.
 
 {{</Aside>}}
 
@@ -81,11 +81,11 @@ This step is only required if Cloudflare is used for east-west traffic routing.
 
 ## 2. Configure overlay policies
 
-We use Aruba Orchestrator’s Business Intent Overlays to create intuitive policies which automatically identify and steer application traffic to Cloudflare. Two Business Intent Overlay (BIO) policies are created in this example.
+We use Aruba Orchestrator's Business Intent Overlays to create intuitive policies which automatically identify and steer application traffic to Cloudflare. Two Business Intent Overlay (BIO) policies are created in this example.
 
 {{<details header="GRE tunnel configuration">}}
 
-Cloudflare’s [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare's [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -97,14 +97,14 @@ To create the overlay policy:
 
 3. Define at least one additional overlay policy and the traffic you want to send to Cloudflare over the GRE tunnels.
 
-The service name used to send traffic through the tunnel created in the next step is **Cloudflare_GRE**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic & Internet bound north-south traffic through Cloudflare’s Secure Web Gateway).
+The service name used to send traffic through the tunnel created in the next step is **Cloudflare_GRE**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic & Internet bound north-south traffic through Cloudflare's Secure Web Gateway).
 
 ![Business Intent Overlay screen with breakout and CF overlays](/images/magic-wan/third-party/aruba-edge-connect/biz-intent-overlay.png)
 {{</details>}}
 
 {{<details header="IPsec tunnel configuration">}}
 
-Cloudflare’s [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare's [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -116,7 +116,7 @@ To create the overlay policy:
 
 3. Define at least one additional overlay policy and the traffic you want to send to Cloudflare over the IPsec tunnels.
 
-The service name used to send traffic through the tunnel created in the next step is **Cloudflare_IPsec**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic and Internet bound north-south traffic through Cloudflare’s Secure Web Gateway).
+The service name used to send traffic through the tunnel created in the next step is **Cloudflare_IPsec**. The example uses **Match Everything** to send all other traffic through the established tunnel (both private east-west traffic and Internet bound north-south traffic through Cloudflare's Secure Web Gateway).
 
 ![Business Intent Overlay screen with breakout and CF overlays for IPsec](/images/magic-wan/third-party/aruba-edge-connect/biz-intent-overlay-ipsec.png)
 {{</details>}}
@@ -127,14 +127,14 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram.png)
 
-1. Create a tunnel on the EdgeConnect using Cloudflare’s assigned public Anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies).
+1. Create a tunnel on the EdgeConnect using Cloudflare's assigned public Anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies).
 2. Create a Virtual Tunnel Interface (VTI) using the private IP pair shared with CF GRE tunnel endpoint and the passthrough tunnel to match the newly created tunnel alias (**CF_GRE_east** in our example).
 
 ![Modify Passthrough Tunnel screen](/images/magic-wan/third-party/aruba-edge-connect/modify-passthrough.png)
 
 ![Edit Virtual Tunnel Interface screen](/images/magic-wan/third-party/aruba-edge-connect/edit-vti.png)
 
-3. Define a GRE tunnel on the Cloudflare dashboard using the EdgeConnect appliance’s public IP and the private IP pair /31 shared with the appliance.
+3. Define a GRE tunnel on the Cloudflare dashboard using the EdgeConnect appliance's public IP and the private IP pair /31 shared with the appliance.
 
 ![GRE tunnels information for each branch](/images/magic-wan/third-party/aruba-edge-connect/gre-tunnels-edgeconnect.png)
 {{</details>}}
@@ -309,7 +309,7 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 **Validate Secure Web Gateway**
 
-To validate traffic flow from the local subnet through Cloudflare’s Secure Web Gateway, perform a curl as show in the example below.
+To validate traffic flow from the local subnet through Cloudflare's Secure Web Gateway, perform a curl as show in the example below.
 
 ![Curl example for validating Secure Web Gateway](/images/magic-wan/third-party/aruba-edge-connect/validate-swg-curl.png)
 
@@ -339,7 +339,7 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 **Validate Secure Web Gateway**
 
-To validate traffic flow from the local subnet through Cloudflare’s Secure Web Gateway, perform a cURL as shown in the example below.
+To validate traffic flow from the local subnet through Cloudflare's Secure Web Gateway, perform a cURL as shown in the example below.
 
 ![cURL example for validating traffic](/images/magic-wan/third-party/aruba-edge-connect/static-routes-west-ipsec.png)
 

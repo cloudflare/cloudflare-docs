@@ -15,10 +15,7 @@ The list of insights may include potential security threats, vulnerabilities, co
 ## Scan properties
 Each insight will have the following properties assigned to them:
 
-*   **Severity**: The security risk of the insight. The severity values are: *Moderate*, *High*, and *Critical*.
-*   **Insight**: The insight description detailing the current configuration that is causing the risk or vulnerability.
-*   **Risk**: A description of the risk associated with not addressing the issue.
-*   **Type**: The insight category.
+{{<render file="_scan-properties.md">}} 
 
 ## Scan frequency
 

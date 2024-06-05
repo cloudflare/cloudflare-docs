@@ -11,7 +11,7 @@ To ensure a smooth deployment, we recommend testing a simple policy before deplo
 
 1. Go to **Gateway** > **Firewall policies**.
 2. Create a policy to block all security categories:
-    {{<render file="gateway/_block-security-categories.md" productFolder="cloudflare-one">}}
+    {{<render file="gateway/policies/_block-security-categories.md" productFolder="cloudflare-one">}}
 3. In the browser, go to `malware.testcategory.com`. You should see a generic Gateway block page.
 4. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.
 

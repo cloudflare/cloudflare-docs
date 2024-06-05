@@ -2,7 +2,7 @@
 title: 2023-11-13 - Emergency
 pcx_content_type: changelog
 weight: 27808
-layout: list
+layout: wide
 ---
 
 # 2023-11-13 - Emergency

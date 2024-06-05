@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Eleventy site
+title: Eleventy
 ---
 
-# Deploy an Eleventy site
+# Eleventy
 
 [Eleventy](https://www.11ty.dev/) is a simple static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
 
@@ -54,6 +54,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Eleventy site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Eleventy site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Eleventy">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Eleventy">}}

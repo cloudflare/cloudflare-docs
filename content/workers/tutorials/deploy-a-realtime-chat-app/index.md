@@ -29,7 +29,7 @@ $ git clone https://github.com/cloudflare/workers-chat-demo.git
 After you have cloned the repository, authenticate Wrangler by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
 ## Deploy your project

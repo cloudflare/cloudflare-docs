@@ -10,17 +10,50 @@ weight: 21
 
 The descriptions below detail the fields available for `page_shield_events`.
 
-{{<table-wrap>}}
+## Action
 
-| Field | Value | Type |
-| -- | -- | -- |
-| Action | The action which was taken against the violation. <br />Possible values are <em>log</em> \| <em>allow</em>. | string |
-| Host | The host where the resource was seen on. | string |
-| PageURL | The page URL the violation was seen on. | string |
-| PolicyID | The ID of the policy which was violated. | string |
-| Timestamp | The timestamp of when the report was received. | int or string |
-| URL | The resource URL. | string |
-| URLContainsCDNCGIPath | Whether the resource URL contains the CDN-CGI path. | bool |
-| URLHost | The domain host of the URL. | string |
+Type: string
 
-{{</table-wrap>}}
+The action which was taken against the violation. <br />Possible values are <em>log</em> \| <em>allow</em>.
+
+## Host
+
+Type: string
+
+The host where the resource was seen on.
+
+## PageURL
+
+Type: string
+
+The page URL the violation was seen on.
+
+## PolicyID
+
+Type: string
+
+The ID of the policy which was violated.
+
+## Timestamp
+
+Type: int or string
+
+The timestamp of when the report was received.
+
+## URL
+
+Type: string
+
+The resource URL.
+
+## URLContainsCDNCGIPath
+
+Type: bool
+
+Whether the resource URL contains the CDN-CGI path.
+
+## URLHost
+
+Type: string
+
+The domain host of the URL.

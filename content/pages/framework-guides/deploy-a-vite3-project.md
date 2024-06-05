@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Vite 3 site
+title: Vite 3
 ---
 
-# Deploy a Vite 3 site
+# Vite 3
 
 [Vite](https://vitejs.dev) is a next-generation build tool for front-end developers. With [the release of Vite 3](https://vitejs.dev/blog/announcing-vite3.html), developers can make use of new command line (CLI) improvements, starter templates, and [more](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13) to help build their front-end applications.
 
@@ -54,6 +54,6 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-{{<render file="_learn-more.md" withParameters="Vite 3">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Vite 3">}}

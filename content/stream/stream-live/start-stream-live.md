@@ -2,6 +2,9 @@
 pcx_content_type: tutorial
 title: Start a live stream
 weight: 1
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Start a live stream
@@ -34,7 +37,7 @@ header: Request
 ---
 curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
--D '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
+-d '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs
 ```
 
@@ -86,7 +89,7 @@ header: Response
 
 - `deleteRecordingAfterDays` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
 
-  - Specifies a date and time when the recording, not the input, will be deleted. This property applies from the time the recording is made available and ready to stream. After the recording is deleted, it is no longer viewable and no longer counts towards storage for billing. Minimum value is `30`.
+  - Specifies a date and time when the recording, not the input, will be deleted. This property applies from the time the recording is made available and ready to stream. After the recording is deleted, it is no longer viewable and no longer counts towards storage for billing. Minimum value is `30`, maximum value is `1096`.
 
     When the stream ends, a `scheduledDeletion` timestamp is calculated using the `deleteRecordingAfterDays` value if present.
 
@@ -108,7 +111,7 @@ header: Request
 ---
 $ curl -X PUT \
 -H "Authorization: Bearer <API_TOKEN>" \
--D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
+-d '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
@@ -129,6 +132,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:i
 
 - Your creators should use an appropriate bitrate for their live streams, typically well under 12Mbps (12000Kbps). High motion, high frame rate content typically should use a higher bitrate, while low motion content like slide presentations should use a lower bitrate.
 - Your creators should use a [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 8 seconds. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
+- When possible, select CBR (constant bitrate) instead of VBR (variable bitrate) as CBR helps to ensure a stable streaming experience while preventing buffering and interruptions.
 
 {{<heading-pill heading="h4" style="beta">}}Low-Latency HLS broadcast recommendations{{</heading-pill>}}
 

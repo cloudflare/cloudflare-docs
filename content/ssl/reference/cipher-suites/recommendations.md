@@ -1,7 +1,7 @@
 ---
 title: Recommendations
 pcx_content_type: reference
-layout: list
+layout: wide
 weight: 2
 meta:
   title: Cipher suites recommendations

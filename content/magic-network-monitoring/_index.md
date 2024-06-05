@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Magic Network Monitoring
 ---
 
-{{<heading-pill style="beta">}} Cloudflare Magic Network Monitoring {{</heading-pill>}}
+# Cloudflare Magic Network Monitoring
 
 {{<description>}}
 
@@ -21,19 +21,27 @@ Magic Network Monitoring provides visibility into your network traffic by analyz
 
 Enterprise customers can use Magic Network Monitoring with [Magic Transit on-demand](/magic-transit/on-demand/) to monitor their network, identify volumetric DDoS attacks, and activate Magic Transit on-demand to mitigate those attacks.
 
+Magic Network Monitoring is automatically enabled for all Magic Transit and Magic WAN enterprise customers. Any enterprise customers without Magic Transit or Magic WAN that are interested in testing Magic Network Monitoring can receive access to the Magic Network Monitoring [free version](/magic-network-monitoring/magic-network-monitoring-free/) by submitting a request to their Cloudflare account team.
+
 ---
 
 ## Features
 
 {{<feature header="Rules" href="/magic-network-monitoring/rules/">}}
 
-Create rules to configure the threshold for data flowing from your network. 
+Create rules to configure the threshold for data flowing from your network.
+
+{{</feature>}}
+
+{{<feature header="Magic Transit integration" href="/magic-network-monitoring/magic-transit-integration/">}}
+
+Magic Transit On Demand customers can use Magic Network Monitoring to enable DDoS mitigation when a DDoS attack is detected.
 
 {{</feature>}}
 
 {{<feature header="Notifications" href="/magic-network-monitoring/notifications/">}}
 
-Set up notifications to learn about an attack. 
+Set up notifications to learn about an attack.
 
 {{</feature>}}
 
@@ -57,9 +65,9 @@ Connects your network infrastructure directly with Cloudflare – rather than us
 {{</related>}}
 
 ## More resources
- 
+
 {{<resource-group>}}
- 
+
 {{<resource header="Discord" href="https://discord.com/invite/cloudflaredev" icon="logo-Discord">}}Connect with the Magic Network Monitoring community on Discord to ask questions, and share feedback.{{</resource>}}
- 
+
 {{</resource-group>}}

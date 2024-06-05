@@ -13,7 +13,7 @@ Cloudflare offers several tools to test the speed of your website, as well as th
 
 ### Using Cloudflare
 
-Once your domain is [active on Cloudflare](/fundamentals/setup/account-setup/add-site/), you can run speed tests within the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed).
+Once your domain is [active on Cloudflare](/fundamentals/setup/manage-domains/add-site/), you can run speed tests within the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed).
 
 This speed test will provide information about critical loading times, performance with and without [Cloudflare's proxy](/fundamentals/concepts/how-cloudflare-works/), and recommended optimizations.
 
@@ -37,11 +37,11 @@ If you use these third-party tools, you should do the following to test website 
 5. Run a second speed test to get your baseline performance with Cloudflare.
 
 
-[^1]: The results of your first speed test with Cloudflare will likely contain uncached results, which will provide inaccurate results.<br/><br/>One of the key ways Cloudflare speeds up your site is through [caching](/fundamentals/concepts/how-cloudflare-works/#performance), which will appear in the results of the second test.
+[^1]: The results of your first speed test with Cloudflare will likely contain uncached results, which will provide inaccurate results.<br/><br/>One of the key ways Cloudflare speeds up your site is through [caching](/learning-paths/get-started/concepts/how-cloudflare-works/#performance), which will appear in the results of the second test.
 
 ### Improve speed
 
-Based on the results of these speed tests, you may want to explore other ways to [optimize your site speed](/learning-paths/optimize-site-speed/) using Cloudflare.
+Based on the results of these speed tests, you may want to explore other ways to [optimize your site speed](/speed/) using Cloudflare.
 
 {{<Aside type="note">}}
 

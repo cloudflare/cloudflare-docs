@@ -40,6 +40,8 @@ JSD is completely optional. To adjust your settings, configure Super Bot Fight M
 
 {{<render file="_bots-cookie.md">}}
 
+{{<render file="_disable-cf-bm-cookie.md">}}
+
 ## Considerations
 
 {{<render file="_about-plan-considerations.md">}}

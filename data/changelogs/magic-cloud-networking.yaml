@@ -1,0 +1,11 @@
+---
+link: "/magic-cloud-networking/changelog/"
+productName: Magic Cloud Networking
+productLink: "/magic-cloud-networking/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-05-31'
+  title: Closed beta launch
+  description: |-
+    Cloudflare launched Magic Cloud Networking in closed beta.

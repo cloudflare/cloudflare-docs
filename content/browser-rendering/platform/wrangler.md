@@ -16,12 +16,12 @@ To install Wrangler, refer to [Install and Update Wrangler](/workers/wrangler/in
 
 ## Bindings
 
-[Bindings](/workers/configuration/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. A browser binding will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. A browser binding will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
 
-To deploy a Browser Rendering Worker, you must declare a [browser binding](/workers/configuration/bindings/) in your Worker's `wrangler.toml` configuration file.
+To deploy a Browser Rendering Worker, you must declare a [browser binding](/workers/runtime-apis/bindings/) in your Worker's `wrangler.toml` configuration file.
 
 {{<Aside type="note" header="Wrangler configuration">}}
-If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add `node_compat = true` to your Worker's `wrangler.toml` configuration.
+If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add `node_compat = true` to your Worker's `wrangler.toml` configuration. More information [here](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), including for [pages functions](/workers/runtime-apis/nodejs/#enable-nodejs-with-pages-functions).
 {{</Aside>}}
 
 
@@ -43,3 +43,5 @@ After the binding is declared, access the DevTools endpoint using `env.MYBROWSER
 ```javascript
 const browser = await puppeteer.launch(env.MYBROWSER);
 ```
+
+Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network. Local mode support does not exist for Browser Rendering so `--remote` is required. To deploy, run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy).

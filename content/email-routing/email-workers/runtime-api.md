@@ -35,7 +35,7 @@ addEventListener("email", (event) => {
 
 ## Syntax: ES modules
 
-`EmailEvent` can be handled in Workers functions written using the [ES modules format](/workers/learning/migrate-to-module-workers/) by adding an `email` function to your module's exported handlers:
+`EmailEvent` can be handled in Workers functions written using the [ES modules format](/workers/reference/migrate-to-module-workers/) by adding an `email` function to your module's exported handlers:
 
 ```js
 export default {
@@ -74,9 +74,9 @@ export default {
   readonly raw: ReadableStream;
   readonly rawSize: number;
 
-  public constructor(from: String, to: String, raw: ReadableStream | String);
+  public constructor(from: string, to: string, raw: ReadableStream | string);
 
-  setReject(reason: String): void;
+  setReject(reason: string): void;
   forward(rcptTo: string, headers?: Headers): Promise<void>;
   reply(message: EmailMessage): Promise<void>;
 }

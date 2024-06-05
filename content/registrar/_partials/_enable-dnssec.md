@@ -12,6 +12,6 @@ Cloudflare Registrar offers one-click DNSSEC activation for free to all customer
 3. Find the domain you where you want to activate DNSSEC and select **Manage**.
 4. Select **Configuration** > **Enable DNSSEC**. If DNSSEC was previously activated, select **Disable DNSSEC** to disable it.
 
-Cloudflare publishes delegation signer (DS) records in the form of [CDS and CDNSKEY records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) for a domain delegated to Cloudflare. Cloudflare Registrar scans those records at regular intervals, and gathers those details and sends them to your domain’s registry.
+Cloudflare publishes delegation signer (DS) records in the form of [CDS and CDNSKEY records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/) for a domain delegated to Cloudflare. Cloudflare Registrar scans those records at regular intervals, and gathers those details and sends them to your domain's registry.
 
 This process can take one to two days after you first enable DNSSEC.

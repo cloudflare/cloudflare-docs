@@ -8,23 +8,26 @@ meta:
 
 # JavaScript and web standards
 
-The Workers runtime provides the following standardized APIs for use by Workers running on Cloudflare's global network.
-
 ---
 
 ## JavaScript standards
 
-Cloudflare Workers uses the V8 JavaScript engine from Google Chrome. The Workers runtime is updated at least once a week, to at least the version that is currently used by Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
+The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAssembly engine](/workers/reference/how-workers-works/). The Workers runtime is updated at least once a week, to at least the version of V8 that is currently used by Google Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
 
 All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) supported by the current Google Chrome stable release are supported, with a few notable exceptions:
 
-- `eval()` is not allowed for security reasons.
-- `new Function` is not allowed for security reasons.
+- For security reasons, the following are not allowed:
+  - `eval()`
+  - `new Function`
+  - [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compile_static)
+  - [`WebAssembly.compileStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compileStreaming_static)
+  - `WebAssembly.instantiate` with a [buffer parameter](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate_static#primary_overload_%E2%80%94_taking_wasm_binary_code)
+  - [`WebAssembly.instantiateStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiateStreaming_static)
 - `Date.now()` returns the time of the last I/O; it does not advance during code execution.
 
 ---
 
-## Web global APIs
+## Web standards and global APIs
 
 The following methods are available per the [Worker Global Scope](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope):
 
@@ -148,6 +151,14 @@ The `URLPattern` API provides a mechanism for matching URLs based on a convenien
 
 ---
 
+## `Intl`
+
+The `Intl` API allows you to format dates, times, numbers, and more to the format that is used by a provided locale (language and region).
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+
+---
+
 ## `navigator.userAgent`
 
 When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
@@ -171,4 +182,23 @@ addEventListener('rejectionhandled', (event) => {
   console.log(event.promise);  // The promise that was rejected.
   console.log(event.reason);  // The value or Error with which the promise was rejected.
 });
+```
+
+---
+
+## `navigator.sendBeacon(url[, data])`
+
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP `POST` request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or diagnostics information asynchronously on a best-effort basis.
+
+For example, you can replace:
+
+```js
+const promise = fetch('https://example.com', { method: 'POST', body: 'hello world' });
+ctx.waitUntil(promise);
+```
+
+with `navigator.sendBeacon(...)`:
+
+```js
+navigator.sendBeacon('https://example.com', 'hello world');
 ```

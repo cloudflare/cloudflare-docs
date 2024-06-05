@@ -39,11 +39,35 @@ Network Analytics will not show other traffic, such as:
 
 ## High-level metrics
 
-The side panels in the Network Analytics page provide a summary of activity over the period selected in the timeframe drop-down list.
+The side panels in the Network Analytics page provide a summary of activity over the period selected in the time frame drop-down list.
 
 ![Available high-level metrics in the Network Analytics dashboard](/images/analytics/network-analytics/high-level-metrics.png)
 
 Selecting one of the metrics in the sidebar will define the base unit (packets or bits/bytes) for the data displayed in the dashboard.
+
+## Executive summary
+
+![Executive summary card in the Network Analytics dashboard.](/images/analytics/network-analytics/executive-summary-card.png)
+
+The executive summary provides top insights and trends about DDoS attacks targeting your network, including the amount of attacks, percentage of attacks traffic mitigated relative to your traffic, largest attack rates, total mitigated attack bytes, top source, and estimated duration of the attacks.
+
+These insights are adaptive based on the selected time frame and the **Packets** or **Bytes** [metrics](#high-level-metrics) selector. The insights are also accompanied by the trends relative to the selected time period, visualized as period-over-period change in percentage and indicator arrows.
+
+The executive summary also features a one-liner summary at the top, informing you about recent and ongoing attacks.
+
+### Total attacks
+
+The total number of attacks is based on unique attack IDs of mitigations issued by the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
+
+Since the mitigation system may generate several mitigation rules (and therefore several attack IDs) for a single attack, the actual number of attacks may seem higher in some cases.
+
+To obtain the metadata of recently mitigated DDoS attacks, query the [`dosdAttackAnalyticsGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/#dosdattackanalyticsgroups) GraphQL node.
+
+{{<Aside type="note" header="Note about attack rates">}}
+Attack rates in the executive summary may seem lower than the ones displayed in the time series graph because they are calculated based on the maximum rate of unique attack events and only by the Network-layer DDoS Attack Protection managed ruleset. However, in practice, multiple attacks and mitigation systems can contribute to blocking a single attack, resulting in a larger rate than the one displayed.
+
+Additionally, attack rates may change based on the sampling and adaptive bit rate (ABR) as you zoom in and out in the time series graph. Refer to [Concepts](/analytics/network-analytics/understand/concepts/) for more information.
+{{</Aside>}}
 
 ## Filters
 
@@ -54,6 +78,7 @@ You can filter by the following parameters:
 * Mitigation action taken by Cloudflare
 * Mitigation system that performed the action
 * Source IP, port, ASN, tunnel
+* [Direction](#traffic-direction)
 * Destination IP, port, IP range (description or CIDR of provisioned prefixes), tunnel
 * Source Cloudflare data center and data center country of where the traffic was observed
 * Packet size
@@ -62,9 +87,13 @@ You can filter by the following parameters:
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
 
-{{<Aside type="warning">}}
-Currently, the Network Analytics dashboard does not fully support [leased IPs/prefixes](/magic-transit/cloudflare-ips/) for Magic Transit customers.
-{{</Aside>}}
+### Traffic direction
+
+The available values in the **Direction** filter have the following meaning, from the point of view of a specific customer's network:
+
+- **Ingress**: Incoming traffic from the public Internet (ingress) to the customer's network via Cloudflare's network (for example, through [Magic Transit](/magic-transit/));
+- **Egress**: Outgoing traffic leaving the customer's network through Cloudflare's network to the public Internet (for example, through [Magic Transit deployed with the egress option](/magic-transit/reference/egress/));
+- **Lateral**: Traffic that stayed within the customer's network, routed through Cloudflare's network (for example, traffic between customer office branches or data centers routed through [Magic WAN](/magic-wan/)).
 
 ## Packets summary or Bits summary
 

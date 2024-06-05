@@ -19,7 +19,7 @@ There are two major prerequisites before Cloudflare can begin onboarding your IP
 1.  You must verify your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are up to date with the correct prefix or ASN information.
 2.  Cloudflare must receive a [Letter of Agency (LOA)](/byoip/concepts/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
 
-Optionally, if you use the Resource Public Key Infrastructure (RPKI) protocol to sign your routes, Cloudflare can help with this as well. Contact your account team know if you are interested in using RPKI.
+Optionally, if you use the {{<glossary-tooltip term_id="Resource Public Key Infrastructure (RPKI)">}}Resource Public Key Infrastructure (RPKI){{</glossary-tooltip>}} protocol to sign your routes, Cloudflare can help with this as well. Contact your account team know if you are interested in using RPKI.
 
 After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/byoip/concepts/dynamic-advertisement/) API or via the Cloudflare dashboard.
 

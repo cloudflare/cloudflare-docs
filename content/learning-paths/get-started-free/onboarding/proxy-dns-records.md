@@ -41,7 +41,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 
 Before proxying your records, review [our guide](/dns/manage-dns-records/reference/proxied-dns-records/) that explains what proxying does and what limitations it has.
 
-You may also need to [allow Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
+You may also need to [allow Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
 
 ## How to do it
 

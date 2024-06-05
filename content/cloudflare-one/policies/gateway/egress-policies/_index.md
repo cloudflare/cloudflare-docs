@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Egress policies
-layout: single
 weight: 5
 ---
 
@@ -11,7 +10,7 @@ weight: 5
 Only available on Enterprise plans.
 {{</Aside>}}
 
-When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise customers can purchase [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
+When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
 
@@ -23,15 +22,15 @@ To control whether only IPv4 or IPv6 is used to egress, ensure you are [filterin
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
 
-| Policy name                 | Selector       | Operator | Value            | Egress method                   |
-| --------------------------- | -------------- | -------- | ---------------- | ------------------------------- |
-| Access third-party provider | Destination IP | is       | `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
+{{<render file="gateway/policies/_egress-destination-ip.md">}}
+
+### Catch-all policy
 
 For the best performance, we recommend creating a catch-all policy to route all other users through the default Zero Trust IP range:
 
-| Policy name           | Selector       | Operator | Value     | Egress method                    |
-| --------------------- | -------------- | -------- | --------- | -------------------------------- |
-| Default egress policy | Destination IP | is not   | `0.0.0.0` | Cloudflare default egress method |
+| Policy name           | Selector | Operator | Value                    | Egress method                    |
+| --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
+| Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
 Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will use the closest dedicated egress IP location.
 
@@ -49,57 +48,57 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Destination Continent
 
-{{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-continent.md" withParameters="net.dst">}}
 
 ### Destination Country
 
-{{<render file="gateway/_destination-country.md" withParameters="net.dst">}}
+{{<render file="gateway/selectors/_destination-country.md" withParameters="net.dst">}}
 
 ### Destination IP
 
-{{<render file="gateway/_destination-ip.md">}}
+{{<render file="gateway/selectors/_destination-ip.md">}}
 
 ### Destination Port
 
-{{<render file="gateway/_destination-port.md">}}
+{{<render file="gateway/selectors/_destination-port.md">}}
 
 ### Device Posture
 
-{{<render file="gateway/_device-posture.md">}}
+{{<render file="gateway/selectors/_device-posture.md">}}
 
 ### Protocol
 
-{{<render file="gateway/_protocol.md">}}
+{{<render file="gateway/selectors/_protocol.md">}}
 
 ### Proxy Endpoint
 
-{{<render file="gateway/_proxy-endpoint.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### Source Continent
 
 The continent of the user making the request.
-{{<render file="gateway/_source-continent.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-continent.md" withParameters="net.src">}}
 
 ### Source Country
 
 The country of the user making the request.
-{{<render file="gateway/_source-country.md" withParameters="net.src">}}
+{{<render file="gateway/selectors/_source-country.md" withParameters="net.src">}}
 
 ### Source IP
 
-{{<render file="gateway/_source-ip-net.md">}}
+{{<render file="gateway/selectors/_source-ip-net.md">}}
 
 ### Source Port
 
-{{<render file="gateway/_source-port.md">}}
+{{<render file="gateway/selectors/_source-port.md">}}
 
 ### Users
 
-{{<render file="gateway/_users.md">}}
+{{<render file="gateway/selectors/_users.md">}}
 
 ### Virtual Network
 
-{{<render file="gateway/_virtual-network.md">}}
+{{<render file="gateway/selectors/_virtual-network.md">}}
 
 ## Comparison operators
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Certificate authorities
-layout: list
+layout: wide
 weight: 5
 meta:
   description: For publicly trusted certificates, Cloudflare partners with different certificate authorities (CAs). Refer to this page to check what CAs are used for each Cloudflare offering and for more details about the CAs features, limitations, and browser compatibility.
@@ -17,7 +17,7 @@ For publicly trusted certificates, Cloudflare partners with different certificat
 
 | Certificate         | Algorithm | [Let's Encrypt](#lets-encrypt) | [Google Trust Services](#google-trust-services) | [Sectigo](#sectigo) | [DigiCert](#digicert-deprecating-soon)                 |
 |---------------------|-------|---------------|-----------------------|---------|--------------------------|
-| [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br />✅<br /> <sub>Deprecating soon</sub> |
+| [Universal](/ssl/edge-certificates/universal-ssl/)| ECDSA<br /><br /><br />RSA<br /><sub>(Paid plans only)</sub> | ✅<br /><br /><br />✅| ✅<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br />✅<br /> <sub>Deprecating soon</sub> |
 | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br /> ✅<br /> <sub>Deprecating soon</sub> |
 | [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) | ECDSA<br /><br /><br />RSA | ✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ❌ <br /><br /><br /> ❌ |
 | [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) | ECDSA<br /><br /><br />RSA |✅<br /><br /><br />✅| ❌<br /><br /><br />✅ | N/A<br /><br /><br />N/A | ✅<br /> <sub>Deprecating soon</sub> <br /><br /> ✅<br /> <sub>Deprecating soon</sub> |
@@ -51,7 +51,9 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts ISRG’s “ISRG Root X1” certificate. You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
+The main determining factor for whether a platform can validate Let’s Encrypt certificates is whether that platform trusts the self-signed “ISRG Root X1” certificate. As Let's Encrypt announced a change in its chain of trust for 2024, devices that only trust the cross-signed version of the “ISRG Root X1” certificate will be impacted. Refer to [Let's Encrypt chain update](/ssl/reference/migration-guides/lets-encrypt-chain/) for details.
+
+You can find the full list of supported clients in the [Let's Encrypt documentation](https://letsencrypt.org/docs/certificate-compatibility/). Older versions of Android and Java clients might not be compatible with Let’s Encrypt certificates.
 
 #### Other resources
 
@@ -67,7 +69,6 @@ The main determining factor for whether a platform can validate Let’s Encrypt 
 #### Limitations
 
 * Punycode domains are not yet supported.
-* Cloudflare will be supporting ECDSA with Google Trust Services soon.
 
 #### Browser compatibility (most compatible)
 
@@ -77,10 +78,11 @@ This section summarizes commonly requested client support information. For the c
 
 {{</Aside>}}
 
-Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser. All browsers or operating systems that depend on these root programs are covered.
-In addition, some of Google Trust Services' [root CAs](https://pki.goog/faq/#faq-27) may rely on a cross-signature to ensure optimal support across a wide range of devices.
+By cross-signing with a [GlobalSign root CA](https://valid.r1.roots.globalsign.com/) that has been installed in client devices for more than 20 years, Google Trust Services can ensure optimal support across a wide range of devices.
 
-You can use the root CAs list for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
+Currently trusted by Microsoft, Mozilla, Safari, Cisco, Oracle Java, and Qihoo’s 360 browser, all browsers or operating systems that depend on these root programs are covered.
+
+You can use the [root CAs list](https://pki.goog/faq/#faq-27) for checking compatibility between chain and client but, as explained in [Certificate pinning](/ssl/reference/certificate-pinning/), you should **not** use this list for pinning against.
 
 ---
 

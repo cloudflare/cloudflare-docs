@@ -70,3 +70,7 @@ and http.request.uri.path eq "/login"
 and http.request.method eq "POST"
 and not any(cf.bot_management.detection_ids[*] in {3355446 12577893})
 ```
+
+## Account takeover detections
+
+{{<render file="_account-takeover-detections.md">}}

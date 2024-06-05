@@ -144,7 +144,7 @@ If you allow users to upload their own videos directly to Cloudflare Stream, add
 Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestream.com
 ```
 
-To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the Stream Dashboard [here](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
+To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.
 
 ### Why is PageSpeed Insights giving a bad score when using the Stream Player?
 

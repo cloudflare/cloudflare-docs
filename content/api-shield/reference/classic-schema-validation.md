@@ -2,14 +2,14 @@
 title: Classic Schema Validation
 pcx_content_type: how-to
 type: overview
-layout: list
+layout: wide
 meta:
   title: Configure Classic Schema Validation
 ---
 
 # Configure Classic Schema Validation
 
-Use the **API Shield** interface to configure [API Schema Validation](/api-shield/security/schema-validation/), which validates requests according to the API Schema you provide.
+Use the **API Shield** interface to configure [API Schema Validation](/api-shield/security/schema-validation/), which validates requests according to the {{<glossary-tooltip term_id="API schema">}}API schema{{</glossary-tooltip>}} you provide.
 
 Before you can configure Schema Validation for an API, you must obtain an API Schema file matching our [specifications](/api-shield/security/schema-validation/#specifications).
 
@@ -40,7 +40,7 @@ To validate the hostname, you must include the _Hostname_ field explicitly in th
 
     If you get a validation error, ensure that you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a unique operation ID.
 
-After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
+After deploying your API Shield rule, Cloudflare displays a summary of all {{<glossary-tooltip term_id="API endpoint">}}API endpoints{{</glossary-tooltip>}} organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
 1. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 2. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.

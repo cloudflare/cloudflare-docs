@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Limits
+weight: 2
+layout: wide
 ---
 
 # Limits
@@ -13,7 +15,7 @@ title: Limits
 | Writes to different keys              | 1,000 writes per day  | Unlimited   |
 | Writes to same key                    | 1 per second          | 1 per second|
 | Operations/worker invocation          | 1000                  | 1000        |
-| Namespaces                            | 100                   | 100         |
+| Namespaces                            | 200                   | 200         |
 | Storage/account                       | 1 GB                  | Unlimited   |
 | Storage/namespace                     | 1 GB                  | Unlimited   |
 | Keys/namespace                        | Unlimited             | Unlimited   |

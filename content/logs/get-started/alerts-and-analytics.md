@@ -12,6 +12,8 @@ With analytics and alerting, you can monitor your Logpush job health and find ou
 
 Alerts are sent via the [Cloudflare Notifications](/notifications/) system. They can be sent via email or webhook. When subscribed to job disablement notification, you will receive at most one alert per job per 24 hours. The notification email contains the job ID and destination configuration.
 
+{{<available-notifications product="Logpush">}}
+
 ## Enable alerts 
 
 You can add an alert for **Failing Logpush Job Disabled** via the **Notifications** section of the dashboard. Note that alerts can be configured at the account level and apply to all jobs within an account.

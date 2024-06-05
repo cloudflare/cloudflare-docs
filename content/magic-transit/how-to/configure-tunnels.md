@@ -8,13 +8,13 @@ meta:
 
 # Configure tunnel endpoints
 
-{{<render file="tunnel-endpoints/_tunnel-endpoints.md" withParameters="`169.254.244.0/20`">}}
+{{<render file="tunnel-endpoints/_tunnel-endpoints.md" withParameters="`169.254.240.0/20`">}}
 
 ## Ways to onboard traffic to Cloudflare
 
 ### GRE and IPsec tunnels
 
-{{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/">}}
+{{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/;;/magic-transit/reference/tunnels/#supported-configuration-parameters">}}
 
 #### Anti-replay protection
 

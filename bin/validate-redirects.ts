@@ -5,6 +5,9 @@ async function main( ){
 
   let numInfiniteRedirects = 0;
   let numUrlsWithFragment = 0;
+  let numDuplicateRedirects = 0;
+  let redirectSourceUrls: string[] = [];
+
   for (const line of redirects.split('\n')) {
     if (line.startsWith('#') || line.trim() === '') continue;
 
@@ -19,9 +22,16 @@ async function main( ){
       console.log(`✘ Found source URL with fragment:\n    ${from}`);
       numUrlsWithFragment++;
     }
+
+    if (redirectSourceUrls.includes(from)) {
+      console.log(`✘ Found repeated source URL:\n    ${from}`)
+      numDuplicateRedirects++;
+    } else {
+      redirectSourceUrls.push(from);
+    }
   }
 
-  if (numInfiniteRedirects || numUrlsWithFragment) {
+  if (numInfiniteRedirects || numUrlsWithFragment || numDuplicateRedirects) {
     console.log("\nDetected errors:");
 
     if (numInfiniteRedirects > 0) {
@@ -30,6 +40,10 @@ async function main( ){
 
     if (numUrlsWithFragment > 0) {
       console.log(`- ${numUrlsWithFragment} source URL(s) with a fragment`);
+    }
+
+    if (numDuplicateRedirects > 0) {
+      console.log(`- ${numDuplicateRedirects} repeated source URL(s)`);
     }
 
     console.log("\nPlease fix the errors above before merging :)");

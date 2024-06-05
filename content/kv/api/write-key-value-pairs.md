@@ -31,14 +31,14 @@ The `put()` method returns a `Promise` that you should `await` on to verify a su
 
 The maximum size of a value is 25 MiB.
 
-You can also [write key-value pairs from the command line with Wrangler](/kv/platform/kv-commands/#create) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#create) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 {{<Aside type="note">}} 
 Due to the eventually consistent nature of KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
 
 Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. 
 
-Refer to [How KV works](/kv/learning/how-kv-works/) for more information on this topic.
+Refer to [How KV works](/kv/reference/how-kv-works/) for more information on this topic.
 {{</Aside>}}
 
 ## Write data in bulk
@@ -52,6 +52,12 @@ A `key` and a `value` are required for each KV pair. The entire request size mus
 ## Expiring keys
 
 KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time, or after a certain amount of time has passed since the key was last modified.
+
+{{<Aside type="note">}}
+
+An `expiration` setting on a key will result in that key being deleted, even in cases where the `cacheTtl` is set to a higher (longer duration) value. Expiration always takes precedence.  
+
+{{</Aside>}}
 
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read the key will behave as if the key does not exist. The deleted key will not count against the KV namespace’s storage usage for billing purposes.
 
@@ -83,7 +89,7 @@ To use `expiration` or `expirationTtl`, run one of the two commands below to set
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/kv/learning/kv-namespaces/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write with an expiration on the command line via Wrangler](/kv/reference/kv-namespaces/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 ## Metadata
 

@@ -27,10 +27,10 @@
     }
     // set tooltip text
     if (isDark) {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
+      document.getElementById("ThemeToggle--tooltip").textContent =
         "Set theme to light (⇧+D)";
     } else {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
+      document.getElementById("ThemeToggle--tooltip").textContent =
         "Set theme to dark (⇧+D)";
     }
   }
@@ -41,7 +41,7 @@
 
     // Shift+D for toggle
     addEventListener("keydown", (ev) => {
-      if (ev.target !== document.body) return;
+      if (ev.target !== document.body || ev.repeat) return;
       if (ev.which === 68 && ev.shiftKey) {
         ev.preventDefault();
         setter(!btn.checked);

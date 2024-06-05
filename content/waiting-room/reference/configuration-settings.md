@@ -3,7 +3,7 @@ pcx_content_type: reference
 type: overview
 title: Configuration settings
 weight: 2
-layout: list
+layout: wide
 ---
 
 # Configuration settings

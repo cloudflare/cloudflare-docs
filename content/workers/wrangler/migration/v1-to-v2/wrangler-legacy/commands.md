@@ -440,7 +440,7 @@ Create or replace a secret.
 
 ```sh
 $ wrangler secret put <name> --env ENVIRONMENT_NAME
-Enter the secret text you’d like assigned to the variable name on the script named my-worker-ENVIRONMENT_NAME:
+Enter the secret text you would like assigned to the variable name on the Worker named my-worker-ENVIRONMENT_NAME:
 ```
 
 You will be prompted to input the secret's value. This command can receive piped input, so the following example is also possible:

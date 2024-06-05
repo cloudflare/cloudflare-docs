@@ -2,7 +2,6 @@
 title: Advanced TCP Protection
 pcx_content_type: concept
 weight: 6
-layout: single
 meta:
   title: Cloudflare Advanced TCP Protection
 ---

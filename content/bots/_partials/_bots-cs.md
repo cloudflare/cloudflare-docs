@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-**Cloudflare Service** is a special Bot Score source for Enterprise Zero Trust to avoid false positives.
+**Cloudflare Service** is a special {{<glossary-tooltip term_id="bot score">}}bot score{{</glossary-tooltip>}} source for Enterprise Zero Trust to avoid false positives.

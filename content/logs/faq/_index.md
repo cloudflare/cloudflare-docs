@@ -4,7 +4,7 @@ pcx_content_type: navigation
 hideChildren: true
 title: FAQ
 Weight: 130
-layout: list
+layout: wide
 ---
 
 # FAQ

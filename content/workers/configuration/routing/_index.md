@@ -1,7 +1,6 @@
 ---
 pcx_content_type: navigation
 title: Routes and domains
-layout: single
 meta:
   description: Connect your Worker to an external endpoint (via Routes, Custom Domains or a `workers.dev` subdomain) such that it can be accessed by the Internet.
 ---
@@ -16,7 +15,7 @@ There are three types of routes:
 
 * [Routes](/workers/configuration/routing/routes/): Routes that are set within a Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
 
-* `workers.dev`: The `workers.dev` subdomain route automatically created for your Worker that you can disable.
+* [`workers.dev`](/workers/configuration/routing/workers-dev/): The `workers.dev` subdomain route automatically created for your Worker that you can disable.
 
 ## What is best for me?
 
