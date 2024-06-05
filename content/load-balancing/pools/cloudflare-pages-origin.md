@@ -6,9 +6,9 @@ weight: 3
 
 # Use Cloudflare Pages as origin
 
-This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management capabilities.
+This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 
-The following sections will guide you through setting up an [active-passive failover](/load-balancing/load-balancers/common-configurations/) load balancer with [Cloudflare Pages](/pages/) as one of the origins, while also going into details about the Load Balancing dashboard workflow, and some important field values and troubleshooting.
+The following sections will guide you through setting up an [active-passive failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover) load balancer with [Cloudflare Pages](/pages/) as one of the origins, while also going into details about the Load Balancing dashboard workflow, and some important field values and troubleshooting.
 
 ## Use cases
 
@@ -57,13 +57,15 @@ You can name the monitor after the parameters you have defined. For example: `HT
 This way you can easily remember the criteria a certain monitor is using when you decide to attach it to other origins as well.
 {{</Aside>}}
 
+6. Select **Save** to confirm.
+
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Create origin pools">}}
 
 Origin pools hold information about where the health monitor requests and your visitors requests will be directed to.
 
-To support the [use cases](#use-cases) mentioned before, and assuming only one origin server for your production website and one for the Cloudflare Pages instance, create two pools with one origin server each:
+To support the [use cases](#use-cases) mentioned above, and assuming only one origin server for your production website and one for the Cloudflare Pages instance, create two pools with one origin server each:
 
 1. Go to **Traffic** > **Load Balancing**.
 
@@ -81,12 +83,12 @@ To support the [use cases](#use-cases) mentioned before, and assuming only one o
     * The origin [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one origin, the origin weight will not make a difference in this case.
     * (Optional) A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
 
-        If your production website is hosted on a platform like Pages, where you have a default subdomain (`example.pages.dev`) and then configures a custom domain (`my-app.com`), you will probably need to add a host header to avoid failing the health monitor request.
+        If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will probably need to add a host header to avoid failing the health monitor request.
 
 6. Finish configuring the first pool with the following information:
     * Leave the **Health Threshold** set to `1`. Since each pool will only have one origin, this is the only possible value for this field.
     * Select the **Monitor** configured in the previous step.
-    * Select **Health Monitor Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the origin health.
+    * Select **Health Check Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the origin health.
     * Set up **Pool Notifications** and **Health Notifications** as you prefer.
 
 7. Select **Save**
@@ -95,22 +97,22 @@ To support the [use cases](#use-cases) mentioned before, and assuming only one o
 
 {{<table-wrap>}}
 
-| Field                   |  Value                                        |
-|------------------------ | ----------------------------------------------|
-| Pool name               | `secondary`                                   |
-| Description             | `Pages version`                               |
-| Origin steering         | `<default>`                                   |
-| Origin name             | `my-pages-website`                            |
-| Origin address          | `<IP address>`                                |
-| Host                    | `<your custom domain or Pages subdomain>`     |
-| Health threshold        | `1`                                           |
-| Monitor                 | `<monitor defined on previous step>`          |
-| Health check regions    | `<select region of your choice>`              |
+| Field                       |  Value                                        |
+|---------------------------- | ----------------------------------------------|
+| Pool name                   | `secondary`                                   |
+| Description                 | `Pages version`                               |
+| Origin steering             | `<default>`                                   |
+| Origin name                 | `my-pages-website`                            |
+| Origin address              | `<IP address>`                                |
+| Host (**Add host header**)* | `<your custom domain or Pages subdomain>`     |
+| Health threshold            | `1`                                           |
+| Monitor                     | `<monitor defined on previous step>`          |
+| Health check regions        | `<select region of your choice>`              |
 
 {{</table-wrap>}}
 
-{{<Aside type="warning" header="Remember">}}
-The origin pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain for it to resolve correctly.
+{{<Aside type="warning" header="*Important">}}
+The origin pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly.
 
 Failing to do so may result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
 {{</Aside>}}
@@ -125,7 +127,7 @@ Before setting up the load balancer:
 2. Find the origin pools you created in the list and check if their status is `healthy`.
 3. Expand each pool entry to see that the health status for origins within them is also `healthy`.
 
-The basic principle is that, if both your production website and your Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
+The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
 
 Revise your pools and monitor configuration to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
 
@@ -143,7 +145,7 @@ After confirming the origins and monitors are set up correctly and return the ex
 
 3. On the **Add an Origin Pool**, configure the following and select **Next**.
     * Select the first pool you created in Step 2 and select **Add Pool**.
-    * Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Pages pool would be the second (`secondary`).
+    * Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Cloudflare Pages pool would be the second (`secondary`).
     * If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools). For the purposes of this tutorial, you can leave this pointing to your secondary pool.
 
 4. On the **Monitors** page, review the monitors attached to your pools and the expected health status, and select **Next**.
