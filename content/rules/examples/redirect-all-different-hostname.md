@@ -1,8 +1,8 @@
 ---
 pcx_content_type: example
-summary: A redirects rule where all requests for `smallshop.example.com` are redirected to a different hostname using HTTPS, keeping the original path and query string.
+summary: A redirect rule where all requests for `smallshop.example.com` are redirected to a different hostname using HTTPS, keeping the original path and query string.
 product:
-  - Redirects Rules
+  - Redirect Rules
 title: Redirect all requests to a different hostname
 ---
 

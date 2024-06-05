@@ -1,11 +1,11 @@
 ---
-title: Reference Table
+title: Examples
 pcx_content_type: configuration
 weight: 6
 layout: wide
 meta:
-  title: URL normalization reference table
-  description: Reference table displaying the impact of different URL normalization settings in the URLs of incoming requests.
+  title: URL normalization examples
+  description: Examples of the impact of different URL normalization settings in the URLs of incoming requests.
 ---
 
 # URL normalization examples

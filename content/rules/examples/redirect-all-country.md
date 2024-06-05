@@ -1,8 +1,8 @@
 ---
 pcx_content_type: example
-summary: A redirects rule where all website visitors from the United Kingdom are redirected to a different domain, but current functionality is maintained in the same paths.
+summary: A redirect rule where all website visitors from the United Kingdom are redirected to a different domain, but current functionality is maintained in the same paths.
 product:
-  - Redirects Rules
+  - Redirect Rules
 title: Redirect all requests from one country to another domain
 ---
 

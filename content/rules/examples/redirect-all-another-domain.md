@@ -1,8 +1,8 @@
 ---
 pcx_content_type: example
-summary: A redirects rule where the original domain was replaced with a different domain, maintaining all functionality, except for HTTP service (port 80).
+summary: A redirect rule where the original domain was replaced with a different domain, maintaining all functionality, except for HTTP service (port 80).
 product:
-  - Redirects Rules
+  - Redirect Rules
 title: Redirect all requests from one domain to another domain
 ---
 

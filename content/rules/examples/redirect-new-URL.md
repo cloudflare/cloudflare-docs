@@ -1,8 +1,8 @@
 ---
 pcx_content_type: example
-summary: A redirects rule where visitors requesting the `/contact-us/` page are redirected to the new page URL `/contacts/`.
+summary: A redirect rule where visitors requesting the `/contact-us/` page are redirected to the new page URL `/contacts/`.
 product:
-  - Redirects Rules
+  - Redirect Rules
 title: Redirect visitors to the new URL of a specific page
 ---
 

@@ -1,8 +1,8 @@
 ---
 pcx_content_type: example
-summary: A redirects rule where requests for the administration area of `store.example.com` is redirected to HTTPS, keeping the original path and query string.
+summary: A redirect rule where requests for the administration area of `store.example.com` is redirected to HTTPS, keeping the original path and query string.
 product:
-  - Redirects Rules
+  - Redirect Rules
 title: Redirect admin area requests to HTTPS
 ---
 
