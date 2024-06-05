@@ -1,5 +1,6 @@
 {{- $cust_id := "1mwganm1ma0xgnmj" -}}
 {{- $video_id := .Get "video_id" -}}
+{{- $video_title := default "Not set" (.Get "video_title") -}}
 {{- $youtube_link := default "https://www.youtube.com/@CloudflareWorkers/videos" (.Get "youtube_link") -}}
 {{- $show_youtube := default true (.Get "show_youtube")}}
 
@@ -10,14 +11,13 @@
         style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
         allowfullscreen="true"
-        id="stream-player">
+        id="{{ $video_id }}">
     </iframe>
     <script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
     <script>
-      const player = Stream(document.getElementById('stream-player'));
-      player.addEventListener('play', () => {
-        zaraz.track("play docs video")
-      });
+      Stream(document.getElementById({{$video_id}})).addEventListener('play', () => {
+        zaraz.track('play docs video' {title: ({{$video_title}})})
+      })
     </script>
   </div>
 {{- if $show_youtube -}}
