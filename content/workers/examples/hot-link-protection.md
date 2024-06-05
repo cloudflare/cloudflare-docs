@@ -8,13 +8,14 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: configuration
 title: Hot-link protection
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -74,6 +75,33 @@ export default {
     return response;
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, URL, fetch
+
+async def on_fetch(request):
+    homepage_url = "https://tutorial.cloudflareworkers.com/"
+    protected_type = "image/"
+
+    # Fetch the original request
+    response = await fetch(request)
+
+    # If it's an image, engage hotlink protection based on the referer header
+    referer = request.headers["Referer"]
+    content_type = response.headers["Content-Type"] or ""
+
+    if referer and content_type.startswith(protected_type):
+        # If the hostnames don't match, it's a hotlink
+        if URL.new(referer).hostname != URL.new(request.url).hostname:
+            # Redirect the user to your website
+            return Response.redirect(homepage_url, 302)
+
+    # Everything is fine, return the response normally
+    return response
 ```
 
 {{</tab>}}

@@ -7,6 +7,7 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 preview:
   - true
 pcx_content_type: configuration
@@ -15,7 +16,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -40,6 +41,17 @@ export default {
     return new Response("Hello world");
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response
+
+async def on_fetch(request):
+    print(dict(request.headers))
+    return Response.new('Hello world')
 ```
 
 {{</tab>}}
