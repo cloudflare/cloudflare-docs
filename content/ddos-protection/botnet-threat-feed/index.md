@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
-title: DDoS Botnet Threat Feed
-weight: 10
+title: Botnet Threat Feed
+weight: 15
 meta:
   title: DDoS Botnet Threat Feed for service providers
 ---
@@ -134,7 +134,7 @@ header: Example response
   "result": [
     {
       "cidr": "127.0.0.1/32",
-      "date": "1970-01-01T00:00:00Z",
+      "date": "2024-05-05T00:00:00Z",
       "offense_count": 10000
     },
     // ... other entries ...
