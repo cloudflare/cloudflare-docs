@@ -6,7 +6,7 @@ weight: 1
 
 # Creating your first AI Gateway
 
-In this guide, you will learn how to create your first AI Gateway. You can create multiple gateways to control different applications.
+In this guide, you will learn how to create a AI Gateway. You can create multiple gateways to control different applications.
 
 ## Prerequisites
 
