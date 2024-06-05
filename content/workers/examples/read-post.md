@@ -158,7 +158,7 @@ async def read_request_body(request):
 async def on_fetch(request):
     def raw_html_response(html):
         headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
-        return Response.new(html, headers=Headers)
+        return Response.new(html, headers=headers)
 
     if "form" in request.url:
         return raw_html_response("")
