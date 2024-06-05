@@ -69,7 +69,6 @@ You can find the full list of supported clients in the [Let's Encrypt documentat
 #### Limitations
 
 * Punycode domains are not yet supported.
-* Cloudflare supports ECDSA with Google Trust Services for Universal certificates. ECDSA support for other certificate types will be added soon.
 
 #### Browser compatibility (most compatible)
 
