@@ -14,7 +14,7 @@ When working with Magic WAN and Cloudflare Network Interconnect (CNI), there are
 
 ## Express CNI
 
-With [Express CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1500 bytes, both for ingress and egress traffic.
+With [Express CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1,500 bytes, both for ingress and egress traffic.
 
 For the time being, Express CNI does not support BGP. You need to create policy-based routes to ensure traffic is routed correctly. You also need to implement tracking of network traffic to ensure that the CNI and Cloudflare data center is functioning properly.
 
@@ -28,7 +28,7 @@ Bidirectional health checks do not work when you use Express CNI to onboard your
 
 With Classic CNI you need to [set up an onboarding process](/network-interconnect/classic-cni/) with Cloudflare. There is no self-serving option through the dashboard.
 
-Magic WAN only supports GRE tunnels over CNI. You will need to set your {{<glossary-tooltip term_id="maximum segment size (MSS)">}}MSS clamp{{</glossary-tooltip>}} size to 1476 bytes to accommodate overhead from additional headers. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
+Magic WAN only supports GRE tunnels over CNI. You will need to set your {{<glossary-tooltip term_id="maximum segment size (MSS)">}}MSS clamp{{</glossary-tooltip>}} size to 1,476 bytes to accommodate overhead from additional headers. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
 
 Magic WAN with Classic CNI does not support BGP for the private encapsulated traffic. You need to create policy-based routes to ensure traffic is routed correctly. Classic CNI does support BGP for the outer GRE packet, and this can be used for re-routing the tunnel over a backup CNI in the event of an issue with the primary.
 
