@@ -14,6 +14,8 @@ model:
       value: "true"
     - property_id: "info"
       value: "https://ai.google.dev/gemma/docs"
+    - property_id: "lora"
+      value: "true"
     - property_id: "max_batch_prefill_tokens"
       value: "2048"
     - property_id: "max_input_length"

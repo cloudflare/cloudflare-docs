@@ -27,7 +27,7 @@ To set the default rate limiting configuration in the dashboard:
 2. Go to **AI** > **AI Gateway**.
 3. Go to **Settings**.
 4. Enable **Rate-limiting**.
-5. Adjust the rate, time period, and rate limting method as desired.
+5. Adjust the rate, time period, and rate limiting method as desired.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

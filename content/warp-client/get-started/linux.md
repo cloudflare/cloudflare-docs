@@ -35,7 +35,7 @@ To connect for the very first time:
 
 ### Switching modes
 
-You can use `warp-cli set-mode --help` to get a list of the modes to switch between. For example:
+You can use `warp-cli mode --help` to get a list of the modes to switch between. For example:
 
 - **DNS only mode via DoH:** `warp-cli mode doh`.
 - **WARP with DoH:** `warp-cli mode warp+doh`.

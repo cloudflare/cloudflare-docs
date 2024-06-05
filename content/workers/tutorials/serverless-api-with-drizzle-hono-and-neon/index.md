@@ -273,7 +273,7 @@ export default app;
 
 If you start your development server and go to `http://localhost:8787`, your browser will display data being returned as JSON.
 
-![Ouput demo](./output.png)
+![Output demo](./output.png)
 
 ## 10. Deploy your Worker using Wrangler
 

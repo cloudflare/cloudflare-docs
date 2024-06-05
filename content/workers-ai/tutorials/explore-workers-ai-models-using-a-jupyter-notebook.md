@@ -82,7 +82,7 @@ else:
 Explore all [Text Generation Models](/workers-ai/models/#text-generation)
 
 ```python
-model = "@cf/meta/llama-2-7b-chat-int8"
+model = "@cf/meta/llama-3-8b-instruct"
 
 response = requests.post(
     f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}",
