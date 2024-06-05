@@ -115,6 +115,8 @@ The origin pointing to [Cloudflare Pages](/pages/) must have **host header** fil
 Failing to do so may result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
 {{</Aside>}}
 
+{{</tutorial-step>}}
+
 {{<tutorial-step title="Check the origins health status">}}
 
 Before setting up the load balancer:
