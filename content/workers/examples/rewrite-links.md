@@ -14,7 +14,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -96,6 +96,36 @@ export default {
     }
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from pyodide.ffi import create_proxy
+from js import HTMLRewriter, fetch
+
+async def on_fetch(request):
+    old_url = "developer.mozilla.org"
+    new_url = "mynewdomain.com"
+
+    class AttributeRewriter:
+        def __init__(self, attr_name):
+            self.attr_name = attr_name
+        def element(self, element):
+            attr = element.getAttribute(self.attr_name)
+            if attr:
+                element.setAttribute(self.attr_name, attr.replace(old_url, new_url))
+
+    rewriter = HTMLRewriter.new().on("a", create_proxy(AttributeRewriter("href"))).on("img", create_proxy(AttributeRewriter("src")))
+    res = await fetch(request)
+    content_type = res.headers["Content-Type"]
+
+    # If the response is HTML, it can be transformed with
+    # HTMLRewriter -- otherwise, it should pass through
+    if "text/html" in content_type:
+        return rewriter.transform(res)
+    return res
 ```
 
 {{</tab>}}
