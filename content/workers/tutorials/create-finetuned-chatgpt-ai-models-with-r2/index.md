@@ -25,7 +25,7 @@ To review the completed code for this application, refer to the [GitHub reposito
 
 Before you start, make sure you have:
 
-- A Cloudflare account with access to R2. If you do not have a Cloudflare accout, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Then purchase R2 from your Cloudflare dashboard.
+- A Cloudflare account with access to R2. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Then purchase R2 from your Cloudflare dashboard.
 - An OpenAI API key.
 - A fine-tune document, structured as [JSON Lines](https://jsonlines.org/). Use the [example document](https://github.com/kristianfreeman/openai-finetune-r2-example/blob/16ca53ca9c8589834abe317487eeedb8a24c7643/example_data.jsonl) in the source code.
 
