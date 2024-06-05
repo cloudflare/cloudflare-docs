@@ -8,13 +8,13 @@ title: Build a QR code generator
 
 # Build a QR code generator
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build and publish a Worker application that generates QR codes.
 
 If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/kristianfreeman/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## 1. Create a new Workers project
 
