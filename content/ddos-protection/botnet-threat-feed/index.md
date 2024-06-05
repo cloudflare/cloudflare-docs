@@ -38,7 +38,6 @@ Make sure that:
 - You have access to the DDoS Botnet Threat Feed. If not, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/).
 - Cloudflare has already provisioned your account with information about your ASNs.
 
-
 ## Get started
 
 ### 1. Obtain Cloudflare API token
@@ -83,7 +82,7 @@ The provided `{asn}` must be affiliated with your account.
 header: Example request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/botnet_feed/asn/{asn}/full_report" \
---header "Content-Type:application/json" \
+--header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -122,7 +121,7 @@ The provided `{asn}` must be affiliated with your account.
 header: Example request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/botnet_feed/asn/{asn}/day_report?date=2024-05-05" \
---header "Content-Type:application/json" \
+--header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
