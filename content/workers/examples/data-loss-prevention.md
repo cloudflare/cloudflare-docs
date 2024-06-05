@@ -170,20 +170,19 @@ import re
 from datetime import datetime
 from js import Response, fetch, JSON, Headers
 
+# Alert a data breach by posting to a webhook server
+async def post_data_breach(request):
+    some_hook_server = "https://webhook.flow-wolf.io/hook"
+    headers = Headers.new({"content-type": "application/json"}.items())
+    body = JSON.stringify({
+      "ip": request.headers["cf-connecting-ip"],
+      "time": datetime.now(),
+      "request": request,
+    })
+    return await fetch(some_hook_server, method="POST", headers=headers, body=body)
+
 async def on_fetch(request):
     debug = True
-    # some_hook_server = "https://webhook.flow-wolf.io/hook"
-    some_hook_server = "https://jsonplaceholder.typicode.com/posts"
-
-    # Alert a data breach by posting to a webhook server
-    async def post_data_breach(request):
-        headers = Headers.new({"content-type": "application/json"}.items())
-        body = JSON.stringify({
-          "ip": request.headers["cf-connecting-ip"],
-          "time": datetime.now(),
-          "request": request,
-        })
-        return await fetch(some_hook_server, method="POST", headers=headers, body=body)
 
     # Define personal data with regular expressions.
     # Respond with block if credit card data, and strip
@@ -200,21 +199,20 @@ async def on_fetch(request):
     # When debugging replace the response from the origin with an email
     text = text.replace("You may use this", "me@example.com may use this") if debug else text
 
-    sensitive_regex_dict = {
-      "credit_card":
-      r'\b(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})\b',
-      "email": r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b',
-      "phone": r'\b07\d{9}\b',
-    }
-
-    for kind in sensitive_regex_dict:
-        match = re.search(sensitive_regex_dict[kind], text, flags=re.IGNORECASE)
+    sensitive_regex = [
+      ("credit_card",
+      r'\b(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})\b'),
+      ("email", r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b'),
+      ("phone", r'\b07\d{9}\b'),
+    ]
+    for (kind, regex) in sensitive_regex:
+        match = re.search(regex, text, flags=re.IGNORECASE)
         if match:
             # Alert a data breach
             await post_data_breach(request)
             # Respond with a block if credit card, therwise replace sensitive text with `*`s
             card_resp = Response.new(kind + " found\nForbidden\n", status=403,statusText="Forbidden")
-            sensitive_resp = Response.new(re.sub(sensitive_regex_dict[kind], "**********", text, flags=re.IGNORECASE), response)
+            sensitive_resp = Response.new(re.sub(regex, "*"*10, text, flags=re.IGNORECASE), response)
             return card_resp if kind == "credit_card" else  sensitive_resp
 
     return Response.new(text, response)

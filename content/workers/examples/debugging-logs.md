@@ -115,7 +115,7 @@ import traceback
 from pyodide.ffi import create_once_callable
 from js import Response, fetch, Headers
 
-async def on_fetch(request, _, ctx):
+async def on_fetch(request, _env, ctx):
     # Service configured to receive logs
     log_url = "https://log-service.example.com/"
 
@@ -127,7 +127,7 @@ async def on_fetch(request, _, ctx):
     try:
         if not response.ok and not response.redirected:
             body = await response.text()
-        # Ensure the string is small enough to be a header
+        # Simulating an error. Ensure the string is small enough to be a header
         raise Exception(f'Bad response at origin. Status:{response.status} Body:{body.strip()[:10]}')
     except Exception as e:
         # Without ctx.waitUntil(), your fetch() to Cloudflare's
