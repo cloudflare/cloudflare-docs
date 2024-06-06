@@ -23,6 +23,20 @@ Deprecated APIs:
 
 Refer to the [migration guide](/rules/reference/page-rules-migration/) for more information on the Rules features that are replacing Page Rules.
 
+## Legacy DNS Settings Endpoints
+**End of life date: September 13th, 2024**
+
+The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
+
+Instead, please use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage these settings.
+
+- Instead of the `.../use_apex_ns` endpoint, please use the `multi_provider` field.
+- Instead of the `.../secondary_overrides` endpoint, please use the `secondary_overrides` field.
+
+Deprecated APIs:
+- /zones/:zone_id/dns_settings/use_apex_ns
+- /zones/:zone_id/dns_settings/secondary_overrides
+
 ## Auto Minify
 **End of life date: August 5th, 2024**
 
