@@ -35,7 +35,7 @@ Deprecated APIs:
 ## DNS Records: "locked" Field
 **End of life date: July 14th, 2024**
 
-The `"locked"` field of DNS records in API responses is unused and has been guaranteed to always be `false` for more than a year. Starting on July 15th, the field will be omitted from API responses entirely. If received from a client, the field will continue to be ignored, just as it is today.
+The `"locked"` field of DNS records in API responses is unused and has been guaranteed to always be `false` for more than a year. This deprecation means that the field will be omitted from API responses entirely. If received from a client, the field will continue to be ignored, just as it is today.
 
 Modified API:
  - GET /zones/:zone_id/dns_records
