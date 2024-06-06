@@ -19,6 +19,10 @@ Cloudflare Access currently supports SCIM provisioning using the following ident
 
 Cloudflare Access can automatically deprovision users from Zero Trust after they are deactivated in the identity provider and display synchronized group names in the Access and Gateway policy builders. Cloudflare does not provision new users in Zero Trust when they are added to the identity provider -- users must first register a device with the WARP client or authenticate to an Access application.
 
+## Sync users and groups in SaaS applications
+
+You can use SCIM with [Access for SaaS](/cloudflare-one/applications/configure-apps/saas-apps/) to automatically provision and deprovision users from a [supported identity provider](#supported-identity-providers) into your SaaS applications. Once configured, SCIM will automatically grant a user access to all the SaaS applications they need to do their job once they have been added to the identity provider.
+
 ## SCIM for Cloudflare dashboard SSO
 
 To provision access to your Cloudflare account, you will need to set up a distinct [dashboard SSO SCIM integration](/fundamentals/setup/account/account-security/scim-setup/) in your IdP. You can assign users and groups to this new SCIM application to define who can access the Cloudflare dashboard.
