@@ -348,7 +348,7 @@ Refer to [Security levels](/waf/tools/security-level/#security-levels) for more 
 
 API configuration property name: `"security_level"` (string).
 
-API values: `"off"`, `"essentially_off"` (deprecated), `"low"` (deprecated), `"medium"` (deprecated), `"high"` (deprecated), `"under_attack"`.
+API values: `"off"`, `"under_attack"`, `"essentially_off"` (deprecated), `"low"` (deprecated), `"medium"` (deprecated), `"high"` (deprecated).
 
 ```json
 ---
