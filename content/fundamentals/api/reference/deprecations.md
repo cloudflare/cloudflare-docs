@@ -34,7 +34,16 @@ All rules created or updated using the Rulesets API will return an error if thei
 
 Modified APIs:
 - PATCH /zones/:zone_id/settings/security_level
-- [All Rulesets API endpoints](/ruleset-engine/rulesets-api/endpoints/)
+- POST /accounts/:account_id/rulesets
+- POST /zones/:zone_id/rulesets
+- POST /accounts/:account_id/rulesets/:ruleset_id/rules
+- POST /zones/:zone_id/rulesets/:ruleset_id/rules
+- PUT /accounts/:account_id/rulesets/:ruleset_id
+- PUT /zones/:zone_id/rulesets/:ruleset_id
+- PUT /accounts/:account_id/rulesets/phases/:phase_name/entrypoint
+- PUT /zones/:zone_id/rulesets/phases/:phase_name/entrypoint
+- PATCH /accounts/:account_id/rulesets/:ruleset_id/rules/:rule_id
+- PATCH /zones/:zone_id/rulesets/:ruleset_id/rules/:rule_id
 
 ## Auto Minify
 **End of life date: August 5th, 2024**
