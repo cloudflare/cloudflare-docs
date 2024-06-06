@@ -331,9 +331,7 @@ header: API configuration example
 
 ## Security Level (deprecated) { #security-level }
 
-{{<render productFolder="waf" file="_security-level-deprecation.md">}}
-
-[Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
+[Security Level](/waf/tools/security-level/) (deprecated) controls Managed Challenges for requests from low reputation IP addresses.
 
 Use this setting to select the security level for matching requests:
 
