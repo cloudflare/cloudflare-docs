@@ -28,7 +28,7 @@ Step-by-step guides to help you build and learn.
 
 {{<resource-by-tag tags="AI" resource_type="tutorial">}}
 
-## Use cases
+## Customer spotlights
 
 Explore case studies on [AI companies building on Cloudflare](https://workers.cloudflare.com/built-with/collections/ai-workers/).
 
