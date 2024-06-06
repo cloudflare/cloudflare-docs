@@ -3,6 +3,7 @@ updated: 2023-09-27
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
+tags: [AI]
 title: Deploy a Worker that connects to OpenAI via AI Gateway
 ---
 

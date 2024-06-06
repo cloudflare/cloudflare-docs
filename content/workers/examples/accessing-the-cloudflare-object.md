@@ -8,7 +8,7 @@ languages:
   - Python
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Accessing the Cloudflare Object
 weight: 11
 layout: example

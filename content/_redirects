@@ -86,6 +86,9 @@
 /access/ssh/short-live-cert-server/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 
+# ai
+/ai/ /use-cases/ai/ 301
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
