@@ -6,7 +6,7 @@ productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
 - publish_date: '2024-06-06'
-  title: Scalability improvements to the app launcher
+  title: Scalability improvements to the App Launcher
   description: |-
     Applications now load more quickly for customers with a large number of applications or complex policies.
 - publish_date: '2024-04-28'
