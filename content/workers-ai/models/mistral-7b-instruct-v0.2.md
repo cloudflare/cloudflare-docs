@@ -14,6 +14,8 @@ model:
       value: "true"
     - property_id: "info"
       value: "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2"
+    - property_id: "lora"
+      value: "true"
     - property_id: "max_batch_prefill_tokens"
       value: "8192"
     - property_id: "max_input_length"

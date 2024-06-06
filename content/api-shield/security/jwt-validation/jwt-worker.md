@@ -92,7 +92,7 @@ header: JavaScript example code
  *
  *   1. Replace `token_config_id` with the ID of the Token Config to update
  *   2. Replace `zone_id` with your Zone ID
- *   3. Replace `url` with a publically accessible URL with the JWKs you want to use
+ *   3. Replace `url` with a publicly accessible URL with the JWKs you want to use
  *   4. Create a new API Token with "Zone.API Gateway Edit" permissions and add it as a secret with the name `CF_API_TOKEN` (see https://developers.cloudflare.com/workers/configuration/secrets/)
  *
  * This worker also handles GET and POST requests:

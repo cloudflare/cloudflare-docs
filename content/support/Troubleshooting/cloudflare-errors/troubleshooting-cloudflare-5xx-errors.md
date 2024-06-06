@@ -96,10 +96,10 @@ If the error does not mention `cloudflare`, contact your hosting provider for as
 This error can be returned in case of a compression issue at the origin, for example the origin server is serving gzip encoded compressed content but is not updating the `content-length` header, or the origin is serving broken gzip compressed content.
 You can try to disable compression at your origin to confirm if this is the root cause of the errors.
 
-Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic. 
+Otherwise, under certain conditions it is possible a given Data Center observes a sudden increase of traffic.
 In these cases our automated processes will move traffic away from such location to a different Data Center making sure there is no impact for our customers.
-These traffic adjustments are mostly seamless and take only a few seconds. 
-Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors. 
+These traffic adjustments are mostly seamless and take only a few seconds.
+Still, it is possible that during this automated process some clients observe added latency and HTTP 502 errors.
 You can find more information about our automated traffic management tools [in this blogpost](https://blog.cloudflare.com/meet-traffic-manager).
 
 **Resolution**
@@ -155,6 +155,11 @@ in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/se
 520 errors are prevalent with certain PHP applications that crash the
 origin web server.
 {{</Aside>}}
+
+If HTTP/2 is enabled at your origin web server, please check and make sure HTTP/2 is correctly configured.
+Cloudflare connects to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2).
+If the origin web server accepts the HTTP/2 connection but then doesn’t respect or support the protocol, an HTTP Error 520 will be returned.
+You can disable the [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/#disable-http2-to-origin) setting on the Cloudflare Dashboard under Speed -> Optimization -> Protocol Optimization and check your origin web server configuration further.
 
 If 520 errors continue after contacting your hosting provider or site administrator, provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/):
 
@@ -232,7 +237,9 @@ ___
 
 ## Error 524: a timeout occurred
 
-Error 524 indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second connection timed out. This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
+Error 524 usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 second [Proxy Read Timeout](/fundamentals/reference/connection-limits/). This can happen if the origin server is taking too long because it has too much work to do - e.g. a large data query, or because the server is struggling for resources and cannot return any data in time.
+
+Error 524 can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 second [Proxy Write Timeout](/fundamentals/reference/connection-limits/).
 
 {{<Aside type="note">}}
 A 524 occurs if the origin web server
@@ -260,6 +267,11 @@ or
 {{</Aside>}}
 
 -   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
+
+{{<Aside type="note">}}
+If the timeouts are on write requests, the [Proxy Write Timeout](/fundamentals/reference/connection-limits/) of 30 seconds cannot be adjusted.
+{{</Aside>}}
+
 -   If you regularly run HTTP requests that take over 100 seconds to complete (for example large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
 
 {{<Aside type="note">}}
@@ -289,7 +301,7 @@ Contact your hosting provider to exclude the following common causes at your or
 
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
--   No [SNI](/fundamentals/reference/glossary/#server-name-indication-sni) support
+-   No {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}SNI{{</glossary-tooltip>}} support
 -   The [cipher suites](/ssl/origin-configuration/cipher-suites/) presented by Cloudflare to the origin do not match the cipher suites supported by the origin web server
 
 {{<Aside type="note">}}

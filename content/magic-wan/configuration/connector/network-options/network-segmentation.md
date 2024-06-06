@@ -37,7 +37,7 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-site-acls-create-site-acl) to create a network policy.
+Create a `POST` request [using the API](/api/operations/magic-site-acls-create-acl) to create a network policy.
 
 Example:
 

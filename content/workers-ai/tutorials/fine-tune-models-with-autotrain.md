@@ -4,6 +4,8 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Fine Tune Models With AutoTrain from HuggingFace
+tags:
+  - AI
 ---
 
 # Fine Tune Models With AutoTrain from HuggingFace

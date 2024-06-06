@@ -8,7 +8,7 @@ languages:
   - Python
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Fetch HTML
 weight: 3
 layout: example

@@ -3462,19 +3462,13 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown--table-wrap table {
-  min-width: calc(
-    var(--docs-body-width) - var(--docs-content-gap) * 2 -
-      var(--table-border-width) * 2
-  );
+  min-width: 100%;
   margin: 0;
 }
 
 @media (max-width: 768px) {
   .DocsMarkdown--table-wrap table {
-    min-width: calc(
-      100vw - var(--docs-content-horizontal-padding) * 2 -
-        var(--table-border-width) * 2
-    );
+    min-width: 100%;
   }
 }
 
@@ -4409,6 +4403,20 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 }
 
+p#totalExamples {
+  margin-top: 1em;
+  font-size: 1.1em;
+  padding-left: .5em;
+  width: 7em;
+  font-weight: 400;
+  border-radius: 5px;
+  background: #FCC373;
+}
+
+[theme="dark"] p#totalExamples {
+  background: #0051c3;
+}
+
 .DocsTutorials {
   margin: 2em 0;
   width: 53em;
@@ -5141,6 +5149,12 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
 }
 
+.tutorialDateInfo {
+  margin-bottom: 2em;
+  font-size: .85em;
+  margin-top: -.5em;
+}
+
 .tutorialPreReqs {
   padding-top: 0.5em;
   padding-inline: 2em;
@@ -5362,4 +5376,9 @@ code.ruleID:active {
 
 .author-details{
   font-weight: bold;
+}
+
+.youtube_link {
+  margin-top: .75em;
+  font-size: .9em;
 }

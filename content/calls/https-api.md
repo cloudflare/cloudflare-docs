@@ -21,7 +21,7 @@ Cloudflare Calls simplifies the management of peer connections and media tracks 
 - **Retrieve Session Information**: Fetches detailed information about a specific session.
   - `GET /apps/{appId}/sessions/{sessionId}`
 
-[View full API and schema (OpenAPI format)](https://gist.githubusercontent.com/renandincer/dd6e913a8c824d718e9eeb2e2ed0b783/raw/11e24edac2b0d8e1783f340793673cd576ac417c/Calls%2520API%2520v1)
+[View full API and schema (OpenAPI format)](/calls/static/calls-api-2024-05-21.yaml)
 
 ## Handling Secrets
 

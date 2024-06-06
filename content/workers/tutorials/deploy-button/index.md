@@ -8,7 +8,7 @@ title: Create a deploy button with GitHub Actions
 
 # Deploy button
 
-## Background
+{{<tutorial-date-info>}}
 
 Deploy buttons let you deploy applications to Cloudflare's global network in under five minutes. The deploy buttons use Wrangler to deploy a Worker using the [Wrangler GitHub Action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler). You can deploy an application from a set of ready-made Cloudflare templates, or make deploy buttons for your own applications to make sharing your work easier.
 
@@ -17,7 +17,7 @@ Try the deploy button below to deploy a GraphQL server:
 <p>
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/workers-graphql-server" target="_blank" rel="noopener">
     <img src="https://deploy.workers.cloudflare.com/button" alt="Select Deploy with Workers to deploy a GraphQL server">
-  </a> 
+  </a>
 </p>
 
 Refer to [deploy.workers.cloudflare.com](https://deploy.workers.cloudflare.com/) for additional projects to deploy.

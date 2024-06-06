@@ -1,6 +1,7 @@
 ---
 link: "/cloudflare-one/changelog/gateway/"
 productName: Gateway
+productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:

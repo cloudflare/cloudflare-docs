@@ -17,7 +17,7 @@ You'll need to generate an [API token](/fundamentals/api/get-started/create-toke
 header: Request to Workers AI llama model
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-2-7b-chat-int8 \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-3-8b-instruct \
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{"prompt": "What is Cloudflare?"}'
@@ -31,5 +31,29 @@ header: Request to Workers AI text classification model
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/huggingface/distilbert-sst-2-int8 \
   --header 'Authorization: Bearer {cf_api_token}' \
   --header 'Content-Type: application/json' \
-  --data '{ "text": "This pizza is amazing!" }'
+  --data '{ "text": "Cloudflare docs are amazing!" }'
+```
+
+## OpenAI compatible endpoints
+
+{{<render file="_openai-compatibility.md" productFolder="workers-ai">}}
+<br/>
+
+```bash
+---
+header: Request to OpenAI compatible endpoint
+---
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/v1/chat/completions \
+ --header 'Authorization: Bearer {cf_api_token}' \
+ --header 'Content-Type: application/json' \
+ --data '{
+      "model": "@cf/meta/llama-3-8b-instruct",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is Cloudflare?"
+        }
+      ]
+    }
+'
 ```

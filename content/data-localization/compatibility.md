@@ -75,7 +75,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
-| BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
+| Static IP/BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
 | Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
 | Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
@@ -126,7 +126,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnentry num="20">}}You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.{{</fnentry>}}
 {{<fnentry num="21">}}Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.{{</fnentry>}}
 {{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
-{{<fnentry num="26">}}BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
+{{<fnentry num="26">}}Static IP/BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
 {{<fnentry num="27">}}Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).{{</fnentry>}}
 {{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/reference/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
 {{<fnentry num="29">}}You cannot yet specify region location for object storage itself.{{</fnentry>}}

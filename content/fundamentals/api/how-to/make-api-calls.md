@@ -8,6 +8,8 @@ weight: 2
 
 Once you [create your API token](/fundamentals/api/get-started/create-token/), all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <API_TOKEN>` interface. An example request is shown below.
 
+<!-- The following example uses an invalid API key to demonstrate what those keys look like -->
+
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}" \
 --header "Authorization: Bearer YQSn-xWAQiiEh9qM58wZNnyQS7FUdoqGIUAbrh7T"

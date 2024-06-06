@@ -7,7 +7,7 @@ model:
   task:
     id: "882a91d1-c331-4eec-bdad-834c919942a8"
     name: "Image-to-Text"
-    description: null
+    description: "Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text."
   tags:
     - "image-to-text"
   properties:

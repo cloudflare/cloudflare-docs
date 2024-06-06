@@ -5,7 +5,7 @@ weight: 2
 layout: learning-unit
 ---
 
-{{<render file="_waf-intro.md" productFolder="waf">}}
+{{<render file="_waf-managed-rules-intro.md" productFolder="waf">}}
 
 ## Rulesets
 

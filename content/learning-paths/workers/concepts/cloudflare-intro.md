@@ -33,7 +33,7 @@ An example tech stack for an application built on Cloudflare would look like:
 - [Storage resources](/workers/platform/storage-options/) to persist different types of data.
 - [Application security (DDoS protection, WAF, and more)](https://www.cloudflare.com/application-services/products/#security-services) to secure your site.
 - [Application performance (CDN, Load Balancing, and more)](https://www.cloudflare.com/application-services/products/#performance-services) to customize and enhance your site's performance.
-- [AI](/ai/) to run machine learning models.
+- [AI](/use-cases/ai/) to run machine learning models.
 
 And more depending on your use case.
 

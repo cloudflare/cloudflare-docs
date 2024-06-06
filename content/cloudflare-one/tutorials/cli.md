@@ -23,7 +23,7 @@ These instructions are not meant for configuring a service to run against an API
 
 ## Authenticate a session from the command line
 
-Once you have installed `cloudflared`, you can use it to retrieve a Cloudflare Access token for a given application. This walkthrough uses the domain `example.com` as a stand-in for a protected API.
+Once you have installed `cloudflared`, you can use it to retrieve a Cloudflare Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/). This walkthrough uses the domain `example.com` as a stand-in for a protected API.
 
 1.  To generate a token, run the following command:
 
@@ -39,7 +39,7 @@ If the browser window does not launch, you can use the unique URL that is automa
 
 1.  Once you have successfully authenticated, the browser returns the token to `cloudflared` in a cryptographic transfer and stores it.
 
-The token is valid for the session duration configured by the Access administrator.
+The token is valid for the [session duration](/cloudflare-one/identity/users/session-management/) configured by the Access administrator.
 
 ## Access your API
 

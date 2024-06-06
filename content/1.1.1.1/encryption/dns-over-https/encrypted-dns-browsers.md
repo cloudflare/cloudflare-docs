@@ -9,6 +9,10 @@ There are several browsers compatible with DNS over HTTPS (DoH). This protocol l
 
 Some browsers might already have this setting enabled.
 
+{{<Aside type="note">}}
+To use 1.1.1.1 For Families, follow the steps below but, instead of choosing the default 1.1.1.1 option, refer to [Set up](/1.1.1.1/setup/#dns-over-https-doh) and specify the URL you want to use.
+{{</Aside>}}
+
 ## Mozilla Firefox
 
 1. Select the menu button > **Settings**.

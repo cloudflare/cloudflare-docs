@@ -3,6 +3,8 @@ pcx_content_type: how-to
 type: overview
 title: Use the dashboard
 weight: 2
+meta:
+  title: Work with custom rulesets in the dashboard
 ---
 
 # Work with custom rulesets in the dashboard
@@ -41,7 +43,7 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 9. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-10. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
+10. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
 
 11. Select **Deploy**.
 
@@ -49,6 +51,6 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 13. Select **Create**.
 
-## Configuring a custom response for blocked requests
+## Configure a custom response for blocked requests
 
 {{<render file="_custom-response-blocked-requests.md" withParameters="WAF block;;403">}}
