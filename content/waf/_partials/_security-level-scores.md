@@ -23,10 +23,10 @@ The available security levels are the following:
 |------------------------------------|:------------------:|--------------------------------------------------------------------------------------|
 | Off (Enterprise<br>customers only) | _N/A_              | Does not challenge IP addresses.                                                     |
 | I’m Under Attack!                  | _N/A_              | Only for use if your website is currently under a DDoS attack.                       |
-| Essentially off<br>_(deprecated)_  | 50–100             | Only challenges IP addresses with the worst reputation.                              |
-| Low<br>_(deprecated)_              | 25–100             | Challenges only threatening visitors.                                                |
-| Medium<br>_(deprecated)_           | 15–100             | Challenges both threatening and moderately threatening visitors.                     |
-| High<br>_(deprecated)_             |  0–100             | Challenges all visitors that exhibited threatening behavior within the last 14 days. |
+| Essentially off                    | 50–100             | Only challenges IP addresses with the worst reputation.                              |
+| Low                                | 25–100             | Challenges only threatening visitors.                                                |
+| Medium                             | 15–100             | Challenges both threatening and moderately threatening visitors.                     |
+| High                               |  0–100             | Challenges all visitors that exhibited threatening behavior within the last 14 days. |
 
 {{</table-wrap>}}
 

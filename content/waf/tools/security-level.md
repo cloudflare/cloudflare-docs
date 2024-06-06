@@ -6,6 +6,14 @@ title: Security Level
 
 {{<heading-pill style="deprecated">}}Security Level{{</heading-pill>}}
 
+{{<Aside type="warning" header="Deprecation notice">}}
+Security Level and threat score are deprecated. The **Security Level** setting will be removed from the Cloudflare dashboard on 2024-07-01, and will be replaced with a toggle for [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/).
+
+For Cloudflare API and Terraform users, the following configurations will stop working after 2024-09-30:
+- Configuring the security level to a value other than `off` and `under_attack`.
+- Creating/editing any rules using the `cf.threat_score` field in their expressions.
+{{</Aside>}}
+
 {{<render file=_security-level-description.md productFolder="waf">}}
 
 ---
