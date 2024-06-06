@@ -33,7 +33,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Auto Minify (deprecated) { #auto-minify }
+{{<heading-pill style="deprecated" heading="h2">}}Auto Minify{{</heading-pill>}}
 
 [Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
@@ -329,9 +329,9 @@ header: API configuration example
 
 {{</details>}}
 
-## Security Level (deprecated) { #security-level }
+{{<heading-pill style="deprecated" heading="h2">}}Security Level{{</heading-pill>}}
 
-[Security Level](/waf/tools/security-level/) (deprecated) controls Managed Challenges for requests from low reputation IP addresses.
+[Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
 
 Use this setting to select the security level for matching requests:
 
@@ -363,7 +363,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Server Side Excludes (deprecated) { #server-side-excludes }
+{{<heading-pill style="deprecated" heading="h2">}}Server Side Excludes{{</heading-pill>}}
 
 [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 
