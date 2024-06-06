@@ -4,7 +4,11 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Explore Code Generation Using DeepSeek Coder Models
+meta:
+  description: Explore how you can use AI models to generate code and work more efficiently.
 weight: 4
+tags:
+  - AI
 ---
 
 # Explore Code Generation Using DeepSeek Coder Models
@@ -14,7 +18,7 @@ A handy way to explore all of the models available on [Workers AI](/workers-ai) 
 
 You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/notebooks/deepseek-coder-exploration.ipynb) or view the embedded notebook below.
 
-{{<stream video_id="97b46763341a395a4ce1c0a6f913662b">}}
+{{<stream video_id="97b46763341a395a4ce1c0a6f913662b" video_title="Explore Code Generation Using DeepSeek Coder Models">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai)
 

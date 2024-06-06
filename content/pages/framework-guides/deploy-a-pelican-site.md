@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Pelican site
+title: Pelican
 ---
 
-# Deploy a Pelican site
+# Pelican
 
 [Pelican](https://docs.getpelican.com) is a static site generator, written in Python. With Pelican, you can write your content directly with your editor of choice in reStructuredText or Markdown formats.
 

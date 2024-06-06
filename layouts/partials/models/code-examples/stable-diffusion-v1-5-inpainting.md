@@ -31,7 +31,7 @@ export default {
 
     const response =
       await env.AI.run(
-        "@cf/runwayml/stable-diffusion-v1-5-inpainting",
+        "{{ .Page.Params.model.name }}",
         inputs
       );
 

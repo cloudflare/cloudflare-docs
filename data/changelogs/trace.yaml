@@ -1,6 +1,9 @@
 ---
 link: "/fundamentals/basic-tasks/trace-request/changelog/"
 productName: Trace
+productLink: "/fundamentals/basic-tasks/trace-request/"
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
 
 - publish_date: '2024-04-15'

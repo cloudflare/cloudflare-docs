@@ -86,6 +86,9 @@
 /access/ssh/short-live-cert-server/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 
+# ai
+/ai/ /use-cases/ai/ 301
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
@@ -98,6 +101,7 @@
 /support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
 /support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
+/analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 
 # area1
 /email-security/reporting/search/unified-search/ /email-security/reporting/search/ 301
@@ -370,7 +374,7 @@
 /fundamentals/get-started/origin-health/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
 /fundamentals/get-started/reference/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
-/fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
+/fundamentals/get-started/task-guides/optimize-site-speed/ /speed/ 301
 /fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
 /fundamentals/internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
@@ -431,7 +435,7 @@
 /fundamentals/data-products/about-analytics/ /analytics/faq/about-analytics/ 301
 /fundamentals/data-products/analytics-integrations/graylog/index/ /analytics/analytics-integrations/graylog/ 301
 /fundamentals/data-products/analytics-integrations/looker/index/ /analytics/analytics-integrations/looker/ 301
-/fundamentals/data-products/analytics-integrations/elastic/index/ /analytics/analytics-integrations/elastic/ 301
+/analytics/analytics-integrations/elastic/ /analytics/analytics-integrations/ 301
 /fundamentals/data-products/analytics-integrations/splunk/index/ /analytics/analytics-integrations/splunk/ 301
 /fundamentals/data-products/analytics-integrations/datadog/index/ /analytics/analytics-integrations/datadog/ 301
 /fundamentals/data-products/analytics-integrations/google-cloud/index/ /analytics/analytics-integrations/google-cloud/ 301
@@ -440,7 +444,6 @@
 /fundamentals/data-products/ /analytics/ 301
 /fundamentals/get-started/setup/add-site/ /fundamentals/setup/manage-domains/add-site/ 301
 /fundamentals/get-started/get-started-external-link/ /learning-paths/get-started/ 301
-/fundamentals/get-started/task-guides/optimize-speed-external-link/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/get-started/task-guides/prevent-ddos-attacks-external/ /learning-paths/prevent-ddos-attacks/ 301
 /fundamentals/get-started/task-guides/origin-health/free/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/business/ /fundamentals/basic-tasks/protect-your-origin-server/ 301
@@ -581,6 +584,7 @@
 /learning-paths/modules/security/dns-filtering-concepts/what-is-dns/ /learning-paths/dns-filtering/concepts/what-is-dns/ 301
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
+/learning-paths/optimize-site-speed/ /speed/ 301
 /learning-paths/replace-vpn/initial-setup-zero-trust/configure-idp/ /learning-paths/replace-vpn/get-started/configure-idp/ 301
 /learning-paths/workers/configure/ /learning-paths/workers/get-started/ 301
 /learning-paths/workers/configure/intro-to-config/ /learning-paths/workers/get-started/ 301
@@ -725,7 +729,9 @@
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
+/pages/framework-guides/deploy-a-vuepress-site/ /pages/framework-guides/deploy-a-vitepress-site/ 301
 /pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site/ 301
+/pages/functions/plugins/mailchannels/ /workers/tutorials/send-emails-with-resend/ 301
 /pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
 /pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
@@ -1249,6 +1255,7 @@
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
 /workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
+/workers/tutorials/create-a-chatgpt-powered-search-plugin/ /workers/tutorials/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/observability/local-development-and-testing/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
@@ -1345,6 +1352,7 @@
 /workers/tutorials/hello-world-rust/ /workers/tutorials/ 301
 /workers/tutorials/introduction-to-cloudflare-workers/ https://www.youtube.com/watch?v=H7Qe96fqg1M 301
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
+/workers/tutorials/localize-a-website/ /pages/tutorials/localize-a-website/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301

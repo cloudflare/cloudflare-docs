@@ -3,6 +3,7 @@ title: Configure JWT Validation
 pcx_content_type: how-to
 type: overview
 layout: wide
+weight: 1
 meta:
   title: Configure JWT Validation
 ---

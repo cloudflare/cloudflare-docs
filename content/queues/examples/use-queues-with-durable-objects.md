@@ -32,6 +32,10 @@ name = "my-worker"
 bindings = [
   { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
 ]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["YourDurableObject"]
 ```
 
 The following Worker script:
@@ -48,7 +52,7 @@ filename: src/index.ts
 ---
 interface Env {
   YOUR_QUEUE: Queue;
-  YOUR_DO_CLASS: DurableObject;
+  YOUR_DO_CLASS: DurableObjectNamespace;
 }
 
 export default {
@@ -74,23 +78,18 @@ export default {
       // This would return "wrote to queue", but you could return any response.
       return response;
     }
+		return new Response("userId must be provided", { status: 400 });
   }
 }
 
 export class YourDurableObject implements DurableObject {
-  constructor(public state: DurableObjectState, env: Env) {
-      this.state = state;
-      // Ensure you pass your bindings and environment variables into
-      // each Durable Object when it is initialized
-      this.env = env;
-    }
-  }
+  constructor(private state: DurableObjectState, private env: Env) {}
 
   async fetch(request: Request) {
     // Error handling elided for brevity.
     // Publish to your queue
     await this.env.YOUR_QUEUE.send({
-      id: this.state.id // Write the ID of the Durable Object to your queue
+      id: this.state.id.toString() // Write the ID of the Durable Object to your queue
       // Write any other properties to your queue
     });
 

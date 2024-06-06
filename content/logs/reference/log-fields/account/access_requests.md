@@ -10,24 +10,92 @@ weight: 21
 
 The descriptions below detail the fields available for `access_requests`.
 
-{{<table-wrap>}}
+## Action
 
-| Field | Value | Type |
-| -- | -- | -- |
-| Action | What type of record is this. <em>login</em> \| <em>logout</em>. | string |
-| Allowed | If request was allowed or denied. | bool |
-| AppDomain | The domain of the Application that Access is protecting. | string |
-| AppUUID | Access Application UUID. | string |
-| Connection | Identity provider used for the login. | string |
-| Country | Request's country of origin. | string |
-| CreatedAt | The date and time the corresponding access request was made (for example, '2021-07-27T00:01:07Z'). | int or string |
-| Email | Email of the user who logged in. | string |
-| IPAddress | The IP address of the client. | string |
-| PurposeJustificationPrompt | Message prompted to the client when accessing the application. | string |
-| PurposeJustificationResponse | Justification given by the client when accessing the application. | string |
-| RayID | Identifier of the request. | string |
-| TemporaryAccessApprovers | List of approvers for this access request. | array[string] |
-| TemporaryAccessDuration | Approved duration for this access request. | int |
-| UserUID | The uid of the user who logged in. | string |
+Type: string
 
-{{</table-wrap>}}
+What type of record is this. <em>login</em> \| <em>logout</em>.
+
+## Allowed
+
+Type: bool
+
+If request was allowed or denied.
+
+## AppDomain
+
+Type: string
+
+The domain of the Application that Access is protecting.
+
+## AppUUID
+
+Type: string
+
+Access Application UUID.
+
+## Connection
+
+Type: string
+
+Identity provider used for the login.
+
+## Country
+
+Type: string
+
+Request's country of origin.
+
+## CreatedAt
+
+Type: int or string
+
+The date and time the corresponding access request was made (for example, '2021-07-27T00:01:07Z').
+
+## Email
+
+Type: string
+
+Email of the user who logged in.
+
+## IPAddress
+
+Type: string
+
+The IP address of the client.
+
+## PurposeJustificationPrompt
+
+Type: string
+
+Message prompted to the client when accessing the application.
+
+## PurposeJustificationResponse
+
+Type: string
+
+Justification given by the client when accessing the application.
+
+## RayID
+
+Type: string
+
+Identifier of the request.
+
+## TemporaryAccessApprovers
+
+Type: array[string]
+
+List of approvers for this access request.
+
+## TemporaryAccessDuration
+
+Type: int
+
+Approved duration for this access request.
+
+## UserUID
+
+Type: string
+
+The uid of the user who logged in.

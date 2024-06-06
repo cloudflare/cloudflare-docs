@@ -1,7 +1,8 @@
 ---
 link: "/cloudflare-one/changelog/gateway/"
 productName: Gateway
-productArea: Zero Trust
+productLink: "/cloudflare-one/policies/gateway/"
+productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
 - publish_date: '2024-04-05'

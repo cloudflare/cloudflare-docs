@@ -84,7 +84,7 @@ The following [Wrangler commands](/workers/wrangler/commands/) have a `--local` 
 | Command                                    |
 | ----------------------------------------------------|
 | [`d1 execute`](/workers/wrangler/commands/#execute) |
-| [`kv:key](/workers/wrangler/commands/#kvkey) |
+| [`kv:key`](/workers/wrangler/commands/#kvkey) |
 | [`kv:bulk`](/workers/wrangler/commands/#kvbulk) |
 | [`r2 object`](/workers/wrangler/commands/#r2-object) |
 

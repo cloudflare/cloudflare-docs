@@ -45,7 +45,7 @@ Before you generate a custom root CA, make sure you have [OpenSSL](https://www.o
 When preparing your certificate and private key for upload, be sure to remove any unwanted characters, such as mismatching subdomains in the certificate's common name. To review the private key, run the following command:
 
 ```sh
-$ openssl rsa -in <CUSTOM-ROOT-PRIVATE-KEY>.key -text
+$ openssl rsa -in <CUSTOM-ROOT-PRIVATE-KEY>.pem -text
 ```
 
 To review the certificate, run the following command:

@@ -12,10 +12,7 @@ meta:
 
 ## Main features
 
-*   **Security Insights**: Review and manage potential security risks and vulnerabilities associated with your IT infrastructure.
-*   **Infrastructure**: Review and manage your IT infrastructure.
-*   **Security Reports (beta)**: Gain visibility into requests blocked or challenged by the Cloudflare Application Security suite of products.
-*   **Brand Protection (beta)**: Search for new domains that may be attempting to impersonate your brand.
+{{<render file="_main-features.md">}}
 
 {{<button-group>}}
   {{<button type="primary" href="/security-center/get-started/">}}Get started{{</button>}}

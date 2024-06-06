@@ -10,6 +10,10 @@ meta:
 
 To set up Authenticated Origin Pulls - which help ensure requests to your origin server come from the Cloudflare network - choose whether to enable them on [all hostnames in your zone](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or on a [per-hostname basis](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
+{{<Aside type="warning">}}
+{{<render file="_aop-per-hostname-cert-requirement.md">}}
+{{</Aside>}}
+
 ---
 
 ## Other situations

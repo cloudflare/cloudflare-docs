@@ -35,8 +35,8 @@ Magic WAN is compatible with a host of third-party devices. If you do not have M
 Magic WAN sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
-{{<feature header="Traffic steering" href="/magic-wan/reference/traffic-steering/" cta="Learn about traffic steering">}}
-Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
+{{<feature header="Automatic cloud on-ramps" href="/magic-wan/configuration/magic-cloud-networking/" cta="Automate your cloud on-ramps">}}
+Automate resource discovery, and reduce management burden when connecting to your public cloud.
 {{</feature>}}
 
 {{<feature header="Network analytics" href="/magic-wan/analytics/">}}
@@ -46,6 +46,10 @@ Network analytics allows you to check traffic patterns and DDoS attacks in near 
 ---
 
 ## Related products
+
+{{<related header="Magic Cloud Networking" href="/magic-cloud-networking/" product="magic-cloud-networking">}}
+Simplify and automate cloud resource discovery, and reduce your management burden when connecting to your public cloud.
+{{</related>}}
 
 {{<related header="Cloudflare Zero Trust" href="/cloudflare-one/" product="cloudflare-one">}}
 Cloudflare Zero Trust replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.

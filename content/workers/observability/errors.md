@@ -19,7 +19,7 @@ When a Worker running in production has an error that prevents it from returning
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
 | `1101`     | Worker threw a JavaScript exception.                                                                              |
 | `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                             |
-| `1103`     | The owner of this worker needs to contact [Cloudflare Support](https://support.cloudflare.com/)                   |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                   |
 | `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
 | `1019`     | Worker hit [loop limit](#loop-limit).                                                                             |
 | `1021`     | Worker has requested a host it cannot access.                                                                     |
@@ -39,24 +39,41 @@ A Worker cannot call itself or another Worker more than 16 times. In  order to p
 ## Errors on Worker upload
 These errors occur when a Worker is uploaded or modified. 
 {{<table-wrap>}}
-| Error code | Meaning                                                                                                           |
-| ---------------- | -------------------------------------------------------------------------------------------------------------- |
-| `10006`     | Could not parse script body.                                                                              |
-| `10007`     | Script or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                                      |
-| `10015`     | Account is not entitled to use Workers.                                          |
-| `10016`     | Invalid script name.                                                    |
-| `10026`     | Could not parse request body.                                                                     |
-| `10035`     | Multiple attempts to modify a resource at the same time                                                                                        
-| `10037`     | An account has exceeded the number of [Workers scripts allowed](/workers/platform/limits/#number-of-workers).                         |
-| `10026`     | Could not parse request body.                         |                        |
-| `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                         |
-| `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                         |
-| `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).                         |
-| `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                         |
-| `10068`     | The uploaded script has no registered [event handlers](/workers/runtime-apis/handlers/).                         |
-| `10069`     | The uploaded script contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.                     |
+| Error code | Meaning                                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `10006`     | Could not parse your Worker's code.                                                                                          |
+| `10007`     | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                    |
+| `10015`     | Account is not entitled to use Workers.                                                                                      |
+| `10016`     | Invalid Worker name.                                                                                                         |
+| `10021`     | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors) for details. |
+| `10026`     | Could not parse request body.                                                                                                |
+| `10035`     | Multiple attempts to modify a resource at the same time                                                                      |     
+| `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
+| `10026`     | Could not parse request body.                                                                                                |
+| `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                     |
+| `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                  |
+| `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).  |
+| `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                                                                       |
+| `10068`     | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                     |
+| `10069`     | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.           |
 
 {{</table-wrap>}}
+
+### Validation Errors (10021)
+
+The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked). For example, if you attempt to deploy a broken Worker with invalid JavaScript that would throw a `SyntaxError` — Cloudflare will not deploy your Worker.
+
+Specific error cases include but are not limited to:
+
+#### Script startup exceeded CPU time limit
+
+This means that you are doing work in the top-level scope of your Worker that takes [more than the startup time limit (400ms)](/workers/platform/limits/#worker-startup-time) of CPU time.
+
+This is usually a sign of a bug and/or large performance problem with your code or a dependency you rely on. It's not typical to use more than 400ms of CPU time when your app starts. The more time your Worker's code spends parsing and executing top-level scope, the slower your Worker will be when you deploy a code change or a new [isolate](/workers/reference/how-workers-works/) is created.
+
+This error is most commonly caused by attempting to perform expernsive initialization work directly in top level (global) scope, rather than either at build time or when your Worker's handler is invoked. For example, attempting to initialize an app by generating or consuming a large schema.
+
+To analyze what is consuming so much CPU time, you should open Chrome DevTools for your Worker and look at the Profiling and/or Performance panels to understand where time is being spent. Is there something glaring that consumes tons of CPU time, especially the first time you make a request to your Worker?
 
 ## Runtime errors
 

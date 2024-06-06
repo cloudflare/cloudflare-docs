@@ -142,6 +142,44 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sq
   --url-query query="SELECT clientRequestMethod, clientRequestPath, clientRequestProtocol FROM http_requests WHERE date = '2023-10-12' LIMIT 500"
 ```
 
+## SQL queries supported
+
+These are the SQL query clauses supported by Log Explorer.
+
+### SELECT 
+
+The `SELECT` clause specifies the columns that you want to retrieve from the database tables. It can include individual column names, expressions, or even wildcard characters to select all columns.
+
+### FROM 
+
+The `FROM` clause specifies the tables from which to retrieve data. It indicates the source of the data for the `SELECT` statement.
+
+### WHERE 
+
+The `WHERE` clause filters the rows returned by a query based on specified conditions. It allows you to specify conditions that must be met for a row to be included in the result set.
+
+### GROUP BY 
+
+The `GROUP BY` clause is used to group rows that have the same values into summary rows.
+
+### HAVING
+
+The `HAVING` clause is similar to the `WHERE` clause but is used specifically with the `GROUP BY` clause. It filters groups of rows based on specified conditions after the `GROUP BY` operation has been performed.
+
+### ORDER BY 
+
+The `ORDER BY` clause is used to sort the result set by one or more columns in ascending or descending order.
+
+### LIMIT 
+
+The `LIMIT` clause is used to constrain the number of rows returned by a query. It is often used in conjunction with the `ORDER BY` clause to retrieve the top N rows or to implement pagination.
+
+{{<Aside type="note">}}
+
+Log Explorer does not support `JOINs`, `DDL`, `DML`, or `EXPLAIN` queries.
+
+{{</Aside>}}
+
 ## FAQs
 
 ### Which fields (or columns) are available for querying?

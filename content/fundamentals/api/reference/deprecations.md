@@ -8,6 +8,21 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
+## Page Rules
+**End of life date: Jan 6th, 2025**
+
+The Page Rules API endpoints are deprecated, since Page Rules were deprecated.
+
+Deprecated APIs:
+- GET /zones/:zone_id/pagerules
+- POST /zones/:zone_id/pagerules
+- DELETE /zones/:zone_id/pagerules/:pagerule_id
+- GET /zones/:zone_id/pagerules/:pagerule_id
+- PATCH /zones/:zone_id/pagerules/:pagerule_id
+- PUT /zones/:zone_id/pagerules/:pagerule_id
+
+Refer to the [migration guide](/rules/reference/page-rules-migration/) for more information on the Rules features that are replacing Page Rules.
+
 ## Auto Minify
 **End of life date: August 5th, 2024**
 
@@ -16,6 +31,18 @@ The Auto Minify API endpoints are deprecated, since the Auto Minify feature was 
 Deprecated APIs:
 - GET /zones/:zone_id/settings/minify
 - PATCH /zones/:zone_id/settings/minify
+
+## DNS Records: "locked" Field
+**End of life date: July 14th, 2024**
+
+The `"locked"` field of DNS records in API responses is unused and has been guaranteed to always be `false` for more than a year. This deprecation means that the field will be omitted from API responses entirely. If received from a client, the field will continue to be ignored, just as it is today.
+
+Modified API:
+ - GET /zones/:zone_id/dns_records
+ - POST /zones/:zone_id/dns_records
+ - GET /zones/:zone_id/dns_records/:dns_record_id
+ - PATCH /zones/:zone_id/dns_records/:dns_record_id
+ - PUT /zones/:zone_id/dns_records/:dns_record_id
 
 ## Mobile Redirect
 **End of life date: June 30th, 2024**

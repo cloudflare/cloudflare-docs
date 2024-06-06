@@ -18,7 +18,7 @@ Issuing and renewing certificates can take up a lot of time from your technical 
 
 Advanced certificates offer more customization than Universal SSL.
 
-With [custom certificates](/ssl/edge-certificates/custom-certificates/), you have full control in terms of certificate authority (CA) or certificate [validation level](/ssl/concepts/#validation-level), for example, but you need to handle issuance and renewal on your own.
+With [custom certificates](/ssl/edge-certificates/custom-certificates/), you have full control in terms of certificate authority (CA) or certificate {{<glossary-tooltip term_id="validation level" link="/ssl/concepts/#validation-level">}}validation level{{</glossary-tooltip>}}, but you need to handle issuance and renewal on your own.
 
 ### Meet cipher suites requirements
 

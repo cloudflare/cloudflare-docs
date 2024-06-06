@@ -1,11 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Nuxt site
+title: Nuxt
 meta:
   description: Web framework making Vue.js-based development simple and powerful.
 ---
 
-# Deploy a Nuxt site
+# Nuxt
 
 [Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
 
