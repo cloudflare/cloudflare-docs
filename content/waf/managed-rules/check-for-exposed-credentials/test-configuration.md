@@ -12,7 +12,6 @@ After enabling and configuring exposed credentials checks, you may want to test 
 
 Cloudflare provides a special set of case-sensitive credentials for this purpose:
 
-- Login: `CF_EXPOSED_USERNAME` or `CF_EXPOSED_USERNAME@example.com`
-- Password: `CF_EXPOSED_PASSWORD`
+{{<render file="_exposed-creds-test-credentials.md">}}
 
 The WAF always considers these specific credentials as having been previously exposed. Use them to force an "exposed credentials" event, which allows you to check the behavior of your current configuration.
