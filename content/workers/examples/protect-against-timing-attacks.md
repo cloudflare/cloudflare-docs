@@ -7,7 +7,7 @@ tags:
 languages:
   - TypeScript
   - Python
-pcx_content_type: configuration
+pcx_content_type: example
 title: Using timingSafeEqual
 weight: 1001
 layout: example

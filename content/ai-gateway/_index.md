@@ -79,6 +79,8 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
+{{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
+
 {{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
 {{</resource-group>}}

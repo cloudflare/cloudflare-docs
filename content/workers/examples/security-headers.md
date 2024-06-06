@@ -10,7 +10,7 @@ languages:
   - JavaScript
   - TypeScript
   - Python
-pcx_content_type: configuration
+pcx_content_type: example
 title: Set security headers
 weight: 1001
 layout: example

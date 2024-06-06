@@ -7,7 +7,7 @@ languages:
   - JavaScript
   - TypeScript
   - Python
-pcx_content_type: configuration
+pcx_content_type: example
 title: Cache Tags using Workers
 weight: 1001
 layout: example

@@ -8,6 +8,8 @@ title: '{{ replace .File.ContentBaseName `-` ` ` | title }}'
 
 # Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done
 
+{{<tutorial-date-info>}}
+
 Describe the context for this tutorial. You can also optionally describe the intended audience, include a [GitHub link](https://github.com/) to completed code, and even outline a summary of the steps that the reader will be performing throughout this tutorial.
 
 {{<tutorial>}}
@@ -32,7 +34,7 @@ First, use the `c3` CLI to create a new Cloudflare Workers project.
 $ npm create cloudflare@latest <PROJECT_NAME>
 ```
 
-Replace `<PROJECT_NAME>` with your desired project name. 
+Replace `<PROJECT_NAME>` with your desired project name.
 
 (Numbered list example)
 

@@ -7,7 +7,7 @@ tags:
 title: Any valid service token
 weight: 4
 layout: example
-pcx_content_type: configuration
+pcx_content_type: example
 ---
 
 The request will need to present the headers for any service token created for this account
