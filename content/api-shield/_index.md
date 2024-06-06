@@ -27,10 +27,12 @@ Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
 ## Features
 
 {{<feature header="Security features" href="/api-shield/security/">}}
-Secure your APIs using API Shield's security features. {{</feature>}}
+Secure your APIs using API Shield's security features.
+{{</feature>}}
 
 {{<feature header="Management, monitoring, and more" href="/api-shield/api-gateway/">}}
-A package of features that will do everything for your APIs.{{</feature>}}
+A package of features that will do everything for your APIs.
+{{</feature>}}
 
 ## Availability
 
