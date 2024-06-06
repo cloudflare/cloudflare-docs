@@ -754,7 +754,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
           <p>It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
           </p>
-          <p><strong>Note:</strong> This field has been deprecated and should not be used in new rule expressions.</p>
+          <p><strong>Note:</strong> This field has been deprecated and will be removed on 2024-09-30. You should not use this field in expressions of new rules.</p>
         </td>
     </tr>
     <tr id="field-cf-tls_cipher">
