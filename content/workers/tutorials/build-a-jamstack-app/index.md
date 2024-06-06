@@ -8,9 +8,7 @@ title: Build a todo list Jamstack application
 
 # Build a todo list Jamstack application
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
@@ -22,6 +20,8 @@ Before starting this project, you should have some experience with HTML, CSS, an
 2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
 If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/lauragift21/cloudflare-workers-todos) and refer to the [live demo](https://todos.examples.workers.dev/) to review what you will be building.
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## 1. Create a new Workers project
 
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `fetch` constructs a new `Response` with the body text `'Hello World!'`. 
+In your default `index.js` file, you can see that request/response pattern in action. The `fetch` constructs a new `Response` with the body text `'Hello World!'`.
 
 When a Worker receives a `request`, the Worker returns the newly constructed response to the client. Your Worker will serve new responses directly from [Cloudflare's global network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond by constructing responses directly on the Cloudflare global network.
 
@@ -145,9 +145,9 @@ export default {
     };
     const setCache = data => env.TODOS.put('data', data);
     const getCache = () => env.TODOS.get('data');
-    
+
     let data;
-    
+
     const cache = await getCache();
     if (!cache) {
       await setCache(JSON.stringify(defaultData));
@@ -310,7 +310,7 @@ export default {
       } catch (err) {
         return new Response(err, { status: 500 });
       }
-    }	
+    }
     // previous code
   },
 };

@@ -5149,6 +5149,12 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
 }
 
+.tutorialDateInfo {
+  margin-bottom: 2em;
+  font-size: .85em;
+  margin-top: -.5em;
+}
+
 .tutorialPreReqs {
   padding-top: 0.5em;
   padding-inline: 2em;

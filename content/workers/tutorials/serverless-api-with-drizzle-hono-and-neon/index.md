@@ -3,14 +3,16 @@ updated: 2024-05-12
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Cloudflare Workers - Build a serverless API using Drizzle ORM, Hono and Neon
+title: Build a serverless API using Drizzle ORM, Hono and Neon
 spotlight:
   author: Chandan Kumar Mandal
   author_bio_link: https://github.com/chankruze
   author_bio_source: GitHub
 ---
 
-# Cloudflare Workers - Build a serverless API using Drizzle ORM, Hono and Neon
+# Build a serverless API using Drizzle ORM, Hono, and Neon
+
+{{<tutorial-date-info>}}
 
 {{<spotlight-author>}}
 

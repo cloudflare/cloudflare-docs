@@ -8,11 +8,11 @@ title: Managing multiple Workers projects with Lerna
 
 # Managing multiple Workers projects with Lerna
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 Using [`lerna`](https://github.com/lerna/lerna), a tool for managing multiple JavaScript codebases inside a single monorepo, developers can work with multiple Wrangler projects and share dependencies between them. If your codebase is already managed with `lerna`, you can also add a new Wrangler project into your existing monorepo without disrupting your workflow.
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 Begin by installing `lerna`, and creating a new project in the folder `workers-monorepo`:
 
