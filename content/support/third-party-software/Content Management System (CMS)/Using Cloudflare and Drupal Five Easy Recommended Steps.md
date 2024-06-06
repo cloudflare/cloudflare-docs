@@ -41,7 +41,7 @@ Allow IP addresses you expect traffic from in the Cloudflare **Firewall** App.
 
 Why do this?
 
-If Cloudflare has an IP address with a high threat score going to your site, or if you have [Cloudflare's Web Application Firewall](https://www.cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+If you have [Cloudflare's Web Application Firewall](https://www.cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
 
 **Note:** We allow all known search engine and social media crawlers in our macro list. If you decide to block countries in Threat Control, please use care because you may end up inadvertently blocking their crawlers (blocking the USA, for example, could mean that a good crawler gets challenged).
 
@@ -49,7 +49,7 @@ If Cloudflare has an IP address with a high threat score going to your site, or 
 
 Review your basic security settings
 
-If your site is frequently the target of spam attacks or botnet attacks, changing your security level to a higher level will reduce the amount of spam you get on your site. We default all users to a medium setting when they first add the domain to Cloudflare.
+If your site is frequently the target of spam attacks or botnet attacks, changing your security level (deprecated) to a higher level will reduce the amount of spam you get on your site. We default all users to a medium setting when they first add the domain to Cloudflare.
 
 Why do this?
 
