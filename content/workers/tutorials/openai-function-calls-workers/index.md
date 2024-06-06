@@ -11,6 +11,8 @@ tags:
 
 # Use OpenAI GPT function calling with JavaScript and Cloudflare Workers
 
+{{<tutorial-date-info>}}
+
 In this tutorial, you will build a project that leverages [OpenAI's function calling](https://platform.openai.com/docs/guides/function-calling) feature, available in OpenAI's latest Chat Completions API models.
 
 The function calling feature allows the AI model to intelligently decide when to call a function based on the input, and respond in JSON format to match the function's signature. You will use the function calling feature to request for the model to determine a website URL which contains information relevant to a message from the user, retrieve the text content of the site, and, finally, return a final response from the model informed by real-time web data.

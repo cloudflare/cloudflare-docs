@@ -6,13 +6,14 @@ tags:
 languages:
   - JavaScript
   - TypeScript
+  - Python
 pcx_content_type: example
 title: Debugging logs
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -103,6 +104,42 @@ export default {
     return response;
   },
 } satisfies ExportedHandler<Env>;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import json
+import traceback
+from pyodide.ffi import create_once_callable
+from js import Response, fetch, Headers
+
+async def on_fetch(request, _env, ctx):
+    # Service configured to receive logs
+    log_url = "https://log-service.example.com/"
+
+    async def post_log(data):
+        return await fetch(log_url, method="POST", body=data)
+
+    response = await fetch(request)
+
+    try:
+        if not response.ok and not response.redirected:
+            body = await response.text()
+        # Simulating an error. Ensure the string is small enough to be a header
+        raise Exception(f'Bad response at origin. Status:{response.status} Body:{body.strip()[:10]}')
+    except Exception as e:
+        # Without ctx.waitUntil(), your fetch() to Cloudflare's
+        # logging service may or may not complete
+        ctx.waitUntil(create_once_callable(post_log(e)))
+        stack = json.dumps(traceback.format_exc()) or e
+        # Copy the response and add to header
+        response = Response.new(stack, response)
+        response.headers["X-Debug-stack"] = stack
+        response.headers["X-Debug-err"] = e
+
+    return response
 ```
 
 {{</tab>}}

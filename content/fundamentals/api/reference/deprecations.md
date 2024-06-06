@@ -32,6 +32,18 @@ Deprecated APIs:
 - GET /zones/:zone_id/settings/minify
 - PATCH /zones/:zone_id/settings/minify
 
+## DNS Records: "locked" Field
+**End of life date: July 14th, 2024**
+
+The `"locked"` field of DNS records in API responses is unused and has been guaranteed to always be `false` for more than a year. This deprecation means that the field will be omitted from API responses entirely. If received from a client, the field will continue to be ignored, just as it is today.
+
+Modified API:
+ - GET /zones/:zone_id/dns_records
+ - POST /zones/:zone_id/dns_records
+ - GET /zones/:zone_id/dns_records/:dns_record_id
+ - PATCH /zones/:zone_id/dns_records/:dns_record_id
+ - PUT /zones/:zone_id/dns_records/:dns_record_id
+
 ## Mobile Redirect
 **End of life date: June 30th, 2024**
 
