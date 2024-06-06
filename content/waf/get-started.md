@@ -33,7 +33,7 @@ Detections do not take any action on incoming traffic – they only add relevant
 
 ## 1. Deploy the Cloudflare Managed Ruleset
 
-The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) protects against CVEs and known attack vectors. This ruleset is designed to identify common attacks using signatures, while generating low false positives. Rule changes are published on a weekly basis in the [WAF changelog](/waf/change-log/). Cloudflare may also add rules at any time during emergency releases for high profile zero-day protection.
+The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) protects against Common Vulnerabilities and Exposures (CVEs) and known attack vectors. This ruleset is designed to identify common attacks using signatures, while generating low false positives. Rule changes are published on a weekly basis in the [WAF changelog](/waf/change-log/). Cloudflare may also add rules at any time during emergency releases for high profile zero-day protection.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **WAF** and select the **Managed rules** tab.
@@ -95,7 +95,7 @@ Once you have deployed the Cloudflare Managed Ruleset and a rule based on the at
 
 ## 4. (Optional) Deploy the Cloudflare OWASP Core Ruleset
 
-After configuring the Cloudflare Managed Ruleset and attack score, you can also deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). This managed ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set and its attack coverage significantly overlaps with Cloudflare Managed Ruleset by detecting common attack vectors such as SQLi and XSS.
+After configuring the Cloudflare Managed Ruleset and attack score, you can also deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). This managed ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set. Its attack coverage significantly overlaps with Cloudflare Managed Ruleset by detecting common attack vectors such as SQLi and XSS.
 
 {{<Aside type="warning" header="Warning">}}
 The Cloudflare OWASP Core Ruleset is prone to false positives and offers only marginal benefits when added on top of Cloudflare Managed Ruleset and WAF attack score. If you decide to deploy this managed ruleset, you will need to monitor and adjust its settings based on your traffic to prevent false positives.
@@ -107,7 +107,7 @@ This will deploy the ruleset with the default configuration: paranoia level = _P
 
 {{<details header="Ruleset configuration">}}
 
-Unlike the signature-based Cloudflare Managed Ruleset, the Cloudflare OWASP Core Ruleset is score-based. You select a certain paranoia level (levels vary from _PL1_ to _PL4_), which enables an increasing larger group of rules. You also select a score threshold, which decides when to perform the configured action. Low paranoia with a high score threshold usually leads to fewer false positives. For an example of how the OWASP Core Ruleset is evaluated, refer to [OWASP evaluation example](/waf/managed-rules/reference/owasp-core-ruleset/example/).
+Unlike the signature-based Cloudflare Managed Ruleset, the Cloudflare OWASP Core Ruleset is score-based. You select a certain paranoia level (levels vary from _PL1_ to _PL4_, where _PL1_ is the lowest level), which enables an increasing larger group of rules. You also select a score threshold, which decides when to perform the configured action. Low paranoia with a high score threshold usually leads to fewer false positives. For an example of how the OWASP Core Ruleset is evaluated, refer to [OWASP evaluation example](/waf/managed-rules/reference/owasp-core-ruleset/example/).
 
 Follow one of these strategies to configure the ruleset according to your needs:
 
