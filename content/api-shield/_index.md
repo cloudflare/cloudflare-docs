@@ -14,7 +14,7 @@ meta:
 Identify and address your API vulnerabilities.
 {{</description>}}
 
-{{<plan type="enterprise">}}
+{{<plan type="ent-add-on">}}
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
