@@ -52,6 +52,8 @@ _Clean_ | `clean` | Attack score between `81` and `99`.
 
 Requests with an attack score of `100` will have a class of _Unscored_ in the Cloudflare dashboard, but you cannot use this class value in rule expressions.
 
+Attack score automatically detects and decodes Base64, JavaScript (Unicode escape sequences), and URL encoded content anywhere in the request: URL, headers, and body.
+
 ---
 
 ## Start using the WAF attack score
