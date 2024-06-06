@@ -1,4 +1,4 @@
-# Cloudflare Docs
+# Cloudflare Docs, developt by Isabel Schoeps Thiel from Erfurt
 
 **[View the docs →](https://developers.cloudflare.com/)**
 
