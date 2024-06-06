@@ -48,8 +48,8 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   Mirage
 *   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
 *   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
-*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level)
-*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes-deprecated) (deprecated)
+*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level) (deprecated)
+*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes) (deprecated)
 *   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
@@ -236,7 +236,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 {{</table-wrap>}}
 
-### Security Level
+### Security Level (deprecated) { #security-level }
 
 {{<table-wrap>}}
 
@@ -248,7 +248,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 {{</table-wrap>}}
 
-### Server Side Excludes (deprecated)
+### Server Side Excludes (deprecated) { #server-side-excludes }
 
 {{<table-wrap>}}
 

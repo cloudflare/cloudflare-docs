@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/200170056-Understanding
 title: Security Level
 ---
 
-# Security Level
+{{<heading-pill style="deprecated">}}Security Level{{</heading-pill>}}
 
 {{<render file=_security-level-description.md productFolder="waf">}}
 
