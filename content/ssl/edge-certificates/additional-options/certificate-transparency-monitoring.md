@@ -41,12 +41,15 @@ To stop receiving alerts, disable **Certificate Transparency Monitoring** or rem
 
 Most certificate alerts are routine. Cloudflare sends alerts whenever a certificate for your domain appears in a log. Certificates expire (and must be reissued), so it is completely normal to receive issuance emails. If your domain is listed in the email, along with reasonable ownership and certificate information, then **no action is required**.
 
-Additionally, you should check whether the certificate was issued through Cloudflare. Cloudflare partners with multiple CAs to provide certificates. 
+Additionally, you should check whether the certificate was issued through Cloudflare. Cloudflare partners with [multiple CAs](/ssl/reference/certificate-authorities/) to provide certificates.
 To view all Cloudflare-issued certificates and backup certificates - which require no additional actions - visit the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard.
 
 You _should_ take action when something is clearly wrong, such as if you:
 
-- Do not recognize the certificate issuer. (Please note Cloudflare provisions backup certificates, so you may see a certificate listed that is not in active use for your site. The Edge Certificates page above will show all certificates requested for your site.)
+- Do not recognize the certificate issuer.
+    {{<Aside type="note">}}
+Note that Cloudflare provisions backup certificates, so you may see a certificate listed that is not in active use for your site. The [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) will show all certificates requested for your site.
+{{</Aside>}}
 - Have recently noticed problems with your website.
 
 ---
@@ -63,7 +66,7 @@ Only Certificate Authorities can revoke malicious certificates. If you believe a
 
 - [GoDaddy support](https://www.godaddy.com/contact-us?sp_hp=B)
 
-- [Google Trust Services support](https://pki.goog/)
+- [Google Trust Services support](https://pki.goog/faq/)
 
 - [IdenTrust support](https://www.identrust.com/support/support-team)
 
