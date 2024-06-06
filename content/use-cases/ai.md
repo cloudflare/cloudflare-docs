@@ -10,7 +10,7 @@ meta:
 
 Build and deploy ambitious AI applications to Cloudflare's global network.
 
-{{<stream video_id="3c46281a9b2b84ee6776a53f87580c45">}}
+{{<stream video_id="3c46281a9b2b84ee6776a53f87580c45" video_title="Choosing the right text generation model" >}}
 
 ## Reference architectures
 
