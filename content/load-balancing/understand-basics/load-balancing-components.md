@@ -18,7 +18,7 @@ When you set up a load balancer, Cloudflare automatically creates an [LB DNS rec
 
 ## Pools
 
-Within Cloudflare, pools represent your endpoints and how they are organized. As such, a pool can be a group of several endpoints, or you could also have only one endpoint per pool. Depends on what best suits your use case.
+Within Cloudflare, pools represent your endpoints and how they are organized. As such, a pool can be a group of several endpoints, or you could also have only one endpoint per pool — it depends on what best suits your use case.
 
 For example, if you are only using Cloudflare to globally distribute traffic across regions ([global traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/)), each pool could represent one region and, within each region, you could have one endpoint that represents the entry point to your data center.
 
