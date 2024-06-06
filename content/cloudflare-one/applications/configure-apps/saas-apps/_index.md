@@ -64,19 +64,3 @@ Cloudflare will begin synchronizing users and groups between your IdP and the Sa
 
 - **Deletion handling**: Choose what happens to users and groups in the SaaS application when they are deleted from your IdP.
 
-### Settings for common SaaS applications
-
-The table below lists some common SaaS applications, the authentication method used for SCIM, and their SCIM provisioning/deprovisioning capabilities. If your application is not listed, consult their documentation for details.
-
-| Application | Credential type | Create user | Update user | Delete user | Create group | Update group | Delete group |
-| ----------- | --------------- | ----------- | ----------- | ------------ | ----------- | ------------- | ------------ |
-| Atlassian |  | | |  |  |  |  |
-| AWS  | Bearer token | ✅| ✅| ✅ | ✅ | ✅ | ❌ |
-| Datadog |  | | |  |  |  |  |
-| GitHub |  | | |  |  |  |  |
-| Gmail |  | | |  |  |  |  |
-| Google Workspace |  | | |  |  |  |  |
-| Microsoft Azure |  | | |  |  |  |  |
-| Salesforce |  | | |  |  |  |  |
-| Slack |  | | |  |  |  |  |
-| Wordpress |  | | |  |  |  |  |
