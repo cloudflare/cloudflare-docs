@@ -21,8 +21,6 @@ export class Counter {
   }
 
   async fetch(request) {
-    let url = new URL(request.url);
-
     // retrieve data
     let value = (await this.ctx.storage.get("value")) || 0; 
 
@@ -107,7 +105,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     
     - After any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes. Some programs may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed` to `true` to opt out of the default behavior. 
 
-    - If you want to allow some outgoing network messages to proceed immediately but not others, you can use the allowUnconfirmed option to avoid blocking the messages that you want to proceed and then separately call the [`sync()`](/durable-objects/api/transactional-storage-api/#sync) method, which returns a promise that only resolves once all previous writes have successfully been persisted to disk.
+    - If you want to allow some outgoing network messages to proceed immediately but not others, you can use the `allowUnconfirmed` option to avoid blocking the messages that you want to proceed and then separately call the [`sync()`](/durable-objects/api/transactional-storage-api/#sync) method, which returns a promise that only resolves once all previous writes have successfully been persisted to disk.
 
 - {{<code>}}noCache{{</code>}}{{<param-type>}}boolean{{</param-type>}}
 
