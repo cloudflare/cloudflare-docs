@@ -129,7 +129,7 @@ Before setting up the load balancer:
 
 The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
 
-Revise your pools and monitor configuration to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
+Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
 
 {{</tutorial-step>}}
 
@@ -156,18 +156,37 @@ After confirming the origins and monitors are set up correctly and return the ex
 
 7. On the **Review** page, review your configuration and select **Save as Draft**.
 
+A DNS record of the type `LB` will be created under [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) with the hostname you have defined, and a corresponding load balancer will be added to [**Traffic** > **Load Balancing** >](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing)
+
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Deploy on a test hostname" optional="true">}}
 
-Step content
+If you have used a temporary hostname for your load balancer, follow the steps below to deploy and test it.
+
+1. Go to **Traffic** > **Load Balancing**.
+2. In the **Manage Load Balancers** list, locate the load balancer you created under a test hostname (such as `lb`) and select to enable it.
+3. On your browser, request the temporary hostname (`lb.example.com`). You should see the website or application hosted at your primary origin server.
+4. Go back to the **Manage Load Balancers** list, select to expand the test load balancer, and disable the primary pool.
+5. On a new incognito window of your browser, request the temporary hostname once again. You should see the website or application hosted at your secondary origin server this time.
+
+    If you find issues, revise your pools, monitor, and load balancer configurations to confirm they followed the instructions above. Also refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/) if needed.
+
+{{<Aside type="warning" header="Important">}}
+After you can confirm everything is working correctly, make sure you turn the origin pools within the load balancer back on.
+{{</Aside>}}
 
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Route production traffic to load balancer">}}
 
-Step content
+Now that you have set up your load balancer and verified everything is working correctly, you can put the load balancer on a live domain or subdomain:
 
+1. Confirm that your production hostname has the correct [priority order](/load-balancing/load-balancers/dns-records/#priority-order) of DNS records and is covered by an [SSL/TLS certificate](/load-balancing/load-balancers/dns-records/#ssltls-coverage).
+
+    If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, set up an [Origin rule](/rules/origin-rules/features/#dns-record) or [Page rule](/rules/page-rules/how-to/override-url-or-ip-address/).
+
+2. Configure your load balancer to receive production traffic by editing the **Hostname** of your existing load balancer.
 {{</tutorial-step>}}
 
 {{</tutorial>}}
