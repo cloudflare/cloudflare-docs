@@ -16,12 +16,12 @@ Cloudflare integrates with the majority of SaaS applications that support the SA
 
 ## Configure SCIM
 
-Cloudflare Access supports [SCIM provisioning](/cloudflare-one/identity/users/scim/) for SaaS applications that use the SAML authentication protocol. Each SaaS application has different SCIM setup requirements, and some applications may not support all of the SCIM settings available in Zero Trust.
+[SCIM provisioning](/cloudflare-one/identity/users/scim/) allows you to synchronize users and groups between your identity provider (IdP) and SaaS app. Once configured, SCIM will automatically grant a user access to all the SaaS applications they need to do their job once they have been added to the IdP. Each SaaS application has different SCIM setup requirements, and some applications may not support all of the SCIM functionality available in Zero Trust.
 
 ### Prerequisites
 
-- [Add a SaaS application](#add-a-saas-application) using SAML
-- Add a [supported identity provider (IdP)](/cloudflare-one/identity/users/scim/#supported-identity-providers) to Zero Trust
+- [Add a SaaS application](#add-a-saas-application) to Zero Trust
+- Add a [supported IdP](/cloudflare-one/identity/users/scim/#supported-identity-providers) to Zero Trust
 - Enable SCIM provisioning between your IdP and Zero Trust. Refer to our [IdP setup guides](/cloudflare-one/identity/idp-integration/) for details.
 
 ### 1. Obtain SaaS application settings
@@ -51,16 +51,33 @@ Cloudflare will begin synchronizing users and groups between your IdP and the Sa
 #### User synchronization
 
 - **User event handling**: Choose the user creation/update/deletion events that you want Cloudflare to forward from the IdP to the SaaS application.
-- **Filter**: You can enter a SCIM filter expression that matches the IdP users that you want to synchronize with the SaaS application. For example, ........... To synchronize all IdP users, leave this field blank.
-- **Transformation**: You can enter a JSONata script that transforms user identities from the IdP into the format expected by your SaaS application.
+- **Filter**: You can enter a [SCIM filter expression](https://datatracker.ietf.org/doc/html/rfc7644#section-3.4.2.2) that matches the IdP users you want to synchronize with the SaaS application. For example,
+    ```txt
+    email co "@mycompany.com and active eq true"
+    ```
+    To synchronize all IdP users, leave this field blank.
+- **Transformation**: You can enter a [JSONata](https://jsonata.org/) script that modifies user identities from the IdP before they are provisioned to the SaaS application. This is useful for setting defaults, excluding email addresses, or ensuring usernames meet arbitrary criteria. For example,
+
+    ```json
+    {
+      "transformations": {
+        "mapUserName": "$.employeeId",
+        "mapEmail": "$.email",
+        "mapRole": "$.role",
+        "mapDepartment": "$.department",
+        "mapStatus": "$.status"
+      }
+    }
+    ```
 
 #### Group synchronization
 
 - **Group event handling**: Choose the group creation/update/deletion events that you want Cloudflare to forward from the IdP to the SaaS application.
-- **Filter**:  You can enter a SCIM filter expression that matches the IdP groups that you want to synchronize with the SaaS application. For example, ........... To synchronize all IdP groups, leave this field blank.
-- **Transformation**: You can enter a JSONata script that transforms groups from the IdP into the format expected by your SaaS application.
+- **Filter**:  You can enter a [SCIM filter expression](https://datatracker.ietf.org/doc/html/rfc7644#section-3.4.2.2) that matches the IdP groups you want to synchronize with the SaaS application. For example, `displayName eq "Marketing"`. To synchronize all IdP groups, leave this field blank.
+- **Transformation**: You can enter a [JSONata](https://jsonata.org/) script that modifies groups from the IdP before they are provisioned to the SaaS application.
 
-#### Additional settings
+#### Deletion handling
 
-- **Deletion handling**: Choose what happens to users and groups in the SaaS application when they are deleted from your IdP.
-
+Choose what happens to users and groups in the SaaS application when they are deleted from your IdP.
+  - **Delete users and groups** removes them from the application.
+  - **Disable users and groups** deactivates them in the application. Select this option if your SaaS application does not allow resource deletion.

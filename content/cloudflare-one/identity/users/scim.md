@@ -21,7 +21,7 @@ Cloudflare Access can automatically deprovision users from Zero Trust after they
 
 ## Sync users and groups in SaaS applications
 
-You can use SCIM with [Access for SaaS](/cloudflare-one/applications/configure-apps/saas-apps/) to automatically provision and deprovision users from a [supported identity provider](#supported-identity-providers) into your SaaS applications. Once configured, SCIM will automatically grant a user access to all the SaaS applications they need to do their job once they have been added to the identity provider.
+Cloudflare Access can automatically provision and deprovision users from a [supported identity provider](#supported-identity-providers) into your SaaS applications. To learn more, refer to the [Access for SaaS](/cloudflare-one/applications/configure-apps/saas-apps/) documentation.
 
 ## SCIM for Cloudflare dashboard SSO
 
