@@ -64,20 +64,20 @@ The following table lists the most common Page Rule URLs and their equivalent fi
 
 {{<table-wrap style="font-size: 87%">}}
 
-Target & Target components | Page Rule URL example | Filter using Rules language
---------------------|-----------------------|----------------------------
-Index page of root domain only<br>_(Domain + Path)_ | `example.com/` | `http.host = "example.com" and http.request.uri.path = "/"`
-Everything on a specific domain<br>_(Domain)_ | `example.com/*` | `http.host = "example.com"`
+Target & Target components | <div style="width:130px">Page Rule URL example</div> | Filter expression using Rules language
+---|---|---
+Index page of root domain only<br>_(Domain + Path)_ | `example.com/` | `http.host eq "example.com" and http.request.uri.path eq "/"`
+Everything on a specific domain<br>_(Domain)_ | `example.com/*` | `http.host eq "example.com"`
 All subdomains and URLs on a specific domain<br>_(Domain)_ | `*example.com/*` | `http.host contains "example.com"`
 Only subdomains and their URLs<br>_(Domain)_ | `*.example.com/*` | `http.host contains ".example.com"`
-Specific URL on all domains<br>_(Path)_ | `*/images` | `http.request.uri.path = "/images"`
+Specific URL on all domains<br>_(Path)_ | `*/images` | `http.request.uri.path eq "/images"`
 Specific directory and its subdirectories on all domains<br>_(Path)_ | `*/images/*` | `starts_with(http.request.uri.path, "/images/")`
 Specific file in any directory<br>_(Path)_ | `*/wp-login.php` | `ends_with(http.request.uri.path, "/wp-login.php")`
 Specific file on subdomains of a specific domain<br>_(Domain + Path)_ | `*.example.com/*wp-login.php` | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`
-Specific query string on all domains<br>_(Path)_ | `*/*?country=GB` | `http.request.uri.query = "country=GB"`
+Specific query string on all domains<br>_(Path)_ | `*/*?country=GB` | `http.request.uri.query eq "country=GB"`
 Part of a query string on all domains<br>_(Path)_ | `*/*?*country=GB*` | `http.request.uri.query contains "country=GB"`
-Specific file extension in a directory or its subdirectories of a domain<br>_(Domain + Path)_ | `example.com/archives/*.zip` | `http.host = "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension = "zip"`
-Specific file extension in any subdirectory of a domain<br>_(Domain + Path)_ | `example.com/*/downloads/*.txt` | `http.host = "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension = "txt"`
+Specific file extension in a directory or its subdirectories of a domain<br>_(Domain + Path)_ | `example.com/archives/*.zip` | `http.host eq "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension eq "zip"`
+Specific file extension in any subdirectory of a domain<br>_(Domain + Path)_ | `example.com/*/downloads/*.txt` | `http.host eq "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension eq "txt"`
 Specific directory and all its contents on all subdomains of a specific subdomain<br>_(Domain + Path)_ | `*cdn.example.com/file/*` | `http.request.full_uri contains "cdn.example.com/file/"`
 
 {{</table-wrap>}}
