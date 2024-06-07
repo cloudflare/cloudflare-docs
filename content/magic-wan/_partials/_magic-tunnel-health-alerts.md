@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;workflow
+inputParameters: productName;;workflow;;backgroundInfoPath
 ---
 
 # Configure Magic Tunnel health alerts
@@ -81,3 +81,10 @@ Alert Sensitivity Level | Recommended SLO threshold
 High | 99.0
 Medium | 98.0
 Low | 97.0
+
+With these settings, at 100% failure Cloudflare will send alerts at the following time frames, after a problem is detected:
+- **High sensitivity**: First alert within 10 minutes.
+- **Medium sensitivity**: First alert within 20 minutes.
+- **Low sensitivity**: First alert within 30 minutes.
+
+Refer to the [Magic tunnels background information]($3) page for more information on this topic.
