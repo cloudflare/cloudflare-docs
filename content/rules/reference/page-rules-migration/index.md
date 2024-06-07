@@ -58,7 +58,11 @@ All other Page Rules settings will be migrated during 2025.
 
 ## Convert Page Rules URLs to filter expressions
 
-Currently, Rules features do not support wildcards. If you are using wildcards in the URLs of your Page Rules, you must convert these URLs to valid filter expressions when migrating to modern Rules features, using [functions](/ruleset-engine/rules-language/functions/) and [operators](/ruleset-engine/rules-language/operators/) supported by the Rules language.
+When migrating a Page Rule you will need to write a filter expression equivalent to your Page Rules URL using the Rules language.
+
+Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
+
+Strings in filter expressions do not support wildcards. You will need to adapt your Page Rules URLs when migrating them to modern rules. While Enterprise customers can use regular expressions, it will also require adapting the original URLs in your Page Rules to regular expressions.
 
 The following table lists the most common Page Rule URLs and their equivalent filters:
 
