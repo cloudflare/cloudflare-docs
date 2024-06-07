@@ -8,17 +8,19 @@ title: Build a Slackbot
 
 # Build a Slackbot
 
-{{<render file="_tutorials-before-you-start.md">}}
+{{<tutorial-date-info>}}
 
-## Overview
-
-In this tutorial, you will build a [Slack](https://slack.com) bot using [Cloudflare Workers](https://workers.cloudflare.com). Your bot will make use of GitHub webhooks to send messages to a Slack channel when issues are updated or created, and allow users to write a command to look up GitHub issues from inside Slack.
+In this tutorial, you will build a [Slack](https://slack.com) bot using [Cloudflare Workers](/workers/). Your bot will make use of GitHub webhooks to send messages to a Slack channel when issues are updated or created, and allow users to write a command to look up GitHub issues from inside Slack.
 
 ![After following this tutorial, you will be able to create a Slackbot like the one in this example. Continue reading to build your Slackbot.](/images/workers/tutorials/slackbot/issue-command.png)
 
 This tutorial is recommended for people who are familiar with writing web applications. You will use TypeScript as the programming language and [Hono](https://hono.dev/) as the web framework. If you have built an application with tools like [Node](https://nodejs.org) and [Express](https://expressjs.com), this project will feel very familiar to you. If you are new to writing web applications or have wanted to build something like a Slack bot in the past, but were intimidated by deployment or configuration, Workers will be a way for you to focus on writing code and shipping projects.
 
 If you would like to review the code or how the bot works in an actual Slack channel before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/yusukebe/workers-slack-bot). From GitHub, you can add your own Slack API keys and deploy it to your own Slack channels for testing.
+
+---
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Set up Slack
 
