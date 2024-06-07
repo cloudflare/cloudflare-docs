@@ -13,8 +13,9 @@ tags:
 
 # Explore Code Generation Using DeepSeek Coder Models
 
-A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
+{{<tutorial-date-info>}}
 
+A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
 You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/notebooks/deepseek-coder-exploration.ipynb) or view the embedded notebook below.
 
