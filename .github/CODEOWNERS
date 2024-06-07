@@ -18,7 +18,7 @@
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
-/content/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @kodster28 @cloudflare/pcx-technical-writing
 /content/workers-ai/ @rita3ko @pdwittig @kodster28 @craigsdennis @markdembo @mchenco @cloudflare/pcx-technical-writing
 /content/workers-ai/tutorials @craigsdennis @kodster28 @cloudflare/pcx-technical-writing
 /content/workers-ai/static @mchenco @craigsdennis @kodster28 @cloudflare/pcx-technical-writing
