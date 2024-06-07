@@ -86,7 +86,7 @@ bucket_name = '<YOUR_BUCKET_NAME>'
 You will use [Hono](https://hono.dev/), a lightweight framework for building Cloudflare Workers applications. Hono provides an interface for defining routes and middleware functions. Inside your project directory, run the following command to install Hono:
 
 ```sh
-npm install hono
+$ npm install hono
 ```
 
 You also need to install the [OpenAI Node API library](https://www.npmjs.com/package/openai). This library provides convenient access to the OpenAI REST API in a Node.js project. To install the library, execute the following command:
