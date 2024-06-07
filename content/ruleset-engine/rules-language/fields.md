@@ -677,7 +677,17 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
           </p>
-          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3 Fingerprints</a>.
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 Fingerprint</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-ja4">
+        <td><p><code>cf.bot_management.ja4</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+          <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+          </p>
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 Fingerprint</a>.
           </p>
         </td>
     </tr>
