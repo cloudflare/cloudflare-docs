@@ -329,11 +329,11 @@ Within Cloudflare, PTR records are used for reverse DNS lookups and should prefe
 
 ### SOA
 
-A [start of authority (SOA)](https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/) record stores information about your domain such as admin email address, when the domain was last updated, and more.
+A start of authority (SOA) record stores information about your domain such as admin email address, when the domain was last updated, and more. Refer to [What is a DNS SOA record](https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/) for an example.
 
 If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), you do not need to create an SOA record. Cloudflare creates this record automatically when you start using Cloudflare's authoritative nameservers.
 
-{{<render file="_api-field-definitions.md">}}
+If you have an Enterprise account, you also have the option to configure your own [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) and change the values for this record.
 
 ### NS
 

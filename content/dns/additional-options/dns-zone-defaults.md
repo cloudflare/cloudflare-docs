@@ -28,7 +28,7 @@ For primary zones:
 
 - [Multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns): Control whether or not Cloudflare will consider `NS` records you add on the zone apex and if zones that contain external nameservers listed in the registrar will be activated.
 - [NS record TTL](/dns/nameservers/nameserver-options/#ns-record-ttl): Control how long, in minutes, your nameserver (`NS`) records are cached. The default time-to-live (TTL) is 24 hours. This setting applies both to Cloudflare nameservers and [custom nameservers](/dns/nameservers/custom-nameservers/).
-- [SOA record](/dns/manage-dns-records/reference/dns-record-types/#soa): Adjust values for the Start of Authority ([SOA](/dns/manage-dns-records/reference/dns-record-types/#soa)) record that Cloudflare creates for your zone.
+- [SOA record](/dns/manage-dns-records/reference/dns-record-types/#soa): Adjust values for the start of authority (SOA) record that Cloudflare creates for your zone.
 
 For secondary zones:
 
