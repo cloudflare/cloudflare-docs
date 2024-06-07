@@ -6,6 +6,12 @@ meta:
   description: Workers plans and pricing information.
 ---
 
+<style>
+  .DocsMarkdown--table-wrap tr > :first-child {
+    word-break: normal;
+  }
+</style>
+
 # Pricing
 
 {{<Aside type="warning">}}

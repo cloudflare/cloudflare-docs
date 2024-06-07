@@ -56,6 +56,36 @@ If you have a use case for these settings and you intend to keep their behavior,
 
 All other Page Rules settings will be migrated during 2025.
 
+## Convert Page Rules URLs to filter expressions
+
+When migrating a Page Rule you will need to write a filter expression equivalent to your Page Rules URL using the Rules language.
+
+Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
+
+Strings in filter expressions do not support wildcards yet. You will need to adapt your Page Rules URLs when migrating them to modern rules. While Enterprise and Business customers can use regular expressions, it will also require adapting the original URLs in your Page Rules to regular expressions.
+
+The following table lists the most common Page Rule URLs and their equivalent filters:
+
+{{<table-wrap style="font-size: 87%">}}
+
+Target and components | <div style="width:130px">Page Rule URL example</div> | Filter expression using Rules language
+---|---|---
+Index page of root domain only<br>_(Domain + Path)_ | `example.com/` | `http.host eq "example.com" and http.request.uri.path eq "/"`
+Everything on a specific domain<br>_(Domain)_ | `example.com/*` | `http.host eq "example.com"`
+All subdomains and URLs on a specific domain<br>_(Domain)_ | `*example.com/*` | `http.host contains "example.com"`
+Only subdomains and their URLs<br>_(Domain)_ | `*.example.com/*` | `http.host contains ".example.com"`
+Specific file in any directory<br>_(Path)_ | `*/wp-login.php` | `ends_with(http.request.uri.path, "/wp-login.php")`
+Specific file on subdomains of a specific domain<br>_(Domain + Path)_ | `*.example.com/*wp-login.php` | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`
+Specific query string on all domains<br>_(Path)_ | `*/*?country=GB` | `http.request.uri.query eq "country=GB"`
+Part of a query string on all domains<br>_(Path)_ | `*/*?*country=GB*` | `http.request.uri.query contains "country=GB"`
+Specific file extension in a directory or its subdirectories of a domain<br>_(Domain + Path)_ | `example.com/archives/*.zip` | `http.host eq "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension eq "zip"`
+Specific file extension in any subdirectory of a domain<br>_(Domain + Path)_ | `example.com/*/downloads/*.txt` | `http.host eq "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension eq "txt"`
+Specific directory and all its contents on all subdomains of a specific subdomain<br>_(Domain + Path)_ | `*cdn.example.com/file/*` | `http.request.full_uri contains "cdn.example.com/file/"`
+Specific URL on all domains<br>_(Path)_ | `*/images`<br>(required SSL for SaaS) | `http.request.uri.path eq "/images"`
+Specific directory and its subdirectories on all domains<br>_(Path)_ | `*/images/*`<br>(required SSL for SaaS) | `starts_with(http.request.uri.path, "/images/")`
+
+{{</table-wrap>}}
+
 ## Feature correspondence table
 
 The following table summarizes how different Page Rules settings will be migrated to other Rules features. You can refer to this table and the next sections to learn more about the new way of implementing a given Page Rules setting, and also to learn how you can manually migrate your existing Page Rules.
@@ -854,6 +884,8 @@ Page Rules configuration | Migrate to a configuration rule
 
 ### Migrate Forwarding URL
 
+**Example #1: Redirect `www` to root domain**
+
 {{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
@@ -893,10 +925,58 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 Page Rules configuration | Migrate to a dynamic redirect
 -------------------------|------------------------------
-![Example Page Rule with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
+![Example Page Rule #1 with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #1](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
 
 {{</tab>}}
 {{</tabs>}}
+
+**Example #2: Redirect all pages under old path to new path**
+
+{{<tabs labels="Dashboard | Visual guide">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule permanently redirecting `example.com/old-path` to `example.com/new-path`:
+
+- **URL**: `example.com/old-path/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/new-path/$1`
+
+**How to migrate**:
+
+1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname equals "example.com" AND URI Path starts with "/old-path/"`
+        - Using the Expression Editor:<br>
+            `(http.host eq "example.com" and starts_with(http.request.uri.path, "/old-path/"))`
+
+    - **Then**:
+        - **Type**: _Dynamic_
+        - **Expression**: `concat("/new-path/", substring(http.request.uri.path, 10))`<br>
+        (where `10` (start byte value) is the length of `/old-path/`)
+        - **Status code**: _301_
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a dynamic redirect
+-------------------------|------------------------------
+![Example Page Rule #2 with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #2](/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png)
+
+{{</tab>}}
+{{</tabs>}}
+
 
 ### Migrate Host Header Override
 

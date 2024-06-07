@@ -5,11 +5,12 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 tags: [AI]
 title: Deploy a Worker that connects to OpenAI via AI Gateway
+products: [Workers]
 ---
 
 # Deploy a Worker that connects to OpenAI via AI Gateway
 
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to deploy a Worker that makes calls to OpenAI through AI Gateway. AI Gateway helps you better observe and control your AI applications with more analytics, caching, rate limiting, and logging.
 

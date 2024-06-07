@@ -18,7 +18,7 @@
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
-/content/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @kodster28 @cloudflare/pcx-technical-writing
 /content/workers-ai/ @rita3ko @pdwittig @kodster28 @craigsdennis @markdembo @mchenco @cloudflare/pcx-technical-writing
 /content/workers-ai/tutorials @craigsdennis @kodster28 @cloudflare/pcx-technical-writing
 /content/workers-ai/static @mchenco @craigsdennis @kodster28 @cloudflare/pcx-technical-writing
@@ -107,10 +107,10 @@
 /content/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 
 # DDoS Protection
-/content/ddos-protection/ @pedrosousa @cloudflare/pcx-technical-writing
-/content/ddos-protection/change-log/ @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
-/data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
-/data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @pedrosousa @cloudflare/pcx-technical-writing
+/content/ddos-protection/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/ddos-protection/change-log/ @jdesgats @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
+/data/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Docs team areas
 /content/docs-guide/ @kodster28 @crwaters16 @cloudflare/pcx-technical-writing

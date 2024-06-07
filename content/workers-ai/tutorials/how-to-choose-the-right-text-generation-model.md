@@ -13,6 +13,8 @@ tags:
 
 # Choose the Right Text Generation Model
 
+{{<tutorial-date-info>}}
+
 A great way to explore the models that are available to you on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
 You can [download the Workers AI Text Generation Exploration notebook](/workers-ai/static/documentation/notebooks/text-generation-model-exploration.ipynb) or view the embedded notebook below.

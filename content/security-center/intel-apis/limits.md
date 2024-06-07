@@ -9,7 +9,9 @@ meta:
 
 ## API request limits
 
-All API calls made to Threat Intelligence endpoints will contribute to the monthly quota. Additionally, utilizing features within the Security Center such as Investigate and Brand Protection, or other products, such as Page Shield, which also leverage the Security Intelligence APIs, will also contribute to the consumption of the quota. 
+All API calls made to Threat Intelligence endpoints will contribute to the monthly quota. Additionally, utilizing features within the Security Center such as Investigate and Brand Protection, or other products, such as Page Shield, which also leverage the Security Intelligence APIs, will also contribute to the consumption of the quota.
+
+These request limits currently do not apply to the DDoS Botnet Threat Feed API.
 
 {{<table-wrap>}}
 

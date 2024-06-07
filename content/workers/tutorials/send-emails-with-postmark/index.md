@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Postmark
+tags: [Email]
 ---
 
 # Send Emails With Postmark
