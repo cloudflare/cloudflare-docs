@@ -92,7 +92,7 @@ $ npm install hono
 You also need to install the [OpenAI Node API library](https://www.npmjs.com/package/openai). This library provides convenient access to the OpenAI REST API in a Node.js project. To install the library, execute the following command:
 
 ```sh
-npm install openai
+$ npm install openai
 ```
 
 Next, open the `src/index.ts` file and replace the default code with the below code. Replace `<MY_BUCKET>` with the binding name you set in `wrangler.toml` file.
