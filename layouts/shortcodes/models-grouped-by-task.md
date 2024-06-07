@@ -27,6 +27,6 @@ table th:first-of-type {
 {{- $loraFlag = true }}
 {{- end }}
 {{- end }}
-| [{{ $params.model_display_name }}{{ if $betaFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</span>{{ end }}{{ if $loraFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-deprecated" style="width: max-content">Lora</span>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
+| [{{ $params.model_display_name }}{{ if $betaFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</span>{{ end }}{{ if $loraFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-deprecated" style="width: max-content">LoRA</span>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
 {{- end -}}
 {{- end -}}
