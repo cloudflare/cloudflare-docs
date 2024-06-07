@@ -64,7 +64,7 @@ The following table lists the most common Page Rule URLs and their equivalent fi
 
 {{<table-wrap style="font-size: 87%">}}
 
-Target & Target components | <div style="width:130px">Page Rule URL example</div> | Filter expression using Rules language
+Target and components | <div style="width:130px">Page Rule URL example</div> | Filter expression using Rules language
 ---|---|---
 Index page of root domain only<br>_(Domain + Path)_ | `example.com/` | `http.host eq "example.com" and http.request.uri.path eq "/"`
 Everything on a specific domain<br>_(Domain)_ | `example.com/*` | `http.host eq "example.com"`
