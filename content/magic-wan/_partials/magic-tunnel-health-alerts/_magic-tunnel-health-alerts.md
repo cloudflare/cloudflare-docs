@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;workflow;;backgroundInfoPath
+inputParameters: productName;;backgroundInfoPath
 ---
 
 # Configure Magic Tunnel health alerts
@@ -29,8 +29,6 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
-
-$2
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
@@ -87,4 +85,4 @@ With these settings, at 100% failure Cloudflare will send alerts at the followin
 - **Medium sensitivity**: First alert within 20 minutes.
 - **Low sensitivity**: First alert within 30 minutes.
 
-Refer to the [Magic tunnels background information]($3) page for more information on this topic.
+Refer to the [Magic tunnels background information]($2) page for more information on this topic.
