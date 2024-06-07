@@ -3,13 +3,15 @@ content_type: 📝 Tutorial
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Create a fine-tuned OpenAI model with R2
-updated: 2023-09-18
+updated: 2024-06-07
 weight: 1
 tags:
   - AI
 ---
 
 # Create a fine-tuned OpenAI model with R2
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning).
 
