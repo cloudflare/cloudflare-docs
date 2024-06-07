@@ -20,7 +20,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 | [Priority Intelligence Requirements](/api/operations/cloudforce-one-priority-new) | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organizing them into categories. |
 | [Request for Information](/api/operations/cloudforce-one-request-new) | Creates a targeted inquiry for specific intelligence insights to help organizations understand and respond to imminent security threats and vulnerabilities. |
 | [WHOIS](/api/operations/whois-record-get-whois-record) | Provides the WHOIS registration information for a specific domain. |
-| [DDoS Botnet Threat Feed](/ddos-protection/botnet-threat-feed/)<br>(early access) | Provides information to service providers about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. API limits for Threat Intelligence endpoints currently do not apply to this API. |
+| [DDoS Botnet Threat Feed](/ddos-protection/botnet-threat-feed/)<br>(early access) | Provides information to service providers about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. |
 
 ## API Examples
 
