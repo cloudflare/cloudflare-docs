@@ -36,7 +36,7 @@ Next, we will obtain **Identity provider metadata** from Zero Trust.
 7. (Optional) Additional SAML attribute statements can be passed from your IdP to AWS SSO. To learn more about AWS Attribute mapping, refer to [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 8. AWS supports uploading a metadata XML file. To download your SAML metadata from Access:
     1. Copy the **SAML Metadata endpoint**.
-    2. Open a browser tab and go to the SAML Metadata endpoint (`https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/xxx/saml-metadata`).
+    2. In a separate browser window, go to the SAML Metadata endpoint (`https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/xxx/saml-metadata`).
     3. Save the page as `access_saml_metadata.xml`.
 9. Save your SaaS application configuration.
 10. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
