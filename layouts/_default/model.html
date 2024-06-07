@@ -13,16 +13,20 @@
     {{ partial "sidebar.toc" . }}
 
     <div id="docs-content" data-reach-skip-nav-content></div>
-    {{- partial "breadcrumbs" . -}} 
+    {{- partial "breadcrumbs" . -}}
     <div class="DocsContent" id="main" page-type="document">
       <article class="DocsMarkdown">
         <div class="DocsMarkdown-beta">
           <h1>{{ .Title }}</h1>
-          {{ range .Params.model.properties }} 
+          {{ range .Params.model.properties }}
             {{ if and (eq .property_id "beta") (eq .value "true") }}
               {{/* Cannot use heading-pill shortcode outside of content dir */}}
               <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
-            {{ end }} 
+            {{ end }}
+            {{ if and (eq .property_id "lora") (eq .value "true") }}
+              {{/* Cannot use heading-pill shortcode outside of content dir */}}
+              <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">LoRA</div>
+            {{ end }}
           {{ end }}
         </div>
         {{ partial "models/header.md" . | markdownify }}

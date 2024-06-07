@@ -150,7 +150,7 @@ filename: src/index.ts
 ---
 export interface Env {
 	VECTORIZE_INDEX: VectorizeIndex;
-	AI: any;
+	AI: Ai;
 }
 interface EmbeddingResponse {
 	shape: number[];
