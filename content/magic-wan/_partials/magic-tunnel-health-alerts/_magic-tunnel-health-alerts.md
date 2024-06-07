@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;backgroundInfoPath
+inputParameters: productName;;backgroundInfoPath;;networkAnalyticsPath;;healthChecks
 ---
 
 # Configure Magic Tunnel health alerts
@@ -86,3 +86,11 @@ With these settings, at 100% failure Cloudflare will send alerts at the followin
 - **Low sensitivity**: First alert within 30 minutes.
 
 Refer to the [Magic tunnels background information]($2) page for more information on this topic.
+
+## Test SLOs
+
+To test whether a specific alert sensitivity level works for your use case:
+
+1. Create an alert with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to [Network Analytics]($3) to learn how you can view real-time and historical data about your network.
+2. Disable the tunnel you are testing, so there is 100% [health check failure]($4).
+3. The time it takes for Cloudflare to send you an alert will depend on the sensitivity you chose for your alerts (High, Medium or Low).
