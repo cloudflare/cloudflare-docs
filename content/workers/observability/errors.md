@@ -32,6 +32,50 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
+### "The script will never generate a response" errors
+
+Some requests may return a 1101 error with `The script will never generate a response` in the error message. This occurs when the runtime detects that all the code associated with the request has executed and no events are left in the event loop, but a Response has not been returned. This is most often a Response relying on a Promise that never gets resolved or rejected. To debug this problem, look for the creation of Promises within your own code or library code that block a Response, then and ensure their resolution. In other runtimes, this could result in indefinitely hanging code, but Workers error immediately to help with debugging.
+
+In the (admittedly contrived) example below, the Response relies on a Promise resolution that never happens. Uncommenting the `resolve` callback solves the issue.
+
+```js
+export default {
+	fetch(req) {
+		let response = new Response("Example response");
+		let { promise, resolve } = Promise.withResolvers();
+
+		// If this a resolve will never happen, the Workers runtime will
+		// recognize this and throw an error.
+
+		// setTimeout(resolve, 0)
+
+		return promise.then(() => response);
+	},
+};
+```
+
+A subset of these cases are related to open WebSocket connections. If a WebSocket is missing the proper code to close it's server-side connection, a `script will never generate a response` error is thrown. In the example below, the `'close'` event from the client is not properly handled with a `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
+
+```js
+async function handleRequest(request) {
+	let webSocketPair = new WebSocketPair();
+	let [client, server] = Object.values(webSocketPair);
+	server.accept();
+
+	server.addEventListener('close', () => {
+    // This missing line would keep a WebSocket connection open indefinitely
+    // and results in "The script will never generate a response" errors
+
+		// server.close();
+	});
+
+	return new Response(null, {
+		status: 101,
+		webSocket: client,
+	});
+}
+```
+
 ## Errors on Worker upload
 These errors occur when a Worker is uploaded or modified.
 
