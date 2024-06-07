@@ -880,6 +880,8 @@ Page Rules configuration | Migrate to a configuration rule
 
 ### Migrate Forwarding URL
 
+**Example #1: Redirect `www` to root domain**
+
 {{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
@@ -919,10 +921,58 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 Page Rules configuration | Migrate to a dynamic redirect
 -------------------------|------------------------------
-![Example Page Rule with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
+![Example Page Rule #1 with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #1](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
 
 {{</tab>}}
 {{</tabs>}}
+
+**Example #2: Redirect all pages under old path to new path**
+
+{{<tabs labels="Dashboard | Visual guide">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule permanently redirecting `example.com/old-path` to `example.com/new-path`:
+
+- **URL**: `example.com/old-path/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/new-path/$1`
+
+**How to migrate**:
+
+1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname equals "example.com" AND URI Path starts with "/old-path/"`
+        - Using the Expression Editor:<br>
+            `(http.host eq "example.com" and starts_with(http.request.uri.path, "/old-path/"))`
+
+    - **Then**:
+        - **Type**: _Dynamic_
+        - **Expression**: `concat("/new-path/", substring(http.request.uri.path, 10))`<br>
+        (where `10` (start byte value) is the length of `/old-path/`)
+        - **Status code**: _301_
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a dynamic redirect
+-------------------------|------------------------------
+![Example Page Rule #2 with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #2](/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png)
+
+{{</tab>}}
+{{</tabs>}}
+
 
 ### Migrate Host Header Override
 
