@@ -18,11 +18,15 @@ table th:first-of-type {
 {{- range sort $pages "Params.weight" "desc" -}}
 {{- $params := .Params }}
 {{- $betaFlag := false }}
+{{- $loraFlag := false }}
 {{- range $params.model.properties }}
 {{- if and (eq .property_id "beta") (eq .value "true") }}
 {{- $betaFlag = true }}
 {{- end }}
+{{- if and (eq .property_id "lora") (eq .value "true") }}
+{{- $loraFlag = true }}
 {{- end }}
-| [{{ $params.model_display_name }}{{ if $betaFlag }} <div class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</div>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
+{{- end }}
+| [{{ $params.model_display_name }}{{ if $betaFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</span>{{ end }}{{ if $loraFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-deprecated" style="width: max-content">Lora</span>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
 {{- end -}}
 {{- end -}}
