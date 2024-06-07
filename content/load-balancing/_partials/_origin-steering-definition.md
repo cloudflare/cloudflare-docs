@@ -5,15 +5,15 @@ _build:
   list: never
 ---
 
-Origin steering customizes how each [pool](/load-balancing/pools/) distributes requests to its associated origins.
+Endpoint steering customizes how each [pool](/load-balancing/pools/) distributes requests to its associated endpoints.
 
 These distributions are a combination of two properties:
 
-- The origin steering [policy](#policies) chosen for your pool.
-- The [weights](#weights) assigned to each origin server.
+- The endpoint steering [policy](#policies) chosen for your pool.
+- The [weights](#weights) assigned to each endpoint.
 
 {{<Aside type="note">}}
 
-If an origin [becomes unhealthy](/load-balancing/understand-basics/health-details/), your pool will also re-balance traffic according to its steering policy.
+If an endpoint [becomes unhealthy](/load-balancing/understand-basics/health-details/), your pool will also re-balance traffic according to its endpoint steering policy.
 
 {{</Aside>}}

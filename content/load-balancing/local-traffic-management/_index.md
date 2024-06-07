@@ -9,9 +9,9 @@ meta:
 
 # Local traffic management (LTM)
 
-Local traffic management (LTM) enables you to load balance traffic between servers within a data center ([origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/)) and between private applications. This helps you eliminate the need for hardware appliances and facilitates the migration of your infrastructure to the cloud, providing advantages such as elastic scalability and enhanced reliability.
+Local traffic management (LTM) enables you to load balance traffic between servers within a data center ([endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/)) and between private applications. This helps you eliminate the need for hardware appliances and facilitates the migration of your infrastructure to the cloud, providing advantages such as elastic scalability and enhanced reliability.
 
-In order to support not only public IPs but also virtual IPs and private IPs as origin values, Cloudflare LTM uses different off-ramps and on-ramps.
+LTM supports not only public IPs but also virtual IPs and private IPs as endpoint values.
 
 {{<Aside type="note">}}
 This page assumes a certain level of familiarity with how the Cloudflare Load Balancing solution works. For an introductory overview refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
@@ -23,7 +23,7 @@ This page assumes a certain level of familiarity with how the Cloudflare Load Ba
 
 Off-ramps create a direct and secure way for Cloudflare to connect into your networks that are not publicly available.
 
-Since traffic steering decisions or failover mechanisms rely on the health information of pools and origins, being able to input your virtual or private IPs directly as origins within your load balancer means you can better leverage existing health monitoring.
+Since traffic steering decisions or failover mechanisms rely on the health information of pools and endpoints, being able to input your virtual or private IPs directly as endpoints within your load balancer means you can better leverage existing health monitoring.
 
 Cloudflare Load Balancing currently supports using Cloudflare Tunnel as an off-ramp. [GRE and IPsec tunnels](/magic-wan/reference/tunnels/) support will be added in the future.
 
@@ -31,7 +31,7 @@ Cloudflare Load Balancing currently supports using Cloudflare Tunnel as an off-r
 
 Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
 
-Once the origin and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
+Once the endpoint and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
 Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
 

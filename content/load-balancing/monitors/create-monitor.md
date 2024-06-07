@@ -29,7 +29,7 @@ For more details about monitors, refer to [Monitors](/load-balancing/monitors/).
 
 **Attach the monitor to a pool**
 
-Once your monitor is created, you need to attach it to an origin pool:
+Once your monitor is created, you need to attach it to a pool:
 
 1.  Go to **Traffic** > **Load Balancing**.
 
