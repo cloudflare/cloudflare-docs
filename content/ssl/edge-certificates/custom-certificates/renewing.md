@@ -29,7 +29,7 @@ If no valid replacement is available, Cloudflare will remove the custom certific
 Affected domains and subdomains will fall back to any other active certificate covering the hostnames on the expiring certificate.
 
 {{<Aside type="warning">}}
-All certificates in a certificate pack are treated as one object. 
+All certificates in a [certificate pack](/ssl/edge-certificates/custom-certificates/#certificate-packs) are treated as one object.
 The expiration date of a certificate pack is equivalent to the soonest `Not After` date among the certificates in the pack.
 
 For example if you have a custom certificate made of an ECSDA and a RSA certificate, if one of them expires the whole pack will be removed.
