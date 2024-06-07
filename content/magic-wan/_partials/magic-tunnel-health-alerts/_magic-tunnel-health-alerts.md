@@ -3,12 +3,12 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;workflow
+inputParameters: productName;;backgroundInfoPath;;networkAnalyticsPath;;healthChecks
 ---
 
 # Configure Magic Tunnel health alerts
 
-$1 customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful {{<glossary-tooltip term_id="tunnel health-check">}}health checks{{</glossary-tooltip>}} for a Magic Tunnel drops below the selected [service-level objective (SLO)](https://en.wikipedia.org/wiki/Service-level_objective).
+$1 customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful {{<glossary-tooltip term_id="tunnel health-check">}}health checks{{</glossary-tooltip>}} for a Magic Tunnel drops below the selected [service-level objective (SLO)]($2).
 
 Magic Tunnel health alerts will monitor the health check success rate of each Magic Tunnel included in the alert that has actively transferred customer traffic (excluding health check traffic) over the past six hours. Customers can define an SLO threshold for the percentage of health checks that must be successful for each Magic Tunnel. If the number of successful health checks for the Magic Tunnel(s) included in the alert drops below the SLO threshold, then an alert will fire.
 
@@ -25,16 +25,14 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 - Alert SLO
 - Timestamp
 
-## Set up Magic Tunnel health alerts
+## Set up Magic Tunnel health alerts { #setup-ha }
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-$2
-
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
-3. Select **Magic Transit** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
+3. Select **$1** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
 4. Enter a name and description for the notification.
 5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
 6. Choose the tunnels you want to receive alerts for.
@@ -81,3 +79,18 @@ Alert Sensitivity Level | Recommended SLO threshold
 High | 99.0
 Medium | 98.0
 Low | 97.0
+
+With these settings, at 100% failure Cloudflare will send alerts at the following time frames, after a problem is detected:
+- **High sensitivity**: First alert within 10 minutes.
+- **Medium sensitivity**: First alert within 20 minutes.
+- **Low sensitivity**: First alert within 30 minutes.
+
+Refer to the [Magic tunnels background information]($2) page for more information on this topic.
+
+## Test SLOs
+
+To test whether a specific alert sensitivity level works for your use case:
+
+1. [Create an alert](#setup-ha) with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to [Network Analytics]($3) to learn how you can view real-time and historical data about your network.
+2. Disable the tunnel you are testing, so there is 100% [health check failure]($4).
+3. The time it takes for Cloudflare to send you an alert will depend on the sensitivity you chose for your alerts (High, Medium or Low).
