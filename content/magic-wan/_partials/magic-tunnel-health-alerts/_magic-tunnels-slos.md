@@ -31,7 +31,7 @@ This means the SLO would allow for 1000 unsuccessful Magic health checks over th
 
 ### Burn rate
 
-The burn rate measures how fast the error budget is expended over a given time window relative to the SLO window. In the example from above, an SLO of 99% means it is acceptable to observe 100 magic health check fails over the course of 30 days. However, those same 100 health check fails would not be acceptable during the course of one hour, for example.
+The burn rate measures how fast the error budget is expended over a given time window relative to the SLO window. In the example from above, an SLO of 99% means it is acceptable to observe 100 Magic health check fails over the course of 30 days. However, those same 100 health check fails would not be acceptable during the course of one hour, for example.
 
 ## How does Cloudflare decide when to alert
 
