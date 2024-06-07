@@ -56,6 +56,32 @@ If you have a use case for these settings and you intend to keep their behavior,
 
 All other Page Rules settings will be migrated during 2025.
 
+## Convert Page Rules URLs to filter expressions
+
+Currently, Rules features do not support wildcards. If you are using wildcards in the URLs of your Page Rules, you must convert these URLs to valid filter expressions when migrating to modern Rules features, using [functions](/ruleset-engine/rules-language/functions/) and [operators](/ruleset-engine/rules-language/operators/) supported by the Rules language.
+
+The following table lists the most common Page Rule URLs and their equivalent filters:
+
+{{<table-wrap style="font-size: 87%">}}
+
+Target & Target components | Page Rule URL example | Filter using Rules language
+--------------------|-----------------------|----------------------------
+Index page of root domain only<br>_(Domain + Path)_ | `example.com/` | `http.host = "example.com" and http.request.uri.path = "/"`
+Everything on a specific domain<br>_(Domain)_ | `example.com/*` | `http.host = "example.com"`
+All subdomains and URLs on a specific domain<br>_(Domain)_ | `*example.com/*` | `http.host contains "example.com"`
+Only subdomains and their URLs<br>_(Domain)_ | `*.example.com/*` | `http.host contains ".example.com"`
+Specific URL on all domains<br>_(Path)_ | `*/images` | `http.request.uri.path = "/images"`
+Specific directory and its subdirectories on all domains<br>_(Path)_ | `*/images/*` | `starts_with(http.request.uri.path, "/images/")`
+Specific file in any directory<br>_(Path)_ | `*/wp-login.php` | `ends_with(http.request.uri.path, "/wp-login.php")`
+Specific file on subdomains of a specific domain<br>_(Domain + Path)_ | `*.example.com/*wp-login.php` | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`
+Specific query string on all domains<br>_(Path)_ | `*/*?country=GB` | `http.request.uri.query = "country=GB"`
+Part of a query string on all domains<br>_(Path)_ | `*/*?*country=GB*` | `http.request.uri.query contains "country=GB"`
+Specific file extension in a directory or its subdirectories of a domain<br>_(Domain + Path)_ | `example.com/archives/*.zip` | `http.host = "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension = "zip"`
+Specific file extension in any subdirectory of a domain<br>_(Domain + Path)_ | `example.com/*/downloads/*.txt` | `http.host = "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension = "txt"`
+Specific directory and all its contents on all subdomains of a specific subdomain<br>_(Domain + Path)_ | `*cdn.example.com/file/*` | `http.request.full_uri contains "cdn.example.com/file/"`
+
+{{</table-wrap>}}
+
 ## Feature correspondence table
 
 The following table summarizes how different Page Rules settings will be migrated to other Rules features. You can refer to this table and the next sections to learn more about the new way of implementing a given Page Rules setting, and also to learn how you can manually migrate your existing Page Rules.
