@@ -32,7 +32,7 @@ This guide covers how to configure Salesforce as an OpenID Connect (OIDC) applic
 11. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 12. Select **Done**.
 
-## 2. Add a SAML SSO provider to Salesforce
+## 2. Add a SSO provider to Salesforce
 
 1. In Salesforce, go to **Setup**.
 2. In the **Quick Find** box, enter `auth` and select **Auth providers**.
