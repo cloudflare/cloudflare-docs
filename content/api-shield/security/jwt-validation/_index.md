@@ -42,6 +42,7 @@ To automatically keep your JWKS up to date when your identity provider refreshes
     - You may otherwise expect all requests to the selected hostname and endpoints to contain JWTs. If this is the case, choose _Mark as non-compliant_.
 8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when _Mark as non-compliant_ is selected in the previous step.
 9. Select **Save**.
+10. (Optional) Edit the JWT rule expression.
 
 {{<Aside type="note">}}
 Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule.

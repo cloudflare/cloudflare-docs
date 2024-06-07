@@ -63,6 +63,12 @@ The Rules language supports these transformation functions:
 
   - For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
+- <code id="function-is_jwt_valid">{{<name>}}is_jwt_valid{{</name>}}(field {{<type>}}String{{</type>}})</code> {{<type>}}Boolean{{</type>}}
+
+  - Returns `true` if the request has a valid token according to the Token Configuration with the ID `token_configuration_id`. It is only propagated when API Shield is enabled, a JWT configuration is active, and a JWT is on the request.
+
+  - For example, the expression `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` will trigger if an incoming request does not have at least one valid authentication token.
+
 - <code id="function-len">{{<name>}}len{{</name>}}({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
   - Returns the byte length of a String or Bytes field.
