@@ -25,7 +25,7 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 - Alert SLO
 - Timestamp
 
-## Set up Magic Tunnel health alerts
+## Set up Magic Tunnel health alerts { #setup-ha }
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -91,6 +91,6 @@ Refer to the [Magic tunnels background information]($2) page for more informatio
 
 To test whether a specific alert sensitivity level works for your use case:
 
-1. Create an alert with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to [Network Analytics]($3) to learn how you can view real-time and historical data about your network.
+1. [Create an alert](#setup-ha) with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to [Network Analytics]($3) to learn how you can view real-time and historical data about your network.
 2. Disable the tunnel you are testing, so there is 100% [health check failure]($4).
 3. The time it takes for Cloudflare to send you an alert will depend on the sensitivity you chose for your alerts (High, Medium or Low).
