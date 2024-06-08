@@ -22,7 +22,7 @@ With a TURN key you can:
 
 You should generate short-lived credentials for each TURN user. In order to create credentials, you should have a back-end service that uses your TURN Token ID and API token to generate credentials. It will make an API call like this:
 
-```sh
+```bash
 curl -X POST \
 	-H "Authorization: Bearer $TURN_KEY_API_TOKEN" \
 	-H "Content-Type: application/json" -d '{"ttl": 86400}' \
@@ -82,7 +82,7 @@ When using short-lived TURN credentials with WebRTC, credentials can be refreshe
 
 Short lived credentials can also be revoked before their TTL expires with a API call like this:
 
-```sh
+```bash
 curl -X POST \
 	-H "Authorization: Bearer $TURN_KEY_API_TOKEN" \
 	https://rtc.live.cloudflare.com/v1/turn/keys/$TURN_KEY_ID/credentials/username/$USERNAME/revoke

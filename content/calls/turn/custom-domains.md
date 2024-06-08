@@ -8,12 +8,12 @@ weight: 15
 
 Cloudflare Calls TURN service supports using custom domains. Custom domains do not affect any of the performance characteristics of Cloudflare Calls TURN.
 
-| Protocol      | Custom domains     | Primary port | Alternate port |
-| ------------- | ------------------- | ------------ | -------------- |
-| STUN over UDP | ✅ | 3478/udp     | 53/udp         |
-| TURN over UDP | ✅ | 3478/udp     | 53 udp         |
-| TURN over TCP | ✅ | 3478/tcp     | 80/tcp         |
-| TURN over TLS | No | 5349/tcp     | 443/tcp        |
+| Protocol      | Custom domains | Primary port | Alternate port |
+| ------------- | -------------- | ------------ | -------------- |
+| STUN over UDP | ✅             | 3478/udp     | 53/udp         |
+| TURN over UDP | ✅             | 3478/udp     | 53 udp         |
+| TURN over TCP | ✅             | 3478/tcp     | 80/tcp         |
+| TURN over TLS | No             | 5349/tcp     | 443/tcp        |
 
 ## Create a CNAME
 
