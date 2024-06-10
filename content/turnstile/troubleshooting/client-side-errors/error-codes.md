@@ -1,7 +1,7 @@
 ---
 title: Error codes
 pcx_content_type: troubleshooting
-weight: 3
+weight: 2
 layout: wide
 ---
 
