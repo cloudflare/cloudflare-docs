@@ -42,7 +42,8 @@ name = "hyperdrive-example"
 main = "src/index.ts"
 compatibility_date = "2023-09-11"
 
-node_compat = true # required for database drivers to function
+# required for database drivers to function
+compatibility_flags = ["experimental:nodejs_compat"]
 
 # Pasted from the output of `wrangler hyperdrive create $NAME --connection-string=[...]` above.
 [[hyperdrive]]

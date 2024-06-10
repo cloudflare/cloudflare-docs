@@ -170,13 +170,13 @@ async function generateQRCode(request) {
 }
 ```
 
-The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the `node_compat` flag in your Wrangler configuration file:
+The `qr-image` package you installed depends on Node.js APIs. For this to work, you need to set the [`experimental:nodejs_compat_v2`](/workers/runtime-apis/nodejs/) compatibility flag in your Wrangler configuration file:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
-node_compat = true
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 ```
 
 ## 4. Test in an application UI

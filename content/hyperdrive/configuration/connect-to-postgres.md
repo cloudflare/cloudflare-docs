@@ -28,7 +28,8 @@ $ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgr
 The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
 
 ```toml
-node_compat = true # required for database drivers to function
+# required for database drivers to function
+compatibility_flags = ["experimental:nodejs_compat"]
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
@@ -46,7 +47,7 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 | Driver               | Documentation              | Minimum Version Required | Notes                    |
 | -------------------- | -------------------------- | ------------------------ |  ----------------------- |
 | Postgres.js (**recommended**)        | https://github.com/porsager/postgres | `postgres@3.4.4` | Supported in both Workers & Pages. |
-| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages.  |
+| node-postgres - `pg` | https://node-postgres.com/ | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [`experimental:nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag to be enabled.  |
 | Drizzle              | https://orm.drizzle.team/  | `0.26.2`^                |                           |
 | Kysely               | https://kysely.dev/        | `0.26.3`^                |                           |
 
@@ -139,14 +140,14 @@ Install the `node-postgres` driver:
 $ npm install pg
 ```
 
-Ensure you have `node_compat = true` set in your `wrangler.toml` configuration file:
+Ensure you have the [`experimental:nodejs_compat_v2`](/workers/runtime-apis/nodejs/) compatibility flag enabled in your `wrangler.toml` configuration file:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 # other fields elided
-node_compat = true # require for node-postgres to work
+compatibility_flags = ["experimental:nodejs_compat"] # require for node-postgres to work
 ```
 
 Create a new `Client` instance and pass the Hyperdrive parameters:

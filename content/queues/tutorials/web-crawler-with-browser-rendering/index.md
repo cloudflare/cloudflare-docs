@@ -81,7 +81,7 @@ highlight: [7, 9, 10, 11, 12, 14, 15, 16, 18, 19, 20]
 name = "queues-web-crawler"
 main = "src/index.ts"
 compatibility_date = "2023-06-09"
-node_compat = true
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 
 browser = { binding = "CRAWLER_BROWSER", type = "browser" }
 

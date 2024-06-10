@@ -61,7 +61,7 @@ If you choose to deploy, you will be asked to authenticate (if not logged in alr
 ---
 header: wrangler.toml
 ---
-node_compat = true
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 ```
 
 ## 2. Add the PostgreSQL connection library

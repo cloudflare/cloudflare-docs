@@ -145,7 +145,7 @@ name = "timescale-api"
 main = "src/index.ts"
 compatibility_date = "2023-10-30"
 
-node_compat = true
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
