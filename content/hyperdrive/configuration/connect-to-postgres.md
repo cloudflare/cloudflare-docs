@@ -193,19 +193,6 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-## Transaction and statement support
-
-Hyperdrive's connection pooling mode is equivalent to the `transaction` mode of connection poolers like [PgBouncer](https://www.pgbouncer.org/) and [PgCat](https://github.com/postgresml/pgcat).
-
-Hyperdrive does not support the following PostgreSQL features:
-
-- `SET` statements.
-- Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
-- `LISTEN` and `NOTIFY`.
-- `PREPARE` and `DEALLOCATE`.
-
-In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
-
 ## Identify connections from Hyperdrive
 
 To identify active connections to your Postgres database server from Hyperdrive:
