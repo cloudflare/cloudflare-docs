@@ -22,6 +22,8 @@ In order to use this data, you will need to then retrieve it from the [`True-Cli
 
 {{</Aside>}}
 
+## Additional resources
+
 For additional guidance on using True-Client-IP Header with Cloudflare, refer to the following resources:
 
 * [Available Managed Transforms](/rules/transform/managed-transforms/reference/#add-true-client-ip-header)
