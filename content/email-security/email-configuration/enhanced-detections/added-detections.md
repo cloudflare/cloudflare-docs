@@ -24,7 +24,7 @@ These settings apply particularly to trusted business partners that your organiz
 
 To access **Added Detections** and potentially adjust your settings:
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Enhanced Detections** > **Added Detections**.
 

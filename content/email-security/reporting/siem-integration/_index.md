@@ -9,7 +9,13 @@ updated: 2022-07-14
 
 # SIEM integration
 
-With a bit of configuration, you can also bring Area 1 data into your {{<glossary-tooltip term_id="SIEM">}}Security Information and Event Management (SIEM){{</glossary-tooltip>}} tools to view message-level information outside of the dashboard and create your own custom reports.
+{{<Aside type="warning" header="Area 1 has been renamed">}}
+
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
+With a bit of configuration, you can also bring Cloud Email Security (formerly Area 1) data into your {{<glossary-tooltip term_id="SIEM">}}Security Information and Event Management (SIEM){{</glossary-tooltip>}} tools to view message-level information outside of the dashboard and create your own custom reports.
 
 ## Connect a SIEM tool
 

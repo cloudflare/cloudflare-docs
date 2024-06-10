@@ -8,6 +8,12 @@ meta:
 
 # Inline deployment
 
+{{<Aside type="warning" header="Area 1 has been renamed">}}
+
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
 {{<render file="deployment/_setup-inline-overview.md">}}
 
 ## Get started
