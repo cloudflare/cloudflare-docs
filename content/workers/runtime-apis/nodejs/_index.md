@@ -2,61 +2,69 @@
 pcx_content_type: concept
 title: Node.js compatibility
 meta:
-  description: Implemented Node.js runtime APIs and enablement instructions for your Worker project.
+  description: Node.js APIs available in Cloudflare Workers
 ---
 
 # Node.js compatibility
 
-Most Workers import one or more packages of JavaScript or TypeScript code from [npm](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
+When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
 
-To ensure compatibility with a wider set of npm packages, and make it easier for you to run existing applications on Cloudflare Workers, the following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as Workers runtime APIs, with no need to add polyfills to your own code:
+Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
-{{<directory-listing>}}
+1. As built-in APIs provided by the Workers Runtime
+2. As polyfills, added to your code by Wrangler (or by your own build tools)
 
-Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the npm packages you depend on.
-
-```js
-// Do this:
-import { Buffer } from 'node:buffer';
-
-// Do not do this:
-import { Buffer } from 'buffer';
-```
-Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
-
-## Enable Node.js with Workers
-
-Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+To enable both built-in APIs and polyfills to your Worker, add the [`experimental:nodejs_compat_v2`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
 ```toml
 ---
 header: wrangler.toml
 ---
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = [ "experimental:nodejs_compat_v2" ]
 ```
 
-## Enable Node.js with Pages Functions
+{{<Aside type="note" header="Note">}}
 
-### Enable Node.js with Wrangler
+When this ships, the opt-in mechanism will be:
 
-To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
+1. Enable the `nodejs_compat` compatibility flag
+2. Set your compatibility date after <date>
 
-```sh
-$ npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
+The `experimental:nodejs_compat_v2` flag is temporary, just for getting feedback.
+
+{{</Aside>}}
+
+## Built-in Node.js Runtime APIs
+
+The following APIs from Node.js are provided directly by the Workers Runtime:
+
+{{<directory-listing>}}
+
+Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
+
+## Node.js API Polyfills
+
+When you build your Worker with Wrangler, and enable the `experimental:nodejs_compat_v2` compatibility flag, in addition to enabling built-in Node.js APIs from the Workers Runtime, [Wrangler](/workers/wrangler/) will use [unenv](https://github.com/unjs/unenv) to automatically detect uses of Node.js APIs, and add polyfills where relevant.
+
+Adding polyfills maximizes compatibility with existing npm packages, while recognizing that not all APIs from Node.js make sense in the context of serverless functions.
+
+In cases where it is possible to provide a polyfill version of the relevant Node.js API, unenv will do so. In cases where it is not possible to provide a polyfill, such as the `fs` module, unenv adds the module and its methods to your Worker, but calling methods of the module will either noop, or will throw an error with a message like:
+
+```
+[unenv] <method name> is not implemented yet!
 ```
 
-For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
+{{<Aside type="note" header="Note">}}
 
-### Enable Node.js from the Cloudflare dashboard
+Instructions on how to opt out of the polyfills
 
-To enable Node.js for your Pages Function from the Cloudflare dashboard:
+{{</Aside>}}
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** and in **Overview**, select your Pages project.
-3. Select **Settings** > **Functions** > **Compatibility Flags**.
-4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+## Adding polyfills to your Worker manually
 
-### Enable only AsyncLocalStorage
+If you do not use Wrangler to bundle your Worker, and instead use the build tooling provided by a framework such as Next.js, Remix, or Astro, you will need to add polyfills yourself. Follow the [unenv docs](https://github.com/unjs/unenv?tab=readme-ov-file#usage) for guidance on how to integrate unenv with your bundler or build tool of choice.
+
+## Enable only AsyncLocalStorage
 
 To enable the Node.js `AsyncLocalStorage` API only, use the `nodejs_als` compatibility flag.
 
@@ -66,7 +74,3 @@ header:wrangler.toml
 ---
 compatibility_flags = [ "nodejs_als" ]
 ```
-
-## Related resources
-
-* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
