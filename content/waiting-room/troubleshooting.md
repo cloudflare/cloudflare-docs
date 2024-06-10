@@ -81,7 +81,7 @@ Some Cloudflare products run before a waiting room acts on traffic:
 - DDoS Mitigation
 - Web Application Firewall (WAF)
 - Bot Management
-- Page Rules (deprecated)
+- Page Rules (legacy)
 
 Other Cloudflare products run after a waiting room acts on traffic:
 
