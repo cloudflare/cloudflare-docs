@@ -1,6 +1,6 @@
 ---
 title: Feedback reports
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 weight: 4
 ---
 
