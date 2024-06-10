@@ -22,4 +22,4 @@ inputParameters: param1
 
 6. Copy the **SCIM Endpoint** and **SCIM Secret**. You will need to enter these values into the IdP.
 
-The SCIM secret never expires, but you can manually regenerate the secret at any time in Zero Trust.
+The SCIM secret never expires, but you can manually regenerate the secret at any time.
