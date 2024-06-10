@@ -9,11 +9,11 @@ _build:
 
 - Clear your browser cache and cookies: Refer to the guides below on how to clear your browser cache and cookies based on your preferred browser.
   - [Google Chrome](https://support.google.com/accounts/answer/32050?hl=en&co=GENIE.Platform%3DDesktop)
-  - [Mozilla Firefox](https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox) 
+  - [Mozilla Firefox](https://support.mozilla.org/kb/clear-cookies-and-site-data-firefox) 
   - Safari
     - [Desktop](https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac)
-    - [Mobile](https://support.apple.com/en-us/105082)
-  - [Microsoft Edge](https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d) 
+    - [Mobile](https://support.apple.com/105082)
+  - [Microsoft Edge](https://support.microsoft.com/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d) 
 
 - Disable all browser extensions.
 - Ensure that JavaScript is enabled.
