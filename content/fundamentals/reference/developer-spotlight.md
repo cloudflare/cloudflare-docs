@@ -24,9 +24,9 @@ Your tutorial must be:
 1. Easy for anyone to follow.
 2. Technically accurate.
 3. Entirely original, written only by you.
-Written following Cloudflare's documentation style guide. For more information, please visit our [style guide documentation](/style-guide/) and our [tutorial style guide documentation](/style-guide/documentation-content-strategy/content-types/tutorial/#template)
-4. About using Cloudflare's Developer Platform products.
-5. Complete, not an unfinished draft.
+4. Written following Cloudflare's documentation style guide. For more information, please visit our [style guide documentation](/style-guide/) and our [tutorial style guide documentation](/style-guide/documentation-content-strategy/content-types/tutorial/#template)
+5. About using Cloudflare's Developer Platform products.
+6. Complete, not an unfinished draft.
 
 ---
 
