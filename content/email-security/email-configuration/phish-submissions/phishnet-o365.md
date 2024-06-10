@@ -5,13 +5,13 @@ pcx_content_type: how-to
 
 # PhishNet for Office 365
 
-PhishNet is an add-in button that helps users to submit directly to Cloud Email Security (formerly Area 1) {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Cloud Email Security (formerly Area 1)'s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Cloud Email Security (formerly Area 1).
+PhishNet is an add-in button that helps users to submit directly to Cloud Email Security (formerly Area 1) {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Cloud Email Security's detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Cloud Email Security.
 
 ## Prerequisites
 
 To set up PhishNet with Office 365, you will need:
 
-- An Cloud Email Security (formerly Area 1) account with admin access.
+- An Cloud Email Security account with admin access.
 - Admin access to Microsoft.com.
 
 {{<Aside type="note">}}
@@ -46,15 +46,15 @@ Only admin users can deploy PhishNet for all users in Office 365. Non-admin user
 
 9. Go back to the Microsoft admin browser tab.
 
-10. From **Upload Apps to deploy**, select **Provide link to manifest file**, and paste the URL you copied from your Cloud Email Security (formerly Area 1) dashboard.
+10. From **Upload Apps to deploy**, select **Provide link to manifest file**, and paste the URL you copied from your Cloud Email Security dashboard.
 
-    ![Paste the URL you have copied from Cloud Email Security (formerly Area 1).](/images/email-security/phish-submissions/phishnet-o365/step10-upload-apps.png)
+    ![Paste the URL you have copied from Cloud Email Security.](/images/email-security/phish-submissions/phishnet-o365/step10-upload-apps.png)
 
 11. Select **Validate**. Wait for a success message to appear below the input. Then, select **Next**.
 
 12. Under **Assign users**, select **Entire Organization**, and then select **Next**.
 
-    ![Paste the URL you have copied from Cloud Email Security (formerly Area 1).](/images/email-security/phish-submissions/phishnet-o365/step12.png)
+    ![Paste the URL you have copied from Cloud Email Security.](/images/email-security/phish-submissions/phishnet-o365/step12.png)
 
 13. In **App Permissions and Capabilities**, make sure PhishNet has the correct permissions: `Outlook: ReadWriteMailbox, SendReceiveData`. Then, select **Next**.
 
@@ -86,4 +86,4 @@ If you cannot find the PhishNet icon, select the **More actions** menu (the thre
 
 4. Select **Submit Report**.
 
-Once the email has been successfully submitted to Cloudflare Cloud Email Security (formerly Area 1) for review, PhishNet will show you a **Submission Complete** message.
+Once the email has been successfully submitted to Cloudflare Cloud Email Security for review, PhishNet will show you a **Submission Complete** message.

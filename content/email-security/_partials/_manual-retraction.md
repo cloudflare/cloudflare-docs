@@ -21,4 +21,4 @@ When retraction is enabled, you can manually retract messages that were not auto
 
     </div>
 
-5. If the retraction was successful, there will be positive confirmation on Cloud Email Security (formerly Area 1)'s dashboard.
+5. If the retraction was successful, there will be positive confirmation on Cloud Email Security's dashboard.

@@ -15,11 +15,11 @@ updated: 2022-10-11
 
 {{</Aside>}}
 
-For customers using Gmail, setting up Cloud Email Security (formerly Area 1) via BCC is quick and easy. All you need to do is create a content compliance filter to send emails to Cloud Email Security (formerly Area 1) through BCC. The following email flow shows how this works:
+For customers using Gmail, setting up Cloud Email Security via BCC is quick and easy. All you need to do is create a content compliance filter to send emails to Cloud Email Security through BCC. The following email flow shows how this works:
 
-![Email flow when setting up a phishing assessment risk for Gmail with Cloud Email Security (formerly Area 1).](/images/email-security/deployment/api-setup/gmail/gmail-bcc-flow.png)
+![Email flow when setting up a phishing assessment risk for Gmail with Cloud Email Security.](/images/email-security/deployment/api-setup/gmail/gmail-bcc-flow.png)
 
-To setup Cloud Email Security (formerly Area 1) phishing risk assessment for Gmail:
+To setup Cloud Email Security phishing risk assessment for Gmail:
 
 {{<render file="deployment/_gmail-bcc-setup.md">}}
 

@@ -49,7 +49,7 @@ To configure anti-spam policies:
         - **Select quarantine policy**: _UserNotifyAdminRelease_.
     - **High confidence phishing**: _Quarantine message_.
         - **Select quarantine policy**: _UserNotifyAdminRelease_.
-    - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Cloud Email Security (formerly Area 1) recommends 15-30 days.
+    - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Cloud Email Security recommends 15-30 days.
 
     <div class="large-img">
 

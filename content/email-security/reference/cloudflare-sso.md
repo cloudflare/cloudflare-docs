@@ -3,7 +3,7 @@ title: Cloudflare SSO
 pcx_content_type: reference
 weight: 5
 meta:
-    description: You can use your Cloudflare account as the single sign-on (SSO) authentication scheme to log in to the Cloud Email Security (formerly Area 1) dashboard.
+    description: You can use your Cloudflare account as the single sign-on (SSO) authentication scheme to log in to the Cloud Email Security dashboard.
 ---
 
 # Cloudflare SSO
@@ -14,11 +14,11 @@ meta:
 
 {{</Aside>}}
 
-You can use your Cloudflare account as the single sign-on (SSO) authentication scheme to log in to the Cloud Email Security (formerly Area 1) dashboard:
+You can use your Cloudflare account as the single sign-on (SSO) authentication scheme to log in to the Cloud Email Security dashboard:
 
 1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 2. Select **Sign in with Cloudflare**. You will be redirected to your Cloudflare account to log in.
-3. Select **Allow** to allow Cloud Email Security (formerly Area 1) to make changes to your Cloudflare account. You will be redirected to Cloud Email Security (formerly Area 1) dashboard.
-4. Enter your Cloud Email Security (formerly Area 1)'s email address to log in.
+3. Select **Allow** to allow Cloud Email Security to make changes to your Cloudflare account. You will be redirected to Cloud Email Security dashboard.
+4. Enter your Cloud Email Security's email address to log in.
 
-You can now use your Cloudflare account as a single sign-on authentication scheme to log in to Cloud Email Security (formerly Area 1). The next time you access the Cloud Email Security (formerly Area 1) dashboard, just select **Sign in with Cloudflare** to log in.
+You can now use your Cloudflare account as a single sign-on authentication scheme to log in to Cloud Email Security. The next time you access the Cloud Email Security dashboard, just select **Sign in with Cloudflare** to log in.

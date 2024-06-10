@@ -12,9 +12,9 @@ weight: 5
 
 {{</Aside>}}
 
-Cloud Email Security (formerly Area 1) offers a variety of ways for you to better examine and understand your message traffic:
+Cloud Email Security offers a variety of ways for you to better examine and understand your message traffic:
 
 {{<directory-listing showDescriptions=true char_limit=300 >}}
-- The [Cloud Email Security (formerly Area 1) API](/email-security/api/) also allows you to download historical records as needed.
+- The [Cloud Email Security API](/email-security/api/) also allows you to download historical records as needed.
 
 {{<Aside type="note">}} {{<render file="_timestamp.md">}} {{</Aside>}}

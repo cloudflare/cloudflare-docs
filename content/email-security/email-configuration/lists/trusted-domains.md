@@ -10,7 +10,7 @@ weight: 2
 
 ## Default behavior
 
-When messages come to your recipients from certain domains, Cloud Email Security (formerly Area 1) triggers certain [detections](/email-security/reference/dispositions-and-attributes/) by default:
+When messages come to your recipients from certain domains, Cloud Email Security triggers certain [detections](/email-security/reference/dispositions-and-attributes/) by default:
 
 - **Proximity Domains**: Domains with similar spelling to your existing domain. Will trigger a `SPOOF` detection.
 - **Recent Domains**: Domains created recently (exact definition set in [Added Detections](/email-security/email-configuration/enhanced-detections/added-detections/)). Will trigger a `MALICIOUS` or `SUSPICIOUS` detection.

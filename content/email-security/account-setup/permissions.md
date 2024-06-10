@@ -29,7 +29,7 @@ If your account has [parent permissions](/email-security/account-setup/manage-pa
 
 ## Child accounts
 
-Child accounts control settings and services associated with an Cloud Email Security (formerly Area 1) instance.
+Child accounts control settings and services associated with an Cloud Email Security instance.
 
 ### Child users
 

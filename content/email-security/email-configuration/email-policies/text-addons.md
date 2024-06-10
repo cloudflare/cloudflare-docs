@@ -24,7 +24,7 @@ Text add-ons are only applicable to customers using an [inline setup](/email-sec
 
 To update or add a new add-on to the subject or body of a message:
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Text Add-Ons**.
 4. Select **Edit**.

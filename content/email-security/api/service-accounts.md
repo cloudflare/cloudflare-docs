@@ -12,7 +12,7 @@ When you connect to the [Cloud Email Security (formerly Area 1) API](/email-secu
 
 ## Create service account
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Service Accounts**.
 4. Select **Add Service Account**.
@@ -26,7 +26,7 @@ When you connect to the [Cloud Email Security (formerly Area 1) API](/email-secu
 
 If you lose your private key or need to rotate it for security reasons, you can generate a new private key:
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Service Accounts**.
 4. On a specific account, select **...** > **Refresh key**.

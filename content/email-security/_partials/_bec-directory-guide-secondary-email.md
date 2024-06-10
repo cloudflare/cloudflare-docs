@@ -9,7 +9,7 @@ When the Business Email Compromise list is configured, Cloud Email Security (for
 
 In some instances, you may want to allow your protected users to send emails from an alternate email address (like their personal email address). To configure this alternate address, you will have to add it to their directory entry.
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Email Configuration** > **Enhanced Detections** > **Business Email Compromise**.
 

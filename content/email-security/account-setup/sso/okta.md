@@ -8,11 +8,11 @@ meta:
 
 # Okta integration guide
 
-In this tutorial you will learn how to connect your Cloud Email Security (formerly Area 1) account to Okta. When single sign-on (SSO) is correctly configured, your authorized employees can connect to the Cloud Email Security (formerly Area 1) dashboard using a familiar user name and password.
+In this tutorial you will learn how to connect your Cloud Email Security (formerly Area 1) account to Okta. When single sign-on (SSO) is correctly configured, your authorized employees can connect to the Cloud Email Security dashboard using a familiar user name and password.
 
-## 1. Create an Cloud Email Security (formerly Area 1) app in Okta
+## 1. Create an Cloud Email Security app in Okta
 
-You will need to manually create an app for Cloud Email Security (formerly Area 1) in Okta.
+You will need to manually create an app for Cloud Email Security in Okta.
 
 1. Log in to Okta as an administrator.
 
@@ -24,7 +24,7 @@ You will need to manually create an app for Cloud Email Security (formerly Area 
 
     ![Choose SAML 2.0 as the new app integration type](/images/email-security/sso/okta/step3-saml.png)
 
-4. Enter a descriptive name for your app, such as `Cloud Email Security (formerly Area 1)`, and select **Next**.
+4. Enter a descriptive name for your app, such as `Cloud Email Security`, and select **Next**.
 
 5. Enter the following settings for **SAML Settings**:
     | | |
@@ -58,21 +58,21 @@ You will need to manually create an app for Cloud Email Security (formerly Area 
 
     ![Find the View SAML setup instructions button](/images/email-security/sso/okta/step11-saml-instructions.png)
 
-12. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Cloud Email Security (formerly Area 1) dashboard.
+12. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Cloud Email Security dashboard.
 
-    ![Copy and save the SSO URL to use later in the Cloud Email Security (formerly Area 1) dashboard](/images/email-security/sso/okta/step12-sso-url.png)
+    ![Copy and save the SSO URL to use later in the Cloud Email Security dashboard](/images/email-security/sso/okta/step12-sso-url.png)
 
-13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to  finish configuration in the Cloud Email Security (formerly Area 1) dashboard. The start of the metadata should be similar to the following:
+13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to  finish configuration in the Cloud Email Security dashboard. The start of the metadata should be similar to the following:
 
     ```txt
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
     ```
 
-    ![Copy and save the XML metadata to use later in the Cloud Email Security (formerly Area 1) dashboard](/images/email-security/sso/okta/step13-optional.png)
+    ![Copy and save the XML metadata to use later in the Cloud Email Security dashboard](/images/email-security/sso/okta/step13-optional.png)
 
-## 2. Configure Cloud Email Security (formerly Area 1) to connect to Okta
+## 2. Configure Cloud Email Security to connect to Okta
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -87,10 +87,10 @@ You will need to manually create an app for Cloud Email Security (formerly Area 
 5. In **SSO Enforcement**, choose one of the settings according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
 
-6. In **SAML SSO Domain** enter the domain you saved from step 13. For example, `area1security-examplecorp.okta.com`.
+1. In **SAML SSO Domain** enter the domain you saved from step 13. For example, `area1security-examplecorp.okta.com`.
 
-7. In **Metadata XML** paste the XML metadata you saved from step 14.
+2. In **Metadata XML** paste the XML metadata you saved from step 14.
 
-8. Select **Update Settings** to save your configuration.
+3. Select **Update Settings** to save your configuration.
 
-Log out of any customer portal sessions. Your Okta account should now show a tile for Cloud Email Security (formerly Area 1).
+Log out of any customer portal sessions. Your Okta account should now show a tile for Cloud Email Security.

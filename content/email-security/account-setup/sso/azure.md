@@ -59,7 +59,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
 11. Select **Save** and the cross button to exit **SAML Certificates**.
 
-12. Still in the **SAML Certificates** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Cloud Email Security (formerly Area 1) dashboard.
+12. Still in the **SAML Certificates** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Cloud Email Security dashboard.
 
     ![Download the Metadata XML information](/images/email-security/sso/azure/step12-download.png)
 
@@ -71,9 +71,9 @@ Your Azure configuration is now complete. It should look similar to this:
 Now that the application configuration is complete, update **User Assignments** and **Application Properties** as needed to ensure that authorized personnel are able to access the new application from their Apps Catalog. Additionally, you may choose to update the application logo image file or the privacy policy URL.
 {{</Aside>}} 
 
-## 2. Configure Cloud Email Security (formerly Area 1) to connect to Azure
+## 2. Configure Cloud Email Security to connect to Azure
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -88,19 +88,19 @@ Now that the application configuration is complete, update **User Assignments** 
 5. In **SSO Enforcement**, choose one of the settings according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
 
-6. For **SAML SSO Domain**, enter `login.microsoftonline.com`.
+1. For **SAML SSO Domain**, enter `login.microsoftonline.com`.
 
-7. In **Metadata XML** paste the XML metadata you downloaded in the previous step 11. You can open the downloaded file with a text editor to copy all the text. Make sure there are no leading carriage returns or spaces when you copy the text. Your copied text should begin with:
+2. In **Metadata XML** paste the XML metadata you downloaded in the previous step 11. You can open the downloaded file with a text editor to copy all the text. Make sure there are no leading carriage returns or spaces when you copy the text. Your copied text should begin with:
 
     ```txt
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
     ```
-8. Select **Update Settings** to save your configuration.
+3. Select **Update Settings** to save your configuration.
 
 ## 3. Test SSO configuration
 
-After completing both the Azure and Cloud Email Security (formerly Area 1) set ups, you can test your SSO access. 
-In this example, the logo for Cloud Email Security (formerly Area 1) has been updated.
+After completing both the Azure and Cloud Email Security set ups, you can test your SSO access. 
+In this example, the logo for Cloud Email Security has been updated.
 
 {{<Aside type="note">}}Verify that the User Assignments and Application Properties of your new Azure AD application have been updated accordingly to ensure that authorized personnel are able to access the new application from their Office 365/Azure Apps Catalog page. Application logos and privacy policy URL can also be updated as needed.{{</Aside>}}
 
@@ -110,18 +110,18 @@ In this example, the logo for Cloud Email Security (formerly Area 1) has been up
 
 3. Go to **Settings** > **SSO**.
 
-4. Locate the Cloud Email Security (formerly Area 1) Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Cloud Email Security (formerly Area 1). 
+4. Locate the Cloud Email Security Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Cloud Email Security. 
 
-5. If you configured everything correctly, you should be signed in to the Cloud Email Security (formerly Area 1) Portal and redirected to the dashboard.
+5. If you configured everything correctly, you should be signed in to the Cloud Email Security Portal and redirected to the dashboard.
 
 ## Troubleshooting
 
-If you have trouble connecting your Azure account to Cloud Email Security (formerly Area 1), make sure that:
+If you have trouble connecting your Azure account to Cloud Email Security, make sure that:
 
-- The user exists in the Cloud Email Security (formerly Area 1) dashboard.
+- The user exists in the Cloud Email Security dashboard.
 - The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
 - **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Certificates** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration).
-- The SAML SSO Domain is set correctly in the Cloud Email Security (formerly Area 1) dashboard (refer to step 6 in [Configure Cloud Email Security (formerly Area 1) to connect to Azure](#2-configure-area-1-to-connect-to-azure)).
+- The SAML SSO Domain is set correctly in the Cloud Email Security dashboard (refer to step 6 in [Configure Cloud Email Security to connect to Azure](#2-configure-area-1-to-connect-to-azure)).
 - The name ID identifier is set to **Email Address**.
 
 If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

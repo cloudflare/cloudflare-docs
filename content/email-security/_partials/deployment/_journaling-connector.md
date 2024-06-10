@@ -7,11 +7,11 @@ _build:
 
 ### 1. Configure connector for delivery to Cloud Email Security (formerly Area 1) (if required)
 
-{{<Aside type="note">}}Cloud Email Security (formerly Area 1) only scans inbound emails.{{</Aside>}}
+{{<Aside type="note">}}Cloud Email Security only scans inbound emails.{{</Aside>}}
 
 If your email architecture does not include an outbound gateway, you can skip this step and [proceed to the next one](#2-configure-journal-rule).
 
-On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Cloud Email Security (formerly Area 1).
+On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Cloud Email Security.
 
 1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com), and go to **Mail flow** > **Connectors**.
 
@@ -60,7 +60,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 12. Select **Next**.
 
-13. You need to validate the connector by using your tenant’s specific journaling address. To find this address, go to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/support/service-addresses) > **Support** > **Service Addresses page**. 
+13. You need to validate the connector by using your tenant’s specific journaling address. To find this address, go to the [Cloud Email Security dashboard](https://horizon.area1security.com/support/service-addresses) > **Support** > **Service Addresses page**. 
 
     ![Validate the connector](/images/email-security/deployment/api-setup/journaling/step13-validate-email.png)
 
@@ -98,7 +98,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/support/service-addresses). For example, `<customer_name>@journaling.mxrecord.io`.
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Cloud Email Security dashboard](https://horizon.area1security.com/support/service-addresses). For example, `<customer_name>@journaling.mxrecord.io`.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     * **Journal messages sent or received from**: _Everyone_
     * **Type of message to journal**: _External messages only_
@@ -109,7 +109,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
     ![Verify the journal rule information](/images/email-security/deployment/api-setup/journaling/step9-verify-journal-rules.png)
 
-Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Cloud Email Security (formerly Area 1). After it propagates, you can access the Cloudflare Cloud Email Security (formerly Area 1) dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Cloud Email Security (formerly Area 1) from your Exchange server.
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Cloud Email Security. After it propagates, you can access the Cloudflare Cloud Email Security dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Cloud Email Security from your Exchange server.
 
 ### 3. Compliance
 
@@ -139,7 +139,7 @@ After creating the distribution lists based on regions for your users, configure
 
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-    - **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/support/service-addresses). If you need to process emails in certain geographic regions, refer to the [Geographic locations](#geographic-locations) table for more information on what address you should use.
+    - **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Cloud Email Security dashboard](https://horizon.area1security.com/support/service-addresses). If you need to process emails in certain geographic regions, refer to the [Geographic locations](#geographic-locations) table for more information on what address you should use.
     - **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     - **Journal messages sent or received from**: _A specific user or group_ and select the user group you [created above](#3-compliance).
     - **Type of message to journal**: _External messages only_
@@ -150,4 +150,4 @@ After creating the distribution lists based on regions for your users, configure
 
     ![Verify the journal rule information](/images/email-security/deployment/api-setup/journaling/step9-verify-journal-rules.png)
 
-Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Cloud Email Security (formerly Area 1). After it propagates, you can access the Cloudflare Cloud Email Security (formerly Area 1) dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Cloud Email Security (formerly Area 1) from your Exchange server.
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Cloud Email Security. After it propagates, you can access the Cloudflare Cloud Email Security dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Cloud Email Security from your Exchange server.

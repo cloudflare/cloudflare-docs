@@ -6,7 +6,7 @@ weight: 2
 
 # Alert Webhooks
 
-Alert Webhooks allow you to connect external services to Cloud Email Security (formerly Area 1), including:
+Alert Webhooks allow you to connect external services to Cloud Email Security, including:
 
 - Slack
 - Email addresses
@@ -15,12 +15,12 @@ Alert Webhooks allow you to connect external services to Cloud Email Security (f
 
 ## Create an alert webhook
 
-To create an alert webhook in Cloud Email Security (formerly Area 1):
+To create an alert webhook in Cloud Email Security:
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Select **New Webhook**.
 5. Select an **App Type**.
-7. Enter the **Target**.
-8. Select **Publish Webhook**.
+6. Enter the **Target**.
+7. Select **Publish Webhook**.

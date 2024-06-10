@@ -12,6 +12,6 @@ weight: 4
 
 {{</Aside>}}
 
-Once you have [set up Cloud Email Security (formerly Area 1)](/email-security/deployment/), you have several options to customize and fine-tune email behavior.
+Once you have [set up Cloud Email Security](/email-security/deployment/), you have several options to customize and fine-tune email behavior.
 
 {{<directory-listing>}}
