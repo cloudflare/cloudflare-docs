@@ -28,6 +28,11 @@ Your tutorial must be:
 5. About using Cloudflare's Developer Platform products.
 6. Complete, not an unfinished draft.
 
+
+## Account credits
+
+Once your submission has been approved and published, we can then add 350 credits to your Cloudflare account. Credits are only valid for three years. Valid payment details must be stored on the recieving account before credits can be applied.
+
 ---
 
 ## FAQ
