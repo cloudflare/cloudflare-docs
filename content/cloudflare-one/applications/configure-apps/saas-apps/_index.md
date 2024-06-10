@@ -44,7 +44,7 @@ Get the following information from your SaaS application account:
 9. (Optional) Configure [advanced provisioning settings](#advanced-provisioning-settings).
 10. Select **Save application**.
 
-Cloudflare will begin synchronizing users and groups between your IdP and the SaaS application according to the provisioning schedule set in your IdP. To track the user's identity over time, view your [User Registry audit logs](/cloudflare-one/insights/logs/users/).
+Cloudflare will begin synchronizing users and groups between your IdP and the SaaS application according to the provisioning schedule set in your IdP. To track how the user's identity changes over time, view your [User Registry audit logs](/cloudflare-one/insights/logs/users/).
 
 ### Advanced provisioning settings
 
