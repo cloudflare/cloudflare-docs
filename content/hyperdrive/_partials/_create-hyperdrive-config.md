@@ -43,7 +43,7 @@ main = "src/index.ts"
 compatibility_date = "2023-09-11"
 
 # required for database drivers to function
-compatibility_flags = ["experimental:nodejs_compat"]
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 
 # Pasted from the output of `wrangler hyperdrive create $NAME --connection-string=[...]` above.
 [[hyperdrive]]

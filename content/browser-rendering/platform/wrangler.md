@@ -34,7 +34,7 @@ name = "browser-rendering"
 main = "src/index.ts"
 workers_dev = true
 
-compatibility_flags = ["experimental:nodejs_compat"]
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 browser = { binding = "MYBROWSER" }
 ```
 

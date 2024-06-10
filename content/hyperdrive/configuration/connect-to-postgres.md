@@ -29,7 +29,7 @@ The command above will output the ID of your Hyperdrive, which you will need to 
 
 ```toml
 # required for database drivers to function
-compatibility_flags = ["experimental:nodejs_compat"]
+compatibility_flags = ["experimental:nodejs_compat_v2"]
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
@@ -147,7 +147,7 @@ Ensure you have the [`experimental:nodejs_compat_v2`](/workers/runtime-apis/node
 filename: wrangler.toml
 ---
 # other fields elided
-compatibility_flags = ["experimental:nodejs_compat"] # require for node-postgres to work
+compatibility_flags = ["experimental:nodejs_compat_v2"] # require for node-postgres to work
 ```
 
 Create a new `Client` instance and pass the Hyperdrive parameters:

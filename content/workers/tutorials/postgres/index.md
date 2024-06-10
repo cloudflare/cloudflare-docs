@@ -55,7 +55,7 @@ If you choose to deploy, you will be asked to authenticate (if not logged in alr
 
 ### Enable Node.js compatibility
 
-[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml`.
+[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by [enabling the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers):
 
 ```toml
 ---
