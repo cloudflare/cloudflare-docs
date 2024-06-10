@@ -14,9 +14,9 @@ Cloudflare integrates with the majority of SaaS applications that support the SA
 
 {{<directory-listing>}}
 
-## Configure SCIM
+{{<heading-pill style="beta" heading="h2">}}Configure SCIM for SaaS applications{{</heading-pill>}}
 
-[SCIM provisioning](/cloudflare-one/identity/users/scim/) allows you to synchronize users and groups between your identity provider (IdP) and SaaS app. Once configured, SCIM will automatically grant a user access to all the SaaS applications they need to do their job once they have been added to the IdP. Each SaaS application has different SCIM setup requirements, and some applications may not support all of the SCIM functionality available in Zero Trust.
+[SCIM provisioning](/cloudflare-one/identity/users/scim/) allows you to synchronize users and groups between your identity provider (IdP) and SaaS application. Once configured, SCIM will automatically grant a user access to all the SaaS applications they need to do their job once they have been added to the IdP. Each SaaS application has different SCIM setup requirements, and some applications may not support all of the SCIM functionality available in Zero Trust.
 
 ### Prerequisites
 
