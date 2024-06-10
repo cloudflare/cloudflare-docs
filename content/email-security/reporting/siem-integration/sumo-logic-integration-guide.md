@@ -8,9 +8,9 @@ updated: 2023-01-26
 
 # Sumo Logic integration guide
 
-When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly into your instance of Sumo Logic. This document outlines the steps required to integrate Area 1 with Sumo Logic.
+When Cloud Email Security (formerly Area 1) detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly into your instance of Sumo Logic. This document outlines the steps required to integrate Cloud Email Security (formerly Area 1) with Sumo Logic.
 
-![A diagram outlining what happens when Area 1 detects a phishing email and sends it to Sumo Logic.](/images/email-security/siem-integration/sumo-logic/opening-sumo-logic.png)
+![A diagram outlining what happens when Cloud Email Security (formerly Area 1) detects a phishing email and sends it to Sumo Logic.](/images/email-security/siem-integration/sumo-logic/opening-sumo-logic.png)
 
 ## 1. Configure the Sumologic Collector
 
@@ -27,8 +27,8 @@ When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</gloss
     ![Select Hosted Collector.](/images/email-security/siem-integration/sumo-logic/step4-hosted.png)
 
 5. In **Add Hosted Collector**, enter the following settings:
-    - **Name**: `Area 1 Collector`
-    - **Description**: `Area 1 Security Collectors`
+    - **Name**: `Cloud Email Security (formerly Area 1) Collector`
+    - **Description**: `Cloud Email Security (formerly Area 1) Security Collectors`
     - **Category**: Anti-Phishing
 
     ![Enter the settings above to configure your collector.](/images/email-security/siem-integration/sumo-logic/step5-hosted-collector.png)
@@ -43,15 +43,15 @@ When Area 1 detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</gloss
 
     ![Enter a name and description.](/images/email-security/siem-integration/sumo-logic/step8-name.png)
 
-9. The system will present you a dialog box with the HTTP endpoint. Save it, as this will be required to configure Area 1 later.
+9. The system will present you a dialog box with the HTTP endpoint. Save it, as this will be required to configure Cloud Email Security (formerly Area 1) later.
 
     ![Take note of the endpoint to use it later.](/images/email-security/siem-integration/sumo-logic/step9-endpoint.png)
 
-## 2. Configure Area 1
+## 2. Configure Cloud Email Security (formerly Area 1)
 
-The next step is to configure Area 1 to push the Email Detection Events to the Sumologic HTTP Collector.
+The next step is to configure Cloud Email Security (formerly Area 1) to push the Email Detection Events to the Sumologic HTTP Collector.
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
 3. In the Add Webhooks page, enter the following settings: 
     - **App type**: Select **SIEM** > **Splunk**. In **Auth code**, enter `Sumologic`.
@@ -63,12 +63,12 @@ Your Sumo Logic integration will now show up in the All Webhooks panel.
 
 ![Your Sumo Logic webhook will display in the All Webhooks panel.](/images/email-security/siem-integration/sumo-logic/all-webhooks.png)
 
-It will take about ten minutes for the configuration to fully propagate through the infrastructure of Cloudflare Area 1, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Sumo Logic. 
+It will take about ten minutes for the configuration to fully propagate through the infrastructure of Cloudflare Cloud Email Security (formerly Area 1), and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Sumo Logic. 
 
-To view logs, hover your mouse over the Area 1 Collector, and select **Open in Log Search**.
+To view logs, hover your mouse over the Cloud Email Security (formerly Area 1) Collector, and select **Open in Log Search**.
 
 ![View logs in Sumo Logic.](/images/email-security/siem-integration/sumo-logic/open-log.png)
 
-Once events start to flow, select **New** > **Log search** to search for the detection events with your search criteria (for example, `_collector="Area 1 Collector"`).
+Once events start to flow, select **New** > **Log search** to search for the detection events with your search criteria (for example, `_collector="Cloud Email Security (formerly Area 1) Collector"`).
 
 ![Search for events.](/images/email-security/siem-integration/sumo-logic/search-events.png)
