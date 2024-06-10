@@ -278,7 +278,7 @@ const platform = await getPlatformProxy(options);
 
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
-          Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
+          Indicates if and where to persist the bindings data. If `true` or `undefined`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
 
           **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: "./my-directory/v3"`.
 
@@ -382,7 +382,7 @@ The bindings supported by `getPlatformProxy` are:
 
  * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
-    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
+    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) respectively.
 
     {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 

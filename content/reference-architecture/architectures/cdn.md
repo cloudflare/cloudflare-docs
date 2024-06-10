@@ -23,7 +23,7 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 Those who read this reference architecture will learn:
 
-- How Cloudflare CDN can significanly improve the delivery of content to your customers
+- How Cloudflare CDN can significantly improve the delivery of content to your customers
 - How anycast IP routing is important in ensuring reliable CDN performance
 - The range of tiered caching options and how to choose the one for your needs
 

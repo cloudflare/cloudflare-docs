@@ -14,7 +14,7 @@ header: Request
 curl -X POST \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/:account_id/load-balancers/monitors" \
+"https://api.cloudflare.com/client/v4/accounts/:account_id/load_balancers/monitors" \
 -H "Content-Type: application/json" \
 -d '{
     "type":"https",

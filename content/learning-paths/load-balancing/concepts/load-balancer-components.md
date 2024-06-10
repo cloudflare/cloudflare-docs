@@ -7,9 +7,9 @@ layout: learning-unit
 
 At it's most basic, load balancing is made up of three components:
 
-- **Origin pools**: Which contain one or more servers.
-- **Origin servers**: Which respond to individual requests.
-- **A load balancer**: Which decides which traffic goes to each origin pool.
+- **Endpoint pools**: Which contain one or more endpoints.
+- **Endpoints**: Which respond to individual requests.
+- **A load balancer**: Which decides which traffic goes to each pool.
 
 ## How it works
 
@@ -20,18 +20,18 @@ With a load balancer, requests first go through the load balancer. Your load bal
 {{<render file=_load-balancing-diagram.md productFolder="load-balancing">}}
 <br/>
 
-Within each pool, requests then go to individual servers. And that server is what responds to the request.
+Within each pool, requests then go to individual endpoints. And that endpoint is what responds to the request.
 
 ```mermaid
     flowchart LR
       accTitle: Pool traffic flow
-      accDescr: When an incoming request reaches a pool, it then goes to a server within the pool.
-    A[Request 1] --Routed by pool--> Origin2
-      subgraph P1 [Origin pool]
-        Origin1((Origin 1))
-        Origin2((Origin 2))
+      accDescr: When an incoming request reaches a pool, it then goes to an endpoint within the pool.
+    A[Request 1] --Routed by pool--> Endpoint2
+      subgraph P1 [Pool]
+        Endpoint1((Endpoint 1))
+        Endpoint2((Endpoint 2))
       end
 ```
 <br/>
 
-This progression of load balancer --> pool --> server is the core part of how a load balancer works.
+This progression of load balancer --> pool --> endpoint is the core part of how a load balancer works.

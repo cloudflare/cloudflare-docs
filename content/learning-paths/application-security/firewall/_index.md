@@ -14,4 +14,4 @@ Cloudflare's Web Application Firewall (WAF) is used to protect websites from a w
 By the end of this module, you will be able to:
 
 - Understand the different WAF components that Cloudflare offers  
-- Undersatnd the main features within each WAF offering
+- Understand the main features within each WAF offering

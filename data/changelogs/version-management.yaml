@@ -1,6 +1,7 @@
 ---
 link: "/version-management/changelog/"
 productName: Version Management
+productLink: "/version-management/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:

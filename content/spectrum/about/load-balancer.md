@@ -14,7 +14,7 @@ For an overview of how Cloudflare Load Balancing works refer to [Load Balancing 
 
 You can configure a Cloudflare load balancer to probe any TCP port for an accepted connection, which is in addition to HTTP and HTTPS probing capabilities.
 
-Health checks are optional within a load balancer. However, without a health check, the load balancer will distribute traffic to all origins in the first pool. With the health checks enabled, hosts that have gone into an error state will not receive traffic, maintaining uptime. This allows you to enable intelligent failover within a pool of hosts or amongst multiple pools.
+Health checks are optional within a load balancer. However, without a health check, the load balancer will distribute traffic to all endpoints in the first pool. With the health checks enabled, hosts that have gone into an error state will not receive traffic, maintaining uptime. This allows you to enable intelligent failover within a pool of hosts or amongst multiple pools.
 
 The example below shows a TCP health check configuration for an application running on port 2408 with a refresh rate every 30 seconds. You can configure TCP health checks through the dashboard or through Cloudflare's API.
 
@@ -61,11 +61,11 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 
 ## Traffic steering
 
-All traffic steering policies are available for transport load balancing through Spectrum. Refer to the Load Balancing documentation to learn more about the available [traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [origin steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) options.
+All traffic steering policies are available for transport load balancing through Spectrum. Refer to the Load Balancing documentation to learn more about the available [global traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) options.
 
 ## Weights
 
-[Origin weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have origins with different capacity or to split traffic amongst hosts for any other reason.
+[Endpoint weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have endpoints with different capacity or to split traffic amongst hosts for any other reason.
 
 Weight configured within a load balancer pool will be honored with load balancing through Spectrum.
 

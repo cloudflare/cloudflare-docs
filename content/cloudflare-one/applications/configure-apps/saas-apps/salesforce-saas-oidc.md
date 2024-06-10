@@ -20,7 +20,7 @@ This guide covers how to configure Salesforce as an OpenID Connect (OIDC) applic
 4. For the authentication protocol, select **OIDC**.
 5. Select **Add application**.
 6. In **Scopes**, select the attributes that you want Access to send in the ID token.
-7. In **Redirect URLs**, enter the callback URL obtained from Salesforce (`https://<your-domain>.my.salesforce.com/services/authcallback/<URL Suffix>`). Refer to [Add a SAML SSO provider to Salesforce](#2-add-a-saml-sso-provider-to-salesforce) for instructions on obtaining this value.
+7. In **Redirect URLs**, enter the callback URL obtained from Salesforce (`https://<your-domain>.my.salesforce.com/services/authcallback/<URL Suffix>`). Refer to [Add a SSO provider to Salesforce](#2-add-a-sso-provider-to-salesforce) for instructions on obtaining this value.
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 9. Copy the following values:
     - **Client ID**
@@ -32,7 +32,7 @@ This guide covers how to configure Salesforce as an OpenID Connect (OIDC) applic
 11. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 12. Select **Done**.
 
-## 2. Add a SAML SSO provider to Salesforce
+## 2. Add a SSO provider to Salesforce
 
 1. In Salesforce, go to **Setup**.
 2. In the **Quick Find** box, enter `auth` and select **Auth providers**.

@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="warning" header="Warning">}}
 
-The Brotli setting will be removed on 2024-06-14. After this date, Brotli compression will be enabled by default for all zones.
+The Brotli setting will be removed on 2024-08-15. After this date, Brotli compression will be enabled by default for all zones.
 
 Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 

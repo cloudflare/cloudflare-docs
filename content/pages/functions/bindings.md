@@ -413,7 +413,7 @@ export async function onRequest(context) {
 {{<tab label="ts">}}
 ```ts
 interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {

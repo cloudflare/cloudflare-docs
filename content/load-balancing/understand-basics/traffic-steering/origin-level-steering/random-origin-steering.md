@@ -8,4 +8,4 @@ meta:
 
 # Random steering
 
-**Random steering** sends requests to origins purely based on [origin weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
+**Random steering** sends requests to endpoints purely based on [endpoint weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different endpoints.
