@@ -10,7 +10,7 @@ You can set up auto-retraction to automatically move messages matching certain {
 
 To set up automatic retraction:
 
-1. Log in to the [Cloud Email Security  dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Retract Settings** > **Auto-Retract**.
 4. Select **Edit**. 
