@@ -73,6 +73,12 @@ Test the presigned URL by uploading an object using cURL. The example below woul
 $ curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
 ```
 
+### Generating presigned URLs with other languages and tools
+
+Take a look at our other examples for generating presigned URLs.
+
+{{<resource-by-tag tags="r2-presigned-url" resource_type="configuration">}}
+
 ## Add CORS policies from the dashboard
 
 1. From the Cloudflare dashboard, select **R2**.

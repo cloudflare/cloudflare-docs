@@ -1,6 +1,7 @@
 ---
 title: aws CLI
 pcx_content_type: configuration
+tags: [r2-presigned-url]
 ---
 
 # Configure `aws` CLI for R2

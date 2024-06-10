@@ -1,6 +1,7 @@
 ---
 title: aws-sdk-go
 pcx_content_type: configuration
+tags: [r2-presigned-url]
 ---
 
 # Configure `aws-sdk-go` for R2 

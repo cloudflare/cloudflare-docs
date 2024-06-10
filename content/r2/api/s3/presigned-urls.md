@@ -56,11 +56,7 @@ R2 currently supports the following methods when generating a presigned URL:
 
 Generate a presigned URL by referring to the following examples:
 
-- [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
-- [AWS SDK for JS v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
-- [AWS SDK for JS](/r2/examples/aws/aws-sdk-js/#generate-presigned-urls)
-- [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
-- [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
+{{<resource-by-tag tags="r2-presigned-url" resource_type="configuration">}}
 
 ## Presigned URL alternative with Workers
 

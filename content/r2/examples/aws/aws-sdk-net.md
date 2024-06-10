@@ -1,6 +1,7 @@
 ---
 title: aws-sdk-net
 pcx_content_type: configuration
+tags: [r2-presigned-url]
 ---
 
 # Configure `aws-sdk-net` for R2
@@ -110,6 +111,9 @@ static async Task GetObject()
 The [GetPreSignedURL](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/MIS3GetPreSignedURLGetPreSignedUrlRequest.html) method allows you to sign ahead of time, giving temporary access to a specific operation. In this case, presigning a `PutObject` request for `sdk-example/file.txt`.
 
 ```csharp
+---
+highlight: [3]
+---
 static string? GeneratePresignedUrl()
 {
 	AWSConfigsS3.UseSignatureVersion4 = true;

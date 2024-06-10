@@ -1,6 +1,7 @@
 ---
 title: aws-sdk-js
 pcx_content_type: configuration
+tags: [r2-presigned-url]
 ---
 
 # Configure `aws-sdk-js` for R2

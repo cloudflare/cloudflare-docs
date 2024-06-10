@@ -1,6 +1,7 @@
 ---
 title: rclone
 pcx_content_type: configuration
+tags: [r2-presigned-url]
 ---
 
 # Configure `rclone` for R2

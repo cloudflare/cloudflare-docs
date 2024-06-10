@@ -2,6 +2,7 @@
 title: aws-sdk-php
 summary: Example of how to configure `aws-sdk-php` to use R2.
 pcx_content_type: configuration
+tags: [r2-presigned-url]
 ---
 
 # Configure `aws-sdk-php` for R2
