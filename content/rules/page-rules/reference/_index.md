@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Reference
 meta:
-    title: Reference | Page Rules (deprecated)
+    title: Reference | Page Rules (legacy)
 weight: 9
 ---
 
@@ -10,4 +10,4 @@ weight: 9
 
 {{<directory-listing>}}
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}

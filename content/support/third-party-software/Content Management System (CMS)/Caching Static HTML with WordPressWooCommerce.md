@@ -11,7 +11,7 @@ title: Caching Static HTML with WordPressWooCommerce
 ## Overview
 
 {{<Aside type="note">}}
-Customers in all Cloudflare plans can configure caching HTML files. However, Business and Enterprise customers can bypass HTML caching when a cookie is sent with a request *Bypass Cache on Cookie* setting using Cloudflare Page Rules (deprecated).
+Customers in all Cloudflare plans can configure caching HTML files. However, Business and Enterprise customers can bypass HTML caching when a cookie is sent with a request *Bypass Cache on Cookie* setting using Cloudflare Page Rules (legacy).
 {{</Aside>}}
 
 This allows for static HTML to be cached at our edge, with no need for it to be regenerated from request to request. 

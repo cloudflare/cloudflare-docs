@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-c
 title: Settings
 layout: wide
 meta:
-  title: Settings | Page Rules (deprecated)
+  title: Settings | Page Rules (legacy)
 weight: 3
 ---
 
@@ -12,7 +12,7 @@ weight: 3
 
 Settings control the action Cloudflare takes once a request matches the URL pattern defined in a page rule. You can use settings to enable and disable multiple Cloudflare features across the dashboard.
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 Note that:
 
