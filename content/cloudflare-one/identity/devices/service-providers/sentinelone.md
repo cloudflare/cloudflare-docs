@@ -66,4 +66,4 @@ Device posture data is gathered from the SentinelOne Management APIs. For more i
 
 ### Detect user risk behavior
 
-You can configure SentinelOne device posture attributes to determine [user risk score](/cloudflare-one/insights/risk-score/). For more information, refer to [Predefined risk behaviors](/cloudflare-one/insights/risk-score/#predefined-risk-behaviors).
+SentinelOne provides endpoint detection and response (EDR) signals to determine [user risk score](/cloudflare-one/insights/risk-score/). User risk scores allow you to detect and act on users that present risk to your organization. For more information, refer to [Predefined risk behaviors](/cloudflare-one/insights/risk-score/#predefined-risk-behaviors).
