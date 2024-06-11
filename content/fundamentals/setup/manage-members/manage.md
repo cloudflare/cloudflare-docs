@@ -8,6 +8,7 @@ meta:
 # Access to your account
 
 Granting access to others on your account is done with several sets of data principles:
+
 1. Accounts have Account Members.
 2. Account Members have policies
 3. Policies are constructed out of actors, roles, and scopes.
