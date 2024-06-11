@@ -37,7 +37,7 @@ This guide covers how to configure Slack in Cloudflare Zero Trust.
 
 
 {{<tabs labels="Business+ plan | Enterprise Grid plan">}}
-{{<tab label="Business+ plan" no-code="true">}}
+{{<tab label="business+ plan" no-code="true">}}
 
 1. In Slack, go to **Settings & administrations** > **Workspace settings** > **Authentication**.
 2. Select **Configure**.
@@ -52,7 +52,7 @@ This guide covers how to configure Slack in Cloudflare Zero Trust.
 
 {{</tab>}}
 
-{{<tab label="Enterprise Grid plan" no-code="true">}}
+{{<tab label="enterprise grid plan" no-code="true">}}
 
 1. In Slack, go to **Settings & administration** > **Organization settings** > **Security**.
 2. Select **SSO Settings**.
