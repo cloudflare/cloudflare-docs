@@ -47,3 +47,4 @@ http://www.mywebsite.com/cdn-cgi/image/width=80,quality=75/uploads/image.jpg
 - [Image Resizing Documentation](https://developers.cloudflare.com/images/transform-images/)
 - [Cloudflare R2 Developer Docs](https://developers.cloudflare.com/r2/)
 - [Rewrite URL rules](https://developers.cloudflare.com/rules/transform/url-rewrite/)
+- [Serverless image content management platform](https://developers.cloudflare.com/reference-architecture/diagrams/serverless/serverless-image-content-management/)
