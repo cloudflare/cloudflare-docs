@@ -29,7 +29,7 @@
             {{ end }}
             {{ if (eq .property_id "planned_deprecation_date") }}
               {{/* Cannot use heading-pill shortcode outside of content dir */}}
-              <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">Deprecated on {{.value}}</div>
+              <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">Deprecating on {{.value}}</div>
             {{ end }}
           {{ end }}
         </div>
