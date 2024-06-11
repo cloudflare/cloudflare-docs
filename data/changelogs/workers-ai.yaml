@@ -6,6 +6,11 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-06-12'
+  title: Native support for AI Gateways
+  description: |-
+    Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
+
 - publish_date: '2024-05-29'
   title: Add new public LoRAs and note on LoRA routing
   description: |-
