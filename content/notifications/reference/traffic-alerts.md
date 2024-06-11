@@ -9,7 +9,7 @@ weight: 1
 
 ## Error Rate
 
-**Origin Error Rate** alerts allow you to monitor your zones at the origin and be alerted when Cloudflare detects elevated levels of 5XX error responses. You can select which zones to be alerted on and the sensitivity of the alerts. Edge status codes of 521, 522, and 523 also count as origin errors as they indicate issues reaching your origin.
+**Origin Error Rate** alerts allow you to monitor your zones at the origin and be alerted when Cloudflare detects elevated levels of 5XX error responses. You can select which zones to be alerted on and the sensitivity of the alerts. Edge status codes of `521`, `522`, and `523` also count as origin errors as they indicate issues reaching your origin.
 
 **Advanced Error Rate** alerts allow you to monitor either your origin or edge status code. You can select which zones and specific status codes to be alerted on and the sensitivity of the alert. Optionally, you can also filter out certain IP addresses and choose whether to group your alerts by status code.
 
