@@ -80,7 +80,7 @@ Note that the `fetcher` option is a Cloudflare Workers specific extension.
 
 {{<definitions>}}
 
-- {{<code>}}EventSource.from(readableStream{{type-link href="https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream">}}ReadableStream{{</type-link>}}) : EventSource{{</code>}}
+- {{<code>}}EventSource.from(readableStream{{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream">}}ReadableStream{{</type-link>}}) : EventSource{{</code>}}
   - This is a Cloudflare Workers specific extension that creates a new `EventSource` object from an existing `ReadableStream`. Such an instance does not initiate a new connection but instead attaches to the provided stream.
 
 {{</definitions>}}
