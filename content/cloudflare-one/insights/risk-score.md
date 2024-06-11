@@ -20,7 +20,7 @@ Cloudflare Zero Trust assigns a risk score of Low, Medium, or High based on dete
 
 ### View a user's risk score
 
-To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any.
+To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any. From there, you can select an instance of a risk behavior to view the associated log for the detection.
 
 Users that have had their risk score [cleared](#clear-a-users-risk-score) will not appear in the table unless they trigger another risk behavior.
 
