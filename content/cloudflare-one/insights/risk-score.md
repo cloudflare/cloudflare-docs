@@ -65,7 +65,3 @@ You can change the risk level for a behavior at any time.
 2. Select the risk behavior you want to modify.
 3. In the drop-down menu, choose your desired risk level.
 4. Select **Save**.
-
-## SentinelOne Service provider integrations
-
-Endpoint detection and response (EDR) provided by service providers give greater insight into user risk score.

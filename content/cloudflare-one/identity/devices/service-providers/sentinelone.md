@@ -57,9 +57,13 @@ To retrieve those values:
 
 Device posture data is gathered from the SentinelOne Management APIs. For more information, refer to `https://<S1-DOMAIN>.sentinelone.net/api-doc/overview`.
 
-| Selector      | Description         |
-| ------------- | ------------------- |
-| Infected          | Whether the device is infected     |
-| Active Threats      | Number of active threats on the device   |
-| Is Active | Whether the SentinelOne Agent is active |
-| Network status      | Whether the SentinelOne Agent is connected to the SentinelOne service   |
+| Selector       | Description                                                           |
+| -------------- | --------------------------------------------------------------------- |
+| Infected       | Whether the device is infected                                        |
+| Active Threats | Number of active threats on the device                                |
+| Is Active      | Whether the SentinelOne Agent is active                               |
+| Network status | Whether the SentinelOne Agent is connected to the SentinelOne service |
+
+### Detect user risk behavior
+
+You can configure SentinelOne device posture attributes to determine [user risk score](/cloudflare-one/insights/risk-score/). For more information, refer to [Predefined risk behaviors](/cloudflare-one/insights/risk-score/#predefined-risk-behaviors).
