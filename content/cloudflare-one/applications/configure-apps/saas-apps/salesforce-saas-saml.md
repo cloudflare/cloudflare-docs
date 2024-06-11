@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (SAML)
-weight: 8
+weight: 9
 ---
 
 # Connect to Salesforce through Access (SAML)
@@ -62,5 +62,5 @@ This guide covers how to configure Salesforce as a SAML application in Cloudflar
     2. (Optional) To require users to login with Cloudflare Access, turn on **Disable login with Salesforce credentials**.
     3. Turn on **SAML Enabled**.
     4. Turn on **Make federation ID case-insensitive**.
-  
+
 To test, open an incognito browser window and go to your Salesforce domain (`https://<your-domain>.my.salesforce.com`).
