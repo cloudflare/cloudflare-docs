@@ -52,7 +52,6 @@ In cases where it is possible to provide a polyfill version of the relevant Node
 
 ```
 [unenv] <method name> is not implemented yet!
-```
 
 {{<Aside type="note" header="Note">}}
 
