@@ -47,6 +47,12 @@ This guide covers how to configure Jamf Pro in Cloudflare Zero Trust.
     - **Jamf Pro User Mapping**: _Email_
 5. In the top right, turn on **Single Sign On**.
 
+{{<Aside type="note">}}
+
+The Failover Login URL located on this page can be used to log in if your SSO does not work.
+
+{{</Aside>}}
+
 ## 4. Provision Users Locally in Jamf
 
 1. Go to **Settings** > **Systems** > **User accounts and groups** > **New**.
