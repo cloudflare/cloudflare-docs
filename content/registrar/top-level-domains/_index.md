@@ -11,7 +11,7 @@ learning_center:
 
 Cloudflare supports over 200 [top-level domains (TLDs)](https://www.cloudflare.com/learning/dns/top-level-domain/)[^1] and is always evaluating adding new TLDs. We have no specific timeframes for TLDs not yet listed.
 
-[^1]: You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). 
+You can find the full list of supported and coming soon TLDs on the [TLD policies page](https://www.cloudflare.com/tld-policies/). 
 
 {{<Aside type="note">}}
 If you want to register a `.us` domain refer to  [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/).
