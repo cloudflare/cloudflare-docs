@@ -19,6 +19,7 @@ table th:first-of-type {
 {{- $params := .Params }}
 {{- $betaFlag := false }}
 {{- $loraFlag := false }}
+{{- $deprecationFlag := false }}
 {{- range $params.model.properties }}
 {{- if and (eq .property_id "beta") (eq .value "true") }}
 {{- $betaFlag = true }}
@@ -26,7 +27,10 @@ table th:first-of-type {
 {{- if and (eq .property_id "lora") (eq .value "true") }}
 {{- $loraFlag = true }}
 {{- end }}
+{{- if (eq .property_id "planned_deprecation_date") }}
+{{- $deprecationFlag = true }}
 {{- end }}
-| [{{ $params.model_display_name }}{{ if $betaFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</span>{{ end }}{{ if $loraFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-deprecated" style="width: max-content">LoRA</span>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
+{{- end }}
+| [{{ $params.model_display_name }}{{ if $betaFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-beta" style="width: max-content">Beta</span>{{ end }}{{ if $loraFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-early-access" style="width: max-content">LoRA</span>{{ end }}{{ if $deprecationFlag }} <span class="DocsMarkdown--pill DocsMarkdown--pill-deprecated" style="width: max-content">Planned deprecation</span>{{ end }}]({{ .RelPermalink }}) | {{ $params.model.description }} |
 {{- end -}}
 {{- end -}}
