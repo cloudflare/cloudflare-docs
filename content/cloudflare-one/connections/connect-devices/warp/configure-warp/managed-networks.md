@@ -167,8 +167,8 @@ $ openssl s_client -connect <private-server-IP>:443 < /dev/null 2> /dev/null | o
 
 The output will look something like:
 
-```sh
-sha256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
+```txt
+SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
 {{</tab>}}
