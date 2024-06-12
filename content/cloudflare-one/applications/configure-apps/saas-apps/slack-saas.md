@@ -15,13 +15,13 @@ This guide covers how to configure Slack in Cloudflare Zero Trust.
 ## 1. Create Slack App in Access
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **SaaS**.
+2. Select **Add an application** > **SaaS** > **Select**.
 3. For **Application**, select _Slack_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
     - **Entity ID**: `https://slack.com`
-    - **Assertion Consumer Service URL**: `https://<yourdomain>.slack.com/sso/saml`
+    - **Assertion Consumer Service URL**: `https://<YOUR_DOMAIN>.slack.com/sso/saml`
     - **Name ID format**: The format expected by Slack, usually _Email_
 7. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
 8. Select **Save configuration**.
@@ -40,11 +40,11 @@ This guide covers how to configure Slack in Cloudflare Zero Trust.
 
 1. In Slack, go to **Settings & administrations** > **Workspace settings** > **Authentication**.
 2. Select **Configure**.
-3. In the top right, turn **Test mode** on. Configuration changes will not apply until **Configuration** is turned on.
+3. Enable **Test mode**. Configuration changes will not apply until **Configuration** is turned on.
 4. Fill in the following fields:
     - **SAML SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
     - **Identity Provider Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-    - **Public Certificate**: Copy the entire x.509 certificate from [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
+    - **Public Certificate**: Copy the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
 5. Under **Settings**, choose whether SSO is _required_, _partially required_, or _optional_ for workspace members.
 6. (Optional) Under **Customize**, enter a Sign in Button Label.
 7. Test your set-up. If all works well, turn **Test** to **Configure**.
@@ -58,7 +58,7 @@ This guide covers how to configure Slack in Cloudflare Zero Trust.
 3. Fill in the following fields:
     - **SAML SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
     - **Identity Provider Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-    - **Public Certificate**: Copy the entire x.509 certificate from [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
+    - **Public Certificate**: Copy the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
 4. Select **Test Configuration**.
 5. If all works well, select **Turn on SSO** or **Add SSO**.
 

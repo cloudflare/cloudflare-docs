@@ -17,12 +17,12 @@ This guide covers how to configure Jamf Pro in Cloudflare Zero Trust.
 1. In Jamf Pro, go to **Settings** > **Systems** > **Single Sign-On** > **Edit**.
 2. Copy the pre-populated URL in **Entity ID**.
 3. Paste the URL in a web browser to download the Jamf metadata file.
-4. Open the `metadata.xml` file in a text editor and copy the values for **Entity ID** and **Assertion Consumer Service**.
+4. Open the `metadata.xml` file in a text editor, and copy the values for **Entity ID** and **Assertion Consumer Service**.
 
 ## 2. Create Jamf Pro app in Access
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **SaaS**.
+2. Select **Add an application** > **SaaS** > **Select**.
 3. For **Application**, type `Jamf`  or `Jamf Pro` and select the textbox that appears below.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
@@ -45,7 +45,7 @@ This guide covers how to configure Jamf Pro in Cloudflare Zero Trust.
     - **Identity Provider Metadata Source**: SSO endpoint from application configuration in Cloudflare Zero Trust with `/saml-metadata` appended.
     - **Identity Provider User Mapping**: _Name ID_
     - **Jamf Pro User Mapping**: _Email_
-5. In the top right, turn on **Single Sign On**.
+5. Turn on **Single Sign On**.
 
 {{<Aside type="note">}}
 
