@@ -14,4 +14,4 @@ Stream provides server-side analytics that can be used to:
 
 You can access data via the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/analytics) or via the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics).
 
-Users will need the "Analytics" permission to access analytics via Dash or GraphQL.
+Users will need the **Analytics** permission to access analytics via Dash or GraphQL.
