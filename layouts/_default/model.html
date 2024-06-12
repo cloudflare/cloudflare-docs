@@ -25,7 +25,11 @@
             {{ end }}
             {{ if and (eq .property_id "lora") (eq .value "true") }}
               {{/* Cannot use heading-pill shortcode outside of content dir */}}
-              <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">LoRA</div>
+              <div class="DocsMarkdown--pill DocsMarkdown--pill-early-access">LoRA</div>
+            {{ end }}
+            {{ if (eq .property_id "planned_deprecation_date") }}
+              {{/* Cannot use heading-pill shortcode outside of content dir */}}
+              <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">Deprecating on {{.value}}</div>
             {{ end }}
           {{ end }}
         </div>

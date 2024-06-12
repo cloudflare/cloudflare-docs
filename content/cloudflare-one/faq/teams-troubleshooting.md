@@ -161,22 +161,6 @@ To resolve the issue, you will need to edit two Windows registry keys:
     ```
 If you continue to have issues with Microsoft 365 applications, consider enabling [**Directly route Microsoft 365 traffic**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).  
 
-## I see Storage Partitioned Error.
-
-Chrome is rolling out an [experimental feature](https://developer.chrome.com/en/docs/privacy-sandbox/storage-partitioning/) that partitions local storage in browsers. When third-party storage partitioning is enabled, Cloudflare Browser Isolation can inadvertently store data in the wrong remote browser instance, most notably when rapidly switching between tabs.
-
-To determine if your browser is impacted:
-
-1. Go to `chrome://version/?show-variations-cmd`.
-2. Search for `ThirdPartyStoragePartitioning/Enabled`.
-3. If you find a match, you likely need to disable this feature (see below).
-
-To disable third-party storage partitioning:
-
-1. Go to `chrome://flags/#third-party-storage-partitioning`.
-2. Set **Experimental third-party storage partitioning** to _Disabled_.
-3. Select **Relaunch** to apply the change.
-
 ## I see `WebGL Rendering Error`.
 
 Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology. This allows us to deliver a secure, performant remote computing experience without the bandwidth limitations of traditional solutions. While we expect most websites to work perfectly, some browser features and web technologies such as WebGL (Web Graphics Library) are unsupported.
