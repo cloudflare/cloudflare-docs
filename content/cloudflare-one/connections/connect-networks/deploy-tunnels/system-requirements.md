@@ -47,7 +47,7 @@ $ sudo sysctl -p /etc/sysctl.conf
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
-You can set the dynamic port range separately for each transport (TCP or UDP). To increase the number of ports available to `cloudflared` on  Windows:
+To increase the number of ports available to `cloudflared` on  Windows, set the [dynamic port range](https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/tcp-ip-port-exhaustion-troubleshooting) for TCP and UDP:
 
 ```txt
 netsh int ipv4 set dynamicport tcp start=11000 num=50000
