@@ -141,7 +141,10 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 
 ## 2. Extract the SHA-256 fingerprint
 
-To obtain the SHA-256 fingerprint of a **local** certificate:
+{{<tabs labels="Local certificate | Remote server">}}
+{{<tab label="local certificate" no-code="true">}}
+
+To obtain the SHA-256 fingerprint of a local certificate:
 
 ```sh
 $ openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
@@ -153,18 +156,23 @@ The output will look something like:
 SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
-To obtain the SHA-256 fingerprint of a **remote** server: 
+{{</tab>}}
+{{<tab label="remote server" no-code="true">}}
+
+To obtain the SHA-256 fingerprint of a remote server:
 
 ```sh
-$ openssl s_client -connect <private-server-ip>:443 < /dev/null 2> /dev/null | openssl x509 -noout -fingerprint -sha256 | tr -d :
+$ openssl s_client -connect <private-server-IP>:443 < /dev/null 2> /dev/null | openssl x509 -noout -fingerprint -sha256 | tr -d :
 ```
 
-The output will look something like: 
+The output will look something like:
 
 ```sh
 sha256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
+{{</tab>}}
+{{</tabs>}}
 
 ## 3. Add managed network to Zero Trust
 
