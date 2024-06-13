@@ -16,7 +16,7 @@ By default, D1 enforces that foreign key constraints are valid within all querie
 
 ## Defer foreign key constraints
 
-When running a [query](/d1/build-with-d1/d1-client-api/), [migration](/d1/reference/migrations/) or [importing data](/d1/build-with-d1/import-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
+When running a [query](/d1/build-with-d1/d1-client-api/), [migration](/d1/reference/migrations/) or [importing data](/d1/build-with-d1/import-export-data/) against a D1 database, there may be situations in which you need to disable foreign key validation during table creation or changes to your schema.
 
 D1's foreign key enforcement is equivalent to SQLite's `PRAGMA foreign_keys = on` directive. Because D1 runs every query inside an implicit transaction, user queries cannot change this during a query or migration. 
 
