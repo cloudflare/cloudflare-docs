@@ -170,7 +170,7 @@ export default {
 The code above currently extracts the username and password from the request, but does not yet check if the username and password are correct.
 
 To check the username and password, you will need to hash the password and then query the D1 database table `user` with the given username and hashed password.
-If the username and password are correct, you will retrieve a record, otherwise the response will be empty, and you should return a `401 Unauthorized` response.
+If the username and password are correct, you will retrieve a record from D1. If the username or password is incorrect, undefined will be returned and a `401 Unauthorized` response will be send.
 To add this functionality, you will need to add the following code to the `fetch` function by replacing the TODO comment from the last code snippet:
 
 ```ts
