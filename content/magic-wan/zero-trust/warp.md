@@ -9,15 +9,19 @@ meta:
 
 Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an {{<glossary-tooltip term_id="on-ramp">}}on-ramp{{</glossary-tooltip>}} to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels ({{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">}}GRE{{</glossary-tooltip>}}, {{<glossary-tooltip term_id="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">}}IPsec{{</glossary-tooltip>}}, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
 
-Depending on your use case, you will see the following IP addresses when connecting a WARP device to Magic WAN:
-- `100.96.0.0/12`: When connecting a WARP device to an origin behind a GRE or IPsec tunnel.
-- [Cloudflare IP addresses](https://www.cloudflare.com/ips/): When you are connecting a WARP device, and using Zero Trust policies - for example, you have Gateway set up.
-
 ## Prerequisites
 
 Before you can begin using WARP as an on-ramp to Magic WAN, you must set up your [Zero Trust account](/cloudflare-one/setup/#create-a-zero-trust-organization).
 
-## 1. Route packets back to WARP devices
+## IP ranges
+
+When connecting a WARP device to Magic WAN, you will have virtual IP addresses from WARP, in the `100.96.0.0/12` range.
+
+---
+
+## Set up WARP with Magic WAN
+
+### 1. Route packets back to WARP devices
 
 Route packets back to WARP devices from services behind an Anycast GRE or other type tunnel. You need to do this before actually installing WARP. Otherwise, your infrastructure will not route packets correctly to Cloudflare global network and connectivity will fail.
 
@@ -33,13 +37,13 @@ $ ip route add 100.96.0.0/12 dev gre1
 After set up, **HTTP** and **Network logs** in Gateway will show the virtual IP address of your WARP device as the **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare’s public-facing resolver.
 {{</Aside>}}
 
-## 2. Configure Split Tunnels
+### 2. Configure Split Tunnels
 
 Configure [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) from your Zero Trust account to only include traffic from the private IP addresses you want to access.
 
 Optionally, you can configure Split Tunnels to include IP ranges or domains you want to use for connecting to public IP addresses.
 
-## 3. Install the WARP client on your device
+### 3. Install the WARP client on your device
 
 Refer to [Deploy WARP to your organization](/cloudflare-one/connections/connect-devices/warp/deployment/) for more information on whether to choose a manual or managed deployment.
 
@@ -66,3 +70,11 @@ $ nslookup <SERVER_BEHIND_MAGIC_WAN>
 This DNS lookup should return a valid IP address associated with the server or service you are testing for.
 
 Next, test with a browser that you can connect to a service on the WAN by opening a webpage that is only accessible on the WAN. The server can be the same server used in the DNS lookup or another server in the WAN. Connecting using an IP address instead of a domain name should work.
+
+## Double encapsulation
+
+When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
+
+Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
+
+To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) and [WARP UDP ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-udp-ports).

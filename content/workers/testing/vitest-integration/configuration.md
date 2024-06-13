@@ -2,6 +2,8 @@
 title: Configuration
 pcx_content_type: reference
 weight: 4
+meta:
+  description: Vitest configuration specific to the Workers integration.
 ---
 
 # Configuration
@@ -37,7 +39,7 @@ Use [Vitest Workspaces](https://vitest.dev/guide/workspace) to only use the Work
 
 {{<Aside type="warning">}}
 
-Custom `environment`s or `runner`s are not supported when using the Workers Vitest integration.
+Custom Vitest `environment`s or `runner`s are not supported when using the Workers Vitest integration.
 
 {{</Aside>}}
 
@@ -71,7 +73,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 - {{<code>}}isolatedStorage{{</code>}}: {{<type>}}boolean{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this option is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to the [Isolation and concurrency](/workers/testing/vitest-integration/isolation-and-concurrency/) page for more information on the isolation model.
+  - Enables per-test isolated storage. If enabled, any writes to storage performed in a test will be undone at the end of the test. The test's storage environment is copied from the containing suite, meaning `beforeAll()` hooks can be used to seed data. If this option is disabled, all tests will share the same storage. `.concurrent` tests are not supported when isolated storage is enabled. Refer to [Isolation and concurrency](/workers/testing/vitest-integration/isolation-and-concurrency/) for more information on the isolation model.
 
   - Defaults to `true`.
 
@@ -150,9 +152,11 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
     - Can be written with the [Service Worker syntax](/workers/reference/migrate-to-module-workers/#service-worker-syntax).
     - Are not affected by global mocks defined in your tests.
 
-- {{<code>}}wrangler{{</code>}}: {{<type>}}{ configPath?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
+- {{<code>}}wrangler{{</code>}}: {{<type>}}{ configPath?: string; environment?: string; }{{</type>}}{{<prop-meta>}}optional{{</prop-meta>}}
 
   - Path to Wrangler configuration file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/runtime-apis/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
+
+  - The environment option can be used to specify the [Wrangler environment](/workers/wrangler/environments/) to pick up bindings and variables from.
 
 {{</definitions>}}
 

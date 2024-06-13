@@ -21,7 +21,7 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 D1 is Cloudflare’s native serverless database. D1 allows you to build applications that handle large amounts of users at no extra cost. With D1, you can restore your database to any minute within the last 30 days.
 
-Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/build-with-d1/import-data/), and how to [interact with your database](/d1/build-with-d1/d1-client-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
+Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/build-with-d1/import-export-data/), and how to [interact with your database](/d1/build-with-d1/d1-client-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
 
 ---
 
@@ -30,6 +30,12 @@ Create your first D1 database by [following the Get started guide](/d1/get-start
 {{<feature header="Create your first D1 database" href="/d1/get-started/" cta="Create your D1 database">}}
 
 Create your first D1 database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
+
+{{</feature>}}
+
+{{<feature header="SQLite" href="/d1/build-with-d1/d1-client-api/" cta="Execute SQL queries">}}
+
+Execute SQL with SQLite's SQL compatibility and D1 Client API.
 
 {{</feature>}}
 
@@ -71,6 +77,6 @@ Deploy dynamic front-end applications in record time.
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
  
 {{</resource-group>}}

@@ -3,13 +3,20 @@ type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
   - Debugging
-pcx_content_type: configuration
+  - Headers
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
 title: Logging headers to console
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -29,11 +36,22 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     console.log(new Map(request.headers));
     return new Response("Hello world");
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response
+
+async def on_fetch(request):
+    print(dict(request.headers))
+    return Response.new('Hello world')
 ```
 
 {{</tab>}}

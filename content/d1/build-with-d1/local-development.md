@@ -65,8 +65,8 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
 
-{{<Aside type="warning" header="Local development for remote databases">}} 
-It is currently not possible to develop against a _remote_ D1 database when using [Cloudflare Pages](/pages/). 
+{{<Aside type="warning" header="Local development for remote databases">}}
+It is currently not possible to develop against a _remote_ D1 database when using [Cloudflare Pages](/pages/).
 {{</Aside>}}
 
 Your `wrangler.toml` should resemble the following:
@@ -85,12 +85,12 @@ preview_database_id = "DB" # Required for Pages local development
 
 You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to wrangler:
 
-```sh
+```bash
 $ wrangler d1 execute YOUR_DATABASE_NAME \
   --local --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);"
 ```
 
-The preceding command would execute queries the **local only** version of your D1 database. Without the `--local` flag, the commands are executed against the remote version of your D1 database running on Cloudflare's network.   
+The preceding command would execute queries the **local only** version of your D1 database. Without the `--local` flag, the commands are executed against the remote version of your D1 database running on Cloudflare's network.
 
 ## Persist data
 
@@ -124,7 +124,9 @@ database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 ```js
 const mf = new Miniflare({
-  d1Databases: ["DB"],
+  d1Databases: {
+    DB: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  },
 });
 ```
 
@@ -132,9 +134,11 @@ You can then use the `getD1Database()` method to retrieve the simulated database
 
 ```js
 const db = await mf.getD1Database("DB");
-const { results } = await db.prepare("<Query>");
 
-console.log(await res.json(results));
+const stmt = db.prepare("SELECT name, age FROM users LIMIT 3");
+const { results } = await stmt.all();
+
+console.log(results);
 ```
 
 ### `unstable_dev`
@@ -184,7 +188,7 @@ describe("Test D1 Worker endpoint", () => {
     execSync(
       `NO_D1_WARNING=true wrangler d1 migrations apply db --local`
     );
-    
+
     worker = await unstable_dev("src/index.ts", {
       experimental: { disableExperimentalWarning: true },
     });

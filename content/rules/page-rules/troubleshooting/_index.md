@@ -3,7 +3,7 @@ pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: Troubleshooting
 meta:
-    title: Troubleshooting | Page Rules
+    title: Troubleshooting | Page Rules (legacy)
 weight: 10
 ---
 
@@ -12,3 +12,5 @@ weight: 10
 Use the following resources to help you troubleshoot issues with Page Rules.
 
 {{<directory-listing>}}
+
+{{<render file="_page-rules-migration.md">}}

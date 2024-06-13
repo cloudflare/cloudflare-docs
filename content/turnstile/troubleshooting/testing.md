@@ -24,8 +24,14 @@ Cloudflare recommends that sitekeys used in production do not allow local domain
 | `2x00000000000000000000BB` | Always blocks | invisible |
 | `3x00000000000000000000FF` | Forces an interactive challenge | visible |
 
+These dummy sitekeys will produce the `XXXX.DUMMY.TOKEN.XXXX` dummy response token.
+
+Production secret keys will reject this token. You must also use a dummy secret key for testing purposes.
+
 | Secret key | Description |
 | --- | --- |
 | `1x0000000000000000000000000000000AA` | Always passes |
-| `2x0000000000000000000000000000000AA` | Always fails | 
-| `3x0000000000000000000000000000000AA` | Yields a "token already spent" error | 
+| `2x0000000000000000000000000000000AA` | Always fails |
+| `3x0000000000000000000000000000000AA` | Yields a "token already spent" error |
+
+Dummy secret keys should never be used in production as it will accept any response token as valid. 

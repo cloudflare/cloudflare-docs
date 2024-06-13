@@ -1,7 +1,7 @@
 ---
 title: Analytics
 pcx_content_type: reference
-weight: 7
+weight: 8
 meta:
     description: Use Magic WAN's different analytic options for an overview of the performance of your sites, or to troubleshoot potential issues.
 ---
@@ -32,7 +32,7 @@ Refer to [Magic WAN Network Analytics](/magic-wan/analytics/network-analytics/) 
 
 Traceroutes provide a hop by hop breakdown of the Internet path network traffic follows as it traverses from Cloudflare’s network to a customer’s network.
 
-Refer to [traceroutes](/magic-wan/analytics/traceroutes/) to learn more.
+Refer to [Traceroutes](/magic-wan/analytics/traceroutes/) to learn more.
 
 ## Packet captures
 

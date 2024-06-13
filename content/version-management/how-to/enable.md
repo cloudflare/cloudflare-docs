@@ -16,13 +16,13 @@ meta:
 
 {{<Aside type="warning">}}
 
-When you disable Zone Versioning, all your zone settings will revert to those in your **Version Zero**.
+When you disable Zone Versioning, all your zone configurations will revert to those in your **Version Zero**.
 
 {{</Aside>}}
 
 To disable Zone Versioning:
 
-1. Confirm that **Version Zero** has the correct settings for your zone:
+1. Confirm that **Version Zero** has the correct configurations for your zone:
 
     1. Use the [comparison feature](/version-management/how-to/compare-versions/) to view the differences between your current **Production** version and **Version Zero**.
 

@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting FAQ
 pcx_content_type: faq
-weight: 5
+weight: 6
 ---
 
 # Troubleshooting FAQ
@@ -50,15 +50,6 @@ You can safely ignore the error. It is requesting a [Private Access Token (PAT)]
 {{<faq-answer>}}
 
 You will need to provide a [Ray ID](/fundamentals/reference/cloudflare-ray-id/) or QR code when debugging issues. The Ray ID is found at the end of the challenge page. You can obtain the QR code by clicking the success/failure/spinner logo on the widget four times.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
-{{<faq-question level=2 text="What if I encounter an endless challenge loop?" >}}
-{{<faq-answer>}}
-
-If you encounter an endless challenge loop, try disabling your browser extensions.
 
 {{</faq-answer>}}
 {{</faq-item>}}

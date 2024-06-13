@@ -11,7 +11,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
 
     // Picture of a dog
     const exampleInputImage = await fetch(
@@ -31,7 +31,7 @@ export default {
 
     const response =
       await env.AI.run(
-        "@cf/runwayml/stable-diffusion-v1-5-inpainting",
+        "{{ .Page.Params.model.name }}",
         inputs
       );
 
@@ -41,7 +41,7 @@ export default {
       },
     });
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </details>

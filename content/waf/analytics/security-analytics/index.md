@@ -90,9 +90,9 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack analysis**, **Bot analysis**, and **Uploaded content analysis** sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
+The **Attack likelihood**, **Bot likelihood**, and **Malicious uploads** sections display statistics related to WAF attack scores, bot scores, and WAF content scanning scores of incoming requests for the selected time frame.
 
-You can examine different traffic segments according to the current metric (attack, bot, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
+You can examine different traffic segments according to the current metric (attack, bot, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack likelihood** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
 Additionally, you can use the slider tool below the chart to filter incoming requests according to the current metric. This allows you to filter traffic groups outside the predefined segments.
 
@@ -106,9 +106,10 @@ The main chart displays the following data for the selected time frame, accordin
     * **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
     * **Served by origin**: Requests served by your origin server.
 
-* **Attack analysis**: [WAF attack score](/waf/about/waf-attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
-* **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, or _Likely human_.
-* **Rate limit analysis**: displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
+* **Attack likelihood**: [WAF attack score](/waf/about/waf-attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
+* **Bot likelihood**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, or _Likely human_.
+* **Rate limit analysis**: Displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
+* **AI Assistant** {{<inline-pill style="beta">}}: Get insights about your application security by using plain language to interrogate your data. For more information, refer to [our blog post](https://blog.cloudflare.com/security-analytics-ai-assistant).
 
 ### Logs
 
@@ -139,11 +140,11 @@ This feature is currently in its early access phase. Contact your account team t
 
 When performing a forensic analysis, you sometimes select a very short time frame and apply several filters to identify a specific set of requests. In this situation, to get a better understanding of the incoming requests at a given point in time, you would require the full list of requests and not just a sample.
 
-By default, Security Analytics shows sampled logs based on the filters you apply. Under certain conditions, you can switch to **Raw logs**. This view shows all the request logs for the selected time frame and filters instead of sampled logs. At this time, this view is only available when the number of sampled logs shown in the Security Analytics page is low.
+By default, Security Analytics shows sampled logs based on the filters you apply. Under certain conditions, you can switch to **Raw logs**. This view shows all the request logs for the selected time frame and filters instead of sampled logs. At this time, this view is only available when the number of sampled logs shown in the Security Analytics page is lower than 100.
 
 ##### View raw logs
 
-To switch from sampled logs to raw logs, select **Switch to raw logs** under **Sampled logs**. This option is only available when the number of (sampled) logs for the selected time frame is low.
+To switch from sampled logs to raw logs, select **Switch to raw logs** under **Sampled logs**. This option is only available when the number of (sampled) logs for the selected time frame is lower than 100.
 
 To switch from raw logs back to sampled logs, select **Switch back to sampled logs**.
 

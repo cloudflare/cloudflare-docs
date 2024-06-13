@@ -37,3 +37,5 @@ Single Redirects features and quotas are per zone and depend on the zone plan.
 ## Execution order
 
 {{<render file="_product_execution_order.md">}}
+
+{{<render file="_troubleshoot-rules-with-trace.md" withParameters="URL redirects">}}

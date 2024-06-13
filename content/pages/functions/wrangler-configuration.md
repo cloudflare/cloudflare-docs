@@ -6,6 +6,12 @@ weight: 6
 
 # Configuration via `wrangler.toml`
 
+{{<Aside type="warning">}}
+
+If your project contains an existing `wrangler.toml` file that you [previously used for local development](/pages/functions/local-development/), make sure you verify that it matches your project settings in the Cloudflare dashboard before opting-in to deploy your Pages project with `wrangler.toml`. Instead of writing your `wrangler.toml` file by hand, Cloudflare recommends using `npx wrangler pages download config` to download your current project settings into a `wrangler.toml` file.
+
+{{</Aside>}}
+
 Pages Functions can be configured two ways, either via the [Cloudflare dashboard](https://dash.cloudflare.com) or `wrangler.toml`, a configuration file used to customize the development and deployment setup for [Workers](/workers/) and Pages Functions.
 
 This page serves as a reference on how to configure your Pages project via `wrangler.toml`.
@@ -90,7 +96,7 @@ Running [`wrangler pages download config`](/pages/functions/wrangler-configurati
 
 {{</Aside>}}
 
-You can continue to use your `wrangler.toml` file for local developerment without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
+You can continue to use your `wrangler.toml` file for local development without migrating it for production use by not adding a `pages_build_output_dir` key. If you do not add a `pages_build_output_dir` key and run `wrangler pages deploy`, you will see a warning message telling you that fields are missing and that the file will continue to be used for local development only.
 
 ### Projects without existing `wrangler.toml` file
 
@@ -427,6 +433,13 @@ When using Wrangler in the default local development mode, files will be written
 [Durable Objects](/durable-objects/) provide low-latency coordination and consistent storage for the Workers platform.
 
 - Configure Durable Object namespace bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#durable-objects) the same way they are configured with Cloudflare Workers.
+
+{{<Aside type="warning">}}
+
+{{<render file="_do-note.md" productFolder="pages">}} Durable Object bindings configured in a Pages project's `wrangler.toml` require the `script_name` key. For Workers, the `script_name` key is optional.
+
+{{</Aside>}}
+
 - Interact with your [Durable Object namespace binding](/pages/functions/bindings/#durable-objects).
 
 ### Environment variables
@@ -457,7 +470,7 @@ When using Wrangler in the default local development mode, files will be written
 
 ### Queues Producers
 
-[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/reference/batching-retries/). [Queue Producers](/queues/reference/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/configuration/batching-retries/). [Queue Producers](/queues/configuration/javascript-apis/#producer) enable you to send messages into a queue within your Pages Function.
 
 {{<Aside type="note">}}
 

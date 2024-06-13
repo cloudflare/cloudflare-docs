@@ -32,7 +32,7 @@ This architecture shows a fully serverless ETL pipeline with an API endpoint as 
 2. **Input processing**: Process incoming request using [Workers](/workers/) and send messages to [Queues](/queues/) to add to processing backlog.
 3. **Data processing**: Use [Queues](/queues/) to trigger a [consumer](/queues/reference/how-queues-works/#consumers) that process input data in batches to prevent downstream overload and increase efficiency. The consumer performs all data cleaning, transformation and standardization operations.
 4. **Object storage**: Upload processed data to [R2](/r2/) for persistent storage.
-5. **Ack/Retry mechanism**: Signal success/error by using the [Queues Runtime API](/queues/reference/javascript-apis/#message) in the consumer for each document. [Queues](/queues/) will schedule retries, if needed.
+5. **Ack/Retry mechanism**: Signal success/error by using the [Queues Runtime API](/queues/configuration/javascript-apis/#message) in the consumer for each document. [Queues](/queues/) will schedule retries, if needed.
 6. **Data querying**: Access processed data from external services for further data usage.
 
 ## ETL pipeline with object storage ingest
@@ -45,7 +45,7 @@ This architecture shows a fully serverless ETL pipeline with object storage as i
 2. **Input processing**: Send messages to [Queues](/queues/) using [R2 event notifications](/r2/buckets/event-notifications/) upon object upload.
 3. **Data processing**: Use [Queues](/queues/) to trigger a [consumer](/queues/reference/how-queues-works/#consumers) that process input data in batches to prevent downstream overload and increase efficiency. The consumer performs all data cleaning, transformation and standardization operations.
 4. **Object storage**: Upload processed data to [R2](/r2/) for persistent storage.
-5. **Ack/Retry mechanism**: Signal success/error by using the [Queues Runtime API](/queues/reference/javascript-apis/#message) in the consumer for each document. [Queues](/queues/) will schedule retries, if needed.
+5. **Ack/Retry mechanism**: Signal success/error by using the [Queues Runtime API](/queues/configuration/javascript-apis/#message) in the consumer for each document. [Queues](/queues/) will schedule retries, if needed.
 6. **Data querying**: Access processed data from external services for further data usage.
 
 ## Related resources

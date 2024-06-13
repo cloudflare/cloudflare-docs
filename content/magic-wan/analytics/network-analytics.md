@@ -34,4 +34,4 @@ Customers can filter the data in Network Analytics on different packet character
 
 ## Magic Tunnel traffic analytics
 
-{{<render file="_network-analytics.md">}}
+{{<render file="analytics/_network-analytics.md">}}

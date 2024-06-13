@@ -6,7 +6,7 @@ weight: 1
 
 # D1 client API
 
-D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
+D1 is compatible with most SQLite's SQL convention since it leverages SQLite's query engine. D1 client API allows you to interact with a D1 database from within a [Worker](/workers/). 
 
 ## Prepared and static statements
 
@@ -28,10 +28,10 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
 
 D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (`?NNNN`) and Anonymous (`?`) parameters. In the future, D1 will support named parameters as well.
 
-| Syntax | Type | Description |
-| ----- | ----- | -----|
-| `?NNN`| Ordered | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER` |
-| `?` | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead |
+| Syntax | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `?NNN` | Ordered   | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER`                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `?`    | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead |
 
 To bind a parameter, use the `stmt.bind()` method.
 
@@ -54,15 +54,15 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind
 
 D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the client API to their associated D1 types. The type conversion is as follows:
 
-| JavaScript          | D1          |
-| ------------------- | ----------- |
-| null                | `NULL`      |
-| Number              | `REAL`      |
-| Number <sup>1</sup> | `INTEGER`   |
-| String              | `TEXT`      |
-| Boolean <sup>2</sup>| `INTEGER`   |
-| ArrayBuffer         | `BLOB`      |
-| undefined           | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+| JavaScript           | D1                                                                           |
+| -------------------- | ---------------------------------------------------------------------------- |
+| null                 | `NULL`                                                                       |
+| Number               | `REAL`                                                                       |
+| Number <sup>1</sup>  | `INTEGER`                                                                    |
+| String               | `TEXT`                                                                       |
+| Boolean <sup>2</sup> | `INTEGER`                                                                    |
+| ArrayBuffer          | `BLOB`                                                                       |
+| undefined            | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
 
 <sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) are not currently supported in the API yet. JavaScript integers are safe up to [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
@@ -373,11 +373,11 @@ console.log(rows[1].results);
 
 D1 supports the following [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements:
 
-| PRAGMA | Description |
-| ---- | ---- |
-| `table_list` | Returns information about the tables and views in the schema, one table per row of output. |
-| `table_info` | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column. |
-| `foreign_keys` | Query, set, or clear the enforcement of foreign key constraints. |
+| PRAGMA               | Description                                                                                                                                                                                                |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `table_list`         | Returns information about the tables and views in the schema, one table per row of output.                                                                                                                 |
+| `table_info`         | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column. |
+| `defer_foreign_keys` | Query, set, or clear the enforcement of foreign key constraints. For more information, refer to [Define foreign key](/d1/build-with-d1/foreign-keys/)                                                      |
 
 
 
@@ -457,10 +457,10 @@ The code above would throw the following error message:
 
 D1 will return the following error constants, in addition to the extended (detailed) error message:
 
-| Message | Cause |
-| ---- | ---- |
-| `D1_ERROR` | Generic error. |
-| `D1_TYPE_ERROR` | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. | 
-| `D1_COLUMN_NOTFOUND` | Column not found. |
-| `D1_DUMP_ERROR` | Database dump error. |
-| `D1_EXEC_ERROR` | Exec error in line x: y error. |
+| Message              | Cause                                                                                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `D1_ERROR`           | Generic error.                                                                                                                                                   |
+| `D1_TYPE_ERROR`      | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. |
+| `D1_COLUMN_NOTFOUND` | Column not found.                                                                                                                                                |
+| `D1_DUMP_ERROR`      | Database dump error.                                                                                                                                             |
+| `D1_EXEC_ERROR`      | Exec error in line x: y error.                                                                                                                                   |

@@ -87,7 +87,7 @@ If your server is correctly locked down, you will see:
 
 {{<faq-answer>}}
 
-Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancer origins, which also point to `<UUID>.cfargotunnel.com`.
+Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancing endpoints, which also point to `<UUID>.cfargotunnel.com`.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -110,6 +110,8 @@ To log external visitor IPs, you will need to [configure an alternative method](
 {{<faq-answer>}}
 
 Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to Argo Tunnel to match. Once we no longer required users to purchase Argo to create Tunnels, we renamed Argo Tunnel to Cloudflare Tunnel.
+
+For more information about migrating from Argo Tunnel, refer to [Migrate legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/).
 
 {{</faq-answer>}}
 {{</faq-item>}}

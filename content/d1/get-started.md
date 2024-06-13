@@ -94,7 +94,7 @@ $ npx wrangler d1 create prod-d1-tutorial
 
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
-database_name = prod-d1-tutorial"
+database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
@@ -195,7 +195,7 @@ export interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if (pathname === "/api/beverages") {
@@ -212,7 +212,7 @@ export default {
       "Call /api/beverages to see everyone who works at Bs Beverages"
     );
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 In the code above, you:
@@ -263,6 +263,20 @@ $ npx wrangler deploy
 You can now visit the URL for your newly created project to query your live database.
 
 For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
+
+## 8. (Optional) Delete your database
+
+To delete your database, run:
+
+```sh
+$ npx wrangler d1 delete prod-d1-tutorial
+```
+
+If you want to delete your Worker, run:
+
+```sh
+$ npx wrangler delete d1-tutorial
+```
 
 By finishing this tutorial, you have created a D1 database, a Worker to access that database and deployed your project globally.
 

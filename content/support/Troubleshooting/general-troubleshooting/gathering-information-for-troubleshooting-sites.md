@@ -155,17 +155,41 @@ In certain situations when request is not issued or cancelled by the browser (fo
 
 ___
 
-## Identify the Cloudflare data center serving your request
+## Capture a NetLog dump
 
-[A map of our data centers](https://www.cloudflare.com/network-map) is listed on the [Cloudflare status page](https://www.cloudflarestatus.com/), sorted by continent. The three-letter code in the data center name is the [IATA code](http://en.wikipedia.org/wiki/IATA_airport_code) of the nearest major international airport. Determine the Cloudflare data center serving requests for your browser by visiting: `http://``_www.example.com_``/cdn-cgi/trace.`
+In some cases, in order to further troubleshoot issues related to protocols (errors such as `ERR_QUIC_PROTOCOL_ERROR`, `ERR_HTTP2_PROTOCOL_ERROR`, etc..) our Support team may ask you to provide a [NetLog dump](https://www.chromium.org/for-testers/providing-network-details/).
 
-Replace _www.example.com_ with your domain and hostname.  Note the **colo** field from the output.
+{{<Aside type="warning">}}
+You can only generate a NetLog dump on the Google Chrome, Opera or Microsoft Edge browsers.
+{{</Aside>}}
+
+1.  Open a new tab and enter the following depending on the browser you're using:
+- `chrome://net-export`
+- `edge://net-export`
+- `opera://net-export`
+2.  Click the **Start Logging To Disk** button.
+3.  Reproduce the network problem in a different tab.
+(the `chrome://net-export/`, `edge://net-export/` or `opera://net-export` tab needs to stay open otherwise logging will automatically stop)
+4.  Click **Stop Logging** button.
+5.  Attach the log file to your support ticket.
+
 
 ___
 
-## Troubleshoot requests with cURL
+## Identify the Cloudflare data center serving your request
 
-cURL is a command line tool for sending HTTP/HTTPS requests and is useful for troubleshooting:
+[A map of our data centers](https://www.cloudflare.com/network-map) is listed on the [Cloudflare status page](https://www.cloudflarestatus.com/), sorted by continent. 
+The three-letter code in the data center name is the [IATA code](http://en.wikipedia.org/wiki/IATA_airport_code) of the nearest major international airport. 
+Determine the Cloudflare data center serving requests for your browser by visiting: 
+`http://``_www.example.com_``/cdn-cgi/trace.`
+
+Replace `www.example.com` with your domain and hostname.  Note the `colo` field from the output.
+
+___
+
+## Troubleshoot requests with curl
+
+[curl](https://curl.se/) is a command line tool for sending HTTP/HTTPS requests and is useful for troubleshooting:
 
 -   HTTP/HTTPS Performance
 -   HTTP Error Responses
@@ -175,29 +199,27 @@ cURL is a command line tool for sending HTTP/HTTPS requests and is useful for tr
 -   SSL Certificates
 
 {{<Aside type="note">}}
-cURL is not installed by default in Windows and requires an [install
-wizard](http://curl.haxx.se/dlwiz/).
+If you are using Windows, you can find more details on how to use curl on Windows in our [Making API calls on Windows
+](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows) article.
 {{</Aside>}}
 
-Run the following command to send a standard HTTP GET request to your website (replace _www.example.com_ with your domain and hostname):
+Run the following command to send a standard HTTP GET request to your website (replace `www.example.com` with your hostname):
 
 ```
 $ curl -svo /dev/null http://www.example.com/
 ```
 
-This example cURL command returns output detailing the HTTP response and request headers but discards the page body output. cURL output confirms the HTTP response and whether Cloudflare is currently proxying traffic for the site.
+This example curl command returns output detailing the HTTP response and request headers but discards the page body output. curl output confirms the HTTP response and whether Cloudflare is currently proxying traffic for the site.
 
 {{<Aside type="note">}}
-Review the [cURL command
-options](https://curl.haxx.se/docs/manpage.html) for additional
-functionality.
+Review the [curl command options](https://curl.se/docs/manpage.html) for additional functionality.
 {{</Aside>}}
 
 View the sections below for tips on troubleshooting HTTP errors, performance, caching, and SSL/TLS certificates:
 
 ### HTTP errors
 
-When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare’s proxy):
+When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a curl directly to your origin web server IP address (bypassing Cloudflare’s proxy):
 
 ```
 $ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
@@ -212,7 +234,7 @@ assistance.
 
 ### Performance
 
-cURL measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ cURL options](https://curl.haxx.se/docs/manpage.html#-w). The example cURL below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
+curl measures latency or performance degradation for HTTP/HTTPS requests via the [_\-w_ or _\--write-out_ curl option](https://curl.haxx.se/docs/manpage.html#-w). The example curl below measures several performance vectors in the request transaction such as duration of the TLS handshake, DNS lookup, redirects, transfers, etc:
 
 ```
 curl -svo /dev/null https://example.com/ -w "\nContent Type: %{content_type} \
@@ -253,16 +275,14 @@ cURL helps review the HTTP response headers that influence caching. In particula
 -   s-maxage
 
 {{<Aside type="note">}}
-Find specifics on [Cloudflare\'s caching
-behavior](https://support.cloudflare.com/hc/articles/202775670) in
-Cloudflare's Help Center.
+You can refer to the [Cloudflare Cache documentation](/cache/get-started/) for more details.
 {{</Aside>}}
 
 ### SSL/TLS certificates
 
-#### Reviewing Certificates with cURL
+#### Reviewing Certificates with curl
 
-The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and hostname):
+The following curl command shows the SSL certificate served by Cloudflare during an HTTPS request (replace `www.example.com` with your hostname):
 
 ```sh
 $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
@@ -273,7 +293,7 @@ $ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* h
 parses the TLS handshake and certificate information.
 {{</Aside>}}
 
-To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and hostname:
+To display the origin certificate (assuming one is installed), replace `203.0.113.34` below with the actual IP address of your origin web server and replace `www.example.com` with your domain and hostname:
 
 ```sh
 $ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
@@ -281,12 +301,12 @@ $ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 |
 
 #### Testing TLS Versions
 
-If troubleshooting browser support or confirming what TLS versions are supported, cURL allows you to test a specific TLS version by adding one of the following options to your cURL:
+If troubleshooting browser support or confirming what TLS versions are supported, curl allows you to test a specific TLS version by adding the [--tlsv1.X](https://curl.se/docs/manpage.html#--tlsv10) and [--tls-max](https://curl.se/docs/manpage.html#--tls-max) options to your curl:
 
--   \--tlsv1.0
--   \--tlsv1.1
--   \--tlsv1.2
--   \--tlsv1.3
+-   `--tlsv1.0 --tls-max 1.0`
+-   `--tlsv1.1 --tls-max 1.1`
+-   `--tlsv1.2 --tls-max 1.2`
+-   `--tlsv1.3 --tls-max 1.3`
 
 ___
 
@@ -305,7 +325,7 @@ Timeouts are possible for ping results because Cloudflare limits ping
 requests.
 {{</Aside>}}
 
-Review the instructions below for running traceroute on different operating systems. Replace _www.example.com_ with your domain and hostname in the examples below:
+Review the instructions below for running traceroute on different operating systems. Replace `www.example.com` with your domain and hostname in the examples below:
 
 ### Run traceroute on Windows
 

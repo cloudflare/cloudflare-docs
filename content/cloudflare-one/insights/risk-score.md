@@ -20,7 +20,7 @@ Cloudflare Zero Trust assigns a risk score of Low, Medium, or High based on dete
 
 ### View a user's risk score
 
-To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any.
+To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any. You can select an instance of a risk behavior to view the log associated with the detection.
 
 Users that have had their risk score [cleared](#clear-a-users-risk-score) will not appear in the table unless they trigger another risk behavior.
 
@@ -37,10 +37,11 @@ If required, you can reset risk scores for specific users. Once reset, users wil
 
 By default, all predefined behaviors are disabled. When a behavior is enabled, Zero Trust will continuously evaluate all users within the organization for the behavior. You can [change the risk level](#change-risk-behavior-risk-levels) for predefined behaviors if the default assignment does not suit your environment.
 
-| Risk behaviors                        | Requirements                                                                            | Description                                                                                                                                                                                                            |
-| ------------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Impossible travel                     | [A configured Access application](/cloudflare-one/applications/)                        | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/). |
-| High number of DLP policies triggered | [A configured DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) | User has created a high number of DLP policy matches within a narrow frame of time. Matches will appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).                                  |
+| Risk behaviors                         | Requirements                                                                                                | Description                                                                                                                                                                                                            |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Impossible travel                      | [A configured Access application](/cloudflare-one/applications/)                                            | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/). |
+| High number of DLP policies triggered  | [A configured DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/)                     | User has created a high number of DLP policy matches within a narrow frame of time. Matches will appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).                                  |
+| SentinelOne threat detected on machine | [SentinelOne service provider integration](/cloudflare-one/identity/devices/service-providers/sentinelone/) | SentinelOne returns one or more configured [device posture attributes](/cloudflare-one/identity/devices/service-providers/sentinelone/#device-posture-attributes) for a user.                                          |
 
 ## Manage risk behaviors
 

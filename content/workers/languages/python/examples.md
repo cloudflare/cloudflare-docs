@@ -7,28 +7,17 @@ meta:
 
 # Examples
 
-### Return a custom status code and/or response headers
+Cloudflare has a wide range of Python examples in the [Workers Example gallery](/workers/examples/?languages=Python).
+
+In addition to those examples, consider the following ones that illustrate Python-specific behavior.
+
+## Parse an incoming request URL
 
 ```python
 ---
 filename: src/entry.py
 ---
-from js import Response, Headers
-
-async def on_fetch(request, env):
-  # Create a Headers object
-  headers = Headers.new({"x-hello-from": "python-workers"}.items())
-  # Return a response object with a status code and headers
-  return Response.new("Hello world!", status=404, headers=headers)
-```
-
-### Parse an incoming request URL
-
-```python
----
-filename: src/entry.py
----
-from js import Response, Headers
+from js import Response
 from urllib.parse import urlparse, parse_qs
 
 async def on_fetch(request, env):
@@ -48,7 +37,7 @@ async def on_fetch(request, env):
     return Response.new("Hello world!")
 ```
 
-### Parse JSON from the incoming request
+## Parse JSON from the incoming request
 
 ```python
 ---
@@ -61,14 +50,14 @@ async def on_fetch(request):
     return Response.new("Hello, {name}".format(name=name))
 ```
 
-### Emit logs from your Python Worker
+## Emit logs from your Python Worker
 
 ```python
 ---
 filename: src/entry.py
 ---
 # To use the JavaScript console APIs
-from js import console
+from js import console, Response
 # To use the native Python logging
 import logging
 
@@ -92,24 +81,7 @@ async def on_fetch(request):
     return Response.new("We're testing logging!")
 ```
 
-### Respond with JSON
-
-```python
----
-filename: src/entry.py
----
-from js import Response, Headers
-import json
-
-async def on_fetch(request):
-    # Use json.loads to serialize Python objects to JSON strings
-    payload = json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True)
-
-    headers = Headers.new({"content-type": "application/json"}.items())
-    return Response.new(payload, headers=headers)
-```
-
-### Publish to a Queue
+## Publish to a Queue
 
 ```python
 ---
@@ -135,6 +107,22 @@ async def on_fetch(request, env):
     # Return a response
     return Response.json(to_js({"write": "success"}))
 ```
+
+## Query a D1 Database
+
+```python
+---
+filename: src/entry.py
+---
+from js import Response
+
+async def on_fetch(request, env):
+    results = await env.DB.prepare("PRAGMA table_list").all()
+    # Return a JSON response
+    return Response.json(results)
+```
+
+Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
 
 ## Next steps
 

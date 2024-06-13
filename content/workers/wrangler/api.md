@@ -264,6 +264,10 @@ const platform = await getPlatformProxy(options);
 
     *   Optional options object containing preferences for the bindings:
 
+        * `environment` {{<type>}}string{{</type>}}
+
+          The environment to use.
+
         * `configPath` {{<type>}}string{{</type>}}
 
           The path to the configuration object to use (default `wrangler.toml`).
@@ -274,7 +278,7 @@ const platform = await getPlatformProxy(options);
 
         * `persist` {{<type>}}boolean | { path: string }{{</type>}}
 
-          Indicates if and where to persist the bindings data. If not present or `true`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
+          Indicates if and where to persist the bindings data. If `true` or `undefined`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
 
           **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: "./my-directory/v3"`.
 
@@ -351,15 +355,34 @@ The bindings supported by `getPlatformProxy` are:
 
  * [Durable Object bindings](/durable-objects/api/)
 
+     * To use a Durable Object binding with `getPlatformProxy`, always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
+
+        For example, you might have the following file read by `getPlatformProxy`.
+
+        ```toml
+        ---
+        filename: wrangler.toml
+        ---
+        [[durable_objects.bindings]]
+        name = "MyDurableObject"
+        class_name = "MyDurableObject"
+        script_name = "my-worker"
+        ```
+
+        In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
+        with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
+        separately via `wrangler dev`.
+
+
  * [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 
- * [Queue bindings](/queues/reference/javascript-apis/)
+ * [Queue bindings](/queues/configuration/javascript-apis/)
 
  * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
 
  * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
-    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-an-api-token) respectively.
+    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) respectively.
 
     {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 

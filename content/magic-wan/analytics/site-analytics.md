@@ -25,7 +25,6 @@ Magic WAN Site Analytics has the following data types available:
     - Traffic Sent by Tunnel
     - Traffic Received by Tunnel
 
-
 To start using Magic WAN Site Analytics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.

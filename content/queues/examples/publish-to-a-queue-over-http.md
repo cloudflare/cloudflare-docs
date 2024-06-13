@@ -8,14 +8,14 @@ meta:
   title: Queues - Publish Directly via HTTP
 ---
 
-The following example shows you how to publsh messages to a queue from any HTTP client, using a shared secret to securely authenticate the client.
+The following example shows you how to publish messages to a queue from any HTTP client, using a shared secret to securely authenticate the client.
 
 This allows you to write to a Queue from any service or programming language that support HTTP, including Go, Rust, Python or even a Bash script.
 
 ### Prerequisites
 
 - A [queue created](/queues/get-started/#3-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
-- A [configured **producer** binding](/queues/reference/configuration/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
+- A [configured **producer** binding](/queues/configuration/configure-queues/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
 
 Configure your `wrangler.toml` file as follows:
 
@@ -77,7 +77,7 @@ interface Env {
 }
 
 export default {
-	async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req, env): Promise<Response> {
 		// Authenticate that the client has the correct auth key
 		if (env.QUEUE_AUTH_SECRET == "") {
 			return Response.json({ err: "application not configured" }, { status: 500 });
@@ -118,7 +118,7 @@ export default {
 		// Return a HTTP 200 if the send succeeded!
 		return Response.json({ success: true });
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 To deploy this Worker:

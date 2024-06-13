@@ -34,8 +34,6 @@ To add a site:
 
 Create a `POST` request [using the API](/api/operations/magic-sites-create-site) to create a site.
 
-The parameter `"ha_mode": true` enables [high availability](#about-high-availability-configurations). You cannot enable high availability for a site after it has been created. To add high availability to an existing site, you need to delete the site and start again.
-
 Example:
 
 ```bash
@@ -101,7 +99,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-wan-connectors-create-wan) to create a WAN.
+Create a `POST` request [using the API](/api/operations/magic-site-wans-create-wan) to create a WAN.
 
 The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode.
 
@@ -153,7 +151,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-wan-connectors-lans-create-lan) to create a LAN.
+Create a `POST` request [using the API](/api/operations/magic-site-lans-create-lan) to create a LAN.
 
 Example:
 

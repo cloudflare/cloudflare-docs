@@ -2,9 +2,13 @@
 type: example
 summary: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
-tags:
-  - Originless
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
 title: Fetch HTML
 weight: 3
 layout: example
@@ -21,7 +25,7 @@ updated: 2024-01-11
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request: Request): Promise<Response> {
     /**
      * Replace `remote` with the host you wish to send requests to
      */
@@ -29,7 +33,7 @@ export default {
 
     return await fetch(remote, request);
   },
-} satisfies ExportedHandler;
+};
 ```
 
 {{</tab>}}

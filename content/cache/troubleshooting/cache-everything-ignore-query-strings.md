@@ -19,7 +19,7 @@ ___
 
 ## Page Rules limitations
 
-By default, Cloudflare Page Rules does not allow creating a rule that combines the two options mentioned in the use case above.
+By default, Cloudflare Page Rules (legacy) does not allow creating a rule that combines the two options mentioned in the use case above.
 
 Currently, you can pick just one **Cache Level** setting per page rule. As such, for the options discussed in this use case, you could only pick either _Cache Everything_ or _Ignore Query String_.
 

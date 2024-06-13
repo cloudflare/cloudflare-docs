@@ -5,8 +5,13 @@ summary: Return JSON directly from a Worker script, useful for building APIs and
 demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
-  - Originless
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
 title: Return JSON
 weight: 2
 layout: example
@@ -23,7 +28,7 @@ updated: 2024-01-11
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const data = {
       hello: "world",
     };

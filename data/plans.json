@@ -1131,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules",
+      "title": "Page Rules (legacy)",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {
@@ -1158,15 +1158,15 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
+          "summary": "Available on paid plans",
+          "free": "No",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
         "rules": {
           "title": "Number of snippets",
-          "free": 5,
+          "free": 0,
           "pro": 10,
           "biz": 25,
           "ent": 50
@@ -1531,7 +1531,7 @@
         "managed_ruleset_1": {
           "title": "Cloudflare Managed Ruleset",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/cloudflare-managed-ruleset/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1540,7 +1540,7 @@
         "managed_ruleset_2": {
           "title": "Cloudflare OWASP Core Ruleset",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/owasp-core-ruleset/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1549,7 +1549,7 @@
         "managed_ruleset_3": {
           "title": "Cloudflare Exposed Credentials Check",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/exposed-credentials-check/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1558,7 +1558,7 @@
         "managed_rulesets_response": {
           "title": "Cloudflare Sensitive Data Detection",
           "summary": "Enterprise-only",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/sensitive-data-detection/",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1846,7 +1846,7 @@
       }
     },
     "server_side_excludes": {
-      "title": "Server-side Excludes",
+      "title": "Server-side Excludes (deprecated)",
       "link": "/waf/tools/scrape-shield/server-side-excludes/",
       "properties": {
         "availability": {
@@ -1962,7 +1962,7 @@
       }
     },
     "auto_minify": {
-      "title": "Auto Minify",
+      "title": "Auto Minify (deprecated)",
       "link": "/speed/optimization/content/auto-minify/",
       "properties": {
         "availability": {

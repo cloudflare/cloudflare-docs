@@ -27,3 +27,7 @@ This example blocks requests based on country code using the [`ip.geoip.country`
     </tr>
   </tbody>
 </table>
+
+## Other resources
+
+* [Use case: Block traffic from specific countries](/waf/custom-rules/use-cases/block-traffic-from-specific-countries/)

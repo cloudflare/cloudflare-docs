@@ -14,8 +14,8 @@ As the IdenTrust cross-sign (DST Root CA X3) expires on **September 30, 2024**, 
 
 To minimize impact, besides communicating the changes and providing recommendations early, Cloudflare will proceed as follows:
 
-* Automatically switch to a different certificate authority all Cloudflare-managed certificates where you have not specifically chosen Let's Encrypt.
-* Notify you of Cloudflare-managed certificates that you specifically set to use Let's Encrypt, and whether hostnames covered by these certificates are receiving requests from the [impacted devices or systems](#impact).
+* Automatically switch to a different certificate authority the Cloudflare-managed certificates where you have not specifically chosen Let's Encrypt.
+* Notify you of Cloudflare-managed certificates that you specifically set to use Let's Encrypt, and whether hostnames covered by these certificates are receiving requests from the [impacted devices or systems](#client-impact).
 * Bundle Let’s Encrypt certificates uploaded to Cloudflare with the appropriate chains, as long as the [bundling method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) is set to compatible or modern.
 
 Refer to the sections below for more information on each of these actions and how they may reflect on the different certificate types.
@@ -27,7 +27,7 @@ The expiration of the cross-signed chain will primarily affect older devices, fo
 ## Important dates
 
 - **June 2024**: Cloudflare will start automatically changing the CA for managed certificates where you had not opted to use Let's Encrypt.
-- **September 9, 2024**: Cloudflare will stop using the cross-signed chain, both in certificate issuance and in [certificate bundling](#changes-to-custom-certificates).
+- **September 9, 2024**: Cloudflare will stop using the cross-signed chain, both in certificate issuance and in [certificate bundling](#custom-certificates).
 - **September 30, 2024**: The cross-signed chain will expire.
 
 ## How are your products affected
@@ -44,11 +44,17 @@ The email will inform you which certificates are using Let's Encrypt as their CA
 
 You can then [manage your advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) to use a different CA if you choose to do so.
 
+### Total TLS
+
+For [Total TLS](/ssl/edge-certificates/additional-options/total-tls/), if you are concerned that using Let's Encrypt might impact your visitors' experience, go to **SSL/TLS** > **Edge Certificates** and make sure that a different certificate authority is selected in the Total TLS settings.
+
+Cloudflare will not change Total TLS certificates automatically.
+
 ### Custom certificates
 
 #### Compatible or modern
 
-For [custom certificates](/ssl/edge-certificates/custom-certificates/) that use compatible or modern [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), and are uploaded before September 9, Cloudlfare will continue to use the cross-signed chain until their expiry.
+For [custom certificates](/ssl/edge-certificates/custom-certificates/) that use compatible or modern [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), and are uploaded before September 9, Cloudflare will continue to use the cross-signed chain until their expiry.
 
 After September 9, 2024, all Let’s Encrypt certificates uploaded to Cloudflare will be bundled with the ISRG Root X1 chain, instead of the cross-signed chain.
 

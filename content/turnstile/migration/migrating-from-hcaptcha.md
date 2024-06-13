@@ -25,7 +25,7 @@ header: Turnstile script snippet
 
 </div>
 
-2. Locate the `hcaptcha.render()` calls and replace the sitekey with your Turnstile sitekey and the api.
+2. Locate the `hcaptcha.render()` calls and replace the sitekey with your Turnstile sitekey and the API.
 
 <div>
 

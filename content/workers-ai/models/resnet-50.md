@@ -8,9 +8,7 @@ model:
     id: "00cd182b-bf30-4fc4-8481-84a3ab349657"
     name: "Image Classification"
     description: "Image classification models take an image input and assigns it labels or classes."
-  tags:
-    - "image-classification"
-    - "microsoft"
+  tags: []
   properties:
     - property_id: "beta"
       value: "false"
@@ -22,7 +20,7 @@ layout: "model"
 weight: 100
 title: "resnet-50"
 json_schema:
-  input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    }\n  ]\n}"
+  input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"image\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      },\n      \"required\": [\n        \"image\"\n      ]\n    }\n  ]\n}"
   output: "{\n  \"type\": \"array\",\n  \"contentType\": \"application/json\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"score\": {\n        \"type\": \"number\"\n      },\n      \"label\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
 
 ---

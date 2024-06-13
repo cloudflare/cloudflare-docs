@@ -2,9 +2,14 @@
 type: example
 summary: Deliver an HTML page from an HTML string directly inside the Worker script.
 demo: https://returning-html.workers-sites-examples.workers.dev
-tags:
-  - Originless
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+playground-link: true
+pcx_content_type: example
 title: Return small HTML page
 weight: 1
 layout: example
@@ -21,7 +26,7 @@ updated: 2024-01-11
 
 ```ts
 export default {
-  async fetch(request: Request) {
+  async fetch(request): Promise<Response> {
     const html = `<!DOCTYPE html>
 		<body>
 		  <h1>Hello World</h1>

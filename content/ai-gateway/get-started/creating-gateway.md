@@ -8,20 +8,43 @@ weight: 1
 
 In this guide, you will learn how to create your first AI Gateway. You can create multiple gateways to control different applications.
 
-To set up an AI Gateway you will need to:
+## Prerequisites
 
-1. Create a [Cloudflare account](https://dash.cloudflare.com/sign-up/)
+Before you get started, make sure you have a [Cloudflare account](https://dash.cloudflare.com/).
 
-2. Navigate to [AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general) in the dashboard, under the AI menu
+## Setup
 
-3. Create a new AI Gateway and enter your gateway name and URL slug
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
-![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
+To set up an AI Gateway in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **AI** > **AI Gateway**.
+3. Select **Create Gateway**.
+  ![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
+4. Enter your **Gateway name** and **URL slug**. Note: Gateway name has a 64 character limit. 
+5. Select **Create**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To set up an AI Gateway using the API:
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+  - `AI Gateway - Read`
+  - `AI Gateway - Edit`
+
+2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
+3. Using that API token and Account ID, send a [`POST` request](/api/operations/aig-config-create-gateway) to the Cloudflare API.
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Next Steps
 
 {{<resource-group>}}
 
-{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
+{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications/" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
 
 {{</resource-group>}}

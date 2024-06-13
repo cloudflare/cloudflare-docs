@@ -7,19 +7,19 @@ layout: learning-module
 
 # Setup
 
-Create a load balancer that monitors origin health and intelligently routes traffic.
+Create a load balancer that monitors endpoint health and intelligently routes traffic.
 
 ## Objectives
 
 By the end of this module, you will be able to:
 
 - Configure a monitor and health checks.
-- Create an origin pool.
+- Create an endpoint pool.
 - Create a load balancer.
 - Analyze traffic patterns.
 
 ## Prerequisites
 
-- Multiple origin servers, either physical or cloud-based.
+- Multiple endpoints, either physical or cloud-based.
 - Access to Load Balancing, available as an [add-on](/load-balancing/get-started/enable-load-balancing/) for any type of account.
 - Two hostnames, one for test traffic and the other for production traffic.

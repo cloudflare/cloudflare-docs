@@ -10,7 +10,7 @@ meta:
 
 **Proximity steering** routes visitors or internal services to the closest physical data center.
 
-To use proximity steering on a load balancer, you first need to add GPS coordinates to each origin pool.
+To use proximity steering on a load balancer, you first need to add GPS coordinates to each pool.
 
 ## When to add proximity steering
 
