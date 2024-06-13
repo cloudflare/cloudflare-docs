@@ -67,7 +67,14 @@ Replace `<YOUR_DATABASE_NAME>` with the name you want to you for your database. 
 
 After the database is successfully created, you will see the data for the binding displayed as an output.
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
-To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file.
+To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file, as shown in the example below. 
+
+```toml
+[[d1_databases]]
+binding = "DB"
+database_name = "<YOUR_DATABASE_NAME>"
+database_id = "<YOUR_DATABASE_ID>"
+```
 
 
 ## 3. Create R2 bucket and binding
@@ -81,7 +88,6 @@ $ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
-But this time you will need to add the binding to your wrangler file manually.
 To do this, go to the `wrangler.toml` file again and then add the following lines:
 
 ```toml
