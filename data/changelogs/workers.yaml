@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-12'
+  description: |-
+    - Blob and Body objects now include a new `bytes()` method.
 - publish_date: '2024-05-03'
   description: |-
     - Fixed RPC to/from Durable Objects not honoring the output gate.
