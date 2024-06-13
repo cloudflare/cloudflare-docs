@@ -30,7 +30,11 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
                 "ec2:DeleteTransitGatewayPeeringAttachment",
                 "ec2:DescribeRegions",
                 "ec2:DescribeTransitGatewayPeeringAttachments",
-                "ec2:RejectTransitGatewayPeeringAttachment"
+                "ec2:RejectTransitGatewayPeeringAttachment",
+                "ec2:GetManagedPrefixListEntries",
+                "ec2:CreateManagedPrefixList",
+                "ec2:ModifyManagedPrefixList",
+                "ec2:DeleteManagedPrefixList"
             ],
             "Resource": "*"
         }
