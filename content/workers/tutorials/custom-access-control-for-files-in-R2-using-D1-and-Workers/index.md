@@ -8,7 +8,7 @@ title: Custom access control for files in R2 using D1 and Workers
 
 # Custom access control for files in R2 using D1 and Workers
 
-This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication, using a D1 database for user management and an R2 bucket for file storage. 
+This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage. 
 
 The following sections will guide you through the process of creating a Worker using the Cloudflare CLI, creating and setting up a D1 database and R2 bucket, and then implementing the functionality to securely upload and fetch files from the created R2 bucket.
 
@@ -16,9 +16,9 @@ The following sections will guide you through the process of creating a Worker u
 ## Prerequisites
 
 Before you can start with this tutorial, you will need to have the following prerequisites:
-1. A Cloudflare account
-2. [`npm`](https://docs.npmjs.com/getting-started)
-3. [`Node.js`](https://nodejs.org/en/) with version `16.17.0` or later
+- A Cloudflare account
+- [`npm`](https://docs.npmjs.com/getting-started)
+- [`Node.js`](https://nodejs.org/en/) with version `16.17.0` or later
 
 
 ## 1. Create a new Worker application
@@ -52,7 +52,7 @@ If you do choose to deploy here, you will be asked to authenticate (if not logge
 
 ## 2. Create a new D1 database and binding
 
-Before you can start to modify the now created worker, you need to create a D1 database.
+Now that you have created your Worker, next you will need to create a D1 database.
 This can be done through the Cloudflare Portal or the Wrangler CLI.
 For this tutorial, we will use the Wrangler CLI for simplicity.
 
@@ -63,7 +63,7 @@ If you get asked to install wrangler, just confirm by pressing `y` and then pres
 $ npx wrangler d1 create <YOUR_DATABASE_NAME>
 ```
 
-But be sure to replace `<YOUR_DATABASE_NAME>` with the name you want to you for your database. Keep in mind that this name can't be changed later on.
+Replace `<YOUR_DATABASE_NAME>` with the name you want to you for your database. Keep in mind that this name can't be changed later on.
 
 After the database is successfully created, you will see the data for the binding displayed as an output.
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
@@ -86,8 +86,8 @@ To do this, go to the `wrangler.toml` file again and then add the following line
 
 ```toml
 [[r2_buckets]]
-binding = 'BUCKET'
-bucket_name = '<YOUR_BUCKET_NAME>'
+binding = "BUCKET"
+bucket_name = "<YOUR_BUCKET_NAME>"
 ```
 
 Now that you prepared the wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
@@ -103,11 +103,11 @@ $ npm run cf-typegen
 Before you can start developing the Worker, you need to prepare the D1 database.
 
 For this you need to
-1. create a table in the database which will then be used to store the user data 
-2. create a unique index on the username column, which will speed up database queries and ensure that the username is unique
-3. insert a test user into the table, so you can test your code later on
+1. Create a table in the database which will then be used to store the user data 
+2. Create a unique index on the username column, which will speed up database queries and ensure that the username is unique
+3. Insert a test user into the table, so you can test your code later on
 
-As this operation only needs to be done once, this will be done through the Wrangler CLI and not in the Workers code.
+As this operation only needs to be done once, this will be done through the Wrangler CLI and not in the Worker's code.
 Just run the following commands in order to prepare the database, but be sure to replace `<YOUR_DATABASE_NAME>` with the name you used for your database:
 
 ```sh
@@ -120,13 +120,13 @@ $ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (user
 ## 5. Implement authentication in the Worker
 
 Now that the database and bucket are all set up, you can start to develop the Worker application.
-The first thing you will need to do is to implemen the authentication for the requests.
+The first thing you will need to do is to implement the authentication for the requests.
 
 This tutorial will use a simple username and password authentication, where the username and password (hashed) are stored in the D1 database.
-The requests will contain, the username and password as a base64 encoded string, which is also called Basic Authentication.
+The requests will contain the username and password as a base64 encoded string, which is also called Basic Authentication.
 Depending on the request method, this string will be retrieved from the `Authorization` header for POST requests or the `Authorization` search parameter for GET requests.
 
-To handle the authentication, you will need to replace the current code within `old.ts` file with the following code:
+To handle the authentication, you will need to replace the current code within `index.ts` file with the following code:
 
 ```ts
 export default {
