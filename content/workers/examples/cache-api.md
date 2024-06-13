@@ -105,10 +105,10 @@ from pyodide.ffi import create_proxy
 from js import Response, Request, URL, caches, fetch
 
 async def on_fetch(request, _env, ctx):
-    cache_url = URL.new(request.url)
+    cache_url = request.url
 
     # Construct the cache key from the cache URL
-    cache_key = Request.new(cache_url.toString(), request)
+    cache_key = Request.new(cache_url, request)
     cache = caches.default
 
     # Check whether the value is already available in the cache

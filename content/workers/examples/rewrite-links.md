@@ -117,7 +117,9 @@ async def on_fetch(request):
             if attr:
                 element.setAttribute(self.attr_name, attr.replace(old_url, new_url))
 
-    rewriter = HTMLRewriter.new().on("a", create_proxy(AttributeRewriter("href"))).on("img", create_proxy(AttributeRewriter("src")))
+    href = create_proxy(AttributeRewriter("href"))
+    src = create_proxy(AttributeRewriter("src"))
+    rewriter = HTMLRewriter.new().on("a", href).on("img", src)
     res = await fetch(request)
     content_type = res.headers["Content-Type"]
 

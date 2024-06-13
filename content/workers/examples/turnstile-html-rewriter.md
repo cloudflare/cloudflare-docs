@@ -96,7 +96,8 @@ async def on_fetch(request, env):
 
     class Append:
         def element(self, element):
-            element.append('<scriptsrc="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>', {"html": True})
+            s = '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>'
+            element.append(s, {"html": True})
 
     class AppendOnID:
         def __init__(self, name):
@@ -104,10 +105,13 @@ async def on_fetch(request, env):
         def element(self, element):
             # You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
             if element.getAttribute("id") == self.name:
-                element.append(f'<div class="cf-turnstile" data-sitekey="{site_key}" data-theme="light"></div>', { "html": True })
+                div = f'<div class="cf-turnstile" data-sitekey="{site_key}" data-theme="light"></div>'
+                element.append(div, { "html": True })
 
     # Instantiate the API to run on specific elements, for example, `head`, `div`
-    new_res = HTMLRewriter.new().on("head", create_proxy(Append())).on("div", create_proxy(AppendOnID("NAME_OF_ATTRIBUTE"))).transform(res)
+    head = create_proxy(Append())
+    div = create_proxy(AppendOnID("NAME_OF_ATTRIBUTE"))
+    new_res = HTMLRewriter.new().on("head", head).on("div", div).transform(res)
 
     return new_res
 ```
