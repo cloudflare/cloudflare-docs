@@ -19,7 +19,7 @@ Sentry integration is available to all Enterprise customers and Free, Pro, and B
 
 {{<Aside type="warning">}}
 
-This integration is not supported for Pages projects. This is because it installs a tail worker which Pages does not support.
+This integration is not supported for Pages projects. Pages does not support [Tail Workers](/workers/observability/logging/tail-workers/), and the Sentry integration relies on adding a Tail Worker to your Worker.
 
 {{</Aside>}}
 
