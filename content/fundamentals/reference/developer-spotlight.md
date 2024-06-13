@@ -1,9 +1,9 @@
 ---
 pcx_content_type: reference
-title: Developer Spotlight Program
+title: Developer Spotlight program
 ---
 
-# Developer Spotlight Program
+# Developer Spotlight program
 
 If you use Cloudflare's developer products and would like to share your expertise then Cloudflare's Developer Spotlight program is for you! Whether you use Cloudflare in your profession, as a student or as a hobby, let us spotlight your creativity. Write a tutorial for our documentation and earn credits for your Cloudflare account along with having your name credited on your work.
 
