@@ -5,6 +5,10 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-11'
+  title: Updated response codes on requests for errored videos
+  description: |-
+    Stream will now return HTTP error status 424 (failed dependency) when requesting segments, manifests, thumbnails, downloads, or subtitles for videos that are in an errored state. Previously, Stream would return one of several 5xx codes for requests like this.
 - publish_date: '2024-04-11'
   title: Live Instant Clipping for live broadcasts and recordings
   description: |-

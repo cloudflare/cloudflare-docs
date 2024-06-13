@@ -82,7 +82,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/cha
 
 ### Cache TTL (cf-cache-ttl)
 
-Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and requires refreshing from the original source. You can use **cf-cache-ttl** to set the desired caching duration in seconds.
+Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and requires refreshing from the original source. You can use **cf-cache-ttl** to set the desired caching duration in milliseconds.
 
 For example, if you set a TTL of one hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a more recent response, and that response will repopulate the cache for the next hour.
 
@@ -96,7 +96,7 @@ header: Request to be cached for an hour
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
-  --header 'cf-cache-ttl: 3600' \
+  --header 'cf-cache-ttl: 3600000' \
   --data ' {
    		 "model": "gpt-3.5-turbo",
    		 "messages": [

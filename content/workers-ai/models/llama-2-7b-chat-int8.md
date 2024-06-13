@@ -20,6 +20,8 @@ model:
       value: "1800"
     - property_id: "terms"
       value: "https://ai.meta.com/resources/models-and-libraries/llama-downloads/"
+    - property_id: planned_deprecation_date
+      value: "2024-06-30"
 task_type: "text-generation"
 model_display_name: "llama-2-7b-chat-int8"
 layout: "model"
