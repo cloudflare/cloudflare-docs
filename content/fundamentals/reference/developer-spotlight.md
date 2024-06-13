@@ -17,7 +17,7 @@ Anybody who is not currently a Cloudflare employee and regularly uses our Develo
 
 Those who apply will be asked to provide a title and details for a tutorial they would like to write for the Developer Spotlight program. Selected applicants will be contacted by the email and will be asked to write and submit their completed tutorial to [Cloudflare's documentation GitHub](https://github.com/cloudflare/cloudflare-docs). 
 
-Once your tutorial has been submitted as a PR, we will then conduct two reviews; A technical review to check that the tutorial is technically accurate and a content review to check that the tutorial adheres to our documentation styleguide. Once your work has been approved by both reviews and your submission has been published, you will be awarded 350 account credits to your Cloudflare account and your name will be added to the header of your tutorial.
+Once your tutorial has been submitted as a PR, we will then conduct two reviews; A technical review to check that the tutorial is technically accurate and a content review to check that the tutorial adheres to our documentation style guide. Once your work has been approved by both reviews and your submission has been published, you will be awarded 350 account credits to your Cloudflare account and your name will be added to the header of your tutorial.
 
 ## Submission rules
 
