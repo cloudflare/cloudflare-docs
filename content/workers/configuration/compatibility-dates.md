@@ -71,6 +71,17 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_als" ]
 ```
 
+### Querying enabled compatibility flags at runtime
+
+When using the ESM-syntax on your workers, it is possible to query the current set of active compatibility flags in effect for your worker at runtime.
+
+```js
+import { compatibilityFlags } from 'cloudflare:workers';
+
+console.log(compatibilityFlags['nodejs_compat_v2']);  // true or false
+console.log(compatibilityFlags['url_standard']);  // true or false
+```
+
 ## Change history
 
 Newest changes are listed first.
