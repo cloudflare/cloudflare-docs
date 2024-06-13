@@ -63,7 +63,7 @@ If you get asked to install wrangler, just confirm by pressing `y` and then pres
 $ npx wrangler d1 create <YOUR_DATABASE_NAME>
 ```
 
-Replace `<YOUR_DATABASE_NAME>` with the name you want to you for your database. Keep in mind that this name can't be changed later on.
+Replace `<YOUR_DATABASE_NAME>` with the name you want to use for your database. Keep in mind that this name can't be changed later on.
 
 After the database is successfully created, you will see the data for the binding displayed as an output.
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
@@ -96,7 +96,8 @@ binding = "BUCKET"
 bucket_name = "<YOUR_BUCKET_NAME>"
 ```
 
-Now that you prepared the wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
+Now that you have prepared the Wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
+This file will then provide TypeScript with the correct type definitions for the bindings, which allows for type checking and code completion in your editor.
 You could either update it manually or run the following command in the directory of your project to update it automatically based on the wrangler configuration file (recommended).
 
 ```sh
