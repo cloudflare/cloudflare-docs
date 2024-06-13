@@ -134,6 +134,10 @@ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./
 - Export is not supported for virtual tables, including databases with virtual tables. D1 supports virtual tables for full-text search using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html). As a workaround, delete any virtual tables, export, and then recreate virtual tables.
 - A running export will block other database requests.
 
+## Known Bugs
+
+1. WARP on results in errors for all commands except import
+
 ## Troubleshooting
 
 If you receive an error when trying to import an existing schema and/or dataset into D1:
@@ -148,3 +152,4 @@ If you receive an error when trying to import an existing schema and/or dataset 
 * Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
 * Learn how to [use the D1 client API](/d1/build-with-d1/d1-client-api/) from within a Worker.
 * Understand how [database migrations work](/d1/reference/migrations/) with D1.
+
