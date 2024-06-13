@@ -123,12 +123,12 @@ The reason the Cloudflare network exists is to provide services to customers to 
 
 In general, what customers need to effectively combat and protect against the growing breadth and complexity of threats is a unified security solution that provides visibility, analytics, detection, and mitigation in an operationally consistent and efficient manner. Cloudflare addresses these needs in several ways:
 
-- Operational consistency. Cloudflare has a single dashboard/UI for all administrative tasks.
-- Operational simplicity. Cloudflare is well known for minimizing operational complexity with well-designed user interfaces that minimize manual configurations and UI workflows. Additionally, cross-product integrations allow for automating configurations and policies.
-- Continuous innovation. Cloudflare continues to innovate across its broad security portfolio with unique differentiating capabilities such as its CAPTCHA replacement product, Turnstile, and the industry-first API Sequence Mitigation capability.
-- Workload location agnostic. Cloudflare was built first and foremost around performance and security services. As such, it was built from the ground up to be workload location agnostic with multi-cloud inherently being a top use case. Customers can deploy workloads in multiple clouds and/or on-prem and get the same operational consistency.
-- Performance and scale. All Cloudflare services run on every server in every data center on the same global cloud, allowing for maximum performance in terms of global reachability and latency and ability to scale out, leveraging the full capacity of Cloudflare’s global infrastructure.
-- API first. Cloudflare is API first. All configurations and capabilities available from the UI/dashboard are also available from the API. Cloudflare can easily be configured with Terraform to support automation for customer workflows/processes.
+- Operational consistency: Cloudflare has a single dashboard/UI for all administrative tasks.
+- Operational simplicity: Cloudflare is well-known for minimizing operational complexity with well-designed user interfaces that minimize manual configurations and UI workflows. Additionally, cross-product integrations allow for automating configurations and policies.
+- Continuous innovation: Cloudflare continues to innovate across its broad security portfolio with unique differentiating capabilities such as its CAPTCHA replacement product, Turnstile, and the industry-first API Sequence Mitigation capability.
+- Workload location agnostic: Cloudflare was built first and foremost around performance and security services. As such, it was built from the ground up to be workload location agnostic with multi-cloud inherently being a top use case. Customers can deploy workloads in multiple clouds and/or on-prem and get the same operational consistency.
+- Performance and scale: All Cloudflare services run on every server in every data center on the same global cloud, allowing for maximum performance in terms of global reachability and latency and ability to scale out, leveraging the full capacity of Cloudflare’s global infrastructure.
+- API first: Cloudflare is API first. All configurations and capabilities available from the UI/dashboard are also available from the API. Cloudflare can easily be configured with Terraform to support automation for customer workflows/processes.
 
 Cloudflare’s security services that protect networks, applications, devices, users, and data can be grouped into the following categories. 
 
@@ -146,7 +146,7 @@ Public and private resources can also include both infrastructure-level componen
 
 ![The network OSI model describes network communication from the physical through to the application layer.](/images/reference-architecture/security/security-ref-arch-3.svg)
 
-Cloudflare can protect at multiple layers of the OSI model and in this document we are primarily concerned with protecting resources at layers 3, 4, and 7.
+Cloudflare can protect at multiple layers of the OSI model, and in this document we are primarily concerned with protecting resources at layers 3, 4, and 7.
 
 - Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device, and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination. 
 - Layer 4, referred to as the “transport layer,” is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called “segments” before sending it to layer 3.
@@ -164,7 +164,7 @@ Businesses rely on public websites and API endpoints for daily ecommerce transac
 
 Public assets need to be protected on multiple fronts and from various attacks; therefore, multiple different security capabilities need to be implemented. Additionally, customers must tackle the operational efficiency of solutions they implement. Managing multiple point products for mitigating different attacks or having multiple vendors to meet company security objectives and requirements creates many operational inefficiencies and issues such as multiple UIs/dashboards, training, lack of cross-product integrations, etc.
 
-The diagram below shows a typical request for a public asset going through the Cloudflare network. Our security services are part of many capabilities and Cloudflare acts as a reverse proxy, where requests are routed to the closest data center and performance and security services are applied prior to that request being routed onto the destination. These services can easily be consolidated and used together regardless of where workloads are deployed; the operations and implementation remain consistent. Note the diagram doesn't detail all of Cloudflare's services.
+The diagram below shows a typical request for a public asset going through the Cloudflare network. Our security services are part of many capabilities, and Cloudflare acts as a reverse proxy where requests are routed to the closest data center and performance and security services are applied prior to that request being routed onto the destination. These services can easily be consolidated and used together regardless of where workloads are deployed; the operations and implementation remain consistent. Note the diagram doesn't detail all of Cloudflare's services.
 
 ![Every request through Cloudflare passes once for inspection across all security products.](/images/reference-architecture/security/security-ref-arch-4.svg)
 
