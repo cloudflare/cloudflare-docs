@@ -199,9 +199,9 @@ entries:
   general_definition: |-
     Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
 
-- term: VPN
+- term: Virtual Private Network (VPN)
   general_definition: |-
-    a Virtual Private Network (VPN) is a tool that allows users to send and receive data across shared or public networks as if their devices were directly connected to the private network. For example, employees working from home can use a VPN to access files on the corporate network.
+    a tool that allows users to send and receive data across shared or public networks as if their devices were directly connected to the private network. For example, employees working from home can use a VPN to access files on the corporate network.
 
 - term: WARP client
   general_definition: |-
