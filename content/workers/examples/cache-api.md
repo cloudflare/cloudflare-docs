@@ -102,7 +102,7 @@ export default {
 
 ```py
 from pyodide.ffi import create_proxy
-from js import Response, Request, fetch, URL, caches
+from js import Response, Request, URL, caches, fetch
 
 async def on_fetch(request, _env, ctx):
     cache_url = URL.new(request.url)

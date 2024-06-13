@@ -123,7 +123,7 @@ async def on_fetch(request):
 
     # If the response is HTML, it can be transformed with
     # HTMLRewriter -- otherwise, it should pass through
-    if "text/html" in content_type:
+    if content_type.startswith("text/html"):
         return rewriter.transform(res)
     return res
 ```

@@ -96,7 +96,7 @@ async def on_fetch(request, env):
 
     class Append:
         def element(self, element):
-            element.append('<scriptsrc="https://challenges.cloudflare.com/turnstile/v0/api.js"async defer></script>', {"html": True})
+            element.append('<scriptsrc="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>', {"html": True})
 
     class AppendOnID:
         def __init__(self, name):

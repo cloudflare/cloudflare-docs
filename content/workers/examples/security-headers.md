@@ -202,7 +202,7 @@ from js import Response, fetch, Headers
 
 async def on_fetch(request):
     default_security_headers = {
-        #Secure your application with Content-Security-Policy headers.
+        # Secure your application with Content-Security-Policy headers.
         #Enabling these headers will permit content from a trusted domain and all its subdomains.
         #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
         "Content-Security-Policy": "default-src 'self' example.com *.example.com",

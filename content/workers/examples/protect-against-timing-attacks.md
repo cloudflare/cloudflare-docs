@@ -31,8 +31,9 @@ interface Environment {
 
 export default {
   async fetch(req: Request, env: Environment) {
-    if (!env.MY_SECRET_VALUE)
+    if (!env.MY_SECRET_VALUE) {
       return new Response("Missing secret binding", { status: 500 });
+    }
 
     const authToken = req.headers.get("Authorization") || "";
 
@@ -74,12 +75,12 @@ async def on_fetch(request, env):
     if len(auth_token) != len(secret):
         return Response.new("Unauthorized", status=401)
 
+    if a.byteLength != b.byteLength:
+        return Response.new("Unauthorized", status=401)
+
     encoder = TextEncoder.new()
     a = encoder.encode(auth_token)
     b = encoder.encode(secret)
-
-    if a.byteLength != b.byteLength:
-        return Response.new("Unauthorized", status=401)
 
     if not crypto.subtle.timingSafeEqual(a, b):
         return Response.new("Unauthorized", status=401)
