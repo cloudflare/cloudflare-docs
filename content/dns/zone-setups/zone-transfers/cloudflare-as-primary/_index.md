@@ -23,3 +23,5 @@ Outgoing zone transfers are available to Enterprise customers who are currently 
 ## Notes
 
 If you use [Cloudflare Load Balancing](/load-balancing/), only proxied Load Balancer DNS records will be transferred.
+
+If you wish to use [DNSSEC](/dns/dnssec/) with outgoing zone transfers, you will need to set up [Multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/).
