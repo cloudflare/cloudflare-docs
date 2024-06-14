@@ -73,15 +73,15 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 API value: `isolate`
 
-[Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) do not support isolation.
+The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
 
-For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
+The [Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) selectors do not support isolation.
 
 ### Do Not Isolate
 
 API value: `noisolate`
 
-For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
+The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
 
 ### Do Not Inspect
 
