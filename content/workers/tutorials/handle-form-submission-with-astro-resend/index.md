@@ -8,7 +8,7 @@ title: How to use Cloudflare Workers to send form submissions from an Astro+Rese
 
 # How to use Cloudflare Workers to send form submissions from an Astro+Resend app
 
-This article will instruct5 you on how to send emails from Astro and Cloudflare Workers (via Cloudflare SSR Adapter) using Resend.
+This tutorial will instruct you on how to send emails from [Astro](https://astro.build/) and Cloudflare Workers (via Cloudflare SSR Adapter) using [Resend](https://resend.com/).
 
 ## Prerequisites
 
@@ -26,12 +26,12 @@ Open your terminal and run the below command:
 ---
 header: Create Astro project
 ---
-npm create cloudflare@latest my-astro-app -- --framework=astro/
+npm create cloudflare@latest my-astro-app -- --framework=astro
 ```
 
 Follow the prompts to configure your project, selecting your preferred options for TypeScript usage, TypeScript strictness, version control, and deployment.
 	
-After the initial installation, run the following to add the Cloudflare adapter:
+After the initial installation change into the newly created project directory `my-astro-app` and run the following to add the Cloudflare adapter:
 	
 ```bash
 ---
@@ -40,7 +40,7 @@ header: Install Cloudflare Adapter
 npm run astro add cloudflare
 ```
 
-This adapter allows Astro's Server-Side Rendered (SSR) sites and components to work on Cloudflare Pages and converts Astro's endpoints into Cloudflare Workers.
+The [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) allows Astro's Server-Side Rendered (SSR) sites and components to work on Cloudflare Pages and converts Astro's endpoints into Cloudflare Workers endpoints.
 
 ## 2. Add your domain to Resend
 
@@ -66,13 +66,13 @@ If you do not have a domain and just want to test you can skip to step 4 of this
     - In Resend, find the "API Keys" option in the side menu and click it.
     - Create a new API key with a descriptive name and give Full Access permission.
 5. **Save the API key for Local Development and Deployed Worker**
-	- Local Development: create an .env in the root folder of your Astro project and save the API key as RESEND_API_KEY='Api key here' (no quotes).
-	-  Deployed Worker: run the following in your cli and follow the instructions.
+	- For local development, create an .env in the root folder of your Astro project and save the API key as RESEND_API_KEY='Api key here' (no quotes).
+	- For a deployed Worker, run the following in your CLI and follow the instructions.
 ```bash
 $ npx wrangler secret put RESEND_API_KEY
 ```
 
-## 3. Astro Endpoint/Worker
+## 3. Create an Astro endpoint
 
 In the `src/pages` directory, create a new folder called `api`. Inside the `api` folder, create a new file called `sendEmail.json.ts`. This will create an endpoint at `/api/sendEmail.json`.
 
@@ -106,7 +106,9 @@ export const POST: APIRoute = async ({ request }) => {
 
 ```
 
-Next you will need to install the resend SDK.
+## 4. Send emails using Resend 
+
+Next you will need to install the Resend SDK.
 
 ```bash
 ---
@@ -139,13 +141,14 @@ export const POST: APIRoute = async ({ request }) => {
   if (!name || !email || !message) {
 
     return new Response(
-	JSON.stringify({
+      JSON.stringify({
         message: `Fill out all fields.`,
-      }), {
-      status: 404,
-      statusText: "Did not provide the right data",
-    });
-
+      }), 
+      {
+        status: 404,
+        statusText: "Did not provide the right data",
+      }
+    );
   }
 
   // Sending information to Resend
@@ -189,7 +192,7 @@ export const POST: APIRoute = async ({ request }) => {
 Make sure to change the 'to' property in 'resend.emails.send' function, if you set up your own domain in step 2. If you skipped that step, keep the value 'delivered@resend.dev'; otherwise, Resend will throw an error.
 
 {{</Aside>}}
-## 4. Create an Astro Form Component
+## 5. Create an Astro Form Component
 
 In the `src` directory, create a new folder called `components`. Inside the `components` folder, create a new file `AstroForm.astro` and copy the provided code into it.
 
@@ -203,44 +206,44 @@ filename: src/components/AstroForm.astro
 export const prerender = false;
 
 type formData = {
-    name: string;
-    email: string;
-    message: string;
-}; 
+  name: string;
+  email: string;
+  message: string;
+};
 
 if (Astro.request.method === "POST") {
-    try {
-        const formData = await Astro.request.formData();
-        const response = await fetch(Astro.url + "/api/sendEmail.json", {
-            method: "POST",
-            body: formData,
-        });
+  try {
+    const formData = await Astro.request.formData();
+    const response = await fetch(Astro.url + "/api/sendEmail.json", {
+      method: "POST",
+      body: formData,
+    });
 
-        const data: formData = await response.json();
+    const data: formData = await response.json();
 
-        if(response.status === 200) {
-            console.log(data.message);
-        }
-    } catch (error) {
-        if (error instanceof Error) {
-	        console.error(`Error: ${error.message}`);
-        }
-    }
+    if (response.status === 200) {
+      console.log(data.message);
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error: ${error.message}`);
+    }
+  }
 }
 ---
 
 <form method="POST">
     <label>
-    Name
-    <input type="text" id="name" name="name" required />
+        Name
+        <input type="text" id="name" name="name" required />
     </label>
     <label>
-    Email
-    <input type="email" id="email" name="email" required />
+        Email
+        <input type="email" id="email" name="email" required />
     </label>
     <label>
-    Message
-    <textarea id="message" name="message" required />
+        Message
+        <textarea id="message" name="message" required />
     </label>
     <button>Send</button>
 </form>
@@ -257,7 +260,30 @@ Astro requires an absolute URL, which is why you should use `Astro.url + "/api/s
 
 Additionally, adding the `export const prerender = false;` will enable SSR; otherwise, the component will be static and unable to send a post request. If you don't enable it inside the component then you will need to enable SSR via the [template directive](https://docs.astro.build/en/reference/directives-reference/).
 
-After creating the `AstroForm` component, add it to your Astro app, just like any other component [component](https://docs.astro.build/en/basics/astro-components/).
+After creating the `AstroForm` component, add the component to your main index file located in the `src/pages` directory. Below is an example of how the main index file should look with the `AstroForm` component added.
 
-## 5. Conclusion
+```Typescript
+---
+filename: src/pages/index.astro
+---
+
+---
+import AstroForm from '../components/AstroForm.astro'
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <AstroForm />
+  </body>
+</html>
+
+```
+## 6. Conclusion
 You now have an Astro form component that sends emails via Resend and Cloudflare Workers. You can view your project locally via `npm run preview`, or you can deploy it live via `npm run deploy`.
