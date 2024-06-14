@@ -10,7 +10,7 @@ This guide covers how to configure ServiceNow as a SAML application in Cloudflar
 
 ## Prerequisites
 
-- Admin access to a ServiceNow account
+- Admin access to a ServiceNow account.
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
