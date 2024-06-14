@@ -69,7 +69,7 @@ entries:
 
 - term: device posture
   general_definition: |-
-    evaluates how secure a device is by checking its serial number, OS version, installed certificates, or other attributes.
+    a way to evaluate the security of a user's device, for example by verifying its serial number or checking if it has the latest software updates.
 
 - term: device profile
   general_definition: |-
