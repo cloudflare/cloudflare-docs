@@ -1,15 +1,9 @@
 ---
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
-title: Page Rules (legacy)
+title: Page Rules
 weight: 19
 ---
-
-{{<heading-pill style="legacy">}}Page Rules{{</heading-pill>}}
-
-Page rules trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
-
-{{<render file="_page-rules-migration.md">}}
 
 ## Availability
 
