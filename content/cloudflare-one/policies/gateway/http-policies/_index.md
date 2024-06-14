@@ -81,21 +81,21 @@ The [Destination Continent](#destination-continent), [Destination Country](#dest
 
 API value: `noisolate`
 
-The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
+The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Inspect
 
 API value: `off`
 
-{{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning">}}
 
-When a Do Not Inspect policy is created for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
 {{</Aside>}}
 
-Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. [Learn more](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) about applications which may require a Do Not Inspect policy.
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
-All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. [Learn more](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies) about the order of enforcement for HTTP policies.
+All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
 
 ### Do Not Scan
 
