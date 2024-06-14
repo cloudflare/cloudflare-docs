@@ -37,19 +37,22 @@ If required, you can reset risk scores for specific users. Once reset, users wil
 
 In addition to controls in Zero Trust, Okta users can send risk scores to Okta to apply SSO-level policies.
 
-To send user risk scores to Okta:
+To send user risk scores to Okta, first configure Zero Trust:
 
 1. Set up the [Okta SSO integration](/cloudflare-one/identity/idp-integration/okta/).
 2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 3. In **Login methods**, locate your Okta integration and select **Edit**.
 4. Turn on **Send risk score to Okta**.
+5. Select **Save**.
+6. Copy the well-known URL.
 
-To configure user risk score within Okta:
+Next, configure user risk score within Okta:
 
 1. On your Okta admin dashboard, go to **Security** > **Device Integrations**.
 2. Go to **Receive shared signals**, then select **Create stream**.
 3. Name your integration. In **Set up integration with**, choose _Well-known URL_.
-4. In **Well-known URL**,
+4. In **Well-known URL**, enter the well-known URL provided by Zero Trust.
+5. Select **Create**.
 
 While turned on, Zero Trust will send any user risk score updates to Okta, including score increases and resets. These updates will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
 
