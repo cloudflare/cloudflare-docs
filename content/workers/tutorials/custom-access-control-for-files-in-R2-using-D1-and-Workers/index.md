@@ -257,12 +257,13 @@ When the deployment finished successfully, you will see a success message with t
 To finish this tutorial, you should test your Worker application by sending a `POST` request to upload a file and after that a `GET` request to fetch the file.
 This can be done by using a tool like `curl` or `Postman`, but for simplicity, this will describe the usage of `curl`.
 
-First run the following command to upload a simple JSON file with the content `{"Hello": "Worker!"}`:
+Copy the following command which can be used to upload a simple JSON file with the content `{"Hello": "Worker!"}`.
+Replace `<YOUR_API_SECRET>` with the base64 encoded username and password combination and then run the command. For this example you can use `YWRtaW46cGFzc3dvcmQ=`, which can be decoded to `admin` and `test`, for the api secret placeholder.
 
 ```sh
 $ curl --location '<YOUR_WORKER_URL>/myFile.json' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Basic YWRtaW46cGFzc3dvcmQ=' \
+--header 'Authorization: Basic <YOUR_API_SECRET>' \
 --data '{
     "Hello": "Worker!"
 }'
