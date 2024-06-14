@@ -6,7 +6,7 @@ weight: 15
 
 # Managed service providers (MSPs)
 
-Managed service providers (MSPs) are third-party entities that can deploy and manage a Cloudflare Zero Trust configuration for your organization.
+Managed service providers (MSPs) are third-party entities that can remotely deploy and manage a Cloudflare Zero Trust configuration for your organization. Gateway implements MSP configurations using the [Cloudflare Tenant](/tenant/) API.
 
 ## Types of accounts
 
