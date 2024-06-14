@@ -46,8 +46,8 @@ header: cURL example
 ---
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions \
-  --header 'Authorization: Bearer {api_token}' \
-  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: application/json" \
   --data '
     {
       "model": "@cf/meta/llama-3-8b-instruct",
