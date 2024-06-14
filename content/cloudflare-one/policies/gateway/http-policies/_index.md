@@ -75,7 +75,11 @@ API value: `isolate`
 
 The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
 
+{{<Aside type="warning">}}
+
 The [Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) selectors do not support isolation.
+
+{{</Aside>}}
 
 ### Do Not Isolate
 
@@ -96,6 +100,23 @@ When you create a Do Not Inspect policy for a given hostname, application, or ap
 Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
+
+{{<details header="Supported selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Domain](#domain)
+- [Host](#host)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+- [Virtual Network](#virtual-network)
+
+{{</details>}}
 
 ### Do Not Scan
 
