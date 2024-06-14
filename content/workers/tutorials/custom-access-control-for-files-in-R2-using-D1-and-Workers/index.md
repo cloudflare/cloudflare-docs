@@ -115,12 +115,14 @@ For this you need to
 3. Insert a test user into the table, so you can test your code later on
 
 As this operation only needs to be done once, this will be done through the Wrangler CLI and not in the Worker's code.
-Just run the following commands in order to prepare the database, but be sure to replace `<YOUR_DATABASE_NAME>` with the name you used for your database:
+Copy the commands listed below, replace the placeholders and then run them in order to prepare the database.
+For this tutorial you can replace the `<YOUR_USERNAME>` and `<YOUR_HASHED_PASSWORD>` placeholders with `admin` and `5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8` respecively.
+And `<YOUR_DATABASE_NAME>` should be replaced with the name you used to create the database.
 
 ```sh
 $ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE TABLE user (id INTEGER PRIMARY KEY NOT NULL, username STRING NOT NULL, password STRING NOT NULL)" --remote
 $ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "CREATE UNIQUE INDEX user_username ON user (username)"  --remote
-$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (username, password) VALUES ('admin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8')"  --remote
+$ npx wrangler d1 execute <YOUR_DATABASE_NAME> --command "INSERT INTO user (username, password) VALUES ('<YOUR_USERNAME>', '<YOUR_HASHED_PASSWORD>')"  --remote
 ```
 
 
