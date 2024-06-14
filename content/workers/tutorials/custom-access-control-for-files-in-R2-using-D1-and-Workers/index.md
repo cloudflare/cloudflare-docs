@@ -144,7 +144,7 @@ export default {
 			if (request.method === 'POST') {
 				authBase64 = request.headers.get('Authorization');
 			} else if (request.method === 'GET') {
-				authBase64 = new URL(request.url).searchParams.get('Authorization');
+				authBase64 = url.searchParams.get('Authorization');
 			} else {
 				return new Response('Method Not Allowed!', { status: 405 });
 			}
@@ -206,9 +206,8 @@ To implement this functionality, you will need to replace the TODO comment from 
 
 ```ts
 if (request.method === 'POST') {
-    const file = await request.blob();
 	// Upload the file to the R2 bucket with the user id followed by a slash as the prefix and then the path of the URL
-    await env.BUCKET.put(`${user.id}/${url.pathname}`, file);
+    await env.BUCKET.put(`${user.id}/${url.pathname}`, request.body);
     return new Response('OK', { status: 200 });
 }
 // TODO: Implement GET request handling
@@ -231,7 +230,9 @@ if (request.method === 'GET') {
 	if (!file) {
 		return new Response('Not Found!', { status: 404 });
 	}
-	return new Response(await file.blob());
+  const headers = new Headers();
+  file.writeHttpMetadata(headers);
+  return new Response(file.body, { headers });
 }
 return new Response('Method Not Allowed!', { status: 405 });
 ```
