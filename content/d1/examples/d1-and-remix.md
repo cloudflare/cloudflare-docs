@@ -39,7 +39,7 @@ interface Env {
 }
 
 export const loader: LoaderFunction = async ({ context, params }) => {
-  let env = context.env as Env;
+  let env = context.cloudflare.env as Env;
 
   let { results } = await env.DB.prepare("SELECT * FROM users LIMIT 5").all();
   return json(results);
