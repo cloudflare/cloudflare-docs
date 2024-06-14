@@ -5,6 +5,12 @@ title: Move a domain between Cloudflare accounts
 
 # Move a domain between Cloudflare accounts
 
+{{<Aside type="warning">}}
+
+If you are using Cloudflare Registrar you must first move your domain to a 3rd party registrar, see [Requirements](/fundamentals/setup/manage-domains/move-domain/#Requirements) for more details and [Transfer domain out from Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/) for instructions on performing a domain transfer to a 3rd party registrar.
+
+{{</Aside>}}
+
 You will have to move or transfer domains from one Cloudflare account to another if you:
 
 * Manage a multi-user organization and need to segment domain access by user.
