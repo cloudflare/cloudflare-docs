@@ -15,7 +15,7 @@ entries:
 
 - term: application token
   general_definition: |-
-    a data file that grants a user access to a specific Access application for a period of time.
+    a piece of data that grants a user access to a specific Access application for a period of time. Can be stored in a browser cookie or passed to the application in place of a normal password.
 
 - term: captive portal
   general_definition: |-
@@ -49,6 +49,10 @@ entries:
   general_definition: |-
     Cloudflare Gateway is a modern next-generation firewall between your user, device, or network and the public Internet. It includes DNS filtering to inspect and apply policies to all Internet-bound DNS queries.
 
+- term: Cloudflare One Agent
+  general_definition: |-
+    the name of the Cloudflare WARP client app on iOS and Android devices.
+
 - term: Cloudflare Tunnel
   general_definition: |-
     Cloudflare Tunnel (formerly Argo Tunnel) establishes a secure outbound connection within your infrastructure to connect applications and machines to Cloudflare.
@@ -62,6 +66,14 @@ entries:
     a program that performs tasks without active management or maintenance.
   associated_products:
     - DDoS Protection
+
+- term: device posture
+  general_definition: |-
+    evaluates how secure a device is by checking its serial number, OS version, installed certificates, or other attributes.
+
+- term: device profile
+  general_definition: |-
+    a collection of WARP client settings applied to a specific set of devices in your organization.
 
 - term: DNS filtering
   general_definition: |-
@@ -86,6 +98,14 @@ entries:
 - term: JSON web token
   general_definition: |-
     a compact way to securely transmit information between parties as a JSON object, often used for authentication.
+
+- term: managed network
+  general_definition: |-
+    a network location, such as an office, that is associated with a specific WARP client device profile.
+
+- term: MDM file
+  general_definition: |-
+    a Mobile Device Management (MDM) file is a configuration file that allows organizations to manage the software, settings, and certificates installed on their devices.
 
 - term: MFA
   general_definition: |-
@@ -205,7 +225,7 @@ entries:
 
 - term: WARP client
   general_definition: |-
-    Cloudflare Zero Trust customers can use the Cloudflare WARP application to connect corporate desktops to Cloudflare Gateway for advanced web filtering. It utilizes the security benefits of WARP technology.
+    an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
 
 - term: Zero Trust Security
   general_definition: |-
