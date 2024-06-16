@@ -3,13 +3,13 @@ updated: 2024-06-15
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Creating a recommendation system for an e-commerce site using Cloudflare's AI services'
+title: Creating a recommendation system for an e-commerce site using Cloudflare's AI services
 weight: 2
 tags:
   - AI
 ---
 
-# Creating a recommendation system for an e-commerce site using Cloudflare's AI services'
+# Creating a recommendation system for an e-commerce site using Cloudflare's AI services
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
@@ -174,7 +174,7 @@ Let's start implementing step-by-step.
 This API requires the use of Workers AI and Vectorize. To use these resources from Workers, you need to create and bind the resources. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/#text-embeddings) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
 
 ```sh
-npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
+$ npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
 ```
 
 When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml`. Copy the three lines starting with `[[vectorize]]`.
@@ -190,24 +190,26 @@ index_name = "stripe-products"
 
 To use the created Vectorize index from Workers, let's perform the binding. Open `wrangler.toml` and add the copied lines.
 
-```diff
+```toml
 ---
 filename: wrangler.toml
+highlight: [5,6,7]
 ---
 name = "cross-sell-api"
 main = "src/index.ts"
 compatibility_date = "2024-06-05"
 
-+[[vectorize]]
-+binding = "VECTORIZE_INDEX"
-+index_name = "stripe-products"
+[[vectorize]]
+binding = "VECTORIZE_INDEX"
+index_name = "stripe-products"
 ```
 
 Additionally, let's add the configuration to use Workers AI in `wrangler.toml`.
 
-```diff
+```toml
 ---
 filename: wrangler.toml
+highlight: [9,10]
 ---
 name = "cross-sell-api"
 main = "src/index.ts"
@@ -217,8 +219,8 @@ compatibility_date = "2024-06-05"
 binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 
-+[ai]
-+binding = "AI" # available in your Worker on env.AI
+[ai]
+binding = "AI" # available in your Worker on env.AI
 ```
 
 When handling bound resources from your application, you can generate TypeScript type definitions to develop more safely. Run the `npm run cf-typegen` command. This command updates the `worker-configuration.d.ts` file, allowing you to use both Vectorize and Workers AI in a type-safe manner.
@@ -269,7 +271,7 @@ app.post('/webhook', async (c) => {
   const body = await c.req.json()
   if (body.type === 'product.created') {
     const product = body.data.object
-    console.log(product)
+    console.log(JSON.stringify(product, null, 2))
   }
   return c.text('ok', 200)
 })
@@ -356,7 +358,7 @@ app.post('/webhook', async (c) => {
     )
     if (event.type === 'product.created') {
       const product = event.data.object
-      console.log(product)
+      console.log(JSON.stringify(product, null, 2))
     }
     return c.text("", 200)
   } catch (err) {
@@ -421,19 +423,20 @@ We've prepared to ingest product information, so let's start implementing the pr
 
 In this step, we'll first implement the process of converting externally sent data into text data. This is necessary because the information to be converted into vector data is in text form. If you want to include product names, descriptions, and metadata as search targets, add the following processing.
 
-```diff
+```ts
 ---
 filename: src/index.ts
+highlight: [3,4,5,6,7,8,9]
 ---
 if (event.type === 'product.created') {
   const product = event.data.object
-+  const productData = [
-+    `## ${product.name}`,
-+    product.description,
-+    '### metadata',
-+    Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
-+  ].join('\n')
-+  console.log(productData)
+  const productData = [
+    `## ${product.name}`,
+    product.description,
+    '### metadata',
+    Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
+  ].join('\n')
+  console.log(JSON.stringify(productData, null, 2))
 }
 ```
 
@@ -448,9 +451,10 @@ product description.
 
 Now that we've converted the data to text, let's convert it to vector data. By using the Text Embedding model of Workers AI, we can convert text into vector data of any desired dimension.
 
-```diff
+```ts
 ---
 filename: src/index.ts
+highlight: [7,8,9,10,11,12,13]
 ---
 const productData = [
   `## ${product.name}`,
@@ -458,14 +462,13 @@ const productData = [
   '### metadata',
   Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
 ].join('\n')
--console.log(productData)
-+const embeddings = await c.env.AI.run(
-+  '@cf/baai/bge-large-en-v1.5',
-+  {
-+    text: productData,
-+  }
-+)
-+console.log(embeddings)
+const embeddings = await c.env.AI.run(
+  '@cf/baai/bge-large-en-v1.5',
+  {
+    text: productData,
+  }
+)
+console.log(JSON.stringify(embeddings, null, 2))
 ```
 
 When using Workers AI, execute the `c.env.AI.run()` function. Specify the model you want to use as the first argument. In the second argument, input text data about the text you want to convert using the Text Embedding model or the instructions for the generated images or text. If you want to save the converted vector data using Vectorize, make sure to select a model that matches the number of `dimensions` specified in the `npx wrangler vectorize create` command. If the numbers do not match, there is a possibility that the converted vector data cannot be saved.
@@ -474,9 +477,10 @@ When using Workers AI, execute the `c.env.AI.run()` function. Specify the model 
 
 Finally, let's save the created data to Vectorize. Edit `src/index.ts` to implement the indexing process using the `VECTORIZE_INDEX` binding. Since the data to be saved will be vector data, save the pre-conversion text data as metadata.
 
-```diff
+```ts
 ---
 filename: src/index.ts
+highlight: [16,17,18,19,20,21,22,23,24]
 ---
 if (event.type === 'product.created') {
   const product = event.data.object
@@ -486,29 +490,29 @@ if (event.type === 'product.created') {
     '### metadata',
     Object.entries(product.metadata).map(([key, value]) => `- ${key}: ${value}`).join('\n')
   ].join('\n')
-  console.log(productData)
+  console.log(JSON.stringify(productData, null, 2))
   const embeddings = await c.env.AI.run(
     '@cf/baai/bge-large-en-v1.5',
     {
       text: productData,
     }
   )
-+  await c.env.VECTORIZE_INDEX.insert([{
-+    id: product.id,
-+    values: embeddings.data[0],
-+    metadata: {
-+      name: product.name,
-+      description: product.description || '',
-+      product_metadata: product.metadata,
-+    }
-+  }])
+  await c.env.VECTORIZE_INDEX.insert([{
+    id: product.id,
+    values: embeddings.data[0],
+    metadata: {
+      name: product.name,
+      description: product.description || '',
+      product_metadata: product.metadata,
+    }
+  }])
 }
 
 ```
 
 With this, we have established a mechanism to synchronize the product data with the database for recommendations. Use Stripe CLI commands to save some product data.
 
-```sh
+```bash
 $ stripe products create --name="Smartphone X" \
   --description="Latest model with cutting-edge features" \
   -d "default_price_data[currency]=usd" \
@@ -516,7 +520,7 @@ $ stripe products create --name="Smartphone X" \
   -d "metadata[category]=electronics"
 ```
 
-```sh
+```bash
 $ stripe products create --name="Ultra Notebook" \
   --description="Lightweight and powerful notebook computer" \
   -d "default_price_data[currency]=usd" \
@@ -524,7 +528,7 @@ $ stripe products create --name="Ultra Notebook" \
   -d "metadata[category]=computers"
 ```
 
-```sh
+```bash
 $ stripe products create --name="Wireless Earbuds Pro" \
   --description="High quality sound with noise cancellation" \
   -d "default_price_data[currency]=usd" \
@@ -532,7 +536,7 @@ $ stripe products create --name="Wireless Earbuds Pro" \
   -d "metadata[category]=audio"
 ```
 
-```sh
+```bash
 $ stripe products create --name="Smartwatch 2" \
   --description="Stay connected with the latest smartwatch" \
   -d "default_price_data[currency]=usd" \
@@ -540,7 +544,7 @@ $ stripe products create --name="Smartwatch 2" \
   -d "metadata[category]=wearables"
 ```
 
-```sh
+```bash
 $ stripe products create --name="Tablet Pro" \
   --description="Versatile tablet for work and play" \
   -d "default_price_data[currency]=usd" \
@@ -594,7 +598,7 @@ app.get('/products/:product_id', async (c) => {
 Let's run this API. Use a product ID that starts with `prod_`, which can be obtained from the result of running the `stripe products crate` command or the `stripe products list` command.
 
 ```sh
-curl http://localhost:8787/products/prod_xxxx
+$ curl http://localhost:8787/products/prod_xxxx
 ```
 
 If you send a request using a product ID that exists in the Vectorize index, the data for that product and two related products will be returned as follows.
@@ -651,9 +655,10 @@ If you send a request using a product ID that exists in the Vectorize index, the
 
 Looking at the `score` in `similarProducts`, you can see that there is data with a `score` of `1`. This means it is exactly the same as the query used to search. By looking at the metadata, it is evident that the data is the same as the product ID sent in the request. Since we want to search for related products, let's add a `filter` to prevent the same product from being included in the search results. Here, a filter is added to exclude data with the same product name using the `metadata` name.
 
-```diff
+```ts
 ---
 filename: src/index.ts
+highlight: [7,8,9,10,11]
 ---
 app.get('/products/:product_id', async (c) => {
   const productId = c.req.param('product_id')
@@ -661,11 +666,11 @@ app.get('/products/:product_id', async (c) => {
   const similarProducts = await c.env.VECTORIZE_INDEX.query(product.values, {
     topK: 3,
     returnMetadata: true,
-+    filter: {
-+      name: {
-+        "$ne": product.metadata?.name.toString(),
-+      }
-+    }
+    filter: {
+      name: {
+        "$ne": product.metadata?.name.toString(),
+      }
+    }
   })
 
   return c.json({
@@ -745,7 +750,6 @@ This API will implement the following processes:
 This method realizes a text generation mechanism called Retrieval Augmented Generation (RAG) using Cloudflare. The bindings and other preparations are already completed, so let's add the API.
 
 ```ts
-
 ---
 filename: src/index.ts
 ---
