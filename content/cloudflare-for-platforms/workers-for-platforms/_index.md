@@ -9,7 +9,7 @@ pcx_content_type: overview
 
 {{<description>}}
 
-With Workers for Platforms you can deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, without you or your users having to manage any infrastructure. 
+Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.
 
 {{</description>}}
 
