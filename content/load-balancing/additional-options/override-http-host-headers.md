@@ -36,7 +36,7 @@ If you set a header override on an individual endpoint, it will take precedence 
 
 For example, you might have a load balancer for `www.example.com` with the following setup:
 
-- Endpoint pools:
+- Pools:
 
   - Pool 1:
 
