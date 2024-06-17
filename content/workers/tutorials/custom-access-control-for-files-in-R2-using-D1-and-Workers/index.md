@@ -4,9 +4,17 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Custom access control for files in R2 using D1 and Workers
+spotlight:
+  author: Dominik Fuerst
+  author_bio_link: https://github.com/justDMNK
+  author_bio_source: GitHub
 ---
 
 # Custom access control for files in R2 using D1 and Workers
+
+{{<tutorial-date-info>}}
+
+{{<spotlight-author>}}
 
 This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage. 
 
