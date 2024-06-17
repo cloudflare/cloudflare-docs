@@ -54,8 +54,6 @@ In the GitHub Action you have set up, environment variables are needed to push y
 4.  Create one secret and put **CLOUDFLARE_ACCOUNT_ID** as the name with the value being your Cloudflare account ID.
 5.  Create another secret and put **CLOUDFLARE_API_TOKEN** as the name with the value being your Cloudflare API token.
 
-This will ensure that the secrets are secure. Each time your GitHub Actions runs, it will access these secrets.
-
 Add the value of your Cloudflare account ID and Cloudflare API token as `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, respectively. This will ensure that these secrets are secure, and each time your Action runs, it will access these secrets.
 
 ### Set up a workflow
