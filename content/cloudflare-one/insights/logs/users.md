@@ -6,7 +6,7 @@ weight: 1
 
 # User logs
 
-User logs show a list of all users who have authenticated to Cloudflare Zero Trust. For each user who has logged in, you can view the identity used for policy enforcement, enrolled devices, login history, and seat usage.
+User logs show a list of all users who have authenticated to Cloudflare Zero Trust. For each user who has logged in, you can view their enrolled devices, login history, seat usage, and identity used for policy enforcement.
 
 ## View user logs
 
@@ -14,7 +14,7 @@ In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**
 
 ### Available logs
 
-- **User Registry identity**: Select the user's name to view their most recent user identity. Gateway will use this identity when evaluating [firewall, egress, and resolver policies](/cloudflare-one/policies/gateway/). This identity is refreshed when the user re-authenticates WARP, logs into an Access application, or has their IdP group membership updated via [SCIM provisioning](/cloudflare-one/identity/users/scim/). To track how the user's identity has changed over time, go to the **Audit logs** tab.
+- **User Registry identity**: Select the user's name to view their last seen identity. This identity is refreshed when the user re-authenticates WARP, logs into an Access application, or has their IdP group membership updated via {{<glossary-tooltip term_id="SCIM" link="/cloudflare-one/identity/users/scim/">}}SCIM provisioning{{</glossary-tooltip>}}. To track how the user's identity has changed over time, go to the **Audit logs** tab.
 - **Session identities**: The user's identity when they authenticated to a specific Access application. Learn more about [Access session management](/cloudflare-one/identity/users/session-management/).
 - **Devices**: Devices registered to the user via WARP.
-- **Recent activities**: Login events from the past 30(?) days.
+- **Recent activities**: The user's five most recent Access login attempts. For more details, refer to your [authentication audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs).
