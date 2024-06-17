@@ -73,11 +73,6 @@ To receive more detailed metrics, **Add filter**. You can also filter each metri
 
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 
-{{<Aside type="note">}}
-To opt out of the new Web Traffic Analytics, select **Switch back to the
-old experience** on the left side of the page.
-{{</Aside>}}
-
 ### Security
 
 For this tab, the number and type of charts may vary based on existing data and customer plan. Most of the metrics in this tab come from the Cloudflare Firewall app. The panels available include:
