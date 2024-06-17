@@ -62,7 +62,7 @@ This screen will advise you to create an authentication policy before proceeding
 
 ## 5. Create an authentication policy to test integration
 
-Refer to [Atlassian Support's documentation](https://support.atlassian.com/security-and-access-policies/docs/configure-authentication-policies-for-your-organization/) for more information about authentication policies.
+To enable SSO for users in Atlassian Cloud, create an [Atlassian authentication policy](https://support.atlassian.com/security-and-access-policies/docs/configure-authentication-policies-for-your-organization/):
 
 1. In Atlassian Cloud, go to **Security** > **Authentication policies**.
 2. Select **Add policy**.
