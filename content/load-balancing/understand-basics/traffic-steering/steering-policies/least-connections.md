@@ -28,9 +28,9 @@ header: Load Balancers
 ```
 
 Refer to the [API documentation](/api/operations/load-balancers-update-load-balancer) for more information on the load balancer configuration.
-  
+
 {{<Aside type="note">}}
-Least connections steering can also be configured on a pool as an [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-connections-origin/), taking into account connection counts and weights for origins within the pool.
+Least connections steering can also be configured on a pool as an [endpoint steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-connections-origin/), taking into account connection counts and weights for endpoints within the pool.
 {{</Aside>}}
 
 ## Limitations
