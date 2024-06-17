@@ -17,7 +17,7 @@ This guide covers how to configure Atlassian Cloud as a SAML application in Clou
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **Add an application** > **SaaS** > **Select** .
+2. Select **Add an application** > **SaaS**.
 3. For **Application**, select _Atlassian_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
@@ -37,7 +37,7 @@ This guide covers how to configure Atlassian Cloud as a SAML application in Clou
 
 {{<Aside type="note">}}
 
-This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-application-policy-to-test-integration). Waiting until then to do so will not lengthen the process.
+This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-application-policy-to-test-integration).
 
 {{</Aside>}}
 
@@ -74,4 +74,4 @@ This screen will advise you to create an authentication policy before proceeding
 
 ## 6. Test the integration
 
-Open an incognito browser window and log in with the credentials of the test user you added to the test authentication policy. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. When this is successful, turn on **Enforce single sign-on** in your desired authentication policy, or add the desired users to the application policy created in step [5. Create an Application Policy to test Integration](#2-create-an-application-policy-to-test-integration).
+Open an incognito browser window and log in with the credentials of the test user you added to the test authentication policy. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. When this is successful, turn on **Enforce single sign-on** in your desired authentication policy, or add the desired users to the application policy created in step [5. Create an Application Policy to test Integration](#5-create-an-application-policy-to-test-integration).
