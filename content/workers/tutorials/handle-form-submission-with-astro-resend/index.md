@@ -1,12 +1,20 @@
 ---
-updated: 2024-05-07
+updated: 2024-06-17
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: How to use Cloudflare Workers to send form submissions from an Astro+Resend app
+spotlight:
+  author: Cody Walsh
+  author_bio_link: https://www.linkedin.com/in/cody-walsh-616a979/
+  author_bio_source: LinkedIn
 ---
 
 # How to use Cloudflare Workers to send form submissions from an Astro+Resend app
+
+{{<tutorial-date-info>}}
+
+{{<spotlight-author>}}
 
 This tutorial will instruct you on how to send emails from [Astro](https://astro.build/) and Cloudflare Workers (via Cloudflare SSR Adapter) using [Resend](https://resend.com/).
 
