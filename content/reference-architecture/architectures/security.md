@@ -148,42 +148,42 @@ Public and private resources can also include both infrastructure-level componen
 
 Cloudflare can protect at multiple layers of the OSI model, and in this document we are primarily concerned with protecting resources at layers 3, 4, and 7.
 
-- Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device, and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination. 
+- Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination.
 - Layer 4, referred to as the “transport layer,” is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called “segments” before sending it to layer 3.
 
 Cloudflare security products that can be used for L3 and L4 security include Cloudflare’s network services offerings, including Magic Transit, Magic Firewall, Magic WAN, Magic Network Monitoring, and Spectrum.
 
-- Layer 7 is the “application layer.” It is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests and responses are layer 7 events. Cloudflare has a suite of application security products that includes Web Application Firewall (WAF), Rate Limiting, L7 DDoS, API Gateway, Bot Management, and Page Shield.
+- Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events. Cloudflare has a suite of application security products that includes Web Application Firewall (WAF), Rate Limiting, L7 DDoS, API Gateway, Bot Management, and Page Shield.
 
-Note that SaaS applications could be considered both public and private. Salesforce has direct Internet-facing access, but contains very private information and is usually only accessible by employee accounts that are provisioned by IT. For the purpose of this document, we will consider SaaS applications as private resources.
+Note that SaaS applications could be considered both public and private. For example, Salesforce has direct Internet-facing access but contains very private information and is usually only accessible by employee accounts that are provisioned by IT. For the purpose of this document, we will consider SaaS applications as private resources.
 
-These are general guidelines, because with Cloudflare it's possible to have very sensitive internal applications be protected by publicly accessible remote access services. We will explain more as we continue through this document.
+These are general guidelines because with Cloudflare it's possible to have very sensitive internal applications be protected by publicly accessible remote access services. We will explain more as we continue through this document.
 
 ### Protecting public resources 
-Businesses rely on public websites and API endpoints for daily ecommerce transactions and brand awareness, and often the entire business is an online service. High availability, performance, and security are top concerns, and customers use Cloudflare to ensure their businesses stay up and running. Cloudflare security services help prevent fraud, data exfiltration, and attacks that can create liability, cause losses and brand damage, and slow down or halt business. 
+Businesses rely on public websites and API endpoints for daily ecommerce transactions and brand awareness, and often the entire business is an online service. High availability, performance, and security are top concerns, and customers use Cloudflare to ensure their businesses stay up and running. Cloudflare security services help prevent fraud, data exfiltration, and attacks that can create liability, cause losses and brand damage, and slow down or halt business.
 
-Public assets need to be protected on multiple fronts and from various attacks; therefore, multiple different security capabilities need to be implemented. Additionally, customers must tackle the operational efficiency of solutions they implement. Managing multiple point products for mitigating different attacks or having multiple vendors to meet company security objectives and requirements creates many operational inefficiencies and issues such as multiple UIs/dashboards, training, lack of cross-product integrations, etc.
+Public assets need to be protected on multiple fronts and from various attacks; therefore, multiple different security capabilities need to be implemented. Additionally, customers must tackle the operational efficiency of solutions they implement. Managing multiple point products for mitigating different attacks or having multiple vendors to meet company security objectives and requirements creates many operational inefficiencies and issues, such as multiple UIs/dashboards, training, lack of cross-product integrations, etc.
 
-The diagram below shows a typical request for a public asset going through the Cloudflare network. Our security services are part of many capabilities, and Cloudflare acts as a reverse proxy where requests are routed to the closest data center and performance and security services are applied prior to that request being routed onto the destination. These services can easily be consolidated and used together regardless of where workloads are deployed; the operations and implementation remain consistent. Note the diagram doesn't detail all of Cloudflare's services.
+The diagram below shows a typical request for a public asset going through the Cloudflare network. Our security services are part of many capabilities, and Cloudflare acts as a reverse proxy where requests are routed to the closest data center and performance and security services are applied prior to that request being routed onto the destination. These services can easily be consolidated and used together regardless of where workloads are deployed; the operations and implementation remain consistent. Note: the diagram doesn't detail all of Cloudflare's services.
 
 ![Every request through Cloudflare passes once for inspection across all security products.](/images/reference-architecture/security/security-ref-arch-4.svg)
 
-- The world's fastest DNS service provides fast resolution of public hostnames.
-- Ensure data compliance by choosing geographic locations for the inspection and storage of data.
-- Spectrum extends Cloudflare security capabilities to all UDP/TCP applications.
-- Security services inspect a request in one pass.
-- Application performance services also act on the request in the same pass.
-- Smart routing finds the lowest latency path between Cloudflare and the public destination. 
+- The world's fastest DNS service provides fast resolution of public hostnames
+- Ensure data compliance by choosing geographic locations for the inspection and storage of data
+- Spectrum extends Cloudflare security capabilities to all UDP/TCP applications
+- Security services inspect a request in one pass
+- Application performance services also act on the request in the same pass
+- Smart routing finds the lowest latency path between Cloudflare and the public destination
 
 #### Common attacks and protection
-Cloudflare's broad product portfolio protects against a wide variety of attacks. Several common attacks are described in more detail below with a reference to the Cloudflare products that are used to mitigate the specific attack.
+Cloudflare's broad product portfolio protects against a wide variety of attacks. Several common attacks are described in more detail below and include a reference to the Cloudflare products that are used to mitigate the specific attack.
 
 ##### DDoS attacks
 A [distributed denial-of-service (DDoS) attack](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) is a malicious attempt to disrupt the availability of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of traffic. The goal is to slow down or crash a program, service, computer, or network, or to fill up capacity so that no one else can use or receive the service. DDoS attacks can occur at L3, L4, or L7, and Cloudflare provides protections at all these different layers.
 
 ![DDoS attacks are prevented at layers 3, 4 and 7.](/images/reference-architecture/security/security-ref-arch-5.svg)
 
-Cloudflare’s L7 DDoS Protection prevents denial of service at layer 7, Spectrum protects at layer 4, and Magic Transit protects at layer 3. In addition to the core DDoS-specific security products, Cloudflare provides advanced rate limiting capabilities to allow for throttling traffic based on very granular request data, including headers information and API tokens. Cloudflare’s Bot Management capabilities can also limit denial-of-service attacks by effectively mitigating bot traffic.
+Cloudflare’s L7 DDoS Protection prevents denial of service at layer 7; Spectrum protects at layer 4; and Magic Transit protects at layer 3. In addition to the core DDoS-specific security products, Cloudflare provides advanced rate limiting capabilities to allow for throttling traffic based on very granular request data, including headers information and API tokens. Cloudflare’s Bot Management capabilities can also limit denial-of-service attacks by effectively mitigating bot traffic.
 
 Products: [L7 DDoS](/ddos-protection/managed-rulesets/http/), [Spectrum](/spectrum/), [Magic Transit](/magic-transit/)
 
@@ -199,7 +199,7 @@ Web Application Firewall (WAF) Managed Rules allow you to deploy pre-configured 
 
 WAF checks incoming web requests and filters undesired traffic based on sets of rules (rulesets) deployed at the edge. These managed rulesets are maintained and regularly updated by Cloudflare. From the extensive threat intelligence obtained from across our global network, Cloudflare is able to quickly detect and classify threats. As new attacks/threats are identified, Cloudflare will automatically push WAF rules to customers to ensure they are protected against the latest zero-day attacks.
 
-Additionally, Cloudflare provides for [WAF Attack Score](/waf/about/waf-attack-score/) which complements Cloudflare managed rules by detecting attack variations. These variations are typically achieved by malicious actors via fuzzing techniques trying to identify ways to bypass existing security policies. WAF classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious.
+Additionally, Cloudflare provides for [WAF Attack Score](/waf/about/waf-attack-score/), which complements Cloudflare managed rules by detecting attack variations. These variations are typically achieved by malicious actors via fuzzing techniques that are trying to identify ways to bypass existing security policies. WAF classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious.
 
 ![Machine learning maintains lists of managed rules to determine if the request should be let through the WAF or not.](/images/reference-architecture/security/security-ref-arch-6.svg)
 
@@ -211,7 +211,7 @@ Unauthorized access can result from broken authentication or broken access contr
 Products: [SSL/TLS - mTLS](/ssl/client-certificates/enable-mtls/), [API Gateway (JWT Validation)](/api-shield/security/jwt-validation/), [WAF](/waf/)
 
 ##### Client-side attacks
-Client-side attacks like [Magecart](https://blog.cloudflare.com/detecting-magecart-style-attacks-for-pageshield) involve compromising third-party libraries, compromising a website, or exploiting vulnerabilities in order to exfiltrate sensitive user data to an attacker-controlled domain. Page Shield leverages Cloudflare’s position in the network as a reverse proxy to receive information directly from the browser about: 
+Client-side attacks like [Magecart](https://blog.cloudflare.com/detecting-magecart-style-attacks-for-pageshield) involve compromising third-party libraries, compromising a website, or exploiting vulnerabilities in order to exfiltrate sensitive user data to an attacker-controlled domain. Page Shield leverages Cloudflare’s position in the network as a reverse proxy to receive information directly from the browser about:
 
 1. What JavaScript files/modules are being loaded
 2. Outbound connections made
@@ -234,16 +234,16 @@ Data exfiltration is the process of acquiring sensitive data through malicious t
 Products: [WAF - Sensitive Data Detection](/waf/managed-rules/)
 
 ##### Credential stuffing 
-Credential stuffing is a cyber attack in which credentials obtained from a data breach on one service are used to attempt to log in to another unrelated service. Usually, automation tools or scripting are used to loop through a vast number of stolen credentials, sometimes augmented with additional data in the hopes of achieving account takeover.
+Credential stuffing is a cyberattack in which credentials obtained from a data breach on one service are used to attempt to log in to another unrelated service. Usually, automation tools or scripting are used to loop through a vast number of stolen credentials, sometimes augmented with additional data in the hopes of achieving account takeover.
 
 Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and thwart automated attempts to gain access. WAF policies can be used with specific request criteria to prevent attacks. Additionally, Cloudflare’s WAF and Exposed Credentials Check managed ruleset can be used to detect compromised credentials being used in auth requests. Rate limiting can also throttle requests and effectiveness of malicious credential stuffing techniques.
 
 Products: [Bot Management](/bots/), [WAF](/waf/), [Rate Limiting](/waf/rate-limiting-rules/)
 
 ##### Brute force attacks
-Brute force attacks attempt to guess passwords or clues, using random characters sometimes combined with common password suggestions. Usually, automation tools or scripting are used to loop through a vast number of possibilities in a short amount of time. 
+Brute force attacks attempt to guess passwords or clues, using random characters sometimes combined with common password suggestions. Usually, automation tools or scripting are used to loop through a vast number of possibilities in a short amount of time.
 
-Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and stop automated brute force attacks. WAF and rate limiting policies can be used with specific request criteria to apply granular policies on application login pages to block or throttle traffic. 
+Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and stop automated brute force attacks. WAF and rate limiting policies can be used with specific request criteria to apply granular policies on application login pages to block or throttle traffic.
 
 Products: [Bot Management](/bots/), [WAF](/waf/), [Rate Limiting](/waf/rate-limiting-rules/)
 
@@ -260,7 +260,7 @@ Products: [Bot management](/bots/), [WAF](/waf/)
 ##### Fuzzing (vulnerability scanning)
 Fuzzing is an automated testing method used by malicious actors that uses various combinations of data and patterns to inject invalid, malformed, or unexpected inputs into a system. The malicious user hopes to find defects and vulnerabilities that can then be exploited. Cloudflare WAF leverages machine learning to detect attempts to bypass security policies. The WAF attack score complements managed rules and highlights the likeliness of an attack.
 
-Bot Management can be used to detect potentially malicious bots automating vulnerability scanning. With API Gateway, customers can employ schema validation and sequence mitigation to prevent the automated scanning and fuzzing techniques with APIs.
+Bot Management can detect potentially malicious bots by automating vulnerability scanning. With API Gateway, customers can employ schema validation and sequence mitigation to prevent the automated scanning and fuzzing techniques with APIs.
 
 Products: [WAF](/waf/), [Bot Management](/bots/), [API Gateway](/api-shield/api-gateway/)
 
