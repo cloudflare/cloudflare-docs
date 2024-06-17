@@ -16,9 +16,9 @@ title: Configure Workers for Platforms
 To enable Workers for Platforms, you will need to purchase the [Workers for Platforms Paid plan](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-for-platforms), and select your account.
-2. Complete the payment process for the Workers for Platforms Paid.
+2. Complete the payment process for the Workers for Platforms Paid plan.
 
-If you're an Enterprise customer, contact your Cloudflare account team to enable Workers for Platforms. 
+If you are an Enterprise customer, contact your Cloudflare account team to enable Workers for Platforms. 
 
 ### Learn about Workers for Platforms
 
