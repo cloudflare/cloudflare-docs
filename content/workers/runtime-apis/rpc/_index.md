@@ -218,6 +218,10 @@ Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/St
 
 In all cases, ownership of the stream is transferred to the recipient. The sender can no longer read/write the stream after sending it. If the sender wishes to keep its own copy, it can use the [`tee()` method of `ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee) or the [`clone()` method of `Request` or `Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response/clone). Keep in mind that doing this may force the system to buffer bytes and lose the benefits of flow control.
 
+### Note:
+
+When handling `Response` objects, fully consume the response using `.text()`, `.json()`, or `.blob()` before logging or utilizing it further. This ensures the stream is not closed prematurely in asynchronous contexts like queue processing.
+
 ## Forwarding RPC stubs
 
 A stub received over RPC from one Worker can be forwarded over RPC to another Worker.
