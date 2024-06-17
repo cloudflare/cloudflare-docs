@@ -28,7 +28,7 @@ Durable Object alarms are not reset between test runs and do not respect isolate
 
 ### Durable Objects and `isolatedStorage`
 
-Using WebSockets with Durable Objects with the [(/workers/testing/vitest-integration/isolation-and-concurrency) flag turned on is not supported. You must set `isolatedStorage: false` in your `vitest.config.ts` file.
+Using WebSockets with Durable Objects with the [`isolatedStorage`](/workers/testing/vitest-integration/isolation-and-concurrency) flag turned on is not supported. You must set `isolatedStorage: false` in your `vitest.config.ts` file.
 
 ### Returning non-primitive values from RPC methods
 
