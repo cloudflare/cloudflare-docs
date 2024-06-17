@@ -24,13 +24,14 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 8. In **Customer GRE endpoint**, enter your router’s public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
 9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team.
 10. Leave the default values for **TTL** and **MTU**.
-11. Choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
-12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
-13. The **Health check direction** defaults to **$6** for $1. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
-14. (Optional) **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
-15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
-16. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
-17. After adding your tunnel information, select **Add tunnels** to save your changes.
+11. _(Optional)_ Enable **Tunnel health checks** if you want to use this feature.
+12. _(Optional)_ If you enabled **Tunnel health checks**, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+13. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
+14. The **Health check direction** defaults to **$6** for $1. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+15. (Optional) **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
+16. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+17. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
+18. After adding your tunnel information, select **Add tunnels** to save your changes.
 
 {{</details>}}
 
