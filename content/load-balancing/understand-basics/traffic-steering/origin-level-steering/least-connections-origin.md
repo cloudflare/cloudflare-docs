@@ -37,6 +37,6 @@ Least connections steering can also be configured on a load balancer as a [steer
 
 ## Limitations
 
-Least connections steering can be configured for pools that are part of [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), but is only supported in a no-operation, dummy form. When endpoint steering logic is applied for a pool on a DNS-only load balancer, all endpoint connection counts are considered to be zero, meaning traffic is served solely based on endpoint weights.
+Least connections steering can be configured for pools that are part of [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), but is only supported in a no-operation form. When endpoint steering logic is applied for a pool on a DNS-only load balancer, all endpoint connection counts are considered to be zero, meaning traffic is served solely based on endpoint weights.
 
 Although it is configurable, it is not recommended to associate pools that use least connections steering with DNS-only load balancers due to its partial support.
