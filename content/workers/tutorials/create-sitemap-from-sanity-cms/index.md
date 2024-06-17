@@ -12,6 +12,8 @@ spotlight:
 
 # Create a sitemap from Sanity CMS with Workers
 
+{{<tutorial-date-info>}}
+
 {{<spotlight-author>}}
 
 In this tutorial, you will put together a Cloudflare Worker that creates and serves a sitemap using data from [Sanity.io](https://www.sanity.io), a headless CMS.

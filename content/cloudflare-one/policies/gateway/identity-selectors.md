@@ -31,9 +31,9 @@ To view the identity that Gateway will use when evaluating policies, check the [
 
 Specify a value from the SAML Attribute Assertion.
 
-| UI name         | API example                                 |
-| --------------- | ------------------------------------------- |
-| SAML Attributes | `identity.saml_attributes == "\"finance\""` |
+| UI name         | API example                                       |
+| --------------- | ------------------------------------------------- |
+| SAML Attributes | `identity.saml_attributes == "\"group=finance\""` |
 
 ### User Email
 

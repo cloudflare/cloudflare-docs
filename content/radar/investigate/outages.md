@@ -54,7 +54,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/annotations/outages?limi
     "locations": ["US"],
     "asns": [],
     "eventType": "OUTAGE",
-    "linkedUrl": "https://twitter.com/CloudflareRadar/status/1575229448353349632",
+    "linkedUrl": "https://x.com/CloudflareRadar/status/1575229448353349632",
     "outage": {
       "outageCause": "WEATHER",
       "outageType": "REGIONAL"

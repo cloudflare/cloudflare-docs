@@ -31,7 +31,7 @@ example-tf/
 │   │   │   ├── dns.tf              # `<subject>.tf` (dns.tf) is for managing the individual resources
 │   │   │   ├── provider.tf         # `provider.tf` is for configuring the providers
 │   │   │   └── vars.tf             # manage all variables for this component
-│   │   └── page_rules              # ... same as above but for page rules (deprecated)
+│   │   └── page_rules              # ... same as above but for Page Rules (legacy)
 │   │       ├── page_rules.tf
 │   │       ├── provider.tf
 │   │       └── vars.tf

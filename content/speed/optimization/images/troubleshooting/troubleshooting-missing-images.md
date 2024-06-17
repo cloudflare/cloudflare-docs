@@ -6,7 +6,7 @@ title: Troubleshoot missing images
 
 # Troubleshoot missing images
 
-If images are missing from your website, other Cloudflare features may be interferring with those images.
+If images are missing from your website, other Cloudflare features may be interfering with those images.
 
 To troubleshoot:
 

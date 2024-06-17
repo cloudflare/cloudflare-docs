@@ -113,6 +113,10 @@ If Cloudflare cannot load your site or you have blocked the United States (US) v
 A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
 {{</Aside>}}
 
+{{<Aside type="note">}}
+When publishing the custom error page, the system will ignore query strings. This means that if the custom error page URL contains a query string the address published will remove `?` and anything after that (ie. `https://domain.com/5xx.html?removeimages` -> `https://domain.com/5xx.html`).
+{{</Aside>}}
+
 ### Account-level custom error page
 
 To publish an account level custom error page:

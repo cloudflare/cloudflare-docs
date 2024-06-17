@@ -16,7 +16,7 @@ Pricing for Cloudflare Calls Serverless SFU and TURN services is $0.05 per GB of
 
 There is a free tier of 1,000 GB before any charges start. This free tier includes both Serverless SFU and TURN services. Cloudflare Calls billing appears as a single line item on your Cloudflare bill, covering both SFU and TURN.
 
-Data traffic between Cloudflare Calls TURN, Cloudflare Calls SFU, and Cloudflare Stream WHIP/WHEP does not incur any charges.
+Traffic between Cloudflare Calls TURN and Cloudflare Calls SFU or Cloudflare Stream (WHIP/WHEP) does not incur any charges.
 
 ### Is Calls TURN HIPAA/GDPR/FedRAMP compliant? 
 
@@ -32,9 +32,17 @@ Cloudflare Calls TURN server runs on [Cloudflare's global network](https://www.c
 
 ### What is the difference between Cloudflare Calls TURN with a enterprise plan vs self-serve (pay with your credit card) plans?
 
-There is no performance or feature level difference for Cloudflare Calls TURN service in enterprise or self-serve plans, however those on [enterprise plans](https://www.cloudflare.com/enterprise/) will get the benefit of priority support, predicable flat-rate pricing and SLA guarantees.
+There is no performance or feature level difference for Cloudflare Calls TURN service in enterprise or self-serve plans, however those on [enterprise plans](https://www.cloudflare.com/enterprise/) will get the benefit of priority support, predictable flat-rate pricing and SLA guarantees.
 
 ## Technical
+
+### I need to allowlist (whitelist) Cloudflare TURN IP addresses which IP addresses should I use?
+
+Please allowlist Cloudflare's published [IP address ranges](https://www.cloudflare.com/ips/). Cloudflare's TURN service will use an IP address from this list. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
+
+### I would like to hardcode IP addresses used for TURN in my application to save a DNS lookup
+
+Although this is not recommended, we understand there is a very small set of circumstances where hardcoding IP addresses might be useful. In this case, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly. Note that this DNS response could return more than one IP address. In addition, you must set up a failover to a DNS query if there is a problem connecting to the hardcoded IP address. Cloudflare tries to, but cannot guarantee that the IP address used for the TURN service won't change without a specific discussion. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
 
 ### Does Cloudflare Calls TURN support the expired IETF RFC draft "draft-uberti-behave-turn-rest-00"?
 
@@ -54,17 +62,12 @@ There is no defined limit for credential issuance. Start at 500 credentials/sec 
 
 ### Does Calls TURN support IPv6?
 
-Cloudflare Calls is available over both IPv4 and IPv6 for TURN Client to TURN server communication, however it does not issue relay addresses in IPv6 as described in [RFC 6156](https://datatracker.ietf.org/doc/html/rfc6156).
+Yes. Cloudflare Calls is available over both IPv4 and IPv6 for TURN Client to TURN server communication, however it does not issue relay addresses in IPv6 as described in [RFC 6156](https://datatracker.ietf.org/doc/html/rfc6156).
 
 ### Does Calls TURN issue IPv6 relay addresses?
 
-Calls TURN will not respect `REQUESTED-ADDRESS-FAMILY` STUN attribute if specified and will issue IPv4 addresses only.
+No. Calls TURN will not respect `REQUESTED-ADDRESS-FAMILY` STUN attribute if specified and will issue IPv4 addresses only.
 
 ### Does Calls TURN support TCP relaying?
 
-Calls does not implement [RFC6062](https://datatracker.ietf.org/doc/html/rfc6062) and will not respect `REQUESTED-TRANSPORT` STUN attribute.
-
-### Does Calls TURN support DTLS-over-UDP?
-
-No - Calls TURN does not support DTLS-over-UDP relaying as this method is rarely used and is not implemented on the Web Platform.
-
+No. Calls does not implement [RFC6062](https://datatracker.ietf.org/doc/html/rfc6062) and will not respect `REQUESTED-TRANSPORT` STUN attribute.

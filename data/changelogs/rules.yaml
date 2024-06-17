@@ -1,14 +1,20 @@
 ---
 link: "/rules/changelog/"
 productName: Rules
+productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
 
-- publish_date: '2024-05-14'
-  title: Page Rules deprecation
+- publish_date: '2024-06-03'
+  title: Cloudflare Snippets now available to all Enterprise customers
   description: |-
-    Page Rules are now deprecated. You should start using [modern Rules features](https://developers.cloudflare.com/rules/) instead of Page Rules. Refer to the [Page Rules migration guide](https://developers.cloudflare.com/rules/reference/page-rules-migration/) for more information.
+    Cloudflare Snippets (alpha) are now available to all Enterprise customers. Customers in other paid plans will gradually get access throughout 2024.
+
+- publish_date: '2024-05-14'
+  title: Page Rules migration
+  description: |-
+    Page Rules are now a legacy product. Consider using [modern Rules features](https://developers.cloudflare.com/rules/) instead of Page Rules. Refer to the [Page Rules migration guide](https://developers.cloudflare.com/rules/reference/page-rules-migration/) for more information.
 
 - publish_date: '2024-05-13'
   title: New Configuration Rules setting for Web Analytics (RUM)

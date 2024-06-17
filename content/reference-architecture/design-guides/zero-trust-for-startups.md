@@ -138,7 +138,7 @@ As you begin to use third-party vendors for Zero Trust security outcomes, those 
 
 ## Traditional and mesh network building
 
-In the ‘old world’ model (also known as a castle and moat security architecture), your infrastructure would probably be homogenous and protected by a firewall. To access network resources, users not in the office (or other third parties, vendors, etc.) would need to connect to the network via a VPN and firewall, or use another available network route via a public IP address. Because most infrastructure now lives in the cloud, and most startups begin remote-first, almost none of the traditional networking concepts will be explicitly relevant as you design the initial phases of your ‘corporate network’.
+In the ‘old world’ model (also known as a castle and moat security architecture), your infrastructure would probably be homogeneous and protected by a firewall. To access network resources, users not in the office (or other third parties, vendors, etc.) would need to connect to the network via a VPN and firewall, or use another available network route via a public IP address. Because most infrastructure now lives in the cloud, and most startups begin remote-first, almost none of the traditional networking concepts will be explicitly relevant as you design the initial phases of your ‘corporate network’.
 
 In this more traditional networking model, your infrastructure will probably be structured in several of the following ways:
 
@@ -207,7 +207,7 @@ If your organization is experimenting with mesh connectivity, Cloudflare can hel
 
 The Cloudflare products that are typically most relevant for startups are a combination of our WARP client (via `cloudflared`) and Cloudflare Tunnel (via WARP Connector). This allows you to manage remote access, mesh connectivity, and traditional networking connectivity from a single dashboard. On a more granular level, this means you can configure device posture information, identity information, client certificates, and common L4 indicators (like port, IP, and source/destination protocols) from a single point of policy enforcement — enabling you to build robust security policies for both human and autonomous network interaction.
 
-![Cloudflare connecting mutliple cloud providers, public, and private networks](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-traditional-and-mesh-network-building-connecting-networks-to-networks.svg)
+![Cloudflare connecting multiple cloud providers, public, and private networks](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-traditional-and-mesh-network-building-connecting-networks-to-networks.svg)
 
 This blend of networking models is designed to support a wide range of use cases, whether you are trying to provide remote access to your corporate network, extend your corporate network to encompass cloud environments on on-premises equipment, or continue building out a model for mesh connectivity between critical infrastructure without introducing additional risk or overhead.
 

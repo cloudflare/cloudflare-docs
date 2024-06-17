@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Traffic steering policies decide how a load balancer routes traffic to attached and healthy pools.
+Global traffic steering policies decide how a load balancer routes traffic to attached and healthy pools.

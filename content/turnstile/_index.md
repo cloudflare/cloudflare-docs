@@ -9,7 +9,13 @@ meta:
 
 # Turnstile
 
-Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
+{{<description>}}
+Cloudflare’s smart CAPTCHA alternative. 
+{{</description>}}
+
+Turnstile can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
+
+{{<plan type="all">}}
 
 ![Turnstile Overview](/images/turnstile/turnstile-overview.png)
 

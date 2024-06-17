@@ -4,6 +4,9 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Multi-vendor AI observability and control"
+  description: By shifting features such as rate limiting, caching, and error handling to the proxy layer, organizations can apply unified configurations across services and inference service providers.
+tags:
+  - AI
 ---
 
 # Multi-vendor AI observability and control

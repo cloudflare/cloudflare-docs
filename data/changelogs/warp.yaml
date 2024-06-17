@@ -1,6 +1,7 @@
 ---
 link: "/cloudflare-one/changelog/warp/"
 productName: Zero Trust WARP Client
+productLink: "/cloudflare-one/connections/connect-devices/warp/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:

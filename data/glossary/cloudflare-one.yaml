@@ -1,6 +1,10 @@
 ---
 productName: Cloudflare One
 entries:
+- term: Access group
+  general_definition: |-
+    a set of rules that can be configured once and then quickly applied across many Access applications.
+
 - term: App Launcher
   general_definition: |-
     the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
@@ -8,6 +12,10 @@ entries:
 - term: application
   general_definition: |-
     the resource protected by Cloudflare Zero Trust, which can be a subdomain, a path, or a SaaS application.
+
+- term: application token
+  general_definition: |-
+    a piece of data that grants a user access to a specific Access application for a period of time. Can be stored in a browser cookie or passed to the application in place of a normal password.
 
 - term: captive portal
   general_definition: |-
@@ -19,47 +27,43 @@ entries:
 
 - term: cloudflared
   general_definition: |-
-    `cloudflared` is the software powering Cloudflare Tunnel. It runs on origin servers to connect to Cloudflare's network and on client devices for non-HTTP traffic.
-  associated_products:
-    - Tunnel
+    the software powering Cloudflare Tunnel. It runs on origin servers to connect applications or private networks to Cloudflare.
+
+- term: cloudflared replica
+  general_definition: |-
+    an additional instance of `cloudflared` that points to the same Cloudflare Tunnel. It ensures that your network remains online in case a single host running `cloudflared` goes down.
 
 - term: Cloudflare Access
   general_definition: |-
-    Cloudflare Access replaces corporate VPNs with Cloudflare’s network. It allows customers to deploy internal tools in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
-  associated_products:
-    - Access
+    Cloudflare Access replaces corporate VPNs with Cloudflare’s network. It verifies attributes such as identity and device posture to grant users secure access to internal tools.
 
 - term: Cloudflare Browser Isolation
   general_definition: |-
     Cloudflare Browser Isolation seamlessly executes active webpage content in a secure isolated browser to protect users from zero-day attacks, malware, and phishing.
-  associated_products:
-    - RBI
-    - Gateway
-    - ZTNA
 
 - term: Cloudflare CASB
   general_definition: |-
     Cloudflare CASB provides comprehensive visibility and control over SaaS apps to prevent data leaks and compliance violations. It helps detect insider threats, shadow IT, risky data sharing, and bad actors.
-  associated_products:
-    - CASB
 
 - term: Cloudflare Data Loss Prevention (DLP)
   general_definition: |-
     Cloudflare Data Loss Prevention (DLP) allows you to scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers, financial information, secret keys, and source code.
-  associated_products:
-    - DLP
+
+- term: Cloudflare DEX
+  general_definition: |-
+    Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust organization.
 
 - term: Cloudflare Gateway
   general_definition: |-
     Cloudflare Gateway is a modern next-generation firewall between your user, device, or network and the public Internet. It includes DNS filtering to inspect and apply policies to all Internet-bound DNS queries.
-  associated_products:
-    - Gateway
+
+- term: Cloudflare One Agent
+  general_definition: |-
+    the name of the Cloudflare WARP client app on iOS and Android devices.
 
 - term: Cloudflare Tunnel
   general_definition: |-
-    Cloudflare Tunnel (formerly Argo Tunnel) establishes a secure outbound connection within your infrastructure to connect applications and machines to Cloudflare.
-  associated_products:
-    - Tunnel
+    Cloudflare Tunnel uses software agents (`cloudflared` or WARP Connector) to establish a secure connection between a private network and Cloudflare.
 
 - term: Cloudflare Zero Trust
   general_definition: |-
@@ -69,15 +73,20 @@ entries:
   general_definition: |-
     a program that performs tasks without active management or maintenance.
   associated_products:
-    - Tunnel
     - DDoS Protection
+
+- term: device posture
+  general_definition: |-
+    a way to evaluate the security of a user's device, for example by verifying its serial number or checking if it has the latest software updates.
+
+- term: device profile
+  general_definition: |-
+    a collection of WARP client settings applied to a specific set of devices in your organization.
 
 - term: DNS filtering
   general_definition: |-
     DNS filtering uses the Domain Name System to block malicious websites and filter out harmful content, enhancing security and access control.
   associated_products:
-    - Access
-    - Gateway
     - DNS
 
 - term: DoH subdomain
@@ -88,30 +97,39 @@ entries:
   general_definition: |-
     DNS locations are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes, or data centers.
   associated_products:
-    - Access
-    - Gateway
     - DNS
 
 - term: identity provider
   general_definition: |-
     an identity provider (IdP) stores and manages users' digital identities, enabling single sign-on and authentication for multiple applications.
 
-
 - term: JSON web token
   general_definition: |-
     a compact way to securely transmit information between parties as a JSON object, often used for authentication.
 
-- term: Next-generation firewall
+- term: locally-managed tunnel
   general_definition: |-
-    a more powerful firewall with advanced features for modern security needs.
+    a Cloudflare Tunnel that was created by running `cloudflared tunnel create <NAME>` on the command line. Tunnel configuration is stored in your local `cloudflared` directory.
+
+- term: managed network
+  general_definition: |-
+    a network location, such as an office, that is associated with a specific WARP client device profile.
+
+- term: MDM file
+  general_definition: |-
+    a Mobile Device Management (MDM) file is a configuration file that allows organizations to manage the software, settings, and certificates installed on their devices.
+
+- term: MFA
+  general_definition: |-
+    Multi-factor authentication (MFA) checks multiple aspects of a user's identity, not only their username and password, before allowing them access to an application.
 
 - term: OAuth
   general_definition: |-
     a protocol for authorizing users, allowing them to perform actions and view data on different platforms without sharing credentials.
 
-- term: OpenID Connect
+- term: OIDC
   general_definition: |-
-    a simple identity layer on top of OAuth 2.0 for verifying user identity and obtaining basic profile information.
+    OpenID Connect (OIDC) is an identity authentication protocol built on top of OAuth 2.0. It is used verifying user identity and obtaining basic profile information.
 
 - term: PAC file
   general_definition: |-
@@ -120,6 +138,10 @@ entries:
 - term: policy
   general_definition: |-
     a set of rules that regulate network activity, such as login access and website reachability.
+
+- term: remotely-managed tunnel
+  general_definition: |-
+    a Cloudflare Tunnel that was created in Zero Trust under **Networks** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the API.
 
 - term: RDP
   general_definition: |-
@@ -139,9 +161,13 @@ entries:
   general_definition: |-
     Secure Access Service Edge (SASE) is a cloud-based security model bundling networking and security functions.
 
+- term: SCIM
+  general_definition: |-
+    System for Cross-domain Identity Management (SCIM) is an open standard protocol that allows identity providers (such as Okta or Microsoft Entra ID) to synchronize user identity information with cloud applications and services.
+
 - term: seat
   general_definition: |-
-    a unique user authenticating to access applications protected by Cloudflare Access or to use Gateway services.
+    a unique user authenticating to an Access application or enrolling in WARP,
 
 - term: service provider (SP)
   general_definition: |-
@@ -149,19 +175,17 @@ entries:
 
 - term: service token
   general_definition: |-
-    service tokens are generated by Cloudflare Access and enable automated systems or applications to access protected applications.
-  associated_products:
-    - Access
+    authentication credentials generated by Cloudflare Access which enable automated systems to access protected applications.
+
+- term: session
+  general_definition: |-
+    an event generated when a user logs in to an Access application.
 
 - term: shadow IT
   general_definition: |-
     shadow IT is the unsanctioned use of software, hardware, or other systems and services within an organization, often without the knowledge of that organization's information technology (IT) department.
 
     For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/).
-  associated_products:
-    - Access
-    - CASB
-    - Gateway
 
 - term: SMB
   general_definition: |-
@@ -177,9 +201,7 @@ entries:
 
 - term: team domain
   general_definition: |-
-    a unique subdomain assigned to your Cloudflare account, where secured applications are accessed by users; for example, `<your-team-name>.cloudflareaccess.com`.
-
-    Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.
+    a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare Zero Trust.
 
 - term: team name
   general_definition: |-
@@ -193,43 +215,37 @@ entries:
 
 - term: Terraform
   general_definition: |-
-    Terraform is a tool for building, changing, and versioning infrastructure, providing components and documentation for Cloudflare resources.
+    an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax.
   associated_products:
     - Terraform
 
-- term: Tunnel certificate
+- term: tunnel
   general_definition: |-
-    the Cloudflare Tunnel software, `cloudflared`, generates a certificate for secure connections using a service token and an origin certificate.
-  associated_products:
-    - Tunnel
+    a secure pathway for network traffic to flow between a device and Cloudflare's global network.
 
 - term: User risk score
   general_definition: |-
     Cloudflare Zero Trust user risk score ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
-  associated_products:
-    - Access
-    - Gateway
-    - DLP
-    - CASB
 
 - term: User risk score level
   general_definition: |-
     Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
-  associated_products:
-    - Access
-    - Gateway
-    - DLP
-    - CASB
+
+- term: Virtual network
+  general_definition: |-
+    a software abstraction that allows you to logically segregate resources on a private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes.
 
 - term: Virtual Private Network (VPN)
   general_definition: |-
-    a VPN extends a private network across a public network, enabling users to send and receive data across shared or public networks as if their computing devices were directly connected to the private network.
-  associated_products:
-    - Tunnel
+    a tool that allows users to send and receive data across shared or public networks as if their devices were directly connected to the private network. For example, employees working from home can use a VPN to access files on the corporate network.
 
 - term: WARP client
   general_definition: |-
-    Cloudflare Zero Trust customers can use the Cloudflare WARP application to connect corporate desktops to Cloudflare Gateway for advanced web filtering. It utilizes the security benefits of WARP technology.
+    an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
+
+- term: WARP Connector
+  general_definition: |-
+    an extension of the WARP client used to establish site-to-site, bidirectional, and mesh networking connectivity. WARP Connector software installs on a Linux server within a private network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
 
 - term: Zero Trust Security
   general_definition: |-
