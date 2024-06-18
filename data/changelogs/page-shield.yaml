@@ -6,6 +6,16 @@ productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 
+- publish_date: '2024-06-18'
+  title: Released Cookie Monitor
+  description: |-
+    Page Shield now captures HTTP cookies set and used by the web application. List of cookies captured can be viewed in the dashboard or queried through API.
+
+- publish_date: '2024-06-14'
+  title: Added filter operators of scripts and connections
+  description: |-
+    In the dashboard, scripts and connections can now be filtered by "does not contain" operator. Pages associated with scripts and connections can be filtered by "includes", "starts with" and "ends with".
+
 - publish_date: '2024-04-26'
   title: Suggestions for the default directive
   description: |-
