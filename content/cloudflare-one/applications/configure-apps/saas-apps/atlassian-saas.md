@@ -32,7 +32,7 @@ This guide covers how to configure Atlassian Cloud as a SAML application in Clou
 ## 3. Configure an identity provider and SAML SSO in Atlassian Cloud
 1. In Atlassian Cloud, go to **Security** > **Identity providers**.
 2. Select **Other provider** > **Choose**.
-3. For **Directory name**, enter your desired name.
+3. For **Directory name**, enter your desired name. For example, you could enter `Cloudflare Access`.
 4. Select **Add** > **Set up SAML single sign-on** > **Next**.
 
 {{<Aside type="note">}}
